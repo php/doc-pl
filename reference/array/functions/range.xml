@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.15 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.range">
    <refnamediv>
     <refname>range</refname>
@@ -9,60 +9,87 @@
     </refpurpose>
    </refnamediv>
    <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>array</type><methodname>range</methodname>
-      <methodparam><type>mixed</type><parameter>dolny</parameter></methodparam>
-      <methodparam><type>mixed</type><parameter>górny</parameter></methodparam>
-     </methodsynopsis>
+   <title>Opis</title>
+    <methodsynopsis>
+     <type>array</type><methodname>range</methodname>
+     <methodparam><type>mixed</type><parameter>dolny</parameter></methodparam>
+     <methodparam><type>mixed</type><parameter>górny</parameter></methodparam>
+     <methodparam choice="opt"><type>number</type><parameter>krok</parameter></methodparam>
+    </methodsynopsis>
     <para>
      <function>range</function> zwraca tablicę elementów od
      <parameter>dolny</parameter> do <parameter>górny</parameter>, włącznie.
      Jeśli dolny > górny, to sekwencja będzie od górnego do dolnego.
     </para>
-    <example>
-     <title>Przykłady użycia <function>range</function></title>
-     <programlisting role="php">
-<![CDATA[
-foreach(range(0, 9) as $liczba) {
-    echo $liczba;
-}
-foreach(range('a', 'z') as $litera) {
-    echo $litera;
-}
-foreach(range('z', 'a') as $litera) {
-    echo $litera;
-}
-]]>
-     </programlisting>
-    </example>
     <note>
-     <para>
-      Do wersji 4.1.0, funkcja <function>range</function> generowała tylko
-      rosnące tablice liczbowe. Obsługa dla sekwencji znakowych i tablic
-      malejących została dodana w 4.1.0.
-     </para>
+     <title>Nowy parametr</title>
+     <simpara>
+      Parametr opcjonalny <parameter>krok</parameter> został dodany w PHP
+      5.0.0.
+     </simpara>
+    </note>
+    <para>
+     Jeśli podany zostanie parametr <parameter>krok</parameter>, zostanie on
+     użyty jako różnica pomiędzy elementami w sekwencji.
+     <parameter>krok</parameter> powinien być liczbą dodatnią. Jeśli nie
+     zostanie on podany, <parameter>krok</parameter> przyjmie domyślną wartość
+     1.
+    </para>
+    <para>
      <example>
-      <title>Symulowanie sekwencji malejących i znakowych</title>
+      <title>Przykłady użycia funkcji <function>range</function></title>
       <programlisting role="php">
 <![CDATA[
-# do odwrócenia kolejności sekwencji można użyć array_reverse
-foreach(array_reverse(range(0,9)) as $liczba) {
+<?php
+// array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
+foreach (range(0, 12) as $liczba) {
     echo $liczba;
 }
 
-# funkcja array_map() może być użyta do zamiany liczb całkowitych na znaki
-# używając chr()
-foreach(array_map('chr', range(ord('a'),ord('z'))) as $znak){
-    echo $znak;
+// Parametr kroku został wprowadzony w 5.0.0
+// array(0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
+foreach (range(0, 100, 10) as $liczba) {
+    echo $liczba;	
 }
+
+// Użycie sekwencji znakowych wprowadzono w 4.1.0
+// array('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i');
+foreach (range('a', 'i') as $litera) {
+    echo $litera;
+}
+
+// array('c', 'b', 'a');
+foreach (range('c', 'a') as $litera) {
+    echo $litera;
+}  
+?>
 ]]>
       </programlisting>
      </example>
+    </para>
+    <note>
+     <para>
+      W wersjach wcześniejszych od PHP 4.1.0 funkcja
+      <function>range</function> generowała tylko rosnące tablice liczbowe.
+      Obsługa sekwencji znakowych i tablic malejących została wprowadzona w
+      PHP 4.1.0. Wartości sekwencji znakowych są ograniczone do długości
+      jednego znaku. Jeśli wprowadzony zostanie ciąg długości większej niż
+      jeden, użyty zostanie tylko pierwszy znak.
+     </para>
     </note>
+   </note>
+   <caution>
     <para>
-     Patrz także: <function>shuffle</function> aby zobaczyć inny przykład
-     wykorzystania tej funkcji.
+     W wersjach PHP od 4.1.0 do 4.3.2 funkcja <function>range</function>
+     rozpoznawała ciągi numeryczne jako ciągi, a nie jako liczby. W związku z
+     tym będą one użyte do generowania sekwencji znakowych. Na przykład
+     <literal>"4242"</literal> będzie traktowane jako <literal>"4"</literal>.
+    </para>
+   </caution>
+    <para>
+     Patrz także: <function>shuffle</function>,
+     function>array_fill</function> i <link
+     linkend="control-structures.foreach">foreach</link>.
     </para>
    </refsect1>
   </refentry>

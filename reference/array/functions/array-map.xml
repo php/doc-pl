@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.5 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.5 $ -->
+<!-- EN-Revision: 1.15 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.6 $ -->
   <refentry id="function.array-map">
    <refnamediv>
     <refname>array_map</refname>
@@ -10,12 +10,12 @@
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-     <methodsynopsis>
-      <type>array</type><methodname>array_map</methodname>
-      <methodparam><type>callback</type><parameter>funkcja_zwrotna</parameter></methodparam>
-      <methodparam><type>array</type><parameter>tbl1</parameter></methodparam>
-      <methodparam choice="opt"><type>array</type><parameter>tbl2...</parameter></methodparam>
-     </methodsynopsis>
+    <methodsynopsis>
+     <type>array</type><methodname>array_map</methodname>
+     <methodparam><type>callback</type><parameter>funkcja_zwrotna</parameter></methodparam>
+     <methodparam><type>array</type><parameter>tbl1</parameter></methodparam>
+     <methodparam choice="opt"><type>array</type><parameter>tbl2...</parameter></methodparam>
+    </methodsynopsis>
     <para>
      <function>array_map</function> zwraca tablicę zawierającą wszystkie
      elementy tablicy <parameter>tbl1</parameter> po użyciu na każdej z nich
@@ -27,18 +27,21 @@
       <title>Przykład użycia <function>array_map</function></title>
       <programlisting role="php">
 <![CDATA[
-function szescian($n) {
+function szescian($n)
+{
     return $n*$n*$n;
 }
 
 $a = array(1, 2, 3, 4, 5);
 $b = array_map("szescian", $a);
 print_r($b);
+?>
 ]]>
       </programlisting>
       <para>
-       Powyższy przykład wyświetli:
-       <screen>
+       Zmienna <varname>$b</varname> będzie zawierała:
+      </para>
+      <screen>
 <![CDATA[
 Array
 (
@@ -49,8 +52,7 @@ Array
     [4] => 125
 )
 ]]>        
-       </screen>
-      </para>
+      </screen>
      </example>
     </para>
     <para>
@@ -60,11 +62,13 @@ Array
       </title>
       <programlisting role="php">
 <![CDATA[
-function pokaz_po_Hiszpansku($n, $m) {
+function pokaz_po_Hiszpansku($n, $m)
+{
     return "Po Hiszpańsku liczba $n to $m";
 }
 
-function mapuj_na_Hiszpanski($n, $m) {
+function mapuj_na_Hiszpanski($n, $m)
+{
     return array ($n => $m);
 }
 
@@ -76,20 +80,20 @@ print_r($c);
 
 $d = array_map("mapuj_po_Hiszpansku", $a , $b);
 print_r($d);
+?>
 ]]>
       </programlisting>
-      <para>
-       Powyższy przykład wyświetli:
-       <screen>
+      &example.outputs.;
+      <screen>
 <![CDATA[
 // Zmienna $c
 Array
 (
-    [0] => The number 1 is called uno in Spanish
-    [1] => The number 2 is called dos in Spanish
-    [2] => The number 3 is called tres in Spanish
-    [3] => The number 4 is called cuatro in Spanish
-    [4] => The number 5 is called cinco in Spanish
+    [0] => Po Hiszpańsku liczba 1 to uno
+    [1] => Po Hiszpańsku liczba 2 to dos
+    [2] => Po Hiszpańsku liczba 3 to tres
+    [3] => Po Hiszpańsku liczba 4 to cuatro
+    [4] => Po Hiszpańsku liczba 5 to cinco
 )
 
 // Zmienna $d
@@ -122,8 +126,7 @@ Array
 
 )
 ]]>
-       </screen>
-      </para>
+      </screen>
      </example>
     </para>
     <para>
@@ -143,6 +146,7 @@ Array
       <title>Tworzenie tablicy tablic</title>
       <programlisting role="php">
 <![CDATA[
+<?php
 $a = array(1, 2, 3, 4, 5);
 $b = array("one", "two", "three", "four", "five");
 $c = array("uno", "dos", "tres", "cuatro", "cinco");
@@ -150,11 +154,11 @@ $d = array("jeden", "dwa", "trzy", "cztery", "pięć");
 
 $e = array_map(null, $a, $b, $c, $d);
 print_r($e);
+?>
 ]]>
       </programlisting>
-      <para>
-       Powyższy przykład wyświetli:
-       <screen>
+      &example.outputs;
+      <screen>
 <![CDATA[
 Array
 (
@@ -200,13 +204,13 @@ Array
 
 )
 ]]>
-       </screen>
-      </para>
+      </screen>
      </example>
     </para>
     <para>
      Patrz także: <function>array_filter</function>,
-     <function>array_reduce</function>.
+     <function>array_reduce</function>, <function>array_walk</function> i
+     &seealso.callback;.
     </para>
    </refsect1>
   </refentry>
