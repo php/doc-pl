@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.session-register">
    <refnamediv>
     <refname>session_register</refname>
@@ -33,8 +33,8 @@
     <caution>
      <para>
       Przy użyciu
-      <varname>$HTTP_SESSION_VARS</varname>/<varname>$_SESSION</varname> nie
-      powinno się używać <function>session_register</function>,
+      <varname>$_SESSION</varname> (lub <varname>$HTTP_SESSION_VARS</varname>)
+      nie powinno się używać <function>session_register</function>,
       <function>session_is_registered</function> i
       <function>session_unregister</function>.
      </para>
@@ -49,19 +49,19 @@
      <function>session_start</function> bez żadnych parametrów.
     </para>
     <para>
-     Możesz tworzyć zmienne sesyjne poprostu przez dopisywanie odpowiednicz
-     wpisów do tablic <varname>$HTTP_SESSION_VARS</varname> lub 
-     <varname>$_SESSION</varname> (PHP >= 4.1.0).
+     Możesz tworzyć zmienne sesyjne po prostu przez dopisywanie odpowiednich
+     wpisów do tablic <varname>$_SESSION</varname> lub 
+     <varname>$HTTP_SESSION_VARS</varname> (PHP &lt; 4.1.0).
      <informalexample>
       <programlisting role="php">
 <![CDATA[
 $barney = "Duży fioletowy dinozaur.";
 session_register("barney");
 
-$HTTP_SESSION_VARS["zim"] = "Najeźdźca z innej planety.";
+$_SESSION["zim"] = "Najeźdźca z innej planety.";
 
-# tablica $_SESSION typu auto-global została wprowadzona w PHP 4.1.0
-#_SESSION["spongebob"] = "Ma kwadratowe spodnie.";
+# Stara metoda opiera się o $HTTP_SESSION_VARS
+$HTTP_SESSION_VARS["spongebob"] = "Ma kwadratowe spodnie.";
 ]]>       
       </programlisting>
      </informalexample>
