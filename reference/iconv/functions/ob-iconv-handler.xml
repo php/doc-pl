@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.6 $ -->
+<!-- EN-Revision: 1.3 Maintainer: qrak Status: ready -->
+<!-- $Revision: 1.7 $ -->
   <refentry id="function.ob-iconv-handler">
    <refnamediv>
     <refname>ob_iconv_handler</refname>
-    <refpurpose>Konwertuje kodowanie znaków jako uchwyt buforu wyjścia</refpurpose>
+    <refpurpose>Konwersja kodowania znaków jako uchwyt buforu wyjścia</refpurpose>
    </refnamediv>
    <refsect1>
     <title>Opis</title>
@@ -14,13 +14,14 @@
       <methodparam><type>int</type><parameter>status</parameter></methodparam>
      </methodsynopsis>
     <para>
-     Konwertuje łańcuch zapisany w <parameter>internal_encoding</parameter> do
+     Konwertuje string zapisany w <parameter>internal_encoding</parameter> do
      <parameter>output_encoding</parameter>.
     </para>
     <para>
      <parameter>internal_encoding</parameter> i
      <parameter>output_encoding</parameter> powinny zostać zdefiniowane przez
-     <function>iconv_set_encoding</function> lub w pliku konfiguracyjnym.
+     <function>iconv_set_encoding</function> lub w pliku konfiguracyjnym
+     &php.ini;.
     </para>
     <para>
      <example>
@@ -34,8 +35,9 @@ ob_start("ob_iconv_handler"); // rozpocznij buforowanie wyjścia
     </para>
     <para>
      Patrz także: 
-     <function>iconv_get_encoding</function> i
-     <function>iconv_set_encoding</function>.
+     <function>iconv_get_encoding</function>,
+     <function>iconv_set_encoding</function> i
+     funkcje <link linkend="ref.outcontrol">output-control</link>.
     </para>
    </refsect1>
   </refentry>
