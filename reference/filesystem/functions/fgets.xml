@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- splitted from ./pl/functions/filesystem.xml, last change in rev 1.1 -->
-<!-- last change to 'fgets' in en/ tree in rev 1.2 -->
-<!-- EN-Revision: 1.2 Maintainer: adi Status: partial -->
-<!-- OLD-Revision: 1.115/EN.1.2 -->
+<!-- EN-Revision: 1.11 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.3 $ -->
   <refentry id="function.fgets">
    <refnamediv>
     <refname>fgets</refname>
@@ -12,12 +10,12 @@
     <title>Opis</title>
      <methodsynopsis>
       <type>string</type><methodname>fgets</methodname>
-      <methodparam><type>int</type><parameter>fp</parameter></methodparam>
+      <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam>
       <methodparam choice="opt"><type>int</type><parameter>długość</parameter></methodparam>
-      </methodsynopsis>
+     </methodsynopsis>
     <para>
      Zwraca łańcuch o długości - 1 bajtów odczytany z pliku wskazanego
-     przez fp. Czytanie kończy się kiedy przeczytano długość - 1 bajtów
+     przez <parameter>uchwyt</parameter>. Czytanie kończy się kiedy przeczytano długość - 1 bajtów
      lub gdy wystąpi znak nowej linii (jest on dołączany do zwracanego
      wyniku) lub gdy wystąpi znak końca pliku EOF (którykolwiek
      przypadek zdarzy się pierwszy). Jeśli nie została określona długość,
@@ -30,36 +28,58 @@
      Główna pułapka:
     </para>
     <simpara>
-     Osoby używające semantyki 'C' z fgets powinni zauważyć różnicę
-     w sposobie zwracania EOF.
-    </simpara>
+     Osoby przyzwyczajone do semantyki 'C' powinni zauważyć różnicę
+     w sposobie zwracania <literal>EOF</literal> przez <function>fgets</function>.
+     </simpara>
     <simpara>
      Wskaźnik pliku musi być poprawny i musi wskazywać na plik
      poprawnie otwarty przez <function>fopen</function>,
      <function>popen</function> lub
      <function>fsockopen</function>.
-   </simpara>
+    </simpara>
     <para>
      Prosty przykład:
      <example>
       <title>Czytanie pliku linia po linii</title>
       <programlisting role="php">
 <![CDATA[
-$fd = fopen ("/tmp/inputfile.txt", "r");
-while (!feof ($fd)) {
-    $buffer = fgets($fd, 4096);
+<?php
+$uchwyt = fopen ("/tmp/inputfile.txt", "r");
+while (!feof ($uchwyt)) {
+    $buffer = fgets($uchwyt, 4096);
     echo $buffer;
 }
-fclose ($fd);
+fclose ($uchwyt);
+?>
 ]]>
       </programlisting>
      </example>
     </para>
+    <note>
+     <simpara>
+      Parametr <parameter>długość</parameter> stał się opcjonalny w PHP 4.2.0
+	  jeśli został pominięty, to powinien przyjąć wartość 1024.  
+      W PHP 4.3, pominięcie <parameter>długość</parameter> powoduje odczytywanie
+	  ze strumienia do chwili osiągnięcia końca lini,
+	  Jeśli większość lini w pliku jest dłuższa od 8KB, dużo efektywniejsze
+	  jest podanie maksymalnej długości linii.
+     </simpara>
+    </note>
+	<note> 
+       <simpara> 
+        Funkcja jest binaarnie bezpieczna od PHP 4.3.  Poprzednie wersje
+		nie są binarnie bezpieczne.
+       </simpara> 
+      </note> 
+      &note.line-endings; 
     <para>
-     Patrz także <function>fread</function>, <function>fopen</function>,
-     <function>popen</function>, <function>fgetc</function>,
-     <function>fsockopen</function> i
-     <function>socket_set_timeout</function>.
+     Patrz także: <function>fread</function>,
+	 <function>fgetc</function>,  
+     <function>stream_get_line</function>,  
+	 <function>fopen</function>,
+     <function>popen</function>, 
+	 <function>fsockopen</function> i 
+	 <function>socket_set_timeout</function>.
     </para>
    </refsect1>
   </refentry>
