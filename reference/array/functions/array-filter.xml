@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.5 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.12 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.array-filter">
    <refnamediv>
     <refname>array_filter</refname>
@@ -16,16 +16,19 @@
       <methodparam choice="opt"><type>callback</type><parameter>funkcja_zwrotna</parameter></methodparam>
      </methodsynopsis>
     <para>
-     <function>array_filter</function> zwraca tablicę zawierającą wszystkie
-     elementy tablicy <parameter>wejście</parameter> przefitrowane przez
-     podaną funkcję zwrotną. Jeśli <parameter>wejście</parameter> jest tablicą
-     asocjacyjną, przypisania klucz pozostają zachowane.
+     <function>array_filter</function> wykonuje iterację dla każdej wartości z
+     tablicy <parameter>wejście</parameter>, przekazując tą wartość jako
+     parametr funkcji <parameter>funkcja_zwrotna</parameter>. Jeśli
+     <parameter>funkcja_zwrotna</parameter> zwróci wartość true, bieżąca
+     wartość zostanie wstawiona do tablicy wynikowej. Klucze tablicy zostają
+     zachowane.
     </para>
     <para>
      <example>
       <title>Przykład użycia <function>array_filter</function></title>
       <programlisting role="php">
 <![CDATA[
+<?php
 function nieparzysta($var) {
     return ($var % 2 == 1);
 }
@@ -41,11 +44,13 @@ echo "Nieparzyste:\n";
 print_r(array_filter($tablica1, "nieparzyste"));
 echo "Parzyste:\n";
 print_r(array_filter($tablica2, "parzyste"));
+?>
 ]]>
       </programlisting>
       <para>
        Powyższy przykład wyświetli:
-       <screen role="php">
+      </para>
+      <screen role="php">
 <![CDATA[
 Nieparzyste:
 Array
@@ -63,8 +68,7 @@ Array
     [6] => 12
 )
 ]]>     
-       </screen>
-      </para>
+      </screen>
      </example>
     </para>     
     <para>
@@ -73,8 +77,8 @@ Array
      <function>array_filter</function> pozostaje nieokreślone.
     </para>
     <para>
-     Patrz także: <function>array_map</function> i
-     <function>array_reduce</function>.
+     Patrz także: <function>array_map</function>,
+     <function>array_reduce</function> i <function>array_walk</function>.
     </para>
    </refsect1>
   </refentry>
