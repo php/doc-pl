@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.11 Maintainer: slawek Status: ready -->
-<!-- $Revision: 1.6 $ -->
+<!-- EN-Revision: 1.13 Maintainer: slawek Status: ready -->
+<!-- $Revision: 1.7 $ -->
  <chapter id="features.cookies">
   <title>Ciasteczka (cookies)</title>
 
@@ -12,15 +12,32 @@
    Ciasteczka stanowią część nagłówka HTTP, więc funkcja
    <function>setcookie</function> musi być wywoływana zanim jakiekolwiek dane
    zostaną wysłane do przeglądarki. Występuje tu to samo ograniczenie,
-   co w przypadku <function>header</function>. 
+   co w przypadku <function>header</function>. Możesz skorzystać z
+   <link linkend="ref.outcontrol">funkcji buforujących</link>,
+   aby opóźnić wysłanie danych do czasu, gdy zdecydujesz o wysłaniu ciasteczek
+   lub dodatkowych nagłówków.
   </para>
 
   <para>
    Każde ciasteczko wysłane do ciebie od klienta, będzie automatycznie
-   przekształcone w zmienną PHP, podobnie, jak przy użyciu metod POST i GET.
+   przekształcone w zmienną PHP, podobnie, jak przy użyciu metod POST i GET,
+   zależnie od ustawienia dyrektyw konfiguracyjnych
+   <literal>register_globals</literal> i <literal>variables_order</literal>.
    Jeśli chcesz przypisać wiele wartości do pojedynczego ciasteczka, po prostu
-   dodaj <emphasis>[]</emphasis> do nazwy ciasteczka. Po więcej detali
-   sięgnij do funkcji <function>setcookie</function>.
+   dodaj <emphasis>[]</emphasis> do nazwy ciasteczka.
+  </para>
+
+  <para>
+   W PHP 4.1.0 i późniejszych, tworzona jest globalna tablica
+   <literal>$_COOKIE</literal>, przechowująca wszystkie ciasteczka nadesłane
+   przez klienta. We wcześniejszych wersjach PHP, tworzona jest tablica
+   <literal>$HTTP_COOKIE_VARS</literal>, jeśli ustawiona została dyrektywa
+   konfiguracyjna <literal>track_vars</literal>.
+  </para>
+
+  <para>
+   Po więcej informacji, włącznie z uwagami o błędach przeglądarek, sięgnij do
+   opisu funkcji <function>setcookie</function>.
   </para>
 
  </chapter>
