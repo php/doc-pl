@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.3 $ -->
+<!-- EN-Revision: 1.13 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.4 $ -->
   <refentry id="function.array">
    <refnamediv>
     <refname>array</refname>
@@ -17,6 +17,8 @@
     <para>
      Zwraca tablicę stworzoną z podanych parametrów. Parametry mogą być
      indeksowane przy pomocy operatora <literal>=&gt;</literal> operator.
+     Więcej informacji o tym czym są tablice można znaleźć w rodziale o <link
+      linkend="language.types.array">typie tablicowym</link>.
     </para>
     <para>
      <note>
@@ -36,6 +38,10 @@
      nadpisze wcześniejsze.
     </para>
     <para>
+     Przecinek po ostatniej podanej wartości, mimo że jest niespotykany, jest
+     poprawny składniowo.
+    </para>
+    <para>
      Poniższy przykład demonstruje jak stworzyć wielowymiarową tablicę, jak
      określić klucze w tablicy asocjacyjnej i jak pominąć-i-kontynuować
      liczbowe indeksy w normalnych tablicach.
@@ -43,11 +49,13 @@
       <title>Przykład użycia <function>array</function></title>
       <programlisting role="php">
 <![CDATA[
+<?php
 $owoce = array (
-   "owoce"  => array ("a"=&gt;"pomarańcza", "b"=&gt;"banan", "c"=&gt;"jabłko"),
-   "liczby" => array (1, 2, 3, 4, 5, 6),
-   "dziury" => array ("pierwszy", 5 =&gt; "drugi", "trzeci")
+   "owoce"  => array("a"=&gt;"pomarańcza", "b"=&gt;"banan", "c"=&gt;"jabłko"),
+   "liczby" => array(1, 2, 3, 4, 5, 6),
+   "dziury" => array("pierwszy", 5 =&gt; "drugi", "trzeci")
 );
+?>
 ]]>
       </programlisting>
      </example>
@@ -57,13 +65,14 @@ $owoce = array (
       <title>Automatyczne indeksowanie w funkcji <function>array</function></title>
       <programlisting role="php">
 <![CDATA[
-$array = array( 1, 1, 1, 1,  1, 8=>1,  4=>1, 19, 3=>13);
+<?php
+$array = array( 1, 1, 1, 1,  1, 8 => 1,  4 => 1, 19, 3 => 13);
 print_r($array);
+?>
 ]]>
       </programlisting>
-      <para>
-       wyświetli:
-       <screen role="php">
+      &example.outputs;
+      <screen role="php">
 <![CDATA[
 Array
 (
@@ -76,9 +85,10 @@ Array
     [9] => 19
 )
 ]]>
-       </screen>
-      </para>
+      </screen>
      </example>
+    </para>
+    <para>
      Zauważ, że indeks '3' jest zdefiniowany dwa razy i przchowuje on końcową
      wartość 13. Indeks 4 jest zdefiniowany po indeksie 8, a następnym
      wygenerowanym indeksem (dla wartości 19) jest 9, ponieważ największym
@@ -90,28 +100,48 @@ Array
       <title>Indeksowanie od 1 w <function>array</function></title>
       <programlisting role="php">
 <![CDATA[
+<?php
 $pierwszy_kwartal  = array(1 => 'Styczeń', 'Luty', 'Marzec');
 print_r($pierwszy_kwartal);
+?>
 ]]>
       </programlisting>
-      <para>
-       wyświetli:
-       <screen role="php">
+      &example.outputs;
+      <screen role="php">
 <![CDATA[
 Array
 (
-    [1] => 'Styczeń'
-    [2] => 'Luty'
-    [3] => 'Marzec'
+    [1] => Styczeń
+    [2] => Luty
+    [3] => Marzec
 )
 ]]>
-       </screen>
-      </para>
+      </screen>
      </example>
     </para>
     <para>
-     Patrz także: <function>array_pad</function>, <function>list</function>
-     i <function>range</function>.
+     Podobnie jak w Perlu, wartość z tablicy można uzyskać wewnątrz
+     cudzysłowów. Jednakże w PHP niezbędne jest zawarcie zmiennej wewnątrz
+     nawiasów klamrowych.
+     <example>
+      <title>Odczytywanie elementu tablicy wewnątrz cudzysłowów</title>
+      <programlisting role="php">
+<![CDATA[ 	
+<?php 	
+
+$foo = array('bar' => 'baz'); 	
+echo "Hello {$foo['bar']}!"; // Hello baz! 	
+
+?> 	
+]]>
+      </programlisting>
+     </example>
+    </para>
+    <para>
+     Patrz także: <function>array_pad</function>, <function>list</function>,
+     <function>count</function>,
+     <link linkend="control-structures.foreach">foreach</link> i
+     <function>range</function>.
     </para>
    </refsect1>
   </refentry>
