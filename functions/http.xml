@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- $Revision: 1.3 $ -->
-<!-- tłumacz: Tomasz Wójtowicz
-aktualizacja do wersji en 1.6 z naszego CVSu
-w dniu 7.11.2001 -->
+<!-- $Revision: 1.4 $ -->
+<!-- tłumacz: Tomasz Wójtowicz <tomek-w@wp.pl>
+aktualizacja do wersji en 1.6 z naszego CVSu w dniu 7.11.2001 
+aktualizacja do wersji en 1.8 z naszego CVSu w dniu 28.11.2001
+-->
  <reference id="ref.http">
   <title>Funkcje obsługi HTTP</title>
   <titleabbrev>HTTP</titleabbrev>
@@ -43,8 +44,10 @@ w dniu 7.11.2001 -->
      to nowy nagłówek zostanie dodany do już istniejących. Na przykład:
      <informalexample>
       <programlisting role="php">
+<![CDATA[      
 header('WWW-Authenticate: Negociate');
 header('WWW-Authenticate: NTLM',false);
+]]>
       </programlisting>
      </informalexample>
     </para>
@@ -55,10 +58,12 @@ header('WWW-Authenticate: NTLM',false);
      status przekierowania <literal>REDIRECT</literal> (302). 
      <informalexample>
       <programlisting role="php">
+<![CDATA[
 header("Location: http://www.php.net/"); /* Przekieruj przeglądarkę 
                                             na stronę główną PHP */
 exit;                 /* Upewnij się, że kod poniżej nie zostanie wykonany 
                          po przekierowaniu. */
+]]>
       </programlisting>
      </informalexample>
     </para>
@@ -74,9 +79,11 @@ exit;                 /* Upewnij się, że kod poniżej nie zostanie wykonany
       <acronym>URI</acronym>:
       <informalexample>
        <programlisting>
+<![CDATA[
 header("Location: http://".$HTTP_SERVER_VARS['HTTP_HOST']
                        ."/".dirname($HTTP_SERVER_VARS['PHP_SELF'])
                        ."/".$relative_url);
+]]>
        </programlisting>
       </informalexample>
      </para>
@@ -92,7 +99,9 @@ header("Location: http://".$HTTP_SERVER_VARS['HTTP_HOST']
      generował właściwy kod statusu zapytania HTTP.
      <informalexample>
       <programlisting role="php">
+<![CDATA[
 header("HTTP/1.0 404 Not Found");
+]]>
       </programlisting>
      </informalexample>
     </para>
@@ -103,7 +112,9 @@ header("HTTP/1.0 404 Not Found");
        <literal>Status</literal>.
        <informalexample>
         <programlisting role="php">
+<![CDATA[
 header("Status: 404 Not Found");
+]]>
         </programlisting>
        </informalexample>
       </para>
@@ -111,15 +122,17 @@ header("Status: 404 Not Found");
     <para>
      Skrypty PHP często służą do generowania dynamiczej treści, która
      nie może być buforowana przez klienta czy serwer proxy. Pamięć cache
-     w większości tych urządzeń da się wyłączyć dzięki:
+     (bufor) w większości tych urządzeń da się wyłączyć dzięki:
      <informalexample>
       <programlisting role="php">
+<![CDATA[
 header ("Expires: Mon, 26 Jul 1997 05:00:00 GMT");    // data w przeszłości
 header ("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT"); 
                                                       // ciągle modyfikowany
 header("Cache-Control: no-store, no-cache, must-revalidate");  // HTTP/1.1
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");                          // HTTP/1.0
+]]>
       </programlisting>
      </informalexample>
      <note>
@@ -127,7 +140,7 @@ header("Pragma: no-cache");                          // HTTP/1.0
        Możesz zaobserwować, że strony nie są buforowane, nawet jeśli
        nie użyłeś wszystkich ww. nagłówków. Jest wiele sposobów, w jakie
        użytkownicy mogą skonfigurować swoje przeglądarki, aby zmienić
-       standardowy sposób buforowania. Przez wysyłnie powyższych nagłówków,
+       standardowy sposób buforowania. Przez wysłanie powyższych nagłówków,
        powinno się udać ominąć jakiekolwiek ustawienia pozwalające
        na zbuforowanie wyniku pracy twojego skryptu.
       </para>
@@ -150,11 +163,13 @@ header("Pragma: no-cache");                          // HTTP/1.0
      pojedynczym pliku PHP/HTML.
      <informalexample>
       <programlisting role="php">
+<![CDATA[
 &lt;?php require("user_logging.inc") ?&gt;
 
 
 &lt;?php header ("Content-Type: audio/x-pn-realaudio"); ?&gt;
 // skrypt nie działa - zauważ puste linie pomiędzy instrukcjami
+]]>
       </programlisting>
      </informalexample>
      <note>
@@ -176,11 +191,13 @@ header("Pragma: no-cache");                          // HTTP/1.0
      pliku i zmusić przeglądarkę do wyświetlenia okienka Zapisz jako.
      <informalexample>
       <programlisting role="php">
+<![CDATA[
 &lt;?php
 header("Content-type: application/pdf");
 header("Content-Disposition: attachment; filename=downloaded.pdf");
 
 /* ... treść pliku pdf ... */
+]]>
       </programlisting>
      </informalexample>
      <note>
@@ -304,9 +321,11 @@ header("Content-Disposition: attachment; filename=downloaded.pdf");
       <title><function>setcookie</function> wysyła przykładowe ciasteczka
       </title>
       <programlisting role="php">
+<![CDATA[
 setcookie ("TestCookie", "Test Value");
 setcookie ("TestCookie", $value,time()+3600);  /* traci ważność za godzinę */
 setcookie ("TestCookie", $value,time()+3600, "/~rasmus/", ".utoronto.ca", 1);
+]]>
       </programlisting>
      </example>
     </para>
@@ -316,10 +335,12 @@ setcookie ("TestCookie", $value,time()+3600, "/~rasmus/", ".utoronto.ca", 1);
       <title>Kasowanie ciasteczek
       </title>
       <programlisting role="php">
+<![CDATA[
 setcookie ("TestCookie");
 // ustaw datę ważności na godzinę wstecz
 setcookie ("TestCookie", "", time() - 3600);
 setcookie ("TestCookie", "", time() - 3600, "/~rasmus/", ".utoronto.ca", 1);
+]]>
       </programlisting>
      </example>
      Kiedy chcesz skasować ciasteczko, upewnij się, że data ważności jest
@@ -332,8 +353,10 @@ setcookie ("TestCookie", "", time() - 3600, "/~rasmus/", ".utoronto.ca", 1);
      przykładowego ciasteczka ze skryptu, zastosuj poniższy przykład:
      <informalexample>
       <programlisting role="php">
+<![CDATA[
 echo $TestCookie;
 echo $HTTP_COOKIE_VARS["TestCookie"];
+]]>
       </programlisting>
      </informalexample>
     </para>
@@ -344,6 +367,7 @@ echo $HTTP_COOKIE_VARS["TestCookie"];
      umieszczane są w tablicy o nazwie takiej jak ciasteczko.
      <informalexample>
       <programlisting role="php">
+<![CDATA[
 setcookie ("cookie[three]", "cookiethree");
 setcookie ("cookie[two]", "cookietwo");
 setcookie ("cookie[one]", "cookieone");
@@ -352,6 +376,7 @@ if (isset ($cookie)) {
         echo "$name == $value&lt;br>\n";
     }
 }
+]]>
       </programlisting>
      </informalexample>
     </para>
