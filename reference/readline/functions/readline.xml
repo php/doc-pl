@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
 <!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.readline">
    <refnamediv>
     <refname>readline</refname>
@@ -10,7 +10,7 @@
     <title>Opis</title>
      <methodsynopsis>
       <type>string</type><methodname>readline</methodname>
-      <methodparam choice="opt"><type>string</type><parameter>prompt</parameter></methodparam>
+      <methodparam><type>string</type><parameter>prompt</parameter></methodparam>
      </methodsynopsis>
     <para>
      Funkcja ta zwraca pojedyńczy string pobrany od użytkownika. Jako parametr
@@ -24,16 +24,16 @@
      <programlisting role="php">
 <![CDATA[
 <?php
-//pobierz 3 komendy od użytkownika
+// pobierz 3 komendy od użytkownika
 for ($i=0; $i < 3; $i++) {
         $line = readline("Komenda: ");
         readline_add_history($line);
 }
 
-//zrzuć historię
+// zrzuć historię
 print_r(readline_list_history());
 
-//zrzuć zmienne
+// zrzuć zmienne
 print_r(readline_info());
 ?>
 ]]>
