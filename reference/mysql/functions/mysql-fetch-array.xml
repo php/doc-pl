@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.5 Maintainer: slawek Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.6 Maintainer: slawek Status: ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.mysql-fetch-array">
    <refnamediv>
     <refname>mysql_fetch_array</refname> 
@@ -67,7 +67,7 @@ select table1.field as foo table2.field as bar from table1, table2
 <![CDATA[
 <?php
 mysql_connect('localhost', 'uzytkownik', 'haslo') or
-    die('Nie można się połączyć');
+    die('Nie można się połączyć: ' . mysql_error());
 mysql_select_db('baza');
 
 $result = mysql_query("SELECT id, nazwa FROM tabela");
@@ -86,7 +86,7 @@ mysql_free_result($result);
 <![CDATA[
 <?php
 mysql_connect('localhost', 'uzytkownik', 'haslo') or
-    die('Nie można się połączyć');
+    die('Nie można się połączyć: ' . mysql_error());
 mysql_select_db('baza');
 
 $result = mysql_query("SELECT id, nazwa FROM tabela");
@@ -105,7 +105,7 @@ mysql_free_result($result);
 <![CDATA[
 <?php
 mysql_connect('localhost', 'uzytkownik', 'haslo') or
-    die('Nie można się połączyć');
+    die('Nie można się połączyć: ' . mysql_error());
 mysql_select_db('baza');
 
 $result = mysql_query("SELECT id, nazwa FROM tabela");
