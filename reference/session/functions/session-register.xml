@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.5 $ -->
+<!-- EN-Revision: 1.9 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.6 $ -->
   <refentry id="function.session-register">
    <refnamediv>
     <refname>session_register</refname>
     <refpurpose>
-     Zarejestruj jedną lub więcej zmiennych w bieżącej sesji
+     Zarejestruj jedną lub więcej zmiennych globalnych w bieżącej sesji
     </refpurpose>
    </refnamediv>
    <refsect1>
@@ -24,17 +24,33 @@
     </para>
     <caution>
      <para>
+      Jeśli skrypt ma działać niezależnie od ustawienia
+      <link linkend="ini.register-globals">register_globals</link>, niezbędne
+      jest użycie tablicy
+      <link linkend="reserved.variables.session">$_SESSION</link>, jako że
+      elementy <varname>$_SESSION</varname> są atomatycznie rejestrowane.
+      Jeśli skrypt korzysta z <function>session_register</function>, nie
+      będzie on działać w środowisku z wyłączoną dyrektywą
+      <link linkend="ini.register-globals">register_globals</link>.
+     </para>
+    </caution>
+    &note.registerglobals;
+    <caution>
+     <para>
       Funkcja ta rejestruje <emphasis>globalną</emphasis> zmienną. Jeśli
-      chcesz zarejestrować zmienną w sesji z wnętrza funkcji, musisz się
-      upewnić że jest ona globalna prez użycie <function>global</function> lub
-      używając tablic sesyjnych, tak jak to opisano poniżej.
+      zachodzi konieczność zarejestrowania zmiennej sesyjnej z wnętrza
+      funkcji, należy uczynić ją globalną poprzez użycie instrukcji
+      <link
+       linkend="language.variables.scope"><command>global</command></link>,
+      przez tablicę <varname>$GLOBALS[]</varname> lub prez użycie specjalnych
+      tablic opisanych poniżej.
      </para>
     </caution>
     <caution>
      <para>
-      Przy użyciu
-      <varname>$_SESSION</varname> (lub <varname>$HTTP_SESSION_VARS</varname>)
-      nie powinno się używać <function>session_register</function>,
+      Przy korzystaniu z tablicy <varname>$_SESSION</varname>
+      (lub <varname>$HTTP_SESSION_VARS</varname>) nie nalezy korzystać z
+      funkcji <function>session_register</function>,
       <function>session_is_registered</function> i
       <function>session_unregister</function>.
      </para>
@@ -46,7 +62,9 @@
     <para>
      Jeśli przed wywołaniem tej funkcji nie wywołano
      <function>session_start</function>, dokonane zostanie niejawne wywołanie
-     <function>session_start</function> bez żadnych parametrów.
+     <function>session_start</function> bez żadnych parametrów. Tablica
+     <varname>$_SESSION</varname> nie naśladuje tego zachowania i wymaga
+     wywołania <function>session_start</function> przed korzystaniem z niej.
     </para>
     <para>
      Możesz tworzyć zmienne sesyjne po prostu przez dopisywanie odpowiednich
@@ -55,13 +73,17 @@
      <informalexample>
       <programlisting role="php">
 <![CDATA[
+<?php
+// Nie powinno się już używać session_register()
 $barney = "Duży fioletowy dinozaur.";
 session_register("barney");
 
+// Od PHP 4.1.0 Preferowane jest użycie $_SESSION
 $_SESSION["zim"] = "Najeźdźca z innej planety.";
 
-# Stara metoda opiera się o $HTTP_SESSION_VARS
+// Stara metoda opiera się o $HTTP_SESSION_VARS
 $HTTP_SESSION_VARS["spongebob"] = "Ma kwadratowe spodnie.";
+?>
 ]]>       
       </programlisting>
      </informalexample>
@@ -80,13 +102,14 @@ $HTTP_SESSION_VARS["spongebob"] = "Ma kwadratowe spodnie.";
      <para>
       Jeśli użyta jest tablica <varname>$_SESSION</varname> (lub
       <varname>$HTTP_SESSION_VARS</varname> dla PHP 4.0.6 i starszych),
-      przypisz zmienną do <varname>$_SESSION</varname>, na przykład
+      przypisz vartość do <varname>$_SESSION</varname>, na przykład
       $_SESSION['var'] = 'ABC';
      </para>
     </note>
     <para>
-     Patrz także: <function>session_is_registered</function> i
-     <function>session_unregister</function>.
+     Patrz także: <function>session_is_registered</function>,
+     <function>session_unregister</function> i
+     <link linkend="reserved.variables.session">$_SESSION</link>.
     </para>
    </refsect1>
   </refentry>
