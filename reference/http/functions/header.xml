@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: Qrak Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.3 Maintainer: Qrak Status: ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.header">
    <refnamediv>
     <refname>header</refname>
@@ -204,7 +204,15 @@ header("Content-Disposition: attachment; filename=downloaded.pdf");
        lub późniejszy.
       </para>
      </note>
-    </para>    
+    </para>
+    <note> 
+       <simpara>
+        Jeśli <link linkend="ini.safe-mode">tryb bezpieczny</link> jest
+        włączony, uid skryptu jest dodane do części <literal>realm</literal>
+        nagłówka <literal>WWW-Authenticate</literal>, jeśli ustawisz ten
+        nagłówek (wykorzystuje się go do autoryzacji HTTP).
+       </simpara> 
+    </note> 
     <para>
      Patrz także: <function>headers_sent</function>,
      <function>setcookie</function>, i rozdział 
