@@ -1,46 +1,78 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
 <!-- splitted from ./pl/functions/filesystem.xml, last change in rev 1.1 -->
-<!-- last change to 'popen' in en/ tree in rev 1.2 -->
-<!-- EN-Revision: 1.2 Maintainer: adi Status: partial -->
-<!-- OLD-Revision: 1.115/EN.1.2 -->
+<!-- EN-Revision: 1.13 Maintainer: adi Status: ready -->
   <refentry id="function.popen">
    <refnamediv>
     <refname>popen</refname>
-    <refpurpose>Opens process file pointer</refpurpose>
+    <refpurpose>Otwiera wskaźnik pliku do procesu</refpurpose>
    </refnamediv>
    <refsect1>
-    <title>Description</title>
+    <title>Opis</title>
      <methodsynopsis>
-      <type>int</type><methodname>popen</methodname>
-      <methodparam><type>string</type><parameter>command</parameter></methodparam>
-      <methodparam><type>string</type><parameter>mode</parameter></methodparam>
+      <type>resource</type><methodname>popen</methodname>
+      <methodparam><type>string</type><parameter>polecenie</parameter></methodparam>
+      <methodparam><type>string</type><parameter>tryb</parameter></methodparam>
      </methodsynopsis>
     <para>
-     Opens a pipe to a process executed by forking the command given
-     by command.
-    </para>
+	 Otwiera potok do procesu uruchomionego przez rozwidlenie polecenia (ang. forking)
+	 podanego w parametrze polecenie.
+	</para>
+    <para> 
+     Zwraca wskaźnik pliku identyczny do tego zwracanego przez 
+	 <function>fopen</function> z wyjątkiem tego, że jest on jednokierunkowy
+	 (może być tylko użyty do odczytu lub zapisu) i musi być zamknięty za pomocą
+	 <function>pclose</function>. Wskaźnik ten może być użyty z
+     <function>fgets</function>, <function>fgetss</function> i
+     <function>fwrite</function>.
+     </para>
     <para>
-     Returns a file pointer identical to that returned by
-     <function>fopen</function>, except that it is unidirectional (may
-     only be used for reading or writing) and must be closed with
-     <function>pclose</function>. This pointer may be used with
-     <function>fgets</function>, <function>fgetss</function>, and
-     <function>fputs</function>.
+     W przypadku błędu, zwraca &false;. 
     </para>
+    <note>
+     <para>
+      Jeśli szukasz dwukierunkowej obsługi (w obie strony), użyj 
+      <function>proc_open</function>.
+     </para>
+    </note>
     <para>
-     If an error occurs, returns &false;.
-    </para>
-    <para>
-     <informalexample>
+     <example>
+      <title><function>popen</function> przykład</title>
       <programlisting role="php">
 <![CDATA[
-$fp = popen ("/bin/ls", "r");
+<?php
+$uchwyt = popen("/bin/ls", "r");
+?>
+]]>
+      </programlisting>
+     </example>
+    </para>
+    <para>
+     Jeśli polecenie uruchamiane nie może zostać znalezione, poprawny
+	 zasób jest zwracany. To może wydawać się dziwne, ale ma sens;
+	 pozwala tobie na dostęp do wszystkich informacji o błędach zwracanych
+	 przez powłokę.
+	 <informalexample>
+      <programlisting role="php">
+<![CDATA[
+<?php
+error_reporting(E_ALL);
+
+/* Dodanie przekierowania, aby móc dostać stderr. */
+$uchwyt = popen('/sciezka/do/czegos 2>&1', 'r');
+echo "'$uchwyt'; " . gettype($uchwyt) . "\n";
+$czytaj = fread($uchwyt, 2096);
+echo $czytaj;
+pclose($uchwyt);
+?>
 ]]>
       </programlisting>
      </informalexample>
     </para>
+    &note.exec-path;
+    &warn.sm.exec;
     <para>
-     See also <function>pclose</function>.
+     Patrz także <function>pclose</function>, <function>fopen</function> i
+	 <function>proc_open</function>.
     </para>
    </refsect1>
   </refentry>
