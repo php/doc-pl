@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.3 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.3 $ -->
+<!-- EN-Revision: 1.8 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.4 $ -->
   <refentry id="function.session-unset">
    <refnamediv>
     <refname>session_unset</refname>
@@ -22,9 +22,21 @@
      <para>
       Jeśli użyta została tablica <varname>$_SESSION</varname> (lub
       <varname>$HTTP_SESSION_VARS</varname> dla PHP 4.0.6 i starszych), aby
-      wyrejestrować zmienną z sesji należy użyć <function>unset</function>.
+      wyrejestrować zmienną z sesji należy użyć <function>unset</function>, na
+      przykład <literal>unset ($_SESSION['varname']);</literal>.
      </para>
     </note>
+    <para>
+     <caution>
+      <para>
+       <emphasis>Nie</emphasis> należy usuwać całej zmiennej
+       <varname>$_SESSION</varname> poprzez wywołanie
+       <literal>unset($_SESSION)</literal>, ponieważ uniemożliwi to
+       rejestrację zmiennych sesyjnych poprzez zmienną superglobalną
+       <varname>$_SESSION</varname>.
+      </para>
+     </caution>
+    </para>
    </refsect1>
   </refentry>
 
