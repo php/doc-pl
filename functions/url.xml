@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- $Revision: 1.3 $ -->
+<!-- $Revision: 1.4 $ -->
  <reference id="ref.url">
   <title>Funkcje URL</title>
   <titleabbrev>URLs</titleabbrev>
@@ -143,16 +143,20 @@
      <example>
       <title><function>rawurlencode</function> przykład 1</title>
       <programlisting role="php">
-echo '&lt;a href="ftp://user:', rawurlencode('foo @+%/'),
+<![CDATA[
+echo '<a href="ftp://user:', rawurlencode('foo @+%/'),
      '@ftp.my.com/x.txt">';
+]]>
       </programlisting>
      </example>
      Lub, jeśli podajesz informację w części PATH_INFO (ścieżka) URL'a:
      <example>
       <title><function>rawurlencode</function> przykład 2</title>
       <programlisting role="php">
-echo '&lt;a href="http://x.com/department_list_script/',
+<![CDATA[
+echo '<a href="http://x.com/department_list_script/',
     rawurlencode('sales and marketing/Miami'), '">';
+]]>
       </programlisting>
      </example>
     </para>
@@ -183,14 +187,16 @@ echo '&lt;a href="http://x.com/department_list_script/',
      <example>
       <title><function>urldecode</function> przykład</title>
       <programlisting role="php">
-$a = split('&amp;', $QUERY_STRING);
+<![CDATA[
+$a = split('&', $QUERY_STRING);
 $i = 0;
-while ($i &lt; count($a)) {
+while ($i < count($a)) {
     $b = split('=', $a[$i]);
     echo 'Wartość parametru ', htmlspecialchars(urldecode($b[0])),
          ' wynosi ', htmlspecialchars(urldecode($b[1])), "&lt;br>";
     $i++;
 }
+]]>
       </programlisting>
      </example>
     </para>
@@ -232,7 +238,9 @@ while ($i &lt; count($a)) {
      <example>
       <title><function>urlencode</function> przykład</title>
       <programlisting role="php">
-echo '&lt;a href="mycgi?foo=', urlencode($userinput), '">';
+<![CDATA[
+echo '<a href="mycgi?foo=', urlencode($userinput), '">';
+]]>
       </programlisting>
      </example>
     </para>
@@ -254,7 +262,9 @@ echo '&lt;a href="mycgi?foo=', urlencode($userinput), '">';
      <example>
       <title><function>urlencode/htmlentities</function> przykład</title>
       <programlisting role="php">
-echo '&lt;a href="mycgi?foo=', htmlentities(urlencode($userinput)), '">';
+<![CDATA[
+echo '<a href="mycgi?foo=', htmlentities(urlencode($userinput)), '">';
+]]>
       </programlisting>
      </example>
     </para>
