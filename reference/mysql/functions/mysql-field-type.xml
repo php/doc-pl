@@ -35,14 +35,14 @@ $fields = mysql_num_fields($result);
 $rows   = mysql_num_rows($result);
 $i = 0;
 $table = mysql_field_table($result, $i);
-echo "Tabela '".$table."' ma ".$fields." pól i ".$rows." wierszy <BR>";
-echo "Tabela ma nastêpuj±ce pola <BR>"; 
+echo "Tabela '".$table."' ma ".$fields." pól i ".$rows." wierszy <br />";
+echo "Tabela ma nastêpuj±ce pola <br />"; 
 while ($i &lt; $fields) {
     $type  = mysql_field_type($result, $i);
     $name  = mysql_field_name($result, $i);
     $len   = mysql_field_len($result, $i);
     $flags = mysql_field_flags($result, $i);
-    echo $type." ".$name." ".$len." ".$flags."<BR>";
+    echo $type." ".$name." ".$len." ".$flags."<br />";
     $i++;
 }
 mysql_close();

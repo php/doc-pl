@@ -103,7 +103,7 @@ mysql_connect("serwer","uzytkownik","haslo");
 mysql_select_db("baza");
 $result = mysql_query("select * from tabela")
     or die("Zapytanie zakoñczone niepowodzeniem");
-# pobieramy dane kolumny
+/* pobieramy dane kolumny */
 $i = 0;
 while ($i < mysql_num_fields($result)) {
     echo "Informacje o kolumnie $i:<BR>\n";
@@ -111,7 +111,7 @@ while ($i < mysql_num_fields($result)) {
     if (!$meta) {
         echo "Informacje niedostêpne<BR>\n";
     }
-    echo "<PRE>
+    echo "<pre>
 blob:         $meta->blob
 max_length:   $meta->max_length
 multiple_key: $meta->multiple_key
@@ -124,7 +124,7 @@ type:         $meta->type
 unique_key:   $meta->unique_key
 unsigned:     $meta->unsigned
 zerofill:     $meta->zerofill
-</PRE>";
+</pre>";
     $i++;
 }
 mysql_free_result($result);

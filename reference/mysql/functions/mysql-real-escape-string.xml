@@ -7,51 +7,52 @@
    <refnamediv>
     <refname>mysql_real_escape_string</refname>
     <refpurpose>
-     Escapes special characters in a string for use in a SQL statement, taking into account the current charset of the connection.
+     Dodaje znaki unikowe dla potrzeb poleceñ SQL, bior±c po uwagê zestaw
+     znaków u¿ywany w po³±czeniu.
     </refpurpose>
    </refnamediv>
    <refsect1>
-    <title>Description</title>
+    <title>Opis</title>
      <methodsynopsis>
       <type>string</type><methodname>mysql_real_escape_string</methodname>
-      <methodparam><type>string</type><parameter>unescaped_string</parameter></methodparam>
-      <methodparam choice="opt"><type>resource</type><parameter>link_identifier</parameter></methodparam>
+      <methodparam><type>string</type><parameter>³añcuch_bez_znaków_unikowych</parameter></methodparam>
+      <methodparam choice="opt"><type>resource</type><parameter>identyfikator_po³±czeniar</parameter></methodparam>
      </methodsynopsis>
     <para>
-     This function will escape special characters in the
-     <parameter>unescaped_string</parameter>, taking into account the current
-     charset of the connection so that it is safe to place it in a
-     <function>mysql_query</function>. 
+     Ta funkcja dodaje znaki unikowe do
+     <parameter>³añcucha_bez_znaków_unikowych</parameter>, maj±c na uwadze
+     aktualnie u¿ywany w po³±czeniu zestaw znaków. Tak przygotowanego ³añcucha
+     mo¿na bezpiecznie u¿yc w funkcji <function>mysql_query</function>.
     </para>
     <note>
      <simpara>
-      <function>mysql_real_escape_string</function> does not escape
-      <literal>%</literal> and <literal>_</literal>.
+      <function>mysql_real_escape_string</function> nie dodaje znaków unikowych
+      przed <literal>%</literal> i <literal>_</literal>.
      </simpara>
     </note>
      <example>
-      <title><function>mysql_real_escape_string</function> example</title>
+      <title>przyk³ad u¿ycia <function>mysql_real_escape_string</function></title>
       <programlisting role="php">
 <![CDATA[
 <?php
-$link = mysql_connect('localhost', 'mysql_user', 'mysql_password');
+$link = mysql_connect('localhost', 'uzytkownik', 'haslo');
 $item = "Zak's and Derick's Laptop";
 $escaped_item = mysql_real_escape_string($item);
-printf ("Escaped string: %s\n", $escaped_item);
+printf ("Ze znakami unikowymi: %s\n", $escaped_item);
 ?>
 ]]>
       </programlisting>
       <para>
-       The above example would produce the following output:
+       Powy¿szy przyk³ad da nastêpuj±cy wynik:
        <screen>
 <![CDATA[
-Escaped string: Zak\'s and Derick\'s Laptop
+Ze znakami unikowymi: Zak\'s and Derick\'s Laptop
 ]]>
        </screen>
       </para>
      </example>
     <para>
-     See also:
+     Patrz tak¿e:
      <function>mysql_escape_string</function>
      <function>mysql_character_set_name</function>
     </para>

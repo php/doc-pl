@@ -6,41 +6,45 @@
   <refentry id="function.mysql-thread-id">
    <refnamediv>
     <refname>mysql_thread_id</refname>
-    <refpurpose>Return the current thread id</refpurpose>
+    <refpurpose>Zwraca id bie¿±cego w±tku</refpurpose>
    </refnamediv>
    <refsect1>
-    <title>Description</title>
+    <title>Opis</title>
     <methodsynopsis>
      <type>int</type><methodname>mysql_thread_id</methodname>
-     <methodparam choice="opt"><type>resource</type><parameter>link_identifier</parameter></methodparam>
+     <methodparam choice="opt"><type>resource</type><parameter>identyfikator_po³±czenia</parameter></methodparam>
     </methodsynopsis>
     <para>
-     <function>mysql_thread_id</function> returns the current thread id. If the connection is lost and you reconnect with <function>mysql_ping</function>, the thread ID will change. This means you should not get the thread ID and store it for later. You should get it when you need it.
+     <function>mysql_thread_id</function> zwraca id bie¿±cego w±tku. Je¶li
+     po³±czenie zosta³o przerwane i nawi±zane ponownie przy u¿yciu funkcji
+     <function>mysql_ping</function>, to id w±tku siê zmieni. Oznacza to, ¿e
+     nie powinno siê pobieraæ id w±tku i zapisywaæ do pó¼niejszego u¿ycia, lecz
+     pobieraæ zawsze, gdy jest potrzebny.
     </para>
      <example>
-      <title><function>mysql_list_processes</function> example</title>
+      <title>przyk³ad u¿ycia <function>mysql_list_processes</function></title>
       <programlisting role="php">
 <![CDATA[
 <?php
-$link = mysql_connect('localhost', 'mysql_user', 'mysql_password');
+$link = mysql_connect('localhost', 'uzytkownik', 'haslo');
 $thread_id = mysql_thread_id($link);
 if ($thread_id){
-    printf ("current thread id is %d\n", $thread_id);
+    printf ("id bie¿±cego w±tku: %d\n", $thread_id);
 }
 ?>
 ]]>
       </programlisting>
       <para>
-       The above example would produce the following output:
+       Powy¿szy przyk³ad da nastêpuj±cy wynik:
        <screen>
 <![CDATA[
-current thread id is 73
+id bie¿±cego w±tku: 73
 ]]>
        </screen>
       </para>
      </example>
     <para>
-     See also:
+     Patrz tak¿e:
      <function>mysql_ping</function>
      <function>mysql_list_processes</function>
     </para>

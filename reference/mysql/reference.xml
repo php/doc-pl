@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- $Revision: 1.2 $ -->
+<!-- $Revision: 1.3 $ -->
  <reference id="ref.mysql">
   <title>MySQL</title>
   <titleabbrev>MySQL</titleabbrev>
@@ -157,19 +157,17 @@
       <programlisting role="php">
 <![CDATA[ 
 <?php
-// Łączenie i wybranie bazy
-$link = mysql_connect("host", "login", "haslo")
+/* Łączenie i wybranie bazy */
+$link = mysql_connect("localhost", "uzytkownik", "haslo")
     or die ("Nie można się połączyć");
 print ("Połączenie nawiązane");
-mysql_select_db ("baza")
-    or die ("Nie mozna wybrać bazy danych");
+mysql_select_db ("baza") or die ("Nie mozna wybrać bazy danych");
     
-// Wysyłanie zapytania SQL
+/* Wysyłanie zapytania SQL */
 $query = "SELECT * FROM tabela";
-$result = mysql_query ($query)
-    or die ("Zapytanie zakończone niepowodzeniem");
+$result = mysql_query ($query) or die ("Zapytanie zakończone niepowodzeniem");
 
-// Wyświetlenie wyników w HTML
+/* Wyświetlenie wyników w HTML */
 print "<table>\n";
 while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
    print "\t<tr>\n";
@@ -180,10 +178,10 @@ while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
 }
 print "</table>\n";
 
-// Zwalnianie pamięci
+/* Zwalnianie pamięci */
 mysql_free_result($result); 
 
-// Rozłączanie  
+/* Rozłączanie */
 mysql_close($link);
 ?>
 ]]> 
