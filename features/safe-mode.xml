@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- $Revision: 1.6 $ -->
+<!-- EN-Revision: 1.17 Maintainer: slawek Status: ready -->
+<!-- $Revision: 1.7 $ -->
  <chapter id="features.safe-mode">
   <title>Tryb bezpieczny</title>
 
@@ -14,12 +15,14 @@
   <para>
    Dykertywy konfiguracyjne odpowiadające za tryb bezpieczny:
    <programlisting role="ini">
-safe_mode = Off 
-open_basedir = 
-safe_mode_exec_dir = 
-safe_mode_allowed_env_vars = PHP_ 
-safe_mode_protected_env_vars = LD_LIBRARY_PATH 
-disable_functions = 
+<![CDATA[
+safe_mode = Off
+open_basedir =
+safe_mode_exec_dir =
+safe_mode_allowed_env_vars = PHP_
+safe_mode_protected_env_vars = LD_LIBRARY_PATH
+disable_functions =
+]]>
    </programlisting>
   </para>
   <para>
@@ -28,47 +31,61 @@ disable_functions =
    operować i właścicielem uruchamianego skryptu jest ten sam użytkownik.
    Na przykład:
    <programlisting role="ls">
--rw-rw-r--    1 rasmus   rasmus       33 Jul  1 19:20 script.php 
--rw-r--r--    1 root     root       1116 May 26 18:01 /etc/passwd 
+<![CDATA[
+-rw-rw-r--    1 rasmus   rasmus       33 Jul  1 19:20 script.php
+-rw-r--r--    1 root     root       1116 May 26 18:01 /etc/passwd
+]]>
    </programlisting>
-   Uruchomienie script.php 
+   Uruchomienie script.php
    <programlisting role="php">
-&lt;?php
- readfile('/etc/passwd'); 
-?&gt;  
+<![CDATA[
+<?php
+ readfile('/etc/passwd');
+?>
+]]>
    </programlisting>
    z uruchomionym trybem bezpiecznym spowoduje wyświetlenie błędu:
-   <programlisting role="php">
+   <screen>
+<![CDATA[
 Warning: SAFE MODE Restriction in effect. The script whose uid is 500 is not 
 allowed to access /etc/passwd owned by uid 0 in /docroot/script.php on line 2
-   </programlisting>
+]]>
+   </screen>
   </para>
   <para>
    Jeśli zamiast włączać opcję <link linkend="ini.safe-mode">safe_mode</link>
    ustawisz katalog open_basedir, wtedy wszystkie operacje plikowe bedą
    ograniczone do tego katalogu. Na przykład (dla httpd.conf Apache'a):
    <programlisting role="ini">
-&lt;Directory /docroot&gt; 
-php_admin_value open_basedir /docroot 
-&lt;/Directory&gt;  
+<![CDATA[
+<Directory /docroot>
+php_admin_value open_basedir /docroot
+</Directory>
+]]>
    </programlisting>
    Uruchomienie tego samego skryptu script.php z ustawionym katalogiem
    open_basedir spowoduje wyświetlenie:
-   <programlisting role="php">
-Warning: open_basedir restriction in effect. File is in wrong directory in 
-/docroot/script.php on line 2 
-   </programlisting>
+   <screen>
+<![CDATA[
+Warning: open_basedir restriction in effect. File is in wrong directory in
+/docroot/script.php on line 2
+]]>
+   </screen>
   </para>
   <para>
    Możesz także wyłączyć pojedyncze funkcje. Jeśli do pliku php.ini dodasz:
    <programlisting role="ini">
-disable_functions readfile,system  
+<![CDATA[
+disable_functions readfile,system
+]]>
    </programlisting>
    po uruchomieniu skryptu otrzymasz:
-   <programlisting role="php">
-Warning: readfile() has been disabled for security reasons in 
-/docroot/script.php on line 2 
-   </programlisting>
+   <screen>
+<![CDATA[
+Warning: readfile() has been disabled for security reasons in
+/docroot/script.php on line 2
+]]>
+   </screen>
   </para>
 
   <sect1 id="features.safe-mode.functions">
@@ -280,6 +297,7 @@ sgml-minimize-attributes:nil
 sgml-always-quote-attributes:t
 sgml-indent-step:1
 sgml-indent-data:t
+indent-tabs-mode:nil
 sgml-parent-document:nil
 sgml-default-dtd-file:"../../manual.ced"
 sgml-exposed-tags:nil
