@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.82 Maintainer: slawek Status: ready -->
-<!-- $Revision: 1.16 $ -->
+<!-- EN-Revision: 1.83 Maintainer: slawek Status: ready -->
+<!-- $Revision: 1.17 $ -->
  <reference id="ref.mysql">
   <title>Funkcje MySQL</title>
   <titleabbrev>MySQL</titleabbrev>
@@ -398,8 +398,8 @@ mysql_close($link);
      identyfikatorem połączenia.
     </para>
     <para>
-		 &return.success; 
-		</para>
+     &return.success; 
+    </para>
     <example>
      <title>tworzenie bazy MySQL</title>
      <programlisting role="php">
@@ -618,10 +618,10 @@ while ($i < $cnt) {
      <function>mysql_drop_db</function> usuwa całą bazę z serwera
      skojarzonego z podanym identyfikatorem połączenia.
     </para>
-		<para>
+    <para>
      Aby zachować zgodność z poprzednimi wersjami, można użyć również
      <function>mysql_dropdb</function>. Jest to jednak niezalecane.
-		</para>
+    </para>
     <para> 
      Patrz także: <function>mysql_create_db</function>.
     </para>
@@ -796,8 +796,8 @@ echo mysql_errno().": ".mysql_error()."<BR>";
      kolumna będzie brana pod uwagę. Dostęp do innych kolumn o tej
      samej nazwie jest możliwy jedynie przez indeksowanie numeryczne
      lub przez stworzenie aliasa. Po stworzeniu aliasa nie można
-		 już odwoływać się do danej kolumny używając jej prawdziwej nazwy
-		 (w tym przykładzie używając <literal>'pole'</literal>).
+     już odwoływać się do danej kolumny używając jej prawdziwej nazwy
+     (w tym przykładzie używając <literal>'pole'</literal>).
      <informalexample>
       <programlisting role="sql">
 <![CDATA[
@@ -817,13 +817,13 @@ select tjeden.pole as cos tdwa.pole as cos2 from tjeden, tdwa
      przyjmować następujące wartości: MYSQL_ASSOC, MYSQL_NUM i MYSQL_BOTH.
      Tę funkcjonalność dodano w PHP 3.0.7. Wartością domyślną jest MYSQL_BOTH.
     </para>
-		<para>
-		 Używając MYSQL_BOTH otrzymasz tablicę indeksowaną zarówno asocjacyjnie
-		 jak i numerycznie. MYSQL_ASSOC dostarczy tablicy indeksowanej tylko
-		 asocjacyjnie (jak w <function>mysql_fetch_assoc</function>), natomiast
-		 MYSQL_NUM indeksowanej tylko numerycznie (jak w
-		 <function>mysql_fetch_row</function>).
-		</para>
+    <para>
+     Używając MYSQL_BOTH otrzymasz tablicę indeksowaną zarówno asocjacyjnie
+     jak i numerycznie. MYSQL_ASSOC dostarczy tablicy indeksowanej tylko
+     asocjacyjnie (jak w <function>mysql_fetch_assoc</function>), natomiast
+     MYSQL_NUM indeksowanej tylko numerycznie (jak w
+     <function>mysql_fetch_row</function>).
+    </para>
     <para>
      Po dalsze szczegóły patrz także
      <function>mysql_fetch_row</function> i
@@ -950,62 +950,62 @@ mysql_free_result($result);
      <itemizedlist>
       <listitem>
        <simpara>
-	name - nazwa kolumny
+        name - nazwa kolumny
        </simpara>
       </listitem>
       <listitem>
        <simpara>
-	table - nazwa tabeli do której należy kolumna
+        table - nazwa tabeli do której należy kolumna
        </simpara>
       </listitem>
       <listitem>
        <simpara>
-	max_length - maksymalna długość kolumny
+        max_length - maksymalna długość kolumny
        </simpara>
       </listitem>
       <listitem>
        <simpara>
-	not_null - 1 jeżeli pole nie może być puste (&null;)
+        not_null - 1 jeżeli pole nie może być puste (&null;)
        </simpara>
       </listitem> 
       <listitem>
        <simpara>
-	primary_key - 1 jeżeli kolumna jest kluczem podstawowym
+        primary_key - 1 jeżeli kolumna jest kluczem podstawowym
        </simpara>
       </listitem> 
       <listitem>
        <simpara>
-	unique_key - 1 jeżeli kolumna jest kluczem unikatowym
+        unique_key - 1 jeżeli kolumna jest kluczem unikatowym
        </simpara>
       </listitem> 
       <listitem>
        <simpara>
-	multiple_key - 1 jeżeli kolumna jest kluczem nieunikatowym
+        multiple_key - 1 jeżeli kolumna jest kluczem nieunikatowym
        </simpara>
       </listitem> 
       <listitem>
        <simpara>
-	numeric - 1 jeżeli kolumna jest liczbowa
+        numeric - 1 jeżeli kolumna jest liczbowa
        </simpara>
       </listitem> 
       <listitem>
        <simpara>
-	blob - 1 jeżeli kolumna jest typu BLOOB
+        blob - 1 jeżeli kolumna jest typu BLOOB
        </simpara>
       </listitem>
       <listitem>
        <simpara>
-	type - typ kolumny
+        type - typ kolumny
        </simpara>
       </listitem>
       <listitem>
        <simpara>
-	unsigned - 1 jeżeli kolumna jest bez znaku (plus lub minus)
+        unsigned - 1 jeżeli kolumna jest bez znaku (plus lub minus)
        </simpara>
       </listitem>
       <listitem>
        <simpara>
-	zerofill - 1 jeżeli kolumna jest wypełniona zerami
+        zerofill - 1 jeżeli kolumna jest wypełniona zerami
        </simpara>
       </listitem>
      </itemizedlist>
@@ -2084,7 +2084,7 @@ $result = mysql_query("SELECT kolumna FROM tabela")
     </para>
     <para>
      Kolejne wywołania funkcji <function>mysql_query</function> będą
-     dotyczy
+     dotyczyły aktywnej bazy danych.
     </para>
     <para> Patrz także:
      <function>mysql_connect</function>, 
@@ -2181,7 +2181,7 @@ for ($i = 0; $i < mysql_num_rows($result); $i++) {
      <parameter>identyfikator_połączenia</parameter>, włączając to nazwę
      serwera. Jeżeli
      <parameter>identyfikator_połączenia</parameter> nie zostanie podany,
-		 wykorzystane zostanie ostatnio otwarte połączenie.
+     wykorzystane zostanie ostatnio otwarte połączenie.
     </para>
     <para>
      <function>mysql_get_host_info</function> dodano w PHP 4.0.5.
@@ -2206,7 +2206,7 @@ for ($i = 0; $i < mysql_num_rows($result); $i++) {
     </funcsynopsis>
     <para> 
      <function>mysql_get_proto_info</function> zwraca wersję protokołu,
-		 używanego przez
+     używanego przez
      <parameter>identyfikator_połączenia</parameter>. Jeżeli
      <parameter>identyfikator_połączenia</parameter> nie zostanie podany,
      wykorzystane zostanie ostatnio otwarte połączenie.
@@ -2234,10 +2234,10 @@ for ($i = 0; $i < mysql_num_rows($result); $i++) {
     </funcsynopsis>
     <para> 
      <function>mysql_get_server_info</function> zwraca wersję serwera,
-		 używanego przez
-		 <parameter>identyfikator_połączenia</parameter>. Jeżeli
+     używanego przez
+     <parameter>identyfikator_połączenia</parameter>. Jeżeli
      <parameter>identyfikator_połączenia</parameter> nie zostanie podany,
-		 wykorzystane zostanie ostatnio otwarte połączenie.
+     wykorzystane zostanie ostatnio otwarte połączenie.
     </para>
     <para>
      <function>mysql_get_server_info</function> dodano w PHP 4.0.5.
