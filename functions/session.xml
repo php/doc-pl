@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- $Revision: 1.3 $ -->
+<!-- $Revision: 1.4 $ -->
  <reference id="ref.session">
   <title>Funkje obsługi sesji</title>
   <titleabbrev>Sesje</titleabbrev>
@@ -67,10 +67,12 @@
       linkend="ini.track-vars"><literal>track_vars</literal></link>
      </title>
      <programlisting role="php">
-&lt;?php
+<![CDATA[
+<?php
 session_register("count");
 $HTTP_SESSION_VARS["count"]++;
-?&gt;
+?>
+]]>
      </programlisting>
     </example>
    </para>
@@ -86,10 +88,12 @@ $HTTP_SESSION_VARS["count"]++;
       linkend="ini.register-globals"><literal>register_globals</literal></link>
      </title>
      <programlisting role="php">
-&lt;?php
+<![CDATA[
+<?php
 session_register("count");
 $count++;
-?&gt;
+?>
+]]>
      </programlisting>
     </example>
    </para>
@@ -138,19 +142,21 @@ $count++;
     <example>
      <title>Zliczanie ilości odwiedzin pojedyńczego użytkownika</title>
      <programlisting role="php">
-&lt;?php
+<![CDATA[
+<?php
 session_register ("count");
 $count++;
-?&gt;
+?>
 
 Witaj gościu. Oglądasz tą stronę &lt;?php echo $count; ?&gt; raz.&lt;p&gt;
 
-&lt;php?
-# &lt;?=SID?&gt; jest konieczne do zachowania identyfikatora sesji jeśli
+<?php
+# <?=SID?> jest konieczne do zachowania identyfikatora sesji jeśli
 # użytkownik wyłączył ciastka
-?&gt;
+?>
 
-Aby kontynuować, &lt;A HREF="nextpage.php?&lt;?=SID?&gt;"&gt;kliknij tutaj&lt;/A&gt;
+Aby kontynuować, <A HREF="nextpage.php?<?=SID?>">kliknij tutaj</A>
+]]>
      </programlisting>
     </example>
    </para>
@@ -418,14 +424,16 @@ Aby kontynuować, &lt;A HREF="nextpage.php?&lt;?=SID?&gt;"&gt;kliknij tutaj&lt;/A
     <example>
      <title>Przykłady <function>session_name</function></title>
      <programlisting role="php">
-&lt;?php
+<![CDATA[
+<?php
 
 # ustaw nazwę sesji na WebsiteID
 
 $poprzednia_nazwa = session_name ("WebsiteID");
 
-echo "Poprzednią nazwą sesji było $poprzednia_nazwa&lt;p&gt;";
-?&gt;
+echo "Poprzednią nazwą sesji było $poprzednia_nazwa<p>";
+?>
+]]>
      </programlisting>
     </example>
     <note>
@@ -841,7 +849,8 @@ echo "Poprzednią nazwą sesji było $poprzednia_nazwa&lt;p&gt;";
        Przykład <function>session_set_save_handler</function>
       </title>
       <programlisting role="php">
-&lt;?php
+<![CDATA[
+<?php
 
 function open ($save_path, $session_name) {
   global $sess_save_path, $sess_session_name;
@@ -901,7 +910,8 @@ session_start();
 
 // dalej normalnie używaj sesji
 
-?&gt;
+?>
+]]>
       </programlisting>
      </example>
     </para>
@@ -963,15 +973,17 @@ session_start();
     <example>
      <title>Przykłady <function>session_cache_limiter</function></title>
      <programlisting role="php">
-&lt;?php
+<![CDATA[
+<?php
 
 # Ustaw ogranicznik pamięci podręcznej na 'private'
 
 session_cache_limiter('private');
 $cache_limiter = session_cache_limiter();
 
-echo "Ogranicznikiem pamięci podręcznej jest teraz $cache_limiter&lt;p&gt;";
-?&gt;
+echo "Ogranicznikiem pamięci podręcznej jest teraz $cache_limiter<p>";
+?>
+]]>
      </programlisting>
     </example>
     <note>
