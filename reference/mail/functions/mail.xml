@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.11 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.8 $ -->
+<!-- EN-Revision: 1.13 Maintainer: qrak Status: ready -->
+<!-- $Revision: 1.9 $ -->
   <refentry id="function.mail">
    <refnamediv>
     <refname>mail</refname>
@@ -92,7 +92,7 @@ mail("joecool@example.com", "Temat listu", "Linia 1\nLinia 2\nLinia 3");
       <title>Wysyłanie listu z dodatkowymi nagłówkami.</title>
       <programlisting>
 <![CDATA[
-mail("nobody@example.com", "temat", $message,
+mail("nobody@example.com", "temat", $wiadomosc,
      "From: webmaster@$SERVER_NAME\r\n"
     ."Reply-To: webmaster@$SERVER_NAME\r\n"
     ."X-Mailer: PHP/" . phpversion());
@@ -114,7 +114,7 @@ mail("nobody@example.com", "temat", $message,
       <title>Wysyłanie listu z dodatkowymi nagłówkami i przełącznikami.</title>
       <programlisting>
 <![CDATA[
-mail("nobody@example.com", "temat", $message,
+mail("nobody@example.com", "temat", $wiadomosc,
      "From: webmaster@$SERVER_NAME", "-fwebmaster@$SERVER_NAME");
 ]]>
       </programlisting>
@@ -137,47 +137,47 @@ mail("nobody@example.com", "temat", $message,
       <programlisting>
 <![CDATA[
 /* adresaci */
-$to  = "Mary <mary@example.com>" . ", " ; // zwróc uwagę na przecinek
-$to .= "Kelly <kelly@example.com>";
+$do  = "Marysia <marysia@example.com>" . ", " ; // zwróc uwagę na przecinek
+$do .= "Kasia <kasia@example.com>";
 
 /* temat */
-$subject = "Birthday Reminders for August";
+$temat = "Przypomnienie o urodzinach w Sierpniu";
 
 /* wiadomość */
-$message = '
+$wiadomosc = '
 <html>
 <head>
- <title>Birthday Reminders for August</title>
+ <title>Przypomnienie o urodzinach w Sierpniu</title>
 </head>
 <body>
-<p>Here are the birthdays upcoming in August!</p>
+<p>Te urodziny będziemy świętować w Sierpniu!</p>
 <table>
  <tr>
-  <th>Person</th><th>Day</th><th>Month</th><th>Year</th>
+  <th>Osoba</th><th>Dzień</th><th>Miesiąc</th><th>Rok</th>
  </tr>
  <tr>
-  <td>Joe</td><td>3rd</td><td>August</td><td>1970</td>
+  <td>Jan</td><td>3.</td><td>Sierpnia</td><td>1970</td>
  </tr>
  <tr>
-  <td>Sally</td><td>17th</td><td>August</td><td>1973</td>
+  <td>Szymon</td><td>17.</td><td>Sierpnia</td><td>1973</td>
  </tr>
 </table>
 </body>
 </html>
 ';
 
-/* Aby wysłać e-mail w foramcie HTML, należy ustawić nagłówek Content-type. */
-$headers  = "MIME-Version: 1.0\r\n";
-$headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
+/* Aby wysłać e-mail w formacie HTML, należy ustawić nagłówek Content-type. */
+$naglowki  = "MIME-Version: 1.0\r\n";
+$naglowki .= "Content-type: text/html; charset=iso-8859-1\r\n";
 
 /* dodatkowe nagłówki */
-$headers .= "From: Birthday Reminder <birthday@example.com>\r\n";
+$naglowki .= "From: Przypominacz o urodzinach <urodziny@example.com>\r\n";
 
-$headers .= "Cc: birthdayarchive@example.com\r\n";
-$headers .= "Bcc: birthdaycheck@example.com\r\n";
+$naglowki .= "Cc: archiwum_mailingu@example.com\r\n";
+$naglowki .= "Bcc: kontrola_mailingu@example.com\r\n";
 
 /* a teraz wyślij */
-mail($to, $subject, $message, $headers);
+mail($do, $temat, $wiadomosc, $naglowki);
 ]]>
       </programlisting>
      </example>
@@ -189,6 +189,17 @@ mail($to, $subject, $message, $headers);
       gdyż w przeciwnym razie, e-mail może nie być wysłany poprawnie.
      </para>
     </note>
+    <note>
+     <para>
+      Argument <parameter>do</parameter> nie może być adresem w postaci
+      &quot;Ktośtam &lt;someone@example.com&gt;&quot;. Funkcja
+      <function>mail</function> nie przetworzy prawidłowo takiego adresu w
+      czasie transakcji z Agentem Transferu Poczty (MTA).
+     </para>
+    </note>
+    <para>
+     Patrz także: <function>imap_mail</function>.
+    </para>
    </refsect1>
   </refentry>
 
