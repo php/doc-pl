@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- splitted from ./pl/functions/session.xml, last change in rev 1.1 -->
-<!-- last change to 'session-is-registered' in en/ tree in rev 1.8 -->
 <!-- EN-Revision: 1.2 Maintainer: leszek Status: ready -->
-<!-- OLD-Revision: 1.70/EN.1.8 -->
+<!-- $Revision: 1.3 $ -->
   <refentry id="function.session-is-registered">
    <refnamediv>
     <refname>session_is_registered</refname>
@@ -21,6 +19,24 @@
      bieżącej sesji zarejestrowana jest zmienna o nazwie
      <parameter>nazwa</parameter>.
     </para>
+    <note>
+     <para>
+      Jeśli użyta została tablica <varname>$_SESSION</varname> (lub
+      <varname>$HTTP_SESSION_VARS</varname> dla PHP 4.0.6 lub starszych), do
+      sprawdzenia czy zmienna została zarejestrowana w sesji należy użyć
+      funkcji <function>isset</function> na tablicy
+      <varname>$_SESSION</varname>.
+     </para>
+    </note>
+    <caution>
+     <para>
+      Przy użyciu
+      <varname>$HTTP_SESSION_VARS</varname>/<varname>$_SESSION</varname>, nie
+      należy używać <function>session_register</function>,
+      <function>session_is_registered</function> i
+      <function>session_unregister</function>.
+     </para>
+    </caution>
    </refsect1>
   </refentry>
 

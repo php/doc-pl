@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- $Revision: 1.2 $ -->
+<!-- EN-Revision: 1.2 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.3 $ -->
  <reference id="ref.session">
   <title>Sesje</title>
   <titleabbrev>Sesje</titleabbrev>
@@ -13,7 +14,7 @@
    </para>
    <para>
     Jeśli jesteś zaznajomiony z zarządzaniem sesją w PHPLIB, zauważysz że
-    pewnie koncepcje są podobne w obłudze sesji PHP.
+    pewnie koncepcje są podobne w obsłudze sesji PHP.
    </para>
    <para>
     Gość wchodzący na twoją stronę WWW otrzymuje unikalny identyfikator, tzw.
@@ -32,7 +33,7 @@
    <para>
     Wszystkie zarejestrowane zmienne są serializowane po wykonaniu całego kodu
     strony. Zarejestrowane zmienne, które są niezdefiniowane, są zaznaczane
-    jako niezdefijiowane. Nie są one definiowane przez moduł sesji w
+    jako niezdefiniowane. Nie są one definiowane przez moduł sesji w
     następujących po sobie wywołaniach, chyba że użytkownik zdefiniuje je
     później.
    </para>
@@ -51,17 +52,27 @@
      włączona.
     </para>
    </note>
-
+   <note>
+    <para>
+     Od wersji PHP 4.1.0 dostępna jest globalna zmienna
+     <varname>$_SESSION</varname>, podobnie jak <varname>$_POST</varname>,
+     <varname>$_GET</varname>, <varname>$_REQUEST</varname> i tak dalej. W
+     odróżnieniu od <varname>$HTTP_SESSION_VARS</varname>,
+     <varname>$_SESSION</varname> jest zawsze globalna. W związku z tym
+     <literal>global</literal> nie powinno być użyte do
+     <varname>$_SESSION</varname>.
+    </para>
+   </note>
    <para>
     Jeśli włączona jest opcja <link
     linkend="ini.track-vars"><literal>track_vars</literal></link> a
     <link
     linkend="ini.register-globals"><literal>register_globals</literal></link>
     jest wyłączona, tylko pozycje należące do zmiennej asocjacyjnej
-    $HTTP_SESSION_VARS mogą być zarejestrowane jako zmienne sesyjne.
-    Odtworzone zmienne sesyjne będą dostępne tylko w zmiennej
-    $HTTP_SESSION_VARS.
-  <example>
+    <varname>$HTTP_SESSION_VARS</varname> mogą być zarejestrowane jako
+    zmienne sesyjne. Odtworzone zmienne sesyjne będą dostępne tylko w zmiennej
+    <varname>$HTTP_SESSION_VARS</varname>.
+    <example>
      <title>
       Rejestracja zmiennej z włączoną opcją <link
       linkend="ini.track-vars"><literal>track_vars</literal></link>
@@ -69,8 +80,53 @@
      <programlisting role="php">
 <![CDATA[
 <?php
-session_register("count");
-$HTTP_SESSION_VARS["count"]++;
+if (isset($HTTP_SESSION_VARS['count'])) {
+    $HTTP_SESSION_VARS['count']++;
+}
+else {
+    $HTTP_SESSION_VARS['count'] = 0;
+}
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   <para>
+    Użycie <varname>$_SESSION</varname> (lub
+    <varname>$HTTP_SESSION_VARS</varname> dla wersji PHP 4.0.6 i starszych)
+    jest wskazane ze względów bezpieczeństwa i czytelności kodu. Używając
+    <varname>$_SESSION</varname> lub <varname>$HTTP_SESSION_VARS</varname> nie
+    ma potrzeby używać funkcji
+    session_register()/session_unregister()/session_is_registered().
+    Użytkownicy mogą uzyskiwać dostęp do zmiennych sesyjnych tak jak do
+    normalnych zmiennych.
+    <example>
+     <title>
+      Rejestrowanie zmiennych przez $_SESSION
+     </title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+// Użyj $HTTP_SESSION_VARS dla PHP 4.0.6 i starszych
+if (!isset($_SESSION['count'])) {
+    $_SESSION['count'] = 0;
+} else {
+    $_SESSION['count']++;
+}
+?>
+]]>
+     </programlisting>
+    </example>
+    <example>
+     <title>
+      Wyrejestrowywanie zmiennej korzystając z $_SESSION
+     </title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+// Użyj $HTTP_SESSION_VARS dla PHP 4.0.6 i starszych
+unset($_SESSION['count']);
+
 ?>
 ]]>
      </programlisting>
@@ -81,17 +137,46 @@ $HTTP_SESSION_VARS["count"]++;
     linkend="ini.register-globals"><literal>register_globals</literal></link>,
     wszystkie globalne zmienne mogą być zarejestrowane jako zmienne sesyjne a
     zmienne sesyjne będą odtworzone do odpowiadających im zmiennych
-    globalnych.
-  <example>
+    globalnych. Ponieważ PHP musi wiedzieć które globalne zmienne są
+    zarejestrowane jako zmienne sesyjne, użytkownik musi użyć funkcji
+    session_register() podczas gdy
+    <varname>$HTTP_SESSION_VARS</varname>/<varname>$_SESSION</varname> nie
+    muszą używać session_register().
+    <caution>
+     <para>
+      Jeśli używane są tablice
+      <varname>$HTTP_SESSION_VARS</varname>/<varname>$_SESSION</varname> i
+      i wyłączona jest opcja <link
+       linkend="ini.register-globals"><literal>register_globals</literal></link>,
+      nie powinno się używać <function>session_register</function>,
+      <function>session_is_registered</function> i
+      <function>session_unregister</function>.
+     </para>
+     <para>
+      Jeśli włączona zostanie opcja <link
+       linkend="ini.register-globals"><literal>register_globals</literal></link>,
+      powinno się używać <function>session_unregister</function> ponieważ
+      zmienne sesyjne są rejestrowane jako zmienne globalne kiedy dane sesyjne
+      są deserializowane. Wyłączenie <link
+       linkend="ini.register-globals"><literal>register_globals</literal></link>
+      jest zalecane ze względów bezpieczeństwa i wydajności.
+     </para>
+    </caution>
+    <example>
      <title>
-      Rejestracja zminnych z włączoną opcją <link
+      Rejestracja zmiennych z włączoną opcją <link
       linkend="ini.register-globals"><literal>register_globals</literal></link>
      </title>
      <programlisting role="php">
 <![CDATA[
 <?php
-session_register("count");
-$count++;
+if (!session_is_registered('cound')) {
+    session_register('count');
+    $count = 0;
+}
+else {
+    $count++;
+}
 ?>
 ]]>
      </programlisting>
@@ -102,8 +187,16 @@ $count++;
     linkend="ini.track-vars"><literal>track_vars</literal></link> i
     <link
     linkend="ini.register-globals"><literal>register_globals</literal></link>,
-    globalne zmienne i wpisy w $HTTP_SESSION_VARS będą referencjami do tej
-    samej wartości.
+    globalne zmienne i wpisy w
+    <varname>$HTTP_SESSION_VARS</varname>/<varname>$_SESSION</varname>
+    będą referencjami do tej samej, już zarejestrowanej zmiennej. 
+   </para>
+   <para>
+    Jeśli użytkownik użyje session_register() do zarejestrowania zmiennej
+    sesyjnej,
+    <varname>$HTTP_SESSION_VARS</varname>/<varname>$_SESSION</varname> nie
+    będą zawierały tych zmiennych w tablicy dopóki nie zostanie ona odczytana
+    z miejsca przechowywania sesji (np. do czasu następnego wywołania).
    </para>
    <para>
     Istnieją dwie metody propagacji identyfikatora sesji:
@@ -144,18 +237,24 @@ $count++;
      <programlisting role="php">
 <![CDATA[
 <?php
-session_register ("count");
-$count++;
+if (!session_is_registered('count')) {
+    session_register('count');
+    $count = 1;
+}
+else {
+    $count++;
+}
 ?>
 
 Witaj gościu. Oglądasz tą stronę <?php echo $count; ?> raz.<p>
 
 <?php
-# <?=SID?> jest konieczne do zachowania identyfikatora sesji jeśli
-# użytkownik wyłączył ciastka
+# <?php echo SID?> (<?=SID?> może być użyte jeśli włączona jest możliwość
+# używania krótkich tagów) jest konieczne do zachowania identyfikatora
+# sesji jeśli użytkownik wyłączył ciastka
 ?>
 
-Aby kontynuować, <A HREF="nextpage.php?<?=SID?>">kliknij tutaj</A>
+Aby kontynuować, <A HREF="nextpage.php?<?php echo SID?>">kliknij tutaj</A>
 ]]>
      </programlisting>
     </example>
@@ -181,7 +280,7 @@ Aby kontynuować, <A HREF="nextpage.php?<?=SID?>">kliknij tutaj</A>
    </para>
    <para>
     System zarządzania sesją obsługuje wiele opcji konfiguracyjnych, które
-    możesz wstawić do swojego pliku php.ini. Oto ich krótki przegląd.
+    możesz wstawić do swojego pliku &php.ini;. Oto ich krótki przegląd.
     <itemizedlist>
      <listitem>
       <simpara>
@@ -195,7 +294,9 @@ Aby kontynuować, <A HREF="nextpage.php?<?=SID?>">kliknij tutaj</A>
        <literal>session.save_path</literal> definiuje argument, który jest
        przekazywany procedurze obsługi zapisu danych. Jeśli wybierzesz
        domyślną procedurę obsługi, jest to ścieżka gdzie tworzone będą pliki z
-       danymi. Domyślnie <literal>/tmp</literal>.
+       danymi. Domyślnie <literal>/tmp</literal>. Jeśli głębokość ścieżki
+       określonej w parametrze <literal>session.save_path</literal> jest
+       większa niż 2, nie przeprowadzone zostanie zbieranie śmieci.
       </simpara>
       <warning>
        <para>
