@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
 <!-- splitted from ./pl/functions/filesystem.xml, last change in rev 1.1 -->
 <!-- last change to 'touch' in en/ tree in rev 1.2 -->
-<!-- EN-Revision: 1.2 Maintainer: adi Status: partial -->
+<!-- EN-Revision: 1.9 Maintainer: adi Status: ready -->
 <!-- OLD-Revision: 1.115/EN.1.2 -->
  <refentry id="function.touch">
    <refnamediv>
@@ -11,32 +11,35 @@
    <refsect1>
     <title>Opis</title>
      <methodsynopsis>
-      <type>int</type><methodname>touch</methodname>
+      <type>bool</type><methodname>touch</methodname> 
       <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
-      <methodparam choice="opt"><type>int</type><parameter>
-         czas
-        </parameter></methodparam>
+      <methodparam choice="opt"><type>int</type><parameter>czas</parameter></methodparam>
+	  <methodparam choice="opt"><type>int</type><parameter>dczas</parameter></methodparam>
      </methodsynopsis>
     <para>
-     Próbuje ustawić czas modyfikacji pliku o nazwie nazwa_pliku
-     na wartość podaną przez czas. Jeśli opcja czas nie jest
-     podana, używa czasu bieżącego.
+     Próbuje ustawić czas dostępu i modyfikacji pliku o nazwie 
+	 <parameter>nazwa_pliku</parameter> na wartość podaną przez <parameter>czas</parameter>.
+	 Jeśli parametr <parameter>czas</parameter> nie został podany, używa czasu bieżącego.
+	 To jest odpowiednik działania utime (czasami odwołujemy się do utime). Jeśli
+	 trzeci parametr <parameter>dczas</parameter> jest dostępny, czas dostępu do podanego
+	 pliku jest ustawiany na wartość <parameter>dczas</parameter>.
+	 Zauważ, że czas dostępu jest zawsze modyfikowany, niezależnie od ilości parametrów.
     </para>
     <para>
-     Jeśli plik nie istnieje, to zostanie utworzony.
+     Jeśli plik nie istnieje, to zostanie utworzony. &return.success;
     </para>
     <para>
-     Zwraca &true; gdy sukces i &false; w przeciwnym wypadku.
-     <example>
+      <example>
       <title><function>touch</function> przykład</title>
       <programlisting role="php">
 <![CDATA[
-if (touch ($FileName)) {
-    print "$FileName czas modyfikacji został
-           zmieniony na obecną date i czas";
+<?php
+if (touch($FileName)) { 
+   echo "$FileName czas modyfikacji został zmieniony na bieżący czas"; 
 } else {
-    print "Przykro mi ale Nie Mogę zmienić czasu modyfikacji pliku $FileName";
+    echo "Przykro mi ale Nie Mogę zmienić czasu modyfikacji pliku $FileName";
 }
+?>
 ]]>
       </programlisting>
      </example>
