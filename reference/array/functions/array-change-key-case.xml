@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.10 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.array-change-key-case">
    <refnamediv>
     <refname>array_change_key_case</refname>
@@ -30,13 +30,16 @@
      <title>Przykład użycia <function>array_change_key_case</function></title>
      <programlisting role="php">
 <![CDATA[
+<?php
 $wejscie = array("PierWszy" => 1, "DruGi" => 4);
 print_r(array_change_key_case($wejscie, CASE_UPPER));
+?>
 ]]>
      </programlisting>
      <para>
       Powyższy przykład wyświetli:
-      <screen>
+     </para>
+     <screen>
 <![CDATA[
 Array
 (
@@ -44,9 +47,13 @@ Array
     [DRUGI] => 2
 )
 ]]>
-      </screen>
-     </para>
+     </screen>
     </example>
+    <para>
+     Jeśli tablica ma indeksy które będą się powtarzały po wykonaniu tej
+     funkcji (np. "klucZ" i "kLUCZ"), wartość tego elementu który jest dalej w
+     tablicy nadpisze pozostałe indeksy.
+    </para> 
    </refsect1>
   </refentry>
 
@@ -67,6 +74,6 @@ sgml-local-catalogs:nil
 sgml-local-ecat-files:nil
 End:
 vim600: syn=xml fen fdm=syntax fdl=2 si
-vim: et tw=78 syn=sgml
+vim: et tw=78 syn=sgml encoding=iso-8859-2
 vi: ts=1 sw=1
 -->
