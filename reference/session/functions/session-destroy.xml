@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.3 $ -->
+<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.4 $ -->
   <refentry id="function.session-destroy">
    <refnamediv>
     <refname>session_destroy</refname>
@@ -17,47 +17,47 @@
      bieżącą sesją. Nie usuwa żadnych globalnych zmiennych związanych z sesją.
      Nie usuwa też ciasteczka sesyjnego.
     </simpara>
+    <para>	
+     Aby "zabić" całość sesji, na przykład aby wylogować użytwkonika, należy
+     także usunąć identyfikator sesji. Jeśli do propagowania identyfikatora
+     sesji jużyte było ciasteczko, to usunięte musi być ciasteczko sesyjne.
+     Można do tego użyć funkcji <function>setcookie</function>.
+    </para>
     <simpara>
-     Funkcja ta zawraca &true; w przypadku sukcesu w niszczeniu danych sesji.
-     W przeciwnym przypadku zwracana jest wartość &false;.
+     &return.success;
     </simpara>
     <para>
      <example>
-      <title>Niszczenie sesji</title>
+      <title>Niszczenie sesji przy użyciu <varname>$_SESSION</varname></title>
       <programlisting role="php">
 <![CDATA[
 <?php
-
 // Inicjalizuj sesję
 // Jeśli używasz sesion_name("cośtam"), nie zapomnij o tym teraz!
 session_start();
 // Usuń wszystkie zmienne sesyjne
-session_unset();
-// Na koniec, zniszcz sesję
-session_destroy();
-
-?>       
-]]>
-      </programlisting>
-     </example>
-    </para>
-    <para>
-     <example>
-      <title>Niszczenie sesji używając $_SESSION</title>
-      <programlisting role="php">
-<![CDATA[
-<?php
-
-// Inicjalizuj sesję
-// Jeśli używasz session_name("coś"), nie zapomnij o tym teraz!
-session_start();
-// Usuń wszystkie zmienne sesyjne
 $_SESSION = array();
+
+// Jeśli pożądane jest zabicie sesji, usuń także ciasteczko sesyjne.
+// Uwaga: to usunie sesję, nie tylko dane sesji
+if (isset($_COOKIE[session_name()])) { 
+   setcookie(session_name(), '', time()-42000, '/'); 
+}
+
 // Na koniec zniszcz sesję
 session_destroy();
 ]]>
       </programlisting>
      </example>
+    </para>
+    <note>	
+     <para>	
+      <function>session_unset</function> należy używać dla starszego kodu,
+      który nie korzysta z <varname>$_SESSION</varname>.
+     </para>	
+    </note>
+    <para>
+     Patrz także: <function>unset</function> i <function>setcookie</function>.
     </para>
    </refsect1>
   </refentry>
