@@ -1,5 +1,8 @@
 <?xml encoding="iso-8859-2"?>
-<!-- $Revision: 1.1 $ -->
+<!-- $Revision: 1.2 $ -->
+<!-- tłumacz: Tomasz Wójtowicz
+aktualizacja do wersji en 1.6 z naszego CVSu
+w dniu 7.11.2001 -->
  <reference id="ref.http">
   <title>Funkcje obsługi HTTP</title>
   <titleabbrev>HTTP</titleabbrev>
@@ -7,7 +10,7 @@
   <partintro>
    <simpara>
     Te funkcje pozwalają ci operować na danych wysyłanych do przeglądarki
-    internetowej już na poziomie protokołu HTTP.
+    internetowej na poziomie protokołu HTTP.
    </simpara>
   </partintro>
 
@@ -27,34 +30,32 @@
      </funcprototype>
     </funcsynopsis>
     <para>
-     Funkcja <function>header</function> służy do wysłania surowego
-     nagłówka HTTP przed wysłaniem zawartości dokumentu <acronym>HTML</acronym>.
+     <function>header</function> służy do wysłania surowego
+     nagłówka <acronym>HTTP</acronym>.
      Zajrzyj do <ulink url="&spec.http1.1;">Specyfikacji HTTP 1.1</ulink>
-     aby dowiedzieć się więcej na temat nagłówków HTTP.
+     aby dowiedzieć się więcej na temat nagłówków <acronym>HTTP</acronym>.
     </para>
     <para>
-     Opcjonalny parametr <parameter>replace</parameter> określa, czy podany
-     nagłówek ma zastąpić nagłówek tego samego typu przygotowany przez serwer,
+     Opcjonalny agrument <parameter>zamień</parameter> określa, czy funkcja
+     ma zastąpić nagłówek tego samego typu przygotowany przez serwer,
      czy dodać jeszcze jeden. Domyślnie, oryginalny
      nagłówek zostanie zastąpiony, ale jeśli ustawisz ten argument na &false;,
      to nowy nagłówek zostanie dodany do już istniejących. Na przykład:
      <informalexample>
       <programlisting role="php">
-header('www-authenticate: Negociate');
-header('www-authenticate: NTLM',false);
+header('WWW-Authenticate: Negociate');
+header('WWW-Authenticate: NTLM',false);
       </programlisting>
      </informalexample>
     </para>
     <para>
-     W PHP są dwa specjalne wywołania funkcji <function>header</function>.
-     Pierwszym z nich jest &quot;Location&quot;.  To wywołanie, nie tylko
-     wysyła ten nagłówek do przeglądarki, ale także zwraca do serwera Apache
-     status PRZEKIEROWANIA. Z punktu widzenia piszącego skrypt PHP nie jest 
-     to najistostniejsze, jednak dla osób, które rozumieją zasadę działania
-     Apache'a może być to istotne.
+     W PHP są dwa specjalne wywołania <function>header</function>.
+     Pierwszym z nich jest &quot;Location&quot;. To wywołanie nie tylko
+     wysyła ten nagłówek do przeglądarki, ale także wysyła do przeglądarki
+     status przekierowania <literal>REDIRECT</literal> (302). 
      <informalexample>
       <programlisting role="php">
-header ("Location: http://www.php.net/"); /* Przekieruj przeglądarkę 
+header("Location: http://www.php.net/"); /* Przekieruj przeglądarkę 
                                             na stronę główną PHP */
 exit;                 /* Upewnij się, że kod poniżej nie zostanie wykonany 
                          po przekierowaniu. */
@@ -63,17 +64,17 @@ exit;                 /* Upewnij się, że kod poniżej nie zostanie wykonany
     </para>
     <note>
      <para>
-      Protokół HTTP 1.1 wymaga URL-i bezwzględnych w nagłówku
+      Protokół HTTP 1.1 wymaga bezwzględnego <acronym>URI</acronym> w nagłówku
       <ulink url="&spec.http1.1;/rfc2616-sec14.html#sec14.30">Location:</ulink>
-      włącznie z określeniem protokołu, nazwy hosta and i bezwzględnej scieżki
-      dostępu.
-      Niektóre klienty mogą akceptować względne URL-e, jednak zdecydowanie nie
-      powinienieś bazować na tym. Zwykle używa się
+      włącznie z określeniem protokołu, nazwy hosta i bezwzględnej scieżki
+      dostępu, ale niektóre klienty akceptują względne <acronym>URI</acronym>.
+      Zwykle używa się
       $HTTP_SERVER_VARS['HTTP_HOST'], $HTTP_SERVER_VARS['PHP_SELF'] i
-      funkcji <function>dirname</function> by wygenerować bezwględnego URL-a:
+      funkcji <function>dirname</function> by wygenerować bezwględnego 
+      <acronym>URI</acronym>:
       <informalexample>
        <programlisting>
-header ("Location: http://".$HTTP_SERVER_VARS['HTTP_HOST']
+header("Location: http://".$HTTP_SERVER_VARS['HTTP_HOST']
                        ."/".dirname($HTTP_SERVER_VARS['PHP_SELF'])
                        ."/".$relative_url);
        </programlisting>
@@ -82,35 +83,66 @@ header ("Location: http://".$HTTP_SERVER_VARS['HTTP_HOST']
     </note>
     <para>
      Drugim specjalnym wywołaniem funkcji jest każdy nagłówek zaczynający się
-     od ciągu znaków &quot;HTTP/&quot; (wielkość liter nie gra roli). Na
-     przykład, jeśli dyrektywa konfiguracyjna ErrorDocument 404 twojego Apache-a
-     wskazuje na skrypt PHP, byłoby dobrze przekonać się, czy ten skrypt 
-     faktycznie generuje 404. Pierwszą rzeczą, którą powinieneś zrobić w swoim
-     skrypcie jest wtedy: 
+     od ciągu znaków &quot;<literal>HTTP/</literal>&quot; (wielkość liter nie
+     gra roli), którego używa się do określenia, jaki kod statusu HTTP ma zostać
+     wysłany.
+     Na przykład, jeśli skonfigurowałeś Apache'a tak, że skrypt PHP obsługuje
+     zapytania do nieistniejących plików (za pomocą dyrektywy 
+     <literal>ErrorDocument</literal>), powinieneś zwrócić uwagę, aby skrypt
+     generował właściwy kod statusu zapytania HTTP.
      <informalexample>
       <programlisting role="php">
-header ("HTTP/1.0 404 Not Found");
+header("HTTP/1.0 404 Not Found");
       </programlisting>
      </informalexample>
     </para>
+    <note>
+      <para>
+       W PHP 3 działa to tylko wtedy, kiedy PHP jest skompilowane jako moduł
+       serwera Apache. Taki sam efekt można osiągnąć za pomocą nagłówka
+       <literal>Status</literal>.
+       <informalexample>
+        <programlisting role="php">
+header("Status: 404 Not Found");
+        </programlisting>
+       </informalexample>
+      </para>
+     </note>
     <para>
-     Skrypty PHP często służą do generowania dynamicznych dokumentów HTML, które
-     nie mogą być buforowane przez klienta czy serwer proxy. Pamięć cache
+     Skrypty PHP często służą do generowania dynamiczej treści, która
+     nie może być buforowana przez klienta czy serwer proxy. Pamięć cache
      w większości tych urządzeń da się wyłączyć dzięki:
      <informalexample>
       <programlisting role="php">
 header ("Expires: Mon, 26 Jul 1997 05:00:00 GMT");    // data w przeszłości
 header ("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT"); 
                                                       // ciągle modyfikowany
-header ("Cache-Control: no-cache, must-revalidate");  // HTTP/1.1
-header ("Pragma: no-cache");                          // HTTP/1.0
+header("Cache-Control: no-store, no-cache, must-revalidate");  // HTTP/1.1
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");                          // HTTP/1.0
       </programlisting>
      </informalexample>
+     <note>
+      <para>
+       Możesz zaobserwować, że strony nie są buforowane, nawet jeśli
+       nie użyłeś wszystkich ww. nagłówków. Jest wiele sposobów, w jakie
+       użytkownicy mogą skonfigurować swoje przeglądarki, aby zmienić
+       standardowy sposób buforowania. Przez wysyłnie powyższych nagłówków,
+       powinno się udać ominąć jakiekolwiek ustawienia pozwalające
+       na zbuforowanie wyniku pracy twojego skryptu.
+      </para>
+      <para>
+       Dodatkowo, <function>session_cache_limiter</function> i dyrektywa
+       konfiguracyjna <literal>session.cache_limiter</literal> służą
+       do automatycznego generowania nagłówków związanych z bufurowaniem,
+       kiedy sesje są w użyciu.
+      </para>
+     </note>
     </para>
     <para>
-     Pamiętaj, że funkcja <function>header</function> może być wywoływana 
-     jedynie do momentu nim jakakolwiek treść zostanie wysłana, czyli zarówno
-     znaczniki HTML, puste linie jak i wynik pracy PHP. Jest to bardzo
+     Pamiętaj, że <function>header</function> może być wywoływana 
+     jedynie do momentu nim zostanie wysłana jakakolwiek treść, tzn. 
+     znaczniki HTML, puste linie lub wynik pracy PHP. Jest to bardzo
      częsty błąd, gdzie skrypty z funkcjami <function>include</function>, 
      <function>require</function> itp. mają spacje albo puste linie przed
      wywołaniem funkcji <function>header</function>. 
@@ -118,16 +150,53 @@ header ("Pragma: no-cache");                          // HTTP/1.0
      pojedynczym pliku PHP/HTML.
      <informalexample>
       <programlisting role="php">
-&lt;?php require("user_logging.inc") ?>
+&lt;?php require("user_logging.inc") ?&gt;
 
 
-&lt;?php header ("Content-Type: audio/x-pn-realaudio"); ?>
+&lt;?php header ("Content-Type: audio/x-pn-realaudio"); ?&gt;
 // skrypt nie działa - zauważ puste linie pomiędzy instrukcjami
       </programlisting>
      </informalexample>
+     <note>
+      <para>
+       W PHP 4 można użyć buforowania wyjścia aby ominąć ten problem.
+       Wszystko, co skrypt wyśle do przeglądarki zostanie zatrzymane na
+       serwerze do momentu, kiedy pojawi się instrukcja wysłania danych.
+       Można to zrobić za pomocą funkcji <function>ob_start</function> i
+       <function>ob_end_flush</function>, lub ustawiając dyrektywę kofiguracyjną
+       <literal>output_buffering</literal> w pliku <filename>php.ini</filename>
+       lub w plikach konfiguracyjnych serwera.
+      </para>
+     </note>
+    </para>
+    <para>
+     Aby użytkownik został monitowany o zapisanie wysyłanych danych,
+     takich jak np. wygenerowany plik PDF, można użyć nagłówka <ulink
+     url="&url.rfc2183;">Content-Disposition</ulink> aby podać zalecaną nazwę
+     pliku i zmusić przeglądarkę do wyświetlenia okienka Zapisz jako.
+     <informalexample>
+      <programlisting role="php">
+&lt;?php
+header("Content-type: application/pdf");
+header("Content-Disposition: attachment; filename=downloaded.pdf");
+
+/* ... treść pliku pdf ... */
+      </programlisting>
+     </informalexample>
+     <note>
+      <para>
+       W Microsoft Internet Explorer 4.01 jest błąd, który uniemożliwia
+       wykorzystanie tego mechanizmu. Nie ma na to rozwiązania. Błąd, który
+       zahacza o ten mechanizm, jest także w Microsoft Internet Explorer 5.5,
+       jednak da się go ominąć aktualizując przeglądarkę poprzez Service Pack 2
+       lub późniejszy.
+      </para>
+     </note>
     </para>    
     <para>
-     Zobacz też <function>headers_sent</function>
+     Zobacz też <function>headers_sent</function>,
+     <function>setcookie</function>, i rozdział 
+     <link linkend="features.http-auth">Autoryzacja HTTP</link>.
     </para>
    </refsect1>
   </refentry>
@@ -146,8 +215,8 @@ header ("Pragma: no-cache");                          // HTTP/1.0
      </funcprototype>
     </funcsynopsis>
     <para>
-     Ta funkcja zwraca &true; jeśli nagłówki HTTP już zostały wysłane, lub
-     &false; w przeciwnym wypadku.
+     <function>headers_sent</function> zwraca &true; jeśli nagłówki HTTP już
+     zostały wysłane, lub &false; w przeciwnym wypadku.
     </para>
     <para>
      Zobacz też <function>header</function>
@@ -293,12 +362,13 @@ if (isset ($cookie)) {
     </para>
     <simpara>
      Microsoft Internet Explorer 4 z zainstalowanym Service Pack 1 nie radzi
-     sobie poprawnie z ciasteczkami, które mają ustawiony parametr ścieżka. 
+     sobie poprawnie z ciasteczkami, które mają ustawiony parametr
+     <parameter>ścieżka</parameter>. 
     </simpara>
     <simpara>
-     Netscape Communicator 4.05 i Microsoft Internet Explorer 3.x obsługują
-     niepoprawnie ciasteczka, w których ścieżka i data_ważności nie są 
-     ustawione.
+     Netscape Communicator 4.05 i Microsoft Internet Explorer 3.x niepoprawnie
+     obsługują ciasteczka, w których <parameter>ścieżka</parameter> i 
+     <parameter>data_ważności</parameter> nie są ustawione.
     </simpara>
    </refsect1>
   </refentry>
