@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- $Revision: 1.2 $ -->
+<!-- $Revision: 1.3 $ -->
  <chapter id="language.operators">
   <title>Operatory</title>
   <simpara>
@@ -74,8 +74,10 @@
     zmiennej stojacej po lewej. Na przykład wartością "$a = 3" jest 3. To 
     pozwala na wykonywanie bardziej skomplikowanych przypisań: 
     <informalexample>
-     <programlisting role="php"> 
+     <programlisting role="php">
+<![CDATA[      
 $a = ($b = 4) + 5; // teraz $a jest równe 9, a $b jest równe 4.
+]]>
      </programlisting>
     </informalexample>
    </para>
@@ -86,11 +88,13 @@ $a = ($b = 4) + 5; // teraz $a jest równe 9, a $b jest równe 4.
     zapisanać wynik działania w tej właśnie zmiennej. Na przykład:
     <informalexample>
      <programlisting role="php">
+<![CDATA[
 $a = 3;
 $a += 5; // ustawia wartość $a na 8, tak jakby napisać: $a = $a + 5;
 $b = "Witaj ";
 $b .= "Świecie!"; // ustawia wartość $b na "Witaj Świecie!", dokładnie tak jak 
 $b = $b . "Świecie!";
+]]>
      </programlisting>
     </informalexample>
    </para>
@@ -245,7 +249,9 @@ $b = $b . "Świecie!";
     w C i wielu innych językach.
     <informalexample>
      <programlisting>
+<![CDATA[
 (expr1) ? (expr2) : (expr3);
+]]>
      </programlisting>
     </informalexample> 
     Wartościa wyrażenia jest <replaceable>expr2</replaceable> jeśli
@@ -273,7 +279,8 @@ $b = $b . "Świecie!";
    <para>
     <informalexample>
      <programlisting role="php">
-&lt;?php
+<![CDATA[
+<?php
 /* Zamierzony błąd obsługi pliku */
 $my_file = @file ('non_existent_file') or
     die ("Failed opening file: error was '$php_errormsg'");
@@ -283,7 +290,8 @@ $value = @$cache[$key];
 // spowoduje niewyświetlenie powiadomienia, jeśli nie istnieje wpis do tablicy o
 indeksie $key.
 
-?&gt;
+?>
+]]>
      </programlisting>
     </informalexample>
    </para>
@@ -322,8 +330,10 @@ indeksie $key.
     dostępny do przypisania do zmiennej).
     <informalexample>
      <programlisting role="php">
+<![CDATA[
 $output = `ls -al`;
-echo "&lt;pre&gt;$output&lt;/pre&gt;";
+echo "<pre>$output</pre>";
+]]>
      </programlisting>
     </informalexample>
    </para>
@@ -384,27 +394,29 @@ echo "&lt;pre&gt;$output&lt;/pre&gt;";
     Prosty skrypt przykładowy:
     <informalexample>
      <programlisting role="php">
-&lt;?php
-echo "&lt;h3&gt;Post-inkrementacja&lt;/h3&gt;";
+<![CDATA[
+<?php
+echo "<h3&gt;Post-inkrementacja</h3&gt;";
 $a = 5;
-echo "Powinno być 5: " . $a++ . "&lt;br&gt;\n";
-echo "Powinno być 6: " . $a . "&lt;br&gt;\n";
+echo "Powinno być 5: " . $a++ . "<br>\n";
+echo "Powinno być 6: " . $a . "<br>\n";
 
-echo "&lt;h3&gt;Pre-inkrementacja&lt;/h3&gt;";
+echo "<h3>Pre-inkrementacja</h3>";
 $a = 5;
-echo "Powinno być 6: " . ++$a . "&lt;br&gt;\n";
-echo "Powinno być 6: " . $a . "&lt;br&gt;\n";
+echo "Powinno być 6: " . ++$a . "<br>\n";
+echo "Powinno być 6: " . $a . "<br>\n";
 
-echo "&lt;h3&gt;Post-dekrementacja&lt;/h3&gt;";
+echo "<h3>Post-dekrementacja</h3>";
 $a = 5;
-echo "Powinno być 5: " . $a-- . "&lt;br&gt;\n";
-echo "Powinno być 4: " . $a . "&lt;br&gt;\n";
+echo "Powinno być 5: " . $a-- . "<br>\n";
+echo "Powinno być 4: " . $a . "<br>\n";
 
-echo "&lt;h3&gt;Pre-dekrementacja&lt;/h3&gt;";
+echo "<h3>Pre-dekrementacja</h3>";
 $a = 5;
-echo "Powinno być 4: " . --$a . "&lt;br&gt;\n";
-echo "Powinno być 4: " . $a . "&lt;br&gt;\n";
-?&gt;
+echo "Powinno być 4: " . --$a . "<br>\n";
+echo "Powinno być 4: " . $a . "<br>\n";
+?>
+]]>
      </programlisting>
     </informalexample>
    </para>
@@ -582,7 +594,7 @@ echo "Powinno być 4: " . $a . "&lt;br&gt;\n";
     W PHP są dwa operatory operujące na łańcuchach znaków (stringach). Pierwszym
     z nich jest operator konkatenacji (połączenia) ('.'), który zwraca łańcuch 
     będący połączeniem zawartości lewego i prawego operandu. Drugim z nich jest
-    operator przypisania konkatenacyjnego ('.='), który dołšcza zawartość 
+    operator przypisania konkatenacyjnego ('.='), który dołącza zawartość 
     wyrażenia stojacego z prawej strony do zmiennej stojacej z lewej strony. 
     Zobacz także <link
     linkend="language.operators.assignment">Operatory Przypisania</link>.
@@ -591,11 +603,13 @@ echo "Powinno być 4: " . $a . "&lt;br&gt;\n";
    <para>
     <informalexample>
      <programlisting role="php">
+<![CDATA[
 $a = "Witaj ";
 $b = $a . "Świecie!"; // teraz $b zawiera ciąg "Witaj Świecie!"
 
 $a = "Witaj ";
 $a .= "Świecie!";     // teraz $a zawiera ciąg "Witaj Świecie!"
+]]>
      </programlisting>
     </informalexample>
    </para>
