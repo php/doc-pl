@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.35 Maintainer: Qrak Status: ready -->
-<!-- $Revision: 1.5 $ -->
+<!-- EN-Revision: 1.42 Maintainer: Qrak Status: ready -->
+<!-- $Revision: 1.6 $ -->
  <chapter id="language.variables">
   <title>Zmienne</title>
   
@@ -112,13 +112,169 @@ $bar = &test();    // Niepoprawne.
    <title>Zmienne predefiniowane</title>
    
    <simpara>
-    PHP udostępnia dużą ilość predefiniowanych zmiennych dla każdego pracującego
-    skryptu. Jednakże wiele spośród tych zmiennych nie może być w pełni
+    PHP udostępnia dla każdego pracującego skryptu dużą ilość predefiniowanych
+    zmiennych. Jednakże wiele spośród tych zmiennych nie może być w pełni
     objaśnionych, gdyż są zależne od rodzaju serwera, jego wersji i ustawień
     i innych czynników. Niektóre z tych zmiennych nie będą dostępne dla
-    skryptów PHP uruchomionych z linii poleceń.
+    skryptów PHP uruchomionych z linii poleceń. Lista tych zmiennych znajduje
+    się w rozdziale <link linkend="reserved.variables">predefiniowane
+    zmienne</link>. 
    </simpara>
-
+   <warning>
+    <simpara>
+     W PHP 4.2.0 i późniejszych, domyślne ustawienie, które udostępniało
+     predefiniowane zmienne w zasięgu globalnym, zostało zmienione. Zmienne
+     nadchodzące metodą GET i POST oraz zmienne serwera 
+     <emphasis>domyślnie</emphasis> nie są już umieszczane w zasięgu globalnym.
+     Zamiast tego umieszczane są w odpowiednich <link
+     linkend="language.variables.superglobals">tablicach superglobalnych</link>.
+    </simpara>
+    <simpara>
+     Nadal można uruchomić udostępnianie tych zmiennych w zasięgu globalnym
+     przez ustawienie dyrektywy konfiguracyjnej <link
+     linkend="ini.register-globals">register_globals</link> na "On" w pliku
+     &php.ini;.
+    </simpara>
+    <simpara>
+     Więcej informacji odnośnie tej zmiany, wraz z wyjaśnieniem
+     przyczyn, w <ulink url="&url.php.release4.1.0;">PHP 4.1.0 Release
+     Announcement</ulink>. <!-- zostawiłem oryginalną nazwę z 2 powodów:
+     - uznałem to za nazwę oficjalną, która nie podlega tłumaczeniu
+     - nie mogłem wymyślić żadnego zgrabnego tłumaczenia tego na polski
+     (Informacja o wydaniu PHP 4.1.0 ?)-->
+    </simpara>
+   </warning>
+   <simpara>
+    Począwszy od wersji 4.1.0, PHP udostępnia zestaw predefiniowanych tablic,
+    które zawierają zmienne serwera, zmienne środowiskowe oraz zmienne
+    użytkownika. Tablice te są dość specyficzne, gdyż są one automatycznie
+    globalne, tzn. automatycznie dostępne w każdym zasięgu. Dlatego nazywa się
+    je "autoglobalami" albo "superglobalami". (W PHP nie ma mechanizmu
+    pozwalającego użytkownikowi na definiowanie własnych superglobali.)
+    Superglobale PHP wymienione są poniżej, jednakże wykaz ich zawartości i
+    głębsze omówienie prefiniowanych zmiennych PHP oraz ich natury znajduje
+    się w rozdziale <link linkend="reserved.variables">predefiniowane
+    zmienne</link>.
+   </simpara>
+   <variablelist id="language.variables.superglobals">
+    <title>Superglobale PHP</title>
+    <varlistentry>
+     <term><link
+linkend="reserved.variables.globals">$GLOBALS</link></term>
+     <listitem>
+      <simpara>
+       Zawiera referencje do każdej ze zmiennych aktualnie dostępnych w zasięgu
+       globalnym skryptu. Kluczami tablicy są nazwy zmiennych globalnych.
+      </simpara>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><link
+linkend="reserved.variables.server">$_SERVER</link></term>
+     <listitem>
+      <simpara>
+       Zmienne tworzone przez serwer lub bezpośrednio powiązane ze środowiskiem
+       uruchomieniowym danego skryptu. Analogiczna do dawnej tablicy
+       <varname>$HTTP_SERVER_VARS</varname> (która jest nadal dostępna, ale
+       uznana za przestarzałą).
+      </simpara>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><link
+linkend="reserved.variables.get">$_GET</link></term>
+     <listitem>
+      <simpara>
+       Zmienne dostarczone do skryptu za pomocą metodą GET protokołu HTTP.
+       Analogiczna do dawnej tablicy <varname>$HTTP_GET_VARS</varname> (która
+       jest nadal dostępna, ale uznana za przestarzałą).
+      </simpara>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><link
+linkend="reserved.variables.post">$_POST</link></term>
+     <listitem>
+      <simpara>
+       Zmienne dostarczone do skryptu metodą POST protokołu HTTP. Analogiczna
+       do dawnej tablicy <varname>$HTTP_POST_VARS</varname> (która jest nadal
+       dostępna, ale uznana za przestarzałą).
+      </simpara>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><link
+linkend="reserved.variables.cookies">$_COOKIE</link></term>
+     <listitem>
+      <simpara>
+       Zmienne dostarczone do skryptu przez ciasteczka HTTP. Analogiczna do
+       dawnej tablicy <varname>$HTTP_COOKIE_VARS</varname> (która jest nadal
+       dostępna, ale uznana za przestarzałą).
+      </simpara>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><link
+linkend="reserved.variables.files">$_FILES</link></term>
+     <listitem>
+      <simpara>
+       Zmienne dostarczone do skryptu przez przesłanie plików do serwera metodą
+       POST protokołu HTTP. Analogiczna do dawnej tablicy
+       <varname>$HTTP_POST_FILES</varname> (która jest nadal dostępna, ale
+       uznana za przestarzałą). Więcej na ten temat w rozdziale <link
+       linkend="features.file-upload.post-method">przesyłanie plików metodą
+       POST</link>.
+      </simpara>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><link
+linkend="reserved.variables.environment">$_ENV</link></term>
+     <listitem>
+      <simpara>
+       Zmienne dostarczone do skryptu przez środowisko operacyjne. Analogiczna
+       do dawnej tablicy <varname>$HTTP_ENV_VARS</varname> (która jest nadal
+       dostępna, ale uznana za przestarzałą).
+      </simpara>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><link
+linkend="reserved.variables.request">$_REQUEST</link></term>
+     <listitem>
+      <simpara>
+       Zmienne użytkownika dostarczone do skryptu przez każdy mechanizm wejścia,
+       przez co nie mogą być godne zaufania. Uwaga: kiedy skrypt jest
+       uruchomiony z linii poleceń, tablica ta <emphasis>nie</emphasis> zawiera
+       zmiennych <varname>argv</varname> i <varname>argc</varname>. Zmienne
+       te są dostępne w tablicy <varname>$_SERVER</varname>. Obecność i
+       kolejność dołączania zmiennych do tej tablicy zależy od dyrektywy
+       konfiguracyjnej <link
+       linkend="ini.variables-order">variables_order</link>. Tablica ta nie
+       posiada swoich odpowiedników we wcześniejszych wersjach PHP.
+      </simpara>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><link
+linkend="reserved.variables.session">$_SESSION</link></term>
+     <listitem>
+      <simpara>
+       Zmienne aktualnie zarejestrowane jako sesyjne. Analogiczne do dawnej
+       tablicy <varname>$HTTP_SESSION_VARS</varname> (która jest wciąż dostępna,
+       ale uznana za przestarzałą). Więcej informacji w rozdziale <link
+       linkend="ref.session">funkcje obsługi sesji</link>.
+      </simpara>
+     </listitem>
+    </varlistentry>
+   </variablelist> 
+    <!--
+    
+    na razie nie usuwać tego - przyda się przy tłumaczeniu rozdziału,
+        do którego zostało to przeniesione
+        
+        Qrak
+        
    <simpara>
     Niezależnie od wymienionych czynników, poniżej przedstawiamy listę
     predefiniowanych zmiennych, dostępnych w typowej instalacji PHP 3,
@@ -156,7 +312,8 @@ $bar = &test();    // Niepoprawne.
      dostępnych (albo będzie mieć jakiekolwiek znaczenie) kiedy skrypt PHP
      jest uruchomiony z linii poleceń.
     </simpara>
-
+     
+        
     <para>
      <variablelist>
       <varlistentry>
@@ -410,7 +567,7 @@ $bar = &test();    // Niepoprawne.
       </varlistentry>
      </variablelist>
     </para>
-
+    
    </sect2>
 
    <sect2 id="language.variables.predefined.environment">
@@ -686,7 +843,7 @@ $bar = &test();    // Niepoprawne.
     </para>
 	
    </sect2>
-
+      -->
   </sect1>
 
 
