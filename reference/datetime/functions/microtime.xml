@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="iso-8859-2"?>
+<!-- EN-Revision: 1.1 Maintainer: Qrak Status: ready -->
+<!-- $Revision: 1.1 $ -->
+<!-- splitted from ./en/functions/datetime.xml, last change in rev 1.2 -->
+  <refentry id="function.microtime">
+   <refnamediv>
+    <refname>microtime</refname>
+    <refpurpose>
+     Zwraca aktualny uniksowy znacznik czasu z mikrosekundami
+    </refpurpose>
+   </refnamediv>
+   <refsect1>
+    <title>Opis</title>
+     <methodsynopsis>
+      <type>string</type><methodname>microtime</methodname>
+      <void/>
+     </methodsynopsis>
+    <para>
+     Zwraca łańcuch znaków "msec sec", gdzie sec jest aktualnym czasem,
+     mierzonym jako liczba sekund od uniksowej Epoki (1 stycznia 1970, 0:00:00
+     GMT), natomiast msec jest aktualną liczbą mikrosekund. Funkcja ta dostępna
+     jest wyłącznie na systemach operacyjnych, które obsługują wywołanie
+     systemowe gettimeofday().
+    </para>
+    <para>
+     Obydwie części łańcucha znaków są podawane w sekundach.
+     <example>
+      <title>przykład <function>microtime</function></title>
+      <programlisting role="php">
+<![CDATA[
+function getmicrotime(){ 
+    list($usec, $sec) = explode(" ",microtime()); 
+    return ((float)$usec + (float)$sec); 
+    } 
+
+$time_start = getmicrotime();
+    
+for ($i=0; $i < 1000; $i++){
+    //nie rób nic przez 1000 iteracji
+    }
+
+$time_end = getmicrotime();
+$time = $time_end - $time_start;
+
+echo "Nie robił nic przez $time sekund";
+]]>
+      </programlisting>
+     </example>
+    </para>
+    <para>
+     Patrz także <function>time</function>.
+    </para>
+   </refsect1>
+  </refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"../../../../manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

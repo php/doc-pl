@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="iso-8859-2"?>
+<!-- EN-Revision: 1.1 Maintainer: Qrak Status: ready -->
+<!-- $Revision: 1.1 $ -->
+<!-- splitted from ./en/functions/datetime.xml, last change in rev 1.2 -->
+  <refentry id="function.mktime">
+   <refnamediv>
+    <refname>mktime</refname>
+    <refpurpose>Oblicza uniksowy znacznik czasu dla podanej daty</refpurpose>
+   </refnamediv>
+   <refsect1>
+    <title>Opis</title>
+     <methodsynopsis>
+      <type>int</type><methodname>mktime</methodname>
+      <methodparam><type>int</type><parameter>godzina</parameter></methodparam>
+      <methodparam><type>int</type><parameter>minuta</parameter></methodparam>
+      <methodparam><type>int</type><parameter>sekunda</parameter></methodparam>
+      <methodparam><type>int</type><parameter>miesiąc</parameter></methodparam>
+      <methodparam><type>int</type><parameter>dzień</parameter></methodparam>
+      <methodparam><type>int</type><parameter>rok</parameter></methodparam>
+      <methodparam choice="opt"><type>int</type><parameter>letni/zimowy</parameter></methodparam>
+     </methodsynopsis>
+    <para>
+     <emphasis>Uwaga:</emphasis> Proszę zwrócić uwagę na dziwną kolejność
+     argumentów, zupełnie odmienną od spotykanej w standardowym wywołaniu
+     uniksowym mktime(); która w dodatku nie jest praktyczna przy opuszczaniu
+     argumentów
+     od prawej do lewej (patrz niżej). Częstym błędem w skryptach są pomyłki
+     w kolejności tych argumentów.
+    </para>
+    <para>
+     Funkcja zwraca uniksowy znacznik czasu odpowiadający podanym argumentom.
+     Znacznik czasu jest liczbą całkowitą długą (long integer) zawierającą
+     liczbę sekund dzielącą uniksową Epokę (1 stycznia 1970) od podanego
+     w argumentach czasu.
+    </para>
+    <para>
+     Argumenty mogą być opuszczane w kolejności od prawej do lewej. Za każdy
+     pominięty argument będzie wówczas wstawiona aktualna wartość, zgodnie
+     z lokalnym czasem/datą.
+    </para>
+    <para>
+     Argument <parameter>letni/zimowy</parameter> może być ustawiony na 1, jeśli
+     to czas zimowy, lub 0 jeśli letni, lub -1 (domyślnie) jeśli niewiadomo,
+     czy letni czy zimowy. Jeśli niewiadomo, PHP spróbuje ustalić to
+     samodzielnie. Może to powodować nieoczekiwane (ale na pewno poprawne)
+     wyniki.
+    </para>
+    <note>
+     <para>
+      Argument <parameter>letni/zimowy</parameter> dodano w PHP 3.0.10.
+     </para>
+    </note>
+    <para>
+     Funkcja <function>mktime</function> przydaje się przy wykonywaniu
+     arytmetyki dat i walidacji, gdyż automatycznie policzy właściwą wartość
+     dla danych spoza przedziałów. Na przykład, każda poniższa linia wyświetli
+     "Jan-01-1998".
+     <example>
+      <title>przykład <function>mktime</function></title>
+      <programlisting role="php">
+<![CDATA[
+echo date ("M-d-Y", mktime (0,0,0,12,32,1997));
+echo date ("M-d-Y", mktime (0,0,0,13,1,1997));
+echo date ("M-d-Y", mktime (0,0,0,1,1,1998));
+echo date ("M-d-Y", mktime (0,0,0,1,1,98));
+]]>
+      </programlisting>
+     </example>
+     <parameter>rok</parameter> może być liczbą dwu lub czterocyfrową, przy
+     czym wartości dwucyfrowe z przedziału 0-69 będą mapowane do 2000-2069,
+     a z przedziału 70-99 do 1970-1999 (w systemach, w których time_t jest
+     32-bitową liczbą całkowitą ze znakiem, co jest obecnie najpopularniejszym
+     rozwiązaniem, poprawny zakres argumentu <parameter>rok</parameter>
+     zawiera się pomiędzy 1902 a 2037).
+    </para>
+    <para>
+     Ostatni dzień dowolnego miesiąca może być wyrażony jako zerowy dzień
+     następnego miesiąca, ale nie jako -1 dzień. Obydwa poniższe przykłady
+     wyświetlą "Ostatni dzień lutego 2000 to: 29".
+     <example>
+      <title>Ostatni dzień miesiąca</title>
+      <programlisting role="php">
+<![CDATA[
+$ostatni = mktime (0,0,0,3,0,2000);
+echo strftime ("Ostatni dzień lutego 2000 to: %d", $ostatni);
+     
+$ostatni = mktime (0,0,0,4,-31,2000);
+echo strftime ("Ostatni dzień lutego 2000 to: %d", $ostatni);
+]]>
+      </programlisting>
+     </example>
+    </para>
+    <simpara>
+    Data z rokiem, miesiącem i dniem równym zero jest niepoprawna (w przeciwnym
+    razie oznaczałoby to 30.11.1999, co mogłoby powodować dziwne rezultaty).
+    </simpara>
+    <para>
+     Patrz także <function>date</function> i <function>time</function>.
+    </para>
+   </refsect1>
+  </refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"../../../../manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
