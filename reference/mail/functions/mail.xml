@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.6 $ -->
+<!-- EN-Revision: 1.8 Maintainer: qrak Status: ready -->
+<!-- $Revision: 1.7 $ -->
   <refentry id="function.mail">
    <refnamediv>
     <refname>mail</refname>
@@ -36,11 +36,34 @@
        <ulink url="&url.rfc2047;">RFC 2047</ulink>,  
        <ulink url="&url.rfc2048;">RFC 2048</ulink> i  
        <ulink url="&url.rfc2049;">RFC 2049</ulink>.  
-    </simpara> 
+    </simpara>
     <para>
      <function>mail</function> zwraca &true; jeśli e-mail został zaakceptowany
      przez przekaźnik pocztowy do wysłania lub &false; w przeciwnym wypadku.
     </para>
+    <warning>
+     <para>
+      Implementacja funkcji <function>mail</function> w systemie Windows różni
+      się od implementacji w systemie Unix.
+      
+      Po pierwsze, funkcja nie używa
+      lokalnych programów do komponowania wiadomości pocztowych, tylko operuje
+      na połączeniach socketowych, co oznacza, że do działania potrzebny
+      jest Agent Transferu Poczty (<literal>MTA</literal>), który nasłuchuje
+      na odpowiednim porcie. (Agent może znajdować się zarówno na maszynie
+      lokalnej, jak i zdalnej).
+      
+      Po drugie, nagłówki użytkownika, takie jak
+      <literal>From:</literal>, <literal>Cc:</literal>, <literal>Bcc:</literal>
+      oraz <literal>Date:</literal> <emphasis role="strong">nie</emphasis>
+      są w pierwszej kolejności interpretowane przez <literal>MTA</literal>,
+      gdyż wcześniej są parsowane przez <literal>PHP</literal>.
+      <literal>PHP</literal> &lt; 4.3 obsługiwał spośród wyżej wymienionych
+      tylko nagłówek <literal>Cc:</literal> (wymagana była odpowiednia wielkość
+      liter); natomiast <literal>PHP</literal> &lt;= 4.3 obsługuje już wszystkie
+      wyżej wymienione nagłówki i nie wymaga odpowiedniej wielkości liter.
+     </para>
+    </warning>
     <para>
      <example>
       <title>Wysyłanie e-maila</title>
@@ -61,10 +84,7 @@ mail("joecool@example.com", "Temat listu", "Linia 1\nLinia 2\nLinia 3");
      <para>
      Aby rozdzielić nagłówki, trzeba użyć sekwencji <literal>\r\n</literal>,
      chociaż niektóre uniksowe agenty pocztowe obsługują także pojedynczy
-     znak nowej linii (<literal>\n</literal>). W nagłówku Cc: jest rozróżniana
-     wielkość liter i z tego powodu, w systemach Win32 musi być pisany jako
-     <literal>Cc:</literal>. Nagłówek Bcc: nie jest obsługiwany w systemach
-     Win32.
+     znak nowej linii (<literal>\n</literal>). 
      </para>
     </note>
     <para>
