@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- $Revision: 1.5 $ -->
+<!-- $Revision: 1.6 $ -->
  <chapter id="installation">
   <title>Instalacja</title>
   <sect1 id="install.general">
@@ -169,6 +169,7 @@
       Instrukcja szubkiej instalacji PHP 4 (jako moduł Apache'a)
      </title>
      <programlisting>
+<![CDATA[
 1.  gunzip apache_1.3.x.tar.gz
 2.  tar xvf apache_1.3.x.tar
 3.  gunzip php-x.x.x.tar.gz
@@ -190,6 +191,7 @@
 
 18. Zrestartuj serwer. (Musisz zatrzymać i ponownie uruchomiś serwer, a nie
 tylko wymusić przeładowanie serwera przez wysłanie sygnału HUP lub USR1.)
+]]>
      </programlisting>
     </example>
    </sect2>
@@ -234,7 +236,8 @@ tylko wymusić przeładowanie serwera przez wysłanie sygnału HUP lub USR1.)
     <title>
      Instrukcja instalacji dla HP-UX 10
     </title>
-    <programlisting>
+    <screen>
+<![CDATA[
 From: paul_mckay@clearwater-it.co.uk
 04-Jan-2001 09:49
 (Te wskazówki dotyczą PHP 4.0.4 i Apache v1.3.9)
@@ -304,7 +307,8 @@ nobody. Po tych poprawkach Apache i PHP powinny działać.
 
 Mam nadzieję, że to komuś pomogło,
 Paul Mckay.
-  </programlisting>
+]]>
+  </screen>
  </example>
 
 </sect1>
@@ -405,11 +409,13 @@ Paul Mckay.
    <example id="install.openbsd.ports.example">
     <title>Przykład instalacji OpenBSD Ports</title>
     <programlisting>
+<![CDATA[
 $ cd /usr/ports/www/php4
 $ make show VARNAME=FLAVORS
  (choose which flavors you want from the list)
 $ env FLAVOR="imap gettext ldap mysql gd" make install
 $ /usr/local/sbin/php4-enable
+]]>
     </programlisting>
    </example>
  </sect2>
@@ -454,7 +460,8 @@ $ /usr/local/sbin/php4-enable
   </simpara>
    <example id="install.macosx.compile.example">
    <title>Instalacja na systemie Mac OS X server</title>
-   <programlisting>
+   <screen>
+<![CDATA[
 1. Pobierz najnowsze dystrybucje Apache i PHP
 2. Zdekompresuje je i uruchom program configure z pakietu Apache, np. tak:
     ./configure --exec-prefix=/usr \ 
@@ -518,7 +525,8 @@ $ /usr/local/sbin/php4-enable
     lub (jeśli nie masz katalogu "local")
 
     cp php.ini-dist /usr/bin/php.ini 
-   </programlisting>
+]]>
+   </screen>
   </example>
   <simpara>
    Inne przykłady dla
@@ -569,9 +577,11 @@ $ /usr/local/sbin/php4-enable
    Teraz napisz "<literal>sudo open -a TextEdit /etc/httpd/httpd.conf</literal>"
    Otworzy się TextEdit z plikiem konfiguracyjnym serwera WWW. Zlokalizuj
    linke na końcu pliku: (użyj polecenia Find)
-   <programlisting>
+   <programlisting role="apache">
+<![CDATA[
    *	#AddType application/x-httpd-php .php 
    *	#AddType application/x-httpd-php-source .phps
+]]>
    </programlisting>
    Usuń dwa znaki hash (<literal>#</literal>), a potem sapisz plik i wyjdź z
    programu TextEdit.
@@ -3248,7 +3258,7 @@ $ /usr/local/sbin/php4-enable
       <listitem>
        <para>
         Zdekompresuj plik dystrybucyjny do dowolnego katalogu, np.
-        &quot;C:\php\&quot;.
+        <filename>C:\php\</filename>.
        </para>
       </listitem>
       <listitem>
@@ -3928,7 +3938,8 @@ $ /usr/local/sbin/php4-enable
      <title>
       Instrukcja instalacji (wersja jako moduł Apache)
      </title>
-     <programlisting>
+     <screen>
+<![CDATA[
 1.  gunzip apache_1.3.x.tar.gz
 2.  tar xvf apache_1.3.x.tar
 3.  gunzip php-x.x.x.tar.gz
@@ -3967,7 +3978,8 @@ $ /usr/local/sbin/php4-enable
 18. Użyj zwykłej procedury dla uruchomienia serwera Apache. (Musisz zatrzymać
 i ponownie uruchomić serwer, nie tylko spowodować przeładowanie serwera
 używając sygnał HUP lub USR1.)
-      </programlisting>
+]]>
+      </screen>
      </example>
 
      <para>
@@ -3977,7 +3989,8 @@ używając sygnał HUP lub USR1.)
       Apache/Uniksa. Powinieneś zamienić <literal>/path/to/</literal> na
       ścieżkę do właściwych aplikacji na swoich systemach.
       <informalexample>
-       <programlisting>
+       <screen>
+<![CDATA[
 1. Kilka wariantów Linuksa i SysV:
 /etc/rc.d/init.d/httpd restart
 
@@ -3993,7 +4006,8 @@ używając sygnał HUP lub USR1.)
 uruchomnić serwer:
 /path/to/apachectl stop
 /path/to/apachectl startssl
-       </programlisting>
+]]>
+       </screen>
       </informalexample>
       Lokalizacje binariów apachectl i http(s)dctl mogą się różnić. Jeśli twój
       system ma polecenia <literal>locate</literal> lub
@@ -4004,8 +4018,10 @@ uruchomnić serwer:
      <para>
       Różne przykłady kompilacji PHP dla Apache:
       <informalexample>
-       <programlisting>
+       <programlisting role="shell">
+<![CDATA[
 ./configure --with-apxs --with-pgsql
+]]>
        </programlisting>
       </informalexample>
      </para>
@@ -4017,8 +4033,10 @@ uruchomnić serwer:
      </para>
      <para>
       <informalexample>
-       <programlisting>
+       <programlisting role="shell">
+<![CDATA[
 ./configure --with-apxs --with-pgsql=shared
+]]>
        </programlisting>
       </informalexample>
      </para>
@@ -4032,8 +4050,10 @@ uruchomnić serwer:
      </para>
      <para>
       <informalexample>
-       <programlisting>
+       <programlisting role="shell">
+<![CDATA[
 ./configure --with-apache=/path/to/apache_source --with-pgsql
+]]>
        </programlisting>
       </informalexample>
      </para>
@@ -4052,8 +4072,10 @@ uruchomnić serwer:
      </para>
      <para>
       <informalexample>
-       <programlisting>
+       <programlisting role="shell">
+<![CDATA[
 ./configure --with-apache=/path/to/apache_source --with-pgsql=shared
+]]>
        </programlisting>
       </informalexample>
      </para>
@@ -4252,7 +4274,8 @@ uruchomnić serwer:
    </para>
    <example id="install.caudium.instructions">
     <title>Instrukcje Instalacji dla Caudium</title>
-    <programlisting>
+    <screen>
+<![CDATA[
 1.  Upewnij się, że Caudium zostało zainstalowane przed rozpoczęciem
     instalacji PHP 4. Aby PHP 4 działało prawidłowo, potrzebny jest Pike
     7.0.268 lub nowszy. Dla przykładu załóżmy, że Caudium jest zainstalowany w
@@ -4271,7 +4294,8 @@ uruchomnić serwer:
     <filename>PHP4.so</filename>. Sprawdź także czy plik
     <filename>caudium/server/lib/[wersja-pike]/PHP4.so</filename> istnieje.
 10. Skonfiguruj moduł PHP Script Support jeśli to konieczne.
-    </programlisting>
+]]>
+    </screen>
    </example>
    <para>
     Możesz oczywiście skompilować moduł Caudium z obsługą dla różnych
@@ -4643,7 +4667,8 @@ uruchomnić serwer:
     <para>
      <example id="install.netscape-enterprise.solaris">
       <title>Przykład instalacji dla Netscape Enterprise na Solaris</title>
-      <programlisting>
+      <screen>
+<![CDATA[
 Instrukcje dla Sun Solaris 2.6 z Netscape Enterprise Server 3.6
 Od: bhager@invacare.com
 
@@ -4675,7 +4700,8 @@ Od: bhager@invacare.com
    ./configure --with-mysql=/usr/local/mysql --with-nsapi=/opt/netscape/suitespot/ --enable-track-vars --enable-libgcc 
 7. make 
 8. make install
-      </programlisting>
+]]>
+      </screen>
      </example>
      Po wykonaniu podstawowej instalacji i przeczytaniu właściwego pliku
      readme, niezbędne może się okazać wykanie dodatkowych kroków
@@ -4700,7 +4726,8 @@ Od: bhager@invacare.com
      <title>
       Przykład konfiguracji dla Netscape Enterprise
      </title>
-     <programlisting>
+     <screen>
+<![CDATA[
 Instrukcje konfiguracji Netscape Enterprise Server
 Od: bhager@invacare.com
 
@@ -4715,7 +4742,7 @@ Od: bhager@invacare.com
     Init fn="load-modules" funcs="php4_init,php4_close,php4_execute,php4_auth_trans" shlib="/php4/nsapiPHP4.dll"
     Init fn=php4_init errorString="Failed to initialize PHP!"
 
-    &lt;object name="default"&gt;
+    <object name="default">
     . 
     . 
     . 
@@ -4724,36 +4751,37 @@ Od: bhager@invacare.com
     Service fn="php4_execute" type="magnus-internal/x-httpd-php" 
     . 
     . 
-    &lt;/Object&gt;
+    </Object>
 
 
-    &lt;Object name="x-httpd-php"&gt; 
+    <Object name="x-httpd-php"> 
     ObjectType fn="force-type" type="magnus-internal/x-httpd-php" 
     Service fn=php4_execute 
-    &lt;/Object&gt; 
+    </Object> 
 
 
     Konfiguracja autoryzacji 
 
     Autentyfikacja PHP nie może być użyta z żadną inną autoryzacją.
-    CAŁA AUTENTYFIKACJA JEST PRZEKAZYWANA DO SKRYPTU PHP. Aby skonfigurować
+    CAŁA AUTORYZACJA JEST PRZEKAZYWANA DO SKRYPTU PHP. Aby skonfigurować
     autoryzację PHP dla całego serwera, dodaj poniższą linię:
 
-    &lt;Object name="default"&gt; 
+    <Object name="default"> 
     AuthTrans fn=php4_auth_trans 
     . 
     . 
     . 
     . 
-    &lt;/Object&gt; 
+    </Object> 
 
     Aby włączyć autoryzację PHP w pojedyńczym katalogu, dodaj poniższą
     linię:
 
-    &lt;Object ppath="d:\ścieżka\do\autoryzowanego\katalgu\*"&gt; 
+    <Object ppath="d:\ścieżka\do\autoryzowanego\katalogu\*"> 
     AuthTrans fn=php4_auth_trans 
-    &lt;/Object&gt;
-     </programlisting>
+    </Object>
+]]>
+     </screen>
     </example>
     <para>
      Jeśli używasz Netscape Enterprise 4.x powinieneś użyć poniższą
@@ -4762,12 +4790,14 @@ Od: bhager@invacare.com
     <example>
      <title>Przykład konfiguracji dla Netscape Enterprise 4.x</title>
      <programlisting>
+<![CDATA[
 Umieść poniższe ponie po inicjalizacji typów mime, a wszystko inne jest
 takie same jak w przykładzie powyżej.
 Od: Graeme Hoose (GraemeHoose@BrightStation.com)
 
 Init fn="load-modules" shlib="/path/to/server4/bin/libphp4.so" funcs="php4_init,php4_close,php4_execute,php4_auth_trans"
 Init fn="php4_init" LateInit="yes"
+]]>
      </programlisting>
     </example>
    </sect2>
@@ -4789,8 +4819,10 @@ Init fn="php4_init" LateInit="yes"
        Stwórz powiązanie plików z linii poleceń.
        Napisz poniższe dwie linie:
        <programlisting>
+<![CDATA[
 assoc .php=PHPScript
 ftype PHPScript=c:\php\php.exe %1 %*
+]]>
        </programlisting>
       </para>
      </listitem>
@@ -4836,8 +4868,10 @@ ftype PHPScript=c:\php\php.exe %1 %*
        Stwórz skojarzenia plików z linii poleceń.
        Wykonaj dwa poniższe polecenia:
        <programlisting>
+<![CDATA[
 assoc .php=PHPScript
 ftype PHPScript=c:\php\php.exe %1 %*
+]]>
        </programlisting>
       </para>
      </listitem>
@@ -4854,8 +4888,10 @@ ftype PHPScript=c:\php\php.exe %1 %*
        Na końcu sekcji Ini, umieść te dwie linie (konicznie po inicjalizacji
        typów mime!):
        <programlisting>
+<![CDATA[
 Init fn="load-modules" funcs="php4_init,php4_close,php4_execute,php4_auth_trans" shlib="c:/php/sapi/php4nsapi.dll"
 Init fn="php4_init" errorString="Failed to initialise PHP!"
+]]>
        </programlisting>
       </para>
      </listitem>
@@ -4865,7 +4901,9 @@ Init fn="php4_init" errorString="Failed to initialise PHP!"
        poniższą linię po wszystkich liniach 'ObjectType' i przed wszystkimi
        liniami 'AddLog':
        <programlisting>
+<![CDATA[
 Service fn="php4_execute" type="magnus-internal/x-httpd-php"
+]]>
        </programlisting>
       </para>
      </listitem>
@@ -4874,10 +4912,12 @@ Service fn="php4_execute" type="magnus-internal/x-httpd-php"
        Na końcu pliku stwórz nowy obiekt o nazwie
        <literal>x-httpd-php</literal> dodając poniższe linie:
        <programlisting>
-&lt;Object name="x-httpd-php"&gt;
+<![CDATA[
+<Object name="x-httpd-php">
 ObjectType fn="force-type" type="magnus-internal/x-httpd-php"
 Service fn=php4_execute
-&lt;/Object&gt;
+</Object>
+]]>
        </programlisting>
       </para>
      </listitem>
