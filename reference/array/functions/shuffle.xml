@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.12 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.shuffle">
    <refnamediv>
     <refname>shuffle</refname>
@@ -9,26 +9,28 @@
    <refsect1>
     <title>Opis</title>
      <methodsynopsis>
-      <type>void</type><methodname>shuffle</methodname>
-      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+      <type>bool</type><methodname>shuffle</methodname>
+      <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
      </methodsynopsis>
     <para>
-     Ta funkcja tasuje tablicę (losuje kolejność elementów w niej). Musisz
-     użyć <function>srand</function> aby przygotować ziarno dla tej funkcji.
+     Ta funkcja tasuje tablicę (losuje kolejność elementów w niej).
      <example>
       <title>Przykład użycia <function>shuffle</function></title>
       <programlisting role="php">
 <![CDATA[
-$liczby = range (1,20);
-srand ((float)microtime()*1000000);
-shuffle ($liczby);
-while (list (, $liczba) = each ($liczby)) {
+<?php
+$liczby = range(1,20);
+srand((float)microtime()*1000000);
+shuffle($liczby);
+while (list(, $liczba) = each($liczby)) {
     echo "$liczba ";
 }
+?>
 ]]>
       </programlisting>
      </example>
     </para>
+    &note.randomseed;
     <para>
      Patrz także: <function>arsort</function>, <function>asort</function>,
      <function>ksort</function>, <function>rsort</function>,
