@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.4 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.rawurldecode">
    <refnamediv>
     <refname>rawurldecode</refname>
@@ -15,10 +15,22 @@
     <para>
      Zwraca łańcuch w którym sekwencje dwóch cyfr szesnastkowych
      poprzedzone znakiem procenta (<literal>%</literal>), zastąpione
-     są przez ich odpowiednik znakowy. Na przykład, łańcuch
-     <screen>foo%20bar%40baz</screen> zostanie odkodowany do postaci
-     <screen>foo bar@baz</screen>.
+     są przez ich odpowiednik znakowy.
     </para>
+	<para>  
+       <example>  
+        <title><function>rawurldecode</function> przykład</title>  
+        <programlisting role="php">  
+  <![CDATA[  
+  <?php  
+    
+  echo rawurldecode('foo%20bar%40baz'); // foo bar@baz  
+    
+  ?>  
+  ]]>  
+        </programlisting>  
+       </example>  
+	</para>
     <note>
      <para>
       <function>rawurldecode</function> nie zamienia znaków plusa ('+')
@@ -27,7 +39,7 @@
     </note>
     <simpara>
      Patrz także: <function>rawurlencode</function>,
-     <function>urldecode</function>,
+     <function>urldecode</function> i
      <function>urlencode</function>.
     </simpara>
    </refsect1>
