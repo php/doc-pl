@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- $Revision: 1.7 $ -->
+<!-- EN-Revision: 1.70 Maintainer: slawek Status: ready -->
+<!-- $Revision: 1.8 $ -->
  <reference id="ref.mysql">
   <title>Funkcje MySQL</title>
   <titleabbrev>MySQL</titleabbrev>
   <partintro>
    <simpara>
     Funkcje te umożliwiają dostęp do serwerów baz danych MySQL. Aby je
-    uaktywnić musisz skompilować php z obsługą MySQL używając opcji
+    uaktywnić musisz skompilować PHP z obsługą MySQL używając opcji
     <option role="configure">--with-mysql</option>. Jeśli użyjesz tej opcji
-    bez podania ścieżki do MySQL, php wykorzysta własne biblioteki klienta.
+    bez podania ścieżki do MySQL, PHP wykorzysta własne biblioteki klienta.
     Użytkownicy, którzy uruchamiają inne aplikacje korzystające z MySQL
-    (na przykład równocześnie php3 i php4 jako moduły apache, lub moduł
+    (na przykład równocześnie PHP3 i PHP4 jako moduły apache, lub moduł
     auth-mysql) powinni zawsze podawać ścieżkę do MySQL:
     <option role="configure">--with-mysql=/sciezka/do/mysql</option>. To
-    wymusi na php użycie bibliotek zainstalowanych przez MySQL, co pozwoli
+    wymusi na PHP użycie bibliotek zainstalowanych przez MySQL, co pozwoli
     uniknąć konfliktów.
    </simpara>
    <simpara>
@@ -30,31 +31,36 @@
     <example>
      <title>Wykorzystanie funkcji MySQL</title>
      <programlisting role="php">
-&lt;?php
-    $link = mysql_connect("mysql_host", "mysql_login", "mysql_password")
-        or die ("Nie można się połączyć");
-    print ("Connected successfully");
-    mysql_select_db ("my_database")
-        or die ("Nie mozna wybrać bazy danych");
-    
-    $query = "SELECT * FROM my_table";
-    $result = mysql_query ($query)
-        or die ("Zapytanie zakończone niepowodzeniem");
+<![CDATA[ 
 
-	// printing HTML result
-
-	print "&lt;table&gt;\n";
-	while ($line = mysql_fetch_array($result)) {
-	    print "\t&lt;tr&gt;\n";
-	    while(list($col_name, $col_value) = each($line)) {
-	        print "\t\t&lt;td&gt;$col_value&lt;/td&gt;\n";
-	    }
-	    print "\t&lt;/tr&gt;\n";
-	}
-	print "&lt;/table&gt;\n";
+<?php
+// Łączenie i wybranie bazy
+$link = mysql_connect("host", "login", "haslo")
+    or die ("Nie można się połączyć");
+print ("Połączenie nawiązane");
+mysql_select_db ("baza")
+    or die ("Nie mozna wybrać bazy danych");
     
-    mysql_close($link);
-?&gt;
+// Wysyłanie zapytania SQL
+$query = "SELECT * FROM tabela";
+$result = mysql_query ($query)
+    or die ("Zapytanie zakończone niepowodzeniem");
+
+// Wyświetlenie wyników w HTML
+print "<table>\n";
+while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
+   print "\t<tr>\n";
+   foreach ($line as $col_name) { 
+       print "\t\t<td>$col_value</td>\n"; 
+   }
+   print "\t</tr>\n";
+}
+print "</table>\n";
+
+// Rozłączanie  
+mysql_close($link);
+?>
+]]> 
      </programlisting>
     </example>
    </para>
