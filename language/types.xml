@@ -1,0 +1,2077 @@
+<?xml version="1.0" encoding="iso-8859-2"?>
+<!-- EN-Revision: 1.73 Maintainer: Qrak Status: ready -->
+<!-- $Revision: 1.1 $ -->
+ <chapter id="language.types">
+  <title>Typy danych</title>
+
+  <sect1 id="language.types.intro">
+  <title>Wstęp</title>
+  
+  <simpara>
+   PHP obsługuje osiem typów prostych.
+  </simpara>
+  
+  <para>
+   Cztery skalarne:
+
+   <itemizedlist>
+
+    <listitem>
+     <simpara>
+      <link linkend="language.types.boolean">boolowski (boolean)</link>
+     </simpara>
+    </listitem>
+
+    <listitem>
+     <simpara>
+      <link linkend="language.types.integer">liczba całkowita (integer)</link>
+     </simpara>
+    </listitem>
+
+    <listitem>
+     <simpara>
+      <link linkend="language.types.float">liczba zmiennoprzecinkowa 
+      (float)</link>
+     </simpara>
+    </listitem>
+
+    <listitem>
+     <simpara>
+      <link linkend="language.types.string">łańcuch znaków (string)</link>
+     </simpara>
+    </listitem>
+
+   </itemizedlist>
+
+   Dwa typy złożone:
+
+   <itemizedlist>
+
+    <listitem>
+     <simpara>
+      <link linkend="language.types.array">tablica (array)</link>
+     </simpara>
+    </listitem>
+
+    <listitem>
+     <simpara>
+      <link linkend="language.types.object">obiekt (object)</link>
+     </simpara>
+    </listitem>
+
+   </itemizedlist>
+
+   Oraz dwa typy specjalne:
+
+   <itemizedlist>
+
+    <listitem>
+     <simpara>
+      <link linkend="language.types.resource">identyfikator zasobów
+      (resource)</link>
+     </simpara>
+    </listitem>
+
+    <listitem>
+     <simpara>
+      <link linkend="language.types.null">NULL (null)</link>
+     </simpara>
+    </listitem>
+
+   </itemizedlist>
+  </para>
+  
+  <note>
+   <simpara>
+    W tym podręczniku często pojawia się typ <literal>mixed</literal>. Ten
+    pseudotyp wskazuje na możliwość użycia danych różnego typu.
+   </simpara>
+   <!--
+   
+   Just an idea, maybe useful for some func-defs?
+   (at least it is for the operator-defs)
+   
+   <simpara>
+    In parameter definitions you can also encounter the 'number' pseudo-type,
+    that indicates a parameter that is either <type>integer</type> or 
+    <type>float</type>.
+   </simpara>
+   -->
+  </note>
+
+
+  <simpara>
+   Typ danych zwykle nie jest ustalany przez programistę. Robi to PHP na
+   podstawie kontekstu, w jakim zmienna jest używana.
+  </simpara>
+  <note>
+   <simpara>
+    Aby sprawdzić typ i wartość konkretnego <link
+    linkend="language.expressions">wyrażenia</link>, należy użyć funkcji
+    <function>var_dump</function>.
+   </simpara>
+   <simpara>
+    Aby mieć czytelną reprezentację typu dla potrzeb debugowania, należy użyć
+    funkcji <function>gettype</function>. Aby sprawdzić, czy zmienna jest
+    jakiegoś konkretnego typu, <emphasis>nie</emphasis> używaj funkcji
+    <function>gettype</function>, tylko grupy funkcji 
+    <literal>is_<replaceable>jakiś_typ</replaceable></literal>.
+   </simpara>
+   <!-- TODO: example(s) would be great -->
+  </note>
+  <simpara>
+   Aby narzucić konwersję zmiennej do określonego typu, można albo <link
+   linkend="language.types.typecasting">rzutować</link> zmienną, albo użyć
+   funkcji <function>settype</function>.
+  </simpara>
+  <simpara>
+   Proszę pamiętać, że w pewnych sytuacjach zmienne mogą się zachowywać różnie,
+   w zależności od tego, jakiego typu są w danej chwili. Więcej informacji
+   w rozdziale <link
+   linkend="language.types.type-juggling">wykorzystywanie typów danych</link>.
+  </simpara>
+  
+   
+   </sect1>
+   
+   <sect1 id="language.types.boolean">
+    <title>Zmienne Logiczne (Boolowskie - boolean)</title>
+    
+    <simpara>
+     Ten rodzaj jest najprostszy. Typ <type>boolean</type> wyraża logiczną
+     prawdę lub fałsz. Może mieć wartości &true; lub &false;.
+    </simpara>
+
+    <note>
+     <simpara>
+      Typ boolowski został wprowadzony w PHP 4.
+     </simpara>
+    </note>
+
+    <sect2 id="language.types.boolean.syntax">
+     <title>Składnia</title>
+     <para>
+      Aby utworzyć wartość boolowską, należy użyć słów kluczowych &true; lub
+      &false;. Wielkość liter w tych słowach nie gra roli.
+      <!-- technically they are just constants -->
+      <informalexample>
+       <programlisting role="php">
+<![CDATA[
+$foo = True; // przypisanie wartości logicznej prawda do $foo     
+]]>
+       </programlisting>
+      </informalexample>
+     </para>
+     <para>
+      Ten typ najczęściej używany jest przy
+      <link linkend="language.operators">operatorach</link>, które zwracają
+      wartość typu <type>boolean</type>, którą następnie przekazuje się
+      do <link linkend="control-structures">struktur kontrolnych</link>.
+      <informalexample>
+       <programlisting role="php">
+<![CDATA[
+// == jest operatorem, który zwraca wartość boolowską
+if ($akcja == "pokaż_wersję") {
+    echo "Wersja 1.23";
+}
+
+// to nie jest konieczne:
+if ($pokaż_separatory == TRUE) {
+    echo "<hr>\n";
+}
+
+// gdyż wystarczy tak:
+if ($pokaż_separatory) {
+    echo "<hr>\n";
+}
+]]>
+       </programlisting>
+      </informalexample>
+     </para>
+    </sect2>
+
+    <sect2 id="language.types.boolean.casting">
+     <title>Konwersja do typu boolowskiego</title>
+      <simpara>
+       Aby jawnie skonwertować wartość na typ <type>boolean</type>, należy
+       użyć rzutowania <literal>(bool)</literal> lub
+       <literal>(boolean)</literal>. Jednakże w większości przypadków nie ma
+       potrzeby użycia rzutowania, ponieważ wartość będzie automatycznie
+       skonwertowana na typ <type>boolean</type>, jeśli operator, funkcja lub
+       struktura kontrolna wymaga argumentu tego właśnie typu.
+      </simpara>
+      <simpara>
+       Zobacz też
+       <link linkend="language.types.type-juggling">wykorzysytwanie typów
+       danych</link>.
+      </simpara>
+      
+      <para>
+       Przy konwersji na typ <type>boolean</type>, poniższe wartości otrzymują
+       wartość logiczną &false;:
+  
+       <itemizedlist>
+        <listitem>
+         <simpara><link linkend="language.types.boolean">boolowski</link> 
+          &false;<!-- duh... --></simpara>
+        </listitem>
+        <listitem>
+         <simpara>liczba <link linkend="language.types.integer">całkowita</link
+         > 0 (zero) </simpara>
+        </listitem>
+        <listitem>
+         <simpara>liczba
+         <link linkend="language.types.float">zmiennoprzecinkowa</link> 
+         0.0 (zero) </simpara>
+        </listitem>
+        <listitem>
+         <simpara>pusty <link linkend="language.types.string"
+           >łańcuch znaków</link>, oraz <link linkend="language.types.string"
+           >łańcuch znaków</link> "0"</simpara>
+        </listitem>
+        <listitem>
+         <simpara><link linkend="language.types.array">tablica</link> 
+         z zerową liczbą elementów</simpara>
+        </listitem>
+        <listitem>
+         <simpara><link linkend="language.types.object">obiekt</link> 
+         z zerową liczbą elementów</simpara>
+        </listitem>
+        <listitem>
+         <simpara>specjalny typ <link linkend="language.types.null"
+           >NULL</link> (włączając niezadeklarowane zmienne)
+         </simpara>
+        </listitem>
+       </itemizedlist>
+       
+       Każda inna wartość otrzymuje logiczną wartość &true; (włączając w to
+       <link linkend="language.types.resource">identyfikatory zasobów</link>).
+       <warning>
+        <simpara>
+         <literal>-1</literal> także ma wartość &true;, jak każda niezerowa
+         (ujemna lub dodatnia) liczba!
+        </simpara>
+       </warning>
+       <!-- TODO: add a few examples, for the people only looking at 
+            the examples... -->
+      </para>
+     
+    </sect2>
+
+   </sect1>
+
+   <sect1 id="language.types.integer">
+    <title>Liczby całkowite (integer)</title>
+    
+    <simpara>
+     Typ <type>integer</type> to liczba całkowita, należąca do przedziału
+     Z = {..., -2, -1, 0, 1, 2, ...}.
+    </simpara>
+     
+    <para>
+     Zobacz też:
+     <link linkend="ref.gmp">Liczby całkowite dużej precyzji</link> oraz
+     <link linkend="language.types.float">Liczby zmiennoprzecinkowe</link>
+    </para>
+
+    <sect2 id="language.types.integer.syntax">
+     <title>Składnia</title>
+     <simpara>
+      Liczby całkowite mogą być zapisane w notacji dziesiętnej (opartej na 10),
+      szesnastkowej (opartej na 16) lub ósemkowej (opartej na 8), opcjonalnie
+      poprzedzone znakiem (- lub +).
+     </simpara>
+     <para>
+      Aby zapisać liczbę w notacji ósemkowej, należy poprzedzić właściwą liczbę
+      symbolem <literal>0</literal> (zero). W notacji szesnastkowej liczbę
+      należy poprzedzić symbolem <literal>0x</literal>.
+      <example>
+       <title>Notacja liczb całkowitych</title>
+       <programlisting role="php">
+<![CDATA[
+$a = 1234; # liczba dziesiętna
+$a = -123; # ujemna liczba dziesiętna
+$a = 0123; # liczba ósemkowa (odpowiednik dziesiętnej 83)
+$a = 0x1A; # liczba szesnastkowa (odpowiednik dziesiętnej 26)
+]]>
+       </programlisting>
+      </example>
+      <!--
+
+       decimal     : [1-9][0-9]*
+                   | 0
+       
+       hexadecimal : 0[xX][0-9a-fA-F]+
+       
+       octal       : 0[0-7]+
+       
+       integer     : [+-]?decimal
+                   | [+-]?hexadecimal
+                   | [+-]?octal
+       
+       -->
+      Maksymalna wielkość liczby całkowitej jest zależna od platformy
+      operacyjnej, zwykle jest to około dwa miliardy (jest to 32 bity ze
+      znakiem). PHP nie obsługuje liczb całkowitych bez znaku.
+     </para>
+    </sect2>
+   
+    <sect2 id="language.types.integer.overflow">
+     <title>Wyjście poza zakres liczb całkowitych</title>
+     <para>
+      W przypadku zapisania liczby całkowitej wykraczającej poza zakres typu
+      <type>integer</type>, liczba ta zostanie potraktowana jako typ
+      <type>float</type>. Również jeśli rezultat operacji będzie wykraczał poza
+      typ <type>integer</type>, jako wynik zostanie zwrócony typ 
+      <type>float</type>.
+      <informalexample>
+       <programlisting role="php">
+<![CDATA[
+$duża_liczba =  2147483647;
+var_dump($duża_liczba);
+// wynik: int(2147483647)
+
+$duża_liczba =  2147483648;
+var_dump($duża_liczba);
+// wynik: float(2147483648)
+
+// tak samo dzieje się przy wartościach szesnastkowych:
+var_dump( 0x80000000 );
+// wynik: float(2147483648)
+
+$million = 1000000;
+$duża_liczba =  50000 * $million;
+var_dump($duża_liczba);
+// wynik: float(50000000000)
+]]>
+       </programlisting>
+      </informalexample>
+      <warning>
+       <simpara>
+        Niestety, błąd w PHP powodował czasem nieprawidłową pracę z liczbami
+        ujemnymi. Na przykład: wynikiem działania <literal>-50000 *
+        $million</literal> była liczba <literal>-429496728</literal>. Błąd ten
+        pojawiał się tylko przy liczbach ujemnych i nie dotyczył wartości
+        dodatnich.
+       </simpara>
+       <simpara>
+        Powyższy problem został rozwiązany w PHP 4.1.0.
+       </simpara>
+      </warning>
+     </para>
+     <para>
+      W PHP nie ma operatora dzielenia całkowitego.
+      <literal>1/2</literal> daje wynik typu <type>float</type> o wartości
+      <literal>0.5</literal>.
+       <!-- See ??? for more information. (with the
+      operators, or with type-jug) -->
+      <informalexample>
+       <programlisting role="php">
+<![CDATA[
+var_dump( 25/7 );
+// wynik: float(3.5714285714286)
+]]>
+       </programlisting>
+      </informalexample>
+     </para>
+    </sect2>
+   
+
+    <sect2 id="language.types.integer.casting">
+     <title>Konwersja na liczby całkowite</title>
+      <simpara>
+       Do jawnej konwersji wartości na typ <type>integer</type> używa się
+       operatora rzutowania <literal>(int)</literal> lub
+       <literal>(integer)</literal>. W większości przypadków jednak rzutowanie
+       nie jest potrzebne, gdyż wartość zostanie skonwertowana automatycznie,
+       o ile operator, funkcja lub struktura kontrolna wymaga argumentu typu
+       <type>integer</type>.
+      </simpara>
+      <simpara>
+       Zobacz też 
+       <link linkend="language.types.type-juggling">wykorzystywanie 
+       typów danych</link>.
+      </simpara>
+      
+      <sect3 id="language.types.integer.casting.from-boolean">
+       <title>Z <link linkend="language.types.boolean"
+           >boolowskiej</link></title>
+       <simpara>
+        &false; będzie mieć wartość 
+        <literal>0</literal> (zero), a &true; 
+        będzie mieć wartość <literal>1</literal> (jeden).
+       </simpara>
+      </sect3>
+
+      <sect3 id="language.types.integer.casting.from-float">
+       <title>Z <link linkend="language.types.float">liczb
+       zmiennoprzecinkowych</link></title> 
+       <simpara>
+        Przy konwersji z liczb zmiennoprzecinkowych do całkowitych, liczba
+        zostanie zaokrąglona <emphasis>w dół</emphasis>.
+       </simpara>
+       
+       <para>
+        Jeśli liczba zmiennoprzecinkowa jest poza zakresem liczb całkowitych,
+        (zwykle <literal>+/- 2.15e+9 = 2^31</literal>), wynik operacji
+        rzutowania jest niezdefiniowany, ponieważ liczba zmiennoprzecinkowa nie
+        ma odpowiedniej precyzji, aby zwrócić dokładną liczbę całkowitą. W tej
+        sytuacji nie pojawi się żadne ostrzeżenie ani informacja odnośnie
+        powstałego błędu!
+       </para>
+       
+       <warning><para>
+        Nigdy nie należy rzutować nieznanego ułamka do typu
+        <type>integer</type>, gdyż może to doprowadzić do otrzymania
+        nieprzewidywalnych wyników.
+        <informalexample>
+         <programlisting role="php">
+<![CDATA[
+echo (int) ( (0.1+0.7) * 10 ); // wyświetla 7!
+]]>
+         </programlisting>
+        </informalexample>
+        
+        Więcej informacji na ten temat w rozdziale <link 
+        linkend="warn.float-precision">precyzja liczb
+        zmiennoprzecinkowych</link>.
+       </para></warning>
+      </sect3>
+      
+      <sect3 id="language.types.integer.casting.from-string">
+       <title>Z łańcuchów znaków</title>
+       <simpara>
+        Zobacz <link linkend="language.types.string.conversion">konwersja
+        łańcuchów znaków</link>
+       </simpara>
+      </sect3>
+      
+      <sect3 id="language.types.integer.casting.from-other">
+       <title>Z innych typów</title>
+       <para>
+        <caution>
+         <simpara>
+          Wynik konwersji do liczb całkowitych z innych typów jest nieokreślony.
+          Obecnie zachowanie jest takie samo, jakby zmienna została najpierw
+          <link linkend="language.types.boolean.casting">skonwertowana do
+          typu boolowskiego</link>. <emphasis>Nie</emphasis> należy jednak
+          polegać na tym zachowaniu, gdyż może ono ulec zmianie bez żadnego
+          ostrzeżenia.
+         </simpara>
+        </caution>
+       </para>
+       <!--
+        
+        IMO, it would more sense as (int) $arr returned the 
+        number of elements in $arr. This won't break anything,
+        since this behaviour was never defined before, and 
+        (bool)(int) $arr will still behave the same.
+        
+        -->
+      </sect3>
+      
+    </sect2>
+  </sect1>
+
+  <sect1 id="language.types.float">
+   <title>Liczby zmiennoprzecinkowe (float)</title>
+   <para>
+    Liczby zmiennoprzecinkowe (typ float, double lub liczby rzeczywiste)
+    mogą być zapisane przy użyciu dowolnej z poniższych składni:
+    <synopsis>
+$a = 1.234; $a = 1.2e3; $a = 7E-10;
+    </synopsis>
+    <!--  
+    
+LNUM	[0-9]+
+DNUM	([0-9]*[\.][0-9]+)|([0-9]+[\.][0-9]*)
+EXPONENT_DNUM	(({LNUM}|{DNUM})[eE][+-]?{LNUM})
+    
+    -->
+    Maksymalna wielkość liczby zmiennoprzecinkowej jest zależna od platformy
+    operacyjnej, zwykle jest to ~1.8e308, przy precyzji 14 liczb dziesiętnych
+    po przecinku (jest to 64 bitowy format IEEE).
+   </para>
+   <warning id="warn.float-precision">
+    <title>Precyzja liczb zmiennoprzecinkowych</title>
+    <para>
+     Jest oczywiste, że nawet proste ułamki dziesiętne, takie jak
+     <literal>0.1</literal> lub <literal>0.7</literal>, nie mogą zostać
+     skonwertowane na ich dwójkowe odpowiedniki bez niewielkiej straty
+     dokładności. Może to powodować pewne problemy: na przykład wyrażenie
+     <literal>floor((0.1+0.7)*10)</literal> zwykle ma wartość
+     <literal>7</literal>, zamiast oczekiwanej <literal>8</literal>, gdyż
+     wewnętrzna reprezentacja tego wartości to liczba 
+     <literal>7.9999999999...</literal>.
+    </para>
+    <para>
+     Powiązane jest to z faktem, że dla pewnych ułamków zwykłych nie istnieje
+     skończone rozwinięcie dziesiętne. Na przykład <literal>1/3</literal> w
+     reprezentacji dziesiętnej ma wartość <literal>0.3333333. . .</literal>.
+    </para>
+    <para>
+     Dlatego nigdy nie należy wierzyć liczbom zmiennoprzecinkowym do ostatniej
+     cyfry i nigdy nie należy wykonywać operacji porównania na stwierdzenie
+     równości. Do operacji na liczbach zmiennoprzecinkowych o naprawdę dużej
+     precyzji należy użyć <link
+     linkend="ref.bc">biblioteki BCMath</link> lub funkcji 
+     <link linkend="ref.gmp">gmp</link>.
+    </para>
+   </warning>
+  </sect1>
+
+  <sect1 id="language.types.string">
+   <title>Łańcuchy znaków (string)</title>
+   <para>
+    Typ <type>string</type> oznacza łańcuch znaków. W PHP znak jest tym sam co
+    bajt, co oznacza, że jest możliwych 256 różnych znaków. Oznacza to także,
+    że PHP nie posiada żadnej wbudowanej obsługi Unikodu.
+    <!-- how about unicode? will we support that eventually? Are
+    there current any ways to work with unicode?
+    -->
+   </para>
+   <note>
+    <simpara>
+     Nie ma technicznych problemów, które utrudniałyby tworzenie bardzo długich
+     ciągów znaków. Nie ma też ustalonej maksymalnej długości łańcuchów znaków
+     obsługiwanych w PHP, więc nie ma powodu do obaw, że dany łańcuch jest zbyt
+     długi.
+    </simpara>
+   </note>
+   <sect2 id="language.types.string.syntax">
+    <title>Składnia</title>
+    <para>
+     Łańcuch znaków można utworzyć na trzy sposoby.
+     <itemizedlist>
+
+      <listitem>
+       <simpara>
+        <link linkend="language.types.string.syntax.single">pojedyncze
+        cudzysłowy</link>
+       </simpara>
+      </listitem>
+      <listitem>
+       <simpara>
+        <link linkend="language.types.string.syntax.double">podwójne
+        cudzysłowy</link>
+       </simpara>
+      </listitem>
+      <listitem>
+       <simpara>
+        <link linkend="language.types.string.syntax.heredoc">składnia
+        heredoc</link>
+       </simpara>
+      </listitem>
+
+     </itemizedlist>
+    </para>
+    <sect3 id="language.types.string.syntax.single">
+     <title>Pojedyncze cudzysłowy</title>
+     <para>
+      Najprostszym sposóbem na zdefiniowanie prostego łańcucha znaków, jest
+      umieszczenie go w pojedynczych cudzysłowach (znak <literal>'</literal>).
+     </para>
+     <para>
+      Aby w takim łańcuch umieścić symbol pojedynczego cudzysłowu, należy go
+      poprzedzić ukośnikiem wstecznym (<literal>\</literal>), tak jak w wielu
+      innych językach programowania. Jeśli ukośnik wsteczny ma wystąpić przed
+      symbolem pojedynczego cudzysłowu lub na końcu łańcucha, wtedy należy
+      napisać go dwukrotnie. W przypadku użycia ukośnika wstecznego z innym
+      znakiem, ukośnik też zostanie wyświetlony! Nie ma zatem potrzeby pisania
+      ukośnika dwukrotnie w innych sytuacjach.
+      <note>
+       <simpara>
+        W PHP 3, ostrzeżenie na poziomie <literal>E_NOTICE</literal> zostanie
+        wyświetlone, jeśli zajdzie powyższa sytuacja.
+       </simpara>
+      </note>
+      <note>
+       <simpara> 
+        W przeciwieństwie do dwóch pozostałych składni, zmienne
+        <emphasis>nie</emphasis> będą zamienione na swoje wartości, kiedy
+        pojawią się pomiędzy pojedynczymi cudzysłowami.
+       </simpara>
+      </note>
+      <informalexample>
+       <programlisting role="php">
+<![CDATA[
+echo 'przykładowy tekst';
+echo 'Wewnątrz łańcuchów znaków mogą się znajdować przełamania linii,
+o właśnie takie.';
+echo 'Adam powiedział: "I\'ll be back"';
+// wynik: ... "I'll be back"
+echo 'Czy na pewno chcesz skasować C:\\*.*?';
+// wynik: ... skasować C:\*.*?
+echo 'Czy na pewno chcesz skasować C:\*.*?';
+// wynik: ... skasować C:\*.*?
+echo 'Próbuję w tym miejscu wprowadzić: \n znak nowej linii';
+// wynik: ... wprowadzić: \n znak nowej linii
+]]>
+       </programlisting>
+      </informalexample>
+     </para>
+    </sect3>
+    <sect3 id="language.types.string.syntax.double">
+     <title>Podwóje cudzysłowy</title>
+     <para>
+      Kiedy łańcuch znaków jest umieszczony pomiędzy podwójnymi cudzysłowami,
+      PHP interpretuje więcej sekwencji cytowania dla znaków specjalnych:
+     </para>
+     <table>
+      <title>Znaki cytowane (specjalne)</title>
+      <tgroup cols="2">
+       <thead>
+        <row>
+         <entry>sekwencja</entry>
+         <entry>znaczenie</entry>
+        </row>
+       </thead>
+       <tbody>
+        <row>
+         <entry><literal>\n</literal></entry>
+         <entry>nowa linia (LF lub 0x0A (10) w ASCII)</entry>
+        </row>
+        <row>
+         <entry><literal>\r</literal></entry>
+         <entry>powrót karetki (CR lub 0x0D (13) w ASCII)</entry>
+        </row>
+        <row>
+         <entry><literal>\t</literal></entry>
+         <entry>tabulacja pozioma (HT lub 0x09 (9) w ASCII)</entry>
+        </row>
+        <row>
+         <entry><literal>\\</literal></entry>
+         <entry>odwrotny ukośnik</entry>
+        </row>
+        <row>
+         <entry><literal>\$</literal></entry>
+         <entry>znak dolara</entry>
+        </row>
+        <row>
+         <entry><literal>\"</literal></entry>
+         <entry>cudzysłów podwójny</entry>
+        </row>
+        <row>
+         <entry><literal>\[0-7]{1,3}</literal></entry>
+         <entry>
+          sekwencja znaków pasująca do powyższego wyrażenia regularnego daje
+          znak zapisany w notacji ósemkowej
+         </entry>
+        </row>
+        <row>
+         <entry><literal>\x[0-9A-Fa-f]{1,2}</literal></entry>
+         <entry>
+          sekwencja znaków pasująca do powyższego wyrażenia regularnego daje
+          znak zapisany w notacji szesnastkowej
+         </entry>
+        </row>
+       </tbody>
+      </tgroup>
+     </table>
+     <para>
+      Tak jak w poprzedniej składni, zapisanie ukośnika wstecznego przed
+      każdym innymi znakiem spowoduje wyświetlenie zarówno ukośnika, jak i
+      znaku.
+     </para>
+     <para>
+      Ale najważniejszą właściwością podwójnych cudzysłowów jest to, że zapisane
+      w nich zmienne zostaną zamienione na ich wartości. Więcej informacji
+      w rozdziale <link linkend="language.types.string.parsing">parsowanie
+      łańcuchów znaków</link>.
+     </para>
+    </sect3>
+    
+    <sect3 id="language.types.string.syntax.heredoc">
+     <title>Składnia Heredoc</title>
+     <simpara>
+      Jeszcze jednym sposobem na zapisanie łańcucha znaków jest użycie skladni
+      heredoc ("&lt;&lt;&lt;"). Po operatorze <literal>&lt;&lt;&lt;</literal>
+      powinno się umieścić identyfikator i takim samym identyfikatorem trzeba
+      zakończyć łańcuch znaków.
+     </simpara>     
+     <simpara>
+      Identyfikator zamykający <emphasis>musi</emphasis> zaczynać się w
+      pierwszej kolumnie nowej linii. Identyfikator musi też podlegać regułom
+      nazewnictwa w PHP: musi się składać wyłącznie z alfanumerycznych znaków
+      oraz znaku podkreślenia i musi zaczynać się od litery lub znaku
+      podkreślenia.
+     </simpara>
+     
+     <warning>
+      <simpara>
+       Ważne by pamiętać, że linia zawierająca identyfikator zamykający nie
+       może zawierać żadnych innych znaków, z <emphasis>wyjątkiem</emphasis>
+       średnika (<literal>;</literal>). Znaczy to przede wszystkim, że
+       identyfikator zamykający <emphasis>nie może być wcinany</emphasis>,
+       i nie może być żadnych spacji ani tabulacji przed lub za średnikiem.
+      </simpara>
+      <simpara>
+       Najbardziej dokuczliwym ograniczeniem jest to, że wewnątrz tego łańcucha
+       znaków nie może być znaku powrotu karetki (<literal>\r</literal>) na
+       końcu linii, jedynie znak nowej linii (<literal>\n</literal>).
+       Ponieważ Microsoft Windows używa jako znaku końca linii sekwencji
+       <literal>\r\n</literal>, łańcuchy znaków zapisne w składni heredoc
+       mogą nie działać, jeśli skrypt zostanie napisany w edytorze windowsowym.
+       Na szczęście większość edytorów tekstowych udostępnia możliwość zapisania
+       pliku w uniksowym formacie końca linii.
+       <!--
+       FTP will sometimes automatically convert \r\n to \n while
+       transferring your files to your webserver (which
+       is *nix, of course)
+       -->
+      </simpara>
+     </warning>
+
+     <para>
+      Składnia heredoc zachowuje się podobnie jak tekst w cudzysłowach
+      podwójnych. Oznacza to też, ze nie ma potrzeby cytowania cudzysłowów w tej
+      składni, ale nadal można używać znaków cytowanych, opisanych powyżej.
+      W tej składni nazwa zmiennej zamieniana jest na jej wartość, ale należy
+      zachować ostrożność przy zapisie złożonych zmiennych razem z tekstem.
+      <example> 
+       <title>Przykład składni heredoc</title>
+       <programlisting role="php">
+<![CDATA[
+<?php
+$str = <<<EOD
+Przykład łańcucha znaków,
+zajmującego kilka linii,
+zapisanego w składni heredoc.
+
+Przykładowe zastosowanie w przezentacji liryki.
+
+Litwo! Ojczyzno moja! ty jesteś jak zdrowie;
+Ile cię trzeba cenić, ten tylko się dowie,
+Kto cię stracił. Dziś piękność twą w całej ozdobie
+Widzę i opisuję, bo tęsknię po tobie.
+\tAdam Mickiewicz - Pan Tadeusz
+EOD;
+
+/* Bardziej złożony przykład, ze zmiennymi */
+class foo
+{
+    var $foo;
+    var $bar;
+
+    function foo()
+    {
+        $this->foo = 'Foo';
+        $this->bar = array('Bar1', 'Bar2', 'Bar3');
+    }
+}
+
+$foo = new foo();
+$name = 'MojeImię';
+
+echo <<<EOT
+Nazywam się "$name". Wyświetlam $foo->foo.
+A teraz wyświetlam z tablicy: {$foo->bar[1]}.
+Po dwukropku powinien pojawić się znak 'A': \x41
+EOT;
+?>
+]]>
+       </programlisting>
+      </example>
+     </para>
+  
+     <note>
+      <para>
+       Obsługa składni heredoc została dodana w PHP 4.
+      </para>
+     </note>
+  
+    </sect3>
+    <sect3 id="language.types.string.parsing">
+     <title>Parsowanie zmiennych</title>
+     <simpara>
+      Kiedy łańcuch znaków jest zapisany w cudzysłowach podwójnych lub w składni
+      heredoc, zawarte w nim nazwy zmiennych są parsowane, tzn. 
+      zamieniane na ich wartości.
+     </simpara>
+     <simpara>
+      Są dwa rodzaje składni,
+      <link linkend="language.types.string.parsing.simple">prosta</link>
+      i
+      <link linkend="language.types.string.parsing.complex">złożona</link>.
+      Składnia prosta jest najbardziej popularna i najwygodniejsza, pozwala
+      na parsowanie zmiennej, wartości z tablicy oraz właściwości obiektu.
+     </simpara>
+     <simpara>
+      Składnia złożona pojawiła się w PHP 4, i można ją rozpoznać po nawiasach
+      sześciennych, otaczających wyrażenie.
+     </simpara>
+     <sect4 id="language.types.string.parsing.simple">
+      <title>Składnia prosta</title>
+      <simpara>
+       Jeśli wewnątrz zmiennej pojawi się znak dolara (<literal>$</literal>),
+       parser pobierze, jak najwięcej tylko się da znaków, aby utworzyć poprawną
+       nazwę zmiennej. Aby jawnie określić koniec nazwy zmiennej, należy ją
+       zapisać w nawiasach sześciennych.
+      </simpara>
+      <informalexample>
+       <programlisting role="php">
+<![CDATA[
+$beer = 'Heineken';
+echo "$beer's taste is great"; /* działa, "'" nie jest poprawnym znakiem nazwy
+zmiennej*/
+echo "He drunk some $beers"; /* nie działa, 's' jest poprawnym znakiem nazwy
+zmiennej*/ 
+echo "He drunk some ${beer}s"; // dział
+]]>
+       </programlisting>
+      </informalexample>
+      <simpara>
+       Podobnie działa parsowanie elementu tablicy lub właściwości obiektu.
+       Dla tablic, prawy nawias prostokątny (<literal>]</literal>) oznacza
+       koniec indeksu. Dla właściwości obiektu obowiązują te same reguły
+       jak dla zwykłych zmiennych, jednak nie działają tu opisane powyżej
+       sztuczki ze zmiennymi.
+       
+       <!-- XXX isn't &true; :(, this would be the trick
+       Also,
+       the same trick with curly-braces works if you
+       want to limit the greediness of parsers (aren't they
+       paying them enough or something?).
+       -->
+      
+      </simpara>
+      <informalexample>
+       <programlisting role="php">
+<![CDATA[
+$owoce = array( 'truskawka' => 'czerwona' , 'banan' => 'żółty' );
+
+// zauważ że to działa inaczej poza cudzysłowami
+echo "Banan jest $owoce[banan].";
+
+echo "Kwadrat ma szerokość $kwadrat->szerokość metrów.";
+
+// Nie działa. Trzeba tu zastosować składnię złożoną
+echo "Kwadrat ma szerokość $kwadrat->szerokość00 centymetrów.";
+
+]]>
+<!-- XXX this won't work:
+echo "This square is $square->{width}00 centimeters broad."; 
+// XXX: php developers: it would be consequent to make this work.
+// XXX: like the $obj->{expr} syntax outside a string works, 
+// XXX: analogously to the ${expr} syntax for variable var's.
+-->
+       </programlisting>
+      </informalexample>
+      <simpara>
+       Do wyrażeń bardziej skomplikowanych należy używać składni złożonej.
+      </simpara>
+     </sect4>
+     <sect4 id="language.types.string.parsing.complex">
+      <title>Składnia złożona</title>
+      <simpara>
+       Nazwa tej składni nie pochodzi od skomplikowanego zapisu, tylko od
+       jej możliwości obsługi złożonych wyrażeń.
+     </simpara>
+     <simpara>
+      Za pomocą tej składni można umieszczać w łańcuchach znaków każdą wartość
+      istniejącą w przestrzeni nazw. Odpowiednie wyrażenie pisze się tak, jakby
+      miało ono znajdować się gdziekolwiek poza łąńcuchem znaków, a potem tylko
+      umieszcza się je między { i }. Ponieważ nie można cytować "{", składnia
+      ta będzie prawidłowo rozpoznana tylko wtedy, kiedy $ znajduje się
+      bezpośrednio za {. (Użyj "{\$" lub "\{$" aby uzyskać "{$"). Poniżej kilka
+      przykładów:
+     </simpara>
+     <informalexample>
+      <programlisting role="php">
+<![CDATA[
+$fajne = 'fantastyczne';
+echo "To jest { $fajne}"; // nie działa, zwraca: To jest { fantastyczne}
+echo "To jest {$fajne}";  // działa, zwraca: To jest fantastyczne
+echo "Kwadrat ma szerokość {$kwadrat->szerokość}00 centimetrów."; 
+echo "To działa: {$arr[4][3]}";     
+
+// Tak jest źle z tego samego powodu
+// co $foo[bar] poza łańcuchem. 
+echo "Tak jest źle: {$arr[foo][3]}"; 
+
+echo "Prawidłowo jest tak: {$arr['foo'][3]}";
+echo "Można nawet pisać tak: {$obj->wartości[3]->nazwa}";
+echo "To jest wartość zmiennej o nazwie $nazwa: {${$nazwa}}";
+]]>
+<!-- maybe it's better to leave this out?? 
+// this works, but i disencourage its use, since this is NOT 
+// involving functions, rather than mere variables, arrays and objects.
+$beer = 'Heineken';
+echo "I'd like to have another {${ strrev('reeb') }}, hips";
+ -->
+       </programlisting>
+      </informalexample>
+     </sect4>
+    </sect3>
+    
+    <sect3 id="language.types.string.substr">
+     <title>Indeksowanie łańcucha (ofsety)</title>
+     <para>
+      Dostęp do pojedynczego znaku łańcucha jest możliwy po podaniu jego
+      indeksu (ofsetu) w nawiasach sześciennych, zaraz po nazwie zmiennej.
+      Pierwszy znak w łańcuchu ma indeks zero.
+     </para>
+     <note>
+      <simpara>
+       Dla zachowania kompatybilności wstecznej, nadal można używać nawiasów
+       kwadratowych, jednak składnia ta, w PHP 4, jest uznana za przestarzałą.
+      </simpara>
+     </note>
+     <para>
+      <example>
+       <title>Przykłady używania łańcuchów znaków</title>
+       <programlisting role="php">
+<!-- TODO: either move these examples to a example section,
+as with arrays, or distribute them under the applicable
+sections. -->
+<![CDATA[
+<?php
+/* Przypisywanie łańcucha do zmiennej */
+$str = "To jest łańcuch znaków";
+
+/* Dołączanie innego łańcucha */
+$str = $str . " a to jego dalsza część";
+
+/* inny sposób dołączania, ze znakiem nowej linii na końcu */
+$str .= " wraz ze znakiem nowej linii na końcu.\n";
+
+/* Ten łańcuch będzie zawierać: "<p>Liczba: 9</p>" */
+$num = 9;
+$str = "<p>Liczba: $num</p>";
+
+/* Natomiast tutaj będzie: "<p>Liczba: $num</p>" */
+$num = 9;
+$str = '<p>Liczba: $num</p>';
+
+/* Pobranie pierwszego znaku łańcucha  */
+$str = 'To jest przykład.';
+$pierwszy = $str{0};
+
+/* Ostatni znak łańcucha */
+$str = 'Dalsza część przykładu.';
+$ostatni = $str{strlen($str)-1};
+?>
+]]>
+       </programlisting>
+      </example>
+     </para>
+    </sect3>
+
+   </sect2><!-- end syntax -->
+
+   <sect2 id="language.types.string.useful-funcs">
+    <title>Przydatne funkcje i operatory</title><!-- and operators -->
+    <para>
+     Łańcuchy znaków łączy się za pomocą operatora '.' (kropka). Proszę
+     pamiętać, że operator dodawania '+' nie obsługuje łączenia łańcuchów.
+     Więcej informacji w rozdziale 
+     <link linkend="language.operators.string">operatory łańcuchowe</link>.
+    </para>
+    <para>
+     PHP posiada mnóstwo funkcji operujących na łańcuchach znaków.
+    </para>
+    <simpara>
+     Najwięcej na ten temat w rozdziale 
+     <link linkend="ref.strings">funkcje łańcuchowe</link>. Poza tym obsługiwane
+     są wyrażenia regularne dla potrzeb zaawnsowanych operacji znajdź i zamień
+     (w dwóch odmianach: <link linkend="ref.pcre">Perl</link> oraz 
+     <link linkend="ref.regex">POSIX extended</link>).
+    </simpara>
+    <simpara>
+     Są także <link linkend="ref.url">funkcje obsługi łańcuchów URL</link>,
+     jak również funkcje szyfrowania i deszyfrowania łańcuchów 
+     (<link linkend="ref.mcrypt">mcrypt</link> oraz 
+     <link linkend="ref.mhash">mhash</link>).
+    </simpara>
+    <simpara>
+     Jeśli nadal nie znalazłeś tego, czego potrzebujesz, być może pomogą
+     ci <link linkend="ref.ctype">funkcje kontroli typu znaków</link>.
+    </simpara>
+   </sect2>
+   <sect2 id="language.types.string.conversion">
+    <title>Konwersja łańcuchów znaków</title>
+
+    <simpara>
+     Jeśli łańcuch znaków jest konwertowany na postać liczbową, rezultat
+     konwersji będzie zależał od poniższych czynników.
+    </simpara>
+    <simpara>
+     Łańcuch zostanie skonwertowany do typu <type>float</type>, jeśli zawiera
+     znaki ".", "e" lub "E". W przeciwnym razie zostanie skonwertowany do typu
+     <type>integer</type>.
+    </simpara>
+    <para>
+     Wartość liczbowa łańcucha znaków zależy od pierwszych znaków tego
+     łańcucha. Jeśli łańcuch zaczyna się od poprawnej wartości liczbowej,
+     wartość ta będzie używa przy konwersji. W przeciwnym razie zwrócona będzie
+     wartość 0 (zero). Poprawna wartość liczbowa zaczyna się od opcjonalnego
+     znaku, po którym znajduje się jedna, lub kilka cyfr (opcjonalnie
+     zawierające przecinek dziesiętny), po którym opcjonalnie znajduje się
+     eksponent. Eksponent jest to znak "e" lub "E", po którym następuje jedna,
+     lub więcej cyfr.
+    </para>
+    <simpara>
+     Kiedy pierwszym wyrażeniem jest łańcuch znaków, typ zmiennej będzie zależał
+     od drugiego wyrażenia.
+    </simpara>
+    <informalexample>
+     <programlisting role="php">
+<![CDATA[
+$foo = 1 + "10.5";              // $foo jest typu float (11.5)
+$foo = 1 + "-1.3e3";            // $foo jest typu float (-1299)
+$foo = 1 + "bob-1.3e3";         // $foo jest typu integer (1)
+$foo = 1 + "bob3";              // $foo jest typu integer (1)
+$foo = 1 + "10 małych świnek";    // $foo jest typu integer (11)
+$foo = 1 + "10 malutkich świnek"; // $foo jest typu integer (11)
+$foo = "10.0 świnek " + 1;        // $foo jest typu integer (11)
+$foo = "10.0 świnek " + 1.0;      // $foo jest typu float (11)     
+]]>
+     </programlisting>
+    </informalexample>
+    <simpara>
+     Więcej informacji na temat tej konwersji znajduje się w podręczniku Uniksa,
+     na stronie polecenia strtod(3).
+    </simpara>
+    <para>
+     Jeśli chciałbyś przetestować któryś z przykładów w tym rozdziale, możesz
+     je skopiować i wkleić, a następnie dodać poniższą linię i obserwować
+     rezultaty.
+     <informalexample>
+      <programlisting role="php">
+<![CDATA[
+echo "\$foo==$foo; jest typu " . gettype ($foo) . "<br>\n";
+]]>
+      </programlisting>
+     </informalexample>
+    </para>
+
+   </sect2>
+  </sect1><!-- end string -->
+
+  <sect1 id="language.types.array">
+   <title>Tablice (array)</title>
+
+   <para>
+    Tablica w PHP jest obecnie uporządkowaną mapą. Mapa jest typem, który
+    przyporządkowuje <emphasis>wartości</emphasis> do
+    <emphasis>kluczy</emphasis>. Typ ten jest optymalizowany na wiele sposobów,
+    więc można go używać jako typową tablicę, albo listę (wektorową),
+    tablicę asocjacyjną (która jest jedną z implementacji mapy), słownik,
+    kolekcję, stos, kolejkę, i temu podobne. Ponieważ wartością tablicy może
+    być inna tablica PHP, można także łatwo symulować drzewa.
+   </para>
+   <para>
+    Wyjasnienie wspomnianych struktur wykracza poza problematykę tego
+    podręcznika,
+    aczkolwiek poniżej uwzględniono conajmniej jeden przykład na każdą z nich.
+    Głębiej zainteresowanych czytelników odsyłamy do odpowiedniej literatury
+    informatycznej. 
+    <!-- like goodrich&tamassia: datastructures and algorithmes.
+    Only, the subtitle is: in Java, and it's quite academic too -->
+   </para>
+   
+   <sect2 id="language.types.array.syntax">
+    <title>Składnia</title>
+    
+    <sect3 id="language.types.array.syntax.array-func">
+     <title>Tworzenie za pomocą <function>array</function></title>
+     <para>
+      Tablicę można utworzyć za pomocą konstrukcji językowej
+      <function>array</function>. Argumentem tej konstrukcji są rozdzielone
+      przecinkiem pary 
+      <literal><replaceable>klucz</replaceable> =&gt; <replaceable
+      >wartość</replaceable></literal>.
+     </para>
+     <para>
+      <varname>klucz</varname> może być albo nieujemną liczbą całkowitą,  
+      <!-- 
+      
+      Negative integers are also allowed, however, IMO it's best to not 
+      document that, or even disencourage it. 
+      
+      Why?
+      
+      First, because it is very tricky. But the real reason is that the key
+      '-1' will be interpreted as a string, and not as a integer. Therefore,
+      the usage
+      
+      "the -1'st value of \$arr is $arr[-1]" is ambigious. By the way,
+      it results in a parse-error anyway, which is another argument for
+      not documenting it.
+      
+      -Jeroen
+      
+      -->
+      albo łańcuchem znaków.
+      Jeśli klucz jest standardową reprezentacją nieujemnej liczby całkowitej,
+      zostanie zinterpretowany tak, jak jest (tzn. <literal>'8'</literal> 
+      będzie zinterpretowane jako <literal>8</literal>, podczas gdy
+      <literal>'08'</literal> będzie zinterpretowane jako
+      <literal>'08'</literal>).
+     </para>
+     <para>
+      Wartością może być cokolwiek.
+     </para>
+     <para>
+      Jeśli pominiesz klucz, to jako klucz zostanie użyty najwyższy indeks
+      całkowity + 1. Jeśli nie ma w ogóle indeksu całkowitego, to klucz będzie
+      miał wartość <literal>0</literal> (zero). Jeśli użyjesz klucza, do którego
+      już wcześniej została przypisana wartość, wartość ta zostanie nadpisana.
+     </para>
+     
+     <para>
+      <synopsis>
+array( <optional> <replaceable>klucz</replaceable> =&gt; </optional>
+<replaceable>wartość</replaceable>
+     , ...
+     )
+// <replaceable>klucz</replaceable> jest albo łańcuchem znaków, albo nieujemną
+                                    liczbą całkowitą
+// <replaceable>wartość</replaceable> może być dowolna
+      </synopsis>
+     </para>
+    </sect3>
+    
+    <sect3 id="language.types.array.syntax.modifying">
+     <title>Tworzenie i edytowanie składnią nawiasów kwadratowych</title>
+     <para>
+      Można zmieniać istniejącą tablicę jawnie ustawiając wartości.
+     </para>
+     <para>
+      Robi się to przez przypisanie wartości do tablicy z podaniem klucza w
+      nawiasach kwadratowych. Można także pominąć klucz i użyć pustej pary
+      nawiasów ("<literal>[]</literal>").
+      <synopsis>
+$arr[<replaceable>klucz</replaceable>] = <replaceable>wartość</replaceable>;
+$arr[] = <replaceable>wartość</replaceable>;
+// <replaceable>klucz</replaceable> jest albo łańcuchem znaków, albo nieujemną
+                                    liczbą całkowitą
+// <replaceable>wartość</replaceable> może być dowolna
+      </synopsis>
+      Jeśli tablica <varname>$arr</varname> nie istnieje, zostanie stworzona.
+      Jest to więc metoda na tworzenie tablic. Aby zmienić wartość konkretnego
+      klucza, po prostu przypisz nową wartość do niego. Aby usunąć parę
+      klucz/wartość, trzeba użyć funkcji <function>unset</function>.
+      
+     </para>
+
+    </sect3>
+    
+
+   </sect2><!-- end syntax -->
+   
+   <sect2 id="language.types.array.useful-funcs">
+    <title>Przydatne funkcje</title>
+    <para>
+     Jest wiele przydatnych funkcji obsługi tablic, o czym więcej w rozdziale
+     <link linkend="ref.array">Tablice</link>.
+    </para>
+    <note>
+     <para>
+      Funkcja <function>unset</function> pozwala kasować komórki tablicy.
+      W takiej sytuacji jednak tablica NIE zostanie zreindeksowana.
+      <informalexample>
+       <programlisting role="php">
+<![CDATA[
+$a = array( 1 => 'jeden', 2 => 'dwa', 3 => 'trzy' );
+unset( $a[2] );
+/* to tak, jakby utworzyć tablicę:
+   $a = array( 1 => 'jeden', 3 => 'trzy');
+   ale NIE:
+   $a = array( 1 => 'jeden', 2 => 'trzy');
+*/   
+]]>
+      </programlisting>
+     </informalexample>
+     
+     </para>    
+    </note> 
+    <para>
+     Struktura kontrolna 
+     <link linkend="control-structures.foreach">foreach</link> została stworzona
+     specjalnie dla potrzeb tablic. Dzięki niej można łatwo trawersować tablicę.
+    </para>
+    
+    
+   </sect2>
+   
+   <sect2 id="language.types.array.donts">
+    <title>Co wolno, a czego nie w tablicach?</title>
+
+    <sect3 id="language.types.array.foo-bar">
+     <title>Dlaczego zapis
+     <literal>$foo[bar]</literal> jest niepoprawny?</title>
+     <para>
+      W starych skryptach można spotkać taką składnię:
+      <informalexample>
+       <programlisting role="php">
+<![CDATA[
+$foo[bar] = 'coś';
+echo $foo[bar];
+// itd.
+]]>
+       </programlisting>
+      </informalexample>
+      Ten zapis jest niepoprawny, ale działa. Dlaczego zatem jest niepoprawny?
+      Powód jest to, co opisano w rozdziale <link
+      linkend="language.types.array.syntax">składnia</link>, że pomiędzy
+      nawiasami kwadratowymi ('<literal>[</literal>' i '<literal>]</literal>')
+      musi znajdować się wyrażenie. Oznacza to, że można używać czegoś takiego:
+      <informalexample>
+       <programlisting role="php">
+<![CDATA[
+echo $arr[ foo(true) ];        
+]]>
+       </programlisting>
+      </informalexample>
+      Jest to przykład użycia wartości zwracanej przez funkcję jako indeksu
+      tablicy. PHP zna też stałe, więc można spotkać zastosowanie      
+      <literal>E_*</literal>.      
+
+      <informalexample>
+       <programlisting role="php">
+<![CDATA[
+$opis_błędu[E_ERROR] = "Wystąpił poważny błąd";
+$opis_błędu[E_WARNING] = "PHP wysłało ostrzeżenie";
+$opis_błędu[E_NOTICE] = "To jest tylko nieformalna uwaga";
+]]>
+       </programlisting>
+      </informalexample>
+      Proszę pamiętać, że <literal>E_ERROR</literal> jest także ważnym
+      identyfikatorem, tak jak <literal>bar</literal> w pierwszym przykładzie.
+      Ale ostatni przykład znaczy to samo co:
+      <informalexample>
+       <programlisting role="php">
+<![CDATA[
+$opis_błędu[1] = "Wystąpił poważny błąd";
+$opis_błędu[2] = "PHP wysłało ostrzeżenie";
+$opis_błędu[8] = "To jest tylko nieformalna uwaga";
+]]>
+       </programlisting>
+      </informalexample>
+      ponieważ <literal>E_ERROR</literal> znaczy to samo co
+      <literal>1</literal>, itd.
+     </para>
+     <para>
+      W takiem razie, jak to możliwe, że <literal>$foo[bar]</literal> działa?
+      To działa, ponieważ <literal>bar</literal>, zgodnie z jego zapisem
+      powinien być stałą. Jednakże w tym przypadku nie instnieje stała o nazwie
+      <literal>bar</literal>. PHP teraz zakłada, że masz na myśli
+      <literal>bar</literal> literalnie, czyli jako łańucuch
+      <literal>"bar"</literal>, tylko że zapomniałeś napisać cudzysłowów.
+     </para>
+     <sect4>
+      <title>Więc dlaczego tak jest źle?</title>
+      <para>
+       Kiedyś w przyszłości grupa PHP może chcieć dodać jeszcze jedną stałą lub
+       słowo kluczowe i wtedy będziesz miał kłopot. Dla przykładu, obecnie
+       już nie można używać słów <literal>empty</literal> i
+       <literal>default</literal>, gdyż są to specjalne słowa kluczowe.
+       <!-- <jeroen>hmm... i'm doubting this myself. Finish it if you like</jeroen>
+       But probably 
+       the most threatening
+       thing is yourself, or whoever will maintain the script. You'll 
+       maybe get very strange behaviour, and 
+       -->
+      </para>
+      <para>
+       Poza tym, jeśli dotąd argumenty nie przekonują cię: ta składnia jest
+       po prostu odrzucona i kiedyś może przestać działać.
+      </para>
+      <note>
+       <simpara>
+        Po przełączeniu <link linkend="function.error-reporting"
+        >error_reporting</link> na <literal>E_ALL</literal>, zobaczysz, że
+        PHP generuje ostrzeżenie, kiedy tylko powyższa składnia zostanie
+        użyta. Tak samo generowane będą ostrzeżenia odnośnie innych odrzuconych
+        "udogodnień". (umieść w swoim skrypcie linię 
+        <literal>error_reporting(E_ALL);</literal>)
+       </simpara>
+      </note>
+      <note>
+       <simpara>
+        Składnia ta jest dozwolona wewnątrz łańcucha znaków w podwójnych
+        cudzysłowach. Więcej szczegółów na ten temat w rozdziale
+        <link linkend="language.types.string.parsing"
+        >parsowanie zmiennych</link>.
+       </simpara>
+      </note>
+     </sect4>
+    </sect3>
+   </sect2>
+
+   <sect2 id="language.types.array.examples">
+    <title>Przykłady</title>
+    <para>
+     Typ tablicowy w PHP jest bardzo różnorodny, co prezentują poniższe
+     przykłady.
+    </para>
+    <para>
+      <informalexample>
+       <programlisting role="php">
+<![CDATA[
+// to:
+$a = array( 'kolor' => 'czerowny'
+          , 'smak' => 'słodki'
+          , 'kształt' => 'okrągły'
+          , 'nazwa'  => 'jabłko'
+          ,            4        // kluczem będzie 0
+          );
+
+// znaczy dokładnie to samo, co to:
+$a['kolor'] = 'czerwony';
+$a['smak'] = 'słodki';
+$a['kształt'] = 'okrągły';
+$a['nazwa'] = 'jabłko';
+$a[]        = 4;        // kluczem będzie 0
+
+$b[] = 'a';
+$b[] = 'b';
+$b[] = 'c';
+// znaczy to samo co: array( 0 => 'a' , 1 => 'b' , 2 => 'c' ),
+// albo prościej: array('a', 'b', 'c')
+]]>
+       </programlisting>
+      </informalexample>
+     </para>
+    
+    <example>
+     <title>Użycie array()</title>
+     <programlisting role="php">
+<![CDATA[
+// tablica jako mapa właściwości
+$mapa = array( 'version'    => 4
+            , 'OS'         => 'Linux'
+            , 'lang'       => 'polski'
+            , 'short_tags' => true
+            );
+            
+// tylko klucze liczbowe
+$array = array( 7
+              , 8
+              , 0
+              , 156
+              , -10
+              );
+// znaczy to samo co array( 0 => 7, 1 => 8, ...)
+
+$zmiany = array(            10 // klucz = 0
+                  , 5    =>  6
+                  , 3    =>  7 
+                  , 'a'  =>  4
+                  ,         11 // klucz = 6 (najwyższy indeks całkowity był 5)
+                  , '8'  =>  2 // klucz = 8 (całkowity!)
+                  , '02' => 77 // klucz = '02'
+                  , 0    => 12 // wartość 10 będzie nadpisana przez 12
+                  );
+                  
+// pusta tablica
+$pusta = array();         
+]]>
+<!-- TODO example of
+- mixed keys
+- overwriting keys
+- integer keys as string
+- using vars/functions as key/values
+- mixed skipping
+-->
+     </programlisting>
+    </example>
+
+    <example id="language.types.array.examples.loop">
+     <title>Kolekcja</title>
+     <programlisting role="php">
+<![CDATA[
+$kolory = array('czerwony','niebieski','zielony','żółty');
+
+foreach ( $kolory as $kolor ) {
+    echo "Czy lubisz $kolor?\n";
+}
+
+/* wynik:
+Czy lubisz czerwony?
+Czy lubisz niebieski?
+Czy lubisz zielony?
+Czy lubisz żółty?
+*/
+]]>
+     </programlisting>
+    </example>
+    
+    <para>
+     Obecnie nie jest możliwa zmiana wartości w tabeli przy użyciu takiej pętli. 
+      <!--
+       Should be made possible, if you write:
+       foreach ( $colors as &$color )
+      
+       See bug#3074
+      -->
+     Można to jednak rozwiązać tak: 
+     <example id="language.types.array.examples.changeloop">
+      <title>Collection</title>
+      <programlisting role="php">
+<![CDATA[
+foreach ($kolory as $klucz => $kolor) {
+    // nie działa:
+    //$kolor = strtoupper($kolor);
+    
+    // działa:
+    $kolory[$klucz] = strtoupper($kolor);
+}
+print_r($kolory);
+
+/* wynik:
+Array
+(
+    [0] => CZERWONY
+    [1] => NIEBIESKI
+    [2] => ZIELONY
+    [3] => ŻÓŁTY
+)
+*/
+]]>
+      </programlisting>
+     </example>
+    </para>
+    <para>
+     Poniższy przykład tworzy tablicę z pierwszym kluczem 1.
+     <example>
+      <title>Pierwszy klucz 1</title>
+      <programlisting role="php">
+<![CDATA[
+$kwartał  = array(1 => 'Styczeń', 'Luty', 'Marzec');
+print_r($kwartał);
+
+/* wynik:
+Array 
+(
+    [1] => 'Styczeń'
+    [2] => 'Luty'
+    [3] => 'Marzec'
+)
+*/
+]]>   
+      </programlisting>
+     </example>
+    </para>
+    <example>
+     <title>Wypełnianie prawdziwej tablicy</title>
+     <programlisting role="php">
+<![CDATA[
+// wypełnij tablicę zawartością folderu
+$uchwyt = opendir('.');
+while ($plik = readdir($uchwyt)) 
+{
+    $pliki[] = $plik;
+}
+closedir($uchwyt); 
+]]>
+     </programlisting>
+    </example>
+    <para>
+     Dane w tablicach są uporządkowane. Ich kolejność może być zmieniona za
+     pomocą różnorodnych funkcji sortujących. Więcej na ten temat w rozdziale
+     <link linkend="ref.array">tablice</link>.
+    </para>
+    <example>
+     <title>Sortowanie tablic</title>
+     <programlisting role="php">
+<![CDATA[
+sort($pliki);
+print_r($pliki);
+]]>
+     </programlisting>
+    </example>
+    <para>
+     Ponieważ wartością tablicy może być wszystko, może też nią być inna
+     tablica. Można w ten sposób tworzyć tablice rekursywne i wielowymiarowe.
+    </para>
+    <example>
+     <title>Tablice rekursywne i wielowymiarowe</title>
+     <programlisting role="php">
+<![CDATA[
+$owoce = array ( "owoce"  => array (   "a" => "pomarańcza"
+                                     , "b" => "banan"
+                                     , "c" => "jabłko"
+                                     )
+                , "liczby" => array ( 1
+                                     , 2
+                                     , 3
+                                     , 4
+                                     , 5
+                                     , 6
+                                     )
+                , "dziury"   => array (      "pierwsza"
+                                     , 5 => "druga"
+                                     ,      "trzecia"
+                                     )
+                );
+]]>
+<!-- quite duplicate...
+$a = array(
+     "apple"  => array(
+          "color"  => "red",
+          "taste"  => "sweet",
+          "shape"  => "round"
+     ),
+     "orange"  => array(
+          "color"  => "orange",
+          "taste"  => "tart",
+          "shape"  => "round"
+     ),
+     "banana"  => array(
+          "color"  => "yellow",
+          "taste"  => "paste-y",
+          "shape"  => "banana-shaped"
+     )
+);
+-->
+     </programlisting>
+    </example>
+
+   </sect2>
+   
+   <!-- TODO
+   <sect2>
+    <title>Misc</title>
+   
+   </sect2>
+   
+   - example multi-dim with $arr[bla][bla] syntax
+   - converting to array
+   - warning about references
+   - note that assigning is copy (usually...)
+   
+   
+   -->  
+
+<!-- there is no such thing as multi/singel dim arrays (at least in PHP4) 
+   <sect2 id="language.types.array.single-dim">
+    <title>Single Dimension Arrays</title>
+
+    <para>
+     PHP supports both scalar and associative arrays. In fact, there
+     is no difference between the two.  You can create an array using
+     the 
+     
+     <function>list</function> 
+     
+     Nope
+     
+     
+     
+     
+     or <function>array</function>
+     functions, or you can explicitly set each array element value.
+     <informalexample>
+      <programlisting role="php"> 
+$a[0] = "abc"; 
+$a[1] = "def"; 
+$b["foo"] = 13;
+      </programlisting>
+     </informalexample>
+    </para>
+    <para>
+     You can also create an array by simply adding values to the
+     array. When you assign a value to an array variable using empty
+     brackets, the value will be added onto the end of the array.
+     <informalexample>
+      <programlisting role="php"> 
+$a[] = "hello"; // $a[2] == "hello"
+$a[] = "world"; // $a[3] == "world" 
+      </programlisting>
+     </informalexample>
+    </para>
+    <para>
+     Arrays may be sorted using the <function>asort</function>,
+     <function>arsort</function>, <function>ksort</function>,
+     <function>rsort</function>, <function>sort</function>,
+     <function>uasort</function>, <function>usort</function>, and
+     <function>uksort</function> functions depending on the type of
+     sort you want.
+    </para>
+    <para>
+     You can count the number of items in an array using the
+     <function>count</function> function.
+    </para>
+    <para>
+     You can traverse an array using <function>next</function> and
+     <function>prev</function> functions.  Another common way to
+     traverse an array is to use the <function>each</function>
+     function.
+    </para>
+   </sect2>
+
+   <sect2 id="language.types.array.multi-dim">
+    <title>Multi-Dimensional Arrays</title>
+
+    <para>
+     Multi-dimensional arrays are actually pretty simple.  For each
+     dimension of the array, you add another [key] value to the end:
+     <informalexample>
+      <programlisting role="php"> 
+$a[1]      = $f;               # one dimensional examples
+$a["foo"]  = $f;   
+
+$a[1][0]     = $f;             # two dimensional
+$a["foo"][2] = $f;             # (you can mix numeric and associative indices)
+$a[3]["bar"] = $f;             # (you can mix numeric and associative indices)
+
+$a["foo"][4]["bar"][0] = $f;   # four dimensional!
+      </programlisting>
+     </informalexample>
+    </para>
+    <para>
+     In PHP 3 it is not possible to reference multidimensional arrays
+     directly within strings. For instance, the following will not
+     have the desired result:
+     <informalexample>
+      <programlisting role="php"> 
+$a[3]['bar'] = 'Bob';
+echo "This won't work: $a[3][bar]";
+      </programlisting>
+     </informalexample>
+     In PHP 3, the above will output <computeroutput>This won't work:
+     Array[bar]</computeroutput>. The string concatenation operator,
+     however, can be used to overcome this:
+     <informalexample>
+      <programlisting role="php">
+$a[3]['bar'] = 'Bob';
+echo "This will work: " . $a[3]['bar'];
+      </programlisting>
+     </informalexample>
+    </para>
+    <para>
+     In PHP 4, however, the whole problem may be circumvented by
+     enclosing the array reference (inside the string) in curly
+     braces:
+     <informalexample>
+      <programlisting role="php">
+$a[3]['bar'] = 'Bob';
+echo "This will work: {$a[3][bar]}";
+      </programlisting>
+     </informalexample>
+    </para>
+    <para>
+     You can "fill up" multi-dimensional arrays in many ways, but the
+     trickiest one to understand is how to use the
+     <function>array</function> command for associative arrays.  These
+     two snippets of code fill up the one-dimensional array in the
+     same way:
+     <informalexample>
+      <programlisting role="php"> 
+# Example 1:
+
+$a["color"]	= "red";
+$a["taste"]	= "sweet";
+$a["shape"]	= "round";
+$a["name"]	= "apple";
+$a[3]		= 4;
+
+# Example 2:
+$a = array(
+     "color" => "red",
+     "taste" => "sweet",
+     "shape" => "round",
+     "name"  => "apple",
+     3       => 4
+);
+      </programlisting>
+     </informalexample>
+    </para>
+    <para>
+     The <function>array</function> function can be nested for
+     multi-dimensional arrays:
+     <informalexample>
+      <programlisting role="php"> 
+&lt;?php
+$a = array(
+     "apple"  => array(
+          "color"  => "red",
+          "taste"  => "sweet",
+          "shape"  => "round"
+     ),
+     "orange"  => array(
+          "color"  => "orange",
+          "taste"  => "tart",
+          "shape"  => "round"
+     ),
+     "banana"  => array(
+          "color"  => "yellow",
+          "taste"  => "paste-y",
+          "shape"  => "banana-shaped"
+     )
+);
+
+echo $a["apple"]["taste"];    # will output "sweet"
+?>
+      </programlisting>
+     </informalexample>
+    </para>
+
+   </sect2>
+   
+   -->
+  </sect1>
+
+  <sect1 id="language.types.object">
+   <title>Obiekty (object)</title>
+
+   <sect2 id="language.types.object.init">
+    <title>Inicjowanie obiektów</title>
+
+    <para>
+     Aby zainicjować obiekt, należy użyć słowa kluczowego <literal>new</literal>
+     aby przypisać instancję obiektu do zmiennej.
+
+     <informalexample>
+      <programlisting role="php">
+<![CDATA[
+<?php
+class foo
+{
+    function do_foo()
+    {
+        echo "Doing foo."; 
+    }
+}
+
+$bar = new foo;
+$bar->do_foo();
+?>
+]]>
+      </programlisting>
+     </informalexample>
+    </para>
+    <simpara>
+     Pełna informacja na ten temat znajduje się w rozdziale <link
+     linkend="language.oop">Klasy i Obiekty</link>.
+    </simpara>
+
+   </sect2>
+  </sect1>
+
+  <sect1 id="language.types.resource">
+   <title>Identyfikator zasobów (resource)</title>
+    
+    <para>
+     Identyfikator zasobów jest specjalną zmienną, przechowywującą odnośnik
+     do zewnętrznego źródła zasobów. Identyfikatory zasobów są tworzone
+     i wykorzystywane przez specjalne funkcje. Zobacz
+     <link linkend="resource">suplement</link> z listą tych funkcji i
+     powiązanych z tym typów zasobów.     
+    </para>
+    
+    <note>
+     <simpara>
+      Identyfikator zasobów został wprowadzony w PHP 4.
+     </simpara>
+    </note>
+
+    <sect2 id="language.types.resource.self-destruct">
+     <title>Zwalnianie zasobów</title>
+    
+    <para>
+     Dzięki systemowi kontroli zasobów, wprowadzonemu w opracowanym przez Zend
+     silniku skryptowym PHP 4, automatycznie wykrywana jest sytuacja, kiedy
+     nie ma już odnośników do zasobu (tak jak w Java). W takie sytuacji zasoby
+     systemowe używane do tego zasobu zostają zwolnione przez destruktor
+     zasobów. Dlatego nie jest
+     konieczne, aby zwalniać pamięć ręcznie za pomocą funkcji typu free_result.
+     <note>
+      <simpara>
+       Wyjątkiem są tu stałe połączenia z serwerami baz danych, które
+       <emphasis>nie</emphasis> są
+       niszczone przez destruktor zasobów. Zobacz też <link 
+       linkend="features.persistent-connections">stałe połączenia</link>.
+      </simpara>
+     </note>
+    </para>
+    
+   </sect2>
+  </sect1>
+    
+  <sect1 id="language.types.null">
+   <title>Typ NULL (null)</title>
+    
+   <para>
+    Specjalna wartość &null; oznacza, że zmienna nie przechowuje żadnej
+    wartości. &null; jest jedyną możliwą wartością typu <type>NULL</type>.
+   </para>
+    <note>
+     <simpara>
+      Typ <type>NULL</type> został wprowadzony w PHP 4.
+     </simpara>
+    </note>
+    
+   <sect2 id="language.types.null.syntax">
+    <title>Składnia</title>
+    <para>
+     Jest tylko jedna wartość, jaką może mieć typ &null; i jest nią słowo
+     kluczowe &null;. Wielkość liter słowa &null; nie gra roli.
+     <informalexample>
+      <programlisting role="php">
+$var = NULL;       
+      </programlisting>
+     </informalexample>
+    </para>
+   </sect2>
+  
+  </sect1>
+
+  <sect1 id="language.types.type-juggling">
+   <title>Wykorzystywanie typów danych</title>
+
+   <simpara>
+    PHP nie wymaga (a nawet nie obsługuje) jawnej deklaracji typów zmiennych.
+    Typ zmiennej jest określany na podstawie kontekstu, w jakim ta zmienna jest
+    używana. Oznacza to m.in., że przy przypisaniu łańcucha znaków do zmiennej
+    <parameter>var</parameter>, zmienna ta zmienia swój typ na string. Jeśli
+    potem zostanie przypisana wartość całkowita, <parameter>var</parameter>
+    zmienia swój typ na integer.
+   </simpara>
+   <para>
+    Przykładem automatyczniej konwersji typów jest operator dodawania '+'.
+    Jeśli którykolwiek z operandów jest typu float, to wszystkie operandy
+    zostaną potraktowane jako liczby float i taki też typ będzie zwrócony jako
+    wynik dodawania. W przeciwnym razie operandy zostaną potraktowane jako
+    liczby całkowite i wynikiem także będzie liczba całkowita. Proszę jednak
+    zwrócić uwagę, że działanie to NIE zmienia typów samych operandów; zmienia
+    jedynie sposób ich interpretacji przez operator dodawania.
+    <informalexample>
+     <programlisting role="php">
+$foo = "0";  // $foo jest łańcuchem znaków (ASCII 48)
+<!-- bad example, no real operator (must be used with variable, modifies it too)
+$foo++;      // $foo is the string "1" (ASCII 49)
+-->
+$foo += 2;   // $foo jest liczbą całkowitą (2)
+$foo = $foo + 1.3;  // $foo jest liczbą zmiennoprzecinkową (3.3)
+$foo = 5 + "10 Małych świnek"; // $foo jest liczbą całkowitą (15)
+$foo = 5 + "10 Większych świnek";     // $foo jest liczbą całkowitą (15)
+<!--
+
+TODO: explain ++/- - behaviour with strings
+
+examples:
+
+++'001' = '002'
+++'abc' = 'abd'
+++'xyz' = 'xza'
+++'9.9' = '9.0'
+++'-3'  = '-4'
+- -'9'   = 8 (integer!)
+- -'5.5' = '5.5'
+- -'-9'  = -10 (integer)
+- -'09'  = 8 (integer)
+- -'abc' = 'abc'
+
+-->
+     </programlisting>
+    </informalexample>
+   </para>
+   <simpara>
+    Jeśli dwa ostanie przykłady wydają się tobie dziwne, zajrzyj do rozdziału
+    <link linkend="language.types.string.conversion">Konwersja łańcuchów
+    znaków</link>.
+   </simpara>
+   <simpara>
+    Jeśli chcesz skonwertować zmienną z jednego typu do innego, użyj
+    <link linkend="language.types.typecasting">rzutowania typów</link>. Aby
+    zmienić typ zmiennej, użyj <function>settype</function>.
+   </simpara>
+   <para>
+    Jeśli chcesz przetestować którykolwiek z przykładów z tego rozdziału, możesz
+    użyć funkcji <function>var_dump</function>.
+   </para>
+   <note>
+    <para>
+     Efekty automatycznej konwersji do tablicy są aktualnie nieokreślone.
+     <informalexample>
+      <programlisting role="php">
+$a = 1;       // $a jest liczbą całkowitą
+$a[0] = "f";  // $a staje się tablicą, $a[0] zawiera "f"
+      </programlisting>
+     </informalexample>
+    </para>
+    <para>
+     W powyższym przykładzie wydawać się może oczywiste, że $a stanie się
+     tablicą z pierwszym elementem "f"; rozważ jednak poniższy przykład:
+     <informalexample>
+      <programlisting role="php">
+$a = "1";     // $a jest łańcuchem znaków
+$a[0] = "f";  // Co z ofsetami łańcuchów? Co się dzieje?
+      </programlisting>
+     </informalexample>
+    </para>
+    <para>
+     Ponieważ PHP obsługuje indeksowanie łańcuchów za pomocą ofsetów, używając
+     tej samej składni co indeksowanie tablic, powyższy przykład powoduje
+     problem: czy $a powinno zostać tablicą z pierwszym elementem o wartości
+     "f", czy raczej "f" powinno zostać pierwszym znakiem łańcucha $a?
+    </para>
+    <para>
+     Z tego właśnie powodu, od PHP 3.0.12 i PHP 4.0b3-RC4, efekt automatycznej
+     konwersji pozostaje nieokreślony. Dyskusje odnośnie tego problemu trwają.
+    </para>
+   </note>
+
+   <sect2 id="language.types.typecasting">
+    <title>Rzutowanie typów</title>
+
+    <para>
+     Rzutowanie typów w PHP działa mniej więcej tak jak w języku C: nazwa
+     docelowego typu umieszczana jest w nawiasach przed nazwą zmiennej, która
+     ma być zrzutowana.
+     <informalexample>
+      <programlisting role="php">
+$foo = 10;   // $foo jest liczbą całkowitą
+$bar = (float) $foo;   // $bar jest typu float (zmiennoprzecinkowego)
+      </programlisting>
+     </informalexample>
+    </para>
+    <para>
+     Operatory rzutowania są następujące:
+     <itemizedlist>
+      <listitem>
+       <simpara>(int), (integer) - rzutowanie do liczb całkowitych</simpara>
+      </listitem>
+      <listitem>
+       <simpara>(bool), (boolean) - rzutowanie do typu boolowskiego</simpara>
+      </listitem>
+      <listitem>
+       <simpara>(float), (double), (real) - rzutowanie do liczb
+       zmiennoprzecinkowych</simpara>
+      </listitem>
+      <listitem>
+       <simpara>(string) - rzutowanie do łańcucha znaków</simpara>
+      </listitem>
+      <listitem>
+       <simpara>(array) - rzutowanie do tablicy</simpara>
+      </listitem>
+      <listitem>
+       <simpara>(object) - rzutowanie do obiektu</simpara>
+      </listitem>
+     </itemizedlist>
+    </para>
+    <note>
+     <simpara>
+      Zamiast rzutować zmienną do łańcucha znaków operatorem, można też umieścić
+      zmienną w cudzysłowie podwójnym. 
+      <!-- TODO: example -->
+     </simpara>
+    </note>
+     
+    <para>
+     Wewnątrz nawiasów operatora rzutowania mogą znajdować się tabulacje i
+     spacje, więc poniższe przykłady są funkcjonalnie identyczne:
+     <informalexample>
+      <programlisting role="php">
+$foo = (int) $bar;
+$foo = ( int ) $bar;
+      </programlisting>
+     </informalexample>
+    </para>
+    <para>
+     Efekt rzutowania pomiędzy niektórymi typami nie zawsze daje spodziewany
+     wynik. Więcej informacji o skutkach rzutowania w rozdziałach:
+    
+     <itemizedlist>
+      <listitem>
+       <simpara><link linkend="language.types.boolean.casting">Konwersja
+       do typu boolowskiego</link></simpara>
+      </listitem>
+      <listitem>
+       <simpara><link linkend="language.types.integer.casting">Konwersja do
+       liczb całkowitych</link></simpara>
+      </listitem>
+      <!-- don't exist yet
+      <listitem>
+       <simpara><link linkend="language.types.float.casting">Converting to 
+        float</link></simpara>
+      </listitem>
+      <listitem>
+       <simpara><link linkend="language.types.string.casting">Converting to 
+        string</link></simpara>
+      </listitem>
+      <listitem>
+       <simpara><link linkend="language.types.array.casting">Converting to 
+        array</link></simpara>
+      </listitem>
+      <listitem>
+       <simpara><link linkend="language.types.object.casting">Converting to 
+        object</link></simpara>
+      </listitem>
+      <listitem>
+       <simpara><link linkend="language.types.resource.casting">Converting to 
+        resource</link></simpara>
+      </listitem>
+      <listitem>
+       <simpara><link linkend="language.types.null.casting">Converting to 
+        &null;</link></simpara>
+      </listitem>
+      -->
+     </itemizedlist>
+    
+    </para>
+    <para>
+     <!-- TODO: move to 'converting to string' -->
+     Przy rzutowaniu lub wymuszeniu konwersji z tablicy do łańcucha znaków,
+     rezultatem będzie słowo <literal>Array</literal>. Przy rzutowaniu lub
+     wymuszeniu konwersji z obiektu do łańcucha znaków, rezultatem będzie
+     słowo <literal>Object</literal>. 
+     
+     <!-- not with my PHP, not even a notice... maybe in PHP3? 
+     Does someone know? 
+     
+     In both cases a warning will
+     be issued. -->
+    </para>
+    <para>
+     Przy rzutowaniu ze zmiennej skalarnej lub łańcucha do tablicy, wartość
+     zmiennej stanie się pierwszym elementem tablicy:
+     <informalexample>
+      <programlisting role="php">
+$var = 'ciao';
+$arr = (array) $var;
+echo $arr[0];  // wynik: 'ciao'  
+      </programlisting>
+     </informalexample>
+    </para>
+    <para>
+     Przy rzutowaniu ze zmiennej skalarnej lub łańcucha do obiektu, wartość
+     zmiennej stanie się właściwością obiektu; właściwość ta będzie nazywać
+     się 'scalar':
+     <informalexample>
+      <programlisting role="php">
+$var = 'ciao';
+$obj = (object) $var;
+echo $obj-&gt;scalar;  // wynik: 'ciao'
+      </programlisting>
+     </informalexample>
+    </para>
+
+   </sect2>
+  </sect1>
+
+ </chapter>
+ 
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"../../manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
