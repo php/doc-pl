@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.31 Maintainer: Qrak Status: ready -->
-<!-- $Revision: 1.9 $ -->
+<!-- EN-Revision: 1.32 Maintainer: Qrak Status: ready -->
+<!-- $Revision: 1.10 $ -->
  <chapter id="language.operators">
   <title>Operatory</title>
   <simpara>
@@ -45,7 +45,7 @@
       </row>
       <row>
        <entry>$a % $b</entry>
-       <entry>Modulo</entry>
+       <entry>Dzielenie Modulo</entry>
        <entry>Reszta z dzielenia $a przez $b.</entry>
       </row>
      </tbody>
@@ -55,7 +55,7 @@
    <simpara>
     Operator dzielenia ("/") zwraca wartość całkowitą (wynikiem dzielenia jest
     liczba całkowita) jeśli obydwa operandy są całkowite (lub są łańcuchami 
-    znaków skonwertowanymi do liczba całkowitych) i wynik ich dzielenia jest 
+    znaków skonwertowanymi do liczb całkowitych) oraz wynik ich dzielenia jest 
     całkowity. Jeśli jednak któryś z operandów jest zmiennoprzecinkowy lub 
     wynikiem dzielenia jest liczba niecałkowita, operator dzielenia zwraca 
     wartość zmiennoprzecinkową.
@@ -117,8 +117,28 @@ $b = $b . "Świecie!";
    <title>Operatory Bitowe</title>
    <simpara>
     Operatory bitowe służą do operowania na wartościach konkretnych bitów w 
-    liczbie.
+    liczbie. Jeśli zarówno lewo jak i prawostronne operandy są typu string,
+    operatory bitowe będą wykonywać operacje na poszczególnych znakach tych
+    łańcuchów.
    </simpara>
+   <para> 
+      <informalexample> 
+       <programlisting> 
+  <![CDATA[ 
+  <?php 
+      echo 12 ^ 9; // Zwraca '5' 
+    
+      echo "12" ^ "9"; // Zwraca znak Backspace (ascii 8)
+                       // ('1' (ascii 49)) ^ ('9' (ascii 57)) = #8 
+    
+      echo "hallo" ^ "hello"; // Zwraca wartości ascii #0 #4 #0 #0 #0 
+                              // 'a' ^ 'e' = #4 
+  ?> 
+  ]]> 
+       </programlisting> 
+      </informalexample> 
+   </para> 
+
    <table>
     <title>Operatory Bitowe</title>
     <tgroup cols="3">
@@ -132,25 +152,25 @@ $b = $b . "Świecie!";
      <tbody>
       <row>
        <entry>$a &amp; $b</entry>
-       <entry>Mnożenie</entry>
+       <entry>Mnożenie bitowe</entry>
        <entry>Dany bit wynikowy jest równy 1 tylko jeśli obydwa bity składowe 
        są równe 1.</entry>
       </row>
       <row>
        <entry>$a | $b</entry>
-       <entry>Sumowanie</entry>
+       <entry>Sumowanie bitowe</entry>
        <entry>Dany bit wynikowy jest równy 1 jeśli conajmniej jeden bit 
        składowy jest równy 1.</entry>
       </row>
       <row>
        <entry>$a ^ $b</entry>
-       <entry>Sumowanie modulo 2</entry>
+       <entry>Sumowanie bitowe modulo 2</entry>
        <entry>Dany bit wynikowy jest równy 1 tylko jeśli jeden z bitów 
        składowych jest równy 1 a drugi jest równy 0.</entry>
       </row>
       <row>
        <entry>~ $a</entry>
-       <entry>Negacja</entry>
+       <entry>Negacja bitowa</entry>
        <entry>Bity w zmiennej $a mające wartość 1 otrzymują wartość 0 i na 
        odwrót.</entry>
       </row>
@@ -159,7 +179,7 @@ $b = $b . "Świecie!";
        <entry>Przesunięcie w lewo</entry>
        <entry>
 	Przesuwa bity w zmiennej $a o $b kroków w lewo (każdy krok znaczy "pomnożone
-    przez dwa").
+    razy dwa").
        </entry>
       </row>
       <row>
