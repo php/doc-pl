@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.5 $ -->
+<!-- EN-Revision: 1.4 Maintainer: qrak Status: ready -->
+<!-- $Revision: 1.6 $ -->
     <refentry id="function.apache-setenv">
      <refnamediv>
       <refname>apache_setenv</refname>
@@ -8,14 +8,40 @@
      </refnamediv>
      <refsect1>
       <title>Opis</title>
-       <methodsynopsis>
-        <type>int</type><methodname>apache_setenv</methodname>
-        <methodparam><type>string</type><parameter>nazwa_zmiennej</parameter></methodparam>
-        <methodparam><type>string</type><parameter>wartość</parameter></methodparam>
-        <methodparam choice="opt"><type>bool</type><parameter>nadrzędność</parameter></methodparam>
-       </methodsynopsis>
+      <methodsynopsis>
+       <type>int</type><methodname>apache_setenv</methodname>
+       <methodparam><type>string</type><parameter>nazwa_zmiennej</parameter></methodparam>
+       <methodparam><type>string</type><parameter>wartość</parameter></methodparam>
+       <methodparam choice="opt"><type>bool</type><parameter>nadrzędność</parameter></methodparam>
+      </methodsynopsis>
       <para>
-       &warn.undocumented.func;
+       <function>apache_setenv</function> ustawia wartość zmiennej środowiskowej Apaches
+	   podanej w <parameter>nazwa_zmiennej</parameter>.  
+      </para>  
+      <note>  
+       <para>
+	    Kiedy zmieniasz zmienną środowiskową Apache, odpowiadająca jej zmienna $SERVER
+		nie jest zmieniana. 
+       </para>  
+      </note>  
+      <example>  
+       <title>Ustawianie zmiennej środowiskowej Apache używając <function>apache_setenv</function></title>  
+       <programlisting role="php">  
+  <![CDATA[  
+  <?php  
+  apache_setenv("EXAMPLE_VAR", "Przykładowa Wartość");  
+  ?>  
+  ]]>  
+       </programlisting>  
+      </example>  
+      <para>  
+	   <function>apache_setenv</function> może być połączone z  
+       <function>apache_getenv</function> poprzez oddzielne strony lub dla ustawienia
+	   zmiennych do przekazania do Server Side Includes (.shtml), które zostały 
+	   dołączone do skryptu PHP.
+	  </para>  
+      <para>  
+       Patrz także: <function>apache_getenv</function>.  
       </para>
    </refsect1>
   </refentry>
