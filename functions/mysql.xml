@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.70 Maintainer: slawek Status: ready -->
-<!-- $Revision: 1.9 $ -->
+<!-- EN-Revision: 1.77 Maintainer: slawek Status: ready -->
+<!-- $Revision: 1.10 $ -->
  <reference id="ref.mysql">
   <title>Funkcje MySQL</title>
   <titleabbrev>MySQL</titleabbrev>
@@ -192,7 +192,7 @@ mysql_close($link);
      </funcprototype>
     </funcsynopsis>
     <para>
-     Zwraca: &true; w przypadku sukcesu lub &false; jeśli wystąpi błąd.
+     &return.success;
     </para>
     <para>
      <function>mysql_close</function> zamyka połączenie z serwerem MySQL
@@ -216,12 +216,14 @@ mysql_close($link);
     <example>
      <title>MySQL close</title>
      <programlisting role="php">
-&lt;?php
+<![CDATA[
+<?php
     $link = mysql_connect ("serwer", "uzytkownik", "haslo")
         or die ("Nie można się połączyć");
     print ("Połączenie nawiązane");
     mysql_close ($link);
-?&gt;
+?>
+]]>
      </programlisting>
     </example>
     <para> 
@@ -301,12 +303,14 @@ mysql_close($link);
     <example>
      <title>MySQL connect</title>
      <programlisting role="php">
-&lt;?php
+<![CDATA[
+<?php
     $link = mysql_connect ("localhost", "uzytkownik", "haslo")
         or die ("Nie można się połączyć");
     print ("Połączenie nawiązane");
     mysql_close ($link);
-?&gt;
+?>
+]]>
      </programlisting>
     </example>
     <para> Patrz także
@@ -339,11 +343,14 @@ mysql_close($link);
      tworzy nową bazę na serwerze skojarzonym z podanym
      identyfikatorem połączenia.
     </para>
-    <!-- returns?? bool -> succes? -->
+    <para>
+		 &return.success; 
+		</para>
     <example>
      <title>tworzenie bazy MySQL</title>
      <programlisting role="php">
-&lt;?php
+<![CDATA[
+<?php
     $link = mysql_pconnect ("serwer", "uzytkownik", "haslo")
         or die ("Nie można się połączyć");
     if (mysql_create_db ("my_db")) {
@@ -351,12 +358,13 @@ mysql_close($link);
     } else {
         printf ("Błąd podczas tworzenia bazy: %s\n", mysql_error ());
     }
-?&gt;
+?>
+]]>
      </programlisting>
     </example>
     <para> 
      Aby zachować zgodność z poprzednimi wersjami, można użyć również 
-     <function>mysql_createdb</function>.
+     <function>mysql_createdb</function>. Jest to jednak niezalecane.
     </para>
     <para> 
      Patrz także: <function>mysql_drop_db</function>.
@@ -379,7 +387,7 @@ mysql_close($link);
      </funcprototype>
     </funcsynopsis>
     <para> 
-     Zwraca: &true; w przypadku sukcesu lub &false; jeśli wystąpi błąd.
+     &return.success;
     </para>
     <para> 
      <function>mysql_data_seek</function> przesuwa wewnętrzny
@@ -393,7 +401,8 @@ mysql_close($link);
     <example>
      <title>mysql_data_seek</title>
      <programlisting role="php">
-&lt;?php
+<![CDATA[
+<?php
     $link = mysql_pconnect ("serwer", "uzytkownik", "haslo")
         or die ("Nie można się połączyć");
 
@@ -404,7 +413,7 @@ mysql_close($link);
     $result = mysql_query ($query)
         or die ("Zapytanie zakończone niepowodzeniem");
 
-    # pobieramy wiersze w odwrotnej kolejności
+    // pobieramy wiersze w odwrotnej kolejności
 
     for ($i = mysql_num_rows ($result) - 1; $i >=0; $i--) {
         if (!mysql_data_seek ($result, $i)) {
@@ -415,11 +424,12 @@ mysql_close($link);
         if(!($row = mysql_fetch_object ($result)))
             continue;
 
-        echo ("$row-&gt;last_name $row-&gt;first_name&lt;BR&gt;\n";
+        echo "$row->last_name $row->first_name<br />\n"; 
     }
 
     mysql_free_result ($result);
-?&gt;
+?>
+]]>
      </programlisting>
     </example>
    </refsect1>
@@ -457,7 +467,8 @@ mysql_close($link);
     <example>
      <title>mysql_db_name</title>
      <programlisting role="php">
-&lt;?php 
+<![CDATA[
+<?php
 error_reporting(E_ALL);
 
 mysql_connect("serwer", "uzytkownik", "haslo");
@@ -465,11 +476,12 @@ $db_list = mysql_list_dbs();
 
 $i = 0;
 $cnt = mysql_num_rows($db_list);
-while ($i &lt; $cnt) {
+while ($i < $cnt) {
     echo mysql_db_name($db_list, $i) . "\n";
     $i++;
 }
-?&gt;
+?>
+]]>
      </programlisting>
     </example>
     <para>
@@ -499,7 +511,7 @@ while ($i &lt; $cnt) {
      </funcprototype>
     </funcsynopsis>
     <para> 
-     Zwraca: dodatni identyfikator wyniku MySQL wskazujący na wynik
+     Zwraca dodatni identyfikator wyniku MySQL wskazujący na wynik
      zapytania, lub &false; w przypadku błędu.
     </para>
     <para> 
@@ -546,16 +558,18 @@ while ($i &lt; $cnt) {
      </funcprototype>
     </funcsynopsis>
     <para> 
-     Zwraca: &true; w przypadku sukcesu lub &false; jeśli wystąpi błąd.
+     &return.success;
     </para>  
     <para> 
      <function>mysql_drop_db</function> usuwa całą bazę z serwera
      skojarzonego z podanym identyfikatorem połączenia.
     </para>
+		<para>
+     Aby zachować zgodność z poprzednimi wersjami, można użyć również
+     <function>mysql_dropdb</function>. Jest to jednak niezalecane.
+		</para>
     <para> 
      Patrz także: <function>mysql_create_db</function>.
-     Aby zachować zgodność z poprzednimi wersjami, można użyć również
-     <function>mysql_dropdb</function>.
     </para>
    </refsect1>
   </refentry>
@@ -593,14 +607,16 @@ while ($i &lt; $cnt) {
      następnej funkcji MySQL.
      <informalexample>
       <programlisting role="php">
-&lt;?php
+<![CDATA[
+<?php
 mysql_connect("serwer","uzytkownik","haslo");
-echo mysql_errno().": ".mysql_error()."&lt;BR>";
+echo mysql_errno().": ".mysql_error()."<BR>";
 mysql_select_db("niematakiejbazy");
-echo mysql_errno().": ".mysql_error()."&lt;BR>";
+echo mysql_errno().": ".mysql_error()."<BR>";
 $conn = mysql_query("SELECT * FROM niematakiejtabeli");
-echo mysql_errno().": ".mysql_error()."&lt;BR>";
-?&gt;
+echo mysql_errno().": ".mysql_error()."<BR>";
+?>
+]]>
       </programlisting>
      </informalexample>
     </para>
@@ -643,14 +659,16 @@ echo mysql_errno().": ".mysql_error()."&lt;BR>";
      następnej funkcji MySQL.
      <informalexample>
       <programlisting role="php">
-&lt;?php
+<![CDATA[
+<?php
 mysql_connect("serwer","uzytkownik","haslo");
-echo mysql_errno().": ".mysql_error()."&lt;BR>";
+echo mysql_errno().": ".mysql_error()."<BR>";
 mysql_select_db("niematakiejbazy");
-echo mysql_errno().": ".mysql_error()."&lt;BR>";
+echo mysql_errno().": ".mysql_error()."<BR>";
 $conn = mysql_query("SELECT * FROM niematakiejtabeli");
-echo mysql_errno().": ".mysql_error()."&lt;BR>";
-?&gt;
+echo mysql_errno().": ".mysql_error()."<BR>";
+?>
+]]>
       </programlisting>
      </informalexample>
     </para>
@@ -723,24 +741,35 @@ echo mysql_errno().": ".mysql_error()."&lt;BR>";
      Jeżeli dwie lub więcej kolumn wyniku ma te same nazwy, ostatnia
      kolumna będzie brana pod uwagę. Dostęp do innych kolumn o tej
      samej nazwie jest możliwy jedynie przez indeksowanie numeryczne
-     lub przez stworzenie aliasa.
+     lub przez stworzenie aliasa. Po stworzeniu aliasa nie można
+		 już odwoływać się do danej kolumny używając jej prawdziwej nazwy
+		 (w tym przykładzie używając <literal>'pole'</literal>).
      <informalexample>
-      <programlisting>
-select t1.f1 as foo t2.f1 as bar from t1, t2
+      <programlisting role="sql">
+<![CDATA[
+select tjeden.pole as cos tdwa.pole as cos2 from tjeden, tdwa
+]]>
       </programlisting>
      </informalexample>
     </para>
     <para>
      Godne uwagi jest to, że użycie <function>mysql_fetch_array</function>
-     NIE jest znacząco wolniejsze od użycia
+     <emphasis>nie jest</emphasis> znacząco wolniejsze od użycia
      <function>mysql_fetch_row</function>, a jest bardziej funkcjonalne.
     </para>
     <para>
      Opcjonalny drugi argument <parameter>result_type</parameter> w
      funkcji <function>mysql_fetch_array</function> jest stałą i może
      przyjmować następujące wartości: MYSQL_ASSOC, MYSQL_NUM i MYSQL_BOTH.
-     (funkcjonalność tę dodano w PHP 3.0.7)
+     Tę funkcjonalność dodano w PHP 3.0.7. Wartością domyślną jest MYSQL_BOTH.
     </para>
+		<para>
+		 Używając MYSQL_BOTH otrzymasz tablicę indeksowaną zarówno asocjacyjnie
+		 jak i numerycznie. MYSQL_ASSOC dostarczy tablicy indeksowanej tylko
+		 asocjacyjnie (jak w <function>mysql_fetch_assoc</function>), natomiast
+		 MYSQL_NUM indeksowanej tylko numerycznie (jak w
+		 <function>mysql_fetch_row</function>).
+		</para>
     <para>
      Po dalsze szczegóły patrz także
      <function>mysql_fetch_row</function> i
@@ -749,17 +778,19 @@ select t1.f1 as foo t2.f1 as bar from t1, t2
     <example>
      <title><function>mysql_fetch_array</function></title>
      <programlisting role="php">
-&lt;?php 
+<![CDATA[
+<?php
 mysql_connect ("serwer","uzytkownik","haslo");
 $result = mysql_db_query ("database","select id_uzytkownika, pelna_nazwa from tabela");
 while ($row = mysql_fetch_array ($result)) {
-    echo "id_uzytkownika: ".$row["id_uzytkownika"]."&lt;br>\n";
-    echo "id_uzytkownika: ".$row[0]."&lt;br>\n";
-    echo "pelna_nazwa: ".$row["pelna_nazwa"]."&lt;br>\n";
-    echo "pelna_nazwa: ".$row[1]."&lt;br>\n";
+    echo "id_uzytkownika: ".$row["id_uzytkownika"]."<br>\n";
+    echo "id_uzytkownika: ".$row[0]."<br>\n";
+    echo "pelna_nazwa: ".$row["pelna_nazwa"]."<br>\n";
+    echo "pelna_nazwa: ".$row[1]."<br>\n";
 }
 mysql_free_result ($result);
-?&gt;
+?>
+]]>
      </programlisting>
     </example>
    </refsect1>
@@ -802,7 +833,7 @@ mysql_free_result ($result);
     </para>
     <para>
      Godne uwagi jest to, że użycie <function>mysql_fetch_assoc</function>
-     NIE jest znacząco wolniejsze od użycia
+     <emphasis>nie</emphasis> jest znacząco wolniejsze od użycia
      <function>mysql_fetch_row</function>, a jest bardziej funkcjonalne.
     </para>
     <para>
@@ -813,7 +844,8 @@ mysql_free_result ($result);
     <example>
      <title><function>mysql_fetch_assoc</function></title>
      <programlisting role="php">
-&lt;?php 
+<![CDATA[
+<?php
 mysql_connect ("serwer","uzytkownik","haslo");
 $result = mysql_db_query ("database","select * from tabela");
 while ($row = mysql_fetch_assoc ($result)) {
@@ -821,7 +853,8 @@ while ($row = mysql_fetch_assoc ($result)) {
     echo $row["pelna_nazwa"];
 }
 mysql_free_result ($result);
-?&gt;
+?>
+]]>
      </programlisting>
     </example>
    </refsect1>
@@ -924,20 +957,21 @@ mysql_free_result ($result);
     <example>
      <title><function>mysql_fetch_field</function></title>
      <programlisting role="php">
-&lt;?php 
+<![CDATA[
+<?php
 mysql_connect ("serwer","uzytkownik","haslo");
     or die ("Nie można się połączyć");
 $result = mysql_db_query ("database", "select * from table")
     or die ("Zapytanie zakończone niepowodzeniem");
 # pobieramy dane kolumny
 $i = 0;
-while ($i &lt; mysql_num_fields ($result)) {
-    echo "Informacje o kolumnie $i:&lt;BR>\n";
+while ($i < mysql_num_fields ($result)) {
+    echo "Informacje o kolumnie $i:<BR>\n";
     $meta = mysql_fetch_field ($result);
     if (!$meta) {
-        echo "Informacje niedostępne&lt;BR>\n";
+        echo "Informacje niedostępne<BR>\n";
     }
-    echo "&lt;PRE>
+    echo "<PRE>
 blob:         $meta->blob
 max_length:   $meta->max_length
 multiple_key: $meta->multiple_key
@@ -950,11 +984,12 @@ type:         $meta->type
 unique_key:   $meta->unique_key
 unsigned:     $meta->unsigned
 zerofill:     $meta->zerofill
-&lt;/PRE>";
+</PRE>";
     $i++;
 }
 mysql_free_result ($result);
-?&gt;
+?>
+]]>
      </programlisting>
     </example>
     <para>
@@ -979,7 +1014,7 @@ mysql_free_result ($result);
      </funcprototype>
     </funcsynopsis>
     <para> 
-     Zwraca: Tablicę zawierającą długość każdego pola z wiersza
+     Zwraca tablicę zawierającą długość każdego pola z wiersza
      ostatnio pobranego przez <function>mysql_fetch_row</function>,
      lub &false;, jeżeli wystąpi błąd.
     </para>  
@@ -1029,7 +1064,8 @@ mysql_free_result ($result);
     <para>
      Opcjonalny argument <parameter>result_typ</parameter> jest
      stałą i może przyjmować następujące wartości: MYSQL_ASSOC,
-     MYSQL_NUM, and MYSQL_BOTH.
+     MYSQL_NUM, and MYSQL_BOTH. Zobacz <function>mysql_fetch_array</function>,
+     by zapoznać się z opisem tych stałych.
     </para>
     <para>
      Szybkość tej funkcji jest identyczna jak
@@ -1039,7 +1075,8 @@ mysql_free_result ($result);
      <example>
       <title><function>mysql_fetch_object</function></title>
       <programlisting role="php">
-&lt;?php 
+<![CDATA[
+<?php
 mysql_connect ("serwer","uzytkownik","haslo");
 $result = mysql_db_query ("baza", "select * from tabela");
 while ($row = mysql_fetch_object ($result)) {
@@ -1047,7 +1084,8 @@ while ($row = mysql_fetch_object ($result)) {
     echo $row->pelna_nazwa;
 }
 mysql_free_result ($result);
-?&gt;
+?>
+]]>
       </programlisting>
      </example>
     </para>
@@ -1072,7 +1110,7 @@ mysql_free_result ($result);
      </funcprototype>
     </funcsynopsis>
     <para> 
-     Zwraca: Tablicę zawierającą wiersz lub &false; jeżeli
+     Zwraca tablicę zawierającą wiersz lub &false; jeżeli
      nie ma więcej wierszy w <parameter>wynik</parameter>.
     </para>
     <para>
@@ -1124,7 +1162,7 @@ mysql_free_result ($result);
     </para>
     <para> 
      Aby zachować zgodność z poprzednimi wersjami, można użyć również 
-     <function>mysql_fieldflags</function>.
+     <function>mysql_fieldflags</function>. Jest to jednak niezalecane.
     </para>
    </refsect1>
   </refentry>
@@ -1161,6 +1199,8 @@ mysql_free_result ($result);
      <example>
       <title><function>mysql_field_name</function></title>
       <programlisting role="php">
+<![CDATA[
+<?php
 // Tabela składa się z trzech pól: 
 //   id_uzytkownika
 //   nazwa_uzytkownika
@@ -1170,21 +1210,23 @@ $res = mysql_db_query("uzytkownicy", "select * from uzytkownicy", $link);
 
 echo mysql_field_name($res, 0) . "\n";
 echo mysql_field_name($res, 2);
+?>
+]]>
       </programlisting>
+      <para>
+       Powyższy przykład da następujący wynik:
+       <screen>
+<![CDATA[
+id_uzytkownika
+haslo
+]]>
+       </screen>
+      </para>
      </example>
     </para>
     <para>
-     Powyższy przykład da następujący wynik:
-     <informalexample>
-      <programlisting>
-id_uzytkownika
-haslo
-      </programlisting>
-     </informalexample>
-    </para>
-    <para>
      Aby zachować zgodność z poprzednimi wersjami, można użyć również 
-     <function>mysql_fieldname</function>.
+     <function>mysql_fieldname</function>. Jest to jednak niezalecane.
     </para>
    </refsect1>
   </refentry>
@@ -1208,7 +1250,7 @@ haslo
     </para>
     <para>
      Aby zachować zgodność z poprzednimi wersjami, można użyć również 
-     <function>mysql_fieldlen</function>.
+     <function>mysql_fieldlen</function>. Jest to jednak niezalecane.
     </para>
    </refsect1>
   </refentry>
@@ -1259,7 +1301,7 @@ haslo
     </para>
     <para>
      Aby zachować zgodność z poprzednimi wersjami, można użyć również 
-     <function>mysql_fieldtable</function>.
+     <function>mysql_fieldtable</function>. Jest to jednak niezalecane.
     </para>
    </refsect1>
   </refentry>
@@ -1289,7 +1331,8 @@ haslo
      <example>
       <title>Typy pól MySQL</title>
       <programlisting role="php">
-&lt;?php 
+<![CDATA[
+<?php
 
 mysql_connect ("serwer","uzytkownik","haslo");
 mysql_select_db ("baza");
@@ -1298,25 +1341,26 @@ $fields = mysql_num_fields ($result);
 $rows   = mysql_num_rows ($result);
 $i = 0;
 $table = mysql_field_table ($result, $i);
-echo "Tabela '".$table."' ma ".$fields." pól i ".$rows." wierszy &lt;BR&gt;";
-echo "Tabela ma następujące pola &lt;BR&gt;"; 
+echo "Tabela '".$table."' ma ".$fields." pól i ".$rows." wierszy <BR>";
+echo "Tabela ma następujące pola <BR>"; 
 while ($i &lt; $fields) {
     $type  = mysql_field_type  ($result, $i);
     $name  = mysql_field_name  ($result, $i);
     $len   = mysql_field_len   ($result, $i);
     $flags = mysql_field_flags ($result, $i);
-    echo $type." ".$name." ".$len." ".$flags."&lt;BR&gt;";
+    echo $type." ".$name." ".$len." ".$flags."<BR>";
     $i++;
 }
 mysql_close();
 
-?&gt;
+?>
+]]>
       </programlisting>
      </example>
     </para>
     <para> 
      Aby zachować zgodność z poprzednimi wersjami, można użyć również 
-     <function>mysql_fieldtype</function>.
+     <function>mysql_fieldtype</function>. Jest to jednak niezalecane.
     </para>
    </refsect1>
   </refentry>
@@ -1330,7 +1374,7 @@ mysql_close();
     <title>Opis</title>
     <funcsynopsis>
      <funcprototype>
-      <funcdef>int <function>mysql_free_result</function></funcdef>
+      <funcdef>bool <function>mysql_free_result</function></funcdef>
       <paramdef>resource <parameter>wynik</parameter></paramdef>
      </funcprototype>
     </funcsynopsis>
@@ -1346,10 +1390,12 @@ mysql_close();
      identyfikatorem wyniku będzie automatycznie zwolniona.
      <!-- TODO and as of PHP4 before, see freeing resources -->
     </para>
-    <!-- returns?? -->
+    <para>
+     &return.success;
+    </para>
     <para>
      Aby zachować zgodność z poprzednimi wersjami, można użyć również 
-     <function>mysql_freeresult</function>.
+     <function>mysql_freeresult</function>. Jest to jednak niezalecane.
     </para>
    </refsect1>
   </refentry>
@@ -1398,9 +1444,10 @@ mysql_close();
      <para>
       <function>mysql_insert_id</function> konwertuje typ wartości otrzymanej
       od natywnej funkcji MySQL C API <literal>mysql_insert_id()</literal>
-      na typ <literal>long</literal>. Jeśli kolumna AUTO_INCREMENT jest typu
-      BIGINT, wartość zwracana przez <function>mysql_insert_id</function>
-      będzie niepoprawna. Należy użyć wewnętrznej funkcji MySQL
+      na typ <literal>long</literal> (czyli <type>int</type> w PHP). Jeśli
+      kolumna AUTO_INCREMENT jest typu BIGINT, wartość zwracana przez
+      <function>mysql_insert_id</function> będzie niepoprawna. Należy w
+      zapytaniu SQL użyć wewnętrznej funkcji MySQL
       <literal>LAST_INSERT_ID()</literal>.
      </para>
     </warning>
@@ -1430,31 +1477,36 @@ mysql_close();
      <function>mysql_list_dbs</function> zwróci wynik zawierający
      nazwy baz dostępnych na serwerze skojarzonym z identyfikatorem
      połączenia. Żeby uzyskać nazwy za wskaźnika wyniku należy
-     użyć funkcji <function>mysql_tablename</function>.
+     użyć funkcji <function>mysql_tablename</function> lub innej operującej na
+     tablicach wyników.
     </para>
     <para>
      <example>
       <title><function>mysql_list_dbs</function></title>
       <programlisting role="php">
+<![CDATA[
+<?php
 $link = mysql_connect ("serwer","uzytkownik","haslo");
 $db_list = mysql_list_dbs($link);
 
 while ($row = mysql_fetch_object($db_list)) {
     echo $row->Database . "\n";
 }
+?>
+]]>
       </programlisting>
-     </example>
-    </para>
-    <para>
-     Powyższy przykład da następujący wynik:
-     <informalexample>
-      <programlisting>
+      <para>
+       Powyższy przykład da następujący wynik:
+       <screen>
+<![CDATA[
 baza1
 baza2
 baza3
 ...
-      </programlisting>
-     </informalexample>
+]]>
+       </screen>
+      </para>
+     </example>
     </para>
     <note>
      <para>
@@ -1464,7 +1516,7 @@ baza3
     </note>
     <para>
      Aby zachować zgodność z poprzednimi wersjami, można użyć również 
-     <function>mysql_listdbs</function>.
+     <function>mysql_listdbs</function>. Jest to jednak niezalecane.
     </para>
     <para>
      Patrz także <function>mysql_db_name</function>.
@@ -1500,44 +1552,39 @@ baza3
      <function>mysql_field_name</function> i
      <function>mysql_field_type</function>.
     </para>
-    <!-- 
-      this is very outdated, and now incorrect 
-    <para>
-      A result identifier is a positive integer. The function returns
-     -1 if a error occurs. A string describing the error will be
-     placed in <literal>$phperrmsg</literal>, and unless the function
-     was called as <literal>@mysql()</literal> then this error string
-     will also be printed out.
-    </para> -->
     <para>
      <example>
       <title><function>mysql_list_fields</function></title>
       <programlisting role="php">
+<![CDATA[
+<?php
 $link = mysql_connect ("serwer","uzytkownik","haslo");
 
 $fields = mysql_list_fields("baza", "tabela", $link);
 $columns = mysql_num_fields($fields);
 
-for ($i = 0; $i &lt; $columns; $i++) {
+for ($i = 0; $i < $columns; $i++) {
     echo mysql_field_name($fields, $i) . "\n";
 }
+?>
+]]>
       </programlisting>
-     </example>
-    </para>
-    <para>
-     Powyższy przykład da następujący wynik:
-     <informalexample>
-      <programlisting>
+      <para>
+       Powyższy przykład da następujący wynik:
+       <screen>
+<![CDATA[
 pole1
 pole2
 pole3
 ...
-      </programlisting>
-     </informalexample>
+]]>
+       </screen>
+      </para>
+     </example>
     </para>
     <para>
      Aby zachować zgodność z poprzednimi wersjami, można użyć również 
-     <function>mysql_listfields</function>.
+     <function>mysql_listfields</function>. Jest to jednak niezalecane.
     </para>
     <!-- TODO: this is equiv. with 'select * from $table where &false;,'
          which implies you can better use the field-research functions
@@ -1569,11 +1616,12 @@ pole3
      nazwę bazy i zwraca wskaźnik wyniku podobnie jak funkcja
      <function>mysql_db_query</function>. Żeby uzyskać nazwy tabel
      za wskaźnika wyniku należy użyć funkcji
-     <function>mysql_tablename</function>.
+     <function>mysql_tablename</function> lub innej operującej na
+     tablicach wyników.
     </para>
     <para>
      Aby zachować zgodność z poprzednimi wersjami, można użyć również 
-     <function>mysql_listtables</function>.
+     <function>mysql_listtables</function>. Jest to jednak niezalecane.
     </para>
    </refsect1>
   </refentry>
@@ -1628,8 +1676,8 @@ pole3
      <example>
       <title><function>mysql_num_rows</function></title>
       <programlisting role="php">
-&lt;?php
-
+<![CDATA[
+<?php
 $link = mysql_connect ("serwer","uzytkownik","haslo");
 mysql_select_db("baza", $link);
 
@@ -1637,8 +1685,8 @@ $result = mysql_query("SELECT * FROM tabela", $link);
 $num_rows = mysql_num_rows($result); 
 
 echo "$num_rows wierszy\n";
-
-?&gt;
+?>
+]]>
       </programlisting>
      </example>
     </para>
@@ -1651,7 +1699,7 @@ echo "$num_rows wierszy\n";
     </para>
     <para>
      Aby zachować zgodność z poprzednimi wersjami, można użyć również 
-     <function>mysql_numrows</function>.
+     <function>mysql_numrows</function>. Jest to jednak niezalecane.
     </para>
    </refsect1>
   </refentry>
@@ -1731,6 +1779,21 @@ echo "$num_rows wierszy\n";
     <para> 
      Dlatego też ten typ połączeń nazywany jest 'stałym'.
     </para>
+    <note>
+     <para>
+      Trzeba zaznaczyć, że stałe połączenia działają jedynie z PHP pracującym
+      jako moduł. Przeczytaj rozdział
+      <link linkend="features.persistent-connections">Stałe połączenia z bazami
+      danych</link> by dowiedzieć się więcej.
+     </para>
+    </note>
+    <warning>
+     <para>
+      Używanie stałych połączeń może wymagać dostrojenia konfiguracji
+      Apache'a i MySQLa, aby nie przekroczyć limitu jednoczesnych połączeń
+      dozwolonych przez MySQL.
+     </para>
+    </warning>
    </refsect1>
   </refentry>
 
@@ -1764,11 +1827,13 @@ echo "$num_rows wierszy\n";
      </para>
     </note>
     <para>
-     <function>mysql_query</function> zwraca &true; lub &false;
-     informując czy zapytanie zakończyło się sukcesem czy też nie.
-     Zwrócona wartość &true; oznacza, że zapytanie było prawidłowe i
-     może być wykonane przez serwer. Nie mówi natomiast nic o liczbie
-     przetworzonych lub zwróconych wierszy. Jest również możliwe, że
+     <function>mysql_query</function> zwraca identyfikator wyniku (lub &false;
+     w przypadku niepowodzenia) jedynie dla zapytań typu SELECT.
+     Dla innych zapytań SQL <function>mysql_query</function> zwraca &true;
+     lub &false; informując czy zapytanie zakończyło się sukcesem czy też nie.
+     Jeśli nie została zwrócona wartość &false; to znaczy, że zapytanie było
+     prawidłowe i może być wykonane przez serwer. Nie mówi natomiast nic o
+     liczbie przetworzonych lub zwróconych wierszy. Jest również możliwe, że
      zapytanie zostanie wykonane poprawnie, nie przetwarzając lub
      zwracając żadnych wierszy.
     </para>
@@ -1778,10 +1843,12 @@ echo "$num_rows wierszy\n";
      <example>
       <title><function>mysql_query</function></title>
       <programlisting role="php">
-&lt;?php
+<![CDATA[
+<?php
 $result = mysql_query ("SELECT * WHERE 1=1")
     or die ("Zapytanie niepoprawne");
-?&gt;
+?>
+]]>
       </programlisting>
      </example>
     </para>
@@ -1793,10 +1860,12 @@ $result = mysql_query ("SELECT * WHERE 1=1")
      <example>
       <title><function>mysql_query</function></title>
       <programlisting role="php">
-&lt;?php
+<![CDATA[
+<?php
 $result = mysql_query ("SELECT kolumna FROM tabela")
     or die ("Zapytanie niepoprawne");
-?&gt;
+?>
+]]>
       </programlisting>
      </example>
     </para>
@@ -1812,18 +1881,23 @@ $result = mysql_query ("SELECT kolumna FROM tabela")
      wierszy przetworzonych przez instrukcje DELETE, INSERT, REPLACE i UPDATE.
     </para>
     <para>
-     Jedynie Po operacji SELECT, <function>mysql_query</function> zwróci
+     Jedynie po operacji SELECT, <function>mysql_query</function> zwróci
      identyfikator wyniku, który można przekazać do
-     funkcji <function>mysql_result</function>. Po zakończeniu operacji na
-     wyniku, można zwolnić zasoby przez niego wykorzystywane wywołując
+     funkcji <function>mysql_result</function> lub innych funkcji operujących
+     na tablicach wyników. Po zakończeniu operacji na wyniku, można zwolnić
+     zasoby przez niego wykorzystywane wywołując
      <function>mysql_free_result</function>. Po zakończeniu działania skryptu
      pamięć i tak będzie automatycznie zwolniona.
     </para>
     <para>
-     Patrz także: <function>mysql_affected_rows</function>,
+     Patrz także: <function>mysql_num_rows</function>,
+     <function>mysql_affected_rows</function>,
      <function>mysql_db_query</function>,
      <function>mysql_unbuffered_query</function>,
      <function>mysql_free_result</function>,
+     <function>mysql_fetch_array</function>,
+     <function>mysql_fetch_row</function>,
+     <function>mysql_fetch_assoc</function>,
      <function>mysql_result</function>,
      <function>mysql_select_db</function> i
      <function>mysql_connect</function>.
@@ -1944,7 +2018,7 @@ $result = mysql_query ("SELECT kolumna FROM tabela")
      </funcprototype>
     </funcsynopsis>
     <para> 
-     Zwraca: &true; w przypadku sukcesu, &false; jeśli wystąpi błąd.
+     &return.success;
     </para>
     <para>
      <function>mysql_select_db</function> ustawia aktywną bazę danych
@@ -1952,7 +2026,7 @@ $result = mysql_query ("SELECT kolumna FROM tabela")
      Jeżeli identyfikator nie zostanie podany, wykorzystane zostanie
      ostatnio otwarte połączenie. Jeżeli żadne połączenie nie jest otwarte,
      funkcja spróbuje je nawiązać wywołując
-     <function>mysql_connect</function>.
+     <function>mysql_connect</function> bez argumentów.
     </para>
     <para>
      Kolejne wywołania funkcji <function>mysql_query</function> będą
@@ -1965,7 +2039,7 @@ $result = mysql_query ("SELECT kolumna FROM tabela")
     </para>
     <para>
      Aby zachować zgodność z poprzednimi wersjami, można użyć również
-     <function>mysql_selectdb</function>.
+     <function>mysql_selectdb</function>. Jest to jednak niezalecane.
     </para>
    </refsect1>
   </refentry>
@@ -1992,16 +2066,18 @@ $result = mysql_query ("SELECT kolumna FROM tabela")
      <example>
       <title>Przykład użycia <function>mysql_tablename</function></title>
       <programlisting role="php">
-&lt;?php 
+<![CDATA[
+<?php
 mysql_connect ("serwer","uzytkownik","haslo");
 $result = mysql_list_tables ("baza");
 $i = 0;
-while ($i &lt; mysql_num_rows ($result)) {
+while ($i < mysql_num_rows ($result)) {
     $tb_names[$i] = mysql_tablename ($result, $i);
-    echo $tb_names[$i] . "&lt;BR>";
+    echo $tb_names[$i] . "<BR>";
     $i++;
 }
-?&gt;
+?>
+]]>
       </programlisting>
      </example>
     </para>
@@ -2126,6 +2202,7 @@ sgml-minimize-attributes:nil
 sgml-always-quote-attributes:t
 sgml-indent-step:1
 sgml-indent-data:t
+indent-tabs-mode:nil 
 sgml-parent-document:nil
 sgml-default-dtd-file:"../../manual.ced"
 sgml-exposed-tags:nil
