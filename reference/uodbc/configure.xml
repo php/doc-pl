@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="iso-8859-2"?>
+<!-- EN-Revision: 1.5 Maintainer: vrana Status: ready -->
+<section id="odbc.installation">
+ &reftitle.install;
+ <para>
+  <variablelist>
+   <varlistentry id="install.configure.with-adabas">
+    <term>
+     <parameter>--with-adabas[=DIR]</parameter>
+    </term>
+    <listitem>
+     <para>
+      PHP 3, PHP 4: Dołącz obsługę Adabas D. DIR jest katalogiem gdzie
+      została zainstalowana baza Adabas, domyślnie /usr/local.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry id="install.configure.with-sapdb">
+    <term>
+     <parameter>--with-sapdb[=DIR]</parameter>
+    </term>
+    <listitem>
+     <para>
+      Include SAP DB support. DIR is SAP DB base install directory, 
+      defaults to <filename>/usr/local</filename>.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry id="install.configure.with-solid">
+    <term>
+     <parameter>--with-solid[=DIR]</parameter>
+    </term>
+    <listitem>
+     <para>
+      PHP 3, PHP 4: Dołącz obsługę Solid. DIR to katalog instalacji
+      Solid, domyślnie <filename>/usr/local/solid</filename>
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry id="install.configure.with-ibm-db2">
+    <term>
+     <parameter>--with-ibm-db2[=DIR]</parameter>
+    </term>
+    <listitem>
+     <para>
+      PHP 3, PHP 4: Dołącz obsługę IBM DB2. DIR to katalog instalcji
+      DB2, domyślnie
+      <filename>/home/db2inst1/sqllib</filename>.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry id="install.configure.with-empress">
+    <term>
+     <parameter>--with-empress[=DIR]</parameter>
+    </term>
+    <listitem>
+     <para>
+      PHP 3, PHP 4: Dołącz obsługę Empress. DIR to katalog instalacji
+      Empress, domyślnie $EMPRESSPATH.{From PHP 4, this option only supports 
+      Empress Version 8.60 and above.}
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry id="install.configure.with-empress-bcs">
+    <term>
+     <parameter>--with-empress-bcs[=DIR]</parameter>
+    </term>
+    <listitem>
+     <para>
+      Include Empress Local Access support. DIR is the Empress base 
+      install directory, defaults to $EMPRESSPATH.  From PHP 4, 
+      this option only supports Empress Version 8.60 and above.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry id="install.configure.with-birdstep">
+    <term>
+     <parameter>--with-birdstep[=DIR]</parameter>
+    </term>
+    <listitem>
+     <para>
+      Include Birdstep support. DIR is the Birdstep base install directory, 
+      defaults to <filename>/usr/local/birdstep</filename>.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry id="install.configure.with-custom-odbc">
+    <term>
+     <parameter>--with-custom-odbc[=DIR]</parameter>
+    </term>
+    <listitem>
+     <para>
+      PHP 3, PHP 4: Dołącza obsługę niestandardowej biblioteki ODBC.
+      Parametrem jest główny katalog biblioteki, domyślnie
+      <filename class="directory">/usr/local</filename>.
+     </para>
+     <simpara>
+      Te opcja jest używana tylko jeśli zdefiniowałeś CUSTOM_ODBC_LIBS przy
+      uruchomieniu skryptu configure. Niezbędne jest także wstawienie
+      prawidłowego pliku odbc.h na ścieżkę include. Jeśli nie posiadasz takiego
+      pliku, stwórz go i dołącz stamtąd swój własny nagłówek. Twój nagłówek
+      może także wymagać pewnych definicji, zwłaszcza jeśli jest to biblioteka
+      wieloplatformowa. Zdefiniuj je w CFLAGS.
+     </simpara>
+     <simpara>
+      Na przykład możesz używać Sybase SQL Anywhere na QNX w następujący
+      sposób:
+      <literal>
+       CFLAGS=-DODBC_QNX LDFLAGS=-lunix CUSTOM_ODBC_LIBS="-ldblib
+       -lodbc" ./configure --with-custom-odbc=/usr/lib/sqlany50
+      </literal>
+     </simpara>
+    </listitem>
+   </varlistentry>
+   <varlistentry id="install.configure.with-iodbc">
+    <term>
+     <parameter>--with-iodbc[=DIR]</parameter>
+    </term>
+    <listitem>
+     <para>
+      PHP 3, PHP 4: Dołącz obsługę iODBC. DIR jest to katalog instalacji
+      iODBC, domyślnie <filename>/usr/local</filename>.
+     </para>
+     <para>
+      Ta opcja została rozwinięta dla iODBC Driver Manager, darmowo
+      rozpowszechnianego menedżera sterowników ODBC który działa na różnych
+      odmianach Uniksa.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry id="install.configure.with-esoob">
+    <term>
+     <parameter>--with-esoob[=DIR]</parameter>
+    </term>
+    <listitem>
+     <para>
+      PHP 3: Opcja niedostępna w PHP 3
+     </para>
+     <para>
+      PHP 4: Dołącz obsługę Easysoft OOB. DIR to katalog instalacji
+      OOB, domyślnie /usr/local/easysoft/oob/client.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry id="install.configure.with-unixODBC">
+    <term>
+     <parameter>--with-unixODBC[=DIR]</parameter>
+    </term>
+    <listitem>
+     <para>
+      PHP 3: Opcja niedostępna w PHP 3
+     </para>
+     <para>
+      PHP 4: Dołącz obsługę unixODBC. DIR to katalog instalacji unixODBC,
+      domyślnie <filename>/usr/local</filename>.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry id="install.configure.with-openlink">
+    <term>
+     <parameter>--with-openlink[=DIR]</parameter>
+    </term>
+    <listitem>
+     <para>
+      PHP 3, PHP 4: Dołącz obsługę OpenLink ODBC. DIR to katalog
+      instalacji OpenLink, domyślnie <filename>/usr/local/openlink</filename>.
+      Od wersji 4.0.6 PHP ta opcja konfiguracji nie jest ważna. Jeśli chcesz
+      używać systemu ODBC firmy OpenLink Software, użyj opcji
+      <parameter>--with-iodbc</parameter>.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry id="install.configure.with-dbmaker">
+    <term>
+     <parameter>--with-dbmaker[=DIR]</parameter>
+    </term>
+    <listitem>
+     <para>
+      PHP 3: Opcja niedostępna w PHP 3
+     </para>
+     <para>
+      PHP 4: Dołącz obsługę DBMaker. DIR to katalog instalacji DBMakera
+      domyślnie tam, gdzie została zainstalowana najnowsza wersja DBMakera
+      (np /home/dbmaker/3.6).
+     </para>
+    </listitem>
+   </varlistentry>
+  </variablelist>
+ </para>
+ <para id="odbc.configure.php3">
+  {To disable unified ODBC support in <emphasis>PHP 3</emphasis> add
+  <option role="configure">--disable-unified-odbc</option> to your configure
+  line. Only applicable if iODBC, Adabas, Solid, Velocis or a custom ODBC
+  interface is enabled.}
+ </para>
+ &windows.builtin;
+</section>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"../../../manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

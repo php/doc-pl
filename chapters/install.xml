@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
 <!-- EN-Revision: 1.96 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.14 $ -->
+<!-- $Revision: 1.15 $ -->
  <chapter id="installation">
   <title>Instalacja</title>
   <sect1 id="install.general">
@@ -678,20 +678,6 @@ $ /usr/local/sbin/php4-enable
   <title>Bazy danych</title>
    <variablelist>
 
-    <varlistentry id="install.configure.with-adabas">
-     <term>
-      <parameter>--with-adabas[=DIR]</parameter>
-     </term>
-     <listitem>
-      <para>
-       PHP 3, PHP 4: Dołącz obsługę Adabas D. DIR jest katalogiem gdzie
-       została zainstalowana baza Adabas, domyślnie /usr/local.
-      </para>
-      <para>
-       <ulink url="&url.adabas;">Strona domowa Adabas</ulink>
-      </para>
-     </listitem>
-    </varlistentry>
     <varlistentry id="install.configure.enable-dba">
      <term>
       <parameter>--enable-dba=shared</parameter>
@@ -781,32 +767,6 @@ $ /usr/local/sbin/php4-enable
       </para>
      </listitem>
     </varlistentry>
-    <varlistentry id="install.configure.with-dbmaker">
-     <term>
-      <parameter>--with-dbmaker[=DIR]</parameter>
-     </term>
-     <listitem>
-      <para>
-       PHP 3: Opcja niedostępna w PHP 3
-      </para>
-      <para>
-       PHP 4: Dołącz obsługę DBMaker. DIR to katalog instalacji DBMakera
-       domyślnie tam, gdzie została zainstalowana najnowsza wersja DBMakera
-       (np /home/dbmaker/3.6).
-      </para>
-     </listitem>
-    </varlistentry>
-    <varlistentry id="install.configure.with-empress">
-     <term>
-      <parameter>--with-empress[=DIR]</parameter>
-     </term>
-     <listitem>
-      <para>
-       PHP 3, PHP 4: Dołącz obsługę Empress. DIR to katalog instalacji
-       Empress, domyślnie $EMPRESSPATH
-      </para>
-     </listitem>
-    </varlistentry>
     <varlistentry id="install.configure.enable-filepro">
      <term>
       <parameter>--enable-filepro</parameter>
@@ -873,21 +833,6 @@ $ /usr/local/sbin/php4-enable
      <listitem>
       <para>
        PHP 3, PHP 4: Dołącz obsługę Hyperwave
-      </para>
-     </listitem>
-    </varlistentry>
-    <varlistentry id="install.configure.with-ibm-db2">
-     <term>
-      <parameter>--with-ibm-db2[=DIR]</parameter>
-     </term>
-     <listitem>
-      <para>
-       PHP 3, PHP 4: Dołącz obsługę IBM DB2. DIR to katalog instalcji
-       DB2, domyślnie
-       <filename>/home/db2inst1/sqllib</filename>.
-      </para>
-      <para>
-       <ulink url="&url.ibmdb2;">Strona domowa IBM DB2</ulink>
       </para>
      </listitem>
     </varlistentry>
@@ -1090,20 +1035,6 @@ $ /usr/local/sbin/php4-enable
      </simpara>
     </listitem>
    </varlistentry>
-   <varlistentry id="install.configure.with-solid">
-    <term>
-     <parameter>--with-solid[=DIR]</parameter>
-    </term>
-    <listitem>
-     <para>
-      PHP 3, PHP 4: Dołącz obsługę Solid. DIR to katalog instalacji
-      Solid, domyślnie <filename>/usr/local/solid</filename>
-     </para>
-     <simpara>
-      <ulink url="&url.solid;">Strona domowa Solid</ulink>
-     </simpara>
-    </listitem>
-   </varlistentry>
    <varlistentry id="install.configure.with-sybase-ct">
     <term>
      <parameter>--with-sybase-ct[=DIR]</parameter>
@@ -1136,71 +1067,6 @@ $ /usr/local/sbin/php4-enable
      </simpara>
      <simpara>
       <ulink url="&url.sybase;">Strona domowa Sybase</ulink>
-     </simpara>
-    </listitem>
-   </varlistentry>
-   <varlistentry id="install.configure.with-openlink">
-    <term>
-     <parameter>--with-openlink[=DIR]</parameter>
-    </term>
-    <listitem>
-     <para>
-      PHP 3, PHP 4: Dołącz obsługę OpenLink ODBC. DIR to katalog
-      instalacji OpenLink, domyślnie <filename>/usr/local/openlink</filename>.
-      Od wersji 4.0.6 PHP ta opcja konfiguracji nie jest ważna. Jeśli chcesz
-      używać systemu ODBC firmy OpenLink Software, użyj opcji
-      <parameter>--with-iodbc</parameter>.
-     </para>
-     <simpara>
-      <ulink url="&url.openlink;">Strona domowa OpenLink Software</ulink>
-     </simpara>
-    </listitem>
-   </varlistentry>
-   <varlistentry id="install.configure.with-iodbc">
-    <term>
-     <parameter>--with-iodbc[=DIR]</parameter>
-    </term>
-    <listitem>
-     <para>
-      PHP 3, PHP 4: Dołącz obsługę iODBC. DIR jest to katalog instalacji
-      iODBC, domyślnie <filename>/usr/local</filename>.
-     </para>
-     <para>
-      Ta opcja została rozwinięta dla iODBC Driver Manager, darmowo
-      rozpowszechnianego menedżera sterowników ODBC który działa na różnych
-      odmianach Uniksa.
-     </para>
-     <simpara>
-      <ulink url="&url.freeodbc;">Strona domowa FreeODBC</ulink> 
-      or <ulink url="&url.iodbc;">Strona domowa iODBC</ulink>
-     </simpara>
-    </listitem>
-   </varlistentry>
-   <varlistentry id="install.configure.with-custom-odbc">
-    <term>
-     <parameter>--with-custom-odbc[=DIR]</parameter>
-    </term>
-    <listitem>
-     <para>
-      PHP 3, PHP 4: Dołącza obsługę niestandardowej biblioteki ODBC.
-      Parametrem jest główny katalog biblioteki, domyślnie
-      <filename class="directory">/usr/local</filename>.
-     </para>
-     <simpara>
-      Te opcja jest używana tylko jeśli zdefiniowałeś CUSTOM_ODBC_LIBS przy
-      uruchomieniu skryptu configure. Niezbędne jest także wstawienie
-      prawidłowego pliku odbc.h na ścieżkę include. Jeśli nie posiadasz takiego
-      pliku, stwórz go i dołącz stamtąd swój własny nagłówek. Twój nagłówek
-      może także wymagać pewnych definicji, zwłaszcza jeśli jest to biblioteka
-      wieloplatformowa. Zdefiniuj je w CFLAGS.
-     </simpara>
-     <simpara>
-      Na przykład możesz używać Sybase SQL Anywhere na QNX w następujący
-      sposób:
-      <literal>
-       CFLAGS=-DODBC_QNX LDFLAGS=-lunix CUSTOM_ODBC_LIBS="-ldblib
-       -lodbc" ./configure --with-custom-odbc=/usr/lib/sqlany50
-      </literal>
      </simpara>
     </listitem>
    </varlistentry>
@@ -1244,20 +1110,6 @@ $ /usr/local/sbin/php4-enable
       zunifikowanego ODBC</link> ustawiane w <link
       linkend="configuration.file">pliku konfiguracyjnym</link>.
      </simpara>
-    </listitem>
-   </varlistentry>
-   <varlistentry id="install.configure.with-unixODBC">
-    <term>
-     <parameter>--with-unixODBC[=DIR]</parameter>
-    </term>
-    <listitem>
-     <para>
-      PHP 3: Opcja niedostępna w PHP 3
-     </para>
-     <para>
-      PHP 4: Dołącz obsługę unixODBC. DIR to katalog instalacji unixODBC,
-      domyślnie <filename>/usr/local</filename>.
-     </para>
     </listitem>
    </varlistentry>
    <varlistentry id="install.configure.with-velocis">
@@ -2008,21 +1860,6 @@ $ /usr/local/sbin/php4-enable
        <para>
         PHP 4: Dołącz obsługę cpdflib (wymaga cpdflib &gt;= 2). DIR to
         katalog instalacji cpdflib, domyślnie /usr.
-       </para>
-      </listitem>
-     </varlistentry>
-
-     <varlistentry id="install.configure.with-esoob">
-      <term>
-       <parameter>--with-esoob[=DIR]</parameter>
-      </term>
-      <listitem>
-       <para>
-        PHP 3: Opcja niedostępna w PHP 3
-       </para>
-       <para>
-        PHP 4: Dołącz obsługę Easysoft OOB. DIR to katalog instalacji
-        OOB, domyślnie /usr/local/easysoft/oob/client.
        </para>
       </listitem>
      </varlistentry>
