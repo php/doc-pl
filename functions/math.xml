@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.71 Maintainer: Qrak Status: ready -->
-<!-- $Revision: 1.14 $ -->
+<!-- EN-Revision: 1.75 Maintainer: Qrak Status: ready -->
+<!-- $Revision: 1.15 $ -->
  <reference id="ref.math">
   <title>Matematyka</title>
   <titleabbrev>Matematyka</titleabbrev>
@@ -13,7 +13,7 @@
      <type>integer</type> i <type>float</type> na twoim komputerze (co odpowiada
      zakresowi long resp. double języka C).
      Jeśli potrzebujesz obsługi większych liczb, zajrzyj do <link
-     linkend="ref.bc">funkcji matematycznych dla liczb dowolnej dokładności
+     linkend="ref.bc">funkcji matematycznych dla liczb o dużej precyzji
      </link>
     </para>
     <sect2 id="math.constants">
@@ -182,7 +182,7 @@
   <refentry id="function.acosh">
    <refnamediv>
     <refname>acosh</refname>
-    <refpurpose>Odwrotny cosinus hiperboliczny</refpurpose>
+    <refpurpose>Area cosinus hiperboliczny</refpurpose>
    </refnamediv>
    <refsect1>
     <title>Opis</title>
@@ -191,14 +191,14 @@
       <methodparam><type>float</type><parameter>arg</parameter></methodparam>
      </methodsynopsis>
     <para>
-     Zwraca odwrotny cosinus hiperboliczny z liczby <parameter>arg</parameter>,
+     Zwraca area cosinus hiperboliczny z liczby <parameter>arg</parameter>,
      tzn. taką wartość, której cosinus hiperboliczny jest równy 
      <parameter>arg</parameter>.
     </para>
     &note.no-windows;
     <para>
      Zobacz też <function>acos</function>, <function>asin</function>
-     and <function>atan</function>.
+     i <function>atan</function>.
     </para>
    </refsect1>
   </refentry>
@@ -227,7 +227,7 @@
   <refentry id="function.asinh">
    <refnamediv>
     <refname>asinh</refname>
-    <refpurpose>Odwrotny sinus hiperboliczny</refpurpose>
+    <refpurpose>Area sinus hiperboliczny</refpurpose>
    </refnamediv>
    <refsect1>
     <title>Opis</title>
@@ -236,14 +236,14 @@
       <methodparam><type>float</type><parameter>arg</parameter></methodparam>
      </methodsynopsis>
     <para>
-     Zwraca odwrotny sinus hiperboliczny z liczby <parameter>arg</parameter>,
+     Zwraca area sinus hiperboliczny z liczby <parameter>arg</parameter>,
      tzn. taką wartość, której sinus hiperboliczny jest równy
      <parameter>arg</parameter>.
     </para>
     &note.no-windows;
     <para>
      Zobacz też <function>asin</function>, <function>acos</function>
-     and <function>atan</function>.
+    i <function>atan</function>.
     </para>
    </refsect1>
   </refentry>
@@ -272,7 +272,7 @@
   <refentry id="function.atanh">
    <refnamediv>
     <refname>atanh</refname>
-    <refpurpose>Odwrotny tangens hiperboliczny</refpurpose>
+    <refpurpose>Area tangens hiperboliczny</refpurpose>
    </refnamediv>
    <refsect1>
     <title>Opis</title>
@@ -281,14 +281,14 @@
       <methodparam><type>float</type><parameter>arg</parameter></methodparam>
      </methodsynopsis>
     <para>
-     Zwraca odwrotny tangens hiperboliczny z liczby <parameter>arg</parameter>,
+     Zwraca area tangens hiperboliczny z liczby <parameter>arg</parameter>,
      tzn. taką wartość, dla której tangens hiperboliczny jest równy
      <parameter>arg</parameter>.
     </para>
     &note.no-windows;
     <para>
      Zobacz też <function>atan</function>, <function>asin</function>
-     and <function>acos</function>.
+     i <function>acos</function>.
     </para>
    </refsect1>
   </refentry>
@@ -454,7 +454,7 @@ $binary = base_convert ($hexadecimal, 16, 2);
     </para>
     <para>
      Zobacz też <function>cos</function>, <function>acosh</function>,
-     <function>sin</function> and <function>tan</function>.
+     <function>sin</function> i <function>tan</function>.
     </para>
    </refsect1>
   </refentry>
@@ -707,6 +707,67 @@ var_dump(hexdec("a0"));
     &warn.experimental.func;
     <para>
      &warn.undocumented.func;
+    </para> 
+     </refsect1> 
+    </refentry> 
+    
+    <refentry id='function.is-finite'> 
+     <refnamediv> 
+      <refname>is_finite</refname> 
+      <refpurpose> 
+      </refpurpose> 
+     </refnamediv> 
+     <refsect1> 
+      <title>Opis</title> 
+       <methodsynopsis> 
+        <type>bool</type><methodname>is_finite</methodname> 
+        <methodparam><type>float</type></methodparam> 
+       </methodsynopsis> 
+      <para>
+       Zwraca  &true;, jeśli argument <parameter>wartość</parameter> jest
+       skończoną liczbą, zawierającą się w zakresie liczb zmiennoprzecinkowych
+       (float) dla tej platformy. 
+      </para> 
+     </refsect1> 
+    </refentry> 
+    
+    <refentry id='function.is-infinite'> 
+     <refnamediv> 
+      <refname>is_infinite</refname> 
+      <refpurpose> 
+      </refpurpose> 
+     </refnamediv> 
+     <refsect1> 
+      <title>Opis</title> 
+       <methodsynopsis> 
+        <type>bool</type><methodname>is_infinite</methodname> 
+        <methodparam><type>float</type><parameter>wartość</parameter></methodparam> 
+       </methodsynopsis> 
+      <para>
+       Zwraca &true;, jeśli argument <parameter>wartość</parameter> jest
+       nieskończonością (dodatnią lub ujemną), tak jak wynik operacji
+       <literal>log(0)</literal>, lub cokolwiek innego, co wykracza poza typ
+       zmiennoprzecinkowy (float) dla tej platformy.
+      </para> 
+     </refsect1> 
+    </refentry> 
+    
+    <refentry id='function.is-nan'> 
+     <refnamediv> 
+      <refname>is_nan</refname> 
+      <refpurpose> 
+      </refpurpose> 
+     </refnamediv> 
+     <refsect1> 
+      <title>Opis</title> 
+       <methodsynopsis> 
+        <type>bool</type><methodname>is_nan</methodname> 
+        <methodparam><type>float</type><parameter>wartość</parameter></methodparam> 
+       </methodsynopsis> 
+      <para>
+       Zwraca &true;, jeśli <parameter>wartość</parameter> jest określana jako
+       'not a number', czyli nie jest liczbą, tak jak wartość funkcji
+       <literal>acos(1.01)</literal>. 
     </para>
    </refsect1>
   </refentry>
@@ -1333,7 +1394,7 @@ $foo = round(1241757, -3);  // $foo == 1242000
     </para>
     <para>
      Zobacz też <function>sin</function>, <function>asinh</function>,
-     <function>cos</function> and <function>tan</function>.
+     <function>cos</function> i <function>tan</function>.
     </para>
    </refsect1>
   </refentry>
@@ -1429,7 +1490,7 @@ $randval = rand();
     </para>
     <para>
      Zobacz też <function>tan</function>, <function>atanh</function>,
-     <function>sin</function> and <function>cos</function>.
+     <function>sin</function> i <function>cos</function>.
     </para>
    </refsect1>
   </refentry>
