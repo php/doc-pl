@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.24 Maintainer: slawek Status: ready -->
-<!-- $Revision: 1.12 $ -->
+<!-- EN-Revision: 1.29 Maintainer: slawek Status: ready -->
+<!-- $Revision: 1.13 $ -->
  <chapter id="features.http-auth">
   <title>Autoryzacja HTTP w PHP</title>
 
@@ -10,45 +10,55 @@
    funkcji <function>header</function> by wysłać do przeglądarki komunikat
    "Wymagana autoryzacja", co spowoduje wyświetlenie okienka z polami
    Użytkownik i Hasło. Po wypełnieniu przez użytkownika tych pól, URL
-   zawierający skrypt PHP zostanie ponownie wywołany ze zmiennymi
-   $PHP_AUTH_USER, $PHP_AUTH_PW i $PHP_AUTH_TYPE zawierającymi odpowiednio
-   nazwę użytkownika, hasło i typ autoryzacji. Obecnie obsługiwany jest
-   jedynie typ "Basic". Więcej informacji znajdziesz w opisie funkcji
+   zawierający skrypt PHP zostanie ponownie wywołany z ustawionymi
+   <link linkend="reserved.variables">predefiniowanymi zmiennymi</link>
+   <varname>PHP_AUTH_USER</varname>, <varname>PHP_AUTH_PW</varname> i
+   <varname>PHP_AUTH_TYPE</varname> zawierającymi odpowiednio
+   nazwę użytkownika, hasło i typ autoryzacji. Zmienne te będą dostępne w
+   tablicach <link linkend="reserved.variables.server">$_SERVER</link> oraz
+   <varname>$HTTP_SERVER_VARS</varname>. Obecnie obsługiwana jest jedynie
+   autoryzacja typu "Basic". Więcej informacji znajdziesz w opisie funkcji
    <function>header</function>.</simpara>
   <para>
    Przykładowy skrypt wymuszający autoryzację klienta:
+  </para>
+  <para>
    <example>
     <title>Autoryzacja HTTP</title>
     <programlisting role="php">
 <![CDATA[
 <?php
   if (!isset($_SERVER['PHP_AUTH_USER'])) { 
-    header("WWW-Authenticate: Basic realm=\"My Realm\"");
-    header("HTTP/1.0 401 Unauthorized");
-    echo "Tekst do wysłania, jeśli użytkownik wciśnie przycisk Anuluj\n";
+    header('WWW-Authenticate: Basic realm="My Realm"');
+    header('HTTP/1.0 401 Unauthorized');
+    echo 'Tekst do wysłania, jeśli użytkownik wciśnie przycisk Anuluj';
     exit;
   } else {
     echo "<p>Hej {$_SERVER['PHP_AUTH_USER']}.</p>"; 
-    echo "<p>Twoje hasło to {$_SERVER['$PHP_AUTH_PW']}.</p>"; 
+    echo "<p>Twoje hasło to {$_SERVER['PHP_AUTH_PW']}.</p>"; 
   }
 ?>
 ]]>
     </programlisting>
-   </example></para>
+   </example>
+  </para>
 
   <note>
+   <title>Kompatybilność</title>
    <para>
     Należy uważać z linijkami dodawanymi do nagłówka HTTP. W celu zachowania
     maksymalnej zgodności ze wszystkimi klientami, słowo Basic powinno
     zaczynać się dużą literą "B", wartość realm powinna być otoczona
     cudzysłowami (nie apostrofami), i dokładnie jeden znak odstępu powinien
-    poprzedzać kod 401 w linii "HTTP/1.0 401".
+    poprzedzać kod <emphasis>401</emphasis> w linii
+    <emphasis>HTTP/1.0 401</emphasis>.
    </para>
   </note>
 
   <para>
-   Zamiast wyświetlać wartości $PHP_AUTH_USER i $PHP_AUTH_PW, zapewne
-   zechcesz sprawdzić poprawność nazwy użytkownika i hasła. Na przykład
+   Zamiast wyświetlać wartość <varname>PHP_AUTH_USER</varname> i
+   <varname>PHP_AUTH_PW</varname>, jak to zrobiono w powyższym przykładzie,
+   zechcesz zapewne sprawdzić poprawność nazwy użytkownika i hasła. Na przykład
    poprzez zapytanie do bazy danych lub odnalezienie użytkownika w pliku dbm.
   </para>
 
@@ -64,10 +74,12 @@
    wysłane tradycyjnym zewnętrznym mechanizmem, zmienne PHP_AUTH nie będą
    ustawiane, jeśli dla danej strony aktywna jest autoryzacja zewnętrzna.
    W tym wypadku, aby uzyskać nazwę użytkownika zautoryzowanego zewnętrznie,
-   należy skorzystać ze zmiennej $REMOTE_USER.
+   należy skorzystać ze zmiennej <varname>REMOTE_USER</varname>. Zatem,
+   <varname>$_SERVER['REMOTE_USER']</varname>.
   </simpara>
 
   <note>
+   <title>Konfiguracja</title>
    <para>
     Aby wykryć czy miała miejsce zewnętrzna autoryzacja, PHP sprwadza
     obecność dyrektywy <literal>AuthType</literal>. Pamiętaj zatem, by
@@ -88,35 +100,36 @@
    i hasła. Tej metody można użyć do wylogowania użytkownika po określonym
    czasie lub stworzenia przycisku "Wyloguj".
   </simpara>
-  <simpara></simpara>
+  <para>
    <example>
-     <title>Autoryzacja HTTP z wymuszeniem przelogowania</title>
-     <programlisting role="php">
+    <title>Autoryzacja HTTP z wymuszeniem przelogowania</title>
+    <programlisting role="php">
 <![CDATA[
 <?php
   function authenticate() {
-    header( "WWW-Authenticate: Basic realm=\"Testowy system autoryzacji\"");
-    header( "HTTP/1.0 401 Unauthorized");
+    header('WWW-Authenticate: Basic realm="Testowy system autoryzacji"');
+    header('HTTP/1.0 401 Unauthorized');
     echo "Musisz podać poprawny login i hasło by wejść na tę stronę\n";
     exit;
   }
  
-  if (!isset($_SERVER['PHP_AUTH_USER']) || ($SeenBefore == 1 && $OldAuth == $_SERVER['$PHP_AUTH_USER']))) {
+  if (!isset($_SERVER['PHP_AUTH_USER']) || ($_POST['SeenBefore'] == 1 && $_POST['OldAuth'] == $_SERVER['PHP_AUTH_USER'])) {
    authenticate();
   } 
   else {
-   echo "<p>Witaj: {$_SERVER['$PHP_AUTH_USER']}<br>";
+   echo "<p>Witaj: {$_SERVER['PHP_AUTH_USER']}<br>";
    echo "Poprzenio: {$_REQUEST['$OldAuth']}";
-   echo "<form action='{$_SERVER['$PHP_SELF']}' METHOD='POST'>\n";
+   echo "<form action='{$_SERVER['PHP_SELF']}' METHOD='POST'>\n";
    echo "<input type='hidden' name='SeenBefore' value='1'>\n";
-   echo "<input type='hidden' name='OldAuth' value='{$_SERVER['$PHP_AUTH_USER']}'>\n";
+   echo "<input type='hidden' name='OldAuth' value='{$_SERVER['PHP_AUTH_USER']}'>\n";
    echo "<input type='submit' value='Re Authenticate'>\n";
    echo "</form></p>\n";
   }
 ?>
 ]]>
-   </programlisting>
-  </example>
+    </programlisting>
+   </example>
+  </para>
   <simpara>
    Powyższa metoda nie jest wymagana przez autoryzację HTTP typu "Basic",
    więc nie można na niej polegać. Testy z przeglądarką Lynx pokazały, że
