@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.23 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.9 $ -->
+<!-- EN-Revision: 1.26 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.10 $ -->
  <reference id="ref.url">
   <title>URL</title>
   <titleabbrev>URLs</titleabbrev>
@@ -102,6 +102,12 @@
      <screen>foo%20bar%40baz</screen> zostanie odkodowany do postaci
      <screen>foo bar@baz</screen>.
     </para>
+    <note>
+     <para>
+      <function>rawurldecode</function> nie zamienia znaków plusa ('+')
+      na spacje. Robi to <function>urldecode</function>.
+     </para>
+    </note>
     <simpara>
      Patrz także <function>rawurlencode</function>,
      <function>urldecode</function>,
@@ -131,26 +137,28 @@
      zniekształceniem ich podczas konwersji znaków dokonywanych
      przez media transmisyjne (np. niektóre systemy pocztowe).
      Na przykład, jeśli chcesz dołączyć hasło do URL'a FTP:
-     <example>
-      <title><function>rawurlencode</function> przykład 1</title>
-      <programlisting role="php">
+    </para>
+    <example>
+     <title><function>rawurlencode</function> przykład 1</title>
+     <programlisting role="php">
 <![CDATA[
 echo '<a href="ftp://user:', rawurlencode('foo @+%/'),
      '@ftp.my.com/x.txt">';
 ]]>
-      </programlisting>
-     </example>
+     </programlisting>
+    </example>
+    <para>
      Lub, jeśli podajesz informację w części PATH_INFO (ścieżka) URL'a:
-     <example>
-      <title><function>rawurlencode</function> przykład 2</title>
-      <programlisting role="php">
+    </para>
+    <example>
+     <title><function>rawurlencode</function> przykład 2</title>
+     <programlisting role="php">
 <![CDATA[
 echo '<a href="http://x.com/department_list_script/',
     rawurlencode('sales and marketing/Miami'), '">';
 ]]>
-      </programlisting>
-     </example>
-    </para>
+     </programlisting>
+    </example>
     <simpara>
      Patrz także <function>rawurldecode</function>,
      <function>urldecode</function>,
