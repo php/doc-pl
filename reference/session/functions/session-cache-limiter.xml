@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.3 $ -->
+<!-- EN-Revision: 1.6 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.4 $ -->
   <refentry id="function.session-cache-limiter">
    <refnamediv>
     <refname>session_cache_limiter</refname>
@@ -24,30 +24,31 @@
      Ogranicznik pamięci podręcznej kontroluje nagłówki HTTP wysyłane do
      klienta. Nagłówki te ustalają zasady, według których zawartość strony
      może być przechowywana w pamięci podręcznej przeglądarki. Ustawiając
-     ogranicznik pamięci podręcznej na przykład na<literal>nocache</literal>,
+     ogranicznik pamięci podręcznej na <literal>nocache</literal>
      zabronimy jakiekolwiek zachowywanie strony po stronie klienta. Wartość
      <literal>public</literal> pozwoli na takie przechywanie. Ogranicznikiem
      może być też <literal>private</literal>, który jest troszkę bardziej
      restrykcyjny niż <literal>public</literal>.
     </para>
     <para>
-     W trybie <literal>private</literal>, nagłówek <literal>Expire</literal>,
+     W trybie <literal>private</literal> nagłówek <literal>Expire</literal>,
      który jest wysyłany do klienta, może spowodować nieoczekiwane działanie
-     niektórych przeglądarem, między innymi Mozilli. Możesz uniknąć tego
+     niektórych przeglądarek, między innymi Mozilli. Możesz uniknąć tego
      problemu używając trybu <literal>private_no_expire</literal>. Nagłówek
      <literal>Expire</literal> nie jest w tym wypadku wysyłany do klienta.
     </para>
     <note>
      <para>
-      <literal>private_no_expire</literal> zostało dodane w PHP 4.2.0dev.
+      <literal>private_no_expire</literal> zostało dodane w PHP 4.2.0.
      </para>
     </note>
     <para>
      Ogranicznik pamięci podręcznej w momencie wywołania skryptu jest zerowany
-     do wartości domyślnej przechowywanej w 
-     <literal>session.cache_limiter</literal>. W związku z tym niezbędne jest
-     wywołanie <function>session_cache_limiter</function> dla każdego
-     wywołania skryptu (i przed wywołaniem <function>session_start</function>).
+     do wartości domyślnej przechowywanej w <link
+      linkend="ini.session.cache-limiter">session.cache_limiter</link>. W
+     związku z tym niezbędne jest wywołanie
+     <function>session_cache_limiter</function> dla każdego wywołania skryptu
+     (i przed wywołaniem <function>session_start</function>).
     </para>
     <example>
      <title>Przykłady <function>session_cache_limiter</function></title>
@@ -55,16 +56,20 @@
 <![CDATA[
 <?php
 
-# Ustaw ogranicznik pamięci podręcznej na 'private'
+/* Ustaw ogranicznik pamięci podręcznej na 'private' */
 
 session_cache_limiter('private');
 $cache_limiter = session_cache_limiter();
 
-echo "Ogranicznikiem pamięci podręcznej jest teraz $cache_limiter<p>";
+echo "Ogranicznikiem pamięci podręcznej jest teraz $cache_limiter<br />";
 ?>
 ]]>
      </programlisting>
     </example>
+    <para>
+     Patrz także:
+     <link linkend="ini.session.cache-limiter">session.cache_limiter</link>.
+    </para>
    </refsect1>
   </refentry>
 
