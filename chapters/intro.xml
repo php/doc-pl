@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- $Revision: 1.2 $ -->
+<!-- $Revision: 1.3 $ -->
  <chapter id="introduction">
   <title>Wprowadzenie</title>
 
   <sect1 id="intro-whatis">
    <title>Czym jest PHP?</title>
    <simpara>
-    PHP (oficjalnie "PHP: Hypertext Preprocessor") jest zagnieżdżonym
-    w HTML jezykiem skryptowym działającym po stronie serwera.
+    PHP (akronim rekursywny "PHP: Hypertext Preprocessor") jest 
+    zagnieżdżonym w HTML jezykiem skryptowym działającym po stronie serwera
+    tworzonym na zasadach open-source.
    </simpara>
    <para>
     Prosta odpowiedź, ale co to znaczy? Przykład:
@@ -16,26 +17,28 @@
     <example>
      <title>Wprowadzający przykład</title>
      <programlisting role="php">
-&lt;html>
-    &lt;head>
-        &lt;title>Przykład&lt;/title>
-    &lt;/head>
-    &lt;body>
-        &lt;?php echo "Cześć! Jestem skryptem PHP!"; ?>
-    &lt;/body>
-&lt;/html>
+<![CDATA[
+<html>
+    <head>
+        <title>Przykład</title>
+    </head>
+    <body>
+        <?php echo "Cześć! Jestem skryptem PHP!"; ?>
+    </body>
+</html>
+]]>
      </programlisting>
     </example>
    </para>
    <para>
-    Zauważ jak bardzo różni się to od skryptów CGI pisanych w innych
+    Zauważ jak bardzo różni się to od skryptów pisanych w innych
     językach, takich jak C czy Perl -- zamiast pisać program, zawierający
     mnóstwo komend tylko do wypisania HTML, piszesz kod HTML zawierający
     troche zagnieżdżonego kodu, który robi coś konkretnego (w powyższym
     przypadku wypisuje jakiś tekst). Kod PHP jest zawarty pomiędzy specjalnymi
     <link linkend="language.basic-syntax.phpmode">znacznikami otwierającymi i
     zamykającymi</link> które pozwalają na wchodzenie do i wychodzenie z
-    trybu PHP.
+    "trybu PHP".
    </para>
    <para>
     PHP różni się od skryptów wykonywanych po stronie klienta takich
@@ -47,21 +50,101 @@
     przez PHP. A wtedy nie ma sposobu, aby użytkownik mógł stwierdzić jakie asy
     trzymasz w rękawie.
    </para>
+   <para>
+    Najlepszą rzeczą w używaniu PHP jest to, że jest bardzo łatwy w opanowaniu
+    dla początkującego, ale oferuje także wiele zaawansowanych właściwości
+    zaawansowanym programistom. Nie bój się przeglądając długą listę
+    możliwości PHP. PHP można się szybko nauczyć i już po kilku godzinach
+    pisać proste skrypty.
+   </para>
+   <para>
+    Pomimo że PHP jest rozwijane pod kątem skryptowania server-side, może on
+    znacznie więcej. Przeczytaj rozdział <link linkend="intro-whatcando">Co
+    potrafi PHP</link> aby uzyskać więcej informacji.
+   </para>
   </sect1>
 
   <sect1 id="intro-whatcando">
    <title>Co potrafi PHP?</title>
    <para>
-    Mówiąc najprościej, PHP potrafi wszystko to, co każdy inny skrypt
-    CGI, czyli zbierać dane z formularzy, generować dynamiczne
-    strony oraz wysyłać i odczytywać cookies (ciasteczka).
+    Wszystko. PHP jest rozwijane pod kątem pisania skryptów server-side, więc
+    możesz zrobić wszystko co potrafią inne programy CGI, jak na przykład
+    odbierać dane z formularzy, generować dynamicznie zawartość strony, lub
+    odbierać i wysyłać ciasteczka. Ale PHP może o wiele więcej.
    </para>
    <para>
-    Prawdopodobnie najmocniejszą i najbardziej znaczącą cechą PHP jest
-    obsługa szerokiej gamy baz danych. Pisanie strony powiązaniej
-    z bazą danych jest niesamowicie proste. Następujące bazy danych są aktualnie
-    obsługiwane przez PHP:	
-     <blockquote>
+    Istnieją trzy główne pola użytkowania skryptów PHP.
+    <itemizedlist>
+     <listitem>
+      <simpara>
+       Pisanie skryptów server-side. Jest to najbardziej tradycyjne i główne
+       pole działania PHP. Potrzebujesz 3 rzeczy aby to robić: parser PHP
+       (plik wykonywalny CGI lub moduł serwera), serwer WWW i przeglądarka.
+       Musisz uruchomić serwer WWW połączony z PHP. Dane wyjściowe programów
+       PHP możesz oglądać kożystając z przeglądarki poprzez serwer. Zobacz
+       rozdział <link linkend="installation">Instalacja</link> aby uzyskać
+       więcej informacji.
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       Pisanie skryptów uruchamianych z linii poleceń. Moższ napisać skrypt
+       PHP i uruchomić go bez serwera i przeglądarki. Potrzebujesz do tego
+       tylko parsera PHP. Ten typ użytkowania jest idealny do uruchamiania
+       skryptów regularnie poprzez crona (lub menedżer zadań na Windowsach),
+       lub przetwarzania tekstu. Zobacz rozdział <link linkend="commandline">
+       Użytkowanie PHP z linii poleceń</link> aby uzyskać więcej informacji.
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       Pisanie aplikacji client-side z interfejsem użytkownika. PHP jest
+       prawdopodobnie nienajlepszym językiem do pisania okienkowych aplikacji,
+       ale jeśli bardzo dobrze znasz PHP i chcesz skorzystać z zaawansowanych
+       możliwości PHP w swojej aplikacji client-side, możesz także użyć pakiet
+       PHP-GTK do pisania takich programów. Z PHP-GTK Masz także możliwość
+       pisania aplikacji wieloplatformowych. PHP-GTK jest rozszerzeniem PHP i
+       nie jest dostępne w głównej dystrybucji. Jeśli jesteś zainteresowany
+       PHP-GTK, odwiedź <ulink url="&url.php.gtk;">stronę domową
+       projektu</ulink>.
+      </simpara>
+     </listitem>
+    </itemizedlist>
+   </para>
+   <para>
+    PHP może być także użyta na większości najważniejszych systemów
+    operacyjnych, takich jak Linux, wiele wariantów systemu Unix (włączając w
+    to HP-UX, Solaris i OpenBSD), Microsoft Windows, Mac OS X, RISC OS i
+    prawdopodobnie wiele innych. PHP w chwili obecnej obsługuje większość
+    serwerów HTTP, włączając w to Apache, Microsoft Internet Information
+    Server, Personal Web Server, serwery Netscape i iPlanet, Oreilly Website
+    Pro, Caudium, Xitami, OmniHTTPd i wiele innych. Dla więszości z nich PHP
+    dostępne jest jako moduły serwera, dla pozostałych jako program CGI. PHP
+    może pracować jako procesor CGI.
+   </para>
+   <para>
+    A więc z PHP istnieje wolnośc wyboru systemu operacyjnego i serwera WWW.
+    Można także wybrać pomiędzy programowaniem proceduralnym a obiektowym, lub
+    pomieszaniem ich obu. Pomimo że nie wszystkie standardy OOP są obsługiwane
+    w PHP, wiele bibliotek i dużych aplikacji (włączając w to <link
+    linkend="pear">biblioteki PEAR</link>) jest napisanych całkowicie w sposób
+    obiektowy.
+   </para>
+   <para>
+    W PHP nie ma ograniczenia, że na wyjściu musi być HTML. Możliwości PHP
+    obejmują tworzenie obrazów, plików PDF, a nawet animacji Flash (używając
+    libswf i Ming) generowanych "w locie". Możesz także wyprowadzać na wyjście
+    dowolne dane tekstowe, jak na przykład XHTML czy dowolny inny plik XMLowy.
+    PHP może autogenerować te pliki i zapisywać je w systemie plików zamiast
+    wysyłać je na wyjście, tworząc pamięć podręczną dla twojej dynamicznej
+    zawartości.
+   </para>
+   <para>
+    Jedną z najmocniejszych i najbardziej znaczących możliwości PHP jest
+    obsługa wielu rodzajów baz danych. Pisanie strony WWW wykorzystującej bazę
+    danych jest niewiarygodnie proste. Obecnie obsługiwane są następujące bazy
+    danych:
+    <blockquote>
      <simplelist columns="3">
       <member>Adabas D</member>
       <member>dBase</member>
@@ -86,22 +169,46 @@
       <member>Unix dbm</member>
      </simplelist>
     </blockquote>
+    Istenieje także abstrakcyjne rozszerzenie DBX pozwalające na przezroczyste
+    używanie dowolnej bazy danych obsługiwanych przez to rozszerzenie.
+    Dodatkowo PHP obsługuje standard ODBC (Open Database Connection), przez co
+    możesz połączyć się do dowolnej innej bazy danych obsługującej ten
+    popularny standard. 
    </para>
    <para>
     PHP obsługuje również inne serwisy używające protokołów
-    takich jak IMAP, SNMP, NNTP, POP3, HTTP i wiele innych. Możesz także
-    otwierać surowe gniazda sieciowe i używać innych protokołów.
+    takich jak IMAP, SNMP, NNTP, POP3, HTTP, COM (pod systemami Windows)
+    i wiele innych. Możesz także otwierać surowe gniazda sieciowe i korzystać
+    z innych protokołów. PHP obsługuje WDDX - kompleksowy model wymiany danych
+    pomiędzy praktycznie wszystkimi sieciowymi językami programowania. PHP
+    obsługuje także obiekty Java i może korzystać z nich przezroczyście - tak
+    jak z obiektów PHP. Możesz także skorzystać z rozszerzenia Corba aby
+    użyskać dostęp do zdalnych obiektów.
    </para>
-<!--
-   <figure>
-    <title>Wewnętrzna struktura</title>
-    <graphic fileref="../images/php3_internal_structure.gif"/>
-   </figure>
-   <figure>
-    <title>Schemat żądania</title>
-    <graphic fileref="../images/php3_request_scheme.gif"/>
-   </figure>
--->
+   <para>
+    PHP mam niezwykle przydatne możliwości do obróbki tekstów, od POSIX'owych
+    i PERL'owych wyrażeń regularnych po parsowanie dokumentów XML. Do
+    parsowania i uzyskiwania dostępu do dokumentów XML wykorzystywane są
+    standardy SAX i XML. Możesz także użyć naszych rozszerzeń XSLT do
+    przetwarzania dokumentów XML.
+   </para>
+   <para>
+    PHP może być używane w sferze e-commerce, ponieważ obsługuje płatności
+    Cybercash, a także funkcje CyberMUT, Verisign Payflow Pro i CCVS,
+    przydatne przy płatnościach on-line.
+   </para>
+   <para>
+    Na koniec warto wspomnieć, że w PHP istnieje wiele innych interesujących
+    rozszerzeń, takich jak funkcje przeszykiwawcze mnoGoSearch, funkcje bramki
+    IRC, wiele narzędzi do kompresji (gzip, bz2), konwersji kalendarza,
+    tłumaczeń...
+   </para>
+   <para>
+    To co widać na tej stronie, to nie jest wszystko co ma do zaoferowanie
+    PHP. Przeczytaj rozdział o <link linkend="installation">instalacji</link>
+    i zobacz <link linkend="funcref">przegląd funkcji</link> jeśli chcesz
+    dowiedzieć się więcej o rozszerzeniach tutaj wspomnianych.
+   </para>
   </sect1>
 
   <sect1 id="intro-history">
