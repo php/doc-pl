@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.3 $ -->
+<!-- EN-Revision: 1.4 Maintainer: qrak Status: ready -->
+<!-- $Revision: 1.4 $ -->
 <!-- splitted from ./en/functions/datetime.xml, last change in rev 1.2 -->
   <refentry id="function.mktime">
    <refnamediv>
@@ -59,10 +59,12 @@
       <title>przykład <function>mktime</function></title>
       <programlisting role="php">
 <![CDATA[
+<?php
 echo date ("M-d-Y", mktime (0,0,0,12,32,1997));
 echo date ("M-d-Y", mktime (0,0,0,13,1,1997));
 echo date ("M-d-Y", mktime (0,0,0,1,1,1998));
 echo date ("M-d-Y", mktime (0,0,0,1,1,98));
+?>
 ]]>
       </programlisting>
      </example>
@@ -74,6 +76,16 @@ echo date ("M-d-Y", mktime (0,0,0,1,1,98));
      zawiera się pomiędzy 1902 a 2037).
     </para>
     <para>
+       <note>
+        <title>Windows</title>
+        <simpara>
+         Żadna znana wersja systemu Windows nie obsługuje ujemnych znaczników
+         czasu. Z tego powodu zakres poprawnych dat zawiera się pomiędzy rokiem
+         1970 a 2038.
+        </simpara>
+       </note>
+    </para>
+    <para>
      Ostatni dzień dowolnego miesiąca może być wyrażony jako zerowy dzień
      następnego miesiąca, ale nie jako -1 dzień. Obydwa poniższe przykłady
      wyświetlą "Ostatni dzień lutego 2000 to: 29".
@@ -81,11 +93,13 @@ echo date ("M-d-Y", mktime (0,0,0,1,1,98));
       <title>Ostatni dzień miesiąca</title>
       <programlisting role="php">
 <![CDATA[
+<?php
 $ostatni = mktime (0,0,0,3,0,2000);
 echo strftime ("Ostatni dzień lutego 2000 to: %d", $ostatni);
      
 $ostatni = mktime (0,0,0,4,-31,2000);
 echo strftime ("Ostatni dzień lutego 2000 to: %d", $ostatni);
+?>
 ]]>
       </programlisting>
      </example>
