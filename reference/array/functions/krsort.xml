@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.11 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.krsort">
    <refnamediv>
     <refname>krsort</refname>
@@ -9,40 +9,43 @@
    <refsect1>
     <title>Opis</title>
      <methodsynopsis>
-      <type>int</type><methodname>krsort</methodname>
-      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+      <type>bool</type><methodname>krsort</methodname>
+      <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
       <methodparam choice="opt"><type>int</type><parameter>flagi</parameter></methodparam>
      </methodsynopsis>
     <para>
      Sortuje trablicę według klucza w porządku odwrotnym utrzymując
      skojarzenia kluczy z danymi. Jest to przydatne głównie w przypadku
      tablic asocjacyjnych.
+    </para>
+    <para>
+     &return.success;
+    </para>
+    <para>
      <example>
       <title>Przykład użycia <function>krsort</function></title>
       <programlisting role="php">
 <![CDATA[
-$owoce = array ("d"=>"cytryna", "a"=>"pomarańcza", "b"=>"banan", "c"=>"jabłko");
-krsort ($owoce);
-reset ($owoce);
-while (list ($key, $val) = each ($owoce)) {
+<?php
+$owoce = array("d"=>"cytryna", "a"=>"pomarańcza", "b"=>"banan", "c"=>"jabłko");
+krsort($owoce);
+reset($owoce);
+while (list($key, $val) = each($owoce)) {
     echo "$key = $val\n";
 }
+?>
 ]]>
       </programlisting>
-     </example>
-    </para>
-    <para>
-     Ten przykład wyświetli:
-    </para>
-    <para>
-     <screen>
+      &example.outputs;
+      <screen>
 <![CDATA[
 d = cytryna
 c = jabłko
 b = banan
 a = pomarańcza
 ]]>
-     </screen>
+      </screen>
+     </example>
     </para>
     <para>
      Możesz zmodyfikować zachowanie sortowania przez użycie opcjonalnego
