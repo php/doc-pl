@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
 <!-- splitted from ./pl/functions/filesystem.xml, last change in rev 1.1 -->
 <!-- last change to 'tmpfile' in en/ tree in rev 1.32 -->
-<!-- EN-Revision: 1.2 Maintainer: adi Status: partial -->
+<!-- EN-Revision: 1.5 Maintainer: adi Status: partial -->
 <!-- OLD-Revision: 1.115/EN.1.32 -->
    <refentry id="function.tmpfile">
    <refnamediv>
@@ -11,12 +11,12 @@
    <refsect1>
     <title>Opis</title>
      <methodsynopsis>
-      <type>int</type><methodname>tmpfile</methodname>
+      <type>resource</type><methodname>tmpfile</methodname>
       <void/>
      </methodsynopsis>
     <para>
      Tworzy plik tymczasowy o unikalnej nazwie i otwiera go 
-     w trybie d zapisu, zwraca uchwyt pliku, podobnie jak
+     w trybie do odczytu i zapisu (w+), zwraca uchwyt pliku, podobnie jak
      <function>fopen</function>.
      Plik jest automatycznie kasowany przy zamykaniu (po użyciu
      <function>fclose</function>), lub gdy skrypt się zakończy.
@@ -31,11 +31,21 @@
       <title><function>tmpfile</function> przykład</title>
       <programlisting role="php">
 <![CDATA[
+<?php
 $temp = tmpfile();
 fwrite($temp, "zapisywanie do pliku tymczasowego");
+fseek($temp, 0); 
+echo fread($temp, 1024); 
 fclose($temp); // to kasuje plik
+?>
 ]]>
       </programlisting>
+	  &example.outputs; 
+      <screen> 
+<![CDATA[ 
+zapisywanie do pliku tymczasowego
+]]> 
+      </screen> 
      </example>
     </para>
     <para>
