@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.18 Maintainer: slawek Status: ready -->
-<!-- $Revision: 1.10 $ -->
+<!-- EN-Revision: 1.20 Maintainer: slawek Status: ready -->
+<!-- $Revision: 1.11 $ -->
  <chapter id="features.safe-mode">
   <title>Tryb bezpieczny</title>
 
@@ -74,7 +74,10 @@ Warning: open_basedir restriction in effect. File is in wrong directory in
    </screen>
   </para>
   <para>
-   Możesz także wyłączyć pojedyncze funkcje. Jeśli do pliku php.ini dodasz:
+   Możesz także wyłączyć pojedyncze funkcje. Pamiętaj jednak, że dyrektywa
+	 disable_functions może być użyta tylko w pliku &php.ini;, co oznacza, że nie
+	 da się wyłączać funkcji w sekcjach VirtualHost i Directory w pliku
+	 httpd.conf. Jeśli do pliku &php.ini; dodasz:
    <programlisting role="ini">
 <![CDATA[
 disable_functions readfile,system
