@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.11 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.array-pop">
    <refnamediv>
     <refname>array_pop</refname>
@@ -10,7 +10,7 @@
     <title>Opis</title>
      <methodsynopsis>
       <type>mixed</type><methodname>array_pop</methodname>
-      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+      <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
      </methodsynopsis>
     <para>
      <function>array_pop</function> zdejmuje i zwraca ostatnią wartość tablicy
@@ -23,8 +23,11 @@
       <title>Przykład użycia <function>array_pop</function></title>
       <programlisting role="php">
 <![CDATA[
-$stos = array ("pomarańcza", "banan", "jabłko", "malina");
-$owoc = array_pop ($stos);
+<?php
+$stos = array("pomarańcza", "banan", "jabłko", "malina");
+$owoc = array_pop($stos);
+print_r($stos);
+?>
 ]]>
       </programlisting>
      </example>
@@ -45,7 +48,6 @@ Array
      a <literal>malina</literal> będzie przypisana do zmiennej
      <varname>$owoc</varname>.
     </para>
-    &return.falseproblem;
     <para>
      Patrz także: <function>array_push</function>,
      <function>array_shift</function> i

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.3 $ -->
+<!-- EN-Revision: 1.11 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.4 $ -->
   <refentry id="function.array-push">
    <refnamediv>
     <refname>array_push</refname>
@@ -12,7 +12,7 @@
     <title>Opis</title>
      <methodsynopsis>
       <type>int</type><methodname>array_push</methodname>
-      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+      <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
       <methodparam><type>mixed</type><parameter>wartosc</parameter></methodparam>
       <methodparam choice="opt"><type>mixed</type><parameter>...</parameter></methodparam>
      </methodsynopsis>
@@ -23,7 +23,9 @@
      liczbę przekazanych wartości. Ma to taki sam efekt jak kod:
      <programlisting role="php">
 <![CDATA[
+<?php
 $tablica[] = $wartosc;
+?>
 ]]>
      </programlisting>
      powtórzony dla każdego parametru <parameter>wartosc</parameter>.
@@ -36,14 +38,18 @@ $tablica[] = $wartosc;
       <title>Przykład użycia <function>array_push</function></title>
       <programlisting role="php">
 <![CDATA[
-$stos = array ("pomarańcza", "banan");
-array_push ($stos, "jabłko", "malina");
+<?php
+$stos = array("pomarańcza", "banan");
+array_push($stos, "jabłko", "malina");
 print_r($stos);
+?>
 ]]>
       </programlisting>
       <para>
-       Powyższy przykład wyświetli:
-       <screen>
+       Po wykonaniu powyższego przykładu zmienna <varname>$stos</varname>
+       będzie miała następujące elementy:
+      </para>
+      <screen>
 <![CDATA[
 Array
 (
@@ -53,10 +59,17 @@ Array
     [3] => malina
 )
 ]]>
-       </screen>
-      </para>
+      </screen>
      </example>
     </para>
+    <note>
+     <simpara>
+      Jeśli funkcja <function>array_push</function> ma być użyta do dodania
+      tylko jednego elementu do tablicy, lepiej jest użyć składni
+      <literal>$tablica[] = </literal>, ponieważ nie powoduje to narzutu przez
+      konieczność wywołanie funkcji.
+     </simpara>
+    </note>
     <para>
      Patrz także: <function>array_pop</function>,
      <function>array_shift</function> i

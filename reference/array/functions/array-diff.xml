@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.10 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.6 $ -->
+<!-- EN-Revision: 1.11 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.7 $ -->
   <refentry id="function.array-diff">
    <refnamediv>
     <refname>array_diff</refname>
@@ -25,18 +25,28 @@
       <programlisting role="php">
 <![CDATA[
 <?php
-$tablica1 = array ("a" =&gt; "zielony", "czerwony", "niebieski", "czerwony");
-$tablica2 = array ("b" =&gt; "zielony", "żółty", "czerwony");
+$tablica1 = array ("a" => "zielony", "czerwony", "niebieski", "czerwony");
+$tablica2 = array ("b" => "zielony", "żółty", "czerwony");
 $wynik = array_diff ($tablica1, $tablica2);
+
+print_r($wynik);
 ?>
 ]]>
       </programlisting>
+      <para>
+       Wielokrotne wystąpienia w $tablica1 są traktowane w ten sam sposób.
+       Powyższy przykład wyświetli:
+      </para>
+      <screen>
+<![CDATA[	
+Array	
+(	
+    [1] => niebieski
+)	
+ 	]]>
+
+      </screen>
      </example>
-    </para>
-    <para>
-     W powyższym przykładzie zmienna <varname>$wynik</varname> zawiera 
-     <literal>array ("niebieski");</literal>. Wielokrotne wystąpienia w
-     $tablica1 są traktowane w taki sam sposób.
     </para>
     <note>
      <simpara>
