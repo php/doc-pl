@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.5 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.7 $ -->
+<!-- EN-Revision: 1.9 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.8 $ -->
   <refentry id="function.array-shift">
    <refnamediv>
     <refname>array_shift</refname>
@@ -23,18 +23,21 @@
      <parameter>tablica</parameter> jest pusta (lub nie jest tablicą),
      zwracana jest wartość &null;.
     </para>
-    <para>
-     <example>
-      <title>Przykład użycia <function>array_shift</function></title>
-      <programlisting role="php">
+    &array.resetspointer; 
+    <example>
+     <title>Przykład użycia <function>array_shift</function></title>
+     <programlisting role="php">
 <![CDATA[
-$stos= array ("pomarańcza", "banan", "jabłko", "malina");
+<?php
+$stos = array ("pomarańcza", "banan", "jabłko", "malina");
 $owoc = array_shift ($stos);
+?>
 ]]>
-      </programlisting>
-      <para>
-       Zmienna <varname>$stos</varname> będzie miała 3 elementy:
-       <screen>
+     </programlisting>
+     <para>
+      Zmienna <varname>$stos</varname> będzie miała 3 elementy:
+     </para>
+     <screen>
 <![CDATA[
 Array
 (
@@ -43,12 +46,12 @@ Array
     [2] => malina
 )
 ]]>
-       </screen>
-       a <literal>pomarańcza</literal> będzie przypisana do zmiennej
-       <varname>$owoc</varname>
-      </para>
-     </example>
-    </para>
+     </screen>
+     <para>
+      a <literal>pomarańcza</literal> będzie przypisana do zmiennej
+      <varname>$owoc</varname>
+     </para>
+    </example>
     <para>
      Patrz także: <function>array_unshift</function>,
      <function>array_push</function> i
@@ -74,6 +77,6 @@ sgml-local-catalogs:nil
 sgml-local-ecat-files:nil
 End:
 vim600: syn=xml fen fdm=syntax fdl=2 si
-vim: et tw=78 syn=sgml
+vim: et tw=78 syn=sgml encoding=iso-8859-2
 vi: ts=1 sw=1
 -->
