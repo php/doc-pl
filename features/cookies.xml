@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.13 Maintainer: slawek Status: ready -->
-<!-- $Revision: 1.7 $ -->
+<!-- EN-Revision: 1.20 Maintainer: slawek Status: ready -->
+<!-- $Revision: 1.8 $ -->
  <chapter id="features.cookies">
   <title>Ciasteczka (cookies)</title>
 
   <para>
-   PHP obsługuje ciasteczka HTTP (cookies). Jest to
+   PHP obsługuje ciasteczka <acronym>HTTP</acronym> (cookies). Jest to
    mechanizm służący do przechowywania danych w przeglądarce i
    w ten sposób śledzenia lub identyfikowania powracających użytkowników.
    Można je ustawiać używając funkcji <function>setcookie</function>.
-   Ciasteczka stanowią część nagłówka HTTP, więc funkcja
+   Ciasteczka stanowią część nagłówka <acronym>HTTP</acronym>, więc funkcja
    <function>setcookie</function> musi być wywoływana zanim jakiekolwiek dane
    zostaną wysłane do przeglądarki. Występuje tu to samo ograniczenie,
    co w przypadku <function>header</function>. Możesz skorzystać z
@@ -20,24 +20,24 @@
 
   <para>
    Każde ciasteczko wysłane do ciebie od klienta, będzie automatycznie
-   przekształcone w zmienną PHP, podobnie, jak przy użyciu metod POST i GET,
+   przekształcone w zmienną PHP, podobnie, jak przy użyciu metod <literal>POST</literal>  i <literal>GET</literal>,
    zależnie od ustawienia dyrektyw konfiguracyjnych
    <literal>register_globals</literal> i <literal>variables_order</literal>.
    Jeśli chcesz przypisać wiele wartości do pojedynczego ciasteczka, po prostu
-   dodaj <emphasis>[]</emphasis> do nazwy ciasteczka.
+   dodaj <literal>[]</literal> do nazwy ciasteczka.
   </para>
 
   <para>
    W PHP 4.1.0 i późniejszych, tworzona jest globalna tablica
-   <literal>$_COOKIE</literal>, przechowująca wszystkie ciasteczka nadesłane
+   <varname>$_COOKIE</varname>, przechowująca wszystkie ciasteczka nadesłane
    przez klienta. We wcześniejszych wersjach PHP, tworzona jest tablica
-   <literal>$HTTP_COOKIE_VARS</literal>, jeśli ustawiona została dyrektywa
-   konfiguracyjna <literal>track_vars</literal>.
+   <varname>$HTTP_COOKIE_VARS</varname>, jeśli ustawiona została dyrektywa
+   konfiguracyjna <literal>track_vars</literal>. (To jest ustawione zawsze od PHP 4.0.3.) 
   </para>
 
   <para>
    Po więcej informacji, włącznie z uwagami o błędach przeglądarek, sięgnij do
-   opisu funkcji <function>setcookie</function>.
+   opisu funkcji <function>setcookie</function> i <function>setrawcookie</function>. 
   </para>
 
  </chapter>
