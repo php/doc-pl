@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.91 Maintainer: slawek Status: ready -->
-<!-- $Revision: 1.23 $ -->
+<!-- EN-Revision: 1.95 Maintainer: slawek Status: ready -->
+<!-- $Revision: 1.24 $ -->
  <reference id="ref.mysql">
   <title>MySQL</title>
   <titleabbrev>MySQL</titleabbrev>
@@ -279,15 +279,12 @@ mysql_close($link);
      zostanie ustawiona bieżąca. Jeżeli nowa kombinacja
      użytkownik/hasło będzie nieprawidłowa, bieżący użytkownik
      pozostanie aktywny.
+     &return.success;
     </para>
-     
-     <!-- what is returned? bool -> succes/failure i suppose? -->
-     <!-- in PHP 3 int and in PHP 4 bool -->
-
     <note>
      <para>
       Tę funkcję dodano w PHP 3.0.13 i wymaga ona MySQL w wersji 3.23.3 lub
-      późniejszej.
+      późniejszej. Nie jest dostępna w PHP 4.
      </para>
     </note>
    </refsect1>
@@ -1125,9 +1122,6 @@ mysql_free_result($result);
      <methodsynopsis>
       <type>object</type><methodname>mysql_fetch_object</methodname>
       <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
-      <methodparam choice="opt"><type>int</type><parameter>
-        typ_wyniku
-       </parameter></methodparam>
      </methodsynopsis>
     <para> 
      Zwraca: obiekt, którego właściwości zawierają pobrany wiersz,
@@ -1141,10 +1135,18 @@ mysql_free_result($result);
      ofsetu (liczby nie są dopuszczalne jako nazwy właściwości).
     </para>
     <para>
-     Opcjonalny argument <parameter>result_typ</parameter> jest
-     stałą i może przyjmować następujące wartości: MYSQL_ASSOC,
-     MYSQL_NUM, and MYSQL_BOTH. Zobacz <function>mysql_fetch_array</function>,
-     by zapoznać się z opisem tych stałych.
+     <programlisting role="php">
+<![CDATA[
+<?php
+
+/* poprawnie */
+echo $wiersz->pole;
+/* niepoprawnie */
+echo $wiersz->0;
+
+?>
+]]>
+     </programlisting>
     </para>
     <para>
      Szybkość tej funkcji jest identyczna jak
@@ -2176,7 +2178,7 @@ for ($i = 0; $i < mysql_num_rows($result); $i++) {
    <refsect1>
     <title>Opis</title>
      <methodsynopsis>
-      <type>int</type><methodname>mysql_get_server_info</methodname>
+      <type>string</type><methodname>mysql_get_server_info</methodname>
       <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
      </methodsynopsis>
     <para> 
