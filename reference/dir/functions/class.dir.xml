@@ -1,10 +1,11 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Revision: 1.1 $ -->
+<?xml version="1.0" encoding="iso-8859-2"?>
+<!-- EN-Revision: 1.1 Maintainer: leniwiec Status: ready -->
+<!-- $Revision: 1.2 $ -->
 <!-- splitted from ./en/functions/dir.xml, last change in rev 1.2 -->
   <refentry id="class.dir">
    <refnamediv>
     <refname>dir</refname>
-    <refpurpose>Directory class</refpurpose>
+    <refpurpose>Klasa obs³ugi katalogów</refpurpose>
    </refnamediv>
    <refsect1>
     &reftitle.description;
@@ -12,38 +13,37 @@
      <ooclass><classname>dir</classname></ooclass>
      <constructorsynopsis>
       <methodname>dir</methodname>
-      <methodparam><type>string</type><parameter>directory</parameter></methodparam>
+      <methodparam><type>string</type><parameter>katalog</parameter></methodparam>
      </constructorsynopsis>
      <fieldsynopsis>
       <type>string</type><varname>path</varname>
      </fieldsynopsis>
      <fieldsynopsis>
-      <type>resource</type><varname>handle</varname>
+      <type>resource</type><varname>handle</varname> 
      </fieldsynopsis>
      <methodsynopsis><type>string</type><methodname>read</methodname><void/></methodsynopsis>
      <methodsynopsis><type>void</type><methodname>rewind</methodname><void/></methodsynopsis>
      <methodsynopsis><type>void</type><methodname>close</methodname><void/></methodsynopsis>
     </classsynopsis>
     <para>
-     A pseudo-object oriented mechanism for reading a directory.  The
-     given <parameter>directory</parameter> is opened.  Two properties
-     are available once the directory has been opened.  The handle
-     property can be used with other directory functions such as
-     <function>readdir</function>, <function>rewinddir</function> and
-     <function>closedir</function>.  The path property is set to path
-     the directory that was opened.  Three methods are available:
-     read, rewind and close.
+     Pseudo obiektowo zorientowany mechanizm czytania katalogu. 
+     Podany <parameter>katalog</parameter> zostaje otwarty.  
+     Gdy katalog zostaje otwarty dostêpne s± dwie w³a¶ciwo¶ci. W³a¶ciwo¶æ
+     handle mo¿e zostaæ u¿yta z innymi funkcjami takimi jak:
+     <function>readdir</function>, <function>rewinddir</function> oraz
+     <function>closedir</function>. W³a¶ciwo¶æ path okre¶la ¶cie¿ke do
+     aktualnie otwartego katalogu. Dostêpne s± równie¿ trzy metody: read,
+     rewind oraz close.
     </para>
     <para>
-     Please note the fashion in which <function>dir</function>'s
-     return value is checked in the example below. We are explicitly
-     testing whether the return value is identical to (equal to and of
-     the same type as--see <link linkend="language.operators.comparison">
-     Comparison Operators</link> for more information) &false; since
-     otherwise, any directory entry whose name evaluates to &false; will
-     stop the loop.
+     Sposób w jaki zwrócona przez <function>dir</function> warto¶æ powinna
+     byæ sprawdzona, obrazuje poni¿szy przyk³ad. Nale¿y sprawdziæ czy
+     zwrócona warto¶æ jest równa (jest tego samego typu -- zobacz równie¿
+     <link linkend="language.operators.comparison">Comparison Operators</link>) &false;. 
+     W przeciwnym razie plik o nazwie &false; (jak równie¿ "0") znajduj±cy siê w czytanym katalogu
+     zatrzyma³ by pêtle.
      <example>
-      <title><function>dir</function> example</title>
+      <title>Przyk³ad u¿ycia <function>dir</function></title>
       <programlisting role="php">
 <![CDATA[
 <?php
@@ -73,17 +73,16 @@ cli
     </para>
     <note>
      <para>
-      The order in which directory entries are returned by the read method is
-      system-dependent.
+      Kolejno¶æ w jakiej zostaj± zwrócone kolejne pliki czytanego katalogu,
+      podczas korzystania z metody read jest zale¿na od systemu plików.
      </para>
     </note>
     <note>
      <para>
-      This defines the internal class
-      <classname>Directory</classname>, meaning that you will not be
-      able to define your own classes with that name. For a full list
-      of predefined classes in PHP, please see <link
-      linkend="reserved.classes">Predefined Classes</link>.
+      dir definiuje wewnêtrzn± klase <classname>Directory</classname>, co
+      oznacza ¿e nie mo¿na samemu zdefiniowaæ klasy o tej nazwie. Zobacz
+      równie¿ lista wszystkich predefiniowanych klas w PHP <link
+       linkend="reserved.classes">Predefined Classes</link>.
      </para>
     </note>
    </refsect1>
