@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.1 $ -->
+<!-- EN-Revision: 1.10 Maintainer: qrak Status: ready -->
+<!-- $Revision: 1.2 $ -->
 <!-- splitted from ./en/functions/apache.xml, last change in rev 1.2 -->
   <refentry id="function.apache-response-headers">
    <refnamediv>
@@ -16,11 +16,33 @@
       <void/>
      </methodsynopsis>
     <para>
-     Zwraca tablicę wszystkich nagłówków odpowiedzi Apache'a. Funkcja ta
-     jest dostępna w PHP od wersji 4.3.0.
+     Zwraca tablicę wszystkich nagłówków odpowiedzi Apache'a.
     </para>
     <para>
-     Patrz także: <function>getallheaders</function> i
+	 <example>  
+      <title><function>apache_response_headers</function> przykład</title>  
+       <programlisting role="php">  
+<![CDATA[  
+<?php  
+print_r(apache_response_headers());  
+?>  
+]]>  
+      </programlisting>  
+      &example.outputs.similar;  
+      <screen>  
+<![CDATA[  
+Array  
+(  
+    [Accept-Ranges] => bytes  
+    [X-Powered-By] => PHP/4.3.8  
+)  
+]]>  
+      </screen>  
+     </example>  
+    </para>  
+     &note.apache.nsapi-module;  
+     <para>  
+     Patrz także: <function>apache_request_headers</function> i  
      <function>headers_sent</function>.
     </para>
    </refsect1>
