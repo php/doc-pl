@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.6 Maintainer: cyb0org Status: ready -->
-<!-- $Revision: 1.1 $ -->
+<!-- EN-Revision: 1.9 Maintainer: cyb0org Status: ready -->
+<!-- $Revision: 1.2 $ -->
   <refentry id="function.xml-parser-create">
    <refnamediv>
     <refname>xml_parser_create</refname>
@@ -17,10 +17,15 @@
      uchwyt zasobów umożliwiający użycie go przez inne funkcje XML.
     </para>
     <para>
-     Opcjonalne <parameter>kodowanie</parameter> określa kodowanie znaków
-     wejściowego XML, który będzie parsowany. Wspieranymi kodowaniami są
-     <literal>"ISO-8859-1"</literal>, które jest również domyślnym jeśli
-     nie zostało określone <parameter>kodowanie</parameter>,
+     Opcjonalne <parameter>kodowanie</parameter> określa w PHP 4 kodowanie
+     znaków wejścia/wyjścia. Od PHP 5 kodowanie danych wejściowych jest
+     automatycznie wykrywane, więc parametr <parameter>encoding</parameter>
+     określa tylko kodowanie na wyjściu. W PHP 4 domyślne kodowanie wyjściowe
+     jest takie same jak i wejściowe. Jeśli podany został pusty ciąg znaków,
+     wówczas parser próbuje zidentyfikować kodowanie znaków dokumentu sprawdzając
+     jego pierwsze 3 lub 4 bajty. W PHP 5.0.0 oraz 5.0.1 domyślnym kodowaniem
+     znaków na wyjściu jest ISO-8859-1, podczas gdy w PHP 5.0.2 i wyżej UTF-8.
+     Wspieranymi kodowaniami są <literal>"ISO-8859-1"</literal>,
      <literal>"UTF-8"</literal> oraz <literal>"US-ASCII"</literal>.
     </para>
     <para>
