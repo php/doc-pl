@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.5 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.natsort">
    <refnamediv>
     <refname>natsort</refname>
@@ -26,6 +26,7 @@
       <title>Przykład użycia <function>natsort</function></title>
       <programlisting role="php">
 <![CDATA[
+<?php
 $tablica1 = $tablica2 = array ("img12.png", "img10.png", "img2.png", "img1.png");
  
 sort($tablica1);
@@ -35,6 +36,7 @@ print_r($tablica1);
 natsort($tablica2);
 echo "\nSortowanie w porządku naturalnym\n";
 print_r($tablica2);
+?>
 ]]>
       </programlisting>
      </example>
@@ -66,6 +68,10 @@ Array
      </screen>
      Aby uzyskać więcej informacji zobacz stronę Martina Poola <ulink
      url="&url.strnatcmp;">Natural Order String Comparison</ulink>.
+    </para>  
+    <para>
+     Jeśli chcesz zachować powiązania indeks/wartość, rozważ użycie
+     <literal>usort($arr, 'strnatcmp')</literal>.
     </para>
     <para>
      Patrz także: <function>natcasesort</function>,

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.65 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.14 $ -->
+<!-- EN-Revision: 1.70 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.15 $ -->
  <chapter id="configuration">
   <title>Konfiguracja</title>
 
@@ -67,12 +67,13 @@ include_path = ".;c:\php\lib"
     Używając PHP jako moduł Apache, możesz zmieniać opcje konfiguracyjne także
     w plikach konfiguracyjnych Apache i .htaccess (Będziesz praw "AllowOverride
     Options" lub "AllowOverride All").
-    </simpara>
+   </simpara>
    
    <simpara>
     Korzystając z PHP 3.0 dyrektywy Apache odpowiadają ustawieniom
     konfiguracyjnym z pliku <filename>php3.ini</filename> poprzedzonym przez
-    "php3_".</simpara>
+    "php3_".
+   </simpara>
 
    <para>
     W PHP 4.0 istnieje kilka dyrektyw Apache, które pozwalają na zmianę
@@ -142,25 +143,25 @@ include_path = ".;c:\php\lib"
 ]]>
 </programlisting>
     </example>
+    
     <note>
      <para>
-      Niektóre dyrektywy mają specjalną obsługę inicjalizującą. Zmiana
-      wartości tych dyrektyw z pliku konfiguracyjnego Apache może spowodować
-      nieoczekiwane zachowanie. Na przykład funkcja obsługująca dyrektywę
-      <systemitem role="directive">error_reporting</systemitem> tłumaczy stałe
-      określające poziom wyświetlanych błędów na wartość liczbową. Zmiana
-      wartości używając <literal>E_ALL</literal>, <literal>E_NOTICE</literal>
-      nie zadziała dla <systemitem
-       role="directive">error_reporting</systemitem>. Użytkownicy muszą używać
-      wartości liczbowych żeby <systemitem
-       role="directive">error_reporting</systemitem> działało.
+      Stałe PHP nie istnieją poza PHP. Dla przykładu, w
+      pliku <filename>httpd.conf</filename> nie można użyć stałych takich jak
+      <constant>E_ALL</constant> czy <constant>E_NOTICE</constant> w celu
+      ustalenia wartości dyrektywy <link
+       linkend="ini.error-reporting">error_reporting</link> ponieważ w tym
+      pliku stałe nie mają żadnej wartości i będą uznane za 
+      <emphasis>0</emphasis>. Zamiast tego trzeba użyć odpowiednich wartości
+      liczbowych. Stałe mogą być użyte w &php.ini;.
      </para>
     </note>
    </para>
    <simpara>
     Możesz przeglądać ustawienia opcji konfiguracyjnych w wyjściu funkcji
     <function>phpinfo</function>. Do tych opcji możesz się także dostać
-    używając funkcji <function>get_cfg_var</function>.
+    używając funkcji <function>ini_get</function> lub
+    <function>get_cfg_var</function>.
    </simpara>
    
    <sect2 id="ini.sect.general">
@@ -218,7 +219,9 @@ wrapper</parameter></link>.
         </simpara>
 
         <note>
-         <para>Obsługa ASPowych tagów została dodana w wersji 3.0.4.</para>
+         <para>
+          Obsługa ASPowych tagów została dodana w wersji 3.0.4.
+         </para>
         </note>
 
        </listitem>
@@ -234,15 +237,18 @@ wrapper</parameter></link>.
          Określa nazwę pliku, który jest automatycznie przetwarzany po głównym
          pliku. Plik jest dołączany tak, jakby została wywołana funkcja
          <function>include</function>, a więc używana jest opcja
-         <link linkend="ini.include-path">include_path</link>.</para>
+         <link linkend="ini.include-path">include_path</link>.
+        </para>
         <para>
          Specjalna wartość <systemitem class="constant">none</systemitem> 
          wyłącza auto-dołączanie.
          <note>
           <simpara>
            Jeśli skrypt zostanie zakończony przez <function>exit</function>,
-           <emphasis>nie</emphasis> dojdzie do auto-dołączenia.</simpara>
-         </note></para>
+           <emphasis>nie</emphasis> dojdzie do auto-dołączenia.
+          </simpara>
+         </note>
+        </para>
        </listitem>
       </varlistentry>
 
@@ -256,10 +262,12 @@ wrapper</parameter></link>.
          Określa nazwę pliku, który będzie automatycznie przetwarzany przed
          głównym plikiem. Plik jest dołączany tak, jakby wywołana była funkcja 
          <function>include</function>, a więc używana jest opcja
-         <link linkend="ini.include-path">include_path</link>.</para>
+         <link linkend="ini.include-path">include_path</link>.
+        </para>
         <para>
          Specjalna wartość <systemitem class="constant">none</systemitem>
-         wyłącza automatyczne poprzedzanie pliku.</para>
+         wyłącza automatyczne poprzedzanie pliku.
+        </para>
        </listitem>
       </varlistentry>
 
@@ -338,7 +346,8 @@ wrapper</parameter></link>.
          wartość <literal>syslog</literal>, błędy wysyłane są do systemowej
          aplikacji logowania. Na systemach oznacza to syslog(3) a na Windows
          NT - log zdarzeń. Systemowa aplikacja logowania nie jest obsługiwana
-         przez Windows 95.</para>
+         przez Windows 95.
+        </para>
        </listitem>
       </varlistentry>
 
@@ -349,40 +358,34 @@ wrapper</parameter></link>.
        </term>
        <listitem>
         <para>
-         Ustaw poziom zgłaszania błędów. Parametrem jest liczba całkowita
-         reprezentująca zestaw bitów. Dodaj wartości poziomów zgałaszania
-         błędów które chcesz.
-         <table>
-          <title>Poziomy zgłaszania błędów</title>
-          <tgroup cols="2">
-           <thead>
-            <row>
-             <entry>wartość bitowa</entry>
-             <entry>zgłaszany błąd</entry>
-            </row>
-           </thead>
-           <tbody>
-            <row>
-             <entry>1</entry>
-             <entry>normalne błędy</entry>
-            </row>
-            <row>
-             <entry>2</entry>
-             <entry>normalne ostrzerzenia</entry>
-            </row>
-            <row>
-             <entry>4</entry>
-             <entry>błędy parsera</entry>
-            </row>
-            <row>
-             <entry>8</entry>
-             <entry>niekrytyczne ostrzerzenia związane ze stylem</entry>
-            </row>
-           </tbody>
-          </tgroup>
-         </table>
-         Domyślną wartością dla tej dyrektywy jest 7 (wyświetlane są normalne
-         błędy, normalne ostrzeżenia i błędy parsera).
+         Ustawia poziom zgłaszania błędów. Parametrem jest albo liczba
+         całkowita reprezentująca zestaw bitów lub nazwa stałej. Poziomy
+         zgłaszania błędów i odpowiednie stałe są opisane w rozdziale <link
+          linkend="features.error-handling">Obsługa błędów</link> i w pliku
+         &php.ini;. Aby ustalić tą wartość w czasie uruchomienia skorzystaj z
+         funkcji <function>error_reporting</function>. Zobacz także dyrektywę
+         <link linkend="ini.display-errors">display_errors</link>.
+        </para>
+        <para>
+         Domyślna wartość ukrywa błędy poziomu <constant>E_NOTICE</constant>.
+         Możesz chcieć je włączyć w trakcie rozwijania aplikacji.
+        </para>
+       </listitem>
+      </varlistentry>
+
+      <varlistentry id="ini.file-uploads">
+       <term>
+        <parameter>file_uploads</parameter>
+        <type>boolean</type>
+       </term>
+       <listitem>
+        <para>
+         Dyrektywa ta ustala czy zezwalać na <link
+          linkend="features.file-upload">upload plików</link> przez protokół
+         HTTP. Zobacz także dyrektywy
+         <link linkend="ini.upload-max-filesize">upload_max_filesize</link>,
+         <link linkend="ini.upload-tmp-dir">upload_tmp_dir</link> i
+         <link linkend="ini.post-max-size">post_max_size</link>.
         </para>
        </listitem>
       </varlistentry>
@@ -435,8 +438,10 @@ wrapper</parameter></link>.
          dostępu tylko na wybrany katalog, zakończ go slashem. Np.:
          "open_basedir = /dir/incl/"
         </para>
-       <note>
-         <para>Obsługa dla wielu katalogów została dodana w 3.0.7.</para>
+        <note>
+         <para>
+          Obsługa dla wielu katalogów została dodana w 3.0.7.
+         </para>
         </note>
         <para>
          Domyślnie PHP pozwala na otwieranie wszystkich plików.
@@ -867,7 +872,8 @@ include_path=".;c:\www\phplib"
         <para>
          Podstawowa nazwa katalogu używanego jako katalog domowy użytkownika
          dla plików PHP, na przykład
-         <literal>public_html</literal>.</para>
+         <literal>public_html</literal>.
+        </para>
        </listitem>
       </varlistentry>
 
@@ -881,7 +887,8 @@ include_path=".;c:\www\phplib"
          Jeśli dyrektywa ta jest włączona, PHP będzie wyświetlał ostrzeżenie
          jeśli operator plus (<literal>+</literal>) został użyty do stringów.
          Dzięki temu łatwiej jest znaleźć skrypty, które wymagają użycia
-         operatora sklejania stringów (<literal>.</literal>).</para>
+         operatora sklejania stringów (<literal>.</literal>).
+        </para>
        </listitem>
       </varlistentry>
 
@@ -903,7 +910,8 @@ include_path=".;c:\www\phplib"
         Określa, czy PHP ma pracować w trybie bezpiecznym. Przeczytaj
         rozdziały <link linkend="security">Bezpieczeństwo</link> i
         <link linkend="features.safe-mode">Tryb bezpieczny</link> aby uzyskać
-        więcej informacji.</para>
+        więcej informacji.
+       </para>
       </listitem>
      </varlistentry>
 
@@ -932,7 +940,8 @@ include_path=".;c:\www\phplib"
        <para>
         Jeśli PHP pracuje w trybie bezpiecznym, funkcje 
         <function>system</function> i inne wywołujące inne programy, odmówią
-        wykonania programów z katalogów innych niż ten.</para>
+        wykonania programów z katalogów innych niż ten.
+       </para>
       </listitem>
      </varlistentry>
 
@@ -949,6 +958,11 @@ include_path=".;c:\www\phplib"
         linkend="ini.include-path">include_path</link> lub musi być podana
         pełna ścieżka do tego katalogu).
        </para>
+       <simpara>
+        Od PHP 4.2.0 dyrektywa ta może zawierać zamiast pojedyńczego katalogu
+        listę ścieżek oddzieloną średnikami, podobnie jak w przypadku
+        dyrektywy include_path.
+       </simpara>
       </listitem>
      </varlistentry>
 
@@ -966,7 +980,8 @@ include_path=".;c:\www\phplib"
       </term>
       <listitem>
        <para>
-        Nazwa lub adres IP hosta używanego przez debugger.</para>
+        Nazwa lub adres IP hosta używanego przez debugger.
+       </para>
       </listitem>
      </varlistentry>
 
@@ -977,7 +992,8 @@ include_path=".;c:\www\phplib"
       </term>
       <listitem>
        <para>
-        Numer portu używany przez debugger.</para>
+        Numer portu używany przez debugger.
+       </para>
       </listitem>
      </varlistentry>
 
@@ -988,7 +1004,8 @@ include_path=".;c:\www\phplib"
       </term>
       <listitem>
        <para>
-        Określa, czy debugger jest włączony.</para>
+        Określa, czy debugger jest włączony.
+       </para>
       </listitem>
      </varlistentry>
 
