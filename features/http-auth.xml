@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- $Revision: 1.6 $ -->
+<!-- EN-Revision: 1.19 Maintainer: slawek Status: ready -->
+<!-- $Revision: 1.7 $ -->
  <chapter id="features.http-auth">
   <title>Autoryzacja HTTP w PHP</title>
 
@@ -19,17 +20,19 @@
    <example>
     <title>Autoryzacja HTTP</title>
     <programlisting role="php">
-&lt;?php
+<![CDATA[
+<?php
   if(!isset($PHP_AUTH_USER)) {
-    header(&quot;WWW-Authenticate: Basic realm=\&quot;My Realm\&quot;&quot;);
-    header(&quot;HTTP/1.0 401 Unauthorized&quot;);
-    echo &quot;Tekst do wysłania, jeśli użytkownik wciśnie przycisk Anuluj\n&quot;;
+    header("WWW-Authenticate: Basic realm=\"My Realm\"");
+    header("HTTP/1.0 401 Unauthorized");
+    echo "Tekst do wysłania, jeśli użytkownik wciśnie przycisk Anuluj\n";
     exit;
   } else {
-    echo &quot;&lt;p&gt;Hej $PHP_AUTH_USER.&lt;/p&gt;&quot;;
-    echo &quot;&lt;p&gt;Twoje hasło to $PHP_AUTH_PW.&lt;/p&gt;&quot;;
+    echo "<p>Hej $PHP_AUTH_USER.</p>";
+    echo "<p>Twoje hasło to $PHP_AUTH_PW.</p>";
   }
 ?>
+]]>
     </programlisting>
    </example></para>
 
@@ -89,27 +92,29 @@
    <example>
      <title>Autoryzacja HTTP z wymuszeniem przelogowania</title>
      <programlisting role="php">
-&lt;?php
+<![CDATA[
+<?php
   function authenticate() {
-    header( &quot;WWW-Authenticate: Basic realm=\&quot;Testowy system autoryzacji\&quot;&quot;);
-    header( &quot;HTTP/1.0 401 Unauthorized&quot;);
-    echo &quot;Musisz podać poprawny login i hasło by wejść na tę stronę\n&quot;;
+    header( "WWW-Authenticate: Basic realm=\"Testowy system autoryzacji\"");
+    header( "HTTP/1.0 401 Unauthorized");
+    echo "Musisz podać poprawny login i hasło by wejść na tę stronę\n";
     exit;
   }
  
-  if(!isset($PHP_AUTH_USER) || ($SeenBefore == 1 &amp;&amp; !strcmp($OldAuth, $PHP_AUTH_USER)) ) {
+  if(!isset($PHP_AUTH_USER) || ($SeenBefore == 1 && !strcmp($OldAuth, $PHP_AUTH_USER)) ) {
    authenticate();
   } 
   else {
-   echo &quot;&lt;/p&gt;Witaj: $PHP_AUTH_USER&lt;br&gt;&quot;;
-   echo &quot;Poprzenio: $OldAuth&quot;;
-   echo &quot;&lt;form action=\&quot;$PHP_SELF\&quot; METHOD=POST&gt;\n&quot;;
-   echo &quot;&lt;input type=\&quot;hidden\&quot; name=\&quot;SeenBefore\&quot; value=\&quot;1\&quot;&gt;\n&quot;;
-   echo &quot;&lt;input type=\&quot;hidden\&quot; name=\&quot;OldAuth\&quot; value=\&quot;$PHP_AUTH_USER\&quot;&gt;\n&quot;;
-   echo &quot;&lt;input type=\&quot;submit\&quot; value=\&quot;Re Authenticate\&quot;&gt;\n&quot;;
-   echo &quot;&lt;/form&gt;&lt;/p&gt;\n&quot;;
+   echo "</p>Witaj: $PHP_AUTH_USER<br>";
+   echo "Poprzenio: $OldAuth";
+   echo "<form action=\"$PHP_SELF\" METHOD=POST>\n";
+   echo "<input type=\"hidden\" name=\"SeenBefore\" value=\"1\">\n";
+   echo "<input type=\"hidden\" name=\"OldAuth\" value=\"$PHP_AUTH_USER\">\n";
+   echo "<input type=\"submit\" value=\"Re Authenticate\">\n";
+   echo "</form></p>\n";
   }
 ?>
+]]>
    </programlisting>
   </example>
   <simpara>
@@ -136,6 +141,7 @@ sgml-minimize-attributes:nil
 sgml-always-quote-attributes:t
 sgml-indent-step:1
 sgml-indent-data:t
+indent-tabs-mode:nil
 sgml-parent-document:nil
 sgml-default-dtd-file:"../../manual.ced"
 sgml-exposed-tags:nil
