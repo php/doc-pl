@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.6 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.5 $ -->
+<!-- EN-Revision: 1.7 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.6 $ -->
   <refentry id="function.usort">
    <refnamediv>
     <refname>usort</refname>
@@ -14,7 +14,7 @@
      <methodsynopsis>
       <type>void</type><methodname>usort</methodname>
       <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
-      <methodparam><type>string</type><parameter>funkcja_por</parameter></methodparam>
+      <methodparam><type>callback</type><parameter>funkcja_por</parameter></methodparam>
      </methodsynopsis>
     <para>
      Funkcja ta posortuje tablicę według jej wartości korzystając z podanej
@@ -118,7 +118,6 @@ $owoce[2]: winogrona
 ]]>
      </screen>
     </para>
-    &note.func-callback;
     <para>
      <example>
       <title>
@@ -169,15 +168,6 @@ c
 d
 ]]>
      </screen>
-    </para>
-    <para>
-     <warning>
-      <para>
-       Używana do sortowania funkcja quicksort w niektórych bibliotekach C
-       (jak na przykład na systemach Solaris) może spowodować zawieszanie się
-       PHP jeśli funkcja porównująca zwraca niespójne wartości.
-      </para>
-     </warning>
     </para>
     <para>
      Patrz także: <function>uasort</function>,
