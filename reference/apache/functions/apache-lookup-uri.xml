@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.5 $ -->
+<!-- EN-Revision: 1.5 Maintainer: qrak Status: ready -->
+<!-- $Revision: 1.6 $ -->
   <refentry id="function.apache-lookup-uri">
    <refnamediv>
     <refname>apache_lookup_uri</refname>
@@ -42,6 +42,49 @@
       <member>mtime</member>
       <member>request_time</member>
      </simplelist>
+	 </para> 
+      <para> 
+       <example> 
+        <title><function>apache_lookup_uri</function> przykład</title> 
+        <programlisting role="php"> 
+  <![CDATA[ 
+  <?php 
+  $info = apache_lookup_uri('index.php?var=value'); 
+  print_r($info); 
+    
+  if (file_exists($info->filename)) { 
+      echo 'plik istnieje!'; 
+  } 
+  ?> 
+  ]]> 
+        </programlisting> 
+        &example.outputs.similar; 
+        <screen> 
+  <![CDATA[ 
+  stdClass Object 
+  ( 
+      [status] => 200 
+      [the_request] => GET /katalog/plik.php HTTP/1.1 
+      [method] => GET 
+      [mtime] => 0 
+      [clength] => 0 
+      [chunked] => 0 
+      [content_type] => application/x-httpd-php 
+      [no_cache] => 0 
+      [no_local_copy] => 1 
+      [unparsed_uri] => /katalog/index.php?var=value 
+      [uri] => /katalog/index.php 
+      [filename] => /home/htdocs/katalog/index.php 
+      [args] => var=value 
+      [allowed] => 0 
+      [sent_bodyct] => 0 
+      [bytes_sent] => 0 
+      [request_time] => 1074282764 
+  ) 
+  file exists! 
+  ]]> 
+        </screen> 
+       </example> 
     </para>
     <note>
      <simpara>
