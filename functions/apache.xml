@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.23 Maintainer: Qrak Status: ready -->
-<!-- $Revision: 1.10 $ -->
+<!-- EN-Revision: 1.24 Maintainer: Qrak Status: ready -->
+<!-- $Revision: 1.11 $ -->
  <reference id="ref.apache">
   <title>Apache</title>
   <titleabbrev>Apache</titleabbrev>
@@ -66,9 +66,7 @@
      <methodsynopsis>
       <type>string</type><methodname>apache_note</methodname>
       <methodparam><type>string</type><parameter>nazwa_noty</parameter></methodparam>
-      <methodparam choice="opt"><type>string</type><parameter>
-        wartość_noty
-       </parameter></methodparam>
+      <methodparam choice="opt"><type>string</type><parameter>wartość_noty</parameter></methodparam>
      </methodsynopsis>
     <para>
      <function>apache_note</function> jest funkcją dotyczącą jedynie serwera
@@ -100,7 +98,7 @@
      mu postaci EBCDIC (bezpiecznie dla binariów) i zwraca wynik.
     </para>
     <para>
-     Zobacz też funkcję odwrotną <function>ebcdic2ascii</function> 
+     Zobacz też funkcję odwrotną <function>ebcdic2ascii</function>
     </para>
    </refsect1>
   </refentry>
@@ -119,11 +117,11 @@
     <para>
      <function>ebcdic2ascii</function> jest funkcją właściwą jedynie Apache'owi,
      dostępną wyłącznie w systemach EBCDIC (OS/390, BS2000). Funkcja konwertuje
-     łańcuch znaków EBCDIC <parameter>łańcuch_ebcdic</parameter> do 
+     łańcuch znaków EBCDIC <parameter>łańcuch_ebcdic</parameter> do
      odpowiadającej mu postaci ASCII (bezpiecznie dla binariów) i zwraca wynik.
     </para>
     <para>
-     Zobacz też funkcję odwrotną <function>ascii2ebcdic</function> 
+     Zobacz też funkcję odwrotną <function>ascii2ebcdic</function>
     </para>
    </refsect1>
   </refentry>
@@ -172,7 +170,7 @@ while (list ($naglowek, $wartosc) = each ($naglowki)) {
      <note>
       <simpara>
        Funkcja <function>getallheaders</function> aktualnie działa tylko
-       wówczas, kiedy PHP działa jako moduł serwera 
+       wówczas, kiedy PHP działa jako moduł serwera
        <productname>Apache</productname>.
       </simpara>
      </note>
@@ -202,49 +200,49 @@ while (list ($naglowek, $wartosc) = each ($naglowki)) {
      <function>require</function>; nie można użyć <function>virtual</function>
      do wczytywania plików, które są same plikami PHP.
     </para> 
-     </refsect1> 
-    </refentry> 
+     </refsect1>
+    </refentry>
     
-    <refentry id='function.apache-child-terminate'> 
-     <refnamediv> 
-      <refname>apache_child_terminate</refname> 
-      <refpurpose>Zakańcza proces Apache'a po zakończeniu tego 
-      zapytania</refpurpose> 
-     </refnamediv> 
-     <refsect1> 
-      <title>Opis</title> 
-       <methodsynopsis> 
-        <type>string</type><methodname>apache_child_terminate</methodname> 
-        <void/> 
+    <refentry id="function.apache-child-terminate">
+     <refnamediv>
+      <refname>apache_child_terminate</refname>
+      <refpurpose>Zakańcza proces Apache'a po zakończeniu tego
+      zapytania</refpurpose>
+     </refnamediv>
+     <refsect1>
+      <title>Opis</title>
+       <methodsynopsis>
+        <type>string</type><methodname>apache_child_terminate</methodname>
+        <void/>
        </methodsynopsis>
       <para>
        <function>apache_child_terminate</function> zakończy proces Apache'a,
        wykonujący aktualne zapytanie PHP, kiedy tylko zapytanie zostanie
        zakończone. Można tego używać do zakończenia procesu po uruchomieniu
        skryptu o dużych zapotrzebowaniach na pamięć, gdyż zwykle pamięć zostaje
-       zwolniona wewnętrznie, ale nie zwrócona systemowi operacyjnemu. 
-      </para> 
-      <para> 
-       Zobacz też <function>exit</function>. 
-      </para> 
-     </refsect1> 
-    </refentry> 
+       zwolniona wewnętrznie, ale nie zwrócona systemowi operacyjnemu.
+      </para>
+      <para>
+       Zobacz też <function>exit</function>.
+      </para>
+     </refsect1>
+    </refentry>
     
-    <refentry id='function.apache-setenv'> 
-     <refnamediv> 
-      <refname>apache_setenv</refname> 
-      <refpurpose>Ustawia zmienną Apache'a subprocess_env</refpurpose> 
-     </refnamediv> 
-     <refsect1> 
-      <title>Opis</title> 
-       <methodsynopsis> 
-        <type>int</type><methodname>apache_setenv</methodname> 
-        <methodparam><type>string</type><parameter>nazwa_zmiennej</parameter></methodparam> 
-        <methodparam><type>string</type><parameter>wartość</parameter></methodparam> 
-        <methodparam choice="opt"><type>bool</type><parameter>nadrzędność</parameter></methodparam> 
+    <refentry id="function.apache-setenv">
+     <refnamediv>
+      <refname>apache_setenv</refname>
+      <refpurpose>Ustawia zmienną Apache'a subprocess_env</refpurpose>
+     </refnamediv>
+     <refsect1>
+      <title>Opis</title>
+       <methodsynopsis>
+        <type>int</type><methodname>apache_setenv</methodname>
+        <methodparam><type>string</type><parameter>nazwa_zmiennej</parameter></methodparam>
+        <methodparam><type>string</type><parameter>wartość</parameter></methodparam>
+        <methodparam choice="opt"><type>bool</type><parameter>nadrzędność</parameter></methodparam>
        </methodsynopsis>
-      <para> 
-       &warn.undocumented.func; 
+      <para>
+       &warn.undocumented.func;
       </para>
    </refsect1>
   </refentry>
