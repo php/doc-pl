@@ -1,50 +1,58 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.18 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.sort">
    <refnamediv>
     <refname>sort</refname>
-    <refpurpose>Sortuj tablicę</refpurpose>
+    <refpurpose>Sortuje tablicę</refpurpose>
    </refnamediv>
    <refsect1>
     <title>Opis</title>
      <methodsynopsis>
-      <type>void</type><methodname>sort</methodname>
-      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+      <type>bool</type><methodname>sort</methodname>
+      <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
       <methodparam choice="opt"><type>int</type><parameter>flagi</parameter></methodparam>
      </methodsynopsis>
     <para>
      Funkcja ta sortuje tablicę. Po zakończeniu działania funkcji
      elementy będą ułożone od najmniejszego do najwiekszego.
+    </para>
+    <note>
+     <simpara>
+      Funkcja <function>sort</function> przypisuje nowe klucze do elementów
+      tablicy <parameter>tablica</parameter>. Wszystkie dotychczasowe klucze
+      zostaną usunięte.
+     </simpara>
+    </note>
+    <para>
+     &return.success;
+    </para>
+    <para>
      <example>
       <title>Przykład użycia <function>sort</function></title>
       <programlisting role="php">
 <![CDATA[
 <?php
 
-$owoce = array ("cytryna", "pomarańca", "banan", "jabłko");
-sort ($owoce);
-reset ($owoce);
-while (list ($key, $val) = each ($owoce)) {
-    echo "owoce[".$key."] = ".$val."\n";
+$owoce = array("cytryna", "pomarańcza", "banan", "jabłko");
+sort($owoce);
+reset($owoce);
+while (list($key, $val) = each($owoce)) {
+    echo "owoce[" . $key . "] = " . $val . "\n";
 }
 ]]>
 ?>
       </programlisting>
-     </example>
-    </para>
-    <para>
-     Ten przykład wyświetli:
-    </para>
-    <para>
-     <screen>
+      &example.output;
+      <screen>
 <![CDATA[
 owoce[0] = banan
 owoce[1] = cytryna
 owoce[2] = jabłko
 owoce[3] = pomarańcza
 ]]>
-     </screen>
+      </screen>
+     </example>
     </para>
     <para>
      Owoce zostały posortowane w porządku alfabetycznym.
@@ -57,16 +65,41 @@ owoce[3] = pomarańcza
      Flagi typu sortowania:
      <itemizedlist>
       <listitem>
-       <simpara>SORT_REGULAR - porównuj elementy normalnie</simpara>
+       <simpara>
+        <constant>SORT_REGULAR</constant> - porównuj elementy normalnie (nie zmienia typów)
+       </simpara>
       </listitem>
       <listitem>
-       <simpara>SORT_NUMERIC - porównuj elementy jako liczby</simpara>
+       <simpara>
+        <constant>SORT_NUMERIC</constant> - porównuj elementy jako liczby
+       </simpara>
       </listitem>
       <listitem>
-       <simpara>SORT_STRING - porównuj elementy jako stringi</simpara>
+       <simpara>
+        <constant>SORT_STRING</constant> - porównuj elementy jako ciągi
+        tekstowe
+       </simpara>
+      </listitem>
+      <listitem>
+       <simpara>
+        <constant>SORT_LOCALE_STRING</constant> - porównuj elementy jako ciągi
+        tekstowe, uwzględniając ustawienia Locale. Dodane w PHP 5.0.2.
+       </simpara>
       </listitem>
      </itemizedlist>
     </para>
+    <note>
+     <para>
+      Drugi parametr został dodany w PHP 4.
+     </para>
+    </note>
+    <warning>
+     <simpara>
+      Należy zachować ostrożność przy sortowaniu funkcją
+      <function>sort</function> tablic o różnych typach elementów, ponieważ
+      może to doprowadzić do nieprzewidzianych wyników.
+     </simpara>
+    </warning>
     <para>
      Patrz także: <function>arsort</function>,
      <function>asort</function>, <function>ksort</function>,
@@ -75,11 +108,6 @@ owoce[3] = pomarańcza
      <function>array_multisort</function> i
      <function>uksort</function>.
     </para>
-    <note>
-     <para>
-      Drugi parametr został dodany w PHP 4.
-     </para>
-    </note>
    </refsect1>
   </refentry>
 
