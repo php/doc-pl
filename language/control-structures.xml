@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.59 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.65 Maintainer: qrak Status: ready -->
+<!-- $Revision: 1.5 $ -->
  <chapter id="control-structures">
   <title>Struktury kontrolne</title>
 
@@ -340,7 +340,7 @@ do {
    <simpara>
     Nie przejmuj się, jeśli nie rozumiesz tego do końca lub w ogóle. Możesz
     tworzyć skrypty, nawet zaawansowane skrypty bez użycia tego
-    'mechanizmu'.
+    "mechanizmu".
    </simpara>
   </sect1>
 
@@ -456,7 +456,10 @@ for (wyrażenie1; wyrażenie2; wyrażenie3): instrukcja; ...; endfor;
    <para>
     PHP 4 zawiera, czego brak w PHP 3, konstrukcję <literal>foreach</literal>,
     podobną do jej odpowiedników z Perla i innych języków. Pętla ta umożliwia
-    łatwą iterację wewnątrz tablic. Istnieją dwie składnie tej konstrukcji,
+    łatwą iterację wewnątrz tablic. <literal>foreach</literal> działa tylko
+    na tablicach i każda próba użycia tej pętli na innym typie lub na
+    niezainicjowanej zmiennej będzie skwitowana komunikatem o błędzie.
+     Istnieją dwie składnie tej konstrukcji,
     przy czym druga jest mniej ważnym, lecz użytecznym rozszerzeniem pierwszej:
     <informalexample>
      <programlisting>
@@ -763,8 +766,8 @@ switch ($i) {
     W tym przypadku, jeśli $i jest równe 0, to PHP wykona wszystkie trzy
     instrukcje print. Jeśli natomiast będzie równe jeden - wtedy tylko dwie
     ostatnie. Zachowanie zgodne z oczekiwaniami będzie wtedy, kiedy $i będzie
-    równe 2 - wtedy wykonane będzie tylko ostatnia instrukcja print. Nie wolno
-    zatem zapominać o umieszczaniu na końcu instrukcji <literal>break</literal>,
+    równe 2 - wtedy wykonane będzie tylko ostatnia instrukcja print. Trzeba
+    zatem pamiętać o umieszczaniu na końcu instrukcji <literal>break</literal>,
     chyba że planuje się wykorzystać jakieś specjalne możliwości instrukcji
     <literal>switch</literal>, o czym dalej.
    </simpara>
@@ -893,7 +896,7 @@ declare (dyrektywa) instrukcje
     <literal>dyrektywa</literal> danego bloku <literal>declare</literal>.
    </para>
    <para>
-    Zdarzenie wywoływanie na każde tyknięcie określa się przez użycie funkcji
+    Zdarzenie wywoływane na każde tyknięcie określa się przez użycie funkcji
     <function>register_tick_function</function>. Więcej szczegółów znajduje
     się w poniższym przykładzie. Proszę pamiętać, że z każdym tyknięciem może
     być wywoływane więcej niż jedno zdarzenie.
@@ -1167,7 +1170,9 @@ echo "A $kolor $owoc";   // Jedno zielone
      Jeśli  
      "<link linkend="ini.allow-url-fopen">URL fopen wrappers</link>"
      są włączone w PHP (takie jest domyślne ustawienie) można podać nazwę pliku
-     do wczytania używając adresu URL (przez protokół HTTP), zamiast podawać
+     do wczytania używając adresu URL (przez protokół HTTP lub innym
+     obsługiwanym sposobem - zajrzyj do <xref linkend="wrappers"/> aby zapoznać
+     się z listą obsługiwanych protokołów), zamiast podawać
      ścieżkę lokalną. Jeśli podany w adresie serwer interpretuje plik docelowy
      jako kod PHP, można do tego skryptu przekazać zmienne w taki sam sposób
      jak przy metodzie GET protokołu HTTP. Ściśle mówiąc, nie jest to to samo,
@@ -1341,6 +1346,24 @@ echo $bar; // wyświetla 1
      <function>require_once</function> dodano w PHP 4.0.1pl2
     </para>
    </note>
+   <note> 
+      <para>
+       Proszę pamiętać, że <function>require_once</function> 
+       oraz <function>include_once</function> mogą zachowywać się w sposób
+       nieoczekiwany na systemach operacyjnych nierozróżniających wielkości
+       liter (non case-sensitive) - takich jak Windows. 
+       <example> 
+        <title><function>require_once</function> zwraca uwagę na wielkość
+        liter</title> 
+        <programlisting role="php"> 
+  <![CDATA[ 
+  require_once("a.php"); // to wczyta plik a.php 
+  require_once("A.php"); // na Windows to ponownie wczyta a.php ! 
+  ]]> 
+        </programlisting> 
+      </example> 
+     </para> 
+   </note> 
    &warn.no-win32-fopen-wrapper;
    <para>
     Patrz także: <function>require</function>,
@@ -1377,6 +1400,24 @@ echo $bar; // wyświetla 1
     <para>
      <function>include_once</function> dodano w PHP 4.0.1pl2
     </para>
+   </note>
+      <note> 
+      <para>
+       Proszę pamiętać, że <function>require_once</function> 
+       oraz <function>include_once</function> mogą zachowywać się w sposób
+       nieoczekiwany na systemach operacyjnych nierozróżniających wielkości
+       liter (non case-sensitive) - takich jak Windows. 
+       <example> 
+        <title><function>include_once</function> zwraca uwagę na wielkość
+        liter</title> 
+        <programlisting role="php"> 
+  <![CDATA[ 
+  include_once("a.php"); // to wczyta plik a.php 
+  include_once("A.php"); // na Windows to ponownie wczyta a.php ! 
+  ]]> 
+        </programlisting> 
+      </example> 
+     </para> 
    </note>
    &warn.no-win32-fopen-wrapper;
    <para>
