@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.6 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.usort">
    <refnamediv>
     <refname>usort</refname>
@@ -24,8 +24,17 @@
     <para>
      Funkcja porównująca musi zwracać liczbę całkowitą mniejszą, równą lub
      większą od zera jeśli pierwszy argument jest odpowiednio mniejszy, równy
-     lub większy niż drugi. Jeśli dwa elementy tablicy są równe, to ich
-     kolejność występowania w posortowanej tablicy pozostaje niezdefiniowany.
+     lub większy niż drugi.
+     <note>
+      <para>
+       Jeśli wynikiem porównania dwóch elementów tablicy jest równość, ich
+       kolejność w posortowanej tablicy pozostaje niezdefiniowana. Od PHP
+       4.0.6 funkcje zdefiniowane przez użytkownika mogły utrzymywać
+       początkową kolejność tych elementów, lecz nowy algorytm sortowania
+       wprowadzony w PHP 4.1.0 czyni to uniemożliwym i nie ma wydajnego
+       sposobu na rozwiązanie tego problemu.
+      </para>
+     </note>
     </para>
     <para>
      <example>
