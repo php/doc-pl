@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="iso-8859-2"?>
+<!-- $Revision: 1.1 $ -->
+<!-- tłumacz Tomasz Wójtowicz <tomek-w@wp.pl>
+tłumaczone z en 1.5 naszego CVSu w dniu 02-12-01
+-->
+ <reference id="ref.apache">
+  <title>Funkcje wyłacznie dla serwera Apache</title>
+  <titleabbrev>Apache</titleabbrev>
+
+  <refentry id="function.apache-lookup-uri">
+   <refnamediv>
+    <refname>apache_lookup_uri</refname>
+    <refpurpose>
+     Wywołuje wewnętrzne żądanie dla określonego URI i zwraca całą informację
+     o nim
+    </refpurpose>
+   </refnamediv>
+   <refsect1>
+    <title>Opis</title>
+    <funcsynopsis>
+     <funcprototype>
+      <funcdef>object <function>apache_lookup_uri</function></funcdef>
+      <paramdef>string <parameter>nazwa_pliku</parameter></paramdef>
+     </funcprototype>
+    </funcsynopsis>
+    <para>
+     Ta funkcja wywołuje wewnętrzne żądanie dla określonego URI. Funkcja zbiera
+     wszystkie istotne informacje odnośnie podanego źródła informacji i zwraca
+     je w postaci klasy. Właściwości zwróconej klasy to:
+     <simplelist>
+      <member>status</member>
+      <member>the_request</member>
+      <member>status_line</member>
+      <member>method</member>
+      <member>content_type</member>
+      <member>handler</member>
+      <member>uri</member>
+      <member>filename</member>
+      <member>path_info</member>
+      <member>args</member>
+      <member>boundary</member>
+      <member>no_cache</member>
+      <member>no_local_copy</member>
+      <member>allowed</member>
+      <member>send_bodyct</member>
+      <member>bytes_sent</member>
+      <member>byterange</member>
+      <member>clength</member>
+      <member>unparsed_uri</member>
+      <member>mtime</member>
+      <member>request_time</member>
+     </simplelist>
+    </para>
+    <note>
+     <simpara>
+      <function>apache_lookup_uri</function> działa jedynie wówczas, kiedy
+      PHP jest zainstalowane jako moduł serwera Apache.
+     </simpara>
+    </note>
+   </refsect1>
+  </refentry>
+  
+  <refentry id="function.apache-note">
+   <refnamediv>
+    <refname>apache_note</refname>
+    <refpurpose>Pobiera lub ustawia noty odpowiedzi Apache'a</refpurpose>
+   </refnamediv>
+   <refsect1>
+    <title>Opis</title>
+    <funcsynopsis>
+     <funcprototype>
+      <funcdef>string <function>apache_note</function></funcdef>
+      <paramdef>string <parameter>nazwa_noty</parameter></paramdef>
+      <paramdef>string 
+       <parameter>
+        <optional>wartość_noty</optional>
+       </parameter>
+      </paramdef>
+     </funcprototype>
+    </funcsynopsis>
+    <para>
+     <function>apache_note</function> jest funkcją dotyczącą jedynie serwera
+     Apache, która pobiera lub ustawia wartości <literal>not</literal>
+     w odpowiedzi http. Jeśli wywołana z jednym argumentem, funkcja zwraca
+     aktualną wartość noty <literal>nazwa_noty</literal>. Jeśli wywołana
+     z dwoma argumentami, ustawi wartość noty <literal>nazwa_noty</literal>
+     na <literal>wartość_noty</literal> i zwróci poprzednią wartość noty
+     <literal>nazwa_noty</literal>.
+    </para>
+   </refsect1>
+  </refentry>
+
+  <refentry id="function.ascii2ebcdic">
+   <refnamediv>
+    <refname>ascii2ebcdic</refname>
+    <refpurpose>Kownertuje łańcuch znaków z ASCII do EBCDIC</refpurpose>
+   </refnamediv>
+   <refsect1>
+    <title>Opis</title>
+    <funcsynopsis>
+     <funcprototype>
+      <funcdef>int <function>ascii2ebcdic</function></funcdef>
+      <paramdef>string <parameter>łańcuch_ascii</parameter></paramdef>
+     </funcprototype>
+    </funcsynopsis>
+    <para>
+     <function>ascii2ebcdic</function> jest funkcją właściwą jedynie Apache'owi,
+     dostępną wyłącznie w systemach EBCDIC (OS/390, BS2000). Funkcja konwertuje
+     łańcuch znaków ASCII <parameter>łańcuch_ascii</parameter> do odpowiadającej
+     mu postaci EBCDIC (bezpiecznie dla binariów) i zwraca wynik.
+    </para>
+    <para>
+     Zobacz też funkcję odwrotną <function>ebcdic2ascii</function> 
+    </para>
+   </refsect1>
+  </refentry>
+
+  <refentry id="function.ebcdic2ascii">
+   <refnamediv>
+    <refname>ebcdic2ascii</refname>
+    <refpurpose>Kownersja łańcucha znaków z EBCDIC do ASCII</refpurpose>
+   </refnamediv>
+   <refsect1>
+    <title>Opis</title>
+    <funcsynopsis>
+     <funcprototype>
+      <funcdef>int <function>ebcdic2ascii</function></funcdef>
+      <paramdef>string <parameter>łańcuch_ebcdic</parameter></paramdef>
+     </funcprototype>
+    </funcsynopsis>
+    <para>
+     <function>ebcdic2ascii</function> jest funkcją właściwą jedynie Apache'owi,
+     dostępną wyłącznie w systemach EBCDIC (OS/390, BS2000). Funkcja konwertuje
+     łańcuch znaków EBCDIC <parameter>łańcuch_ebcdic</parameter> do 
+     odpowiadającej mu postaci ASCII (bezpiecznie dla binariów) i zwraca wynik.
+    </para>
+    <para>
+     Zobacz też funkcję odwrotną <function>ascii2ebcdic</function> 
+    </para>
+   </refsect1>
+  </refentry>
+
+  <refentry id="function.getallheaders">
+   <refnamediv>
+    <refname>getallheaders</refname>
+    <refpurpose>Odczytuje wszystkie nagłówki HTTP z aktualnego zapytania
+    </refpurpose>
+   </refnamediv>
+   <refsect1>
+    <title>Opis</title>
+    <funcsynopsis>
+     <funcprototype>
+      <funcdef>array <function>getallheaders</function></funcdef>
+      <void/>
+     </funcprototype>
+    </funcsynopsis>
+    <para>
+     Funkcja zwraca tablicę asocjacyjną zawierającą wszystkie nagłówki HTTP z
+     aktualnego zapytania.
+    </para>
+    <para>
+     <note>
+      <para>
+       Można też odczytywać wartość typowych zmiennych CGI ze środowiska, co
+       działa niezależnie od tego, czy PHP jest modułem Apache'a, czy nie.
+       Użyj funkcji <function>phpinfo</function> aby zapoznać się z listą
+       wszystkich dostępnych zmiennych środowiskowych.
+      </para>
+     </note>
+    </para>
+    <para>
+     <example>
+      <title>Przykład zastosowania <function>getallheaders</function></title>
+      <programlisting role="php">
+<![CDATA[
+$naglowki = getallheaders();
+while (list ($naglowek, $wartosc) = each ($naglowki)) {
+    echo "$naglowek: $wartosc&lt;br&gt;\n";
+}
+]]>
+      </programlisting>
+     </example>
+    </para>
+    <para>
+     Powyższy przykład wyświetli wszyskie nagłówki z aktualnego zapytania.
+     <note>
+      <simpara>
+       Funkcja <function>getallheaders</function> aktualnie działa tylko
+       wówczas, kiedy PHP działa jako moduł serwera 
+       <productname>Apache</productname>.
+      </simpara>
+     </note>
+    </para>
+   </refsect1>
+  </refentry>
+
+  <refentry id="function.virtual">
+   <refnamediv>
+    <refname>virtual</refname>
+    <refpurpose>Wywołuje wewnętrzne żądanie Apache'a</refpurpose>
+   </refnamediv>
+   <refsect1>
+    <title>Opis</title>
+    <funcsynopsis>
+     <funcprototype>
+      <funcdef>int <function>virtual</function></funcdef>
+      <paramdef>string <parameter>nazwa_pliku</parameter></paramdef>
+     </funcprototype>
+    </funcsynopsis>
+    <para>
+     <function>virtual</function> jest funkcją właściwą jedynie Apache'owi,
+     która jest odpowiednikiem &lt;!--#include virtual...--&gt; w mod_include.
+     Funkcja wywołuje wewnętrzne żądanie Apache'a. Przydaje się do dołączania
+     (inkludowania) skryptów CGI lub plików .shtml, lub czegokolwiek innego,
+     co jest przetwarzane przez serwer Apache. Zwróć uwagę przy skrypcie CGI, że
+     musi on generować poprawne nagłówki CGI, przynajmniej nagłówek
+     Content-type. Dla plików PHP użyj funkcji <function>include</function> lub
+     <function>require</function>; nie można użyć <function>virtual</function>
+     do wczytywania plików, które są same plikami PHP.
+    </para>
+   </refsect1>
+  </refentry>
+
+ </reference>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+sgml-parent-document:nil
+sgml-default-dtd-file:"../../manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
