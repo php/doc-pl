@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
 <!-- EN-Revision: 1.2 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.3 $ -->
-  <refentry id="function.ftp-login">
+<!-- $Revision: 1.1 $ -->
+  <refentry id="function.ftp-close">
    <refnamediv>
-    <refname>ftp_login</refname>
-    <refpurpose>Loguje się w połączeniu FTP</refpurpose>
+    <refname>ftp_close</refname>
+    <refpurpose>Zamyka połączenie FTP</refpurpose>
    </refnamediv>
    <refsect1>
     <title>Opis</title>
      <methodsynopsis>
-      <type>int</type><methodname>ftp_login</methodname>
-      <methodparam><type>int</type><parameter>strumien_ftp</parameter></methodparam>
-      <methodparam><type>string</type><parameter>nazwa_uzytkownika</parameter></methodparam>
-      <methodparam><type>string</type><parameter>haslo</parameter></methodparam>
+      <type>void</type><methodname>ftp_close</methodname>
+      <methodparam><type>resource</type><parameter>strumień_ftp</parameter></methodparam>
      </methodsynopsis>
-    <para> 
-     Loguje się do podanego strumienia FTP.
-    </para>
+    <note>
+     <para>
+      Funkcja ta dostępna jest tylko w wersji CVS.
+     </para>
+    </note>
     <para>
-     Zwraca wartość &true; w przypadku sukcesu lub &false; w przypadku
-     napotkania błędu.
+     <function>ftp_close</function> zamyka <parameter>strumień_ftp</parameter>
+     i zwalnia zasób. Nie można ponownie używać tego zasobu, lecz trzeba go
+     ponownie otworzyć korzystając z funkcji <function>ftp_connect</function>.
     </para>
    </refsect1>
   </refentry>
