@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: dombal Status: Ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.4 Maintainer: dombal Status: Ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.method-exists">
    <refnamediv>
     <refname>method_exists</refname>
@@ -17,6 +17,25 @@
      Funkcja ta zwraca &true; jeżeli metoda określona przez parametr
      <parameter>nazwa_metody</parameter> została zdefiniowany dla obiektu
      <parameter>object</parameter>, &false; w przeciwnym przypadku.
+   	 </para> 
+      <para> 
+       <example> 
+        <title><function>method_exists</function> przykład</title> 
+        <programlisting role="php"> 
+  <![CDATA[ 
+  <?php 
+  $directory = new Directory('.'); 
+  var_dump(method_exists($directory,'read')); 
+  ?> 
+  ]]> 
+        </programlisting> 
+        &example.outputs; 
+        <screen> 
+  <![CDATA[ 
+  bool(true) 
+  ]]> 
+        </screen> 
+       </example> 
     </para>
    </refsect1>
   </refentry>
