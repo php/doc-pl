@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.57 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.13 $ -->
+<!-- EN-Revision: 1.65 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.14 $ -->
  <chapter id="configuration">
   <title>Konfiguracja</title>
 
@@ -24,6 +24,20 @@
     skorzystać ze zmiennej środowiskowej <literal>PHPRC</literal> aby dodać
     katalog do ścieżki poszukiwań pliku &php.ini;.
    </para>
+   <para>
+    Nie wszystkie dyrektywy konfiguracji PHP są opisane poniżej. Pełna lista
+    znajduje się w dobrze skomentowanym pliku &php.ini;. Możesz obejrzeć
+    najnowszy plik &php.ini; <ulink url="&url.cvs.phpini;">tutaj</ulink>, w
+    CVSie,
+   </para>
+   <note>
+    <para>
+     Domyślna wartość dyrektywy PHP
+     <link linkend="ini.register-globals">register_globals</link> zmieniła się
+     z <emphasis>on</emphasis> na <emphasis>off</emphasis> w PHP
+     <ulink url="&url.php.release4.2.0;">4.2.0</ulink>.
+    </para>
+   </note>
    <para>
     <example>
      <title>Przykład &php.ini;</title>
@@ -128,8 +142,21 @@ include_path = ".;c:\php\lib"
 ]]>
 </programlisting>
     </example>
+    <note>
+     <para>
+      Niektóre dyrektywy mają specjalną obsługę inicjalizującą. Zmiana
+      wartości tych dyrektyw z pliku konfiguracyjnego Apache może spowodować
+      nieoczekiwane zachowanie. Na przykład funkcja obsługująca dyrektywę
+      <systemitem role="directive">error_reporting</systemitem> tłumaczy stałe
+      określające poziom wyświetlanych błędów na wartość liczbową. Zmiana
+      wartości używając <literal>E_ALL</literal>, <literal>E_NOTICE</literal>
+      nie zadziała dla <systemitem
+       role="directive">error_reporting</systemitem>. Użytkownicy muszą używać
+      wartości liczbowych żeby <systemitem
+       role="directive">error_reporting</systemitem> działało.
+     </para>
+    </note>
    </para>
-
    <simpara>
     Możesz przeglądać ustawienia opcji konfiguracyjnych w wyjściu funkcji
     <function>phpinfo</function>. Do tych opcji możesz się także dostać
@@ -236,14 +263,22 @@ wrapper</parameter></link>.
        </listitem>
       </varlistentry>
 
-      <varlistentry id="ini.cgi-ext">
+      <varlistentry id="ini.disable-functions">
        <term>
-        <parameter>cgi_ext</parameter>
+        <parameter>disable_functions</parameter>
         <type>string</type>
        </term>
        <listitem>
-        <para>
-        </para>
+        <simpara>
+         Ta dyrektywa pozwala na wyłączenie poszczególnych funkcji ze względu
+         na <link linkend="security">bezpieczeństwo</link>. Pobiera ona listę
+         nazw funkcji oddzielonych przecinkami. Na działanie disable_functions
+         nie wpływa <link linkend="ini.safe-mode">Tryb Bezpieczny</link>.
+        </simpara>
+        <simpara>
+         Ta dyrektywa musi być ustawiona w &php.ini;. Na przykład nie można
+         jej ustawić w <filename>httpd.conf</filename>.
+        </simpara>
        </listitem>
       </varlistentry>
 
@@ -522,17 +557,6 @@ include_path=".;c:\www\phplib"
        </listitem>
       </varlistentry>
 
-      <varlistentry id="ini.isapi-ext">
-       <term>
-        <parameter>isapi_ext</parameter>
-        <type>string</type>
-       </term>
-       <listitem>
-        <para>
-        </para>
-       </listitem>
-      </varlistentry>
-
       <varlistentry id="ini.log-errors">
        <term>
         <parameter>log_errors</parameter>
@@ -633,17 +657,6 @@ include_path=".;c:\www\phplib"
        </listitem>
       </varlistentry>
       
-      <varlistentry id="ini.nsapi-ext">
-       <term>
-        <parameter>nsapi_ext</parameter>
-        <type>string</type>
-       </term>
-       <listitem>
-        <para>
-        </para>
-       </listitem>
-      </varlistentry>
-      
       <varlistentry id="ini.precision">
        <term>
         <parameter>precision</parameter>
@@ -705,21 +718,41 @@ include_path=".;c:\www\phplib"
        <listitem>                 
         <para>
          Ustala, czy rejestrować zmienne EGPCS (Environment, GET, POST,
-         Cookie, Server) jako zmienne globalne. Możesz wyłączyć tę opcję jeśli
-         nie chcesz zaśmiecić globalnych zasięgów swoich skryptów przez dane
-         użytkownika. Ma to największy sens jeśli użwane jest w połączeniu z
-         <link linkend="ini.track-vars">track_vars</link> - w takim przypadku
-         do zmiennych EGCPS możliwy jest przez zmienne globalne
-         <varname>$_ENV</varname>,
-         <varname>$_GET</varname>,
-         <varname>$_POST</varname>,
-         <varname>$_COOKIE</varname>, i
-         <varname>$_SERVER</varname>.
+         Cookie, Server) jako zmienne globalne. Na przykład, jeśli
+         register_globals = on, URL
+         <literal>http://www.example.com/test.php?id=3</literal> stworzy
+         <varname>$id</varname>. Lub <varname>$DOCUMENT_ROOT</varname> z
+         <varname>$_SERVER['DOCUMENT_ROOT']</varname>. Możesz chcieć to
+         wyłączyć jeśli nie chcesz zaśmiecać globalnego zasięgu swoich
+         skryptów danymi użytkowników. Od PHP <ulink
+          url="&url.php.release4.2.0;">4.2.0</ulink> domyślna wartość tej
+         dyrektywy to <emphasis>off</emphasis>. Preferowane jest używanie
+         <link linkend="reserved.variables">predefiniowanych zmiennych</link>,
+         takich jak <link linkend="language.variables.superglobals">zmienne
+          superglobalne</link>: <varname>$_ENV</varname>,
+         <varname>$_GET</varname>, <varname>$_POST</varname>,
+         <varname>$_COOKIE</varname> i <varname>$_SERVER</varname>. Przeczytaj
+         rozdział o bezpieczeństwie dotyczący <link
+          linkend="security.registerglobals">używania register_globals</link>
+         aby uzyskać więcej informacji.
         </para>
         <para>
-         Zauważ, że nie musisz ustawiać AllowOverride All w bloku Directory
-         pliku konfiguracyjnego serwera Apache aby to działało.
+         Zauważ, że dyrektywa 
+         <systemitem role="directive">register_globals</systemitem>
+         nie może być ustawiona w czasie wykonania
+         (<function>ini_set</function>). Można jednak użyć do tego pliku
+         <filename>.htaccess</filename> jeśli twój host pozwala na to.
+         Przykładowy wpis do pliku <filename>.htaccess</filename>:
+         <userinput>php_flag register_globals on</userinput>.
         </para>
+        <note>
+         <para>
+          Ne funkcjonowanie dyrektywy
+          <systemitem role="directive">register_globals</systemitem> wpływa
+          dyrektywa <link
+           linkend="ini.variables-order">variables_order</link>.
+         </para>
+        </note>
        </listitem>
       </varlistentry>
                 
@@ -732,9 +765,22 @@ include_path=".;c:\www\phplib"
         <para>
          Ustala, czy dozwolona jest skrócona forma tagu otwierającego PHP
          (<userinput>&lt;? ?&gt;</userinput>). Jeśli chcesz używać PHP w
-         połączeniu z XMLem, powinieneś wyłączyć tą opcję. Jeśli ta opcja jest
-         wyłączona, musisz używać długiej postaci tagu otwierającego.
-         (<userinput>&lt;?php ?&gt;</userinput>).</para>
+         połączeniu z XMLem, powinieneś wyłączyć tą opcję aby móc używać
+         wtrącenia <userinput>&lt;?xml ?&gt;</userinput>. W przeciwnym
+         przypadku konieczne jest wyświetlanie go przy pomocy PHP, na przykład
+         <userinput>&lt;?php echo '&lt;?xml version="1.0"'; ?&gt;</userinput>.
+         Konieczne będzie także używanie długiej formy tagu otwierającego kod
+         PHP (<userinput>&lt;?php ?&gt;</userinput>).
+        </para>
+        <note>
+         <para>
+          Dyrektywa ta wpływa także na działanie skrótu
+          <userinput>&lt;?=</userinput> który jest odpowiednikiem
+          <userinput>&lt;? echo</userinput>. Użycie tego skrótu wymaga
+          włączenia opcji <systemitem 
+           role="directive">short_open_tag</systemitem>.
+         </para>
+        </note>
        </listitem>
       </varlistentry>
 
