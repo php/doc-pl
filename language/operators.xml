@@ -1,15 +1,128 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.32 Maintainer: Qrak Status: ready -->
-<!-- $Revision: 1.11 $ -->
+<!-- EN-Revision: 1.33 Maintainer: Qrak Status: ready -->
+<!-- $Revision: 1.12 $ -->
  <chapter id="language.operators">
   <title>Operatory</title>
   <simpara>
   </simpara>
   
+  <sect1 id="language.operators.precedence">
+   <title>Priorytety operatorów</title>
+   <para>
+    Priorytet operatora określa, jak "silnie" operator wiąże ze sobą dwa stojące
+    obok niego wyrażenia. Na przykład, w wyrażeniu <literal>1 +
+    5 * 3</literal>, wynik wynosi <literal>16</literal>, nie
+    <literal>18</literal> ponieważ operator mnożenia ("*") ma wyższy priorytet 
+    niż operator dodawania ("+"). Za pomocą nawiasów można zmieniać priorytet 
+    działań według reguł arytmetyki. Na przykład: <literal>(1 + 5) * 3</literal>
+    jest równe <literal>18</literal>.
+   </para>
+   <para>
+    Poniższa tabela zawiera priorytet operatorów, od najniższego priorytetu na 
+    górze.
+    <table>
+     <title>Priorytety operatorów</title>
+     <tgroup cols="2">
+      <thead>
+       <row>
+        <entry>Powiązanie</entry>
+        <entry>Operator</entry>
+       </row>
+      </thead>
+      <tbody>
+       <row>
+        <entry>lewe</entry>
+        <entry>,</entry>
+       </row>
+       <row>
+        <entry>lewe</entry>
+        <entry>or</entry>
+       </row>
+       <row>
+        <entry>lewe</entry>
+        <entry>xor</entry>
+       </row>
+       <row>
+        <entry>lewe</entry>
+        <entry>and</entry>
+       </row>
+       <row>
+        <entry>prawe</entry>
+        <entry>print</entry>
+       </row>
+       <row>
+        <entry>lewe</entry>
+        <entry>
+         = += -= *= /= .= %= &amp;= |= ^= ~= &lt;&lt;= &gt;&gt;=
+        </entry>
+       </row>
+       <row>
+        <entry>lewe</entry>
+        <entry>? :</entry>
+       </row>
+       <row>
+        <entry>lewe</entry>
+        <entry>||</entry>
+       </row>
+       <row>
+        <entry>lewe</entry>
+        <entry>&amp;&amp;</entry>
+       </row>
+       <row>
+        <entry>lewe</entry>
+        <entry>|</entry>
+       </row>
+       <row>
+        <entry>lewe</entry>
+        <entry>^</entry>
+       </row>
+       <row>
+        <entry>lewe</entry>
+        <entry>&amp;</entry>
+       </row>
+       <row>
+        <entry>bez powiązania</entry>
+        <entry>== != === !==</entry>
+       </row>
+       <row>
+        <entry>bez powiązania</entry>
+        <entry>&lt; &lt;= &gt; &gt;=</entry>
+       </row>
+       <row>
+        <entry>lewe</entry>
+        <entry>&lt;&lt; &gt;&gt;</entry>
+       </row>
+       <row>
+        <entry>lewe</entry>
+        <entry>+ - .</entry>
+       </row>
+       <row>
+        <entry>lewe</entry>
+        <entry>* / %</entry>
+       </row>
+       <row>
+        <entry>prawe</entry>
+        <entry>! ~ ++ -- (int) (double) (string) (array) (object) @</entry>
+       </row>
+       <row>
+        <entry>prawe</entry>
+        <entry>[</entry>
+       </row>
+       <row>
+        <entry>bez powiązania</entry>
+        <entry>new</entry>
+       </row>
+      </tbody>
+     </tgroup>
+    </table>
+   </para>
+  </sect1>
+
+  
   <sect1 id="language.operators.arithmetic">
    <title>Operatory Arytmetyczne</title>
    <simpara>
-    Czy pamiętasz podstawy arytmetyki ze szkoły? W PHP operatory działają
+    Czy pamiętasz podstawy arytmetyki ze szkoły? Operatory w PHP działają
     niemalże tak samo.
    </simpara>
    <table>
@@ -266,8 +379,8 @@ $b = $b . "Świecie!";
     </tgroup>
    </table>
    <para>
-    Jeszcze jednym operatorem warunkowym jest operator "?:", działający tak jak
-    w C i wielu innych językach.
+    Jeszcze jednym operatorem warunkowym jest operator "?:" (tzw. ternariusz),
+    działający tak jak w C i wielu innych językach.
     <informalexample>
      <programlisting>
 <![CDATA[
@@ -491,124 +604,13 @@ echo "Powinno być 4: " . $a . "<br>\n";
     </tgroup>
    </table>
    <simpara>
-    Operatory "or" i "and" mają inny priorytet niż "||" i "&amp;&amp;" i właśnie z tego
-    powodu w PHP są dwa rodzaje operatorów "lub" i "i". (Zobacz
+    Operatory "or" i "and" mają inny priorytet niż "||" i "&amp;&amp;" i właśnie
+    z tego powodu w PHP są dwa różne operatory dla "lub" i "i". (Zobacz
     <link linkend="language.operators.precedence">Priorytety Operatorów</link>.)
    </simpara>
   </sect1>
 
-  <sect1 id="language.operators.precedence">
-   <title>Priorytety operatorów</title>
-   <para>
-    Priorytet operatora określa, jak "silnie" operator wiąże ze sobą dwa stojące
-    obok niego wyrażenia. Na przykład, w wyrażeniu <literal>1 +
-    5 * 3</literal>, wynik wynosi <literal>16</literal>, nie
-    <literal>18</literal> ponieważ operator mnożenia ("*") ma wyższy priorytet 
-    niż operator dodawania ("+"). Za pomocą nawiasów można zmieniać priorytet 
-    działań według reguł arytmetyki. Na przykład: <literal>(1 + 5) * 3</literal>
-    jest równe <literal>18</literal>.
-   </para>
-   <para>
-    Poniższa tabela zawiera priorytet operatorów, od najniższego priorytetu na 
-    górze.
-    <table>
-     <title>Priorytety operatorów</title>
-     <tgroup cols="2">
-      <thead>
-       <row>
-        <entry>Powiązanie</entry>
-        <entry>Operator</entry>
-       </row>
-      </thead>
-      <tbody>
-       <row>
-        <entry>lewe</entry>
-        <entry>,</entry>
-       </row>
-       <row>
-        <entry>lewe</entry>
-        <entry>or</entry>
-       </row>
-       <row>
-        <entry>lewe</entry>
-        <entry>xor</entry>
-       </row>
-       <row>
-        <entry>lewe</entry>
-        <entry>and</entry>
-       </row>
-       <row>
-        <entry>prawe</entry>
-        <entry>print</entry>
-       </row>
-       <row>
-        <entry>lewe</entry>
-        <entry>
-         = += -= *= /= .= %= &amp;= |= ^= ~= &lt;&lt;= &gt;&gt;=
-        </entry>
-       </row>
-       <row>
-        <entry>lewe</entry>
-        <entry>? :</entry>
-       </row>
-       <row>
-        <entry>lewe</entry>
-        <entry>||</entry>
-       </row>
-       <row>
-        <entry>lewe</entry>
-        <entry>&amp;&amp;</entry>
-       </row>
-       <row>
-        <entry>lewe</entry>
-        <entry>|</entry>
-       </row>
-       <row>
-        <entry>lewe</entry>
-        <entry>^</entry>
-       </row>
-       <row>
-        <entry>lewe</entry>
-        <entry>&amp;</entry>
-       </row>
-       <row>
-        <entry>bez powiązania</entry>
-        <entry>== != === !==</entry>
-       </row>
-       <row>
-        <entry>bez powiązania</entry>
-        <entry>&lt; &lt;= &gt; &gt;=</entry>
-       </row>
-       <row>
-        <entry>lewe</entry>
-        <entry>&lt;&lt; &gt;&gt;</entry>
-       </row>
-       <row>
-        <entry>lewe</entry>
-        <entry>+ - .</entry>
-       </row>
-       <row>
-        <entry>lewe</entry>
-        <entry>* / %</entry>
-       </row>
-       <row>
-        <entry>prawe</entry>
-        <entry>! ~ ++ -- (int) (double) (string) (array) (object) @</entry>
-       </row>
-       <row>
-        <entry>prawe</entry>
-        <entry>[</entry>
-       </row>
-       <row>
-        <entry>bez powiązania</entry>
-        <entry>new</entry>
-       </row>
-      </tbody>
-     </tgroup>
-    </table>
-   </para>
-  </sect1>
-
+  
   <sect1 id="language.operators.string">
    <title>Operatory Łańcuchowe</title>
    <simpara>
