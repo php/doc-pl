@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.3 Maintainer: cyb0org Status: ready -->
-<!-- $Revision: 1.1 $ -->
+<!-- EN-Revision: 1.6 Maintainer: cyb0org Status: ready -->
+<!-- $Revision: 1.2 $ -->
   <refentry id="function.xml-parse">
    <refnamediv>
     <refname>xml_parse</refname>
     <refpurpose>rozpoczyna parsowanie dokumentu XML</refpurpose>
    </refnamediv>
-   <refsect1>
-    <title>Opis</title>
+   <refsect1 role="description">
+    &reftitle.description;
     <methodsynopsis>
      <type>bool</type><methodname>xml_parse</methodname>
      <methodparam><type>resource</type><parameter>parser</parameter></methodparam>
@@ -15,44 +15,51 @@
      <methodparam choice="opt"><type>bool</type><parameter>ostatni</parameter></methodparam>
     </methodsynopsis>
     <para>
+     <function>xml_parse</function> parsuje dokument XML. Uchwyty dla
+     skonfigurowanych zdarzeń są wywoływane odpowiednią ilość razy.
+    </para>
+   </refsect1>
+   <refsect1 role="parameters">
+    &reftitle.parameters;
+    <para>
      <variablelist>
       <varlistentry>
        <term><parameter>parser</parameter></term>
        <listitem>
-        <simpara>
+        <para>
          Referencja do parsera XML, który ma być użyty.
-        </simpara>
+        </para>
        </listitem>
       </varlistentry>
       <varlistentry>
        <term><parameter>dane</parameter></term>
        <listitem>
-        <simpara>
+        <para>
          Kawałek danych do parsowania. Dokument może być prawidłowo parsowany po
          kawałku za pomocą wielokrotnego wywoływania <function>xml_parse</function>
          z nowymi danymi, dopóki podany jest parametr <parameter>ostatni</parameter>
          i posiada on wartość logiczną &true; podczas parsowania ostatniej porcji danych.
-        </simpara>
+        </para>
        </listitem>
       </varlistentry>
       <varlistentry>
-       <term><parameter>ostatni</parameter> (opcjonalny)</term>
+       <term><parameter>ostatni</parameter></term>
        <listitem>
-        <simpara>
+        <para>
          Jeśli jest podany i posiada wartość logiczną &true;, <parameter>dane</parameter>
          są ostatnim kawałkiem wysłanych danych podczas tego parsowania.
-        </simpara>
+        </para>
        </listitem>
       </varlistentry>
      </variablelist>
     </para>
+   </refsect1>
+   <refsect1 role="returnvalues">
+    &reftitle.returnvalues;
     <para>
-     Podczas parsowania dokumentu XML, procedury obsługi dla skonfigurowanych zdarzeń
-     są wywoływane potrzebną ilość razy, po czym funkcja zwraca &true; lub &false;.
+     &return.success;
     </para>
     <para>
-     &true; jest zwracane jeśli parsowanie zakończyło się pomyślnie, &false; jeśli nie,
-     lub jeśli <parameter>parser</parameter> nie odnosił się do prawidłowego parsera.
      Dla parsowań zakończonych niepomyślnie można uzyskać informację o błędach
      za pomocą <function>xml_get_error_code</function>,
      <function>xml_error_string</function>,
@@ -60,6 +67,12 @@
      <function>xml_get_current_column_number</function> i
      <function>xml_get_current_byte_index</function>.
     </para>
+    <note>
+     <para>
+      Błędy encji są raportowane po zakończeniu przetwarzania danych a więc tylko wtedy
+      gdy ustawiony jest <parameter>ostatni</parameter> i posiada on wartość &true;.
+     </para>
+    </note>
    </refsect1>
   </refentry>
 
