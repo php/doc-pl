@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.36 Maintainer: Qrak Status: ready -->
-<!-- $Revision: 1.14 $ -->
+<!-- EN-Revision: 1.39 Maintainer: Qrak Status: ready -->
+<!-- $Revision: 1.15 $ -->
  <reference id="ref.http">
   <title>HTTP</title>
   <titleabbrev>HTTP</titleabbrev>
@@ -46,10 +46,55 @@ header('WWW-Authenticate: NTLM',false);
      </informalexample>
     </para>
     <para>
-     W PHP są dwa specjalne wywołania <function>header</function>.
-     Pierwszym z nich jest &quot;Location&quot;. To wywołanie nie tylko
-     wysyła ten nagłówek do przeglądarki, ale także wysyła do przeglądarki
-     status przekierowania <literal>REDIRECT</literal> (302). 
+     Są dwa specjalne wywołania funkcji header. Pierwszym z nich jest każdy
+     nagłówek zaczynający się od "<literal>HTTP/</literal>" (wielkość liter
+     nie jest istotna). Nagłówka tego używa się do podania statusu zapytania
+     HTTP. Na przykład, jeśli skonfigurowałeś serwer Apache aby używał skryptu
+     PHP do wyświetlania komunikatów o brakujących plikach (za pomocą dyrektywy
+     <literal>ErrorDocument</literal>), możesz chcieć wypróbować, czy skrypt
+     generuje właściwy kod statusu. 
+       <informalexample>  
+        <programlisting role="php">  
+  <![CDATA[  
+  <?php  
+    header("HTTP/1.0 404 Not Found");  
+  ?>  
+  ]]>  
+        </programlisting>  
+       </informalexample>  
+       <note>  
+        <para>
+         Aby wysłać status połączenia taki jak powyżej, musisz upewnić się,
+         że wysyłany on jest w absolutnie pierwszym wywołaniu funkcji header.
+         Pamiętaj, że funkcja <function>setcookie</function> używa wewnętrznie
+         funkcji <function>header</function>, a funkcje obsługi sesji mogą
+         we własnym zakresie wysyłać ciasteczko. Może to powodować kolizję
+         z wysyłanym statusem zapytania za pomocą
+         <literal>header("HTTP ...")</literal>.
+        </para>  
+       </note>  
+       <note>  
+        <para>
+         W PHP 3 funkcja ta działa tylko, jeżeli PHP jest skompilowane jako
+         moduł Apache'a. Identyczny rezultat do powyższego można uzyskać
+         za pomocą nagłówka <literal>Status</literal>.
+         <informalexample>  
+          <programlisting role="php">  
+  <![CDATA[  
+  header("Status: 404 Not Found");  
+  ]]>  
+          </programlisting>  
+         </informalexample>  
+        </para>  
+       </note>  
+      </para>  
+      <para>
+       Drugim specjalnym wywołaniem funkcji header jest nagłówek
+       "Location:". W tej sytuacji, do klienta wysyłany jest nie tylko ten
+       nagłówek, ale także status przekierowania <literal>REDIRECT</literal>
+       (302), o ile inny status zapytania <literal>3xx</literal> nie został
+       już wysłany.  
+
      <informalexample>
       <programlisting role="php">
 <![CDATA[
@@ -68,51 +113,22 @@ exit;                 /* Upewnij się, że kod poniżej nie zostanie wykonany
       włącznie z określeniem protokołu, nazwy hosta i bezwzględnej scieżki
       dostępu, ale niektóre klienty akceptują względne <acronym>URI</acronym>.
       Zwykle używa się
-      $HTTP_SERVER_VARS['HTTP_HOST'], $HTTP_SERVER_VARS['PHP_SELF'] i
-      funkcji <function>dirname</function> by wygenerować bezwględnego 
+      <literal>$_SERVER['HTTP_HOST']</literal>, 
+      <literal>$_SERVER['PHP_SELF']</literal> i
+      funkcji <function>dirname</function> by wygenerować bezwględny 
       <acronym>URI</acronym>:
       <informalexample>
        <programlisting>
 <![CDATA[
-header("Location: http://".$HTTP_SERVER_VARS['HTTP_HOST']
-                       ."/".dirname($HTTP_SERVER_VARS['PHP_SELF'])
-                       ."/".$relative_url);
+header("Location: http://".$_SERVER['HTTP_HOST']
+                       ."/".dirname($_SERVER['PHP_SELF'])
+                       ."/".$względny_url);
 ]]>
        </programlisting>
       </informalexample>
      </para>
     </note>
-    <para>
-     Drugim specjalnym wywołaniem funkcji jest każdy nagłówek zaczynający się
-     od ciągu znaków &quot;<literal>HTTP/</literal>&quot; (wielkość liter nie
-     gra roli), którego używa się do określenia, jaki kod statusu HTTP ma zostać
-     wysłany.
-     Na przykład, jeśli skonfigurowałeś Apache'a tak, że skrypt PHP obsługuje
-     zapytania do nieistniejących plików (za pomocą dyrektywy 
-     <literal>ErrorDocument</literal>), powinieneś zwrócić uwagę, aby skrypt
-     generował właściwy kod statusu zapytania HTTP.
-     <informalexample>
-      <programlisting role="php">
-<![CDATA[
-header("HTTP/1.0 404 Not Found");
-]]>
-      </programlisting>
-     </informalexample>
-    </para>
-    <note>
-      <para>
-       W PHP 3 działa to tylko wtedy, kiedy PHP jest skompilowane jako moduł
-       serwera Apache. Taki sam efekt można osiągnąć za pomocą nagłówka
-       <literal>Status</literal>.
-       <informalexample>
-        <programlisting role="php">
-<![CDATA[
-header("Status: 404 Not Found");
-]]>
-        </programlisting>
-       </informalexample>
-      </para>
-     </note>
+    
     <para>
      Skrypty PHP często służą do generowania dynamiczej treści, która
      nie może być buforowana przez klienta czy serwer proxy. Pamięć cache
