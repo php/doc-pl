@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.8 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.9 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.feof">
    <refnamediv>
     <refname>feof</refname>
@@ -17,13 +17,13 @@
 	 (także timeout połączena socket'owego);w przeciwnym wypadku zwraca &false;. 
 	</para>
 	<warning> 
-        <simpara> 
-         <function>feof</function> zwróci &true; tylko jeśli połączenie otworzone za pomocą 
-         <function>fsockopen</function> zostało zamknięte. To może być przyczyną
-		 timeout'u skryptu. Obejsciem tego jest użycie
-		 <function>stream_set_timeout</function>, co spowoduje 
-         <function>feof</function>, że zwróci &false; w przypadku timeout'u. 
-        </simpara> 
+        <simpara>
+		Jeśli połączenie otworzone za pomocą <function>fsockopen</function> nie
+		zostanie zamknięte przez serwer, <function>feof</function> będzie
+		czekać aż timeout zostanie osiągniety, wtedy zwróci &true;.
+		Domyślny timeout to 60 sekund. Możesz użyć <function>stream_set_timeout</function>
+		aby zmienić tą wartość.		
+		</simpara> 
        </warning> 
     &fs.validfp.all;
    </refsect1>
