@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.21 Maintainer: slawek Status: ready -->
-<!-- $Revision: 1.10 $ -->
+<!-- EN-Revision: 1.24 Maintainer: slawek Status: ready -->
+<!-- $Revision: 1.11 $ -->
  <chapter id="features.http-auth">
   <title>Autoryzacja HTTP w PHP</title>
 
@@ -22,14 +22,14 @@
     <programlisting role="php">
 <![CDATA[
 <?php
-  if (!isset($PHP_AUTH_USER)) {
+  if (!isset($_SERVER['PHP_AUTH_USER'])) { 
     header("WWW-Authenticate: Basic realm=\"My Realm\"");
     header("HTTP/1.0 401 Unauthorized");
     echo "Tekst do wysłania, jeśli użytkownik wciśnie przycisk Anuluj\n";
     exit;
   } else {
-    echo "<p>Hej $PHP_AUTH_USER.</p>";
-    echo "<p>Twoje hasło to $PHP_AUTH_PW.</p>";
+    echo "<p>Hej {$_SERVER['PHP_AUTH_USER']}.</p>"; 
+    echo "<p>Twoje hasło to {$_SERVER['$PHP_AUTH_PW']}.</p>"; 
   }
 ?>
 ]]>
@@ -101,15 +101,15 @@
     exit;
   }
  
-  if (!isset($PHP_AUTH_USER) || ($SeenBefore == 1 && !strcmp($OldAuth, $PHP_AUTH_USER))) {
+  if (!isset($_SERVER['PHP_AUTH_USER']) || ($SeenBefore == 1 && $OldAuth == $_SERVER['$PHP_AUTH_USER']))) {
    authenticate();
   } 
   else {
-   echo "<p>Witaj: $PHP_AUTH_USER<br>";
-   echo "Poprzenio: $OldAuth";
-   echo "<form action='$PHP_SELF' METHOD='POST'>\n";
+   echo "<p>Witaj: {$_SERVER['$PHP_AUTH_USER']}<br>";
+   echo "Poprzenio: {$_REQUEST['$OldAuth']}";
+   echo "<form action='{$_SERVER['$PHP_SELF']}' METHOD='POST'>\n";
    echo "<input type='hidden' name='SeenBefore' value='1'>\n";
-   echo "<input type='hidden' name='OldAuth' value='$PHP_AUTH_USER'>\n";
+   echo "<input type='hidden' name='OldAuth' value='{$_SERVER['$PHP_AUTH_USER']}'>\n";
    echo "<input type='submit' value='Re Authenticate'>\n";
    echo "</form></p>\n";
   }
@@ -129,6 +129,14 @@
    Autoryzacja HTTP nie działa jeśli używasz serwera Microsoft IIS i
    PHP w wersji CGI. Powodem są pewne ograniczenia IIS.
   </simpara>
+
+  <note>
+   <para>
+    Jeśli włączony jest <link linkend="ini.safe-mode">tryb bezpieczny</link>,
+    uid skryptu jest doklejany do pola <literal>realm</literal> nagłówka
+    <literal>WWW-Authenticate</literal>.
+   </para>
+  </note>
 
  </chapter>
 
