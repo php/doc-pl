@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.73 Maintainer: leszek Status: ready -->
+<!-- EN-Revision: 1.92 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 
 <!ENTITY warn.experimental '<warning><simpara>Ten moduł jest w stadium
@@ -19,6 +19,18 @@ wersji starszej niż 4.3.0, pracujące pod kontrolą systemów Windows, nie
 obsługują dostępu do zdalnych plików w tej funkcji, nawet jeśli opcja <link
 linkend="ini.allow-url-fopen">allow_url_fopen</link> jest
 włączona.</para></warning>'>
+
+<!ENTITY warn.ssl-non-standard '<warning><para>Łącząc się przez SSL, serwer
+Microsoft IIS pogwałca reguły protokołu przez zamknięcie połączenia bez
+wysłania znacznika close_notify. PHP zgłosi to jako "SSL: Fatal Protocol Error"
+po przesłaniu całości danych. Aby obejść ten błąd, wystarczy obniżyć poziom
+raportowania błędów (<link
+      linkend="ini.error-reporting">error_reporting</link>) aby nie były
+wyświetlane ostrzeżenia.  PHP w wersji 4.3.7 i nowsze wykrywa obecność
+zepsutego serwera IIS przy otwieraniu strumienia przez wrapper https:// i
+wyłącza wyświetlanie tych ostrzeżeń. Używając funkcji
+<function>fsockopen</function> do otwarcia gniazda ssl:// należy samemu
+zatroszczyć się o wyłączenie ostrzeżeń.</para></warning>'>
 
 <!ENTITY note.no-remote '<note><simpara>Ta funkcja nie będzie działać dla
 <link linkend="features.remote-files">zdalnych plików</link>, ponieważ
@@ -51,6 +63,9 @@ obsługiwanych protokołów.
 może być użyta także z <emphasis>niektórymi</emphasis> wrapperami URL. Zobacz
 <xref linkend="wrappers"/> aby uzyskać listę wrapperów które obsługują
 funkcjonalność z rodziny <function>stat</function>.</simpara></tip>'>
+
+<!ENTITY note.context-support '<note><simpara>Wsparcie dla kontekstów zostało
+dodane w <literal>PHP 5.0.0</literal>.</simpara></note>'>
 
 <!ENTITY return.success 'Zwraca &true; w przypadku sukcesu, &false; w
 przypadku porażki.'>
@@ -102,9 +117,37 @@ Powoduje ona wykonywanie funkcji <function>addslashes</function> na wszystkich
 danych GET,  POST i COOKIE. Można użyć funkcji <function>stripslashes</function>
 aby usunąć dodane znaki slash.</para></note>'> 
 
+<!-- Image (GD) Notes -->
+
 <!ENTITY note.config.t1lib '<note><simpara>Ta funkcja jest dostępna tylko jeśli
 PHP zostało skompilowane z dyrektywą <option
 role="configure">--enable-t1lib</option>.</simpara></note>'>
+
+<!ENTITY note.bundled.gd '<note><simpara>Ta funkcja jest dostępna tylko jeśli
+PHP zostało skompilowane z dołączoną wersją biblioteki GD.</simpara></note>'>
+
+<!-- DomXml Notes -->
+<!ENTITY node.inserted 'Ten węzeł nie pojawi się w dokumencie dopóki nie
+zostanie wstawiony, np. funkcją <function>domnode_append_child</function>.'>
+
+<!-- Dom Notes -->
+<!ENTITY dom.node.inserted 'Ten węzeł nie pojawi się w dokumencie dopóki nie
+zostanie wstawiony, np. metodą <link
+linkend="function.dom-domnode-appendchild">DOMNode->appendChild()</link>.'>
+
+<!-- FileSystem entities -->
+<!ENTITY fs.validfp.all '<para>Wskaźnik na plik musi być poprawny i musi
+wskazywać na plik pomyślnie otwarty przez funkcję <function>fopen</function>
+lub <function>fsockopen</function>.</para>'>
+
+<!-- PCNTL Notes -->
+<!ENTITY pcntl.parameter.status '<para>Parametr <parameter>status</parameter>
+jest parametrem podanym do pomyślnego wywołania <function>pcntl_waitpid</function>.</para>'>
+
+<!-- XSLT Notes -->
+<!ENTITY note.xslt.windows '<note><para>Zauważ, że należy podać
+<emphasis>file://</emphasis> na początku ścieżki przy pracy pod systemem
+Windows.</para></note>'>
 
 <!-- Various notes -->
 <!ENTITY note.randomseed '<note><simpara>Od PHP w wersji 4.2.0 nie ma potrzeby
@@ -134,6 +177,18 @@ dostępne na platformie Windows.</simpara></note>'>
 przekazana tablica zawierająca referencję do obiektu i nazwę metody
 </simpara></note>'>
 
+<!ENTITY warn.escapeshell '<warning><para>Jeśli planowane jest przekazanie
+danych pochodzących od użytkownia do tej finkcji, powinno sie skorzystać z
+funkcji <function>escapeshellarg</function> lub <function>escapeshellcmd</function>
+aby upewnić się, że użytkownicy nie mogą uruchomić dowolnych poleceń.
+</para></warning>'>
+ 
+<!ENTITY note.exec-bg '<note><para>Jeśli ta funkcja zostanie użyta do
+uruchomienia programu który ma działać w tle, należy upewnić się, że wyjście
+tego programu jest przekierowane do pliku lub innego strumienia wyjściowego. W
+przeciwnym wypadku PHP zawiesi działanie aż do zakończenia działania
+wykonywanego programu.</para></note>'>
+
 <!-- Notes for safe-mode limited functions: -->
 <!ENTITY note.sm.disabled '<note><simpara>&sm.disabled;</simpara></note>'>
 
@@ -141,6 +196,19 @@ przekazana tablica zawierająca referencję do obiektu i nazwę metody
 linkend="features.safe-mode">tryb bezpieczny</link>, PHP sprawdza, czy
 pliki lub katalogi na których chcesz operować mają takie same UID (owner)
 jak skrypt, który jest aktualnie wykonywany.</simpara></note>'>
+
+<!ENTITY warn.sm.exec '<warning><simpara>Jeśli włączony jest <link
+linkend="features.safe-mode">tryb bezpieczny</link>, wszystkie słowa
+następujące po nazwie polecenia są traktowane jako pojedyńczy argument. A więc,
+polecenie <literal>echo y | echo x</literal> staje się 
+<literal>echo "y | echo x"</literal>.</simpara></warning>'>
+ 
+<!ENTITY note.exec-path '<note><simpara>Jeśli
+<link linkend="features.safe-mode">tryb bezpieczny</link> został włączony, możliwe
+jest wykonywanie programów tylko z katalogu określonego przez 
+<link linkend="ini.safe-mode-exec-dir">safe_mode_exec_dir</link>.
+Ze względów praktycznych, nie można podawać elementów <literal>..</literal> w
+ścieżce do pliku wykonywalnego.</simpara></note>'>
 
 <!ENTITY note.sm.uidcheck.dir '<note><simpara>Kiedy włączony jest <link 
 linkend="features.safe-mode">tryb bezpieczny</link>, PHP sprawdza czy
@@ -221,6 +289,9 @@ supplemental files to mark section titles -->
 <!ENTITY reftitle.examples      '<title>Przykłady</title>'>
 <!ENTITY reftitle.seealso       '<title>Zobacz również</title>'>
 
+<!ENTITY note.extension.php5 '<note><simpara>To rozszerzenie wymaga PHP 5.
+</simpara></note>'>
+
 <!ENTITY note.pecl-php5 '<note><simpara>To rozszerzenie zostało usunięte w PHP
 5 i przeniesione do repozytorium <ulink url="&url.pecl;">PECL</ulink>.
 </simpara></note>'>
@@ -235,6 +306,12 @@ Windows posiada wbudowaną obsługę dla tego rozszerzenia. Nie trzeba ładować
 <!ENTITY php '<literal>PHP</literal>'> 
 <!ENTITY safemode '<link linkend="ini.safe-mode">tryb bezpieczny</link>'> 
 
+<!-- Notes for SAPI/Apache -->
+<!ENTITY note.apache.nsapi-module '<note><para>Od PHP w wersji 4.3.3 możliwe
+jest użycie tej funkcji przy pracy w trybie
+<link linkend="ref.nsapi">modułu NSAPI serwera</link> także w serwerach
+Netscape/iPlanet/SunONE.</para></note>'>
+
 <!-- SimpleXML Notes -->
 <!ENTITY simplexml.iteration '<note><simpara>W SimpleXML wprowadzono zasadę
 dodawania pól iteracyjnych dla większości metod. Nie mogą być one przeglądane
@@ -248,6 +325,9 @@ funkcję <emphasis>rozróżniają wielkość znaków</emphasis>.</simpara></note>'>
 <!-- Sybase Notes --> 
 <!ENTITY sybase.ct.only '<note><simpara>Ta funkcja jest dostępna tylko jeśli za
 interfejs do Sybase służy biblioteka CT, nie DB.</simpara></note>'> 
+
+<!ENTITY sybase.db.only '<note><simpara>Ta funkcja jest dostępna tylko jeśli za
+interfejs do Sybase służy biblioteka DB, nie CT.</simpara></note>'>
 
 <!-- Some MySQL Notes --> 
 <!ENTITY mysql.field-case '<note><simpara>Nazwy pól zwracane przez tą
@@ -277,5 +357,16 @@ Engine 2, co oznacza PHP &gt;= 5.0.0.</simpara></note>'>
 </simpara></note>'>
 
 <!ENTITY note.tidy.2only '<note><simpara>Opcjonalne parametry
-<literal>config_options</literal> i <literal>encoding</literal> zostały dodane
+<literal>config</literal> i <literal>encoding</literal> zostały dodane
 w Tidy 2.0.</simpara></note>'>
+
+<!ENTITY tidy.conf-enc '<para>Parametr <parameter>config</parameter> może być
+przekazany jako tablica lub ciąg znakowy. Jesli zostanie przekazany jako ciąg
+znakowy, będzie on interpretowany jako nazwa pliku konfiguracyjnego. W
+przeciwnym przypadku będzie interpretowany jako zbiór opcji. Pod adresem
+<ulink url="&url.tidy.conf;">&url.tidy.conf;</ulink> można znaleźć objaśnienia
+każdej z opcji.</para><para>Parametr <parameter>encoding</parameter> określa
+kodowanie dokumentów wejściowych/wyjściowych. Dozwolone wartości parametru
+<parameter>encoding</parameter> to: ascii, latin1, raw, utf8, iso2022, mac,
+win1252, utf16le, utf16be, utf16, big5 i shiftjis.</para>'>
+
