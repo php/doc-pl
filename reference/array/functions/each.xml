@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.5 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.6 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.each">
    <refnamediv>
     <refname>each</refname> 
@@ -68,7 +68,7 @@ $bar = each ($foo);
     <para>
      <function>each</function> jest zazwyczaj używana w połączeniu z 
      <function>list</function> aby przejść przez tablicę; na przykład
-     <varname>$HTTP_POST_VARS</varname>: 
+     <varname>$_POST</varname>: 
      <example>
       <title>
        Przechodzenie przez <varname>$HTTP_POST_VARS</varname> używając
@@ -76,10 +76,10 @@ $bar = each ($foo);
       </title>
       <programlisting role="php">
 <![CDATA[
-echo "Wartości wysłane metodą POST:<br>";
-reset ($HTTP_POST_VARS);
-while (list ($key, $val) = each ($HTTP_POST_VARS)) {
-    echo "$key => $val<br>";
+echo "Wartości wysłane metodą POST: <br />\n";
+reset ($_POST);
+while (list ($key, $val) = each (_POST)) {
+   echo "$key => $val<br />\n";
 }
 ]]>
       </programlisting>

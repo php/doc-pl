@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.6 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.list">
    <refnamediv>
     <refname>list</refname>
@@ -78,6 +78,48 @@ while (list ($id, $nazwisko, $pensja) = mysql_fetch_row ($wynik)) {
 ]]>
       </programlisting>
      </example>
+    </para>
+    <warning>
+     <para>
+      <function>list</function> Przypisuje wartości zaczynając parametru
+      znajdującego się po prawej. Przy używaniu zwykłych zmiennych nie ma
+      się o co martwić. Ale używając tablic z indeksami, zazwyczaj
+      oczekuje się, że kolejność indeksów w tablicy będzie taka sama jak zapis
+      wywołania <function>list</function>, od lewej do prawej. Otóż tak nie
+      jest. Zmienne są przypisywane w odwrotnej kolejności.
+     </para>
+    </warning>
+    <para>
+     <example>
+      <title>Przykład użycia <function>list</function> z indeksowaną
+       tablicą</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+
+$info = array('kawa', 'brązowa', 'kofeina');
+
+list($a[0], $a[1], $a[2]) = $info;
+
+var_dump($a);
+
+?>
+]]>
+      </programlisting>
+     </example>
+     Przykład ten wyświetli co następuje (zauważ kolejność elementów
+     porównując ją do tej, w której były one zapisane w wywołaniu funkcji
+     <function>list</function>):
+     <screen>
+array(3) {
+  [2]=>
+  string(8) "caffeine"
+  [1]=>
+  string(5) "brown"
+  [0]=>
+  string(6) "coffee"
+}
+     </screen>
     </para>
     <para>
      Patrz także: <function>each</function> <function>array</function> i
