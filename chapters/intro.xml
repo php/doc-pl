@@ -1,0 +1,180 @@
+<?xml encoding="iso-8859-2"?>
+<!-- $Revision: 1.1 $ -->
+ <chapter id="introduction">
+  <title>Wprowadzenie</title>
+
+  <sect1 id="intro-whatis">
+   <title>Czym jest PHP?</title>
+   <simpara>
+    PHP (oficjalnie "PHP: Hypertext Preprocessor") jest zagnieżdżonym
+    w HTML jezykiem skryptowym działającym po stronie serwera.
+   </simpara>
+   <para>
+    Prosta odpowiedź, ale co to znaczy? Przykład:
+   </para>
+   <para>
+    <example>
+     <title>Wprowadzający przykład</title>
+     <programlisting role="php">
+&lt;html>
+    &lt;head>
+        &lt;title>Przykład&lt;/title>
+    &lt;/head>
+    &lt;body>
+        &lt;?php echo "Cześć! Jestem skryptem PHP!"; ?>
+    &lt;/body>
+&lt;/html>
+     </programlisting>
+    </example>
+   </para>
+   <para>
+    Zauważ jak bardzo różni się to od skryptów CGI pisanych w innych
+    językach, takich jak C czy Perl -- zamiast pisać program, zawierający
+    mnóstwo komend tylko do wypisania HTML, piszesz kod HTML zawierający
+    troche zagnieżdżonego kodu, który robi coś konkretnego (w powyższym
+    przypadku wypisuje jakiś tekst). Kod PHP jest zawarty pomiędzy specjalnymi
+    <link linkend="language.basic-syntax.phpmode">znacznikami otwierającymi i
+    zamykającymi</link> które pozwalają na wchodzenie do i wychodzenie z
+    trybu PHP.
+   </para>
+   <para>
+    PHP różni się od skryptów wykonywanych po stronie klienta takich
+    jak np. JavaScript tym, że cały kod PHP wykonywany jest na serwerze.
+    Jeśli masz na serwerze skrypt podobny do przedstawionego wyżej,
+    klient dostanie tylko rezultat wykonania skryptu, bez możliwości
+    stwierdzenia jak wygląda generujący go kod. Możesz nawet
+    skonfigurować serwer WWW, tak aby wszystkie pliki HTML były przetwarzane
+    przez PHP. A wtedy nie ma sposobu, aby użytkownik mógł stwierdzić jakie asy
+    trzymasz w rękawie.
+   </para>
+  </sect1>
+
+  <sect1 id="intro-whatcando">
+   <title>Co potrafi PHP?</title>
+   <para>
+    Mówiąc najprościej, PHP potrafi wszystko to, co każdy inny skrypt
+    CGI, czyli zbierać dane z formularzy, generować dynamiczne
+    strony oraz wysyłać i odczytywać cookies (ciasteczka).
+   </para>
+   <para>
+    Prawdopodobnie najmocniejszą i najbardziej znaczącą cechą PHP jest
+    obsługa szerokiej gamy baz danych. Pisanie strony powiązaniej
+    z bazą danych jest niesamowicie proste. Następujące bazy danych są aktualnie
+    obsługiwane przez PHP:	
+     <blockquote>
+     <simplelist columns="3">
+      <member>Adabas D</member>
+      <member>dBase</member>
+      <member>Empress</member>
+      <member>FilePro (tylko do odczytu)</member>
+      <member>Hyperwave</member>
+      <member>IBM DB2</member>
+      <member>Informix</member>
+      <member>Ingres</member>
+      <member>InterBase</member>
+      <member>FrontBase</member>
+      <member>mSQL</member>
+      <member>Direct MS-SQL</member>
+      <member>MySQL</member>
+      <member>ODBC</member>
+      <member>Oracle (OCI7 i OCI8)</member>
+      <member>Ovrimos</member>
+      <member>PostgreSQL</member>
+      <member>Solid</member>
+      <member>Sybase</member>
+      <member>Velocis</member>
+      <member>Unix dbm</member>
+     </simplelist>
+    </blockquote>
+   </para>
+   <para>
+    PHP obsługuje również inne serwisy używające protokołów
+    takich jak IMAP, SNMP, NNTP, POP3, HTTP i wiele innych. Możesz także
+    otwierać surowe gniazda sieciowe i używać innych protokołów.
+   </para>
+<!--
+   <figure>
+    <title>Wewnętrzna struktura</title>
+    <graphic fileref="../images/php3_internal_structure.gif"/>
+   </figure>
+   <figure>
+    <title>Schemat żądania</title>
+    <graphic fileref="../images/php3_request_scheme.gif"/>
+   </figure>
+-->
+  </sect1>
+
+  <sect1 id="intro-history">
+   <title>Krótka historia PHP</title>
+   <simpara>
+    PHP wymyślił jesienią 1994 &link.rasmus;.
+    Wczesne niepublikowane wersje były używane na jego stronie
+    do śledzenia kto czyta jego CV on-line. Pierwsza wersja
+    używana przez innych była dostępna na początku roku 1995 i była
+    znana jako Personal Home Page Tools. Składała się z bardzo
+    prostego parsera, który rozumiał bardzo niewiele makr, oraz z paru
+    narzędzi, które były wtedy popularnie używane na stronach domowych,
+    czyli księga gości, licznik i pare innych drobiazgów. W połowie
+    1995 parser został przerobiony i nazwany PHP/FI Version 2. FI
+    było częścią innego pakietu stworzonego przez Rasmusa do interpretowania
+    danych z formularzy HTML. Rasmus połączył skrypty z Personal Home 
+    Page tools z Form Interpreter oraz dodał obsługę mSQL i tak
+    narodził się PHP/FI. PHP/FI zaczął rozwijać się w niewiarygodnym
+    tempie, kiedy ludzie zaczęli dodawać swój kod.
+   </simpara>
+   <simpara>
+    Trudno podać dokładne statystyki, ale szacuje się, że pod koniec 1996 
+    PHP/FI było używane przez co najmniej 15,000 serwisów na całym świecie.
+    Do połowy 1997 liczba ta zwiększyła sie do ponad 50,000. 
+    W połowie 1997 nastąpiła także zmiana w rozwoju PHP. 
+    PHP przestał być osobistym projektem Ramsusa do którego dołączyła
+    garstka ludzi, stał się znacznie bardziej zorganizowanym projektem
+    zespołowym. Parser został napisany od zera przez Zeeva Suraskiego
+    i Andi'ego Gutmansa. Ten właśnie praser został podstawą dla PHP Version 3.
+    Spora część kodu PHP/FI została wykorzystana w PHP3, ale też wiele
+    zostało napisane zupełnie od nowa.	
+   </simpara>
+   <simpara>
+    Najnowsza wersja używa silnika <ulink url="&url.zend;">Zend</ulink>
+    zapewniającego
+    większą wydajność, obsługuje jeszcze więcej zewnętrznych bibliotek i
+    rozszerzeń i działa jako natywny moduł z większością popularnych serwerów
+    WWW.
+    Dziś (1/2001) PHP 3 lub PHP 4 dostarczane jest razem
+    z komercyjnymi produktami, takimi jak StrongHold - serwer WWW firmy
+    RedHat. Skromnie szacując na podstawie ekstrapolacji z
+    danych <ulink url="&url.netcraft;">NetCraftu</ulink>
+    (zobacz też <ulink url="&url.netcraft-survey;">Netcraft Web Server
+    Survey</ulink>) PHP jest używane przez ponad 5,100,000 sajtów na
+    całym świecie. Dla porównania, to trochę więcej niż liczba serwerów
+    działających na oprogramowaniu Microsoft IIS.
+   </simpara>
+<!--
+   <figure>
+    <title>NetCraft Webserver Survey</title>
+    <graphic fileref="../images/phpstats-199911.gif"/>
+   </figure>
+-->
+  </sect1>
+
+ </chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+sgml-parent-document:nil
+sgml-default-dtd-file:"../../manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

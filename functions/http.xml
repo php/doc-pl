@@ -1,0 +1,326 @@
+<?xml encoding="iso-8859-2"?>
+<!-- $Revision: 1.1 $ -->
+ <reference id="ref.http">
+  <title>Funkcje obsługi HTTP</title>
+  <titleabbrev>HTTP</titleabbrev>
+
+  <partintro>
+   <simpara>
+    Te funkcje pozwalają ci operować na danych wysyłanych do przeglądarki
+    internetowej już na poziomie protokołu HTTP.
+   </simpara>
+  </partintro>
+
+  <refentry id="function.header">
+   <refnamediv>
+    <refname>header</refname>
+    <refpurpose>Wysyła surowy nagłowek HTTP</refpurpose>
+   </refnamediv>
+   <refsect1>
+    <title>Opis</title>
+    <funcsynopsis>
+     <funcprototype>
+      <funcdef>int <function>header</function></funcdef>
+      <paramdef>string <parameter>treść_nagłówka</parameter></paramdef>
+      <paramdef>bool <parameter><optional>zamień</optional></parameter>
+      </paramdef>
+     </funcprototype>
+    </funcsynopsis>
+    <para>
+     Funkcja <function>header</function> służy do wysłania surowego
+     nagłówka HTTP przed wysłaniem zawartości dokumentu <acronym>HTML</acronym>.
+     Zajrzyj do <ulink url="&spec.http1.1;">Specyfikacji HTTP 1.1</ulink>
+     aby dowiedzieć się więcej na temat nagłówków HTTP.
+    </para>
+    <para>
+     Opcjonalny parametr <parameter>replace</parameter> określa, czy podany
+     nagłówek ma zastąpić nagłówek tego samego typu przygotowany przez serwer,
+     czy dodać jeszcze jeden. Domyślnie, oryginalny
+     nagłówek zostanie zastąpiony, ale jeśli ustawisz ten argument na &false;,
+     to nowy nagłówek zostanie dodany do już istniejących. Na przykład:
+     <informalexample>
+      <programlisting role="php">
+header('www-authenticate: Negociate');
+header('www-authenticate: NTLM',false);
+      </programlisting>
+     </informalexample>
+    </para>
+    <para>
+     W PHP są dwa specjalne wywołania funkcji <function>header</function>.
+     Pierwszym z nich jest &quot;Location&quot;.  To wywołanie, nie tylko
+     wysyła ten nagłówek do przeglądarki, ale także zwraca do serwera Apache
+     status PRZEKIEROWANIA. Z punktu widzenia piszącego skrypt PHP nie jest 
+     to najistostniejsze, jednak dla osób, które rozumieją zasadę działania
+     Apache'a może być to istotne.
+     <informalexample>
+      <programlisting role="php">
+header ("Location: http://www.php.net/"); /* Przekieruj przeglądarkę 
+                                            na stronę główną PHP */
+exit;                 /* Upewnij się, że kod poniżej nie zostanie wykonany 
+                         po przekierowaniu. */
+      </programlisting>
+     </informalexample>
+    </para>
+    <note>
+     <para>
+      Protokół HTTP 1.1 wymaga URL-i bezwzględnych w nagłówku
+      <ulink url="&spec.http1.1;/rfc2616-sec14.html#sec14.30">Location:</ulink>
+      włącznie z określeniem protokołu, nazwy hosta and i bezwzględnej scieżki
+      dostępu.
+      Niektóre klienty mogą akceptować względne URL-e, jednak zdecydowanie nie
+      powinienieś bazować na tym. Zwykle używa się
+      $HTTP_SERVER_VARS['HTTP_HOST'], $HTTP_SERVER_VARS['PHP_SELF'] i
+      funkcji <function>dirname</function> by wygenerować bezwględnego URL-a:
+      <informalexample>
+       <programlisting>
+header ("Location: http://".$HTTP_SERVER_VARS['HTTP_HOST']
+                       ."/".dirname($HTTP_SERVER_VARS['PHP_SELF'])
+                       ."/".$relative_url);
+       </programlisting>
+      </informalexample>
+     </para>
+    </note>
+    <para>
+     Drugim specjalnym wywołaniem funkcji jest każdy nagłówek zaczynający się
+     od ciągu znaków &quot;HTTP/&quot; (wielkość liter nie gra roli). Na
+     przykład, jeśli dyrektywa konfiguracyjna ErrorDocument 404 twojego Apache-a
+     wskazuje na skrypt PHP, byłoby dobrze przekonać się, czy ten skrypt 
+     faktycznie generuje 404. Pierwszą rzeczą, którą powinieneś zrobić w swoim
+     skrypcie jest wtedy: 
+     <informalexample>
+      <programlisting role="php">
+header ("HTTP/1.0 404 Not Found");
+      </programlisting>
+     </informalexample>
+    </para>
+    <para>
+     Skrypty PHP często służą do generowania dynamicznych dokumentów HTML, które
+     nie mogą być buforowane przez klienta czy serwer proxy. Pamięć cache
+     w większości tych urządzeń da się wyłączyć dzięki:
+     <informalexample>
+      <programlisting role="php">
+header ("Expires: Mon, 26 Jul 1997 05:00:00 GMT");    // data w przeszłości
+header ("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT"); 
+                                                      // ciągle modyfikowany
+header ("Cache-Control: no-cache, must-revalidate");  // HTTP/1.1
+header ("Pragma: no-cache");                          // HTTP/1.0
+      </programlisting>
+     </informalexample>
+    </para>
+    <para>
+     Pamiętaj, że funkcja <function>header</function> może być wywoływana 
+     jedynie do momentu nim jakakolwiek treść zostanie wysłana, czyli zarówno
+     znaczniki HTML, puste linie jak i wynik pracy PHP. Jest to bardzo
+     częsty błąd, gdzie skrypty z funkcjami <function>include</function>, 
+     <function>require</function> itp. mają spacje albo puste linie przed
+     wywołaniem funkcji <function>header</function>. 
+     Problem ten pojawia się również w skryptach opartych na
+     pojedynczym pliku PHP/HTML.
+     <informalexample>
+      <programlisting role="php">
+&lt;?php require("user_logging.inc") ?>
+
+
+&lt;?php header ("Content-Type: audio/x-pn-realaudio"); ?>
+// skrypt nie działa - zauważ puste linie pomiędzy instrukcjami
+      </programlisting>
+     </informalexample>
+    </para>    
+    <para>
+     Zobacz też <function>headers_sent</function>
+    </para>
+   </refsect1>
+  </refentry>
+
+  <refentry id="function.headers-sent">
+   <refnamediv>
+    <refname>headers_sent</refname>
+    <refpurpose>Zwraca &true; jeśli nagłówki zostały już wysłane</refpurpose>
+   </refnamediv>
+   <refsect1>
+    <title>Opis</title>
+    <funcsynopsis>
+     <funcprototype>
+      <funcdef>bool <function>headers_sent</function></funcdef>
+      <void/>
+     </funcprototype>
+    </funcsynopsis>
+    <para>
+     Ta funkcja zwraca &true; jeśli nagłówki HTTP już zostały wysłane, lub
+     &false; w przeciwnym wypadku.
+    </para>
+    <para>
+     Zobacz też <function>header</function>
+    </para>
+   </refsect1>
+  </refentry>
+
+  <refentry id="function.setcookie">
+   <refnamediv>
+    <refname>setcookie</refname>
+    <refpurpose>Wysyła ciasteczko</refpurpose>
+   </refnamediv>
+   <refsect1>
+    <title>Opis</title>
+    <funcsynopsis>
+     <funcprototype>
+      <funcdef>int <function>setcookie</function></funcdef>
+      <paramdef>string <parameter>nazwa</parameter></paramdef>
+      <paramdef>string 
+       <parameter><optional>wartość</optional></parameter>
+      </paramdef>
+      <paramdef>int 
+       <parameter><optional>data_ważności</optional></parameter>
+      </paramdef>
+      <paramdef>string 
+       <parameter><optional>ścieżka</optional></parameter>
+      </paramdef>
+      <paramdef>string 
+       <parameter><optional>domena</optional></parameter>
+      </paramdef>
+      <paramdef>int 
+       <parameter><optional>bezpieczne</optional></parameter>
+      </paramdef>
+     </funcprototype>
+    </funcsynopsis>
+    <para>
+     <function>setcookie</function> określa ciasteczko (ang. cookie) do
+     wysłania z nagłówkami HTTP. Ciasteczko musi być wysłane <emphasis>zanim
+     </emphasis> jakiekolwiek inne nagłówki zostaną wysłane (to jest
+     ograniczenie ciasteczek, nie PHP). To wymaga od ciebie umieszczenia
+     wywołań tej funkcji przed znacznikami <literal>&lt;html></literal> czy
+     <literal>&lt;head></literal>.
+    </para>
+    <para>
+     Wszystkie argumenty poza <parameter>nazwa</parameter> są opcjonalne.
+     Jeśli tylko argument nazwa jest obecny, ciasteczko o takie nazwie zostanie
+     usunięte z klienta. Możesz też opuścić argumenty za pomocą pustego łańcucha
+     (<emphasis>&quot;&quot;</emphasis>). Argumenty <parameter>data_ważności
+     </parameter> i <parameter>bezpieczne</parameter> są liczbami całkowitymi
+     i nie można ich opuścić wstawiając pusty łańcuch. Zamiast niego użyj
+     liczby zero (<emphasis>0</emphasis>). Argument 
+     <parameter>data_ważności</parameter> 
+     jest regularnym uniksowym znacznikiem czasu, takim jak
+     zwracany przez funkcje <function>time</function> lub <function>mktime
+     </function>. Argument <parameter>bezpieczne</parameter> oznacza, że
+     ciasteczko może być przekazywane tylko poprzez bezpieczne połączenie HTTPS.
+    </para>
+    <para>
+     Częste pułapki:
+     <itemizedlist>
+      <listitem>
+       <simpara>
+        Ciasteczka nie będą widziane do następnego przeładowania strony
+        dla której mają być widoczne.
+       </simpara>
+      </listitem>
+      <listitem>
+       <simpara>
+        Ciasteczko może być usunięte tylko z tymi parametrami, z jakimi je
+        ustawiono.
+       </simpara>
+      </listitem>
+     </itemizedlist>
+    </para>
+    <simpara>
+     W PHP 3, wielokrotne wywołania <function>setcookie</function> w jednym
+     skrypcie wykonywane były w odwrotnej kolejności. Jeśli chcesz usunąć jedno
+     ciastko przed wprowadzeniem kolejnego, powinieneś umieścić wprowadzenie
+     nowego przed usunęciem starego. W PHP 4 , wielokrotne wywołania 
+     <function>setcookie</function> wykonywane są we właściwej kolejności.
+    </simpara>
+    <para>
+     Parę przykładów - jak wysyłać ciasteczka:
+     <example>
+      <title><function>setcookie</function> wysyła przykładowe ciasteczka
+      </title>
+      <programlisting role="php">
+setcookie ("TestCookie", "Test Value");
+setcookie ("TestCookie", $value,time()+3600);  /* traci ważność za godzinę */
+setcookie ("TestCookie", $value,time()+3600, "/~rasmus/", ".utoronto.ca", 1);
+      </programlisting>
+     </example>
+    </para>
+    <para>
+     A teraz, jak usunąć ciasteczka z poprzedniego przykładu:
+     <example>
+      <title>Kasowanie ciasteczek
+      </title>
+      <programlisting role="php">
+setcookie ("TestCookie");
+// ustaw datę ważności na godzinę wstecz
+setcookie ("TestCookie", "", time() - 3600);
+setcookie ("TestCookie", "", time() - 3600, "/~rasmus/", ".utoronto.ca", 1);
+      </programlisting>
+     </example>
+     Kiedy chcesz skasować ciasteczko, upewnij się, że data ważności jest
+     w przeszłości, co uruchomi mechanizm kasowania ciasteczka w przeglądarce.
+    </para>
+    <para>
+     Zwróć uwagę, że zawartość ciasteczka jest automatycznie kodowana do formatu
+     URL przy wysyłaniu, a po odebraniu automatycznie dekodowana i przypisywana
+     do zmiennej o tej samej nazwie co ciasteczko. Aby poznać zawartość
+     przykładowego ciasteczka ze skryptu, zastosuj poniższy przykład:
+     <informalexample>
+      <programlisting role="php">
+echo $TestCookie;
+echo $HTTP_COOKIE_VARS["TestCookie"];
+      </programlisting>
+     </informalexample>
+    </para>
+    <para>
+     Można też tworzyć tablice złożone z ciasteczek za pomocą zapisu tablicowego
+     w nazwie ciasteczka. Powoduje to utworzenie tylu ciasteczek, ile jest
+     elemetów tablicy, a po otrzymaniu takiego ciasteczka, jego wartości
+     umieszczane są w tablicy o nazwie takiej jak ciasteczko.
+     <informalexample>
+      <programlisting role="php">
+setcookie ("cookie[three]", "cookiethree");
+setcookie ("cookie[two]", "cookietwo");
+setcookie ("cookie[one]", "cookieone");
+if (isset ($cookie)) {
+    while (list ($name, $value) = each ($cookie)) {
+        echo "$name == $value&lt;br>\n";
+    }
+}
+      </programlisting>
+     </informalexample>
+    </para>
+    <para>
+     Więcej informacji na temat ciasteczek znajdziesz w specyfikacji Netscape'a
+     na stronie <ulink
+     url="&spec.cookies;">&spec.cookies;</ulink>.
+    </para>
+    <simpara>
+     Microsoft Internet Explorer 4 z zainstalowanym Service Pack 1 nie radzi
+     sobie poprawnie z ciasteczkami, które mają ustawiony parametr ścieżka. 
+    </simpara>
+    <simpara>
+     Netscape Communicator 4.05 i Microsoft Internet Explorer 3.x obsługują
+     niepoprawnie ciasteczka, w których ścieżka i data_ważności nie są 
+     ustawione.
+    </simpara>
+   </refsect1>
+  </refentry>
+
+ </reference>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+sgml-parent-document:nil
+sgml-default-dtd-file:"../../manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
