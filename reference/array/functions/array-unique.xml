@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.3 $ -->
+<!-- EN-Revision: 1.14 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.4 $ -->
   <refentry id="function.array-unique">
    <refnamediv>
     <refname>array_unique</refname>
@@ -29,31 +29,25 @@
       Dwa elementy tablicy są uważane za równe wtedy i tylko wtedy jeśli
       <literal>(string) $elem1 === (string) $elem2</literal>, czyli jeśli
       reprezentacje wartości w postaci stringów są takie same.
-      <!-- TODO: example of it... -->
      </simpara>
      <simpara>
       Używany będzie pierwszy element.
      </simpara>
     </note>
-    <warning>
-     <simpara>
-      Ta funkcja była zepsuta w PHP 4.0.4!
-      <!-- TODO: when exactly was this broken?... -->
-     </simpara>
-    </warning>
     <para>
      <example>
       <title>Przykład użycia <function>array_unique</function></title>
       <programlisting role="php">
 <![CDATA[
+<?php
 $wejscie = array ("a" => "zielony", "czerwony", "b" => "zielony", "niebieski", "czerwony");
 $wynik = array_unique ($wejscie);
 print_r($wynik);
+?>
 ]]>
       </programlisting>
-      <para>
-       Powyższy przykład wyświetli:
-       <screen>
+      &example.outputs;
+      <screen role="php">
 <![CDATA[
 Array
 (
@@ -62,8 +56,7 @@ Array
     [1] => niebieski
 )
 ]]>
-       </screen>
-      </para>
+      </screen>
      </example>
     </para>
     <para>
@@ -71,14 +64,15 @@ Array
       <title><function>array_unique</function> i typy</title>
       <programlisting role="php">
 <![CDATA[
-$wejscie = array (4,"4","3",4,3,"3");
-$wynik = array_unique ($wejscie);
+<?php
+$wejscie = array(4, "4", "3", 4, 3, "3");
+$wynik = array_unique($wejscie);
 var_dump($wynik);
+?>
 ]]>
       </programlisting>
-      <para>
-       Powyższy przykład wyświetli:
-       <screen>
+      &example.outputs;
+      <screen role="php">
 <![CDATA[
 array(2) {
    [0]=>
@@ -87,8 +81,7 @@ array(2) {
    string(1) "3"
 }
 ]]>
-       </screen>
-      </para>
+      </screen>
      </example>
     </para>
    </refsect1>
