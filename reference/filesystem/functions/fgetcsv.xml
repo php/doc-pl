@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.10 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.17 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.fgetcsv">
    <refnamediv>
     <refname>fgetcsv</refname>
@@ -11,35 +11,54 @@
      <methodsynopsis>
       <type>array</type><methodname>fgetcsv</methodname>
       <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam> 
-      <methodparam><type>int</type><parameter>długość</parameter></methodparam>
+      <methodparam choice="opt"><type>int</type><parameter>długość</parameter></methodparam> 
       <methodparam choice="opt"><type>string</type><parameter>delimiter</parameter></methodparam>
-	  <methodparam choice="opt"><type>string</type><parameter>załącznik</parameter></methodparam>
+	  <methodparam choice="opt"><type>string</type><parameter>ogranicznik</parameter></methodparam>
      </methodsynopsis>
+	 <para> 
+       <variablelist> 
+        <varlistentry> 
+         <term><parameter>uchwyt</parameter></term> 
+         <listitem> 
+          <simpara> 
+		   Ważny uchwyt pliku, poprawnie otwartego za pomocą <function>fopen</function>, 
+           <function>popen</function> lub <function>fsockopen</function>. 
+          </simpara> 
+         </listitem> 
+        </varlistentry> 
+        <varlistentry> 
+         <term><parameter>długość</parameter> (opcjonalny)</term> 
+         <listitem> 
+          <simpara> 
+		   Musi być większy niż najdłuższa linia (w znakach), która znajduje się w pliku CSV
+		   (wliczając znaki końca lini). Stał się opcjonalny w PHP 5.
+          </simpara> 
+         </listitem> 
+        </varlistentry> 
+        <varlistentry> 
+         <term><parameter>delimiter</parameter> (opcjonalny)</term> 
+         <listitem> 
+          <simpara>
+		   Ustawia delimeter (tylko jeden znak) pól. Domyślnie przecinek. 
+          </simpara> 
+         </listitem> 
+        </varlistentry> 
+        <varlistentry> 
+         <term><parameter>ogranicznik</parameter> (opcjonalny)</term> 
+         <listitem> 
+          <simpara> 
+		   Ustawia znak ograniczający pole. Domyślnie jest to cudzysłów. Dodano w PHP 4.3.0.
+          </simpara> 
+         </listitem> 
+        </varlistentry> 
+       </variablelist> 
+      </para> 
     <simpara>
      Działa podobnie do <function>fgets</function> tylko, że
      <function>fgetcsv</function> przetwarza odczytaną linię na pola
      w formacie <acronym>CSV</acronym> i zwraca tablicę zawierającą
-     odczytane pola.  Delimiterem pól jest przecinek, chyba że zostanie
-	 podany inny w opcjonalnym trzecim parametrze <parameter>delimiter</parameter>.
- 	Opcjonalny <parameter>załącznik</parameter> domyślnie jest ustawiony jako cudzysłów.
-	Oba parametry <parameter>delimiter</parameter> i <parameter>załącznik</parameter> są ograniczone
-	do jednego znaku. Jeśli którykolwiek z nich jest dłuższy, to zostanie użyty
-	pierwszy znak.
+     odczytane pola.
 	</simpara>
-	 <note> 
-       <simpara> 
-        Parametr <parameter>załącznik</parameter> został dodany w PHP 4.3.0. 
-       </simpara> 
-      </note> 
-    <simpara>
-     <parameter>uchwyt</parameter> musi być poprawnym wskaźnikiem do pliku
-      otworzonym przez <function>fopen</function>, <function>popen</function>
-     <function>fsockopen</function>.
-    </simpara>
-    <simpara>
-     <parameter>Długość</parameter> musi być większa niż najdłuższa linia znajdująca się
-     w pliku CSV (wliczając w to znaki końca linii).
-    </simpara>
     <simpara>
      <function>fgetcsv</function> zwraca &false; gdy wystąpi błąd, włączając
      w to koniec pliku.
@@ -62,9 +81,9 @@
 <?php
 $row = 1;
 $uchwyt = fopen ("test.csv","r");
-while (($data = fgetcsv($handle, 1000, ",")) !== FALSE)  {
+while (($data = fgetcsv($uchwyt, 1000, ",")) !== FALSE)  {
     $num = count($data);
-    echo "<p> $num pól w lini $row: <br />\n"; 
+    echo "<p> $num pól w lini $row: <br /></p>\n"; 
     $row++;
     for ($c=0; $c < $num; $c++) {
         echo $data[$c] . "<br />\n";
@@ -75,10 +94,22 @@ fclose ($uchwyt);
 ]]>
      </programlisting>
     </example>
-	</para>  
+	</para>
+	<para>  
+      <function>fgetcsv</function> jest bezpieczna binarnie od PHP 4.3.5 
+      </para> 
+      <note> 
+       <simpara>
+	    Ustawienia lokale są brane pod uwagę przez tę funkcję. Jeśli
+		<varname>LANG</varname> jest ustawione na np. <literal>en_US.UTF-8</literal>,
+		pliki z jedno bajtowym kodowaniem zostaną nieprawidłowo odczytane
+		przez funkcję. 
+       </simpara> 
+      </note> 
+      &note.line-endings; 
       <para>  
-       Patrz także: <function>explode</function>, <function>file</function>  
-       i <function>pack</function>  
+       Patrz także: <function>explode</function>, <function>file</function>,  
+       <function>pack</function> i <function>fputcsv</function>.  
       </para>  
    </refsect1>
   </refentry>
