@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.7 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.7 $ -->
+<!-- EN-Revision: 1.14 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.8 $ -->
   <refentry id="function.list">
    <refnamediv>
     <refname>list</refname>
@@ -12,6 +12,7 @@
     <title>Opis</title>
      <methodsynopsis>
       <type>void</type><methodname>list</methodname>
+      <methodparam><type>mixed</type><parameter>zmienna</parameter></methodparam>
       <methodparam rep="repeat"><type>mixed</type><parameter>...</parameter></methodparam>
      </methodsynopsis>
     <para>
@@ -36,15 +37,15 @@ $info = array('kawa', 'brązowa', 'kofeina');
 
 // Listowanie wszystkich zmiennych
 list($napój, $kolor, $składnik) = $info;
-print "$napój jest $kolor a $składnik czyni ją wyjątkową.\n";
+echo "$napój jest $kolor a $składnik czyni ją wyjątkową.\n";
 
 // Listowanie niektórych elementów
 list($napój, , $składnik) = $info;
-print "$napój zawiera $składnik.\n";
+echo "$napój zawiera $składnik.\n";
 
 // Albo przeskoczmy od razu do trzeciego
 list( , , $składnik) = $info;
-print "Potrzebna jest mi $składnik!\n";
+echo "Potrzebna jest mi $składnik!\n";
 
 ?>
 ]]>
@@ -64,14 +65,13 @@ print "Potrzebna jest mi $składnik!\n";
 
 <?php
 
-$wynik = mysql_query ("SELECT id, nazwisko, pensja FROM pracownicy", $conn);
-while (list ($id, $nazwisko, $pensja) = mysql_fetch_row ($wynik)) {
-   print (" <tr>\n".
-          "  <td><a href=\"info.php?id=$id\">$nazwisko</a></td>\n".
-          "  <td>$pensja</td>\n".
-          " </tr>\n");
+$wynik = mysql_query("SELECT id, nazwisko, pensja FROM pracownicy", $conn);
+while (list($id, $nazwisko, $pensja) = mysql_fetch_row($wynik)) {
+   echo " <tr>\n" .
+        "  <td><a href=\"info.php?id=$id\">$nazwisko</a></td>\n" .
+        "  <td>$pensja</td>\n" .
+        " </tr>\n";
 }
-
 ?>
 
 </table>
@@ -89,11 +89,10 @@ while (list ($id, $nazwisko, $pensja) = mysql_fetch_row ($wynik)) {
       jest. Zmienne są przypisywane w odwrotnej kolejności.
      </para>
     </warning>
-    <para>
-     <example>
-      <title>Przykład użycia <function>list</function> z indeksowaną
-       tablicą</title>
-      <programlisting role="php">
+    <example>
+     <title>Przykład użycia <function>list</function> z indeksowaną
+      tablicą</title>
+     <programlisting role="php">
 <![CDATA[
 <?php
 
@@ -105,12 +104,14 @@ var_dump($a);
 
 ?>
 ]]>
-      </programlisting>
-     </example>
-     Przykład ten wyświetli co następuje (zauważ kolejność elementów
-     porównując ją do tej, w której były one zapisane w wywołaniu funkcji
-     <function>list</function>):
-     <screen>
+     </programlisting>
+    </example>
+    <para>
+      Przykład ten wyświetli co następuje (zauważ kolejność elementów
+      porównując ją do tej, w której były one zapisane w wywołaniu funkcji
+      <function>list</function>):
+    </para>
+    <screen>
 array(3) {
   [2]=>
   string(8) "kofeina"
@@ -119,8 +120,7 @@ array(3) {
   [0]=>
   string(6) "kawa"
 }
-     </screen>
-    </para>
+    </screen>
     <para>
      Patrz także: <function>each</function> <function>array</function> i
      <function>extract</function>.
