@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.91 Maintainer: adi Status: partial -->
-<!-- $Revision: 1.10 $ -->
+<!-- EN-Revision: 1.115 Maintainer: adi Status: partial -->
+<!-- $Revision: 1.11 $ -->
  <reference id="ref.filesystem">
   <title>System plików</title>
   <titleabbrev>System plików</titleabbrev>
@@ -34,11 +34,11 @@
      <example>
       <title><function>basename</function> przykład</title>
       <programlisting role="php">
-+<![CDATA[
+<![CDATA[
 $path = "/home/httpd/html/index.php";
 $file = basename ($path);        // $file zawiera "index.php"
 $file = basename ($path,".php"); // $file zawiera "index"
-+]]>
+]]>
       </programlisting>
      </example>
     </para>
@@ -66,11 +66,10 @@ $file = basename ($path,".php"); // $file zawiera "index"
       <methodparam><type>mixed</type><parameter>grupa</parameter></methodparam>
      </methodsynopsis>
     <para>
-     Dokonuje zmiany grupy pliku podanego w parametrze
-     <parameter>nazwa_pliku</parameter> na wybraną parametrem
-     <parameter>grupa</parameter>. Tylko super użytkownik może zmienić
-     dowolnie grupę pliku; inni użytkownicy mogą zmienić grupę pliku
-     na dowolną grupę, której członkiem jest ten użytkownik.
+     Dokonuje zmiany grupy pliku podanego w parametrze <parameter>nazwa_pliku</parameter>
+     na wybraną parametrem <parameter>grupa</parameter> (określoną przez nazwę lub numer).
+     Tylko super użytkownik może zmienić dowolnie grupę pliku; inni użytkownicy mogą
+     zmienić grupę pliku na dowolną grupę, której członkiem jest ten użytkownik.
     </para>
     <para>
      Zwraca &true; gdy sukces; w przeciwnym wypadku zwraca &false;.
@@ -79,11 +78,7 @@ $file = basename ($path,".php"); // $file zawiera "index"
      Patrz także <function>chown</function> i
           <function>chmod</function>.
     </para>
-    <note>
-     <simpara>
-      Ta funkcja nie działa w systemach Windows
-     </simpara>
-    </note>
+ &note.no-windows;
    </refsect1>
   </refentry>
 
@@ -127,11 +122,7 @@ chmod ("/katalog/plik", 0755);  // ósemkowo; poprawna wartość dla praw
      Patrz także <function>chown</function> i
      <function>chgrp</function>.
     </para>
-    <note>
-     <simpara>
-      Ta funkcja nie działa w systemach Windows
-     </simpara>
-    </note>
+ &note.no-windows;
    </refsect1>
   </refentry>
 
@@ -149,7 +140,7 @@ chmod ("/katalog/plik", 0755);  // ósemkowo; poprawna wartość dla praw
      </methodsynopsis>
     <para>
      Dokonuje zmiany właściciela pliku nazwa_pliku na użytkownika
-     podanego w parametrze użytkownik.
+     podanego w parametrze użytkownik (określonego przez nazwę lub numer).
      Tylko super użytkownik może zmienić właściciela pliku.
     </para>
     <para>
@@ -159,11 +150,7 @@ chmod ("/katalog/plik", 0755);  // ósemkowo; poprawna wartość dla praw
      Patrz także <function>chown</function> i
      <function>chmod</function>.
     </para>
-    <note>
-     <simpara>
-     Ta funkcja nie działa w systemach Windows
-    </simpara>
-    </note>
+     &note.no-windows;
    </refsect1>
   </refentry>
 
@@ -240,8 +227,16 @@ if (!copy($file, $file.'.bak')) {
       </programlisting>
      </example>
     </para>
+    <warning>
+     <para>
+      Jeśli docelowy plik istnieje to zostanie nadpisany.
+     </para>
+    </warning>
     <para>
-     Patrz także: <function>rename</function>.
+     Patrz także: <function>move_uploaded_file</function>,
+     <function>rename</function>, i część podręcznika dotycząca
+     <link linkend="features.file-upload">obsługi uploadowanych plików</link>.
+
     </para>
    </refsect1>
   </refentry>
@@ -563,14 +558,15 @@ fclose ($fp);
      <methodsynopsis>
       <type>string</type><methodname>fgets</methodname>
       <methodparam><type>int</type><parameter>fp</parameter></methodparam>
-      <methodparam><type>int</type><parameter>długość</parameter></methodparam>
-     </methodsynopsis>
+      <methodparam choice="opt"><type>int</type><parameter>długość</parameter></methodparam>
+      </methodsynopsis>
     <para>
      Zwraca łańcuch o długości - 1 bajtów odczytany z pliku wskazanego
      przez fp. Czytanie kończy się kiedy przeczytano długość - 1 bajtów
      lub gdy wystąpi znak nowej linii (jest on dołączany do zwracanego
      wyniku) lub gdy wystąpi znak końca pliku EOF (którykolwiek
-     przypadek zdarzy się pierwszy).
+     przypadek zdarzy się pierwszy). Jeśli nie została określona długość,
+     domyślnie przyjmuje 1k (1024 bajty).
     </para>
     <para>
      W przypadku błędu, zwraca &false;.
@@ -671,6 +667,12 @@ fclose ($fd);
      element tablicy odpowiada linii w pliku. Elementy tablicy zawierają
      znak nowej linii.
     </para>
+    <note>
+     <para>
+     Każda linia w wynikowej tabeli zawiera znak nowej lini, jeśli chcesz
+     się ich pozbyć to musisz użyć <function>trim</function>.
+     </para>
+    </note>
     <para>
      Możesz użyć opcjonalnego 2 parametru i ustawić go na "1", jeśli
      chcesz szukać pliku także w
@@ -682,18 +684,20 @@ fclose ($fd);
 <![CDATA[
 <?php
 // pobiera stronę WWW do tablicy i wyświetla ją
-$fcontents = file ('http://www.php.net');
+$fcontents = file ('http://www.php.net/');
 while (list ($line_num, $line) = each ($fcontents)) {
-    echo "<b>Linia $line_num:</b>; " . htmlspecialchars ($line) . "<br>\n";
+    echo "<b>Linia $line_num:</b>; ", htmlspecialchars ($line), "<br>\n";
 }
 
 // pobiera stronę WWW i zapisuje do łańcucha
-$fcontents = join ('', file ('http://www.php.net'));
+$fcontents = join ('', file ('http://www.php.net/'));
 ?>
 ]]>
       </programlisting>
      </informalexample>
     </para>
+    &note.not-bin-safe;
+    &tip.fopen-wrapper;
     <para>
      Patrz także <function>readfile</function>,
      <function>fopen</function>, <function>fsockopen</function> i
@@ -830,16 +834,12 @@ $fcontents = join ('', file ('http://www.php.net'));
      Wyniki tej funkcji są cachowane. Zobacz
      <function>clearstatcache</function> aby uzyskać więcej szczegółów.
     </para>
-    <note>
-     <simpara>
-     Ta funkcja nie działa w systemach Windows.
-     </simpara>
+    &note.no-windows;
     <simpara>
      Ta funkcja nie działa
      <link linkend="features.remote-files">na zdalnych plikach</link>; sprawdzany
      plik musi być dostępny przez system plików serwera.
     </simpara>
-    </note>
    </refsect1>
   </refentry>
 
@@ -866,11 +866,7 @@ $fcontents = join ('', file ('http://www.php.net'));
      <link linkend="features.remote-files">na zdalnych plikach</link>; sprawdzany
      plik musi być dostępny przez system plików serwera.
     </simpara>
-    <note>
-     <simpara>
-     Ta funkcja nie działa w systemach Windows
-     </simpara>
-    </note>
+    &note.no-windows;
    </refsect1>
   </refentry>
 
@@ -932,11 +928,7 @@ $fcontents = join ('', file ('http://www.php.net'));
      <link linkend="features.remote-files">na zdalnych plikach</link>; sprawdzany
      plik musi być dostępny przez system plików serwera.
     </simpara>
-    <note>
-     <simpara>
-      Ta funkcja nie działa w systemach Windows.
-     </simpara>
-    </note>
+    &note.no-windows;
    </refsect1>
   </refentry>
 
@@ -978,7 +970,7 @@ $fcontents = join ('', file ('http://www.php.net'));
       <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
      </methodsynopsis>
     <para>
-     Zwraca rozmiar pliku, lub &false; w przypadku błędu.
+     Zwraca rozmiar pliku w bajtach, lub &false; w przypadku błędu.
     </para>
     <para>
      Wyniki tej funkcji są cachowane. Zobacz
@@ -1081,7 +1073,7 @@ $fcontents = join ('', file ('http://www.php.net'));
     <simpara>
      <function>flock</function> allows you to perform a simple
      reader/writer model which can be used on virtually every platform
-     (including most Unices and even Windows).  The optional 3rd
+     (including most Unix derivatives and even Windows).  The optional third
      argument is set to &true; if the lock would block (EWOULDBLOCK
      errno condition)
     </simpara>
@@ -1089,13 +1081,26 @@ $fcontents = join ('', file ('http://www.php.net'));
      <function>flock</function> returns &true; on success and &false; on
      error (e.g. when a lock could not be acquired).
     </simpara>
+    <note>
+     <para>
+      Because <function>flock</function> requires a file pointer, you may have
+      to use a special lock file to protect access to a file that you intend
+      to truncate by opening it in write mode (with a "w" or "w+" argument to
+      <function>fopen</function>).
+     </para>
+    </note>
     <warning>
      <para>
-      On most operation systems <function>flock</function> is implemented
-      at the process level. When using a multithreaded server API like
-      ISAPI you cannot rely on <function>flock</function> to protect
-      files against other PHP scripts running in parallel threads of the
-      same server instance!
+      <function>flock</function> will not work on NFS and many other networked
+      file systems. Check your operating system documentation for more
+      details.
+     </para>
+     <para>
+      On some operating systems <function>flock</function> is implemented at
+      the process level. When using a multithreaded server API like ISAPI you
+      may not be able to rely on <function>flock</function> to protect files
+      against other PHP scripts running in parallel threads of the same server
+      instance!
      </para>
     </warning>
    </refsect1>
@@ -1266,25 +1271,35 @@ $fp = fopen ("c:\\data\\info.txt", "r");
       <methodparam><type>int</type><parameter>fp</parameter></methodparam>
      </methodsynopsis>
     <simpara>
-     Reads to EOF on the given file pointer and writes the results to
-     standard output.
+     Reads to EOF on the given file pointer from the current position and
+     writes the results to standard output.
     </simpara>
     <simpara>
      If an error occurs, <function>fpassthru</function> returns
      &false;.
     </simpara>
     <simpara>
-     The file pointer must be valid, and must point to a file
-     successfully opened by <function>fopen</function>,
-     <function>popen</function>, or <function>fsockopen</function>.
-     The file is closed when <function>fpassthru</function> is done
-     reading it (leaving <parameter>fp</parameter> useless).
+     The file pointer must be valid, and must point to a file successfully
+     opened by <function>fopen</function>, <function>popen</function>, or
+     <function>fsockopen</function>.  You may need to call
+     <function>rewind</function> to reset the file pointer to the beginning of
+     the file if you have already written data to the file.  The file is
+     closed when <function>fpassthru</function> is done reading it (leaving
+     <parameter>fp</parameter> useless).
     </simpara>
     <simpara>
      If you just want to dump the contents of a file to stdout you may
      want to use the <function>readfile</function>, which saves you
      the <function>fopen</function> call.
     </simpara>
+    <note>
+     <para>
+      When using <function>fpassthru</function> on a binary file on Windows
+      systems, you should make sure to open the file in binary mode by
+      appending a <literal>b</literal> to the mode used in the call to
+      <function>fopen</function>.
+     </para>
+    </note>
     <simpara>
      See also <function>readfile</function>,
      <function>fopen</function>, <function>popen</function>, and
@@ -1460,8 +1475,10 @@ luigi   florist it
       Set position to current location plus
       <parameter>offset</parameter>.</member> <member>SEEK_END - Set
       position to end-of-file plus
-      <parameter>offset</parameter>.</member>
-     </simplelist>
+      <parameter>offset</parameter>. (To move to a position before the
+      end-of-file, you need to pass a negative value in
+      <parameter>offset</parameter>.)</member>
+   </simplelist>
     </para>
     <para>If <parameter>whence is not specified, it is assumed to be
     SEEK_SET.</parameter>
@@ -1792,19 +1809,15 @@ if($fp){
      <function>clearstatcache</function> aby uzyskać więcej szczegółów.
     </para>
     <para>
-     Patrz także <function>is_dir</function> i
-     <function>is_file</function>.
+     Patrz także <function>is_dir</function>,
+     <function>is_file</function> i <function>readlink</function>.
     </para>
     <simpara>
      Ta funkcja nie działa
      <link linkend="features.remote-files">na zdalnych plikach</link>; sprawdzany
      plik musi być dostępny przez system plików serwera.
     </simpara>
-    <note>
-     <simpara>
-      Ta funkcja nie działa w systemach Windows.
-     </simpara>
-    </note>
+   &note.no-windows;
    </refsect1>
   </refentry>
 
@@ -1957,11 +1970,7 @@ if($fp){
      and <function>readlink</function> along with
      <function>linkinfo</function>.
     </para>
-    <note>
-     <simpara>
-     This function does not work on Windows systems
-     </simpara>
-    </note>
+     &note.no-windows;
    </refsect1>
   </refentry>
 
@@ -1988,11 +1997,7 @@ if($fp){
      See also <function>symlink</function>, <function>link</function>,
      and <function>readlink</function>.
     </para>
-    <note>
-     <simpara>
-     This function does not work on Windows systems
-     </simpara>
-    </note>
+    &note.no-windows;
    </refsect1>
   </refentry>
 
@@ -2047,11 +2052,6 @@ mkdir ("/path/to/my/dir", 0700);
      </methodsynopsis>
 
     <para>
-     This function is available only in versions of PHP 3 after PHP
-     3.0.16, and in versions of PHP 4 after 4.0.2.
-    </para>
-
-    <para>
      This function checks to ensure that the file designated by
      <parameter>filename</parameter> is a valid upload file (meaning
      that it was uploaded via PHP's HTTP POST upload mechanism). If
@@ -2081,6 +2081,12 @@ mkdir ("/path/to/my/dir", 0700);
     </para>
 
     &note.sm.uidcheck;
+
+    <warning>
+     <para>
+      If the destination file already exists, it will be overwritten.
+     </para>
+    </warning>
 
     <para>
      See also <function>is_uploaded_file</function>, and the section
@@ -2396,15 +2402,11 @@ $fp = popen ("/bin/ls", "r");
     in case of error.
     </para>
     <para>
-     See also <function>symlink</function>,
-     <function>readlink</function> and
+     See also <function>is_link</function>,
+     <function>symlink</function> and
      <function>linkinfo</function>.
     </para>
-    <note>
-     <simpara>
-     This function does not work on Windows systems
-     </simpara>
-    </note>
+     &note.no-windows;
    </refsect1>
   </refentry>
 
@@ -2447,6 +2449,12 @@ $fp = popen ("/bin/ls", "r");
      <para> The file pointer must be valid, and must point to a file
      successfully opened by <function>fopen</function>.
     </para>
+     <note>
+     <para>
+      If you have opened the file in append ("a") mode, any data you write
+      to the file will always be appended, regardless of the file position.
+     </para>
+    </note>
     <para>
      See also <function>fseek</function> and
      <function>ftell</function>.
@@ -2629,11 +2637,7 @@ $real_path = realpath ("../../index.php");
      and <function>readlink</function> along with
      <function>linkinfo</function>.
     </para>
-    <note>
-     <simpara>
-      This function does not work on Windows systems.
-     </simpara>
-    </note>
+   &note.no-windows;
    </refsect1>
   </refentry>
 
@@ -2701,81 +2705,80 @@ unlink($tmpfname);
    </refsect1>
   </refentry>
 
-  <refentry id="function.tmpfile">
+   <refentry id="function.tmpfile">
    <refnamediv>
     <refname>tmpfile</refname>
-    <refpurpose>Creates a temporary file</refpurpose>
+    <refpurpose>Tworzy plik tymczasowy</refpurpose>
    </refnamediv>
    <refsect1>
-    <title>Description</title>
+    <title>Opis</title>
      <methodsynopsis>
       <type>int</type><methodname>tmpfile</methodname>
       <void/>
      </methodsynopsis>
     <para>
-     Creates a temporary file with an unique name in write mode,
-     returning a file handle similar to the one returned by
+     Tworzy plik tymczasowy o unikalnej nazwie i otwiera go 
+     w trybie d zapisu, zwraca uchwyt pliku, podobnie jak
      <function>fopen</function>.
-     The file is automatically removed when closed (using
-     <function>fclose</function>), or when the script ends.
+     Plik jest automatycznie kasowany przy zamykaniu (po użyciu
+     <function>fclose</function>), lub gdy skrypt się zakończy.
     </para>
     <para>
-     For details, consult your system documentation on the
-     <literal>tmpfile(3)</literal> function, as well as the
-     <filename>stdio.h</filename> header file.
+     Jeśli chcesz uzyskać więcej szczegółów, zajrzyj do dokumentacji
+     twojego systemu dotyczącej funkcji <literal>tmpfile(3)</literal>, 
+     albo do pliku nagłówkowego <filename>stdio.h</filename>.
     </para>
     <para>
      <example>
-      <title><function>tmpfile</function> example</title>
+      <title><function>tmpfile</function> przykład</title>
       <programlisting role="php">
 <![CDATA[
 $temp = tmpfile();
-fwrite($temp, "writing to tempfile");
-fclose($temp); // this removes the file
+fwrite($temp, "zapisywanie do pliku tymczasowego");
+fclose($temp); // to kasuje plik
 ]]>
       </programlisting>
      </example>
     </para>
     <para>
-     See also <function>tempnam</function>.
+     Patrz także <function>tempnam</function>.
     </para>
    </refsect1>
   </refentry>
 
-
-  <refentry id="function.touch">
+ <refentry id="function.touch">
    <refnamediv>
     <refname>touch</refname>
-    <refpurpose>Sets modification time of file</refpurpose>
+    <refpurpose>Ustawia czas modyfikacji pliku</refpurpose>
    </refnamediv>
    <refsect1>
-    <title>Description</title>
+    <title>Opis</title>
      <methodsynopsis>
       <type>int</type><methodname>touch</methodname>
-      <methodparam><type>string</type><parameter>filename</parameter></methodparam>
+      <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
       <methodparam choice="opt"><type>int</type><parameter>
-         time
+         czas
         </parameter></methodparam>
      </methodsynopsis>
     <para>
-     Attempts to set the modification time of the file named by
-     filename to the value given by time. If the option time is not
-     given, uses the present time.
+     Próbuje ustawić czas modyfikacji pliku o nazwie nazwa_pliku
+     na wartość podaną przez czas. Jeśli opcja czas nie jest
+     podana, używa czasu bieżącego.
     </para>
     <para>
-     If the file does not exist, it is created.
+     Jeśli plik nie istnieje, to zostanie utworzony.
     </para>
     <para>
-     Returns &true; on success and &false; otherwise.
+     Zwraca &true; gdy sukces i &false; w przeciwnym wypadku.
      <example>
-      <title><function>touch</function> example</title>
+      <title><function>touch</function> przykład</title>
       <programlisting role="php">
 <![CDATA[
 if (touch ($FileName)) {
-    print "$FileName modification time has been
-           changed to todays date and time";
+    print "$FileName czas modyfikacji został
+           zmieniony na obecną date i czas";
 } else {
-    print "Sorry Could Not change modification time of $FileName";
+    print "Przykro mi ale Nie Mogę zmienić czasu modyfikacji pliku $FileName";
 }
 ]]>
       </programlisting>
@@ -2804,40 +2807,31 @@ if (touch ($FileName)) {
      <function>umask</function> without arguments simply returns the
      current umask.
     </para>
-    <note>
-     <simpara>
-      This function may not work on Windows systems.
-     </simpara>
-    </note>
+     &note.no-windows;
    </refsect1>
   </refentry>
 
-  <refentry id="function.unlink">
+<refentry id="function.unlink">
    <refnamediv>
     <refname>unlink</refname>
-    <refpurpose>Deletes a file</refpurpose>
+    <refpurpose>Kasowanie pliku</refpurpose>
    </refnamediv>
    <refsect1>
-    <title>Description</title>
+    <title>Opis</title>
      <methodsynopsis>
       <type>int</type><methodname>unlink</methodname>
-      <methodparam><type>string</type><parameter>filename</parameter></methodparam>
+      <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
      </methodsynopsis>
     <para>
-     Deletes <parameter>filename</parameter>.  Similar to the Unix C
-     unlink() function.
+     Kasuje <parameter>nazwa_pliku</parameter>. Podobnie do funkcji unlink() 
+     z Unix'owego C.
     </para>
     <para>
-     Returns 0 or &false; on an error.
+     &return.success;
     </para>
     <para>
-     See also <function>rmdir</function> for removing directories.
+     Patrz także <function>rmdir</function> do kasowania katalogów.
     </para>
-    <note>
-     <simpara>
-      This function may not work on Windows systems.
-     </simpara>
-    </note>
    </refsect1>
   </refentry>
 
@@ -2852,6 +2846,7 @@ sgml-minimize-attributes:nil
 sgml-always-quote-attributes:t
 sgml-indent-step:1
 sgml-indent-data:t
+indent-tabs-mode:nil
 sgml-parent-document:nil
 sgml-default-dtd-file:"../../manual.ced"
 sgml-exposed-tags:nil
