@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.8 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.compact">
    <refnamediv>
     <refname>compact</refname>
@@ -30,25 +30,36 @@
      zawierającą zmienne do niej dodane.
     </para>
     <para>
-     Dowolne stringi, które nie są ustawione, poprostu będą pominięte.
+     Dowolne ciągi tekstowe, które nie są ustawione, poprostu będą pominięte.
     </para>
+    <note>
+     <para> 
+      Ponieważ <link linkend="language.variables.variable">zmienne
+       zmienne</link> nie mogą być używane w połączeniu z <link
+       linkend="language.variables.superglobals">tablicami
+       superglobalnymi</link> wewnątrz funkcji, tablice superglobalne nie mogą
+      być przekazywane do funkcji <function>compact</function>.
+     </para>
+    </note>
     <para>
      <example>
       <title>Przykład użycia <function>compact</function></title>
       <programlisting role="php">
 <![CDATA[
+<?php
 $miasto = "San Francisco";
 $stan = "CA";
 $wydarzenie = "SIGGRAPH";
 
-$zmienne_lokalizacyjne = array ("miasto", "stan");
+$zmienne_lokalizacyjne = array("miasto", "stan");
 
-$wynik = compact ("wydarzenie", "nic", $zmienne_lokalizacyjne);
+$wynik = compact("wydarzenie", "nic", $zmienne_lokalizacyjne);
 ]]>
       </programlisting>
       <para>
        Zmienna <varname>$wynik</varname> będzie zawierała:
-       <screen>
+      </para>
+      <screen role="php">
 <![CDATA[
 +Array
 (
@@ -57,8 +68,7 @@ $wynik = compact ("wydarzenie", "nic", $zmienne_lokalizacyjne);
     [stan] => CA
 )
 ]]>
-       </screen>
-      </para>
+      </screen>
      </example>
     </para>
     <para>
