@@ -1,41 +1,72 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- splitted from ./pl/functions/filesystem.xml, last change in rev 1.1 -->
-<!-- last change to 'mkdir' in en/ tree in rev 1.39 -->
-<!-- EN-Revision: 1.2 Maintainer: adi Status: partial -->
-<!-- OLD-Revision: 1.115/EN.1.39 -->
+<!-- EN-Revision: 1.16 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.3 $ -->
   <refentry id="function.mkdir">
    <refnamediv>
     <refname>mkdir</refname>
-    <refpurpose>Makes directory</refpurpose>
+    <refpurpose>Tworzy katalog</refpurpose>
    </refnamediv>
    <refsect1>
-    <title>Description</title>
+    <title>Opis</title>
      <methodsynopsis>
-      <type>int</type><methodname>mkdir</methodname>
-      <methodparam><type>string</type><parameter>pathname</parameter></methodparam>
-      <methodparam><type>int</type><parameter>mode</parameter></methodparam>
+      <type>bool</type><methodname>mkdir</methodname>
+      <methodparam><type>string</type><parameter>nazwa_ścieżki</parameter></methodparam>
+      <methodparam choice="opt"><type>int</type><parameter>prawa dostępu</parameter></methodparam>
+	  <methodparam choice="opt"><type>bool</type><parameter>rekursywność</parameter></methodparam> 
+	  <methodparam choice="opt"><type>resource</type><parameter>kontekst</parameter></methodparam>
      </methodsynopsis>
     <para>
-     Attempts to create the directory specified by pathname.
+     Tworzy katalog podany w nazwa_ścieżki.
     </para>
     <para>
-     Note that you probably want to specify the mode as an
-     octal number, which means it should have a leading zero.
-     The mode is also modified by the current umask, which you
-     can change using <function>umask</function>.
-     <informalexample>
+     Uwaga: Prawdopodobnie chciałbyś podać prawa dostępu jako
+     wartość oktalną (ósemkową), co oznacza że powinieneś
+     poprzedzić je zerem.
+     Prawa dostępu mogą być także modyfikowane przez bieżący
+     umask, który możesz zmienić używając <function>umask</function>.
+     </para>  
+      <para>  
+       <note>  
+        <para>  
+         Prawa dostępu sa ignorowane w Windows, i stały się opcjonalne w PHP 4.2.0.  
+        </para>  
+       </note>  
+      </para>  
+      <para>  
+	   Domyslnie prawa dostępu to 0777, co oznacza najbardziej otwarty dostęp.
+	   Po więcej informacji na temat praw dostępu, przeczytaj na stronie
+	   <function>chmod</function>.  
+       <example>  
+       <title><function>mkdir</function> przykład</title>  
+
       <programlisting role="php">
 <![CDATA[
+<?php 
 mkdir ("/path/to/my/dir", 0700);
+?>
 ]]>
       </programlisting>
-     </informalexample>
+     </example>
     </para>
     <para>
-     Returns &true; on success and &false; on failure.
+     &return.success;
     </para>
+	<note> 
+       <simpara> 
+        Od PHP 5.0.0 <function>mkdir</function> może być użyta z
+		<emphasis>niektórymi</emphasis> wrapperami URL. Zajrzyj do <xref linkend="wrappers"/> 
+		aby uzyskać listę wrapperów, które wspierają <function>mkdir</function>. 
+       </simpara> 
+      </note> 
+      <note> 
+       <simpara> 
+        Parametry <parameter>rekursywność</parameter> i <parameter>kontekst</parameter> zostały
+		dodane w PHP 5.0.0. 
+       </simpara> 
+      </note> 
+      &note.sm.uidcheck.dir; 
     <para>
-     See also <function>rmdir</function>.
+     Patrz także: <function>rmdir</function>.
     </para>
    </refsect1>
   </refentry>
