@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.47 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.11 $ -->
+<!-- EN-Revision: 1.55 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.12 $ -->
  <chapter id="configuration">
   <title>Konfiguracja</title>
 
@@ -444,6 +444,30 @@ wrapper</parameter></link>.
         </para>
        </listitem>
       </varlistentry>
+
+      <varlistentry id="ini.implicit-flush">
+       <term>
+        <parameter>implicit_flush</parameter>
+        <type>boolean</type>
+       </term>
+       <listitem>
+        <para>
+         Domyślna wartość to &false;. Zmiana tej opcji na &true; wymusi na PHP
+         opróżnianie bufora wyjściowego automatycznie po każdym bloku
+         wyświetlającym dane. Jest to równoznaczne z wywołaniem funkcji
+         <function>flush</function> po każdym wywołaniu
+         <function>print</function> i <function>echo</function> oraz po każdym
+         bloku <literal>HTML</literal>.
+        </para>
+        <para>
+         Przy korzystaniu z <literal>PHP</literal> w środowisku sieci WWW,
+         włączenie tej opcji może mieć poważne skutki w zakresie wydajności
+         pracy i jest zalecane tylko przy procesie usuwania błędów. Wartość ta
+         jest ustawiona domyślnie na &true; przy pracy jako <literal>CLI
+         SAPI</literal>
+        </para>
+       </listitem>
+      </varlistentry>
       
       <varlistentry id="ini.include-path">
        <term>
@@ -624,7 +648,7 @@ include_path=".;c:\www\phplib"
          (które mogą zawierać informacje z GET).
 	</simpara>
 	<simpara>
-	  Patrz także <link linkend="commandline">command line</link>.
+	  Patrz także <link linkend="features.commandline">command line</link>.
 	  Ta dyrektywa została udostępniona w PHP 4.0.0, w poprzednich
 	  wersjach jest zawsze włączona "on". 
         </simpara>
@@ -632,7 +656,7 @@ include_path=".;c:\www\phplib"
       </varlistentry>
 
 
-      <varlistentry id="ini.post_max_size">
+      <varlistentry id="ini.post-max-size">
        <term>
         <parameter>post_max_size</parameter>
         <type>integer</type>
@@ -642,8 +666,8 @@ include_path=".;c:\www\phplib"
          Ustawia maksymalny rozmiar danych przesyłanych POST'em. To
          ustawienie ma wpływ również na uloadowania plików. Aby przesłać
          (uploadować) duże pliki, ta wartość musi być większa niż
-         <link linkend="upload-max-filesize">upload_max_filesize</link>.
-	</simpara>
+         <link linkend="ini.upload-max-filesize">upload_max_filesize</link>.
+        </simpara>
         <simpara>
          Jeśli ograniczenie pamięci jest włączone przez skrypt
          konfiguracyjny, <link linkend="ini.memory-limit">memory_limit</link>
@@ -813,8 +837,24 @@ include_path=".;c:\www\phplib"
        <para>
         Określa, czy PHP ma pracować w trybie bezpiecznym. Przeczytaj
         rozdziały <link linkend="security">Bezpieczeństwo</link> i
-        <link linkend="features.safe-mode">Safe Mode</link> aby uzyskać więcej
-        informacji.</para>
+        <link linkend="features.safe-mode">Tryb bezpieczny</link> aby uzyskać
+        więcej informacji.</para>
+      </listitem>
+     </varlistentry>
+
+     <varlistentry>
+      <term>
+       <parameter>safe_mode_gid</parameter>
+       <type>boolean</type>
+      </term>
+      <listitem>
+       <para>
+        Określa czy używać <literal>UID</literal> (&false;) lub
+        <literal>GID</literal> (&true;) przy sprawdzaniu
+        praw dostępu do pliku. Przeczytaj rozdział <link 
+        linkend="features.safe-mode">Tryb bezpieczny</link> aby uzyskać więcej
+        informacji. 
+       </para>
       </listitem>
      </varlistentry>
 
@@ -828,6 +868,22 @@ include_path=".;c:\www\phplib"
         Jeśli PHP pracuje w trybie bezpiecznym, funkcje 
         <function>system</function> i inne wywołujące inne programy, odmówią
         wykonania programów z katalogów innych niż ten.</para>
+      </listitem>
+     </varlistentry>
+
+     <varlistentry id="ini.safe-mode-include-dir">
+      <term>
+       <parameter>safe_mode_include_dir</parameter>
+       <type>string</type>
+      </term>
+      <listitem>
+       <para>
+        Sprawdzanie <literal>UID</literal>/<literal>GID</literal> jest
+        pomijane przy dołączaniu plików z tego katalogu i jego podkatalogów
+        (katalog musi także znajdować się w parametrze <link
+        linkend="ini.include-path">include_path</link> lub musi być podana
+        pełna ścieżka do tego katalogu).
+       </para>
       </listitem>
      </varlistentry>
 
@@ -1525,12 +1581,127 @@ NOTYPE
       </term>
       <listitem>
        <para>
-        <literal>mbstring.substitute_character</literal> definiuje znak
-        zastępujące znaki o błędnych kodach.
+        <literal>mbstring.substitute_character</literal> określa znak
+        zastępujący znaki o błędnych kodach.
        </para>
       </listitem>
      </varlistentry>
     </variablelist>
+   </sect2>
+
+   <sect2 id="ini.sect.exif">
+    <title>Dyrektywy konfiguracji Exif</title>
+    <para>
+     Exif obsługuje automatyczną konwersję znaków Unicode i JIS w
+     komentarzach użytkowników jeśli dostępny jest moduł mbstring. Najpierw
+     dekodowany jest komentarz używając podanego zestawu znaków. Następnie
+     wynik jest kodowany innym zestawem znaków który powinien odpowiadać
+     wyjściu <literal>HTTP</literal>.
+     <variablelist>
+      <varlistentry id="ini.exif.encode_unicode">
+       <term>
+        <parameter>exif.encode_unicode</parameter>
+        <type>string</type>
+       </term>
+       <listitem>
+        <para>
+         <literal>exif.encode_unicode</literal> określa zestaw znaków za pomocą
+         którego przetwarzane będą komentarze użytkowników zapisane w
+         standardzie Unicode. Domyślną wartością tego parametru jest
+         ISO-8859-15, które powinno działać dla większości krajów 
+         nie-azjatyckich. Opcja ta może być pusta lub musi określać kodowanie
+         obsługiwane przez mbstring. Jeśli opcja ta zostanie pusta, użyte
+         zostanie bieżące wewnętrzne kodowanie mbstring.
+        </para>
+       </listitem>
+      </varlistentry>
+
+      <varlistentry id="ini.exif.decode_unicode_motorola">
+       <term>
+        <parameter>exif.decode_unicode_motorola</parameter>
+        <type>string</type>
+       </term>
+       <listitem>
+        <para>
+         <literal>exif.decode_unicode_motorola</literal> określa
+         wewnętrzny zestaw znaków obrazu dla komentarzy użytkownika
+         zakodowanych w Unicode jeśli obraz jest zapisany w kolejności bajtów
+         motoroli (big-endian). Ustawienie to nie może być puste ale można
+         określić listę kodowań obsługiwanych przez mbstring. Domyślną
+         wartością jest UCS-2BE.
+        </para>
+       </listitem>
+      </varlistentry>
+
+      <varlistentry id="ini.exif.decode_unicode_intel">
+       <term>
+        <parameter>exif.decode_unicode_intel</parameter>
+        <type>string</type>
+       </term>
+       <listitem>
+        <para>
+         <literal>exif.decode_unicode_intel</literal> określa
+         wewnętrzny zestaw znaków obrazu dla komentarzy użytkownika
+         zakodowanych w Unicode jeśli obraz jest zapisany w kolejności bajtów
+         intela (little-endian). Ustawienie to nie może być puste ale można
+         określić listę kodowań obsługiwanych przez mbstring. Domyślną
+         wartością jest UCS-2LE.
+        </para>
+       </listitem>
+      </varlistentry>
+
+      <varlistentry id="ini.exif.encode_jis">
+       <term>
+        <parameter>exif.encode_jis</parameter>
+        <type>string</type>
+       </term>
+       <listitem>
+        <para>
+         <literal>exif.encode_jis</literal> określa zestaw znaków za pomocą
+         którego przetwarzane będą komentarze użytkowników zapisane w
+         standardzie JIS. Domyślnie wartość ta jest pusta, co wymusza użycie
+         bieżącego wewnętrznego kodowania mbstring.
+        </para>
+       </listitem>
+      </varlistentry>
+
+      <varlistentry id="ini.exif.decode_jis_motorola">
+       <term>
+        <parameter>exif.decode_jis_motorola</parameter>
+        <type>string</type>
+       </term>
+       <listitem>
+        <para>
+         <literal>exif.decode_jis_motorola</literal> określa
+         wewnętrzny zestaw znaków obrazu dla komentarzy użytkownika
+         zakodowanych w JIS jeśli obraz jest zapisany w kolejności bajtów
+         motoroli (big-endian). Ustawienie to nie może być puste ale można
+         określić listę kodowań obsługiwanych przez mbstring. Domyślną
+         wartością jest JIS.
+        </para>
+       </listitem>
+      </varlistentry>
+
+      <varlistentry id="ini.exif.decode_jis_intel">
+       <term>
+        <parameter>exif.decode_jis_intel</parameter>
+        <type>string</type>
+       </term>
+       <listitem>
+        <para>
+         <literal>exif.decode_jis_intel</literal> określa
+         wewnętrzny zestaw znaków obrazu dla komentarzy użytkownika
+         zakodowanych w JIS jeśli obraz jest zapisany w kolejności bajtów
+         intela (little-endian). Ustawienie to nie może być puste ale można
+         określić listę kodowań obsługiwanych przez mbstring. Domyślną
+         wartością jest JIS.
+        </para>
+       </listitem>
+      </varlistentry>
+
+     </variablelist>
+    </para>
+    
    </sect2>
 
   </sect1>
