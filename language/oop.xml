@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- $Revision: 1.3 $ -->
+<!-- $Revision: 1.4 $ -->
  <chapter id="language.oop">
   <title>Klasy i Obiekty</title>
 
@@ -11,7 +11,8 @@
  
     <informalexample>
      <programlisting role="php">
-&lt;?php
+<![CDATA[
+<?php
 class Koszyk
 {
     var $zakupy;  // Zakupy w naszym koszyku
@@ -35,7 +36,8 @@ class Koszyk
         }   
     }
 }
-?&gt;
+?>
+]]>
      </programlisting>
     </informalexample>
    </para>
@@ -81,6 +83,7 @@ class Koszyk
     </simpara>
     <informalexample>
      <programlisting role="php">
+<![CDATA[
 /* Nic z tego nie będzie działać w PHP 4. */
 class Koszyk
 {
@@ -105,6 +108,7 @@ class Koszyk
         /* itp. . . */
     }
 }
+]]>
      </programlisting>
     </informalexample>
    </note>
@@ -116,11 +120,13 @@ class Koszyk
  
    <informalexample>
     <programlisting role="php">
+<![CDATA[
 $koszyk = new Koszyk;
 $koszyk->dodaj_produkt("10", 1);
 
 $inny_koszyk = new Koszyk;
 $inny_koszyk->dodaj_produkt("0815", 3);
+]]>
     </programlisting>
    </informalexample>
  
@@ -147,6 +153,7 @@ $inny_koszyk->dodaj_produkt("0815", 3);
 
    <informalexample>
     <programlisting role="php">
+<![CDATA[
 // poprawnie, jeden $
 $koszyk->artykuly = array("10" => 1); 
 
@@ -157,6 +164,7 @@ $koszyk->$artykuly = array("10" => 1);
 // $koszyk->$zmienna staje się $koszyk->artykuly
 $zmienna = 'artykuly';
 $koszyk->$zmienna = array("10" => 1);  
+]]>
     </programlisting>
    </informalexample>
 
@@ -194,6 +202,7 @@ $koszyk->$zmienna = array("10" => 1);
  
    <informalexample>
     <programlisting role="php">
+<![CDATA[
 class Nazwany_Koszyk extends Koszyk
 {
     var $wlasciciel;
@@ -203,6 +212,7 @@ class Nazwany_Koszyk extends Koszyk
         $this->wlasciciel = $nazwa;
     }
 }
+]]>
     </programlisting>
    </informalexample>
  
@@ -216,11 +226,13 @@ class Nazwany_Koszyk extends Koszyk
  
    <informalexample>
     <programlisting role="php">
+<![CDATA[
 $nkoszyk = new Nazwany_Koszyk;        // Stwórz nazwany koszyk
 $nkoszyk->ustaw_wlasciciela("kris");  // Nazwij koszyk
 print $nkoszyk->wlasciciel;           // Wyświetl właściciela koszyka
 $nkoszyk->dodaj_przedmiot("10", 1);   // (funkcjonalność odziedziczona z
                                       // koszyka)
+]]>
     </programlisting>
    </informalexample>
 
@@ -247,6 +259,7 @@ $nkoszyk->dodaj_przedmiot("10", 1);   // (funkcjonalność odziedziczona z
  
    <informalexample>
     <programlisting role="php">
+<![CDATA[
 // Działa w PHP 3 i PHP 4.
 class Auto_Koszyk extends Koszyk
 {
@@ -255,6 +268,7 @@ class Auto_Koszyk extends Koszyk
         $this->dodaj_artykul ("10", 1);
     }
 }
+]]>
     </programlisting>
    </informalexample>
  
@@ -270,6 +284,7 @@ class Auto_Koszyk extends Koszyk
  
    <informalexample>
     <programlisting role="php">
+<![CDATA[
 // Działa w PHP 3 i PHP 4.
 class Kontruktor_Koszyk extends Koszyk
 {
@@ -286,6 +301,7 @@ $zwykly_koszyk = new Konstruktor_Koszyk;
 // Czas na prawdziwe zakupy...
  
 $inny_koszyk = new Konstruktor_Koszyk("20", 17);
+]]>
     </programlisting>
    </informalexample>
 
@@ -299,11 +315,12 @@ $inny_koszyk = new Konstruktor_Koszyk("20", 17);
    
    <informalexample>
     <programlisting role="php">
+<![CDATA[
 class A
 {
     function A()
     {
-      echo "Jestem konstruktorem klasy A.&lt;br>\n";
+      echo "Jestem konstruktorem klasy A.<br>\n";
     }
 }
 
@@ -311,12 +328,13 @@ class B extends A
 {
     function C()
     {
-        echo "Zwykła funkcja.&lt;br>\n";
+        echo "Zwykła funkcja.<br>\n";
     }
 }
 
 // W PHP 3 nie zostanie wywołany żaden konstruktor.
 $b = new B;
+]]>
     </programlisting>
    </informalexample>
 
@@ -336,17 +354,18 @@ $b = new B;
 
    <informalexample>
     <programlisting role="php">
+<![CDATA[
 class A
 {
     function A()
     {
-        echo "Jestem konstruktorem klasy A.&lt;br>\n";
+        echo "Jestem konstruktorem klasy A.<br>\n";
     }
 
     function B()
     {
-        echo "Jestem zwykłą funkcją o nazwie B w klasie A.&lt;br>\n";
-        echo "Nie jestem konstruktorem w klasie A.&lt;br>\n";
+        echo "Jestem zwykłą funkcją o nazwie B w klasie A.<br>\n";
+        echo "Nie jestem konstruktorem w klasie A.<br>\n";
     }
 }
 
@@ -354,12 +373,13 @@ class B extends A
 {
     function C()
     {
-        echo "Jestem zwykłą funkcją.&lt;br>\n";
+        echo "Jestem zwykłą funkcją.<br>\n";
     }
 }
 
 // Wywoła to B() jako konstruktor.
 $b = new B;
+]]>
     </programlisting>
    </informalexample>
    
@@ -419,11 +439,12 @@ $b = new B;
    
    <informalexample>
     <programlisting role="php">
+<![CDATA[
 class A
 {
     function przyklad()
     {
-        echo "Jestem orginalną funkcją A::przyklad().&lt;br>\n";
+        echo "Jestem orginalną funkcją A::przyklad().<br>\n";
     }
 }
 
@@ -431,23 +452,24 @@ class B extends A
 {
     function przyklad()
     {
-        echo "Jestem przedefiniowaną funkcją B::przyklad().&lt;br>\n";
+        echo "Jestem przedefiniowaną funkcją B::przyklad().<br>\n";
         A::przyklad();
     }
 }
 
 // nie ma obiektu klasy A.
 // poniższe wyświetli
-//   Jestem orginalną funkcją A::przyklad().&lt;br>
+//   Jestem orginalną funkcją A::przyklad().<br>
 A::przyklad();
 
 // stwórz nowy obiekt klasy B.
 $b = new B;
 
 // poniższe wyświetli
-//   Jestem przedefiniowaną funkcją B::przyklad().&lt;br>
-//   Jestem orginalną funkcją A::przyklad().&lt;br>
+//   Jestem przedefiniowaną funkcją B::przyklad().<br>
+//   Jestem orginalną funkcją A::przyklad().<br>
 $b->przyklad();
+]]>
     </programlisting>
    </informalexample>
 
@@ -502,11 +524,12 @@ $b->przyklad();
 
   <informalexample>
    <programlisting role="php">
+<![CDATA[
 class A
 {
     function przyklad()
     {
-        echo "Jestem A::przyklad() I dostarczam podstawową funkcjonalność.&lt;br>\n";
+        echo "Jestem A::przyklad() I dostarczam podstawową funkcjonalność.<br>\n";
     }
 }
 
@@ -514,7 +537,7 @@ class B extends A
 {
     function przyklad()
     {
-        echo "Jestem B::przyklad() i dostarczam dodatkową funkcjonalność.&lt;br>\n";
+        echo "Jestem B::przyklad() i dostarczam dodatkową funkcjonalność.<br>\n";
         parent::przyklad();
     }
 }
@@ -523,6 +546,7 @@ $b = new B;
 
 // Wywoła to B::przyklad(), który z kolei wywoła A::przyklad().
 $b->przyklad();
+]]>
    </programlisting>
   </informalexample>
  </sect1>
@@ -568,6 +592,7 @@ $b->przyklad();
   
   <informalexample>
    <programlisting role="php">
+<![CDATA[
 classa.inc:
   class A 
   {
@@ -598,6 +623,7 @@ page2.php:
 
   // teraz użyj funkcji pokaz_jeden z obiektu $a.
   $a->pokaz_jeden();
+]]>
    </programlisting>
   </informalexample>
   
@@ -666,14 +692,14 @@ page2.php:
  
     <informalexample>
      <programlisting role="php">
-
+<![CDATA[
 class Foo
 {
     function Foo($nazwa)
     {
         // stworz referencje wewnatrz globalnej tablicy $globalref
         global $globalref;
-        $globalref[] = &amp;$this;
+        $globalref[] = &$this;
         // ustaw nazwę na przekazaną wartość
         $this->ustawNazwe($nazwa);
         // i wyświetl ją
@@ -682,7 +708,7 @@ class Foo
 
     function wyswietlNazwe()
     {
-        echo "&lt;br&gt;",$this->nazwa;
+        echo "<br>",$this->nazwa;
     }
 	
     function ustawNazwe($nazwa)
@@ -690,6 +716,7 @@ class Foo
         $this->nazwa = $nazwa;
     }
 }
+]]>
     </programlisting>
    </informalexample>
   </para>
@@ -702,7 +729,7 @@ class Foo
 
     <informalexample>
      <programlisting role="php">
-
+<![CDATA[
 $bar1 = new Foo('ustawione w konstruktorze');
 $bar1->wyswietlNazwe();
 $globalref[0]->wyswietlNazwe();
@@ -712,7 +739,7 @@ ustawione w konstruktorze
 ustawione w konstruktorze
 ustawione w konstruktorze */
 
-$bar2 =&amp; new Foo('ustawione w konstruktorze');
+$bar2 =& new Foo('ustawione w konstruktorze');
 $bar2->wyswietlNazwe();
 $globalref[1]->wyswietlNazwe();
 
@@ -720,7 +747,7 @@ $globalref[1]->wyswietlNazwe();
 ustawione w konstruktorze
 ustawione w konstruktorze
 ustawione w konstruktorze */
-
+]]>
      </programlisting>
     </informalexample>
    </para>
@@ -747,6 +774,7 @@ ustawione w konstruktorze */
 
     <informalexample>
      <programlisting role="php">
+<![CDATA[
 // teraz zmienimy nazwę. czego się spodziewasz?
 // możesz się spodziewać, że i $bar1 i $globalref[0] zmienią swoje nazwy...
 $bar1->ustawNazwe('ustawiona z zewnątrz');
@@ -771,6 +799,7 @@ $globalref[1]->wyswietlNazwe();
 /* wyjście:
 ustawiona z zewnątrz
 ustawiona z zewnątrz */
+]]>
      </programlisting>
     </informalexample>   
    </para>   
@@ -779,6 +808,7 @@ ustawiona z zewnątrz */
    
     <informalexample>
      <programlisting role="php">
+<![CDATA[
 class A
 {
     function A($i)
@@ -795,26 +825,26 @@ class A
 
     function wyswietlWartosc()
     {
-        echo "&lt;br&gt;","klasa ",get_class($this),': ',$this->value;
+        echo "<br>","klasa ",get_class($this),': ',$this->value;
     }
 }
 
 
 class B
 {
-    function B(&amp;$a)
+    function B(&$a)
     {
-        $this->a = &amp;$a;
+        $this->a = &$a;
     }
 
     function wyswietlWartosc()
     {
-        echo "&lt;br&gt;","klasa ",get_class($this),': ',$this->a->value;
+        echo "<br>","klasa ",get_class($this),': ',$this->a->value;
     }
 }
 // spróbuj zrozumieć dlaczego użycie tu prostego kopiowania może powodować
 // nieporządany efekt w linii uznaczonej znaczkiem '*'
-$a =&amp; new A(10);
+$a =& new A(10);
 $a->stworzRef();
 
 $a->wyswietlWartosc();
@@ -836,6 +866,7 @@ klasa A: 11
 klasa B: 11
 klasa B: 11
 */
+]]>
      </programlisting>
     </informalexample>
    </para>
