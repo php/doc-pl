@@ -1,0 +1,1659 @@
+<?xml encoding="iso-8859-2"?>
+<!-- $Revision: 1.1 $ -->
+ <chapter id="configuration">
+  <title>Konfiguracja</title>
+
+  <sect1 id="configuration.file">
+   <title>Plik konfiguracyjny</title>
+
+   <simpara>
+    Plik konfiguracyjny (nazywający się <filename>php3.ini</filename> w
+    PHP 3.0, i po prostu <filename>php.ini</filename> od PHP 4.0) jest czytany
+    w momencie startu PHP. W przypadku PHP w wersji modułu serwera, dzieje się
+    tylko tylko raz, przy starcie serwera. Dla wersji <acronym>CGI</acronym>
+    dzieje się to dla każdego uruchomienia.</simpara>
+   <para>
+    <example>
+     <title>Przykład php.ini</title>
+     <programlisting role="ini">
+; dowolny tekst w linii zaczynającej się od średnika (;) jest ignorowana
+[php] ; znaczniki sekcji (tekst wewnątrz nawiasów kwadratowych) także jest
+      ; ignorowany
+; Wartości logiczne mogą być albo:
+;    true, on, yes
+; lub false, off, no, none
+register_globals = off
+magic_quotes_gpc = yes
+
+; Stringi mogą być obejmowane w cudzysłowy
+include_path = ".:/usr/local/lib/php"
+
+; Znaki backslash (\) są traktowane tak jak każdy inny znak
+include_path = ".;c:\php\lib"
+</programlisting>
+<!-- TODO: dodać więcej szczegółów na temat wartości i wyrażeń -->
+    </example>
+   </para>
+
+   <simpara>
+    Używając PHP jako moduł Apache, możesz zmieniać opcje konfiguracyjne także
+    w plikach konfiguracyjnych Apache i <filename>.htaccess</filename>.
+    </simpara>
+   
+   <simpara>
+    Korzystając z PHP 3.0 dyrektywy Apache odpowiadają ustawieniom
+    konfiguracyjnym z pliku <filename>php3.ini</filename> poprzedzonym przez
+    "php3_".</simpara>
+
+   <para>
+    W PHP 4.0 istnieje kilka dyrektyw Apache, które pozwalają na zmianę
+    konfiguracji PHP z plików konfiguracyjnych Apache.
+    <variablelist>
+     <varlistentry>
+      <term>
+       <systemitem role="directive">php_value</systemitem>
+       <parameter>nazwa</parameter>
+       <parameter>wartość</parameter>
+      </term>
+      <listitem>
+       <para>
+        Ustawia wartość podanej zmiennej.</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry>
+      <term>
+       <systemitem role="directive">php_flag</systemitem>
+       <parameter>nazwa</parameter>
+       <parameter>on|off</parameter>
+      </term>
+      <listitem>
+       <para>
+        Ta opcja jest używana do opcji konfiguracji tak/nie.</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry>
+      <term>
+       <systemitem role="directive">php_admin_value</systemitem>
+       <parameter>nazwa</parameter>
+       <parameter>wartość</parameter>
+      </term>
+      <listitem>
+       <para>
+        Ta opcja ustawia wartość podanej zmiennej. Opcje konfiguracji "admin"
+        mogą być ustawiane tylko z głównych plików konfiguracyjnych Apache,
+        nie z plików .htaccess.</para>
+      </listitem>
+     </varlistentry>
+     <varlistentry>
+      <term>
+       <systemitem role="directive">php_admin_flag</systemitem>
+       <parameter>nazwa</parameter>
+       <parameter>on|off</parameter>
+      </term>
+      <listitem>
+       <para>
+        Ta opcja jest używana do opcji konfiguracji typu tak/nie.</para>
+      </listitem>
+     </varlistentry>
+    </variablelist>
+   </para>
+   <para>
+    <example>
+     <title>Przykład konfiguracji Apache</title>
+     <programlisting role="ini">
+&lt;IfModule mod_php4.c&gt;
+  php_value include_path ".:/usr/local/lib/php"
+  php_flag safe_mode on
+&lt;/IfModule&gt;
+&lt;IfModule mod_php3.c&gt;
+  php3_include_path ".:/usr/local/lib/php"
+  php3_safe_mode on
+&lt;/IfModule&gt;
+</programlisting>
+    </example>
+   </para>
+
+   <simpara>
+    Możesz przeglądać ustawienia opcji konfiguracyjnych w wyjściu funkcji
+    <function>phpinfo</function>. Do tych opcji możesz się także dostać
+    używając funkcji <function>get_cfg_var</function>.
+   </simpara>
+   
+   <sect2 id="ini.sect.general">
+    <title>Ogólne dyrektywy konfiguracji</title>
+    <para>
+     <variablelist>
+      <varlistentry id="ini.allow-url-fopen">
+       <term>
+        <parameter>allow_url_fopen</parameter>
+        <type>boolean</type>
+       </term>
+       <listitem>
+        <para>
+         Ta opcja włącza interfejsy do funkcji fopen rozpoznające URLe
+         pozwalające na dostęp do obiektów URL jak do plików. Domyślne
+         interfejsy pozwalają na dostęp do
+         <link linkend="features.remote-files">zdalnych plików</link>
+         korzystając z protokołów ftp lub http. Niektóre rozszerzenia, takie
+         jak zlib, mogą rejestrować dodatkowe interfejsy.
+        </para>
+
+        <note>
+         <para>
+          Dyrektywa ta została wprowadzona zaraz po wyjściu wersji 4.0.3.
+          Dla wersji 4.0.3 i wyższych możesz wyłączyć tą opcję w czasie
+          kompilacji używając przełącznika
+          <link linkend="install.configure.disable-url-fopen-wrapper"><parameter>--disable-url-fopen-wrapper</parameter></link>.
+         </para>
+        </note>
+
+       </listitem>
+      </varlistentry>
+
+      <varlistentry id="ini.asp-tags">
+       <term>
+        <parameter>asp_tags</parameter>
+        <type>boolean</type>
+       </term>
+       <listitem>
+        <simpara>
+         Włącza możliwość użycia tagów takich jak w ASP - &lt;% %&gt; - razem
+         z normalnymi tagami &lt;?php ?&gt;. Dotyczy to także skrótowego
+         wyświetlania wartości zmiennych typu &lt;%= $value %&gt;. Aby uzyskać
+         więcej informacji przeczytaj rozdział
+         more information, see <link linkend="language.basic-syntax.phpmode">Wyskakiwanie z HTMLa</link>.
+        </simpara>
+
+        <note>
+         <para>Obsługa ASPowych tagów została dodana w wersji 3.0.4.</para>
+        </note>
+
+       </listitem>
+      </varlistentry>
+      
+      <varlistentry id="ini.auto-append-file">
+       <term>
+        <parameter>auto_append_file</parameter>
+        <type>string</type>
+       </term>
+       <listitem>
+        <para>
+         Określa nazwę pliku, który jest automatycznie przetwarzany po głównym
+         pliku. Plik jest dołączany tak, jakby została wywołana funkcja
+         <function>include</function>, a więc używana jest opcja
+         <link linkend="ini.include-path">include_path</link>.</para>
+        <para>
+         Specjalna wartość <systemitem class="constant">none</systemitem> 
+         wyłącza auto-dołączanie.
+         <note>
+          <simpara>
+           Jeśli skrypt zostanie zakończony przez <function>exit</function>,
+           <emphasis>nie</emphasis> dojdzie do auto-dołączenia.</simpara>
+         </note></para>
+       </listitem>
+      </varlistentry>
+
+      <varlistentry id="ini.auto-prepend-file">
+       <term>
+        <parameter>auto_prepend_file</parameter>
+        <type>string</type>
+       </term>
+       <listitem>
+        <para>
+         Określa nazwę pliku, który będzie automatycznie przetwarzany przed
+         głównym plikiem. Plik jest dołączany tak, jakby wywołana była funkcja 
+         <function>include</function>, a więc używana jest opcja
+         <link linkend="ini.include-path">include_path</link>.</para>
+        <para>
+         Specjalna wartość <systemitem class="constant">none</systemitem>
+         wyłącza automatyczne poprzedzanie pliku.</para>
+       </listitem>
+      </varlistentry>
+
+      <varlistentry id="ini.cgi-ext">
+       <term>
+        <parameter>cgi_ext</parameter>
+        <type>string</type>
+       </term>
+       <listitem>
+        <para>
+        </para>
+       </listitem>
+      </varlistentry>
+
+      <varlistentry id="ini.display-errors">
+       <term>
+        <parameter>display_errors</parameter>
+        <type>boolean</type>
+       </term>
+       <listitem>
+        <para>
+         Określa, czy błędy powinny być wyświetlane jako część wyjścia HTML
+         czy nie.
+        </para>
+       </listitem>
+      </varlistentry>
+      
+      <varlistentry id="ini.doc-root">
+       <term>
+        <parameter>doc_root</parameter>
+        <type>string</type>
+       </term>
+       <listitem>
+        <para>
+         Katalog "katalogu głównego" PHP na serwerze. Używane tylko, jeśli
+         jest to ciąg niepusty. Jeśli PHP jest skonfigurowane do pracy w
+         <link linkend="ini.safe-mode">trybie bezpiecznym</link>, pliki spoza
+         tego katalogu nie będą serwowane.
+        </para>
+       </listitem>
+      </varlistentry>
+
+      <varlistentry id="ini.engine">
+       <term>
+        <parameter>engine</parameter>
+        <type>boolean</type>
+       </term>
+       <listitem>
+        <para>
+         Ta dyrektywa jest przydatna tylko przy pracy z PHP w postaci modułu
+         Apache. Jest ona używana na hostach, na których chce się włączać i
+         wyłączać parsowanie PHP na podstawie katalogu lub na podstawie
+         wirtualnego serwera. Umieszczając <userinput>engine
+         off</userinput> we właściwych miejscach pliku 
+         <filename>httpd.conf</filename> PHP może być aktywne lub nieaktywne.
+        </para>
+       </listitem>
+      </varlistentry>
+      
+      <varlistentry id="ini.error-log">
+       <term>
+        <parameter>error_log</parameter>
+        <type>string</type>
+       </term>
+       <listitem>
+        <para>
+         Nazwa pliku, gdzie logowane mają być błędy. Jeśli użyta jest specjalna
+         wartość <literal>syslog</literal>, błędy wysyłane są do systemowej
+         aplikacji logowania. Na systemach oznacza to syslog(3) a na Windows
+         NT - log zdarzeń. Systemowa aplikacja logowania nie jest obsługiwana
+         przez Windows 95.</para>
+       </listitem>
+      </varlistentry>
+
+      <varlistentry id="ini.error-reporting">
+       <term>
+        <parameter>error_reporting</parameter>
+        <type>integer</type>
+       </term>
+       <listitem>
+        <para>
+         Ustaw poziom zgłaszania błędów. Parametrem jest liczba całkowita
+         reprezentująca zestaw bitów. Dodaj wartości poziomów zgałaszania
+         błędów które chcesz.
+         <table>
+          <title>Poziomy zgłaszania błędów</title>
+          <tgroup cols="2">
+           <thead>
+            <row>
+             <entry>wartość bitowa</entry>
+             <entry>zgłaszany błąd</entry>
+            </row>
+           </thead>
+           <tbody>
+            <row>
+             <entry>1</entry>
+             <entry>normalne błędy</entry>
+            </row>
+            <row>
+             <entry>2</entry>
+             <entry>normalne ostrzerzenia</entry>
+            </row>
+            <row>
+             <entry>4</entry>
+             <entry>błędy parsera</entry>
+            </row>
+            <row>
+             <entry>8</entry>
+             <entry>niekrytyczne ostrzerzenia związane ze stylem</entry>
+            </row>
+           </tbody>
+          </tgroup>
+         </table>
+         Domyślną wartością dla tej dyrektywy jest 7 (wyświetlane są normalne
+         błędy, normalne ostrzeżenia i błędy parsera).
+        </para>
+       </listitem>
+      </varlistentry>
+
+      <varlistentry id="ini.html-errors">
+       <term>
+        <parameter>html_errors</parameter>
+        <type>boolean</type>
+       </term>
+       <listitem>
+        <para>
+         Wyłącz tagi HTMLowe w informacjach o błędach.
+        </para>
+       </listitem>
+      </varlistentry>
+      
+      <varlistentry id="ini.open-basedir">
+       <term>
+        <parameter>open_basedir</parameter>
+        <type>string</type>
+       </term>
+       <listitem>
+        <para>
+         Ogranicz pliki które mogą być otwarte przez PHP do podanego drzewa
+         katalogów.
+        </para>
+        <para>
+         Jeśli skrypt próbóje otworzyć plik, np. przez funkcje fopen lub
+         gzopen, sprawdzane jest położenie pliku. Kiedy plik jest poza podanym
+         drzewem katalogów, PHP odmawia otwarcia takiego pliku. Wszystkie
+         dowiązania symboliczne są rozwiązywane, więc nie jest możliwe uniknąć
+         tego ograniecznia przez symlinki.
+        </para>
+        <para>
+         Wartość specjalna <systemitem class="constant">.</systemitem>
+         wskazuje, że katalog w którym znajduje się skrypt będzie uznawany
+         jako katalog bazowy dla tej dyrektywy.
+        </para>
+        <para>
+         Pod systemem Windows, oddzielaj katalogi średnikami. Na wszystkich
+         innych systemach, oddzielaj katalogi dwukropkami. Pracując jako moduł
+         Apache, ścieżki open_basedir katalogów nadrzędnych są automatycznie
+         dziedziczone.
+        </para>
+        <note>
+         <para>Obsługa dla wielu katalogów została dodana w 3.0.7.</para>
+        </note>
+        <para>
+         Domyślnie PHP pozwala na otwieranie wszystkich plików.
+        </para>
+       </listitem>
+      </varlistentry>
+      
+      <varlistentry id="ini.gpc-order">
+       <term>
+        <parameter>gpc_order</parameter>
+        <type>string</type>
+       </term>
+       <listitem>
+        <para>
+         Ustaw kolejność parsowania zmiennych GET/POST/COOKIE. Domyślne
+         ustawienie do "GPC". Ustawienie tej dyrektywy np. na "GP" spowoduje,
+         że PHP będzie całkowicie ignorował ciasteczka i przebijał wszystkie
+         zmienne otrzymane metodą GET zmiennymi o tej samej nazwie otrzymanymi
+         metodą POST.
+        </para>
+       </listitem>
+      </varlistentry>
+
+      <varlistentry id="ini.ignore-user-abort">
+       <term>
+        <parameter>ignore_user_abort</parameter>
+        <type>string</type>
+       </term>
+       <listitem>
+        <para>
+         Domyślnie włączona. Jeśli zostanie zmieniona na Off, skrypty będą
+         przerywane jak tylkol będą próbowały wysłać coś do klienta, który
+         przerwał połączenie.
+         <function>ignore_user_abort</function>.
+        </para>
+       </listitem>
+      </varlistentry>
+      
+      <varlistentry id="ini.include-path">
+       <term>
+        <parameter>include_path</parameter>
+        <type>string</type>
+       </term>
+       <listitem>
+        <para>
+         Określa listę katalogów, gdzie funkcje
+         <function>require</function>, <function>include</function>
+         i <function>fopen_with_path</function> będą szukały plików. Format
+         jest podobny do zmiennej środowiskowej <envar>PATH</envar>: lista
+         katalogów oddzielona dwukropkiem na systemach UNIX lub średnikiem na
+         systemach Windows.
+         <example>
+          <title>include_path na systemach UNIX</title>
+          <programlisting role="php3.ini">
+include_path=.:/home/httpd/php-lib
+</programlisting>
+         </example>
+         <example>
+          <title>include_path na systemach Windows</title>
+          <programlisting role="php3.ini">
+include_path=".;c:\www\phplib"
+</programlisting>
+         </example>
+         Domyślną wartością tej dyrektywy jest <literal>.</literal>
+         (tylko bieżący katalog).</para>
+       </listitem>
+      </varlistentry>
+
+      <varlistentry id="ini.isapi-ext">
+       <term>
+        <parameter>isapi_ext</parameter>
+        <type>string</type>
+       </term>
+       <listitem>
+        <para>
+        </para>
+       </listitem>
+      </varlistentry>
+
+      <varlistentry id="ini.log-errors">
+       <term>
+        <parameter>log_errors</parameter>
+        <type>boolean</type>
+       </term>
+       <listitem>
+        <para>
+         Ustawia czy komunikaty o błędach skryptu mają być logowane do logu
+         błędów serwera. W związku z tym ta opcja jest specyficzna dla
+         poszczególnych serwerów.</para>
+       </listitem>
+      </varlistentry>
+
+      <varlistentry id="ini.magic-quotes-gpc">
+       <term>
+        <parameter>magic_quotes_gpc</parameter>
+        <type>boolean</type>
+       </term>
+       <listitem>
+        <para>
+         Ustawia stan magic_quotes dla operacji GPC (Get/Post/Cookie). Jeśli
+         magic_quotes są włączone, wszystkie znaki ' (apostrof), &quot;
+         (cudzysłów), \ (backslash) i znaki NULL są zamieniane na sekwencje
+         escape przez dodanie przed te znaki znaku backslash. Jeśli włączona
+         jest także dyrektywa magic_quotes_sybase, wszystkie apostrofy są
+         zamieniane na sekwencej escape przez dodanie apostrofu zamiast znaku
+         backslash.
+        </para>
+       </listitem>
+      </varlistentry>
+
+      <varlistentry id="ini.magic-quotes-runtime">
+       <term>
+        <parameter>magic_quotes_runtime</parameter>
+        <type>boolean</type>
+       </term>
+       <listitem>
+        <para>
+         Jeśli włączona jest dyrektywa
+         <parameter>magic_quotes_runtime</parameter>, większośc funkcji, które
+         zwracają dane z dowolnych zewnętrznych źródeł, włączając w to bazy
+         danych i pliki tekstowe, będzie zwracała dane z apostrofami i
+         cudzysłowami zamienionymi na sekwencje escape przy pomocy znaku
+         backslash. Jeśli włączona jest także opcja
+         <parameter>magic_quotes_sybase</parameter>, apostrof będzę zamieniany
+         na sekwencję escape przy pomocy apostrofu zamiast znaku backslash.
+        </para>
+       </listitem>
+      </varlistentry>
+
+      <varlistentry id="ini.magic-quotes-sybase">
+       <term>
+        <parameter>magic_quotes_sybase</parameter>
+        <type>boolean</type>
+       </term>
+       <listitem>
+        <para>
+         Jeśli włączona jest opcja <parameter>magic_quotes_sybase</parameter>,
+         apostrof będzie zamieniany na sekwencję escape używając apostrofu
+         zamiast znaku backslash, jeśli włączona jest opcja
+         <parameter>magic_quotes_gpc</parameter> i/lub
+         <parameter>magic_quotes_runtime</parameter>.
+        </para>
+       </listitem>
+      </varlistentry>
+
+      <varlistentry id="ini.max-execution-time">
+       <term>
+        <parameter>max_execution_time</parameter>
+        <type>integer</type>
+       </term>
+       <listitem>
+        <para>
+         Dyrektywa to określa maksymalny czas w sekundach wykonywania skryptu,
+         zanim zostanie przerwany przez parser. Pomaga to w zapobieganiu
+         blokowania serwera przez kiepsko napisane skrypty. Domyślne
+         ustawienie to <literal>30</literal>.  
+        </para>
+        <para>
+         Na dyrektywę max_execution_time nie wpływają wywołania systemowe,
+         funkcja <function>sleep</function> itp. Zobacz opis funkcji
+         <function>set_time_limit</function> aby uzyskać więcej szczegółów.
+        </para>
+       </listitem>
+      </varlistentry>
+      
+      <varlistentry id="ini.memory-limit">
+       <term>
+        <parameter>memory_limit</parameter>
+        <type>integer</type>
+       </term>
+       <listitem>
+        <para>
+         Dyrektywa ta ustawia maksymalną wielkość pamięci w bajtach, którą
+         skrypt może zaalokować. Pomaga to w zapobieganiu zjadania całej
+         dostępnej pamięci serwera przez kiepsko napisane skrypty.
+        </para>
+       </listitem>
+      </varlistentry>
+      
+      <varlistentry id="ini.nsapi-ext">
+       <term>
+        <parameter>nsapi_ext</parameter>
+        <type>string</type>
+       </term>
+       <listitem>
+        <para>
+        </para>
+       </listitem>
+      </varlistentry>
+                
+      <varlistentry id="ini.register-globals">
+       <term>
+        <parameter>register_globals</parameter>
+        <type>boolean</type>
+       </term>
+       <listitem>                 
+        <para>
+         Ustala, czy rejestrować zmienne EGPCS (Environment, GET, POST,
+         Cookie, Server) jako zmienne globalne. Możesz wyłączyć tę opcję jeśli
+         nie chcesz zaśmiecić globalnych zasięgów swoich skryptów przez dane
+         użytkownika. Ma to największy sens jeśli użwane jest w połączeniu z
+         <link linkend="ini.track-vars">track_vars</link> - w takim przypadku
+         do zmiennych EGCPS możliwy jest przez zmienne globalne
+         <varname>$HTTP_ENV_VARS</varname>,
+         <varname>$HTTP_GET_VARS</varname>,
+         <varname>$HTTP_POST_VARS</varname>,
+         <varname>$HTTP_COOKIE_VARS</varname>, i
+         <varname>$HTTP_SERVER_VARS</varname>.
+        </para>
+           </listitem>
+      </varlistentry>
+                
+      <varlistentry id="ini.short-open-tag">
+       <term>
+        <parameter>short_open_tag</parameter>
+        <type>boolean</type>
+       </term>
+       <listitem>
+        <para>
+         Ustala, czy dozwolona jest skrócona forma tagu otwierającego PHP
+         (<userinput>&lt;? ?&gt;</userinput>). Jeśli chcesz używać PHP w
+         połączeniu z XMLem, powinieneś wyłączyć tą opcję. Jeśli ta opcja jest
+         wyłączona, musisz używać długiej postaci tagu otwierającego.
+         (<userinput>&lt;?php ?&gt;</userinput>).</para>
+       </listitem>
+      </varlistentry>
+
+      <varlistentry id="ini.sql.safe-mode">
+       <term>
+        <parameter>sql.safe_mode</parameter>
+        <type>boolean</type>
+       </term>
+       <listitem>
+        <para>
+        </para>
+       </listitem>
+      </varlistentry>
+
+      <varlistentry id="ini.track-errors">
+       <term>
+        <parameter>track_errors</parameter>
+        <type>boolean</type>
+       </term>
+       <listitem>
+        <para>
+         Jeśli dyrektywa ta jest włączona, ostatnia informacja o błędzie
+         będzie dostępna jako zmienna globalna <symbol>$php_errormsg</symbol>.
+        </para>
+       </listitem>
+      </varlistentry>
+
+      <varlistentry id="ini.track-vars">
+       <term>
+        <parameter>track_vars</parameter>
+        <type>boolean</type>
+       </term>
+       <listitem>
+        <para>
+         Jeśli ta dyrektywa jest włączona, zmienne EGCS (Environment, GET,
+         POST, Cookie, Server) będą dostępne w globalnych tablicach
+         asocjacyjnych
+         <varname>$HTTP_ENV_VARS</varname>,
+         <varname>$HTTP_GET_VARS</varname>,
+         <varname>$HTTP_POST_VARS</varname>,
+         <varname>$HTTP_COOKIE_VARS</varname>, i
+         <varname>$HTTP_SERVER_VARS</varname>.
+        </para>
+        <para>
+         Zauważ, ze od PHP 4.0.3 dyrektywa <systemitem
+         role="directive">track_vars</systemitem> jest zawsze włączona.
+        </para>
+       </listitem>
+      </varlistentry>
+
+      <varlistentry id="ini.upload-tmp-dir">
+       <term>
+        <parameter>upload_tmp_dir</parameter>
+        <type>string</type>
+       </term>
+       <listitem>
+        <para>
+         Katalog tymczasowy używany do przechowywania plików podczas
+         obsługiwania uploadu plików. Musi być to katalog z prawem zapisu dla
+         użytkownika, jako który pracuje PHP.
+        </para>
+       </listitem>
+      </varlistentry>
+
+      <varlistentry id="ini.upload-max-filesize">
+       <term>
+        <parameter>upload_max_filesize</parameter>
+        <type>integer</type>
+       </term>
+       <listitem>
+        <para>
+         Maksymalny rozmiar uploadowanego pliku. Wartość podawana jest w
+         bajtach.
+        </para>
+       </listitem>
+      </varlistentry>
+
+      <varlistentry id="ini.user-dir">
+       <term>
+        <parameter>user_dir</parameter>
+        <type>string</type>
+       </term>
+       <listitem>
+        <para>
+         Podstawowa nazwa katalogu używanego jako katalog domowy użytkownika
+         dla plików PHP, na przykład
+         <literal>public_html</literal>.</para>
+       </listitem>
+      </varlistentry>
+
+      <varlistentry id="ini.warn-plus-overloading">
+       <term>
+        <parameter>warn_plus_overloading</parameter>
+        <type>boolean</type>
+       </term>
+       <listitem>
+        <para>
+         Jeśli dyrektywa ta jest włączona, PHP będzie wyświetlał ostrzeżenie
+         jeśli operator plus (<literal>+</literal>) został użyty do stringów.
+         Dzięki temu łatwiej jest znaleźć skrypty, które wymagają użycia
+         operatora sklejania stringów (<literal>.</literal>).</para>
+       </listitem>
+      </varlistentry>
+
+     </variablelist>
+    </para>
+   </sect2>
+
+   <sect2 id="ini.sect.safe-mode">
+    <title>Dyrektywy konfiguracji trybu bezpiecznego</title>
+    <variablelist>
+
+     <varlistentry id="ini.safe-mode">
+      <term>
+       <parameter>safe_mode</parameter>
+       <type>boolean</type>
+      </term>
+      <listitem>
+       <para>
+        Określa, czy PHP ma pracować w trybie bezpiecznym. Przeczytaj
+        rozdziały <link linkend="security">Bezpieczeństwo</link> i
+        <link linkend="features.safe-mode">Safe Mode</link> aby uzyskać więcej
+        informacji.</para>
+      </listitem>
+     </varlistentry>
+
+     <varlistentry id="ini.safe-mode-exec-dir">
+      <term>
+       <parameter>safe_mode_exec_dir</parameter>
+       <type>string</type>
+      </term>
+      <listitem>
+       <para>
+        Jeśli PHP pracuje w trybie bezpiecznym, funkcje 
+        function>system</function> i inne wywołujące inne programy, odmówią
+        wykonania programów z katalogów innych niż ten.</para>
+      </listitem>
+     </varlistentry>
+
+    </variablelist>
+   </sect2>
+
+   <sect2 id="ini.sect.debugger">
+    <title>Dyrektywy konfiguracji debuggera</title>
+    <variablelist>
+
+     <varlistentry id="ini.debugger.host">
+      <term>
+       <parameter>debugger.host</parameter>
+       <type>string</type>
+      </term>
+      <listitem>
+       <para>
+        Nazwa lub adres IP hosta używanego przez debugger.</para>
+      </listitem>
+     </varlistentry>
+
+     <varlistentry id="ini.debugger.port">
+      <term>
+       <parameter>debugger.port</parameter>
+       <type>string</type>
+      </term>
+      <listitem>
+       <para>
+        Numer portu używany przez debugger.</para>
+      </listitem>
+     </varlistentry>
+
+     <varlistentry id="ini.debugger.enabled">
+      <term>
+       <parameter>debugger.enabled</parameter>
+       <type>boolean</type>
+      </term>
+      <listitem>
+       <para>
+        Określa, czy debugger jest włączony.</para>
+      </listitem>
+     </varlistentry>
+
+    </variablelist>
+   </sect2>
+
+   <sect2 id="ini.sect.extension">
+    <title>Dyrektywy ładowania rozszerzeń</title>
+    <variablelist>
+     
+     <varlistentry id="ini.enable-dl">
+      <term>
+        <parameter>enable_dl</parameter>
+        <type>boolean</type>
+      </term>
+      <listitem>
+        <para>
+         Ta dyrektywa jest jedynie przydatna przy pracy PHP jako moduł Apache.
+         Możesz włączać i wyłączać możliwość dynamicznego ładowania rozszerzeń
+         PHP przez funkcję <function>dl</function> zależnie od katalogu lub
+         wirtualnego serwera.
+        </para>
+        <para>
+         Głównym powodem wyłączania dynamicznego ładowania rozszerzeń jest
+         kwestia bezpieczeństwa. Używając dynamicznych rozszerzeń możliwe jest
+         ominięcie praktycznie wszystkich ograniczeń 
+         safe_mode i open_basedir.
+        </para>
+        <para>
+         Domyślnie zezwalane jest dynamiczne ładowanie, z wyjątkiem pracy w
+         trybie bezpiecznym. W trybie bezpiecznym korzystanie z funkcji
+         <function>dl</function> jest zawsze zabronione.
+        </para>
+      </listitem>
+     </varlistentry>
+      
+     <varlistentry id="ini.extension-dir">
+      <term>
+       <parameter>extension_dir</parameter>
+       <type>string</type>
+      </term>
+      <listitem>
+       <para>
+        Katalog, w którym PHP powinno szukać dynamicznie dołączanych
+        rozszerzeń.
+       </para>
+      </listitem>
+     </varlistentry>
+     
+     <varlistentry id="ini.extension">
+      <term>
+       <parameter>extension</parameter>
+       <type>string</type>
+      </term>
+      <listitem>
+       <para>
+        Które dynamicznie ładowane rozszerzenia ładować przy starcie PHP.
+       </para>
+      </listitem>
+     </varlistentry>
+     
+    </variablelist>
+   </sect2>
+
+   <sect2 id="ini.sect.mysql">
+    <title>Dyrektywy konfiguracji MySQL</title>
+    <variablelist>
+     
+     <varlistentry id="ini.mysql.allow-persistent">
+      <term>
+       <parameter>mysql.allow_persistent</parameter>
+       <type>boolean</type>
+      </term>
+      <listitem>
+       <para>
+        Czy pozwalać na stałe połączenia MySQL ('persistent
+        connections').
+       </para>
+      </listitem>
+     </varlistentry>
+     
+     <varlistentry id="ini.mysql.default-host">
+      <term>
+       <parameter>mysql.default_host</parameter>
+       <type>string</type>
+      </term>
+      <listitem>
+       <para>
+        Domyślny host serwera, który będzie używany przy łączeniu się z
+        serwerem baz danych jeśli nie zostanie podany żaden inny host.
+       </para>
+      </listitem>
+     </varlistentry>
+     
+     <varlistentry id="ini.mysql.default-user">
+      <term>
+       <parameter>mysql.default_user</parameter>
+       <type>string</type>
+      </term>
+      <listitem>
+       <para>
+        Domyślna nazwa użytkownika, która będzie używana przy łączeniu się z
+        serwerm baz danych jeśli nie zostanie podana żadna inna nazwa.
+       </para>
+      </listitem>
+     </varlistentry>
+     
+     <varlistentry id="ini.mysql.default-password">
+      <term>
+       <parameter>mysql.default_password</parameter>
+       <type>string</type>
+      </term>
+      <listitem>
+       <para>
+        Domyślne hasło, które będzie użyte przy łączeniu się z serwerem baz
+        danych jeśli nie zostanie podane żadne inne hasło.
+       </para>
+      </listitem>
+     </varlistentry>
+     
+     <varlistentry id="ini.mysql.default-port">
+      <term>
+       <parameter>mysql.default_port</parameter>
+       <type>string</type>
+      </term>
+      <listitem>
+       <para>
+        Domyślny numer portu TCP, który będzie użyty przy łączeniu się z
+        serwerm baz danych jeśli nie zostanie podany żaden inny port. Jeśli
+        nie będzie podany port domyślny, będzie on pobrany ze zmiennej
+        środowiskowej <literal>MYSQL_TCP_PORT</literal>, wpisu
+        <literal>mysql-tcp</literal> w pliku
+        <filename>/etc/services</filename> lub stałej czasu kompilacji
+        <literal>MYSQL_PORT</literal>, w tym właśnie porządku. Pod Win32 użyta
+        będzie tylko stała <literal>MYSQL_PORT</literal>.
+       </para>
+      </listitem>
+     </varlistentry>
+     
+     <varlistentry id="ini.mysql.default-socket">
+      <term>
+       <parameter>mysql.default_socket</parameter>
+       <type>string</type>
+      </term>
+      <listitem>
+       <para>
+        Domyślna nazwa gniazda, które będzie użyta to łączenia się z lokalnym
+        serwerem baz danych jeśli nie zostanie podana żadna inna nazwa
+        gniazda.
+       </para>
+      </listitem>
+     </varlistentry>
+     
+     <varlistentry id="ini.mysql.max-persistent">
+      <term>
+       <parameter>mysql.max_persistent</parameter>
+       <type>integer</type>
+      </term>
+      <listitem>
+       <para>
+        Maksymalna liczba stałych połączeń MySQL na każdy proces.
+       </para>
+      </listitem>
+     </varlistentry>
+     
+     <varlistentry id="ini.mysql.max-links">
+      <term>
+       <parameter>mysql.max_links</parameter>
+       <type>integer</type>
+      </term>
+      <listitem>
+       <para>
+        Maksymalna liczba połączeń MySQL na proces, włączając w to połączenia
+        stałe.
+       </para>
+      </listitem>
+     </varlistentry>
+     
+    </variablelist>
+   </sect2>
+
+   <sect2 id="ini.sect.msql">
+    <title>Dyrektywy konfiguracji mSQL</title>
+    <variablelist>
+     
+     <varlistentry id="ini.msql.allow-persistent">
+      <term>
+       <parameter>msql.allow_persistent</parameter>
+       <type>boolean</type>
+      </term>
+      <listitem>
+       <para>
+        Czy pozwalać na stałe połączenia mSQL.
+       </para>
+      </listitem>
+     </varlistentry>
+     
+     <varlistentry id="ini.msql.max-persistent">
+      <term>
+       <parameter>msql.max_persistent</parameter>
+       <type>integer</type>
+      </term>
+      <listitem>
+       <para>
+        Maksymalna liczba trwałych połączeń mSQL na każdy proces.
+       </para>
+      </listitem>
+     </varlistentry>
+     
+     <varlistentry id="ini.msql.max-links">
+      <term>
+       <parameter>msql.max_links</parameter>
+       <type>integer</type>
+      </term>
+      <listitem>
+       <para>
+        Maksymalna liczna połączeń mSQL na każdy proces, włączając w to
+        połączenia stałe.
+       </para>
+      </listitem>
+     </varlistentry>
+     
+    </variablelist>
+   </sect2>
+
+   <sect2 id="ini.sect.pgsql">
+    <title>Dyrektywy konfiguracji PostgreSQL</title>
+    <variablelist>
+     
+     <varlistentry id="ini.pgsql.allow-persistent">
+      <term>
+       <parameter>pgsql.allow_persistent</parameter>
+       <type>boolean</type>
+      </term>
+      <listitem>
+       <para>
+        Czy pozwalać na stałe połączenia PostgreSQL.
+       </para>
+      </listitem>
+     </varlistentry>
+     
+     <varlistentry id="ini.pgsql.max-persistent">
+      <term>
+       <parameter>pgsql.max_persistent</parameter>
+       <type>integer</type>
+      </term>
+      <listitem>
+       <para>
+        Maksymalna liczba stałych połączeń PostgreSQL na każdy proces.
+       </para>
+      </listitem>
+     </varlistentry>
+     
+     <varlistentry id="ini.pgsql.max-links">
+      <term>
+       <parameter>pgsql.max_links</parameter>
+       <type>integer</type>
+      </term>
+      <listitem>
+       <para>
+        Maksymalna liczba połączeń PostgreSQL na każdy proces, włączając w to
+        połąćzenia stałe.
+       </para>
+      </listitem>
+     </varlistentry>
+     
+    </variablelist>
+   </sect2>
+
+
+   <sect2 id="ini.sect.sesam">
+    <title>Dyrektywy konfiguracji SESAM</title>
+    <variablelist>
+     
+     <varlistentry id="ini.sesam-oml">
+      <term>
+       <parameter>sesam_oml</parameter>
+       <type>string</type>
+      </term>
+      <listitem>
+       <para>
+        Nazwa biblioteki PLAM BS2000 zawierającej ładowalne moduły sterowników
+        SESAM. Wymagane do użycia funkcji SESAM. Biblioteka PLAM BS2000 musi
+        być ustawiona na ACCESS=READ,SHARE=YES, ponieważ musi być dostępna do
+        odczytu dla użytkownika, jako który pracuje Apache.
+       </para>
+      </listitem>
+     </varlistentry>
+     
+     <varlistentry id="ini.sesam-configfile">
+      <term>
+       <parameter>sesam_configfile</parameter>
+       <type>string</type>
+      </term>
+      <listitem>
+       <para>
+        Nazwa pliku konfiguracyjnego aplikacji SESAM. Wymagane do użyca
+        funkcji SESAM. Plik BS2000 musi być dostępny do odczytu dla
+        użytkownika, jako który pracuje Apache.
+       </para>
+       <para>
+        Plik konfiguracyjny aplikacji zazwyczaj zawiera konfigurację podobną
+        do tej (zobacz podręcznik do aplikacji SESAM):
+        <informalexample>
+         <programlisting role="bs2000">
+CNF=B
+NAM=K
+NOTYPE
+         </programlisting>
+        </informalexample>
+       </para>
+      </listitem>
+     </varlistentry>
+     
+     <varlistentry id="ini.sesam-messagecatalog">
+      <term>
+       <parameter>sesam_messagecatalog</parameter>
+       <type>string</type>
+      </term>
+      <listitem>
+       <para>
+        Nazwa pliku katalogującego wiadomości SESAM. W większości przypadków
+        użycie tej dyrektywy nie jest konieczne. Jedynie jeśli plik miadomości
+        nie jest zainstalowany w tablicy plików wiadomości BS2000 systemu,
+        może on być ustalony przez tą dyrektywę.
+       </para>
+       <para>
+        Katalog wiadomości musi być ustawiony na ACCESS=READ,SHARE=YES
+        ponieważ musi być on dostępny do odczytu dla użytkownika, jako który
+        pracuje Apache.
+       </para>
+      </listitem>
+     </varlistentry>
+     
+    </variablelist>
+   </sect2>
+
+
+   <sect2 id="ini.sect.sybase">
+    <title>Dyrektywy konfiguracji Sybase</title>
+    <variablelist>
+     
+     <varlistentry id="ini.sybase.allow-persistent">
+      <term>
+       <parameter>sybase.allow_persistent</parameter>
+       <type>boolean</type>
+      </term>
+      <listitem>
+       <para>
+        Czy pozwalać na stałe połączenia Sybase.
+       </para>
+      </listitem>
+     </varlistentry>
+     
+     <varlistentry id="ini.sybase.max-persistent">
+      <term>
+       <parameter>sybase.max_persistent</parameter>
+       <type>integer</type>
+      </term>
+      <listitem>
+       <para>
+        Maksymalna liczba stałych połączeń Sybase na każdy proces.
+       </para>
+      </listitem>
+     </varlistentry>
+     
+     <varlistentry id="ini.sybase.max-links">
+      <term>
+       <parameter>sybase.max_links</parameter>
+       <type>integer</type>
+      </term>
+      <listitem>
+       <para>
+        Maksymalna liczba połączeń Sybase na każdy proces, włączając w to
+        połączenia stałe.
+       </para>
+      </listitem>
+     </varlistentry>
+     
+    </variablelist>
+   </sect2>
+
+   <sect2 id="ini.sect.sybct">
+    <title>Dyrektywy konfiguracji Sybase-CT</title>
+    <variablelist>
+     
+     <varlistentry id="ini.sybct.allow-persistent">
+      <term>
+       <parameter>sybct.allow_persistent</parameter>
+       <type>boolean</type>
+      </term>
+      <listitem>
+       <para>
+        Czy pozwalać na stałe połączenia Sybase-CT.
+        Domyślnie włączone.
+       </para>
+      </listitem>
+     </varlistentry>
+     
+     <varlistentry id="ini.sybct.max-persistent">
+      <term>
+       <parameter>sybct.max_persistent</parameter>
+       <type>integer</type>
+      </term>
+      <listitem>
+       <para>
+        Maksymalna liczba stałych połączeń Sybase-CT na każdy proces. Domyślą
+        wartością jest -1, co oznacza brak limitu.
+       </para>
+      </listitem>
+     </varlistentry>
+     
+     <varlistentry id="ini.sybct.max-links">
+      <term>
+       <parameter>sybct.max_links</parameter>
+       <type>integer</type>
+      </term>
+      <listitem>
+       <para>
+        Maksymalna liczba połączeń Sybase-CT na proces, włączając w to
+        połączenia stałe. Domyślna wartość to -1, co oznacza brak limitu.
+       </para>
+      </listitem>
+     </varlistentry>
+     
+     <varlistentry id="ini.sybct.min-server-severity">
+      <term>
+       <parameter>sybct.min_server_severity</parameter>
+       <type>integer</type>
+      </term>
+      <listitem>
+       <para>
+        Wiadomości serwera z 'serverity' większą lub równą
+        sybct.min_server_severity będą zgłaszane jako ostrzeżenia. Wartość ta
+        może być zmieniona także przez wywołanie
+        <function>sybase_min_server_severity</function>. Domyślna wartość to
+        10.
+        The default
+        is 10 which reports errors of information severity or greater.
+       </para>
+      </listitem>
+     </varlistentry>
+     
+     <varlistentry id="ini.sybct.min-client-severity">
+      <term>
+       <parameter>sybct.min_client_severity</parameter>
+       <type>integer</type>
+      </term>
+      <listitem>
+       <para>
+        Wiadomości biblioteki klienta z 'serverity' większą lub równą 
+        sybct.min_client_severity będą zgłaszane jako błędy. Wartość ta może
+        być zmieniona także przez wywołanie
+        <function>sybase_min_client_severity</function>. Domyślna wartość to
+        10, co praktycznie wyłącza zgłaszanie błędów.
+       </para>
+      </listitem>
+     </varlistentry>
+     
+     <varlistentry id="ini.sybct.login-timeout">
+      <term>
+       <parameter>sybct.login_timeout</parameter>
+       <type>integer</type>
+      </term>
+      <listitem>
+       <para>
+        Maksymalny czas oczekiwania na połączenie zanim zwrócona będzie
+        wartość porażki. Zauważ, że jeśli dojdzie do skończenia czasu
+        max_execution_time w trakcie oczekiwania na połączenie, twój skrypt
+        zostanie zakończony zanim będzie mógł podjąć jakiekolwiek działania
+        zaplanowane na przypadek nieudanego połączenia. Domyślna wartość to
+        jedna minuta.
+       </para>
+      </listitem>
+     </varlistentry>
+     
+     <varlistentry id="ini.sybct.timeout">
+      <term>
+       <parameter>sybct.timeout</parameter>
+       <type>integer</type>
+      </term>
+      <listitem>
+       <para>
+        Maksymalny czas (w sekundach) oczekiwania na wykonanie select_db lub
+        zapytania po którym zwrócona zostanie wartość oznaczająca porażkę.
+        Zauważ, że jeśli dojdzie do skończenia czasu max_execution_time w
+        trakcie oczekiwania na połączenie, twój skrypt zostanie zakończony
+        zanim będzie mógł podjąć jakiekolwiek działania zaplanowane na
+        przypadek niewykonania polecenia. Domyślnie nie ma żadnych ograniczeń.
+       </para>
+      </listitem>
+     </varlistentry>
+     
+     <varlistentry id="ini.sybct.hostname">
+      <term>
+       <parameter>sybct.hostname</parameter>
+       <type>string</type>
+      </term>
+      <listitem>
+       <para>
+        Nazwa hosta, z którego twierdzisz że się łączysz, który będzie
+        wyświetlany w sp_who. Domyślną wartością jest pusty ciąg.
+       </para>
+      </listitem>
+     </varlistentry>
+     
+    </variablelist>
+   </sect2>
+
+   <sect2 id="ini.sect.informix">
+    <title>Dyrektywy konfiguracji Informix</title>
+    <variablelist>
+     
+     <varlistentry id="ini.ifx.allow-persistent">
+      <term>
+       <parameter>ifx.allow_persistent</parameter>
+       <type>boolean</type>
+      </term>
+      <listitem>
+       <para>
+        Czy pozwalać na stałe połączenia Informix.
+       </para>
+      </listitem>
+     </varlistentry>
+     
+     <varlistentry id="ini.ifx.max-persistent">
+      <term>
+       <parameter>ifx.max_persistent</parameter>
+       <type>integer</type>
+      </term>
+      <listitem>
+       <para>
+        Maksymalna liczba stałych połączeń Informix na każdy proces.
+       </para>
+      </listitem>
+     </varlistentry>
+     
+     <varlistentry id="ini.ifx.max-links">
+      <term>
+       <parameter>ifx.max_links</parameter>
+       <type>integer</type>
+      </term>
+      <listitem>
+       <para>
+        Maksymalna liczba połączeń Informix na każdy proces, włączając w to
+        połączenia stałe.
+       </para>
+      </listitem>
+     </varlistentry>
+
+     <varlistentry id="ini.ifx.default-host">
+      <term>
+       <parameter>ifx.default_host</parameter>
+       <type>string</type>
+      </term>
+      <listitem>
+       <para>
+        Domyślny host do połączenia jeśli nie podano innego w
+        <function>ifx_connect</function> lub
+        <function>ifx_pconnect</function>.
+       </para>
+      </listitem>
+     </varlistentry>
+
+     <varlistentry id="ini.ifx.default-user">
+      <term>
+       <parameter>ifx.default_user</parameter>
+       <type>string</type>
+      </term>
+      <listitem>
+       <para>
+        Domyślny identyfikator użytkownika używany jeśli nie podano innego w
+        <function>ifx_connect</function> lub
+        <function>ifx_pconnect</function>.
+       </para>
+      </listitem>
+     </varlistentry>
+
+     <varlistentry id="ini.ifx.default-password">
+      <term>
+       <parameter>ifx.default_password</parameter>
+       <type>string</type>
+      </term>
+      <listitem>
+       <para>
+        Domyślne hasło używane jeśli nie podano innego w
+        <function>ifx_connect</function> lub
+        <function>ifx_pconnect</function>.
+       </para>
+      </listitem>
+     </varlistentry>
+
+     <varlistentry id="ini.ifx.blobinfile">
+      <term>
+       <parameter>ifx.blobinfile</parameter>
+       <type>boolean</type>
+      </term>
+      <listitem>
+       <para>
+        Ustaw na &true; jeśli chcesz zwracać kolumny blob w pliku, lub &false;
+        jeśli chcesz zwracać je w pamięci. Możesz zmienić wartość tej
+        dyrektywy korzystając z <function>ifx_blobinfile_mode</function>.
+       </para>
+      </listitem>
+     </varlistentry>
+
+     <varlistentry id="ini.ifx.textasvarchar">
+      <term>
+       <parameter>ifx.textasvarchar</parameter>
+       <type>boolean</type>
+      </term>
+      <listitem>
+       <para>
+        Ustaw na &true; jeśli chcesz w zapytaniach zwracać kolumny TEXT jako
+        zwykłe stringi, lub &false; jeśli chcesz używać parametrów
+        identyfikatorów blob. Możesz zmienić wartość tej dyrektywy korzystając
+        z <function>ifx_textasvarchar</function>.
+       </para>
+      </listitem>
+     </varlistentry>
+
+     <varlistentry id="ini.ifx.byteasvarchar">
+      <term>
+       <parameter>ifx.byteasvarchar</parameter>
+       <type>boolean</type>
+      </term>
+      <listitem>
+       <para>
+        Ustaw na &true; jeśli chcesz w zapytaniach zwracać kolumny BYTE jak
+        zwykłe stringi, lub &false; jeśli chcesz używać parametrów
+        identyfikatorów blob. Możesz zmienić wartość tej dyrektywy korzystając
+        z <function>ifx_textasvarchar</function>.
+       </para>
+      </listitem>
+     </varlistentry>
+
+     <varlistentry id="ini.ifx.charasvarchar">
+      <term>
+       <parameter>ifx.charasvarchar</parameter>
+       <type>boolean</type>
+      </term>
+      <listitem>
+       <para>
+        Ustaw na &true; jeśli chcesz obcinać początkowe spacje z kolumn CHAR
+        przy pobieraniu ich.
+       </para>
+      </listitem>
+     </varlistentry>
+
+     <varlistentry id="ini.ifx.nullformat">
+      <term>
+       <parameter>ifx.nullformat</parameter>
+       <type>boolean</type>
+      </term>
+      <listitem>
+       <para>
+        Ustaw na &true; jeśli chcesz zwracać kolumny &null; jako string
+        "&null;", lub na &false; jeśli chcesz aby były zwracane jako pusty
+        string. Możesz zmienić wartość tej dyrektywy korzystając z
+        <function>ifx_nullformat</function>.
+       </para>
+      </listitem>
+     </varlistentry>
+
+
+    </variablelist>
+   </sect2>
+
+   <sect2 id="ini.sect.bcmath">
+    <title>Dyrektywy konfiguracji BC Math</title>
+    <variablelist>
+     
+     <varlistentry id="ini.bcmath.scale">
+      <term>
+       <parameter>bcmath.scale</parameter>
+       <type>integer</type>
+      </term>
+      <listitem>
+       <para>
+        Liczba dziesiętnych cyfr dla wszystkich funkcji bcmath.
+       </para>
+      </listitem>
+     </varlistentry>
+     
+    </variablelist>
+   </sect2>
+
+   <sect2 id="ini.sect.browscap">
+    <title>Dyrektywy konfiguracji Możliwości Przeglądarek</title>
+    <variablelist>
+     
+     <varlistentry id="ini.browscap">
+      <term>
+       <parameter>browscap</parameter>
+       <type>string</type>
+      </term>
+      <listitem>
+       <para>
+        Nazwa pliku opisującego możliwości przeglądarek. Zobacz także
+        <function>get_browser</function>.
+       </para>
+      </listitem>
+     </varlistentry>
+     
+    </variablelist>
+   </sect2>
+
+   <sect2 id="ini.sect.uodbc">
+    <title>Dyrektywy konfiguracji Zunifikowanego ODBC</title>
+    <variablelist>
+     
+     <varlistentry id="ini.uodbc.default-db">
+      <term>
+       <parameter>uodbc.default_db</parameter>
+       <type>string</type>
+      </term>
+      <listitem>
+       <para>
+        Źródło danych ODBC używane jeśli nie podane zostało inne w
+        <function>odbc_connect</function> lub
+        <function>odbc_pconnect</function>.
+       </para>
+      </listitem>
+     </varlistentry>
+     
+     <varlistentry id="ini.uodbc.default-user">
+      <term>
+       <parameter>uodbc.default_user</parameter>
+       <type>string</type>
+      </term>
+      <listitem>
+       <para>
+        Nazwa użytkownika używana jeśli inna nie została podana w
+        <function>odbc_connect</function> lub
+        <function>odbc_pconnect</function>.
+       </para>
+      </listitem>
+     </varlistentry>
+     
+     <varlistentry id="ini.uodbc.default-pw">
+      <term>
+       <parameter>uodbc.default_pw</parameter>
+       <type>string</type>
+      </term>
+      <listitem>
+       <para>
+        Hasło używane jeśli inne nie zostało podane w
+        <function>odbc_connect</function> lub
+        <function>odbc_pconnect</function>.
+       </para>
+      </listitem>
+     </varlistentry>
+     
+     <varlistentry id="ini.uodbc.allow-persistent">
+      <term>
+       <parameter>uodbc.allow_persistent</parameter>
+       <type>boolean</type>
+      </term>
+      <listitem>
+       <para>
+        Czy pozwalać na stałe połączenia ODBC.
+       </para>
+      </listitem>
+     </varlistentry>
+     
+     <varlistentry id="ini.uodbc.max-persistent">
+      <term>
+       <parameter>uodbc.max_persistent</parameter>
+       <type>integer</type>
+      </term>
+      <listitem>
+       <para>
+        Maksymalna liczba stałych połączeń ODBC na każdy proces.
+       </para>
+      </listitem>
+     </varlistentry>
+     
+     <varlistentry id="ini.uodbc.max-links">
+      <term>
+       <parameter>uodbc.max_links</parameter>
+       <type>integer</type>
+      </term>
+      <listitem>
+       <para>
+        Maksymalna liczba połączeń ODBC na każdy proces, włączając w to
+        połączenia stałe.
+       </para>
+      </listitem>
+     </varlistentry>
+     
+    </variablelist>
+   </sect2>
+
+   <sect2 id="ini.sect.mbstring">
+    <title>
+     Dyrektywy konfiguracji Multi-Byte String (Wielobajtowych Stringów)
+    </title>
+    <variablelist>
+     
+     <varlistentry id="ini.mbstring.internal-encoding">
+      <term>
+       <parameter>mbstring.internal_encoding</parameter>
+       <type>string</type>
+      </term>
+      <listitem>
+       <para>
+        <literal>mbstring.internal_encoding</literal> definiuje domyślne
+        wewnętrzne kodowanie znaków.
+       </para>
+      </listitem>
+     </varlistentry>
+
+     <varlistentry id="ini.mbstring.http-input">
+      <term>
+       <parameter>mbstring.http_input</parameter>
+       <type>string</type>
+      </term>
+      <listitem>
+       <para>
+        <literal>mbstring.http_input</literal> definiuje domyślne kodowanie
+        znaków wejścia HTTP.
+       </para>
+      </listitem>
+     </varlistentry>
+
+     <varlistentry id="ini.mbstring.http-output">
+      <term>
+       <parameter>mbstring.http_output</parameter>
+       <type>string</type>
+      </term>
+      <listitem>
+       <para>
+        <literal>mbstring.http_output</literal> definiuje domyślne kodowanie
+        znaków wyjścia HTTP.
+       </para>
+      </listitem>
+     </varlistentry>
+
+     <varlistentry id="ini.mbstring.detect-order">
+      <term>
+       <parameter>mbstring.detect_order</parameter>
+       <type>string</type>
+      </term>
+      <listitem>
+       <para>
+        <literal>mbstring.detect_order</literal> definiuje domyślną kolejność
+        wykrywania kodowania znaków.
+       </para>
+      </listitem>
+     </varlistentry>
+
+     <varlistentry id="ini.mbstring.substitute-character">
+      <term>
+       <parameter>mbstring.substitute_character</parameter>
+       <type>string</type>
+      </term>
+      <listitem>
+       <para>
+        <literal>mbstring.substitute_character</literal> definiuje znak
+        zastępujące znaki o błędnych kodach.
+       </para>
+      </listitem>
+     </varlistentry>
+    </variablelist>
+   </sect2>
+
+  </sect1>
+
+ </chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+sgml-parent-document:nil
+sgml-default-dtd-file:"../../manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
