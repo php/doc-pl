@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.3 $ -->
+<!-- EN-Revision: 1.3 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.4 $ -->
   <refentry id="function.ftp-fget">
    <refnamediv>
     <refname>ftp_fget</refname>
@@ -16,6 +16,9 @@
       <methodparam><type>int</type><parameter>fp</parameter></methodparam>
       <methodparam><type>string</type><parameter>plik_zdalny</parameter></methodparam>
       <methodparam><type>int</type><parameter>tryb</parameter></methodparam>
+      <methodparam choice="opt">
+       <type>int</type><parameter>pozycja_wznowienia</parameter>
+      </methodparam>
      </methodsynopsis>
     <para>
      <function>ftp_fget</function> pobiera <parameter>plik_zdalny</parameter>
@@ -23,9 +26,18 @@
      <parameter>fp</parameter>.  <parameter>tryb</parameter> musi być podany
      jako <constant>FTP_ASCII</constant> lub <constant>FTP_BINARY</constant>.
     </para>
+    <note> 
+     <para> 
+      Parametr <parameter>pozycja_wznowienia</parameter> został dodany w PHP
+      4.3.0.
+     </para> 
+    </note> 
     <para>
      Zwraca wartość &true; w przypadku sukcesu lub &false; w przypadku
      napotkania błędu.
+    </para> 
+      <para> 
+       Patrz także: <function>ftp_get</function>. 
     </para>
    </refsect1>
   </refentry>

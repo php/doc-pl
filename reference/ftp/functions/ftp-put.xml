@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
 <!-- EN-Revision: 1.2 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.3 $ -->
+<!-- $Revision: 1.4 $ -->
   <refentry id="function.ftp-put">
    <refnamediv>
     <refname>ftp_put</refname>
-    <refpurpose>Umieszcza plik na serwerze FTP.</refpurpose>
+    <refpurpose>Umieszcza plik na serwerze FTP</refpurpose>
    </refnamediv>
    <refsect1>
     <title>Opis</title>
@@ -14,6 +14,9 @@
       <methodparam><type>string</type><parameter>plik_zdalny</parameter></methodparam>
       <methodparam><type>string</type><parameter>plik_lokalny</parameter></methodparam>
       <methodparam><type>int</type><parameter>tryb</parameter></methodparam>
+      <methodparam choice="opt">
+       <type>int</type><parameter>pozycja_początkowa</parameter>
+      </methodparam>
      </methodsynopsis>
     <para>
      <function>ftp_put</function> umieszcza <parameter>plik_lokalny</parameter>
@@ -21,6 +24,12 @@
      </parameter> połączenia musi być określony jako
      <constant>FTP_ASCII</constant> lub <constant>FTP_BINARY</constant>.
     </para>
+    <note>
+     <para>
+      Parametr <parameter>pozycja_początkowa</parameter> został dodany w PHP
+      4.3.0.
+     </para>
+    </note>
     <para>
      Zwraca wartość &true; w przypadku sukcesu lub &false; w przypadku
      napotkania błędu.
@@ -30,7 +39,7 @@
       <title>Przykład <function>ftp_put</function></title>
       <programlisting role="php">
 <![CDATA[
-$upload = ftp_put ($conn_id, "$plik_docelowy", "$plik_zrodlowy", FTP_ASCII);
+$upload = ftp_put ($conn_id, $plik_docelowy, $plik_zrodlowy, FTP_ASCII);
 ]]>
       </programlisting>
      </example>
