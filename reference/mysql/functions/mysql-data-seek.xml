@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: slawek Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.5 Maintainer: slawek Status: ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.mysql-data-seek">
    <refnamediv>
     <refname>mysql_data_seek</refname>
@@ -39,19 +39,19 @@
 <![CDATA[
 <?php
     $link = mysql_pconnect('serwer', 'uzytkownik', 'haslo')
-        or die('Nie można się połączyć');
+        or die('Nie można się połączyć: ' . mysql_error());
 
     mysql_select_db('baza')
-        or die('Nie można wybrać bazy danych');
+        or die('Nie można wybrać bazy danych: ' . mysql_error());
 
     $query = 'SELECT last_name, first_name FROM friends';
     $result = mysql_query($query)
-        or die('Zapytanie zakończone niepowodzeniem');
+        or die('Zapytanie zakończone niepowodzeniem: ' . mysql_error());
 
     /* pobieramy wiersze w odwrotnej kolejności */
     for ($i = mysql_num_rows($result) - 1; $i >=0; $i--) {
         if (!mysql_data_seek($result, $i)) {
-            echo "Nie można przejść do wiersza $i\n";
+            echo "Nie można przejść do wiersza $i: " . mysql_error() . "\n"; 
             continue;
         }
 

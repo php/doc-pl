@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: slawek Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.4 Maintainer: slawek Status: ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.mysql-connect">
    <refnamediv>
     <refname>mysql_connect</refname>
@@ -12,7 +12,6 @@
       <type>resource</type><methodname>mysql_connect</methodname>
       <methodparam choice="opt"><type>string</type><parameter>
         serwer
-        
        </parameter></methodparam>
       <methodparam choice="opt"><type>string</type><parameter>
         użytkownik
@@ -22,6 +21,9 @@
        </parameter></methodparam>
       <methodparam choice="opt"><type>bool</type><parameter> 
         nowy_identyfikator 
+       </parameter></methodparam> 
+      <methodparam choice="opt"><type>int</type><parameter> 
+        opcje_klienta
        </parameter></methodparam> 
      </methodsynopsis>
     <para> 
@@ -61,11 +63,16 @@
      <parameter>nowy_identyfikator</parameter> zmienia to zachowanie,
      powodując, że <function>mysql_connect</function> za każdym razem otwiera
      nowe połączenie, nawet jeśli funkcja była wcześniej wywołana z identycznymi
-     parametrami.
+     parametrami. Argument <parameter>opcje_klienta</parameter> może być
+     kombinacją stałych MYSQL_CLIENT_SSL, MYSQL_CLIENT_COMPRESS,
+     MYSQL_CLIENT_IGNORE_SPACE lub MYSQL_CLIENT_INTERACTIVE.
     </para>
     <note> 
      <para> 
       Argument <parameter>nowy_identyfikator</parameter> pojawił się w PHP 4.2.0
+     </para> 
+     <para> 
+      Argument <parameter>opcje_klienta</parameter> pojawił się w PHP 4.3.0
      </para> 
     </note> 
     <para>
@@ -79,7 +86,7 @@
 <![CDATA[
 <?php
     $link = mysql_connect('localhost', 'uzytkownik', 'haslo')
-        or die('Nie można się połączyć');
+        or die('Nie można się połączyć: ' . mysql_error());
     print ('Połączenie nawiązane');
     mysql_close($link);
 ?>
