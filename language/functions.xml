@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- $Revision: 1.2 $ -->
+<!-- $Revision: 1.3 $ -->
  <chapter id="functions">
   <title>Funkcje</title>
 
@@ -12,11 +12,13 @@
  
     <informalexample>
      <programlisting role="php">
+<![CDATA[
 function foo ($arg_1, $arg_2, ..., $arg_n)
 {
     echo "Przykładowa funkcja.\n";
     return $retval;
 }
+]]>
      </programlisting>
     </informalexample>
    </para>
@@ -79,10 +81,12 @@ function foo ($arg_1, $arg_2, ..., $arg_n)
  
     <informalexample>
      <programlisting role="php">
+<![CDATA[
 function pobiera_tablice($wejscie)
 {
     echo "$wejscie[0] + $wejscie[1] = ", $wejscie[0]+$wejscie[1];
 }
+]]>
      </programlisting>
     </informalexample>
    </para>
@@ -102,13 +106,15 @@ function pobiera_tablice($wejscie)
  
      <informalexample>
       <programlisting role="php">
-function dodaj_cos_extra(&amp;$string)
+<![CDATA[
+function dodaj_cos_extra(&$string)
 {
     $string .= 'i coś extra.';
 }
 $str = 'To jest string, ';
 dodaj_cos_extra($str);
 echo $str;    // wyświetla 'To jest string string, i coś extra.'
+]]>
       </programlisting>
      </informalexample>
     </para>
@@ -120,6 +126,7 @@ echo $str;    // wyświetla 'To jest string string, i coś extra.'
  
      <informalexample>
       <programlisting role="php">
+<![CDATA[
 function foo ($bar)
 {
     $bar .= ' i coś ekstra.';
@@ -127,8 +134,9 @@ function foo ($bar)
 $str = 'To jest string, ';
 foo ($str);
 echo $str;    // wyświetla 'To jest string, '
-foo (&amp;$str);
+foo (&$str);
 echo $str;    // wyświetla 'To jest string, i coś extra.'
+]]>
       </programlisting>
      </informalexample>
     </para>
@@ -144,12 +152,14 @@ echo $str;    // wyświetla 'To jest string, i coś extra.'
  
      <informalexample>
       <programlisting role="php">
+<![CDATA[
 function robkawe ($typ = "cappucino")
 {
     return "Robię kubek $type.\n";
 }
-echo makecoffee ();
-echo makecoffee ("espresso");
+echo robkawe ();
+echo robkawe ("espresso");
+]]>
       </programlisting>
      </informalexample>
     </para>
@@ -175,12 +185,14 @@ Robię kubek espresso.
  
      <informalexample>
       <programlisting role="php">
+<![CDATA[
 function robjogurt ($typ = "acidophilus", $smak)
 {
     return "Robię miskę $typ $smak.\n";
 }
  
 echo robjogurt ("malinowy");   // nie działa tak jak się spodziewaliśmy
+]]>
       </programlisting>
      </informalexample>
     </para>
@@ -200,12 +212,14 @@ Robię miskę malinowy .
  
      <informalexample>
       <programlisting role="php">
+<![CDATA[
 function robjogurt ($smak, $typ = "acidophilus")
 {
     return "Robię miskę $type $flavour.\n";
 }
  
 echo robjogurt ("malinowy");   // działa tak jak się spodziewaliśmy
+]]>
       </programlisting>
      </informalexample>
     </para>
@@ -250,11 +264,13 @@ Robię miskę acidophilus malinowy.
  
     <informalexample>
      <programlisting role="php">
+<![CDATA[
 function kwadrat ($num)
 {
     return $num * $num;
 }
 echo kwadrat (4);   // wyświetla '16'.
+]]>
      </programlisting>
     </informalexample>
    </para>
@@ -265,11 +281,13 @@ echo kwadrat (4);   // wyświetla '16'.
  
     <informalexample>
      <programlisting role="php">
+<![CDATA[
 function maleLiczby()
 {
     return array (0, 1, 2);
 }
 list ($zero, $jeden, $dwa) = maleLiczby();
+]]>
      </programlisting>
     </informalexample>
    </para>
@@ -278,12 +296,14 @@ list ($zero, $jeden, $dwa) = maleLiczby();
     w deklaracji funkcji i przy przypisywaniu zwracanej wartości do zmiennej:
     <informalexample>
      <programlisting role="php">
-function &amp;zwrocReferencje()
+<![CDATA[
+function &zwrocReferencje()
 {
     return $jakasref;
 }
 
-$nowaref =&amp; zwrocReferencje();
+$nowaref =& zwrocReferencje();
+]]>
      </programlisting>
     </informalexample>
    </para>
@@ -334,15 +354,16 @@ $nowaref =&amp; zwrocReferencje();
     <example>
      <title>Przykład zmiennej funkcji</title>
      <programlisting role="php">
-&lt;?php
+<![CDATA[
+<?php
 function foo()
 {
-    echo "W foo()&lt;br>\n";
+    echo "W foo()<br>\n";
 }
 
 function bar($arg = '')
 {
-    echo "W bar(); argumentem jest '$arg'.&lt;br>\n";
+    echo "W bar(); argumentem jest '$arg'.<br>\n";
 }
 
 $func = 'foo';
@@ -350,6 +371,7 @@ $func();
 $func = 'bar';
 $func('test');
 ?>
+]]>
      </programlisting>
     </example>
    </para>
