@@ -1,45 +1,75 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- splitted from ./pl/functions/filesystem.xml, last change in rev 1.1 -->
-<!-- last change to 'is-uploaded-file' in en/ tree in rev 1.39 -->
-<!-- EN-Revision: 1.2 Maintainer: adi Status: partial -->
-<!-- OLD-Revision: 1.115/EN.1.39 -->
+<!-- EN-Revision: 1.5 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.is-uploaded-file">
    <refnamediv>
     <refname>is_uploaded_file</refname>
-    <refpurpose>Mówi czy plik został przysłany przez HTTP POST</refpurpose>
+    <refpurpose>Mówi czy plik został przysłany przez HTTP POST.</refpurpose>
    </refnamediv>
    <refsect1>
-    <title>Description</title>
-     <methodsynopsis>
-      <type>bool</type><methodname>is_uploaded_file</methodname>
-      <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
-     </methodsynopsis>
-
+    <title>Opis</title>
+    <methodsynopsis>
+     <type>bool</type><methodname>is_uploaded_file</methodname>
+     <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
+    </methodsynopsis>
     <para>
-     Ta funkcja jest dostępna tylko w wersjach PHP 3 późniejszych od
-     3.0.16 i w wersjach PHP 4 późniejszych od 4.0.2.
-    </para>
-
-    <para>
-     Zwraca &true; jeśli plik o nazwie <varname>nazwa_pliku</varname>
+     Zwraca &true; jeśli plik o nazwie <parameter>nazwa_pliku</parameter>
      został przysłany (upload) przez HTTP POST. To pomaga upewnić się,
      czy złośliwy użytkownik nie próbuje oszukać skryptu pracującego
      na plikach, tak aby działał on na plikach na których nie powinien
      -- na przykład
      <filename>/etc/passwd</filename>.
     </para>
-
     <para>
      Ten rodzaj testów jest szczególnie ważny jeśli istnieje szansa, że
      cokolwiek robimy z przysłanymi plikami może zdradzić ich
      treść użytkownikowi lub nawet innym użytkownikom tego samego
      systemu.
     </para>
-
     <para>
-     Patrz także: <function>move_uploaded_file</function> i sekcję
-     <link linkend="features.file-upload">Handling file uploads</link>
-     aby zobaczyć przykładowe skrypty.
+    <function>is_uploaded_file</function> jest dostępna tylko w wersjach
+     PHP 3 późniejszych od PHP 3.0.16, i wersjach PHP 4 późniejszych od 4.0.2.
+     Jeśli utknołeś przy używaniu wcześniejszej wersji, możesz użyć poniższej
+     funkcji w celu pomocy w zabezpieczeniu siebie:
+     <note>
+      <para>
+       Poniższy przykład <emphasis>nie</emphasis> zadziała w wersjach
+       PHP 4 późniejszych od 4.0.2. To jest spowodowane zmianą wewnętrznej
+       funkcjonalności PHP po tej wersji.
+      </para>
+     </note>
+	  </para> 
+       <example> 
+        <title><function>is_uploaded_file</function> przykład</title> 
+     <programlisting role="php">
+<![CDATA[
+<?php
+/* Userland test for uploaded file. */
+ function is_uploaded_file($filename)  
+  {  
+    if (!$tmp_file = get_cfg_var('upload_tmp_dir')) {
+        $tmp_file = dirname(tempnam('', ''));
+    }
+    $tmp_file .= '/' . basename($filename);
+    /* User might have trailing slash in php.ini... */
+    return (ereg_replace('/+', '/', $tmp_file) == $filename);
+}
+
+/* Jak użyć tej funkcji, w tych starych wersjach nie masz także
+ * move_uploaded_file(): */
+if (is_uploaded_file($HTTP_POST_FILES['userfile'])) {
+    copy($HTTP_POST_FILES['userfile'], "/place/to/put/uploaded/file");
+} else {
+    echo "Prawdopodobny atak przez uploadowanie pliku: '$HTTP_POST_FILES[userfile]'.";
+}
+?>
+]]>
+     </programlisting>
+    </example>
+    <para>
+     Patrz także: <function>move_uploaded_file</function> i rozdział
+     <link linkend="features.file-upload">Obsługa uploadowanych plików</link>
+     w celu uzyskania prostych przykładów użycia tej funkcji.
     </para>
    </refsect1>
   </refentry>
