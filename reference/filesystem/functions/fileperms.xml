@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- splitted from ./pl/functions/filesystem.xml, last change in rev 1.1 -->
-<!-- last change to 'fileperms' in en/ tree in rev 1.2 -->
-<!-- EN-Revision: 1.2 Maintainer: adi Status: partial -->
-<!-- OLD-Revision: 1.115/EN.1.2 -->
+<!-- EN-Revision: 1.9 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.3 $ -->
   <refentry id="function.fileperms">
    <refnamediv>
     <refname>fileperms</refname>
@@ -14,18 +12,98 @@
       <type>int</type><methodname>fileperms</methodname>
       <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
      </methodsynopsis>
-    <para>
+    <para>    
      Zwraca prawa dostępu pliku, lub &false; w przypadku błędu.
-    </para>
+     </para>
+	  &note.clearstatcache; 
+      &tip.fopen-wrapper.stat; 
+      <example> 
+          <title>Wyświetlanie uprawnień w postaci ósemkowej</title> 
+          <programlisting role="php"> 
+  <![CDATA[ 
+  <?php 
+  echo substr(sprintf('%o', fileperms('/tmp')), -4); 
+  echo substr(sprintf('%o', fileperms('/etc/passwd')), -4); 
+  ?> 
+  ]]> 
+          </programlisting> 
+          <para>To powino wyświetlić:</para> 
+          <screen> 
+  <![CDATA[ 
+  1777 
+  0644 
+  ]]> 
+          </screen> 
+      </example> 
+      <example> 
+          <title>Wyświetlanie wszystkich uprawnień</title> 
+          <programlisting role="php"> 
+  <![CDATA[ 
+  <?php 
+  $perms = fileperms('/etc/passwd'); 
+    
+  if (($perms & 0xC000) == 0xC000) { 
+      // Gniazdo (socket) 
+      $info = 's'; 
+  } elseif (($perms & 0xA000) == 0xA000) { 
+      // Link symboliczny 
+      $info = 'l'; 
+  } elseif (($perms & 0x8000) == 0x8000) { 
+      // Zwykły plik 
+      $info = '-'; 
+  } elseif (($perms & 0x6000) == 0x6000) { 
+      // Urządzenie blokowe
+      $info = 'b'; 
+  } elseif (($perms & 0x4000) == 0x4000) { 
+      // Katalog 
+      $info = 'd'; 
+  } elseif (($perms & 0x2000) == 0x2000) { 
+      // Urządzenie znakowe 
+      $info = 'c'; 
+  } elseif (($perms & 0x1000) == 0x1000) { 
+      // Potok (FIFO)  
+      $info = 'p'; 
+  } else { 
+      // Nieznane 
+      $info = 'u'; 
+  } 
+    
+  // Właściciel 
+  $info .= (($perms & 0x0100) ? 'r' : '-'); 
+  $info .= (($perms & 0x0080) ? 'w' : '-'); 
+  $info .= (($perms & 0x0040) ? 
+              (($perms & 0x0800) ? 's' : 'x' ) : 
+              (($perms & 0x0800) ? 'S' : '-')); 
+    
+  // Grupa 
+  $info .= (($perms & 0x0020) ? 'r' : '-'); 
+  $info .= (($perms & 0x0010) ? 'w' : '-'); 
+  $info .= (($perms & 0x0008) ? 
+              (($perms & 0x0400) ? 's' : 'x' ) : 
+              (($perms & 0x0400) ? 'S' : '-')); 
+    
+  // Świat 
+  $info .= (($perms & 0x0004) ? 'r' : '-'); 
+  $info .= (($perms & 0x0002) ? 'w' : '-'); 
+  $info .= (($perms & 0x0001) ? 
+              (($perms & 0x0200) ? 't' : 'x' ) : 
+              (($perms & 0x0200) ? 'T' : '-')); 
+    
+  echo $info; 
+  ?> 
+  ]]> 
+          </programlisting> 
+          <para>To powino wyświetlić:</para> 
+          <screen> 
+  <![CDATA[ 
+  -r--r--r-- 
+  ]]> 
+          </screen> 
+      </example> 
     <simpara>
-     Ta funkcja nie działa
-     <link linkend="features.remote-files">na zdalnych plikach</link>; sprawdzany
-     plik musi być dostępny przez system plików serwera.
+	Patrz także: <function>is_readable</function>, 
+     i <function>stat</function> 
     </simpara>
-    <para>
-     Wyniki tej funkcji są cachowane. Zobacz
-     <function>clearstatcache</function> aby uzyskać więcej szczegółów.
-    </para>
    </refsect1>
   </refentry>
 
