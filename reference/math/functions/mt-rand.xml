@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.7 $ -->
+<!-- EN-Revision: 1.10 Maintainer: qrak Status: ready -->
+<!-- $Revision: 1.8 $ -->
   <refentry id="function.mt-rand">
    <refnamediv>
     <refname>mt_rand</refname>
@@ -18,14 +18,9 @@
      charakterystyki i są powolne. Domyślnie PHP używa generatora liczb losowych
      z libc w funkcji <function>rand</function>. Funkcja
      <function>mt_rand</function> jest jej zamiennikiem. Używa ona generatora
-     liczb losowych o znanej charakterystyce, Mersenne Twistera, który generuje
-     liczby losowe w sam raz dla większości potrzeb kryptografii (aby dowiedzieć
-     się więcej, zajrzyj na strony www Mersenne Twistera) i działa cztery razy
-     szybciej od typowych generatorów zawartych w libc. Stronę www Mersene
-     Twistera można znaleźć pod adresem 
-     <ulink url="&url.mersenne;">&url.mersenne;</ulink>, a zoptymalizowaną
-     wersję kodu źródłowego MT pod adresem
-     <ulink url="&url.mersenne.twister;">&url.mersenne.twister;</ulink>.
+     liczb losowych o znanej charakterystyce używając
+     <ulink url="&url.mersenne;">Mersenne Twistera</ulink>, który generuje
+     liczby losowe czterokrotnie szybciej niż średnio funkcja rand() z glibc.
     </simpara>
     <simpara>
      Jeśli funkcja zostanie wywołana bez opcjonalnych argumentów 
@@ -35,11 +30,31 @@
      potrzebujesz liczby losowej z przedziału od 5 do 15 włącznie, użyj
      <literal>mt_rand (5, 15)</literal>.
     </simpara>
-    <simpara>
-     W starszych wersjach PHP trzeba było najpierw zainicjować generator liczb
-     losowych za pomocą funkcji <function>mt-srand</function>. Począwszy od
-     PHP 4.2.0 nie jest to już konieczne.
-    </simpara>
+    <para>
+     <example>
+      <title>Przykład <function>mt_rand</function></title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+echo mt_rand() . "\n";
+echo mt_rand() . "\n";
+
+echo mt_rand(5, 15);
+?>
+]]>
+      </programlisting>
+      &example.outputs.similar;
+      <screen>
+<![CDATA[
+1604716014
+1478613278
+6
+]]>
+      </screen>
+     </example>
+    </para>
+    &note.randomseed;
+
     <note>
      <para>
       W wersjach przed 3.0.7 argument <parameter>max</parameter> znaczył
