@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.5 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.5 $ -->
+<!-- EN-Revision: 1.15 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.6 $ -->
   <refentry id="function.uksort">
    <refnamediv>
     <refname>uksort</refname>
@@ -12,46 +12,58 @@
    <refsect1>
     <title>Opis</title>
      <methodsynopsis>
-      <type>void</type><methodname>uksort</methodname>
-      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
-      <methodparam><type>callback</type><parameter>funkcja_por</parameter></methodparam>
+      <type>bool</type><methodname>uksort</methodname>
+      <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
+      <methodparam><type>callback</type><parameter>funkcja_porównująca</parameter></methodparam>
      </methodsynopsis>
     <para>
-     Funkcja ta posortuje tablicę według kluczy korzystając z podanej przez
+     <function>uksort</function> sortuje tablicę według kluczy korzystając z podanej przez
      użytkownika funkcji porównującej. Jeśli chcesz posortować tablicę według
      skomplikowanych kryteriów, to powinieneś użyć tej funkcji.
+    </para>
+    <para>
+     Funkcja <parameter>funkcja_porównująca</parameter> powinna przyjmować dwa
+     parametry, którymi będą pary kluczy tablicy podanej jako pierwszy
+     parametr funkcji <function>uksort</function>. Funkcja porównująca musi
+     zwracać liczbę całkowitą, mniejszą, równą lub większą od zera jeśli
+     pierwszy parametr jest odpowiednio mniejszy, równy lub większy niż drugi.
+    </para>
+    <para>
+     &return.success;
     </para>
     <example>
      <title>Przykład użycia <function>uksort</function></title>
      <programlisting role="php">
 <![CDATA[
-function cmp ($a, $b) {
-    if ($a == $b) return 0;
+<?php
+function cmp($a, $b)
+{
+    if ($a == $b) {
+        return 0;
+    }
     return ($a > $b) ? -1 : 1;
 }
 
-$a = array (4 => "cztery", 3 => "trzy", 20 => "dwadzieścia", 10 => "dziesięć");
+$a = array(4 => "cztery", 3 => "trzy", 20 => "dwadzieścia", 10 => "dziesięć");
 
-uksort ($a, "cmp");
+uksort($a, "cmp");
 
-while (list ($key, $value) = each ($a)) {
+while (list($key, $value) = each($a)) {
     echo "$key: $value\n";
 }
+?>
 ]]>
-     </programlisting>
-    </example>
-    <para>
-     Ten przykład wyświetli:
-    </para>
-    <para>
-     <screen>
+      </programlisting>
+      &example.output;
+      <screen>
 <![CDATA[
 20: dwadzieścia
 10: dziesięć
 4: cztery
 3: trzy
 ]]>
-     </screen>
+      </screen>
+     </example>
     </para>
     <para>
      Patrz także: <function>usort</function>, <function>uasort</function>, 
