@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.7 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.array-merge-recursive">
    <refnamediv>
     <refname>array_merge_recursive</refname>
@@ -32,13 +32,17 @@
       <title>Przykład użycia <function>array_merge_recursive</function></title>
       <programlisting role="php">
 <![CDATA[
+<?php
 $tbl1 = array ("kolor" => array ("ulubiony" => "czerwony"), 5);
 $tbl2 = array (10, "kolor" => array ("ulubiony" => "zielony", "niebieski"));
 print_r(array_merge_recursive ($tbl1, $tbl2));
+?>
 ]]>
       </programlisting>
       <para>
-       <screen>
+       Zmienna <literal>$result</literal> będze zawierała:
+      </para>
+      <screen>
 <![CDATA[
 Array
 (
@@ -57,8 +61,7 @@ Array
     [1] => 10
 )
 ]]>
-       </screen>
-      </para>
+      </screen>
      </example>
     </para>
     <para>
