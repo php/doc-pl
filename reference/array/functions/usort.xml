@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.7 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.6 $ -->
+<!-- EN-Revision: 1.21 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.7 $ -->
   <refentry id="function.usort">
    <refnamediv>
     <refname>usort</refname>
     <refpurpose>
-     Sortuj tablicę według wartości korzystając ze zdefiniowanej przez
+     Sortuje tablicę według wartości korzystając ze zdefiniowanej przez
      użytkownika funkcji porównującej
     </refpurpose>
    </refnamediv>
@@ -13,8 +13,8 @@
     <title>Opis</title>
      <methodsynopsis>
       <type>void</type><methodname>usort</methodname>
-      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
-      <methodparam><type>callback</type><parameter>funkcja_por</parameter></methodparam>
+      <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
+      <methodparam><type>callback</type><parameter>funkcja_porównująca</parameter></methodparam>
      </methodsynopsis>
     <para>
      Funkcja ta posortuje tablicę według jej wartości korzystając z podanej
@@ -25,6 +25,8 @@
      Funkcja porównująca musi zwracać liczbę całkowitą mniejszą, równą lub
      większą od zera jeśli pierwszy argument jest odpowiednio mniejszy, równy
      lub większy niż drugi.
+    </para>
+    <para>
      <note>
       <para>
        Jeśli wynikiem porównania dwóch elementów tablicy jest równość, ich
@@ -37,31 +39,34 @@
      </note>
     </para>
     <para>
+     &return.success;
+    </para>
+    <para>
      <example>
       <title>Przykład użycia <function>usort</function></title>
       <programlisting role="php">
 <![CDATA[
-function cmp ($a, $b) {
-    if ($a == $b) return 0;
-    return ($a > $b) ? -1 : 1;
+<?php
+function cmp($a, $b)
+{
+    if ($a == $b) {
+        return 0;
+    }
+    return ($a < $b) ? -1 : 1;
 }
 
-$a = array (3, 2, 5, 6, 1);
+$a = array(3, 2, 5, 6, 1);
 
-usort ($a, "cmp");
+usort($a, "cmp");
 
-while (list ($key, $value) = each ($a)) {
+while (list($key, $value) = each($a)) {
     echo "$key: $value\n";
 }
+?>
 ]]>
       </programlisting>
-     </example>
-    </para>
-    <para>
-     Powyższy przykład wyświetli:
-    </para>
-    <para>
-     <screen>
+      &example.output;
+      <screen>
 <![CDATA[
 0: 6
 1: 5
@@ -69,12 +74,13 @@ while (list ($key, $value) = each ($a)) {
 3: 2
 4: 1
 ]]>
-     </screen>
+      </screen>
+     </example>
     </para>
     <note>
      <para>
-      Oczywiście w prostszych przypadkach lepiej jest skorzystać z funkcji
-      <function>rsort</function>.
+      Oczywiście w tym prostym przykładzie lepiej jest skorzystać z funkcji
+      <function>sort</function>.
      </para>
     </note>
     <para>
@@ -85,7 +91,9 @@ while (list ($key, $value) = each ($a)) {
       </title>
       <programlisting role="php">
 <![CDATA[
-function cmp ($a, $b) {
+<?php
+function cmp($a, $b)
+{
     return strcmp($a["owoc"], $b["owoc"]);
 }
 
@@ -95,28 +103,24 @@ $owoce[2]["owoc"] = "winogrona";
 
 usort($owoce, "cmp");
 
-while (list ($key, $value) = each ($owoce)) {
+while (list($key, $value) = each($owoce)) {
     echo "\$owoce[$key]: " . $value["owoc"] . "\n";
 }
 ]]>
       </programlisting>
-     </example>
-    </para>
-    <para>
-     Sortując tablicę wielowymiarową, $a i $b zawierają referencję do
-     pierwszego indeksu tablicy.
-    </para>
-    <para>
-     Ten przykład wyświetli:
-    </para>
-    <para>
-     <screen>
+      <para>
+       Sortując tablicę wielowymiarową, $a i $b zawierają referencję do
+       pierwszego indeksu tablicy.
+      </para>
+      &example.output;
+      <screen>
 <![CDATA[
 $owoce[0]: cytryny
 $owoce[1]: jabłka
 $owoce[2]: winogrona
 ]]>
-     </screen>
+      </screen>
+     </example>
     </para>
     <para>
      <example>
@@ -126,6 +130,7 @@ $owoce[2]: winogrona
       </title>
       <programlisting role="php">
 <![CDATA[
+<?php
 class TestObj {
     var $name;
      
@@ -139,7 +144,9 @@ class TestObj {
     {
         $al = strtolower($a->name);
         $bl = strtolower($b->name);
-        if ($al == $bl) return 0;
+        if ($al == $bl) {
+            return 0;
+        }
         return ($al > $bl) ? +1 : -1;
     }
 }
@@ -148,26 +155,22 @@ $a[] = new TestObj("c");
 $a[] = new TestObj("b");
 $a[] = new TestObj("d");
 
-uasort($a, array ("TestObj", "cmp_obj"));
+uasort($a, array("TestObj", "cmp_obj"));
 
 foreach ($a as $item) {
-    print $item->name."\n";
+    print $item->name . "\n";
 }
 ]]>
       </programlisting>
-     </example>
-    </para>
-    <para>
-     Ten przykład wyświetli:
-    </para>
-    <para>
-     <screen>
+      &example.output;
+      <screen>
 <![CDATA[
 b
 c
 d
 ]]>
-     </screen>
+      </screen>
+     </example>
     </para>
     <para>
      Patrz także: <function>uasort</function>,
