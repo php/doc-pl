@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- splitted from ./pl/functions/filesystem.xml, last change in rev 1.1 -->
-<!-- last change to 'filetype' in en/ tree in rev 1.2 -->
-<!-- EN-Revision: 1.2 Maintainer: adi Status: partial -->
-<!-- OLD-Revision: 1.115/EN.1.2 -->
+<!-- EN-Revision: 1.10 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.3 $ -->
   <refentry id="function.filetype">
    <refnamediv>
     <refname>filetype</refname>
@@ -16,17 +14,36 @@
      </methodsynopsis>
     <para>
      Zwraca typ pliku. Możliwe wartości to fifo, char, dir, block,
-     link, file, and unknown.</para> <para> Zwraca &false;
-     w przypadku błędu.
+     link, file i unknown.
     </para>
     <para>
-     Wyniki tej funkcji są cachowane. Zobacz
-     <function>clearstatcache</function> aby uzyskać więcej szczegółów.
+	 Zwraca	 &false; jeśli wystąpił błąd. <function>filetype</function> również
+	 utworzy wiadomość <constant>E_NOTICE</constant> jeśli wywołanie stat się
+	 nie powiedzie lub gdy plik ma tym nieznany (unknown). 
+	</para>
+    &note.clearstatcache; 
+    
+    &tip.fopen-wrapper.stat; 
+	<para>
+	 <example> 
+<title><function>filetype</function> przykład</title>  
+        <programlisting role="php">  
+  <![CDATA[  
+  <?php  
+    
+  echo filetype('/etc/passwd');  // plik  
+  echo filetype('/etc/');        // katalog 
+    
+  ?>  
+  ]]>  
+        </programlisting>  
+       </example>  
+
     </para>
     <simpara>
-     Ta funkcja nie działa
-     <link linkend="features.remote-files">na zdalnych plikach</link>; sprawdzany
-     plik musi być dostępny przez system plików serwera.
+     Patrz także: <function>is_dir</function>, <function>is_file</function>,
+     <function>is_link</function>, <function>file_exists</function>, 
+     <function>stat</function> i <function>mime_content_type</function>. 
     </simpara>
    </refsect1>
   </refentry>
