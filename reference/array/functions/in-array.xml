@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.5 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.5 $ -->
+<!-- EN-Revision: 1.12 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.6 $ -->
   <refentry id="function.in-array">
    <refnamediv>
     <refname>in_array</refname>
-    <refpurpose>Zwraca &true; jeśli wartość istnieje w tablicy</refpurpose>
+    <refpurpose>Sprawdza czy wartość istnieje w tablicy</refpurpose>
    </refnamediv>
    <refsect1>
     <title>Opis</title>
@@ -43,12 +43,13 @@
       <title>Przykład użycia <function>in_array</function></title>
       <programlisting role="php">
 <![CDATA[
-$os = array ("Mac", "NT", "Irix", "Linux");
-if (in_array ("Irix", $os)) {
-    print "Znaleziono Irix";
+<?php
+$os = array("Mac", "NT", "Irix", "Linux");
+if (in_array("Irix", $os)) {
+    echo "Znaleziono Irix";
 }
-if (in_array ("mac", $os)) {
-    print "Znaleziono mac";
+if (in_array("mac", $os)) {
+    echo "Znaleziono mac";
 }
 ]]>
       </programlisting>
@@ -56,12 +57,12 @@ if (in_array ("mac", $os)) {
        Drugi warunek nie zostaje spełniony ponieważ funkcja
        <function>in_array</function> uwzględnia wielkość znaków, tak więc
        powyższy przykład wyświetli:
-       <screen>
+      </para>
+      <screen>
 <![CDATA[
 Znaleziono Irix
 ]]>
-       </screen>
-      </para>
+      </screen>
      </example>
     </para>
     <para>
@@ -74,21 +75,22 @@ Znaleziono Irix
 <?php
 $a = array('1.10', 12.4, 1.13);
 
-if (in_array('12.4', $a, TRUE))
+if (in_array('12.4', $a, true)) {
     echo "'12.4' znalezione ze ścisłym sprawdzaniem\n";
-if (in_array(1.13, $a, TRUE))
+}
+
+if (in_array(1.13, $a, true)) {
     echo "1.13 znalezione ze ścisłym sprawdzaniem\n";
+}
 ?>
 ]]>
       </programlisting>
-      <para>
-       Powyższy przykład wyświetli:
-       <screen>
+      &example.outputs;
+      <screen>
 <![CDATA[
 1.13 znalezione ze ścisłym sprawdzaniem
 ]]>
-       </screen>
-      </para>
+      </screen>
      </example>
     </para>
     <para>
@@ -99,24 +101,32 @@ if (in_array(1.13, $a, TRUE))
 <?php
 $a = array(array('p', 'h'), array('p', 'r'), 'o');
 
-if (in_array(array ('p', 'h'), $a))
+if (in_array(array ('p', 'h'), $a)) {
     echo "znaleziono 'ph'\n";
-if (in_array(array ('f', 'i'), $a))
+}
+
+if (in_array(array ('f', 'i'), $a)) {
     echo "znaleziono 'fi'\n";
-if (in_array('o', $a))
+}
+
+if (in_array('o', $a)) {
     echo "znaleziono 'o'\n";
+}
 ?>
- 
-// Wyświetlone zostanie
-  
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
 znaleziono 'ph'
 znaleziono 'o'
 ]]>
-      </programlisting>
+      </screen>
      </example>
     </para>
     <para>
-     Patrz także: <function>array_search</function>.
+     Patrz także: <function>array_search</function>,
+     <function>array_key_exists</function> i <function>isset</function>.
     </para>
    </refsect1>
   </refentry>
