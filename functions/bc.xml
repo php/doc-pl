@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.19 Maintainer: Qrak Status: ready -->
-<!-- $Revision: 1.5 $ -->
+<!-- EN-Revision: 1.20 Maintainer: Qrak Status: ready -->
+<!-- $Revision: 1.6 $ -->
  <reference id="ref.bc">
   <title>BCMath Operacje arytmetyczne na liczbach o dużej precyzji</title>
   <titleabbrev>BCMath</titleabbrev>
@@ -40,16 +40,16 @@
     <funcsynopsis>
      <funcprototype>
       <funcdef>string <function>bcadd</function></funcdef>
-      <paramdef>string <parameter>lewy operand</parameter></paramdef>
-      <paramdef>string <parameter>prawy operand</parameter></paramdef>
+      <paramdef>string <parameter>lewy_operand</parameter></paramdef>
+      <paramdef>string <parameter>prawy_operand</parameter></paramdef>
       <paramdef>int 
        <parameter><optional>precyzja</optional></parameter>
       </paramdef>
      </funcprototype>
     </funcsynopsis>
     <para>
-     Dodaje <parameter>lewy operand</parameter> do
-     <parameter>prawy operand</parameter> i zwraca ich sumę jako string.
+     Dodaje <parameter>lewy_operand</parameter> do
+     <parameter>prawy_operand</parameter> i zwraca ich sumę jako ciąg znaków.
      Opcjonalnego argumentu <parameter>precyzja</parameter> używa się do
      określenia ilości miejsc po przecinku dziesiętnym w wyniku.
     </para>
@@ -69,23 +69,23 @@
     <funcsynopsis>
      <funcprototype>
       <funcdef>int <function>bccomp</function></funcdef>
-      <paramdef>string <parameter>lewy operand</parameter></paramdef>
-      <paramdef>string <parameter>prawy operand</parameter></paramdef>
+      <paramdef>string <parameter>lewy_operand</parameter></paramdef>
+      <paramdef>string <parameter>prawy_operand</parameter></paramdef>
       <paramdef>int 
        <parameter><optional>precyzja</optional></parameter>
       </paramdef>
      </funcprototype>
     </funcsynopsis>
     <para>
-     Porównuje <parameter>lewy operand</parameter> z
-     <parameter>prawy operand</parameter> i zwraca rezultat w postaci liczby
+     Porównuje <parameter>lewy_operand</parameter> z
+     <parameter>prawy_operand</parameter> i zwraca rezultat w postaci liczby
      całkowitej. Opcjonalnego argumentu <parameter>precyzja</parameter> używa
      się do ustalenia ilości cyfr po przecinku, które będą wzięte pod uwagę
      przy porównywaniu. Funkcja zwraca wartość 0, jeśli operandy są sobie równe.
-     Jeśli <parameter>lewy operand</parameter> jest większy niż 
-     <parameter>prawy operand</parameter>, to funkcja zwraca +1, zaś jeśli
-     <parameter>lewy operand</parameter> jest mniejszy niż
-     <parameter>prawy operand</parameter>, to funkcja zwraca -1.
+     Jeśli <parameter>lewy_operand</parameter> jest większy niż 
+     <parameter>prawy_operand</parameter>, to funkcja zwraca +1, zaś jeśli
+     <parameter>lewy_operand</parameter> jest mniejszy niż
+     <parameter>prawy_operand</parameter>, to funkcja zwraca -1.
     </para>
    </refsect1>
   </refentry>
@@ -100,16 +100,16 @@
     <funcsynopsis>
      <funcprototype>
       <funcdef>string <function>bcdiv</function></funcdef>
-      <paramdef>string <parameter>lewy operand</parameter></paramdef>
-      <paramdef>string <parameter>prawy operand</parameter></paramdef>
+      <paramdef>string <parameter>lewy_operand</parameter></paramdef>
+      <paramdef>string <parameter>prawy_operand</parameter></paramdef>
       <paramdef>int 
        <parameter><optional>precyzja</optional></parameter>
       </paramdef>
      </funcprototype>
     </funcsynopsis>
     <para>
-     Dzieli <parameter>lewy operand</parameter> przez 
-     <parameter>prawy operand</parameter> i zwraca wynik.
+     Dzieli <parameter>lewy_operand</parameter> przez 
+     <parameter>prawy_operand</parameter> i zwraca wynik.
      Opcjonalnego argumentu <parameter>precyzja</parameter> używa się do
      określenia ilości miejsc po przecinku dziesiętnym w wyniku.
     </para>
@@ -131,13 +131,13 @@
     <funcsynopsis>
      <funcprototype>
       <funcdef>string <function>bcmod</function></funcdef>
-      <paramdef>string <parameter>lewy operand</parameter></paramdef>
+      <paramdef>string <parameter>lewy_operand</parameter></paramdef>
       <paramdef>string <parameter>moduł</parameter></paramdef>
      </funcprototype>
     </funcsynopsis>
     <para>
      Zwraca moduł (resztę z dzielenia) z liczby
-     <parameter>lewy operand</parameter> dzielonej przez 
+     <parameter>lewy_operand</parameter> dzielonej przez 
      <parameter>moduł</parameter>.
     </para>
     <para>
@@ -156,16 +156,16 @@
     <funcsynopsis>
      <funcprototype>
       <funcdef>string <function>bcmul</function></funcdef>
-      <paramdef>string <parameter>lewy operand</parameter></paramdef>
-      <paramdef>string <parameter>prawy operand</parameter></paramdef>
+      <paramdef>string <parameter>lewy_operand</parameter></paramdef>
+      <paramdef>string <parameter>prawy_operand</parameter></paramdef>
       <paramdef>int 
        <parameter><optional>precyzja</optional></parameter>
       </paramdef>
      </funcprototype>
     </funcsynopsis>
     <para>
-     Mnoży <parameter>lewy operand</parameter> przez
-     <parameter>prawy operand</parameter> i zwraca wynik.
+     Mnoży <parameter>lewy_operand</parameter> przez
+     <parameter>prawy_operand</parameter> i zwraca wynik.
      Opcjonalnego argumentu <parameter>precyzja</parameter> używa się do
      określenia ilości miejsc po przecinku dziesiętnym w wyniku.
     </para>
@@ -179,7 +179,7 @@
    <refnamediv>
     <refname>bcpow</refname>
     <refpurpose>
-     Podnosi jedną liczbę o dużej precyzji do potęgi
+     Podnosi liczbę o dużej precyzji do potęgi
     </refpurpose>
    </refnamediv>
    <refsect1>
@@ -269,16 +269,16 @@
     <funcsynopsis>
      <funcprototype>
       <funcdef>string <function>bcsub</function></funcdef>
-      <paramdef>string <parameter>lewy operand</parameter></paramdef>
-      <paramdef>string <parameter>prawy operand</parameter></paramdef>
+      <paramdef>string <parameter>lewy_operand</parameter></paramdef>
+      <paramdef>string <parameter>prawy_operand</parameter></paramdef>
       <paramdef>int 
        <parameter><optional>precyzja</optional></parameter>
       </paramdef>
      </funcprototype>
     </funcsynopsis>
     <para>
-     Odejmuje <parameter>prawy operand</parameter> od 
-     <parameter>lewy operand</parameter> i zwraca wynik jako typ string.
+     Odejmuje <parameter>prawy_operand</parameter> od 
+     <parameter>lewy_operand</parameter> i zwraca wynik jako ciąg znaków.
      Opcjonalnego argumentu <parameter>precyzja</parameter> używa się do
      określenia ilości miejsc po przecinku dziesiętnym w wyniku.
     </para>
