@@ -1,28 +1,22 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- splitted from ./pl/functions/filesystem.xml, last change in rev 1.1 -->
-<!-- last change to 'fgetss' in en/ tree in rev 1.2 -->
-<!-- EN-Revision: 1.2 Maintainer: adi Status: partial -->
-<!-- OLD-Revision: 1.115/EN.1.2 -->
+<!-- EN-Revision: 1.5 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.3 $ -->
   <refentry id="function.fgetss">
    <refnamediv>
     <refname>fgetss</refname>
-    <refpurpose>
-     Pobiera linię ze wskaźnika pliku i usuwa tagi HTML
-    </refpurpose>
+    <refpurpose>Pobiera linię ze wskaźnika pliku i usuwa tagi HTML</refpurpose>
    </refnamediv>
    <refsect1>
     <title>Opis</title>
      <methodsynopsis>
       <type>string</type><methodname>fgetss</methodname>
-      <methodparam><type>int</type><parameter>fp</parameter></methodparam>
+      <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam>
       <methodparam><type>int</type><parameter>długość</parameter></methodparam>
-      <methodparam choice="opt"><type>string</type><parameter>
-        dozwolone_tagi
-       </parameter></methodparam>
+      <methodparam choice="opt"><type>string</type><parameter>dozwolone_tagi</parameter></methodparam>
      </methodsynopsis>
     <para>
      Działa identycznie jak <function>fgets</function>, tylko że fgetss
-     dokonuje usunięcia wszystkich tagów HTML i PHP z tektu, który
+     dokonuje usunięcia wszystkich tagów HTML i PHP z tekstu, który
      przeczyta.
     </para>
     <para>
@@ -31,12 +25,13 @@
      <note>
       <para>
        <parameter>dozwolone_tagi</parameter> został dodany w PHP 3.0.13,
-       PHP4B3.
-      </para>
+       PHP 4.0.0
+      </para> 
      </note>
     </para>
+	  &note.line-endings;
     <para>
-     Patrz także <function>fgets</function>, <function>fopen</function>,
+     Patrz także: <function>fgets</function>, <function>fopen</function>,
      <function>fsockopen</function>, <function>popen</function> i
      <function>strip_tags</function>.
     </para>
