@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.40 Maintainer: Qrak Status: ready -->
-<!-- $Revision: 1.16 $ -->
+<!-- EN-Revision: 1.44 Maintainer: Qrak Status: ready -->
+<!-- $Revision: 1.17 $ -->
  <reference id="ref.http">
-  <title>HTTP</title>
+  <title>HTTP - obsługa protokołu</title>
   <titleabbrev>HTTP</titleabbrev>
 
   <partintro>
@@ -64,13 +64,12 @@ header('WWW-Authenticate: NTLM',false);
        </informalexample>  
        <note>  
         <para>
-         Aby wysłać status połączenia taki jak powyżej, musisz upewnić się,
-         że wysyłany on jest w absolutnie pierwszym wywołaniu funkcji header.
-         Pamiętaj, że funkcja <function>setcookie</function> używa wewnętrznie
-         funkcji <function>header</function>, a funkcje obsługi sesji mogą
-         we własnym zakresie wysyłać ciasteczko. Może to powodować kolizję
-         z wysyłanym statusem zapytania za pomocą
-         <literal>header("HTTP ...")</literal>.
+         Status połączenia HTTP zawsze będzie wysłany w pierwszej linii
+         odpowiedzi serwera, niezależnie od kolejności wywołania funkcji
+         <function>header</function>. Aktualnie ustalony status połączenia może
+         zostać nadpisany nowym, wystarczy tylko po raz kolejny wywołać
+         funkcję <function>header</function>. Należy to jednak zrobić, nim
+         nagłówki zostaną wysłane.
         </para>  
        </note>  
        <note>  
@@ -98,8 +97,7 @@ header('WWW-Authenticate: NTLM',false);
      <informalexample>
       <programlisting role="php">
 <![CDATA[
-header("Location: http://www.php.net/"); /* Przekieruj przeglądarkę 
-                                            na stronę główną PHP */
+header("Location: http://www.example.com/"); /* Przekieruj przeglądarkę */
 exit;                 /* Upewnij się, że kod poniżej nie zostanie wykonany 
                          po przekierowaniu. */
 ]]>
@@ -174,11 +172,10 @@ header("Pragma: no-cache");                          // HTTP/1.0
      <informalexample>
       <programlisting role="php">
 <![CDATA[
-&lt;?php require("user_logging.inc") ?&gt;
 
 
-&lt;?php header ("Content-Type: audio/x-pn-realaudio"); ?&gt;
-// skrypt nie działa - zauważ puste linie pomiędzy instrukcjami
+<?php header ("Content-Type: audio/x-pn-realaudio"); ?>
+// skrypt nie działa - zauważ puste linie ponad funkcją header
 ]]>
       </programlisting>
      </informalexample>
