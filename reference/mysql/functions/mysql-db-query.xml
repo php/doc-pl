@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.3 Maintainer: slawek Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.4 Maintainer: slawek Status: ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.mysql-db-query">
    <refnamediv>
     <refname>mysql_db_query</refname>
@@ -18,7 +18,10 @@
      </methodsynopsis>
     <para> 
      Zwraca dodatni identyfikator wyniku MySQL wskazujący na wynik
-     zapytania, lub &false; w przypadku błędu.
+     zapytania, lub &false; w przypadku błędu. Wartość &true;/&false; jest
+     także zwracana dla zapytań
+     <literal>INSERT</literal>/<literal>UPDATE</literal>/<literal>DELETE</literal>
+     informując o sukcesie/porażce.
     </para>
     <para> 
      <function>mysql_db_query</function> wybiera bazę i wykonuje
@@ -27,6 +30,13 @@
      połączenie z serwerem MySQL. Jeżeli to się nie powiedzie,
      będzie próbować je stworzyć tak, jakby wywołane zostało
      <function>mysql_connect</function> bez argumentów.
+    </para> 
+    <para>
+     Zwróć uwagę, że ta funkcja <emphasis role="strong">NIE</emphasis> wybierze
+     ponownie bazy danych, z którą byłeś połączony wcześniej. Innymi słowy,
+     nie możesz jej użyć by <emphasis>na boku</emphasis> wysłać zapytanie do
+     innej bazy, bo będziesz musiał ręcznie przełączać się z powrotem. Zamiast
+     tego stosuj składnię SQLa <literal>baza.tabela</literal>.
     </para>
     <para> 
      Patrz także: <function>mysql_connect</function> i
