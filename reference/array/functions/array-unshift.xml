@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.5 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.5 $ -->
+<!-- EN-Revision: 1.11 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.6 $ -->
   <refentry id="function.array-unshift">
    <refnamediv>
     <refname>array_unshift</refname>
@@ -12,11 +12,9 @@
     <title>Opis</title>
      <methodsynopsis>
       <type>int</type><methodname>array_unshift</methodname>
-      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+      <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
       <methodparam><type>mixed</type><parameter>wartość</parameter></methodparam>
-      <methodparam choice="opt"><type>mixed</type><parameter>
-        ...
-       </parameter></methodparam>
+      <methodparam choice="opt"><type>mixed</type><parameter>...</parameter></methodparam>
      </methodsynopsis>
     <para>
      <function>array_unshift</function> wstawia jeden lub więcej przekazanych
@@ -35,13 +33,16 @@
       <title>Przykład użycia <function>array_unshift</function></title>
       <programlisting role="php">
 <![CDATA[
+<?php
 $kolejka = array ("pomarańcza", "banan");
 array_unshift ($kolejka, "jabłko", "malina");
+?>
 ]]>
       </programlisting>
       <para>
        Zmienna <varname>$kolejka</varname> będzie miała następujące elementy:
-       <screen>
+      </para>
+      <screen role="php">
 <![CDATA[
 Array
 (
@@ -51,8 +52,7 @@ Array
     [3] => banan
 )
 ]]>
-       </screen>
-      </para>
+      </screen>
      </example>
     </para>
     <para>
