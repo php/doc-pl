@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.15 Maintainer: slawek Status: ready -->
-<!-- $Revision: 1.8 $ -->
+<!-- EN-Revision: 1.16 Maintainer: slawek Status: ready -->
+<!-- $Revision: 1.9 $ -->
  <chapter id="features.remote-files">
   <title>Korzystanie ze zdalnych plików</title>
 
@@ -74,7 +74,7 @@ if (!$file) {
     exit;
 }
 /* Tutaj zapisujemy dane. */
-fputs ($file, "$HTTP_USER_AGENT\n");
+fputs ($file, $HTTP_SERVER_VARS['HTTP_USER_AGENT'] . "\n");
 fclose ($file);
 ?>
 ]]>  
