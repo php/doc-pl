@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.34 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.12 $ -->
+<!-- EN-Revision: 1.36 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.13 $ -->
  <chapter id="language.oop">
   <title>Klasy i Obiekty</title>
 
@@ -247,7 +247,24 @@ $nkoszyk->dodaj_przedmiot("10", 1);   // (funkcjonalność odziedziczona z
 ]]>
     </programlisting>
    </informalexample>
-
+   <para>
+    Taka relacja nazywana jest często relacją "rodzic-potomek". Tworzysz
+    klasę - rodzica - i używasz <literal>extends</literal> aby stworzyć klasę
+    <emphasis>opartą</emphasis> o klasę rodzica: klasę potomną. Możesz także
+    tworzyć nowe klasy potomne oparte o tą klasę potomną.
+   </para>
+   <note>
+    <para>
+     Klasy musza być zdefiniowane zanim zostaną użyte! Jeśli chcesz, aby klasa
+     <literal>Nazwany_Koszyk</literal> rozszerzała klasę
+     <literal>Koszyk</literal>, musisz zdefiniować klasę
+     <literal>Koszyk</literal> jako pierwszą. Jeśli chcesz stworzyć kolejną
+     klasę nazwaną <literal>Niebieski_Nazwany_Koszyk</literal> opartą o
+     klasę <literal>Nazwany_Koszyk</literal>, musisz najpierw zdefiniować
+     klasę <literal>Nazwany_Koszyk</literal>. W skrócie: kolejność, w jakiej
+     klasy są definiowane, jest bardzo ważna.
+    </para>
+   </note>
   </sect1>
 
   <sect1 id="language.oop.constructor">
@@ -317,6 +334,11 @@ $inny_koszyk = new Konstruktor_Koszyk("20", 17);
     </programlisting>
    </informalexample>
 
+   <para>
+    Możesz także użyć operatora <literal>@</literal> aby
+    <emphasis>wyciszyć</emphasis> błędy zachodzące w konstruktorze, np.
+    <literal>@new</literal>
+   </para>
    <caution>
     <simpara>
      W PHP 3, dziedziczone klasy i konstruktory mają wiele ograniczeń.
