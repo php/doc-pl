@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.3 $ -->
+<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.4 $ -->
   <refentry id="function.session-id">
    <refnamediv>
     <refname>session_id</refname>
@@ -14,13 +14,26 @@
      </methodsynopsis>
     <para>
      <function>session_id</function> zwraca identyfikator sesji dla bieżącej
-     sesji. Jeśli podany został parametr <parameter>id</parameter>, zostanie
-     on użyty do zmiany identyfikatora bieżącej sesji.
+     sesji.
+    </para>
+    <para>
+     Jeśli podany został parametr <parameter>id</parameter>, zostanie
+     on użyty do zmiany identyfikatora bieżącej sesji. Przy takim użyciu
+     <function>session_id</function> musi być wywołane przed
+     <function>session_start</function>. Zależnie od funkcji obsługi sesji,
+     nie wszystkie znaki są dozwolone wewnątrz identyfikatora sesji. Na
+     przykład, funkcje obsługi sesji oparte na plikach pozwalają tylko na
+     znaki z przedziału <literal>a-z, A-Z i 0-9</literal>
     </para>
     <para>
      Do pobrania nazwy i identyfikatora bieżącej sesji moża być użyta także
      stała <systemitem>SID</systemitem>, która zawiera string odpowiedni do
-     dodawania go do URLi.
+     dodawania go do URLi. Zauważ, że <systemitem>SID</systemitem> jest
+     zdefiniowane tylko jeśli klient nie wysłał prawidłowego ciasteczka.
+     Przeczytaj także rozdział <link linkend="ref.session">Obsługa sesji</link>
+    </para>
+    <para>
+     Patrz także: <function>session_start</function>.
     </para>
    </refsect1>
   </refentry>
