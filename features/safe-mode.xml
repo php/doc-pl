@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.17 Maintainer: slawek Status: ready -->
-<!-- $Revision: 1.8 $ -->
+<!-- EN-Revision: 1.18 Maintainer: slawek Status: ready -->
+<!-- $Revision: 1.9 $ -->
  <chapter id="features.safe-mode">
   <title>Tryb bezpieczny</title>
 
   <para>
-   Tryb bezpieczny (Safe Mode) jest próbą rozwiązania problemów
+   Tryb bezpieczny (safe mode) jest próbą rozwiązania problemów
    bezpieczeństwa na  współdzielnym serwerze. Co prawda rozwiązywanie ich na
    poziomie PHP nie jest najlepszym rozwiązaniem, ale jeśli nie ma możliwości
    zrobienia tego na poziomie serwera www lub systemu operacyjnego, na wielu
@@ -54,8 +54,9 @@ allowed to access /etc/passwd owned by uid 0 in /docroot/script.php on line 2
   </para>
   <para>
    Jeśli zamiast włączać opcję <link linkend="ini.safe-mode">safe_mode</link>
-   ustawisz katalog open_basedir, wtedy wszystkie operacje plikowe bedą
-   ograniczone do tego katalogu. Na przykład (dla httpd.conf Apache'a):
+   ustawisz katalog <link linkend="ini.open-basedir">open_basedir</link>,
+   wtedy wszystkie operacje plikowe bedą ograniczone do tego katalogu. Na
+   przykład (dla httpd.conf Apache'a):
    <programlisting role="ini">
 <![CDATA[
 <Directory /docroot>
@@ -64,7 +65,7 @@ php_admin_value open_basedir /docroot
 ]]>
    </programlisting>
    Uruchomienie tego samego skryptu script.php z ustawionym katalogiem
-   open_basedir spowoduje wyświetlenie:
+   <link linkend="ini.open-basedir">open_basedir</link> spowoduje wyświetlenie:
    <screen>
 <![CDATA[
 Warning: open_basedir restriction in effect. File is in wrong directory in
@@ -235,9 +236,9 @@ Warning: readfile() has been disabled for security reasons in
        </row>
        <row>
         <entry><function>copy</function></entry>
-        <entry>&sm.uidcheck; &sm.uidcheck.dir; (on 
-        <parameter>source</parameter> and 
-        <parameter>target</parameter>) </entry>
+        <entry>&sm.uidcheck; &sm.uidcheck.dir; (dla 
+        <parameter>źródła</parameter> i
+        <parameter>przeznaczenia</parameter>) </entry>
        </row>
        <row>
         <entry><function>chgrp</function></entry>
@@ -249,8 +250,8 @@ Warning: readfile() has been disabled for security reasons in
        </row>
        <row>
         <entry><function>chmod</function></entry>
-        <entry>&sm.uidcheck; In addition, you cannot  
-        set the SUID, SGID and sticky bits</entry>
+        <entry>&sm.uidcheck; Dodatkowo, nie można ustawić bitów SUID, SGID
+        i sticky bit.</entry>
        </row>
        <row>
         <entry><function>touch</function></entry>
@@ -258,13 +259,13 @@ Warning: readfile() has been disabled for security reasons in
        </row>
        <row>
         <entry><function>symlink</function></entry>
-        <entry>&sm.uidcheck; &sm.uidcheck.dir; (note: only the target is 
-        checked)</entry>
+        <entry>&sm.uidcheck; &sm.uidcheck.dir; (sprawdzany jest jedynie element
+        do którego tworzony jest link)</entry>
        </row>
        <row>
         <entry><function>link</function></entry>
-        <entry>&sm.uidcheck; &sm.uidcheck.dir; (note: only the target is 
-        checked)</entry>
+        <entry>&sm.uidcheck; &sm.uidcheck.dir; (sprawdzany jest jedynie element
+        do którego tworzony jest link)</entry>
        </row>
        <row>
         <entry><function>getallheaders</function></entry>
