@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.11 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.asort">
    <refnamediv>
     <refname>asort</refname>
@@ -9,8 +9,8 @@
    <refsect1>
     <title>Opis</title>
      <methodsynopsis>
-      <type>void</type><methodname>asort</methodname>
-      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+      <type>bool</type><methodname>asort</methodname>
+      <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
       <methodparam choice="opt"><type>int</type><parameter>flagi</parameter></methodparam>
      </methodsynopsis>
     <para>
@@ -19,29 +19,32 @@
      sortowaniu tablic asocjacyjnych, gdzie znacząca jest kolejność
      występowania elementów w tablicy.
     </para>
+    <para>
+     &return.success;
+    </para>
     <example>
      <title>Przykład użycia <function>asort</function></title>
      <programlisting role="php">
 <![CDATA[
+<?php
 $owoce = array ("d"=>"cytryna, "a"=>"pomarańcza", "b"=>"banan", "c"=>"jabłko");
 arsort ($owoce);
 reset ($owoce);
 while (list ($key, $val) = each ($owoce)) {
     echo "$key = $val\n";
 }
+?>
 ]]>
      </programlisting>
-     <para>
-      Ten przykład wyświetli:
-      <screen>
+     &example.outputs;
+     <screen>
 <![CDATA[
 b = banan
 d = cytryna
 c = jabłko
 a = pomarańcza
 ]]>
-      </screen>
-     </para>
+     </screen>
     </example>
     <para>
      Owoce zostały posortowane w porządku alfabetycznym a

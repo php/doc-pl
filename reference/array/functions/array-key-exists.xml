@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.7 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.6 $ -->
+<!-- EN-Revision: 1.11 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.7 $ -->
   <refentry id="function.array-key-exists">
    <refnamediv>
     <refname>array_key_exists</refname>
@@ -20,6 +20,7 @@
      <parameter>igła</parameter> jest ustawiona w tablicy
      <parameter>stóg_siana</parameter>. <parameter>igła</parameter> może być
      dowolną wartością możliwą dla indeksu tablicy.
+     <function>array_key_exists</function> działa także na obiektach.
     </para>
     <para>
      <example>
@@ -27,8 +28,8 @@
       <programlisting role="php">
 <![CDATA[
 <?php
-$stog_siana = array("pierwszy" => 1, "drugi" => 4);
-if (array_key_exists("pierwszy", $stog_siana)) {
+$stog_siana = array('pierwszy' => 1, 'drugi' => 4);
+if (array_key_exists('pierwszy', $stog_siana)) {
     echo "'Pierwszy' element istnieje w tablicy";
 }
 ?>
@@ -41,6 +42,27 @@ if (array_key_exists("pierwszy", $stog_siana)) {
       W PHP 4.0.6 ta funkcja nazywa się <function>key_exists</function>.
      </simpara>
     </note>
+    <example>
+     <title><function>array_key_exists</function> a <function>isset</function></title>
+     <para>
+      <function>isset</function>, w przeciwieństwie do
+      <function>array_key_exists</function>, nie zwraca wartości &true; dla
+      kluczy tablicy, którym przypisana jest wartość &null;.
+     </para>
+     <programlisting role="php">
+<![CDATA[
+<?php
+$tablica = array('pierwszy' => null, 'drugi' => 4);
+
+// zwraca false
+isset($tablica['pierwszy']);
+
+// zwraca true
+array_key_exists('pierwszy', $tablica);
+?>
+]]>
+     </programlisting>	
+    </example>
     <para>
      Patrz także: <function>isset</function>, <function>array_keys</function>,
      i <function>in_array</function>.  
