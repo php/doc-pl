@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.3 $ -->
+<!-- EN-Revision: 1.11 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.4 $ -->
   <refentry id="function.chmod">
    <refnamediv>
     <refname>chmod</refname>
@@ -9,9 +9,9 @@
    <refsect1>
     <title>Opis</title>
      <methodsynopsis>
-      <type>int</type><methodname>chmod</methodname>
+      <type>bool</type><methodname>chmod</methodname>
       <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
-      <methodparam><type>int</type><parameter>prawa</parameter></methodparam>
+      <methodparam><type>bool</type><parameter>prawa</parameter></methodparam>
      </methodsynopsis>
     <para>
      Dokonuje zmiany praw pliku podanego w parametrze
@@ -24,12 +24,48 @@
      (takie jak "g+w") nie będą poprawnie interpretowane.
      Aby zapewnić poprawność operacji musisz parametr
      <parameter>prawa</parameter> poprzedzić prefixem zero (0):
+	 </para> 
+      <para> 
+       <informalexample> 
+        <programlisting role="php"> 
+  <![CDATA[ 
+  <?php 
+  chmod("/somedir/somefile", 755);   // dziesiętnie; prawdopodobnie nieprawidłowo 
+  chmod("/somedir/somefile", "u+rwx,go+rx"); // łańcuch; nieprawidłowo 
+  chmod("/somedir/somefile", 0755);  // ósemkowo; poprawna wartość dla praw 
+  ?> 
+  ]]> 
+        </programlisting> 
+       </informalexample> 
+      </para> 
+      <para> 
+       Parametr <parameter>prawa</parameter> zawiera trzy cyfry w systemie ósemkowym
+	   określające prawa dostępu dla właściciela, grupy do której on należy
+	   oraz wszystkich innych. Jedna cyfra może zostać obliczona poprzez
+	   dodanie do siebie potrzebnych uprawnień. Cyfra 1 oznacza nadanie
+	   praw do wykonania, cyfra 2 oznacza, że plik będzie zapisywalny, cyfra
+	   4 oznacza, że plik będzie można odczytać. Dodając te cyfry
+	   określamy potrzebne uprawnienia. Więcej o prawach w systemie Unix
+	   można przeczytać w 'man 1 chmod' i 'man 2 chmod'. 
+      </para> 
+      <para> 
+
      <informalexample>
       <programlisting role="php">
 <![CDATA[
-chmod ("/katalog/plik", 755);   // dziesiętnie; prawdopodobnie nieprawidłowo
-chmod ("/katalog/plik", "u+rwx,go+rx"); // łańcuch; nieprawidłowo
-chmod ("/katalog/plik", 0755);  // ósemkowo; poprawna wartość dla praw
+<?php
+// Odczyt i zapis dla właściciela, żadnych praw dla innych 
+chmod("/katalog/plik", 0600);
+
+// Odczyt i zapis dla właściciela, odczyt dla wszystkich  
+chmod("/katalog/plik", 0644);  
+    
+// Wszystkie prawa dla właściciela, odczyt i wykonanie dla innych  
+chmod("/katalog/plik", 0755);  
+    
+// Wszystkie prawa dla właściciela, odczyt i wykonanie dla grupy właściciela  
+chmod("/katalog/plik", 0750);  
+?>  
 ]]>
       </programlisting>
      </informalexample>
@@ -37,11 +73,26 @@ chmod ("/katalog/plik", 0755);  // ósemkowo; poprawna wartość dla praw
     <para>
      &return.success;
     </para>
+<note> 
+       <para> 
+        Bieżący użytkownik to użytkownik pod którym działą PHP.
+		Prawdpodobnie nie jest to ten sam użytkownik, którego używasz
+		normalnie przy dostępie do shell'a lub FTP.
+       </para> 
+      </note> 
+      &note.no-remote; 
+      <note> 
+       <simpara> 
+        Kiedy włączony jest <link linkend="features.safe-mode">tryb bezpieczny</link>, PHP 
+        sprawdza czy pliki lub katalogi na których mają zostać wykonane operacje
+		posiadają taki sam UID (właściciela) jak skrypt, który jest wykonywany.
+		W dodatku, nie możesz ustawić SUI, SGID i bitów lepkości (sticky bits). 
+       </simpara> 
+      </note> 
     <para>
      Patrz także: <function>chown</function> i
      <function>chgrp</function>.
     </para>
-    &note.no-windows;
    </refsect1>
   </refentry>
 
