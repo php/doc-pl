@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.19 Maintainer: Qrak Status: ready -->
-<!-- $Revision: 1.5 $ -->
+<!-- EN-Revision: 1.22 Maintainer: Qrak Status: ready -->
+<!-- $Revision: 1.6 $ -->
  <reference id="ref.apache">
   <title>Funkcje wyłacznie dla serwera Apache</title>
   <titleabbrev>Apache</titleabbrev>
@@ -215,7 +215,55 @@ while (list ($naglowek, $wartosc) = each ($naglowki)) {
      Content-type. Dla plików PHP użyj funkcji <function>include</function> lub
      <function>require</function>; nie można użyć <function>virtual</function>
      do wczytywania plików, które są same plikami PHP.
-    </para>
+    </para> 
+     </refsect1> 
+    </refentry> 
+    
+    <refentry id='function.apache-child-terminate'> 
+     <refnamediv> 
+      <refname>apache_child_terminate</refname> 
+      <refpurpose>Zakańcza proces Apache'a po zakończeniu tego 
+      zapytania</refpurpose> 
+     </refnamediv> 
+     <refsect1> 
+      <title>Opis</title> 
+      <funcsynopsis> 
+       <funcprototype> 
+        <funcdef>string <function>apache_child_terminate</function></funcdef> 
+        <void/> 
+       </funcprototype> 
+      </funcsynopsis> 
+      <para>
+       <function>apache_child_terminate</function> zakończy proces Apache'a,
+       wykonujący aktualne zapytanie PHP, kiedy tylko zapytanie zostanie
+       zakończone. Można tego używać do zakańczania procesu po skrypcie o dużych
+       zapotrzebowaniach na pamięć, gdyż zwykle pamięć zostaje zwolniona
+       wewnętrznie, ale nie zwrócona systemowi operacyjnemu. 
+      </para> 
+      <para> 
+       Zobacz też <function>exit</function>. 
+      </para> 
+     </refsect1> 
+    </refentry> 
+    
+    <refentry id='function.apache-setenv'> 
+     <refnamediv> 
+      <refname>apache_setenv</refname> 
+      <refpurpose>Ustawia zmienną Apache'a subprocess_env</refpurpose> 
+     </refnamediv> 
+     <refsect1> 
+      <title>Opis</title> 
+      <funcsynopsis> 
+       <funcprototype> 
+        <funcdef>int <function>apache_setenv</function></funcdef> 
+        <paramdef>string <parameter>nazwa_zmiennej</parameter></paramdef> 
+        <paramdef>string <parameter>wartość</parameter></paramdef> 
+        <paramdef>bool <parameter><optional>nadrzędność</optional></parameter></paramdef> 
+       </funcprototype> 
+      </funcsynopsis> 
+      <para> 
+       &warn.undocumented.func; 
+      </para>
    </refsect1>
   </refentry>
 
