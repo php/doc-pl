@@ -1,12 +1,65 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- $Revision: 1.3 $ -->
+<!-- $Revision: 1.4 $ -->
  <reference id="ref.mail">
   <title>Funkcje obsługi poczty elektronicznej</title>
   <titleabbrev>Mail</titleabbrev>
   <partintro>
    <simpara>
-    <function>mail</function> pozwala ci wysyłać listy e-mail.
+    Funkcja <function>mail</function> pozwala ci wysyłać listy e-mail.
    </simpara>
+   <variablelist>
+    <title>Dyrektywy konfiguracyjne poczty elektronicznej</title>
+
+    <varlistentry id="ini.smtp">
+     <term>
+      <parameter>SMTP</parameter>
+      <type>string</type>
+     </term>
+     <listitem>
+      <para>
+       Adres w DNS-ie lub numer IP serwera SMTP, którego PHP pod Windowsem
+       ma użyć do wysłania poczty za pomocą funkcji <function>mail</function>
+      </para>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry id="ini.sendmail-from">
+     <term>
+      <parameter>sendmail_from</parameter>
+      <type>string</type>
+     </term>
+     <listitem>
+      <para>
+       Określa adres pocztowy w polu "From:" w listach wysyłanych z PHP pod
+       Windowsem.
+      </para>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry id="ini.sendmail-path">
+     <term>
+      <parameter>sendmail_path</parameter>
+      <type>string</type>
+     </term>
+     <listitem>
+      <para>
+       Określa, gdzie znajduje się program <command>sendmail</command>, zwykle
+       <filename>/usr/sbin/sendmail</filename> lub 
+       <filename>/usr/lib/sendmail</filename>
+       <command>configure</command> próbuje samodzielnie zlokalizować ten
+       program i ucznić go domyślnym, ale w przypadku niepowodzenia, można
+       ręcznie ustawić ścieżkę za pomocš tej dyrektywy.
+      </para>
+      <para>
+       W systemach nie używających sendmaila, dyrektywa ta powinna wskazywać
+       na program będący odpowiednikiem sendmaila, o ile jest taki program
+       w tym systemie.
+       Na przykład użytkownicy programu <ulink url="&url.qmail;">Qmail</ulink>
+       mogą ustawić ścieżkę na <filename>/var/qmail/bin/sendmail</filename>.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
   </partintro>
 
   <refentry id="function.mail">
@@ -41,116 +94,132 @@
      kodowaniu MIME - po więcej informacji, zajrzyj
      <ulink url="http://www.zend.com/zend/spotlight/sendmimeemailpart1.php"
      >http://www.zend.com/zend/spotlight/sendmimeemailpart1.php</ulink> lub
-     RFC 1896 (Visit <ulink url="http://www.rfc-editor.org/"
-     >http://www.rfc-editor.org/</ulink>).
+     <ulink url="&url.rfc1896;">RFC 1896</ulink>.
     </simpara>
     <para>
-     <function>mail</function> zwraca &true; jeśli udało się wysłać e-mail, w
-     przeciwnym wypadku zwraca &false;.
+     <function>mail</function> zwraca &true; jeśli udało się wysłać e-mail, lub
+      &false; w przeciwnym wypadku.
     </para>
     <para>
      <example>
       <title>Wysyłanie e-maila.</title>
       <programlisting>
-mail("rasmus@lerdorf.on.ca", "Temat listu", "Linia 1\nLinia 2\nLinia 3");
+<![CDATA[
+mail("joecool@example.com", "Temat listu", "Linia 1\nLinia 2\nLinia 3");
+]]>
       </programlisting>
      </example></para>
     <simpara>
      Jeśli zostanie podany czwarty argument, będzie on dopisany na końcu
      nagłówka wiadomości. Ten argument wykorzystuje się do wstawienia
      dodatkowych nagłówków.
-     Dodatkowe nagłówki rozdziela się znakiem nowego wiersza.
+     Dodatkowe nagłówki rozdziela się znakiem powrotu karetki i nowego wiersza.
     </simpara>
     <note>
      <para>
-     W systemach Win32, trzeba użyć <literal>\r\n</literal> aby
-     rozdzielić nagłówki.  Należy także zwrócić uwagę na nagłówki cc: i bcc:,
-     przy których rozróżniana jest wielkość liter i z tego powodu, w systemach
-     Win32 powinny być pisane jako <literal>Cc:</literal>
-     i <literal>Bcc:</literal>.
+     Aby rozdzielić nagłówki, trzeba użyć sekwencji <literal>\r\n</literal>,
+     chociaż niektóre uniksowe agenty pocztowe obsługują także pojedynczy
+     znak nowej linii (<literal>\n</literal>). W nagłówku Cc: jest rozróżniana
+     wielkość liter i z tego powodu, w systemach Win32 musi być pisany jako
+     <literal>Cc:</literal>. Nagłówek Bcc: nie jest obsługiwany w systemach
+     Win32.
      </para>
     </note>
-    <simpara>
-     Po podaniu piątego argumentu, PHP doda jego zawartość do wywołania
-     serwera poczty wychodzącej (mailera).  Potrzebne jest to do prawidłowego
-     ustawienia nagłówka Return-Path przy wysyłaniu za pomocą programu sendmail.
-    </simpara>
     <para>
      <example>
       <title>Wysyłanie listu z dodatkowymi nagłówkami.</title>
       <programlisting>
-mail("nobody@aol.com", "the subject", $message,
-     "From: webmaster@$SERVER_NAME\nReply-To: webmaster@$SERVER_NAME\nX-Mailer:
-     PHP/" . phpversion());
+<![CDATA[
+mail("nobody@example.com", "temat", $message,
+     "From: webmaster@$SERVER_NAME\r\n"
+    ."Reply-To: webmaster@$SERVER_NAME\r\n"
+    ."X-Mailer: PHP/" . phpversion());
+]]>
       </programlisting>
      </example>
-     Za pomocą piątego argumentu można wysłać dodatkowe parametry do serwera
-     poczty wychodzącej. W poniższym przykładzie ustawiamy właściwy nagłówek
-     Return-Path dla sendmaila. Normalnie sendmail doda nagłówek
-     X-Authentication-Warning po użyciu parametru -f, ponieważ serwer www
-     prawdopodobnie nie zalicza się do zaufanych użytkowników. Aby pozbyć się
-     powyższego ostrzeżenia, należy dodać serwer www do listy zaufanych
-     użytkowników w pliku konfiguracyjnym sendmaila.
     </para>
-    <note>
-     <para>
-      Piąty argument dodano w PHP 4.0.5.
-     </para>
-    </note>
     <para>
+     Argumentu <parameter>dodatkowe_parametry</parameter> używa się do
+     przekazania dodatkowych paramterów do programu wysyłającego pocztę
+     skonfigurowanego w dyrektywie <literal>sendmail_path</literal>.
+     Używa się tego na przykład do ustawienia adresu zwrotnego koperty 
+     (envelope sender adress) przy wysyłaniu
+     listy za pomocą sendmaila. Możesz być zmuszony dodać użytkownika jakim
+     jest twój serwer www do listy zaufanych użytkowników w pliku
+     konfiguracyjnym sendmaila, aby sendmail nie dodał nagłówka "X-warning" do
+     wiadomości przy wysyłaniu koperty (envelope) tą metodą.  
      <example>
       <title>Wysyłanie listu z dodatkowymi nagłówkami i przełącznikami.</title>
       <programlisting>
-mail("nobody@aol.com", "the subject", $message,
+<![CDATA[
+mail("nobody@example.com", "temat", $message,
      "From: webmaster@$SERVER_NAME", "-fwebmaster@$SERVER_NAME");
+]]>
       </programlisting>
      </example>
+     </para>
+     <note>
+      <para>
+       Piąty argument funkcji <function>mail</function> został dodany w 
+       PHP 4.0.5.
+      </para>
+     </note>
+     <para>
      Można tez użyć zwykłych operacji na łańcuchach znaków do tworzenia
      złożonych wiadomości e-mail.
      <example>
       <title>Wysyłanie złożonego e-maila.</title>
       <programlisting>
+<![CDATA[
 /* adresaci */
-$recipient .= "Mary &lt;mary@u.college.edu>" . ", " ; //zwróć uwagę na przecinek
-$recipient .= "Kelly &lt;kelly@u.college.edu>" . ", ";
-$recipient .= "ronabop@php.net";
+$to  = "Mary <mary@example.com>" . ", " ; //zwróc uwagę na przecinek
+$to .= "Kelly <kelly@example.com>";
 
 /* temat */
 $subject = "Birthday Reminders for August";
 
 /* wiadomość */
-$message .= "The following email includes a formatted ASCII table\n";
-$message .= "Day \t\tMonth \t\tYear\n";
-$message .= "3rd \t\tAug \t\t1970\n";
-$message .= "17rd\t\tAug \t\t1973\n";
+$message = '
+<html>
+<head>
+ <title>Birthday Reminders for August</title>
+</head>
+<body>
+<p>Here are the birthdays upcoming in August!</p>
+<table>
+ <tr>
+  <th>Person</th><th>Day</th><th>Month</th><th>Year</th>
+ </tr>
+ <tr>
+  <td>Joe</td><td>3rd</td><td>August</td><td>1970</td>
+  <td>Sally</td><td>17th</td><td>August</td><td>1973</td>
+ </tr>
+</table>
+</body>
+</html>
+';
 
-/* można dodać sygnaturę rozdzielającą */
-$message .= "--\r\n"; //sygnatura rozdzielająca
-$message .= "Birthday reminder copylefted by public domain";
+/* Aby wysłać e-mail w foramcie HTML, należy ustawić nagłówek Content-type. */
+$headers  = "MIME-Version: 1.0\r\n";
+$headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
 
-/* dodatkowe nagłówki na okoliczność błędów, From cc, bcc, itp. */
+/* dodatkowe nagłówki */
+$headers .= "From: Birthday Reminder <birthday@example.com>\r\n";
 
-$headers .= "From: Birthday Reminder &lt;birthday@php.net>\n";
-$headers .= "X-Sender: &lt;birthday@php.net>\n";
-$headers .= "X-Mailer: PHP\n"; // program pocztowy
-$headers .= "X-Priority: 1\n"; // ważna wiadomość!
-$headers .= "Return-Path: &lt;birthday@php.net>\n";  // adres zwrotny dla błędów
-
-/* Jeśli chcesz wysłać list w formacie html, odkomentuj poniższe linie */
-// $headers .= "Content-Type: text/html; charset=iso-8859-1\n"; // typy MIME
-
-$headers .= "cc: birthdayarchive@php.net\n"; // CC do kogo
-$headers .= "bcc: birthdaycheck@php.net, birthdaygifts@php.net"; // BCC do kogo
+$headers .= "Cc: birthdayarchive@example.com\r\n";
+$headers .= "Bcc: birthdaycheck@example.com\r\n";
 
 /* a teraz wyślij */
-mail($recipient, $subject, $message, $headers);
+mail($to, $subject, $message, $headers);
+]]>
       </programlisting>
      </example>
     </para>
     <note>
      <para>
-       Upewnij się, że nie ma nowej linii (ani spacji) po argumentach do lub
-       temat, bo może to wywoływać dziwne rezultaty.
+      Upewnij się, że nie ma żadnych znaków nowej linii w argumencie
+      <parameter>do</parameter> lub <parameter>temat</parameter>,
+      gdyż w przeciwnym razie, e-mail może nie być wysłany poprawnie.
      </para>
     </note>
    </refsect1>
@@ -177,10 +246,12 @@ mail($recipient, $subject, $message, $headers);
      <example>
       <title>Obliczanie wartości hash i dodawanie nowego użytkownika</title>
       <programlisting>
-$user = "kris@koehntopp.de";
+<![CDATA[
+$user = "joecool@example.com";
 $hash = ezmlm_hash ($user);
 $query = sprintf ("INSERT INTO sample VALUES (%s, '%s')", $hash, $user);
 $db->query($query); // wykorzystanie interfejsu PHPLIB db
+]]>
       </programlisting>
      </example>
     </para>
