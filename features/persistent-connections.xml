@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.20 Maintainer: slawek Status: ready -->
-<!-- $Revision: 1.11 $ -->
+<!-- EN-Revision: 1.24 Maintainer: slawek Status: ready -->
+<!-- $Revision: 1.12 $ -->
  <chapter id="features.persistent-connections">
   <title>Stałe połączenia z bazami danych</title>
 
@@ -12,12 +12,6 @@
    jest nowe. Połączenie 'identyczne' to połączenie z tym samym hostem,
    z taką samą nazwą użytkownika i hasłem.
   </simpara>
-  <note>
-   <para>
-    Istnieją także inne moduły udostępniające stałe połączenia, na przykład
-    <link linkend="ref.imap">IMAP</link>.
-   </para>
-  </note>
   <simpara>
    Ludzie niezbyt dobrze znający zasady działania serwerów mogą czasem
    brać stałe połączenia za coś, czym te nie są. Stałe połączenia
@@ -52,11 +46,10 @@
    zostać obsłużony przez inny proces niż za pierwszym razem. Stałe połączenie
    w tym przypadku oznacza, że każdy proces potomny ustanawia połączenie
    z serwerem SQL przy pierwszym wywołaniu strony, która takiego połączenia
-   używa. Jeśli inna strona potrzebuje połączenia z serwerem SQL, może
-   wykorzystać połączenie, które dany proces ustanowił wcześniej.
+   używa.
   </simpara>
   <simpara>
-   Ustatnia metoda to wykorzystanie PHP jako wtyczki (plug-in) do
+   Ostatnia metoda to wykorzystanie PHP jako wtyczki (plug-in) do
    serwera wielowątkowego. Obecnie PHP4 zawiera obsługę mechanizmów
    ISAPI, WSAPI i NSAPI (w Windows), które umożliwiają uruchomienie PHP
    jako wtyczki do wielowątkowych serwerów takich jak Netscape FastTrack
@@ -121,10 +114,10 @@
   <para>  
    Zobacz także <function>fbsql_pconnect</function>,  
    <function>ibase_pconnect</function>, <function>ifx_pconnect</function>,  
-   <function>imap_popen</function>, <function>ingres_pconnect</function>,  
+   <function>ingres_pconnect</function>,  
    <function>msql_pconnect</function>, <function>mssql_pconnect</function>,  
-   <function>mysql_pconnect</function>, <function>OCIPLogon</function>,  
-   <function>odbc_pconnect</function>, <function>Ora_pLogon</function>,  
+   <function>mysql_pconnect</function>, <function>ociplogon</function>,  
+   <function>odbc_pconnect</function>, <function>ora_plogon</function>,   
    <function>pfsockopen</function>, <function>pg_pconnect</function> i
    <function>sybase_pconnect</function>.  
   </para>  
