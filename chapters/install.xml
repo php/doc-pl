@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- $Revision: 1.4 $ -->
+<!-- $Revision: 1.5 $ -->
  <chapter id="installation">
   <title>Instalacja</title>
   <sect1 id="install.general">
@@ -2443,8 +2443,23 @@ $ /usr/local/sbin/php4-enable
        </para>
       </listitem>
      </varlistentry>
+
+     <varlistentry id="install.configure.enable-overload"> 
+      <term> 
+       <parameter>--enable-overload</parameter> 
+      </term> 
+      <listitem> 
+       <para>
+        PHP 3: Opcja niedostępna w PHP 3
+       </para> 
+       <para>
+        PHP 4: Włącz obsługę przeciążania właściwości i metod obiektów.
+       </para>
+      </listitem> 
+     </varlistentry> 
     </variablelist>
    </sect2>
+
 
    <sect2 id="install.configure.networking">
     <title>Sieć</title>
@@ -3285,12 +3300,12 @@ $ /usr/local/sbin/php4-enable
        <para>
         Skopiuj wybrany plik ini (zobacz niżej) do swojego katalogu 
         &apos;%WINDOWS%&apos; na Windows 95/98 lub do katalogu
-        &apos;%SYSTEMROOT%&apos; na Windows NT lub Windows 
-        2000 i zmień jego nazwę na <filename>php.ini</filename>. Twój katalog
+        &apos;%SYSTEMROOT%&apos; na Windows NT/2000/XP
+        mień jego nazwę na <filename>php.ini</filename>. Twój katalog
         &apos;%WINDOWS%&apos; lub &apos;%SYSTEMROOT%&apos; to zazwyczaj:
         <simplelist>
          <member>c:\windows na Windows 9x/Me</member>
-         <member>c:\winnt lub c:\winnt40 na NT/2000 Server</member>
+         <member>c:\winnt lub c:\winnt40 na NT/2000/XP</member>
         </simplelist>
        </para>
        <para>
@@ -3339,7 +3354,7 @@ $ /usr/local/sbin/php4-enable
            Na PWS i IIS możesz ustawić <filename>browscap.ini</filename> aby
            wskazywało na 'c:\windows\system\inetsrv\browscap.ini' na
            Windows 9x/Me lub 'c:\winnt\system32\inetsrv\browscap.ini'
-           na NT/2000 Server. 
+           na NT/2000/XP. 
           </simpara>
          </listitem>
          <listitem>
@@ -3618,7 +3633,7 @@ $ /usr/local/sbin/php4-enable
       przeszukije Windows. Dobrymi miejscami są:
       <simplelist>
        <member>c:\windows\system dla Windows 9x/Me</member>
-       <member>c:\winnt\system32 dla Windows NT/2000</member>
+       <member>c:\winnt\system32 dla Windows NT/2000/XP</member>
       </simplelist>
       Jeśłi któreś z nich są już zainstalowane na twoim systemie, nadpisz je
       tylko jeśli coś nie działa w porządku (przed nadpisaniem ich dobrze jest
@@ -4117,7 +4132,7 @@ uruchomnić serwer:
     <para>
      Jeśli chcesz używać PHP w postaci modułu Apache, upewnij się że
      plik <filename>php4ts.dll</filename> znajduje się w katalogu windws/system
-     (dla Windows 9x/Me) lub winnt/system32 (dla Windows NT/2000), nadpisując
+     (dla Windows 9x/Me) lub winnt/system32 (dla Windows NT/2000/XP), nadpisując
      jakiekolwiek starsze pliki. Potem powinieneś dodać poniższe 2 linie do
      pliku konfiguracyjnego Apache:
      <itemizedlist>
@@ -4503,10 +4518,10 @@ uruchomnić serwer:
    </sect2>
 
    <sect2 id="install.iis.iis4">
-    <title>Windows NT/2000 i IIS 4 lub nowszy</title>
+    <title>Windows NT/2000/XP i IIS 4 lub nowszy</title>
 
     <simpara>
-     Aby zainstalować PHP na systemie NT/2000 Server z serwerm WWW IIS 4 lub
+     Aby zainstalować PHP na systemie NT/2000/XP Server z serwerm WWW IIS 4 lub
      nowszym, wypełnij poniższe instrukcje. Masz dwie możliwości korzystania z
      PHP: używając binariów CGI (<filename>php.exe</filename>) lub modułu
      ISAPI.
@@ -4516,7 +4531,7 @@ uruchomnić serwer:
      W obu przypadkach, musisz uruchomić Microsoft Management
      Console (może istnieć jako 'Internet Services Manager', w Windows NT
      4.0 Option Pack lub w Control Panel=&gt;Administrative Tools w Windows
-     2000). Potem kliknij prawym przyciskiem na węźle twojego serwera WWW
+     2000/XP). Potem kliknij prawym przyciskiem na węźle twojego serwera WWW
      (najprawdopodobniej będzie to 'Default Web Server'), i wybierz
      'Properties'.
     </simpara>
