@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.3 $ -->
+<!-- EN-Revision: 1.3 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.4 $ -->
  <reference id="ref.session">
   <title>Sesje</title>
   <titleabbrev>Sesje</titleabbrev>
@@ -80,6 +80,7 @@
      <programlisting role="php">
 <![CDATA[
 <?php
+session_start();
 if (isset($HTTP_SESSION_VARS['count'])) {
     $HTTP_SESSION_VARS['count']++;
 }
@@ -107,6 +108,7 @@ else {
      <programlisting role="php">
 <![CDATA[
 <?php
+session_start();
 // Użyj $HTTP_SESSION_VARS dla PHP 4.0.6 i starszych
 if (!isset($_SESSION['count'])) {
     $_SESSION['count'] = 0;
@@ -124,9 +126,9 @@ if (!isset($_SESSION['count'])) {
      <programlisting role="php">
 <![CDATA[
 <?php
+session_start()
 // Użyj $HTTP_SESSION_VARS dla PHP 4.0.6 i starszych
 unset($_SESSION['count']);
-
 ?>
 ]]>
      </programlisting>
