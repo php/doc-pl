@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.16 Maintainer: slawek Status: ready -->
-<!-- $Revision: 1.9 $ -->
+<!-- EN-Revision: 1.18 Maintainer: slawek Status: ready -->
+<!-- $Revision: 1.10 $ -->
  <chapter id="features.remote-files">
   <title>Korzystanie ze zdalnych plików</title>
 
@@ -18,8 +18,10 @@
   <para>
    <note>
     <para>
-     Nie możesz używać zdalnych plików w <function>include</function> i
-     <function>require</function> w systemie Windows.
+     <literal>PHP</literal> w wersji dla Windows nie obsługuje zdalnego
+     dostępu do plików przy użyciu funkcji: 
+     <function>include</function>, <function>include_once</function>,
+     <function>require</function> i <function>require_once</function>.
     </para>
    </note>
   </para>
@@ -74,7 +76,7 @@ if (!$file) {
     exit;
 }
 /* Tutaj zapisujemy dane. */
-fputs ($file, $HTTP_SERVER_VARS['HTTP_USER_AGENT'] . "\n");
+fputs ($file, $_SERVER['HTTP_USER_AGENT'] . "\n");
 fclose ($file);
 ?>
 ]]>  
