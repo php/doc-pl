@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.32 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.10 $ -->
+<!-- EN-Revision: 1.47 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.11 $ -->
  <chapter id="configuration">
   <title>Konfiguracja</title>
 
@@ -9,13 +9,13 @@
 
    <simpara>
     Plik konfiguracyjny (nazywający się <filename>php3.ini</filename> w
-    PHP 3.0, i po prostu <filename>php.ini</filename> od PHP 4.0) jest czytany
+    PHP 3.0, i po prostu &php.ini; od PHP 4.0) jest czytany
     w momencie startu PHP. W przypadku PHP w wersji modułu serwera, dzieje się
     tylko tylko raz, przy starcie serwera. Dla wersji <acronym>CGI</acronym>
     dzieje się to dla każdego uruchomienia.</simpara>
    <para>
     <example>
-     <title>Przykład php.ini</title>
+     <title>Przykład &php.ini;</title>
      <programlisting role="ini">
 <![CDATA[
 ; dowolny tekst w linii zaczynającej się od średnika (;) jest ignorowana
@@ -40,7 +40,8 @@ include_path = ".;c:\php\lib"
 
    <simpara>
     Używając PHP jako moduł Apache, możesz zmieniać opcje konfiguracyjne także
-    w plikach konfiguracyjnych Apache i <filename>.htaccess</filename>.
+    w plikach konfiguracyjnych Apache i .htaccess (Będziesz praw "AllowOverride
+    Options" lub "AllowOverride All").
     </simpara>
    
    <simpara>
@@ -148,7 +149,8 @@ include_path = ".;c:\php\lib"
           Dyrektywa ta została wprowadzona zaraz po wyjściu wersji 4.0.3.
           Dla wersji 4.0.3 i wyższych możesz wyłączyć tą opcję w czasie
           kompilacji używając przełącznika
-          <link linkend="install.configure.disable-url-fopen-wrapper"><parameter>--disable-url-fopen-wrapper</parameter></link>.
+          <link linkend="install.configure.disable-url-fopen-wrapper"><parameter>--disable-url-fopen-
+wrapper</parameter></link>.
          </para>
         </note>
 
@@ -371,7 +373,15 @@ include_path = ".;c:\php\lib"
          Apache, ścieżki open_basedir katalogów nadrzędnych są automatycznie
          dziedziczone.
         </para>
-        <note>
+	<para>
+         Restrykcje określone w open_basedir są aktualnie traktowane jako
+         prefix, a nie nazwa katalogu. To znaczy, że "open_basedir = 
+         /dir/incl" także zezwala na dostęp do "/dir/include" i
+         "/dir/incls" jeśli te katalogi istnieją. Jeśli chcesz nałożyć restrykcję
+         dostępu tylko na wybrany katalog, zakończ go slashem. Np.:
+         "open_basedir = /dir/incl/"
+        </para>
+       <note>
          <para>Obsługa dla wielu katalogów została dodana w 3.0.7.</para>
         </note>
         <para>
@@ -590,7 +600,60 @@ include_path=".;c:\www\phplib"
         </para>
        </listitem>
       </varlistentry>
-                
+      
+      <varlistentry id="ini.precision">
+       <term>
+        <parameter>precision</parameter>
+        <type>integer</type>
+       </term>
+       <listitem>
+        <simpara>
+         Ilość znaczących cyfr wyświetlanych w liczbach zmiennoprzecinkowych.
+        </simpara>
+       </listitem>
+      </varlistentry>
+
+      <varlistentry id="ini.register-argc-argv">
+       <term>
+        <parameter>register_argc_argv</parameter>
+        <type>boolean</type>
+       </term>
+       <listitem>
+        <simpara>
+         Określa czy PHP ma ustawiać zmienne argv &amp; argc
+         (które mogą zawierać informacje z GET).
+	</simpara>
+	<simpara>
+	  Patrz także <link linkend="commandline">command line</link>.
+	  Ta dyrektywa została udostępniona w PHP 4.0.0, w poprzednich
+	  wersjach jest zawsze włączona "on". 
+        </simpara>
+       </listitem>
+      </varlistentry>
+
+
+      <varlistentry id="ini.post_max_size">
+       <term>
+        <parameter>post_max_size</parameter>
+        <type>integer</type>
+       </term>
+       <listitem>
+        <simpara>
+         Ustawia maksymalny rozmiar danych przesyłanych POST'em. To
+         ustawienie ma wpływ również na uloadowania plików. Aby przesłać
+         (uploadować) duże pliki, ta wartość musi być większa niż
+         <link linkend="upload-max-filesize">upload_max_filesize</link>.
+	</simpara>
+        <simpara>
+         Jeśli ograniczenie pamięci jest włączone przez skrypt
+         konfiguracyjny, <link linkend="ini.memory-limit">memory_limit</link>
+         wpływa również na uploadowanie plików. Ogólnie mówiąc, <link
+         linkend="ini.memory-limit">memory_limit</link> powinien być większy niż
+         <link linkend="ini.post-max-size">post_max_size</link>.
+        </simpara>
+       </listitem>
+      </varlistentry>
+    
       <varlistentry id="ini.register-globals">
        <term>
         <parameter>register_globals</parameter>
@@ -604,11 +667,11 @@ include_path=".;c:\www\phplib"
          użytkownika. Ma to największy sens jeśli użwane jest w połączeniu z
          <link linkend="ini.track-vars">track_vars</link> - w takim przypadku
          do zmiennych EGCPS możliwy jest przez zmienne globalne
-         <varname>$HTTP_ENV_VARS</varname>,
-         <varname>$HTTP_GET_VARS</varname>,
-         <varname>$HTTP_POST_VARS</varname>,
-         <varname>$HTTP_COOKIE_VARS</varname>, i
-         <varname>$HTTP_SERVER_VARS</varname>.
+         <varname>$_ENV</varname>,
+         <varname>$_GET</varname>,
+         <varname>$_POST</varname>,
+         <varname>$_COOKIE</varname>, i
+         <varname>$_SERVER</varname>.
         </para>
         <para>
          Zauważ, że nie musisz ustawiać AllowOverride All w bloku Directory
@@ -651,7 +714,7 @@ include_path=".;c:\www\phplib"
        <listitem>
         <para>
          Jeśli dyrektywa ta jest włączona, ostatnia informacja o błędzie
-         będzie dostępna jako zmienna globalna <symbol>$php_errormsg</symbol>.
+         będzie dostępna jako zmienna globalna <varname>$php_errormsg</varname>.
         </para>
        </listitem>
       </varlistentry>
@@ -666,11 +729,11 @@ include_path=".;c:\www\phplib"
          Jeśli ta dyrektywa jest włączona, zmienne EGCS (Environment, GET,
          POST, Cookie, Server) będą dostępne w globalnych tablicach
          asocjacyjnych
-         <varname>$HTTP_ENV_VARS</varname>,
-         <varname>$HTTP_GET_VARS</varname>,
-         <varname>$HTTP_POST_VARS</varname>,
-         <varname>$HTTP_COOKIE_VARS</varname>, i
-         <varname>$HTTP_SERVER_VARS</varname>.
+         <varname>$_ENV</varname>,
+         <varname>$_GET</varname>,
+         <varname>$_POST</varname>,
+         <varname>$_COOKIE</varname>, i
+         <varname>$_SERVER</varname>.
         </para>
         <para>
          Zauważ, ze od PHP 4.0.3 dyrektywa <systemitem
@@ -862,123 +925,6 @@ include_path=".;c:\www\phplib"
       <listitem>
        <para>
         Które dynamicznie ładowane rozszerzenia ładować przy starcie PHP.
-       </para>
-      </listitem>
-     </varlistentry>
-     
-    </variablelist>
-   </sect2>
-
-   <sect2 id="ini.sect.mysql">
-    <title>Dyrektywy konfiguracji MySQL</title>
-    <variablelist>
-     
-     <varlistentry id="ini.mysql.allow-persistent">
-      <term>
-       <parameter>mysql.allow_persistent</parameter>
-       <type>boolean</type>
-      </term>
-      <listitem>
-       <para>
-        Czy pozwalać na stałe połączenia MySQL ('persistent
-        connections').
-       </para>
-      </listitem>
-     </varlistentry>
-     
-     <varlistentry id="ini.mysql.default-host">
-      <term>
-       <parameter>mysql.default_host</parameter>
-       <type>string</type>
-      </term>
-      <listitem>
-       <para>
-        Domyślny host serwera, który będzie używany przy łączeniu się z
-        serwerem baz danych jeśli nie zostanie podany żaden inny host.
-       </para>
-      </listitem>
-     </varlistentry>
-     
-     <varlistentry id="ini.mysql.default-user">
-      <term>
-       <parameter>mysql.default_user</parameter>
-       <type>string</type>
-      </term>
-      <listitem>
-       <para>
-        Domyślna nazwa użytkownika, która będzie używana przy łączeniu się z
-        serwerm baz danych jeśli nie zostanie podana żadna inna nazwa.
-       </para>
-      </listitem>
-     </varlistentry>
-     
-     <varlistentry id="ini.mysql.default-password">
-      <term>
-       <parameter>mysql.default_password</parameter>
-       <type>string</type>
-      </term>
-      <listitem>
-       <para>
-        Domyślne hasło, które będzie użyte przy łączeniu się z serwerem baz
-        danych jeśli nie zostanie podane żadne inne hasło.
-       </para>
-      </listitem>
-     </varlistentry>
-     
-     <varlistentry id="ini.mysql.default-port">
-      <term>
-       <parameter>mysql.default_port</parameter>
-       <type>string</type>
-      </term>
-      <listitem>
-       <para>
-        Domyślny numer portu TCP, który będzie użyty przy łączeniu się z
-        serwerm baz danych jeśli nie zostanie podany żaden inny port. Jeśli
-        nie będzie podany port domyślny, będzie on pobrany ze zmiennej
-        środowiskowej <literal>MYSQL_TCP_PORT</literal>, wpisu
-        <literal>mysql-tcp</literal> w pliku
-        <filename>/etc/services</filename> lub stałej czasu kompilacji
-        <literal>MYSQL_PORT</literal>, w tym właśnie porządku. Pod Win32 użyta
-        będzie tylko stała <literal>MYSQL_PORT</literal>.
-       </para>
-      </listitem>
-     </varlistentry>
-     
-     <varlistentry id="ini.mysql.default-socket">
-      <term>
-       <parameter>mysql.default_socket</parameter>
-       <type>string</type>
-      </term>
-      <listitem>
-       <para>
-        Domyślna nazwa gniazda, które będzie użyta to łączenia się z lokalnym
-        serwerem baz danych jeśli nie zostanie podana żadna inna nazwa
-        gniazda.
-       </para>
-      </listitem>
-     </varlistentry>
-     
-     <varlistentry id="ini.mysql.max-persistent">
-      <term>
-       <parameter>mysql.max_persistent</parameter>
-       <type>integer</type>
-      </term>
-      <listitem>
-       <para>
-        Maksymalna liczba stałych połączeń MySQL na każdy proces.
-       </para>
-      </listitem>
-     </varlistentry>
-     
-     <varlistentry id="ini.mysql.max-links">
-      <term>
-       <parameter>mysql.max_links</parameter>
-       <type>integer</type>
-      </term>
-      <listitem>
-       <para>
-        Maksymalna liczba połączeń MySQL na proces, włączając w to połączenia
-        stałe.
        </para>
       </listitem>
      </varlistentry>
@@ -1507,92 +1453,6 @@ NOTYPE
        <para>
         Nazwa pliku opisującego możliwości przeglądarek. Zobacz także
         <function>get_browser</function>.
-       </para>
-      </listitem>
-     </varlistentry>
-     
-    </variablelist>
-   </sect2>
-
-   <sect2 id="ini.sect.uodbc">
-    <title>Dyrektywy konfiguracji Zunifikowanego ODBC</title>
-    <variablelist>
-     
-     <varlistentry id="ini.uodbc.default-db">
-      <term>
-       <parameter>uodbc.default_db</parameter>
-       <type>string</type>
-      </term>
-      <listitem>
-       <para>
-        Źródło danych ODBC używane jeśli nie podane zostało inne w
-        <function>odbc_connect</function> lub
-        <function>odbc_pconnect</function>.
-       </para>
-      </listitem>
-     </varlistentry>
-     
-     <varlistentry id="ini.uodbc.default-user">
-      <term>
-       <parameter>uodbc.default_user</parameter>
-       <type>string</type>
-      </term>
-      <listitem>
-       <para>
-        Nazwa użytkownika używana jeśli inna nie została podana w
-        <function>odbc_connect</function> lub
-        <function>odbc_pconnect</function>.
-       </para>
-      </listitem>
-     </varlistentry>
-     
-     <varlistentry id="ini.uodbc.default-pw">
-      <term>
-       <parameter>uodbc.default_pw</parameter>
-       <type>string</type>
-      </term>
-      <listitem>
-       <para>
-        Hasło używane jeśli inne nie zostało podane w
-        <function>odbc_connect</function> lub
-        <function>odbc_pconnect</function>.
-       </para>
-      </listitem>
-     </varlistentry>
-     
-     <varlistentry id="ini.uodbc.allow-persistent">
-      <term>
-       <parameter>uodbc.allow_persistent</parameter>
-       <type>boolean</type>
-      </term>
-      <listitem>
-       <para>
-        Czy pozwalać na stałe połączenia ODBC.
-       </para>
-      </listitem>
-     </varlistentry>
-     
-     <varlistentry id="ini.uodbc.max-persistent">
-      <term>
-       <parameter>uodbc.max_persistent</parameter>
-       <type>integer</type>
-      </term>
-      <listitem>
-       <para>
-        Maksymalna liczba stałych połączeń ODBC na każdy proces.
-       </para>
-      </listitem>
-     </varlistentry>
-     
-     <varlistentry id="ini.uodbc.max-links">
-      <term>
-       <parameter>uodbc.max_links</parameter>
-       <type>integer</type>
-      </term>
-      <listitem>
-       <para>
-        Maksymalna liczba połączeń ODBC na każdy proces, włączając w to
-        połączenia stałe.
        </para>
       </listitem>
      </varlistentry>
