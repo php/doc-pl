@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.77 Maintainer: slawek Status: ready -->
-<!-- $Revision: 1.10 $ -->
+<!-- EN-Revision: 1.80 Maintainer: slawek Status: ready -->
+<!-- $Revision: 1.11 $ -->
  <reference id="ref.mysql">
   <title>Funkcje MySQL</title>
   <titleabbrev>MySQL</titleabbrev>
@@ -25,6 +25,60 @@
     Dokumentacja do MySQL znajduje się pod adresem <ulink
     url="&url.mysql.docs;">&url.mysql.docs;</ulink>.
    </simpara>
+   <para>
+    Zachowanie funkcji MySQL zależy od ustawień w
+    <link linkend="configuration">pliku konfiguracyjnym</link>.
+    <table>
+     <title><link linkend="ini.sect.mysql">Opcje konfiguracyjne MySQL</link></title>
+     <tgroup cols="3">
+      <thead>
+       <row>
+        <entry>Nazwa</entry>
+        <entry>Domyślnie</entry>
+        <entry>Zmiana</entry>
+       </row>
+      </thead>
+      <tbody>
+       <row>
+        <entry>mysql.allow_persistent</entry>
+        <entry>"On"</entry>
+        <entry>PHP_INI_SYSTEM</entry>
+       </row>
+       <row>
+        <entry>mysql.max_persistent</entry>
+        <entry>"-1"</entry>
+        <entry>PHP_INI_SYSTEM</entry>
+       </row>
+       <row>
+        <entry>mysql.max_links</entry>
+        <entry>"-1"</entry>
+        <entry>PHP_INI_SYSTEM</entry>
+       </row>
+       <row>
+        <entry>mysql.default_port</entry>
+        <entry>NULL</entry>
+        <entry>PHP_INI_ALL</entry>
+       </row>
+       <row>
+        <entry>mysql.default_socket</entry>
+        <entry>NULL</entry>
+        <entry>PHP_INI_ALL</entry>
+       </row>
+       <row>
+        <entry>mysql.default_host</entry>
+        <entry>NULL</entry>
+        <entry>PHP_INI_ALL</entry>
+       </row>
+       <row>
+        <entry>mysql.default_user</entry>
+        <entry>NULL</entry>
+        <entry>PHP_INI_ALL</entry>
+       </row>
+      </tbody>
+     </tgroup>
+    </table>
+    By uzyskać więcej informacji na temat stałych PHP_INI_* zobacz <function>ini_set</function>.
+   </para>
    <para>
     Ten prosty przykład demonstruje jak się połączyć, wykonać zapytanie,
     wyświetlić wyniki i rozłączyć z bazą MySQL.
@@ -218,10 +272,10 @@ mysql_close($link);
      <programlisting role="php">
 <![CDATA[
 <?php
-    $link = mysql_connect ("serwer", "uzytkownik", "haslo")
-        or die ("Nie można się połączyć");
+    $link = mysql_connect("serwer", "uzytkownik", "haslo")
+        or die("Nie można się połączyć");
     print ("Połączenie nawiązane");
-    mysql_close ($link);
+    mysql_close($link);
 ?>
 ]]>
      </programlisting>
@@ -305,10 +359,10 @@ mysql_close($link);
      <programlisting role="php">
 <![CDATA[
 <?php
-    $link = mysql_connect ("localhost", "uzytkownik", "haslo")
-        or die ("Nie można się połączyć");
+    $link = mysql_connect("localhost", "uzytkownik", "haslo")
+        or die("Nie można się połączyć");
     print ("Połączenie nawiązane");
-    mysql_close ($link);
+    mysql_close($link);
 ?>
 ]]>
      </programlisting>
@@ -351,9 +405,9 @@ mysql_close($link);
      <programlisting role="php">
 <![CDATA[
 <?php
-    $link = mysql_pconnect ("serwer", "uzytkownik", "haslo")
-        or die ("Nie można się połączyć");
-    if (mysql_create_db ("my_db")) {
+    $link = mysql_pconnect("serwer", "uzytkownik", "haslo")
+        or die("Nie można się połączyć");
+    if (mysql_create_db("my_db")) {
         print ("Utworzono bazę\n");
     } else {
         printf ("Błąd podczas tworzenia bazy: %s\n", mysql_error ());
@@ -403,31 +457,31 @@ mysql_close($link);
      <programlisting role="php">
 <![CDATA[
 <?php
-    $link = mysql_pconnect ("serwer", "uzytkownik", "haslo")
-        or die ("Nie można się połączyć");
+    $link = mysql_pconnect("serwer", "uzytkownik", "haslo")
+        or die("Nie można się połączyć");
 
-    mysql_select_db ("samp_db")
-        or die ("Nie można wybrać bazy danych");
+    mysql_select_db("baza")
+        or die("Nie można wybrać bazy danych");
 
     $query = "SELECT last_name, first_name FROM friends";
-    $result = mysql_query ($query)
-        or die ("Zapytanie zakończone niepowodzeniem");
+    $result = mysql_query($query)
+        or die("Zapytanie zakończone niepowodzeniem");
 
     // pobieramy wiersze w odwrotnej kolejności
 
-    for ($i = mysql_num_rows ($result) - 1; $i >=0; $i--) {
-        if (!mysql_data_seek ($result, $i)) {
+    for ($i = mysql_num_rows($result) - 1; $i >=0; $i--) {
+        if (!mysql_data_seek($result, $i)) {
             echo "Nie można przejść do wiersza $i\n";
             continue;
         }
 
-        if(!($row = mysql_fetch_object ($result)))
+        if(!($row = mysql_fetch_object($result)))
             continue;
 
         echo "$row->last_name $row->first_name<br />\n"; 
     }
 
-    mysql_free_result ($result);
+    mysql_free_result($result);
 ?>
 ]]>
      </programlisting>
@@ -780,15 +834,16 @@ select tjeden.pole as cos tdwa.pole as cos2 from tjeden, tdwa
      <programlisting role="php">
 <![CDATA[
 <?php
-mysql_connect ("serwer","uzytkownik","haslo");
-$result = mysql_db_query ("database","select id_uzytkownika, pelna_nazwa from tabela");
-while ($row = mysql_fetch_array ($result)) {
+mysql_connect("serwer","uzytkownik","haslo");
+mysql_select_db("baza"); 
+$result = mysql_query("select id_uzytkownika, pelna_nazwa from tabela");
+while ($row = mysql_fetch_array($result)) {
     echo "id_uzytkownika: ".$row["id_uzytkownika"]."<br>\n";
     echo "id_uzytkownika: ".$row[0]."<br>\n";
     echo "pelna_nazwa: ".$row["pelna_nazwa"]."<br>\n";
     echo "pelna_nazwa: ".$row[1]."<br>\n";
 }
-mysql_free_result ($result);
+mysql_free_result($result);
 ?>
 ]]>
      </programlisting>
@@ -846,13 +901,14 @@ mysql_free_result ($result);
      <programlisting role="php">
 <![CDATA[
 <?php
-mysql_connect ("serwer","uzytkownik","haslo");
-$result = mysql_db_query ("database","select * from tabela");
-while ($row = mysql_fetch_assoc ($result)) {
+mysql_connect("serwer","uzytkownik","haslo");
+mysql_select_db("baza"); 
+$result = mysql_query("select * from tabela");
+while ($row = mysql_fetch_assoc($result)) {
     echo $row["id_uzytkownika"];
     echo $row["pelna_nazwa"];
 }
-mysql_free_result ($result);
+mysql_free_result($result);
 ?>
 ]]>
      </programlisting>
@@ -959,15 +1015,16 @@ mysql_free_result ($result);
      <programlisting role="php">
 <![CDATA[
 <?php
-mysql_connect ("serwer","uzytkownik","haslo");
+mysql_connect("serwer","uzytkownik","haslo");
     or die ("Nie można się połączyć");
-$result = mysql_db_query ("database", "select * from table")
-    or die ("Zapytanie zakończone niepowodzeniem");
+mysql_select_db("baza");
+$result = mysql_query("select * from tabela")
+    or die("Zapytanie zakończone niepowodzeniem");
 # pobieramy dane kolumny
 $i = 0;
-while ($i < mysql_num_fields ($result)) {
+while ($i < mysql_num_fields($result)) {
     echo "Informacje o kolumnie $i:<BR>\n";
-    $meta = mysql_fetch_field ($result);
+    $meta = mysql_fetch_field($result);
     if (!$meta) {
         echo "Informacje niedostępne<BR>\n";
     }
@@ -987,7 +1044,7 @@ zerofill:     $meta->zerofill
 </PRE>";
     $i++;
 }
-mysql_free_result ($result);
+mysql_free_result($result);
 ?>
 ]]>
      </programlisting>
@@ -1077,13 +1134,14 @@ mysql_free_result ($result);
       <programlisting role="php">
 <![CDATA[
 <?php
-mysql_connect ("serwer","uzytkownik","haslo");
-$result = mysql_db_query ("baza", "select * from tabela");
-while ($row = mysql_fetch_object ($result)) {
+mysql_connect("serwer","uzytkownik","haslo");
+mysql_select_db($db);  
+$result = mysql_query("select * from tabela");
+while ($row = mysql_fetch_object($result)) {
     echo $row->id_uzytkownika;
     echo $row->pelna_nazwa;
 }
-mysql_free_result ($result);
+mysql_free_result($result);
 ?>
 ]]>
       </programlisting>
@@ -1205,9 +1263,10 @@ mysql_free_result ($result);
 //   id_uzytkownika
 //   nazwa_uzytkownika
 //   haslo
-
-$res = mysql_db_query("uzytkownicy", "select * from uzytkownicy", $link);
-
+$link = mysql_connect('localhost', $uzytkownik, 'haslo');  
+mysql_select_db($dbname, $link)  
+    or die("Nie można otworzyć bazy $dbname");  
+$res = mysql_query("select * from users", $link);  
 echo mysql_field_name($res, 0) . "\n";
 echo mysql_field_name($res, 2);
 ?>
@@ -1333,21 +1392,20 @@ haslo
       <programlisting role="php">
 <![CDATA[
 <?php
-
-mysql_connect ("serwer","uzytkownik","haslo");
-mysql_select_db ("baza");
-$result = mysql_query ("SELECT * FROM tabela");
-$fields = mysql_num_fields ($result);
-$rows   = mysql_num_rows ($result);
+mysql_connect("serwer","uzytkownik","haslo");
+mysql_select_db("baza");
+$result = mysql_query("SELECT * FROM tabela");
+$fields = mysql_num_fields($result);
+$rows   = mysql_num_rows($result);
 $i = 0;
-$table = mysql_field_table ($result, $i);
+$table = mysql_field_table($result, $i);
 echo "Tabela '".$table."' ma ".$fields." pól i ".$rows." wierszy <BR>";
 echo "Tabela ma następujące pola <BR>"; 
 while ($i &lt; $fields) {
-    $type  = mysql_field_type  ($result, $i);
-    $name  = mysql_field_name  ($result, $i);
-    $len   = mysql_field_len   ($result, $i);
-    $flags = mysql_field_flags ($result, $i);
+    $type  = mysql_field_type($result, $i);
+    $name  = mysql_field_name($result, $i);
+    $len   = mysql_field_len($result, $i);
+    $flags = mysql_field_flags($result, $i);
     echo $type." ".$name." ".$len." ".$flags."<BR>";
     $i++;
 }
@@ -1845,8 +1903,8 @@ echo "$num_rows wierszy\n";
       <programlisting role="php">
 <![CDATA[
 <?php
-$result = mysql_query ("SELECT * WHERE 1=1")
-    or die ("Zapytanie niepoprawne");
+$result = mysql_query("SELECT * WHERE 1=1")
+    or die("Zapytanie niepoprawne");
 ?>
 ]]>
       </programlisting>
@@ -1862,8 +1920,8 @@ $result = mysql_query ("SELECT * WHERE 1=1")
       <programlisting role="php">
 <![CDATA[
 <?php
-$result = mysql_query ("SELECT kolumna FROM tabela")
-    or die ("Zapytanie niepoprawne");
+$result = mysql_query("SELECT kolumna FROM tabela")
+    or die("Zapytanie niepoprawne");
 ?>
 ]]>
       </programlisting>
@@ -1892,7 +1950,6 @@ $result = mysql_query ("SELECT kolumna FROM tabela")
     <para>
      Patrz także: <function>mysql_num_rows</function>,
      <function>mysql_affected_rows</function>,
-     <function>mysql_db_query</function>,
      <function>mysql_unbuffered_query</function>,
      <function>mysql_free_result</function>,
      <function>mysql_fetch_array</function>,
@@ -2068,11 +2125,11 @@ $result = mysql_query ("SELECT kolumna FROM tabela")
       <programlisting role="php">
 <![CDATA[
 <?php
-mysql_connect ("serwer","uzytkownik","haslo");
-$result = mysql_list_tables ("baza");
+mysql_connect("serwer");
+$result = mysql_list_tables("baza");
 $i = 0;
-while ($i < mysql_num_rows ($result)) {
-    $tb_names[$i] = mysql_tablename ($result, $i);
+while ($i < mysql_num_rows($result)) {
+    $tb_names[$i] = mysql_tablename($result, $i);
     echo $tb_names[$i] . "<BR>";
     $i++;
 }
