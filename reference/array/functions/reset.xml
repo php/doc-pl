@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.13 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.reset">
    <refnamediv>
     <refname>reset</refname>
@@ -12,14 +12,38 @@
     <title>Opis</title>
      <methodsynopsis>
       <type>mixed</type><methodname>reset</methodname>
-      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+      <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
      </methodsynopsis>
     <para>
      <function>reset</function> przewija wewnętrzny wskaźnik tablicy parametru
-     <parameter>tablica</parameter> na jego pierwszy element.
+     <parameter>tablica</parameter> na jego pierwszy element i zwraca jego
+     wartość, lub &false; jeśli tablica jest pusta.
     </para>
     <para>
-     <function>reset</function> zwraca wartość pierwszego elementu tablicy.
+     <example>
+      <title>Przykład użycia funkcji <function>reset</function></title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+
+$tablica = array('krok pierwszy', 'krok drugi', 'krok trzeci', 'krok czwarty');
+
+// domyślnie, wskażnik jest na pierwszym elemencie
+echo current($tablica) . "<br />\n"; // "krok pierwszy"
+
+// przeskocz dwa kroki
+next($tablica);
+next($tablica);
+echo current($tablica) . "<br />\n"; // "krok trzeci"
+
+// zresetuj wskaźnik, zacznik od nowa na pierwszym kroku
+reset($tablica);
+echo current($tablica) . "<br />\n"; // "krok pierwszy"
+
+?>
+]]>
+      </programlisting>
+     </example>
     </para>
     <para>
      Patrz także: <function>current</function>,

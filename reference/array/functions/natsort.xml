@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.5 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.5 $ -->
+<!-- EN-Revision: 1.13 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.6 $ -->
   <refentry id="function.natsort">
    <refnamediv>
     <refname>natsort</refname>
@@ -11,15 +11,19 @@
    <refsect1>
     <title>Opis</title>
      <methodsynopsis>
-      <type>void</type><methodname>natsort</methodname>
-      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+      <type>bool</type><methodname>natsort</methodname>
+      <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
      </methodsynopsis>
     <para>
      Funkcja ta implementuje algorytm sortowania, który sortuje stringi
-     alfanumeryczne tak, jak posortowałby je człowiek. Jest on określany jako
-     "porządkowanie naturalne". Przykład różnicy między tym algorytmem a
-     zwykłymi komputerowymi algorytmami sortowania stringów (używanymi w
-     funkcji <function>sort</function>) można zobaczyć poniżej:
+     alfanumeryczne tak, jak posortowałby je człowiek, zachowując przypisania
+     klucz-wartość. Jest on określany jako "porządkowanie naturalne". Przykład
+     różnicy między tym algorytmem a zwykłymi komputerowymi algorytmami
+     sortowania stringów (używanymi w funkcji <function>sort</function>) można
+     zobaczyć poniżej:
+    </para>
+    <para>
+     &return.success;
     </para>
     <para>
      <example>
@@ -27,7 +31,7 @@
       <programlisting role="php">
 <![CDATA[
 <?php
-$tablica1 = $tablica2 = array ("img12.png", "img10.png", "img2.png", "img1.png");
+$tablica1 = $tablica2 = array("img12.png", "img10.png", "img2.png", "img1.png");
  
 sort($tablica1);
 echo "Standardowe sortowanie\n";
@@ -39,13 +43,8 @@ print_r($tablica2);
 ?>
 ]]>
       </programlisting>
-     </example>
-    </para>
-    <para>
-     Powyższy przykład wyświetli:
-    </para>
-    <para>
-     <screen>
+      &example.outputs;
+      <screen>
 <![CDATA[
 Standardowe sortowanie
 Array
@@ -65,14 +64,13 @@ Array
     [0] => img12.png
 )
 ]]>
-     </screen>
-     Aby uzyskać więcej informacji zobacz stronę Martina Poola <ulink
-     url="&url.strnatcmp;">Natural Order String Comparison</ulink>.
-    </para>  
-    <para>
-     Jeśli chcesz zachować powiązania indeks/wartość, rozważ użycie
-     <literal>usort($arr, 'strnatcmp')</literal>.
-    </para>
+      </screen>
+      <para>
+       Aby uzyskać więcej informacji zobacz stronę Martina Poola <ulink
+        url="&url.strnatcmp;">Natural Order String Comparison</ulink>.
+      </para>
+     </example>
+    </para> 
     <para>
      Patrz także: <function>natcasesort</function>,
      <function>strnatcmp</function> i
