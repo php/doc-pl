@@ -1,71 +1,85 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- splitted from ./pl/functions/filesystem.xml, last change in rev 1.1 -->
-<!-- last change to 'fgetcsv' in en/ tree in rev 1.2 -->
-<!-- EN-Revision: 1.2 Maintainer: adi Status: partial -->
-<!-- OLD-Revision: 1.115/EN.1.2 -->
+<!-- EN-Revision: 1.9 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.3 $ -->
   <refentry id="function.fgetcsv">
    <refnamediv>
     <refname>fgetcsv</refname>
-    <refpurpose>
-     Pobiera linię ze wskanika pliku i przetwarza na pola CSV
-    </refpurpose>
+    <refpurpose>Pobiera linię ze wskanika pliku i przetwarza na pola CSV</refpurpose>
    </refnamediv>
    <refsect1>
     <title>Opis</title>
      <methodsynopsis>
       <type>array</type><methodname>fgetcsv</methodname>
-      <methodparam><type>int</type><parameter>fp</parameter></methodparam>
+      <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam> 
       <methodparam><type>int</type><parameter>długość</parameter></methodparam>
-      <methodparam choice="opt"><type>string</type><parameter>
-        delimiter
-       </parameter></methodparam>
+      <methodparam choice="opt"><type>string</type><parameter>delimiter</parameter></methodparam>
+	  <methodparam choice="opt"><type>string</type><parameter>załącznik</parameter></methodparam>
      </methodsynopsis>
     <simpara>
      Działa podobnie do <function>fgets</function> tylko, że
      <function>fgetcsv</function> przetwarza odczytaną linię na pola
      w formacie <acronym>CSV</acronym> i zwraca tablicę zawierającą
-     odczytane pola.  Delimiterem pól jest przecinek, chyba że
-     określisz inny delimiter w opcjonalnym 3 parametrze.
-    </simpara>
+     odczytane pola.  Delimiterem pól jest przecinek, chyba że zostanie
+	 podany inny w opcjonalnym trzecim parametrze <parameter>delimiter</parameter>.
+ 	Opcjonalny <parameter>załącznik</parameter> domyślnie jest ustawiony jako cudzysłów.
+	Oba parametry <parameter>delimiter</parameter> i <parameter>załącznik</parameter> są ograniczone
+	do jednego znaku. Jeśli którykolwiek z nich jest dłuższy, to zostanie użyty
+	pierwszy znak.
+	</simpara>
+	 <note> 
+       <simpara> 
+        Parametr <parameter>załącznik</parameter> został dodany w PHP 4.3.0. 
+       </simpara> 
+      </note> 
     <simpara>
-     <parameter>Fp</parameter> musi być poprawnym wskaźnikiem do pliku
-     poprawnie otworzonym przez <function>fopen</function> lub
+     <parameter>uchwyt</parameter> musi być poprawnym wskaźnikiem do pliku
+      otworzonym przez <function>fopen</function>, <function>popen</function>
      <function>fsockopen</function>.
     </simpara>
     <simpara>
-     Długość musi być większa niż najdłuższa linia znajdująca się
+     <parameter>Długość</parameter> musi być większa niż najdłuższa linia znajdująca się
      w pliku CSV (wliczając w to znaki końca linii).
     </simpara>
     <simpara>
      <function>fgetcsv</function> zwraca &false; gdy wystąpi błąd, włączając
      w to koniec pliku.
     </simpara>
-    <simpara>
-     Nota bene. Pusta linia w pliku CSV zostanie zwrócona jako tablica
-     składająca się z pojedynczego pola &null; i nie zostanie potraktowana
+    <note>
+     <simpara>
+     Pusta linia w pliku CSV zostanie zwrócona jako tablica
+     składająca się z pojedynczego pola <type>null</type> i nie zostanie potraktowana
      jako błąd.
-    </simpara>
+     </simpara>
+    </note>
+	<para> 
     <example>
      <title>
       <function>fgetcsv</function> przykład - Odczyt i wyświetlenie całej
       zawartości pliku CSV
-     </title>
+	 </title>
      <programlisting role="php">
 <![CDATA[
+<?php
 $row = 1;
-$fp = fopen ("test.csv","r");
-while ($data = fgetcsv ($fp, 1000, ",")) {
-    $num = count ($data);
-    print "<p> $num pola w linii $row: <br>";
+$uchwyt = fopen ("test.csv","r");
+while ($data = fgetcsv ($uchwyt, 1000, ",")) {
+    $num = count($data);
+    echo "<p> $num pól w lini $row: <br />\n"; 
     $row++;
     for ($c=0; $c < $num; $c++) {
-        print $data[$c] . "<br>";
+        echo $data[$c] . "<br />\n";
     }
 }
-fclose ($fp);
+fclose ($uchwyt);
+?>
 ]]>
      </programlisting>
     </example>
+	</para>  
+      <para>  
+       Patrz także: <function>explode</function>, <function>file</function>  
+       i <function>pack</function>  
+      </para>  
    </refsect1>
   </refentry>
 
