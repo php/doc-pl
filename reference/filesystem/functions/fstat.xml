@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- splitted from ./pl/functions/filesystem.xml, last change in rev 1.1 -->
-<!-- last change to 'fstat' in en/ tree in rev 1.24 -->
-<!-- EN-Revision: 1.2 Maintainer: adi Status: partial -->
-<!-- OLD-Revision: 1.115/EN.1.24 -->
-  <refentry id="function.fstat">
+<!-- EN-Revision: 1.2 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.3 $ -->
+ <refentry id="function.fstat">
    <refnamediv>
     <refname>fstat</refname>
-    <refpurpose>
-     Pobiera informacje o pliku używając otwartego wskaźnika pliku
-    </refpurpose>
+    <refpurpose>Pobiera informacje o pliku używając otwartego wskaźnika pliku</refpurpose>
    </refnamediv>
    <refsect1>
     <title>Opis</title>
@@ -30,7 +26,7 @@
       <listitem><simpara>liczba dowiązań</simpara></listitem>
       <listitem><simpara>identyfikator właściciela</simpara></listitem>
       <listitem><simpara>identyfikator grupy właściciela</simpara></listitem>
-      <listitem><simpara>typ urządzenia (jeśli urządzenie inode)*</simpara></listitem>
+      <listitem><simpara>typ urządzenia (jeśli urządzenie i-węzłowe)*</simpara></listitem>
       <listitem><simpara>rozmiar w bajtach</simpara></listitem>
       <listitem><simpara>czas ostatniego dostępu</simpara></listitem>
       <listitem><simpara>czas ostatniej modyfikacji</simpara></listitem>
@@ -39,7 +35,8 @@
       <listitem><simpara>liczba przydzielonych bloków</simpara></listitem>
      </orderedlist>
      * - poprawny tylko w systemach obsługujących type st_blksize -- inne systemy
-     (np. Windows) zwracają -1</para>
+     (np. Windows) zwracają -1
+    </para>
     <para>
      Wyniki tej funkcji są cachowane. Zobacz
      <function>clearstatcache</function> aby uzyskać więcej szczegółów.
