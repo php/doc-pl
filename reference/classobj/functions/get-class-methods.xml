@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.7 Maintainer: dombal Status: Ready -->
-<!-- $Revision: 1.5 $ -->
+<!-- EN-Revision: 1.9 Maintainer: dombal Status: Ready -->
+<!-- $Revision: 1.6 $ -->
   <refentry id="function.get-class-methods">
    <refnamediv>
     <refname>get_class_methods</refname>
@@ -64,9 +64,7 @@ foreach ($metody_klasy as $nazwa_metody) {
 ?>
 ]]>
       </programlisting>
-      <para>
-       Wyświetli:
-      </para>
+      &example.outputs; 
       <screen>
 <![CDATA[
 mojaklasa
@@ -76,6 +74,12 @@ mojafun2
       </screen>
      </example>
     </para>
+	 <warning> 
+       <para>
+	    Od PHP 5, funkcja zwraca nazwy metod tak jak zostały zadeklarowane
+		(z uwzględnieniem wielkości liter). W PHP 4 były one zmieniane na małe litery.
+       </para> 
+      </warning> 
     <simpara>
      Patrz także: <function>get_class_vars</function>,
      <function>get_object_vars</function>.

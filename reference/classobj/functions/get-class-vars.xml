@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.7 Maintainer: dombal Status: Ready -->
-<!-- $Revision: 1.5 $ -->
+<!-- EN-Revision: 1.9 Maintainer: dombal Status: Ready -->
+<!-- $Revision: 1.6 $ -->
   <refentry id="function.get-class-vars">
    <refnamediv>
     <refname>get_class_vars</refname>
@@ -15,7 +15,7 @@
       <methodparam><type>string</type><parameter>nazwa_klasy</parameter></methodparam>
      </methodsynopsis>
     <para>
-     Funkcja ta zwróci tablicę asocjacyjną domyślnych właściwości klasy.
+     Funkcja ta zwróci tablicę asocjacyjną domyślnych publicznych właściwości klasy.
      Elementy wynikowej tablicy są w formie <parameter>nazwa_właściwości =>
       wartość</parameter>
     </para>
@@ -37,6 +37,7 @@ class mojaklasa {
     var $zm1; // ta nie ma domyślnej wartości...
     var $zm2 = "xyz";
     var $zm3 = 100;
+	private $zm4; // PHP 5
 
     // konstruktor
     function mojaklasa() {
@@ -59,9 +60,7 @@ foreach ($wlasciwosci_klasy as $nazwa => $wartosc) {
 ?>
 ]]>
       </programlisting>
-      <para>
-       Wyświetli:
-      </para>
+      &example.outputs;
       <screen>
 <![CDATA[
 // Przed PHP 4.2.0
