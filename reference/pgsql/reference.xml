@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="iso-8859-2"?>
+<!-- $Revision: 1.1 $ -->
+ <reference id="ref.pgsql">
+  <title>PostgreSQL</title>
+  <titleabbrev>PostgreSQL</titleabbrev>
+  <partintro>
+   <para>
+    PostgreSQL, stworzony początkowo na Wydziale Nauk Komputerowych
+    Uniwersytetu Berkeley, był pionierem wielu koncepcji obiektowych 
+    obecnie dostępnych w komercyjnych bazach danych. Jest zgodny z
+    ze standardami języka SQL92/SQL3, obsługuje transakcje i pozwala
+    definiować własne typy danych. PostgreSQL jest wolno-dostępnym
+    spadkobiercą oryginalnego kodu Berkeley.
+   </para>
+   <para>
+    PostgreSQL jest produktem Open Source i jest dostępny za darmo.
+    Aby korzystać wsparcia dla PosgreSQL-a, będziesz potrzebował 
+    PostgreSQL w wersji 6.5 lub nowszej. Aby wykorzystać wszystkie
+    możliwości modułu potrzebny jest PostgreSQL 7.0 lub nowszy.
+    PostgreSQL wspiera wiele stron kodowych, z wielobajtowymi włącznie.
+    Aktualna wersja i więcej informacji jest dostępne
+    tu: <ulink url="&url.pgsql;">&url.pgsql;</ulink>.
+   </para>
+   <para>
+    W celu uruchomienia wsparcia dla PostgreSQL-a, należy użyć opcji
+    <option role="configure">--with-pgsql[=DIR]</option> w czasie
+    kompilacji PHP.
+    Jeśli jest dostępny współdzielony moduł, może on być załadowany
+    przez wpisanie dyrektywy <link linkend="ini.extension">extension</link>
+    w pliku &php.ini; lub funkcji <function>dl</function>.
+    Wspierane dyrektywy ini są opisane w pliku 
+    <filename>php.ini-dist</filename> który jest zawarty w dystrybucji
+    źródłowej.
+   </para> 
+   <warning>
+    <para>
+     Używanie modułu PostgreSQL z PHP 4.0.6 nie jest zalecane ze względu na
+     błąd w obsłudze komunikatów. Zaleca się używanie wersji 4.1.0 lub
+     nowszej.
+    </para>
+   </warning>
+   <warning>
+    <para>
+     Nazwy funkcji PostgreSQL będą zmienione w wersji 4.2.0 w celu dostosowania
+     do obecnych standardów kodowania. Większość nowych nazw będzie
+     miała dodatkowe podkreślenia np. pg_lo_open(). Niektóre funkcje
+     będą miały zmienione nazwy, aby ujednolicić nazewnictwo np.
+     pg_exec() na pg_query().
+     Stare nazwy będzie można używać w wersji 4.2.0 i w kilku kolejnych,
+     mogą jednak być usunięte w przyszłości.
+    </para>
+    <table>
+     <title>Zmienione nazwy funkcji</title>
+     <tgroup cols="2">
+      <thead>
+       <row>
+        <entry>Stara nazwa</entry>
+        <entry>Nowa nazwa</entry>
+       </row>
+      </thead>
+      <tbody>
+       <row>
+        <entry><function>pg_exec</function></entry>
+        <entry><function>pg_query</function></entry>
+       </row>
+       <row>
+        <entry><function>pg_getlastoid</function></entry>
+        <entry><function>pg_last_oid</function></entry>
+       </row>
+       <row>
+        <entry><function>pg_cmdtuples</function></entry>
+        <entry><function>pg_affected_rows</function></entry>
+       </row>
+       <row>
+        <entry><function>pg_numrows</function></entry>
+        <entry><function>pg_num_rows</function></entry>
+       </row>
+       <row>
+        <entry><function>pg_numfields</function></entry>
+        <entry><function>pg_num_fields</function></entry>
+       </row>
+       <row>
+        <entry><function>pg_fieldname</function></entry>
+        <entry><function>pg_field_name</function></entry>
+       </row>
+       <row>
+        <entry><function>pg_fieldsize</function></entry>
+        <entry><function>pg_field_size</function></entry>
+       </row>
+       <row>
+        <entry><function>pg_fieldnum</function></entry>
+        <entry><function>pg_field_num</function></entry>
+       </row>
+       <row>
+        <entry><function>pg_fieldprtlen</function></entry>
+        <entry><function>pg_field_prtlen</function></entry>
+       </row>
+       <row>
+        <entry><function>pg_fieldisnull</function></entry>
+        <entry><function>pg_field_is_null</function></entry>
+       </row>
+       <row>
+        <entry><function>pg_freeresult</function></entry>
+        <entry><function>pg_free_result</function></entry>
+       </row>
+       <row>
+        <entry><function>pg_result</function></entry>
+        <entry><function>pg_fetch_result</function></entry>
+       </row>
+       <row>
+        <entry><function>pg_loreadall</function></entry>
+        <entry><function>pg_lo_read_all</function></entry>
+       </row>
+       <row>
+        <entry><function>pg_locreate</function></entry>
+        <entry><function>pg_lo_create</function></entry>
+       </row>
+       <row>
+        <entry><function>pg_lounlink</function></entry>
+        <entry><function>pg_lo_unlink</function></entry>
+       </row>
+       <row>
+        <entry><function>pg_loopen</function></entry>
+        <entry><function>pg_lo_open</function></entry>
+       </row>
+       <row>
+        <entry><function>pg_loclose</function></entry>
+        <entry><function>pg_lo_close</function></entry>
+       </row>
+       <row>
+        <entry><function>pg_loread</function></entry>
+        <entry><function>pg_lo_read</function></entry>
+       </row>
+       <row>
+        <entry><function>pg_lowrite</function></entry>
+        <entry><function>pg_lo_write</function></entry>
+       </row>
+       <row>
+        <entry><function>pg_loimport</function></entry>
+        <entry><function>pg_lo_import</function></entry>
+       </row>
+       <row>
+        <entry><function>pg_loexport</function></entry>
+        <entry><function>pg_lo_export</function></entry>
+       </row>
+      </tbody>
+     </tgroup>
+    </table>
+    <para>
+     Stara składnia <function>pg_connect</function>/
+     <function>pg_pconnect</function> będzie wycofywana aby zapewnić
+     w przyszłości wsparcie dla asynchronicznych połączeń. Prosimy
+     używać łańcucha połączeniowego dla <function>pg_connect</function>
+     i <function>pg_pconnect</function>.
+    </para>
+   </warning>
+   <para>
+    Nie wszystkie funkcje są wspierane przez wszystkie wersje. Zależy
+    to od twojej wersji libpq (Interfejs C klienta PostgreSQL) i sposobu jej 
+    kompilacji. Jeśli brakuje jakiejś funkcji, libpq nie będzie wspierać
+    danej funkcjonalności.
+   </para>
+   <para>
+    Jest istotne żeby używać nowszej biblioteki libpq niż serwer PostgreSQL 
+    z którym się łączymy. Jeśli libpq jest starsze niż oczekiwane przez serwer 
+    PostgreSQL, możesz mieć problemy.
+   </para>
+   <para>
+    Od wersji 6.3 (03/02/1998) PostgreSQL używa gniazdek domen unixowych 
+    ("unix domain socket"). Port TCP NIE będzie domyślnie otwarty.
+    Poniższa tabela pokazuje te nowe rodzaje połączeń. Plik gniazdka 
+    znajduje się w <filename>/tmp/.s.PGSQL.5432</filename>.
+    Ta opcja może być odblokowana przez użycie flagi '-i' z poleceniem
+    <command>postmaster</command> i oznacza: "nasłuchuj na gniazdkach 
+    TCP/IP oraz na gniazdkach domen unixowych".
+    <table>
+     <title>PostgreSQL Postmaster i PHP</title>
+     <tgroup cols="3">
+      <thead>
+       <row>
+       	<entry>Postmaster</entry>
+       	<entry>PHP</entry>
+       	<entry>Status</entry>
+       </row>
+      </thead>
+      <tbody>
+       <row>
+        <entry>postmaster &amp;</entry>
+        <entry>pg_connect("dbname=MyDbName");</entry>
+        <entry>OK</entry>
+       </row>
+       <row>
+        <entry>postmaster -i &amp;</entry>
+        <entry>pg_connect("dbname=MyDbName");</entry>
+        <entry>OK</entry>
+       </row>
+       <row>
+        <entry>postmaster &amp;</entry>
+        <entry>pg_connect("host=localhost dbname=MyDbName");</entry>
+        <entry>
+         Unable to connect to PostgreSQL server: connectDB() failed:
+         Is the postmaster running and accepting TCP/IP (with -i)
+         connection at 'localhost' on port '5432'? in
+         /path/to/file.php on line 20.
+        </entry>
+       </row>
+       <row>
+        <entry>postmaster -i &amp;</entry>
+        <entry>pg_connect("host=localhost dbname=MyDbName");</entry>
+        <entry>OK</entry>
+       </row>
+      </tbody>
+     </tgroup>
+    </table>
+   </para>
+   <para>
+    Połączenie do serwera PostgreSQL może być nawiązane poprzez ustawienie 
+    następujących wartości w łańcuchu połączenia: <command>$conn =
+    pg_connect("host=myHost port=myPort tty=myTTY options=myOptions
+    dbname=myDB user=myUser password=myPassword ");
+    </command>
+   </para>
+   <para>
+    Poprzednia składnia:
+    <command>
+     $conn = pg_connect ("host", "port", "options", "tty", "dbname")
+    </command>
+    jest wycofywana.
+   </para>
+   <para>
+    Zmienne środowiskowe wpływają na zachowanie klienta i serwera
+    PostgreSQL. Przykładowo, moduł PostgreSQL będzie poszukiwał zmiennej 
+    PGHOST kiedy nazwa serwera będzie pominięta w łańcuchu połączeniowym. 
+    Używane zmienne środowiskowe zmieniają się wraz z wersjami. Szczegóły
+    można znaleźć w PostgreSQL Programmer's Manual (libpq - Environment 
+    Variables).
+   </para>
+   <para>
+    Upewnij się że ustawiłeś zmienne środowiskowe dla właściwego użytkownika.
+    Użyj <literal>$_ENV</literal> lub <function>getenv</function> aby sprawdzić
+    jakie zmienne środowiskowe są dostępne dla bieżącego procesu.
+   </para>
+   <example>
+    <title>Ustawianie domyślnych parametrów</title>
+    <programlisting>
+<![CDATA[
+PGHOST=psgql.exmaple.com
+PGPORT=7890
+PGDATABASE=web-system
+PGUSER=web-user
+PGPASSWORD=secret
+PGDATESTYLE=ISO
+PGTZ=JST
+PGCLIENTENCODING=EUC-JP
+
+export PGHOST PGPORT PGDATABASE PGUSER PGPASSWORD PGDATESTYLE PGTZ PGCLIENTENCODING
+]]>
+    </programlisting>
+   </example>
+   <para>
+    Poczynając od PostgreSQL 7.1.0, jedno pole typu text może pomieścić
+    do 1GB. Wcześniejsze wersje limitowały wielkość pola do rozmiaru bloku
+    (domyślnie 8KB, maksymalnie 32KB, definiowane przy kompilacji).
+   </para>
+   <para>
+    Użycie interfejsu wielkich obiektów (LO - Large Objects) wymaga 
+    zamknięcia go wewnątrz bloku transakcji. Transakcja rozpoczyna 
+    się poleceniem SQL <command>BEGIN</command> i - jeśli transakcja 
+    się powiedzie - kończy się poleceniem <command>COMMIT</command> lub
+    <command>END</command>. Jeśli transakcja nie powiedzie się, 
+    powinna być zakończona poleceniem <command>ROLLBACK</command> 
+    lub <command>ABORT</command>.
+    <example>
+     <title>Używanie wielkich obiektów (Large Objects)</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+    $database = pg_connect ("dbname=jacarta");
+    pg_query ($database, "begin");
+    $oid = pg_lo_create ($database);
+    echo "$oid\n";
+    $handle = pg_lo_open ($database, $oid, "w");
+    echo "$handle\n";
+    pg_lo_write ($handle, "large object data");
+    pg_lo_close ($handle);
+    pg_query ($database, "commit");
+?>
+]]>
+     </programlisting>
+    </example>
+    Nie wolno zamykać połączenia do serwera PostgreSQL, przed zamknięciem
+    wielkiego obiektu.
+   </para>
+  </partintro>
+
+&reference.pgsql.functions;
+
+ </reference>
+<!-- Keep this comment at the end of the file
+Local variables: 
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"../../../manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
