@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Revision: 1.1 $ -->
+<?xml version="1.0" encoding="iso-8859-2"?>
+<!-- $Revision: 1.2 $ -->
  <reference id="ref.filesystem">
   <title>Funkcje systemu plików</title>
   <titleabbrev>System plików</titleabbrev>
@@ -35,9 +35,11 @@
      <example>
       <title><function>basename</function> przyk³ad</title>
       <programlisting role="php">
++<![CDATA[
 $path = "/home/httpd/html/index.php";
 $file = basename ($path);        // $file zawiera "index.php"
 $file = basename ($path,".php"); // $file zawiera "index"
++]]>
       </programlisting>
      </example>
     </para>
@@ -69,7 +71,7 @@ $file = basename ($path,".php"); // $file zawiera "index"
     <para>
      Dokonuje zmiany grupy pliku podanego w parametrze
      <parameter>nazwa_pliku</parameter> na wybran± parametrem
-     <parameter>grupa</parameter>. Tylko superu¿ytkownik mo¿e zmieniæ
+     <parameter>grupa</parameter>. Tylko super u¿ytkownik mo¿e zmieniæ
      dowolnie grupê pliku; inni u¿ytkownicy mog± zmieniæ grupê pliku
      na dowoln± grupê, której cz³onkiem jest ten u¿ytkownik.
     </para>
@@ -115,9 +117,11 @@ $file = basename ($path,".php"); // $file zawiera "index"
      <parameter>prawa</parameter> poprzedziæ prefixem zero (0):
      <informalexample>
       <programlisting role="php">
+<![CDATA[
 chmod ("/katalog/plik", 755);   // dziesiêtnie; prawdopodobnie nieprawid³owo
 chmod ("/katalog/plik", "u+rwx,go+rx"); // ³añcuch; nieprawid³owo
 chmod ("/katalog/plik", 0755);  // ósemkowo; poprawna warto¶æ dla praw
+]]>
       </programlisting>
      </informalexample>
     </para>
@@ -153,7 +157,7 @@ chmod ("/katalog/plik", 0755);  // ósemkowo; poprawna warto¶æ dla praw
     <para>
      Dokonuje zmiany w³a¶ciciela pliku nazwa_pliku na u¿ytkownika
      podanego w parametrze u¿ytkownik.
-     Tylko superu¿ytkownik mo¿e zmieniæ w³a¶ciciela pliku.
+     Tylko super u¿ytkownik mo¿e zmieniæ w³a¶ciciela pliku.
     </para>
     <para>
       Zwraca &true; gdy sukces; w przeciwnym wypadku zwraca &false;.
@@ -239,9 +243,11 @@ chmod ("/katalog/plik", 0755);  // ósemkowo; poprawna warto¶æ dla praw
      <example>
       <title><function>copy</function> przyk³ad</title>
       <programlisting role="php">
+<![CDATA[
 if (!copy($file, $file.'.bak')) {
-    print ("Kopiowanie pliku nie powiod³o siê...&lt;br>\n");
+    print ("Kopiowanie pliku nie powiod³o siê...<br>\n");
 }
+]]>
       </programlisting>
      </example>
     </para>
@@ -302,8 +308,10 @@ if (!copy($file, $file.'.bak')) {
      <example>
       <title><function>dirname</function> przyk³ad</title>
       <programlisting role="php">
+<![CDATA[
 $path = "/etc/passwd";
 $file = dirname ($path); // $file zawiera "/etc"
+]]>
       </programlisting>
      </example>
     </para>
@@ -319,7 +327,7 @@ $file = dirname ($path); // $file zawiera "/etc"
     <refpurpose>Zwraca ilo¶æ wolnego miejsca w katalogu</refpurpose>
    </refnamediv>
    <refsect1>
-    <title>Description</title>
+    <title>Opis</title>
     <funcsynopsis>
      <funcprototype>
       <funcdef>float <function>disk_free_space</function></funcdef>
@@ -335,8 +343,10 @@ $file = dirname ($path); // $file zawiera "/etc"
      <example>
       <title><function>disk_free_space</function> przyk³ad</title>
       <programlisting role="php">
+<![CDATA[
 $df = disk_free_space("/"); // $df zawiera ilo¶æ wolnego (w bajtach) miejsca
                           // w "/"
+]]>
       </programlisting>
      </example>
     </para>
@@ -370,7 +380,7 @@ $df = disk_free_space("/"); // $df zawiera ilo¶æ wolnego (w bajtach) miejsca
     <refpurpose>Zwraca ca³kowity rozmiar katalogu</refpurpose>
    </refnamediv>
    <refsect1>
-    <title>Description</title>
+    <title>Opis</title>
     <funcsynopsis>
      <funcprototype>
       <funcdef>float <function>disk_total_space</function></funcdef>
@@ -386,8 +396,10 @@ $df = disk_free_space("/"); // $df zawiera ilo¶æ wolnego (w bajtach) miejsca
      <example>
       <title><function>disk_total_space</function> przyk³ad</title>
       <programlisting role="php">
+<![CDATA[
 $df = disk_total_space("/"); // $df zawiera ca³kowit± liczbê bajtów
                              // dostêpn± w "/"
+]]>
       </programlisting>
      </example>
     </para>
@@ -427,7 +439,7 @@ $df = disk_total_space("/"); // $df zawiera ca³kowit± liczbê bajtów
     <refpurpose>Sprawdza czy wska¼nik pliku jest na koñcu pliku (EOF)</refpurpose>
    </refnamediv>
    <refsect1>
-    <title>Description</title>
+    <title>Opis</title>
     <funcsynopsis>
      <funcprototype>
       <funcdef>int <function>feof</function></funcdef>
@@ -479,7 +491,7 @@ $df = disk_total_space("/"); // $df zawiera ca³kowit± liczbê bajtów
     <refpurpose>Pobiera znak ze wska¼nika pliku</refpurpose>
    </refnamediv>
    <refsect1>
-    <title>Description</title>
+    <title>Opis</title>
     <funcsynopsis>
      <funcprototype>
       <funcdef>string <function>fgetc</function></funcdef>
@@ -539,7 +551,7 @@ $df = disk_total_space("/"); // $df zawiera ca³kowit± liczbê bajtów
     </simpara>
     <simpara>
      D³ugo¶æ musi byæ wiêksza ni¿ najd³u¿sza linia znajduj±ca siê
-     w pliku CSV (allowing for trailing line-end characters).
+     w pliku CSV (wliczaj±c w to znaki koñca linii).
     </simpara>
     <simpara>
      <function>fgetcsv</function> zwraca &false; gdy wyst±pi b³±d, w³±czaj±c
@@ -556,17 +568,19 @@ $df = disk_total_space("/"); // $df zawiera ca³kowit± liczbê bajtów
       zawarto¶ci pliku CSV
      </title>
      <programlisting role="php">
+<![CDATA[
 $row = 1;
 $fp = fopen ("test.csv","r");
 while ($data = fgetcsv ($fp, 1000, ",")) {
     $num = count ($data);
-    print "&lt;p&gt; $num pola w linii $row: &lt;br&gt;";
+    print "<p> $num pola w linii $row: <br>";
     $row++;
-    for ($c=0; $c&lt;$num; $c++) {
-        print $data[$c] . "&lt;br&gt;";
+    for ($c=0; $c < $num; $c++) {
+        print $data[$c] . "<br>";
     }
 }
 fclose ($fp);
+]]>
      </programlisting>
     </example>
    </refsect1>
@@ -578,7 +592,7 @@ fclose ($fp);
     <refpurpose>Pobiera liniê ze wska¼nika pliku</refpurpose>
    </refnamediv>
    <refsect1>
-    <title>Description</title>
+    <title>Opis</title>
     <funcsynopsis>
      <funcprototype>
       <funcdef>string <function>fgets</function></funcdef>
@@ -594,7 +608,7 @@ fclose ($fp);
      przypadek zdarzy siê pierwszy).
     </para>
     <para>
-     W przypdaku b³êdu, zwraca &false;.
+     W przypadku b³êdu, zwraca &false;.
     </para>
     <para>
      G³ówna pu³apka:
@@ -614,12 +628,14 @@ fclose ($fp);
      <example>
       <title>Czytanie pliku linia po linii</title>
       <programlisting role="php">
+<![CDATA[
 $fd = fopen ("/tmp/inputfile.txt", "r");
 while (!feof ($fd)) {
     $buffer = fgets($fd, 4096);
     echo $buffer;
 }
 fclose ($fd);
+]]>
       </programlisting>
      </example>
     </para>
@@ -706,16 +722,18 @@ fclose ($fd);
     <para>
      <informalexample>
       <programlisting role="php">
-&lt;?php
+<![CDATA[
+<?php
 // pobiera stronê WWW do tablicy i wy¶wietla j±
 $fcontents = file ('http://www.php.net');
 while (list ($line_num, $line) = each ($fcontents)) {
-    echo "&lt;b&gt;Linia $line_num:&lt;/b&gt; " . htmlspecialchars ($line) . "&lt;br&gt;\n";
+    echo "<b>Linia $line_num:</b>; " . htmlspecialchars ($line) . "<br>\n";
 }
 
 // pobiera stronê WWW i zapisuje do ³añcucha
 $fcontents = join ('', file ('http://www.php.net'));
-?&gt;
+?>
+]]>
       </programlisting>
      </informalexample>
     </para>
@@ -764,7 +782,7 @@ $fcontents = join ('', file ('http://www.php.net'));
     <refpurpose>Pobiera ostatni czas dostêpu do pliku</refpurpose>
    </refnamediv>
    <refsect1>
-    <title>Description</title>
+    <title>Opis</title>
     <funcsynopsis>
      <funcprototype>
       <funcdef>int <function>fileatime</function></funcdef>
@@ -773,7 +791,7 @@ $fcontents = join ('', file ('http://www.php.net'));
     </funcsynopsis>
     <simpara>
      Zwraca czas, kiedy nast±pi³ ostatni dostêp do pliku lub &false; w
-     przypadku b³êdu. Czas jest zwracany w postaci Unix'owego znacznika
+     przypadku b³êdu. Czas jest zwracany w postaci unix'owego znacznika
      czasu.
      </simpara>
     <simpara>
@@ -781,14 +799,14 @@ $fcontents = join ('', file ('http://www.php.net'));
       <function>clearstatcache</function> aby uzyskaæ wiêcej szczegó³ów.
     </simpara>
     <simpara>
-     Notka: The atime of a file is supposed to change whenever
-     the data blocks of a file are being read. This can be
-     costly performancewise when an application regularly
-     accesses a very large number of files or directories. Some
-     Unix filesystems can be mounted with atime updates disabled
-     to increase the performance of such applications; USENET
-     news spools are a common example. On such filesystems
-     this function will be useless.
+     Notka: Czas dostêpu do pliku przypuszczalnie zmienia siê
+     zawsze kiedy bloki danych pliku s± odczytywane. To mo¿e
+     kosztowaæ utratê wydajno¶ci aplikacji, która regularnie
+     korzystaj± z wielu plików lub katalogów. Niektóre unix'owe
+     systemy plików mog± byæ montowane z wy³±czonym uaktualnianiem
+     czasu dostêpu, aby podnie¶æ wydajno¶æ takich aplikacji;
+     USENETowy katalog roboczy wiadomo¶ci s± powszechnym przyk³adem.
+     Na takich systemach plików ta funkcja bêdzie bezu¿yteczna.
     </simpara>
     <simpara>
      Ta funkcja nie dzia³a <link
@@ -823,9 +841,9 @@ $fcontents = join ('', file ('http://www.php.net'));
      Note: In most Unix filesystems, a file is considered
      changed when its inode data is changed; that is, when
      the permissions, owner, group, or other metadata
-     from the inode is updated. See also 
+     from the inode is updated. See also
      <function>filemtime</function> (which is what you want to use
-     when you want to create "Last Modified" footers on web pages) and 
+     when you want to create "Last Modified" footers on web pages) and
      <function>fileatime</function>.
     </para>
     <para>Note also that in some Unix texts the ctime of a file is
@@ -843,33 +861,34 @@ $fcontents = join ('', file ('http://www.php.net'));
   <refentry id="function.filegroup">
    <refnamediv>
     <refname>filegroup</refname>
-    <refpurpose>Gets file group</refpurpose>
+    <refpurpose>Pobiera grupê pliku</refpurpose>
    </refnamediv>
    <refsect1>
-    <title>Description</title>
+    <title>Opis</title>
     <funcsynopsis>
      <funcprototype>
       <funcdef>int <function>filegroup</function></funcdef>
-      <paramdef>string <parameter>filename</parameter></paramdef>
+      <paramdef>string <parameter>nazwa_pliku</parameter></paramdef>
      </funcprototype>
     </funcsynopsis>
-    <para>    
-     Returns the group ID of the owner of the file, or &false; in case
-     of an error. The group ID is returned in numerical format, use
-     <function>posix_getgrgid</function> to resolve it to a group name.
+    <para>
+     Zwraca identyfikator grupy do której nale¿y w³a¶ciciel pliku lub
+     &false; w przypadku b³êdu. Identyfikator grupy zwracany jest
+     w postaci numerycznej, u¿yj
+     <function>posix_getgrgid</function> aby rozwin±æ go w nazwê grupy.
     </para>
     <para>
-     The results of this function are cached. See
-     <function>clearstatcache</function> for more details.
+     Wyniki tej funkcji s± cachowane. Zobacz
+     <function>clearstatcache</function> aby uzyskaæ wiêcej szczegó³ów.
     </para>
     <note>
      <simpara>
-     This function does not work on Windows systems
+     Ta funkcja nie dzia³a w systemach Windows.
      </simpara>
     <simpara>
-     This function will not work on <link
-     linkend="features.remote-files">remote files</link>; the file to
-     be examined must be accessible via the server's filesystem.
+     Ta funkcja nie dzia³a
+     <link linkend="features.remote-files">na zdalnych plikach</link>; sprawdzany
+     plik musi byæ dostêpny przez system plików serwera.
     </simpara>
     </note>
    </refsect1>
@@ -878,31 +897,31 @@ $fcontents = join ('', file ('http://www.php.net'));
   <refentry id="function.fileinode">
    <refnamediv>
     <refname>fileinode</refname>
-    <refpurpose>Gets file inode</refpurpose>
+    <refpurpose>Pobiera i-wêze³ pliku</refpurpose>
    </refnamediv>
    <refsect1>
-    <title>Description</title>
+    <title>Opis</title>
     <funcsynopsis>
      <funcprototype>
       <funcdef>int <function>fileinode</function></funcdef>
-      <paramdef>string <parameter>filename</parameter></paramdef>
+      <paramdef>string <parameter>nazwa_pliku</parameter></paramdef>
      </funcprototype>
     </funcsynopsis>
-    <para> 
-     Returns the inode number of the file, or &false; in case of an
-     error.</para>
     <para>
-     The results of this function are cached. See
-     <function>clearstatcache</function> for more details.
+     Zwraca numer i-wêz³a pliku lub &false; w przypadku b³êdu.
+    </para>
+    <para>
+     Wyniki tej funkcji s± cachowane. Zobacz
+     <function>clearstatcache</function> aby uzyskaæ wiêcej szczegó³ów.
     </para>
     <simpara>
-     This function will not work on <link
-     linkend="features.remote-files">remote files</link>; the file to
-     be examined must be accessible via the server's filesystem.
+     Ta funkcja nie dzia³a
+     <link linkend="features.remote-files">na zdalnych plikach</link>; sprawdzany
+     plik musi byæ dostêpny przez system plików serwera.
     </simpara>
     <note>
      <simpara>
-     This function does not work on Windows systems
+     Ta funkcja nie dzia³a w systemach Windows
      </simpara>
     </note>
    </refsect1>
@@ -911,34 +930,33 @@ $fcontents = join ('', file ('http://www.php.net'));
   <refentry id="function.filemtime">
    <refnamediv>
     <refname>filemtime</refname>
-    <refpurpose>Gets file modification time</refpurpose>
+    <refpurpose>Pobiera czas ostatniej modyfikacji pliku</refpurpose>
    </refnamediv>
    <refsect1>
-    <title>Description</title>
+    <title>Opis</title>
     <funcsynopsis>
      <funcprototype>
       <funcdef>int <function>filemtime</function></funcdef>
-      <paramdef>string <parameter>filename</parameter></paramdef>
+      <paramdef>string <parameter>nazwa_pliku</parameter></paramdef>
      </funcprototype>
     </funcsynopsis>
     <para>
-     Returns the time the file was last modified, or &false; in case of
-     an error. The time is returned as a Unix timestamp.
+     Zwraca czas, kiedy plik by³ ostatnio modyfikowany lub &false; w przypadku
+     b³êdu. Czas jest zwracany w postaci unix'owego znacznika czasu.
     </para>
     <para>
-     The results of this function are cached. See
-     <function>clearstatcache</function> for more details.
+     Wyniki tej funkcji s± cachowane. Zobacz
+     <function>clearstatcache</function> aby uzyskaæ wiêcej szczegó³ów.
     </para>
     <simpara>
-     This function will not work on <link
-     linkend="features.remote-files">remote files</link>; the file to
-     be examined must be accessible via the server's filesystem.
+     Ta funkcja nie dzia³a
+     <link linkend="features.remote-files">na zdalnych plikach</link>; sprawdzany
+     plik musi byæ dostêpny przez system plików serwera.
     </simpara>
-    <para>Note: This function returns the time when the data
-     blocks of a file were being written to, that is, the time
-     when the content of the file was changed. Use
-     <function>date</function> on the result of this function
-     to get a printable modification date for use in page footers.
+    <para>Notka: Ta funkcja zwraca czas kiedy bloki danych pliku zosta³y
+     zapisane, to jest, czas kiedy zawarto¶æ pliku zosta³a zmieniona.
+     U¿yj <function>date</function> na wyniku tej funkcji aby otrzymaæ
+     czyteln± datê modyfikacji do u¿ycia jej w stopkach stron.
     </para>
    </refsect1>
   </refentry>
@@ -946,33 +964,34 @@ $fcontents = join ('', file ('http://www.php.net'));
   <refentry id="function.fileowner">
    <refnamediv>
     <refname>fileowner</refname>
-    <refpurpose>Gets file owner</refpurpose>
+    <refpurpose>Pobiera w³a¶ciciela pliku</refpurpose>
    </refnamediv>
    <refsect1>
-    <title>Description</title>
+    <title>Opis</title>
     <funcsynopsis>
      <funcprototype>
       <funcdef>int <function>fileowner</function></funcdef>
-      <paramdef>string <parameter>filename</parameter></paramdef>
+      <paramdef>string <parameter>nazwa_pliku</parameter></paramdef>
      </funcprototype>
     </funcsynopsis>
-    <para>    
-     Returns the user ID of the owner of the file, or &false; in case of
-     an error. The user ID is returned in numerical format, use
-     <function>posix_getpwuid</function> to resolve it to a username.
+    <para>
+     Zwraca identyfikator u¿ytkownika, który jest w³a¶cicielem pliku, lub
+     &false; w przypadku b³êdu. Identyfikator u¿ytkownika zwracany jest
+     w postaci numerycznej, u¿yj
+     <function>posix_getpwuid</function> aby rozwin±æ go w nazwê u¿ytkownika.
     </para>
     <para>
-     The results of this function are cached. See
-     <function>clearstatcache</function> for more details.
+     Wyniki tej funkcji s± cachowane. Zobacz
+     <function>clearstatcache</function> aby uzyskaæ wiêcej szczegó³ów.
     </para>
     <simpara>
-     This function will not work on <link
-     linkend="features.remote-files">remote files</link>; the file to
-     be examined must be accessible via the server's filesystem.
+     Ta funkcja nie dzia³a
+     <link linkend="features.remote-files">na zdalnych plikach</link>; sprawdzany
+     plik musi byæ dostêpny przez system plików serwera.
     </simpara>
     <note>
      <simpara>
-     This function does not work on Windows systems
+      Ta funkcja nie dzia³a w systemach Windows.
      </simpara>
     </note>
    </refsect1>
@@ -981,27 +1000,27 @@ $fcontents = join ('', file ('http://www.php.net'));
   <refentry id="function.fileperms">
    <refnamediv>
     <refname>fileperms</refname>
-    <refpurpose>Gets file permissions</refpurpose>
+    <refpurpose>Pobiera prawa dostêpu pliku</refpurpose>
    </refnamediv>
    <refsect1>
-    <title>Description</title>
+    <title>Opis</title>
     <funcsynopsis>
      <funcprototype>
       <funcdef>int <function>fileperms</function></funcdef>
-      <paramdef>string <parameter>filename</parameter></paramdef>
+      <paramdef>string <parameter>nazwa_pliku</parameter></paramdef>
      </funcprototype>
     </funcsynopsis>
-    <para>    
-     Returns the permissions on the file, or &false; in case of an error.
+    <para>
+     Zwraca prawa dostêpu pliku, lub &false; w przypadku b³êdu.
     </para>
     <simpara>
-     This function will not work on <link
-     linkend="features.remote-files">remote files</link>; the file to
-     be examined must be accessible via the server's filesystem.
+     Ta funkcja nie dzia³a
+     <link linkend="features.remote-files">na zdalnych plikach</link>; sprawdzany
+     plik musi byæ dostêpny przez system plików serwera.
     </simpara>
     <para>
-     The results of this function are cached. See
-     <function>clearstatcache</function> for more details.
+     Wyniki tej funkcji s± cachowane. Zobacz
+     <function>clearstatcache</function> aby uzyskaæ wiêcej szczegó³ów.
     </para>
    </refsect1>
   </refentry>
@@ -1009,27 +1028,27 @@ $fcontents = join ('', file ('http://www.php.net'));
   <refentry id="function.filesize">
    <refnamediv>
     <refname>filesize</refname>
-    <refpurpose>Gets file size</refpurpose>
+    <refpurpose>Pobiera rozmiar pliku</refpurpose>
    </refnamediv>
    <refsect1>
-    <title>Description</title>
+    <title>Opis</title>
     <funcsynopsis>
      <funcprototype>
       <funcdef>int <function>filesize</function></funcdef>
-      <paramdef>string <parameter>filename</parameter></paramdef>
+      <paramdef>string <parameter>nazwa_pliku</parameter></paramdef>
      </funcprototype>
     </funcsynopsis>
-    <para> 
-     Returns the size of the file, or &false; in case of an error.
+    <para>
+     Zwraca rozmiar pliku, lub &false; w przypadku b³êdu.
     </para>
     <para>
-     The results of this function are cached. See
-     <function>clearstatcache</function> for more details.
+     Wyniki tej funkcji s± cachowane. Zobacz
+     <function>clearstatcache</function> aby uzyskaæ wiêcej szczegó³ów.
     </para>
     <simpara>
-     This function will not work on <link
-     linkend="features.remote-files">remote files</link>; the file to
-     be examined must be accessible via the server's filesystem.
+     Ta funkcja nie dzia³a
+     <link linkend="features.remote-files">na zdalnych plikach</link>; sprawdzany
+     plik musi byæ dostêpny przez system plików serwera.
     </simpara>
    </refsect1>
   </refentry>
@@ -1037,29 +1056,29 @@ $fcontents = join ('', file ('http://www.php.net'));
   <refentry id="function.filetype">
    <refnamediv>
     <refname>filetype</refname>
-    <refpurpose>Gets file type</refpurpose>
+    <refpurpose>Pobiera typ pliku</refpurpose>
    </refnamediv>
    <refsect1>
-    <title>Description</title>
+    <title>Opis</title>
     <funcsynopsis>
      <funcprototype>
       <funcdef>string <function>filetype</function></funcdef>
-      <paramdef>string <parameter>filename</parameter></paramdef>
+      <paramdef>string <parameter>nazwa_pliku</parameter></paramdef>
      </funcprototype>
     </funcsynopsis>
-    <para>    
-     Returns the type of the file. Possible values are fifo, char,
-     dir, block, link, file, and unknown.</para> <para> Returns &false;
-     if an error occurs.
+    <para>
+     Zwraca typ pliku. Mo¿liwe warto¶ci to fifo, char, dir, block,
+     link, file, and unknown.</para> <para> Zwraca &false;
+     w przypadku b³êdu.
     </para>
     <para>
-     The results of this function are cached. See
-     <function>clearstatcache</function> for more details.
+     Wyniki tej funkcji s± cachowane. Zobacz
+     <function>clearstatcache</function> aby uzyskaæ wiêcej szczegó³ów.
     </para>
     <simpara>
-     This function will not work on <link
-     linkend="features.remote-files">remote files</link>; the file to
-     be examined must be accessible via the server's filesystem.
+     Ta funkcja nie dzia³a
+     <link linkend="features.remote-files">na zdalnych plikach</link>; sprawdzany
+     plik musi byæ dostêpny przez system plików serwera.
     </simpara>
    </refsect1>
   </refentry>
@@ -1076,7 +1095,7 @@ $fcontents = join ('', file ('http://www.php.net'));
       <funcdef>bool <function>flock</function></funcdef>
       <paramdef>int <parameter>fp</parameter></paramdef>
       <paramdef>int <parameter>operation</parameter></paramdef>
-      <paramdef>int 
+      <paramdef>int
        <parameter>
         <optional>wouldblock</optional>
        </parameter>
@@ -1152,150 +1171,153 @@ $fcontents = join ('', file ('http://www.php.net'));
   <refentry id="function.fopen">
    <refnamediv>
     <refname>fopen</refname>
-    <refpurpose>Opens file or URL</refpurpose>
+    <refpurpose>Otwiera plik lub URL</refpurpose>
    </refnamediv>
    <refsect1>
-    <title>Description</title>
+    <title>Opis</title>
     <funcsynopsis>
      <funcprototype>
       <funcdef>int <function>fopen</function></funcdef>
-      <paramdef>string <parameter>filename</parameter></paramdef>
-      <paramdef>string <parameter>mode</parameter></paramdef>
-      <paramdef>int 
+      <paramdef>string <parameter>nazwa_pliku</parameter></paramdef>
+      <paramdef>string <parameter>tryb</parameter></paramdef>
+      <paramdef>int
        <parameter>
-        <optional>use_include_path</optional>
+        <optional>u¿yj_include_path</optional>
        </parameter>
       </paramdef>
      </funcprototype>
     </funcsynopsis>
     <simpara>
-     If <parameter>filename</parameter> begins with "http://" (not
-     case sensitive), an HTTP 1.0 connection is opened to the
-     specified server, the page is requested using the HTTP GET
-     method, and a file pointer is returned to the beginning
-     of the body of the response. A 'Host:' header is sent with the
-     request in order to handle name-based virtual hosts.
+     Je¶li <parameter>nazwa_pliku</parameter> zaczyna siê od "http://" (nie
+     jest rozró¿niana wielo¶æ liter), jest otwierane po³±czenie HTTP 1.0
+     do wybranego serwera, strona jest ¿±dana u¿ywaj±c metody HTTP GET
+     i wska¼nik pliku jest ustawiany na pocz±tku cia³a odpowiedzi.
+     Nag³ówek 'Host:' jest wysy³any z ¿±daniem pozwalaj±cym
+     uchwyciæ oparte o nazwê wirtualne hosty.
     </simpara>
     <simpara>
-     Note that the file pointer allows you to retrieve only the
-     <emphasis>body</emphasis> of the response; you cannot
-     access the HTTP response header using this function.
+     Zauwa¿, ¿e wska¼nik pliku pozwala tobie wydobyæ tylko
+     <emphasis>cia³o</emphasis> odpowiedzi; Nie mo¿esz
+     dostaæ siê do nag³ówka HTTP u¿ywaj±c tej funkcji.
     </simpara>
     <simpara>
-     Versions prior to PHP 4.0.5 do not handle HTTP redirects. Because
-     of this, directories must include trailing slashes.
+     Wersje przed PHP 4.0.5 nie obs³uguj± przekierowañ HTTP. Z tego powodu
+     katalogi musz± zawieraæ koñcz±ce slashe.
     </simpara>
     <simpara>
-     If <parameter>filename</parameter> begins with "ftp://" (not case
-     sensitive), an ftp connection to the specified server is opened
-     and a pointer to the requested file is returned. If the server
-     does not support passive mode ftp, this will fail. You can open
-     files for either reading or writing via ftp (but not both
-     simultaneously).
+     Je¶li <parameter>nazwa_pliku</parameter> zaczyna siê od "ftp://"
+     (nie jest rozró¿niana wielko¶æ znaków), jest otwierane po³±czenie
+     ftp do podanego serwera i zwracany jest wska¼nik do ¿±danego pliku.
+     je¶li serwer nie obs³uguje trybu pasywnego ftp, ta funkcja zawiedzie.
+     Mo¿esz otwieraæ pliki albo do odczytu lub zapisu przez ftp (ale nie
+     oba tryby równocze¶nie).
     </simpara>
     <simpara>
-     If <parameter>filename</parameter> is one of "php://stdin",
-     "php://stdout", or "php://stderr", the corresponding stdio
-     stream will be opened.  (This was introduced in PHP 3.0.13;
-     in earlier versions, a filename such as "/dev/stdin" or
-     "/dev/fd/0" must be used to access the stdio streams.)
+     Je¶li <parameter>nazwa_pliku</parameter> jest jedn± z mo¿liwo¶ci
+     "php://stdin", "php://stdout" lub "php://stderr" zostanie otworzony
+     odpowiedni strumieñ stdio.  (To zosta³o wprowadzone w PHP 3.0.13;
+     w wcze¶niejszych wersjach, aby dostaæ siê do strumienia stdio
+     nazwa_pliku musi mieæ postaæ "/dev/stdin" lub "/dev/fd/0".)
     </simpara>
     <simpara>
-     If <parameter>filename</parameter> begins with anything else, the
-     file will be opened from the filesystem, and a file pointer to
-     the file opened is returned.
+     Je¶li <parameter>nazwa_pliku</parameter> zaczyna siê czymkolwiek innym
+     zostanie otworzony plik z systemu plików i zostanie zwrócony wska¼nik
+     pliku.
     </simpara>
     <simpara>
-     If the open fails, the function returns &false;.
+     Je¶li otwieranie zwiedzie, funkcja zwróci &false;.
     </simpara>
     <para>
-     <parameter>mode</parameter> may be any of the following:
+     <parameter>tryb</parameter> mo¿e byæ dowolny z poni¿szych:
      <itemizedlist>
       <listitem>
        <simpara>
-        'r' - Open for reading only; place the file pointer at the
-        beginning of the file.
+        'r' - Otwórz tylko do odczytu; ustawia wska¼nik pliku na pocz±tku
+        pliku.
        </simpara>
       </listitem>
       <listitem>
        <simpara>
-        'r+' - Open for reading and writing; place the file pointer at
-        the beginning of the file.
+        'r+' - Otwórz do odczytu i zapisu;  ustawia wska¼nik pliku na pocz±tku
+        pliku.
        </simpara>
       </listitem>
       <listitem>
        <simpara>
-        'w' - Open for writing only; place the file pointer at the
-        beginning of the file and truncate the file to zero length.
-        If the file does not exist, attempt to create it.
+        'w' - Otwórz tylko do zapisu; ustawia wska¼nik pliku na pocz±tku
+        pliku i obcina plik (zeruje) do 0 d³ugo¶ci.
+        Je¶li plik nie istnieje to próbuje go utworzyæ.
        </simpara>
       </listitem>
       <listitem>
        <simpara>
-        'w+' - Open for reading and writing; place the file pointer at
-        the beginning of the file and truncate the file to zero
-        length.  If the file does not exist, attempt to create it.
-       </simpara>
+        'w+' - Otwórz do odczytu i zapisu; ustawia wska¼nik pliku na pocz±tku
+        pliku i obcina plik (zeruje) do 0 d³ugo¶ci.
+        Je¶li plik nie istnieje to próbuje go utworzyæ.
+      </simpara>
       </listitem>
       <listitem>
        <simpara>
-        'a' - Open for writing only; place the file pointer at the end
-        of the file. If the file does not exist, attempt to create
-        it.
-       </simpara>
+        'a' - Otwórz tylko do zapisu; ustawia wska¼nik pliku na koñcu
+        pliku. Je¶li plik nie istnieje to próbuje go utworzyæ.
+      </simpara>
       </listitem>
       <listitem>
        <simpara>
-        'a+' - Open for reading and writing; place the file pointer at
-        the end of the file. If the file does not exist, attempt to
-        create it.
+        'a+' - Otwórz do odczytu i zapisu; ustawia wska¼nik pliku na koñcu
+        pliku. Je¶li plik nie istnieje to próbuje go utworzyæ.
        </simpara>
       </listitem>
      </itemizedlist>
     </para>
     <note>
      <para>
-      The <parameter>mode</parameter> may contain the letter
-      'b'. This is useful only on systems which differentiate between
-      binary and text files (i.e. Windows. It's useless on Unix). 
-      If not needed, this will be ignored.
+      Parametr <parameter>tryb</parameter> mo¿e zawieraæ literê
+      'b'. To jest u¿yteczne tylko na systemach, które rozró¿niaj±
+      pliki pomiêdzy binarne i tekstowe (np. Windows. To jest
+      bezu¿yteczne na Unixach)
+      Je¶li nie potrzebne zostanie zignorowane.
      </para>
     </note>
     <para>
-     You can use the optional third parameter and set it to "1", if
-     you want to search for the file in the <link
-     linkend="ini.include-path">include_path</link>, too.
+     Mo¿esz u¿yæ opcjonalnego 3 parametru i ustawiæ go na "1", je¶li
+     chcesz szukaæ pliku tak¿e w
+     <link linkend="ini.include-path">include_path</link>.
     </para>
     <para>
      <example>
-      <title><function>fopen</function> example</title>
+      <title><function>fopen</function> przyk³ad</title>
       <programlisting role="php">
+<![CDATA[
 $fp = fopen ("/home/rasmus/file.txt", "r");
 $fp = fopen ("/home/rasmus/file.gif", "wb");
 $fp = fopen ("http://www.php.net/", "r");
 $fp = fopen ("ftp://user:password@example.com/", "w");
+]]>
       </programlisting>
      </example>
     </para>
     <simpara>
-     If you are experiencing problems with reading and writing to
-     files and you're using the server module version of PHP, remember
-     to make sure that the files and directories you're using are
-     accessible to the server process.
+     Je¶li do¶wiadczasz problemów z czytaniem i zapisywaniem do plików
+     i u¿ywasz PHP jako modu³ serwera, pamiêtaj, ¿e pliki i katalogi
+     które u¿ywasz musz± byæ osi±galne dla procesu serwera.
     </simpara>
     <para>
-     On the Windows platform, be careful to escape any backslashes
-     used in the path to the file, or use forward slashes.
+     Na platformach Windows, uwa¿aj na zastosowanie znaków ucieczki
+     dla wszystkich u¿ytych w ¶cie¿ce do pliku backslashy, lub
+     u¿yj slash'y.
      <informalexample>
-      <programlisting role="php"> 
+      <programlisting role="php">
+<![CDATA[
 $fp = fopen ("c:\\data\\info.txt", "r");
+]]>
       </programlisting>
      </informalexample>
     </para>
     <simpara>
-     See also <function>fclose</function>,
+     Patrz tak¿e <function>fclose</function>,
      <function>fsockopen</function>,
-     <function>socket_set_timeout</function>, and
+     <function>socket_set_timeout</function> i
      <function>popen</function>.
     </simpara>
    </refsect1>
@@ -1303,7 +1325,7 @@ $fp = fopen ("c:\\data\\info.txt", "r");
 
   <refentry id="function.fpassthru">
    <refnamediv>
-    <refname>fpassthru</refname> 
+    <refname>fpassthru</refname>
     <refpurpose>
      Output all remaining data on a file pointer
     </refpurpose>
@@ -1347,27 +1369,27 @@ $fp = fopen ("c:\\data\\info.txt", "r");
   <refentry id="function.fputs">
    <refnamediv>
     <refname>fputs</refname>
-    <refpurpose>Writes to a file pointer</refpurpose>
+    <refpurpose>Zapisuje do wska¼nika pliku</refpurpose>
    </refnamediv>
    <refsect1>
-    <title>Description</title>
+    <title>Opis</title>
     <funcsynopsis>
      <funcprototype>
       <funcdef>int <function>fputs</function></funcdef>
       <paramdef>int <parameter>fp</parameter></paramdef>
       <paramdef>string <parameter>str</parameter></paramdef>
-      <paramdef>int 
+      <paramdef>int
        <parameter>
-        <optional>length</optional>
+        <optional>d³ugo¶æ</optional>
        </parameter>
       </paramdef>
      </funcprototype>
     </funcsynopsis>
     <para>
-     <function>fputs</function> is an alias to
-     <function>fwrite</function>, and is identical in every way.  Note
-     that the <parameter>length</parameter> parameter is optional and
-     if not specified the entire string will be written.
+     <function>fputs</function> jest aliasem do
+     <function>fwrite</function>, i jest identyczna w ka¿dym przypadku.  Zauwa¿,
+     ¿e parametr <parameter>d³ugo¶æ</parameter> jest opcjonalny i je¶li
+     go nie podasz to ca³y ³añcuch zostanie zapisany.
     </para>
    </refsect1>
   </refentry>
@@ -1375,57 +1397,61 @@ $fp = fopen ("c:\\data\\info.txt", "r");
   <refentry id="function.fread">
    <refnamediv>
     <refname>fread</refname>
-    <refpurpose>Binary-safe file read</refpurpose>
+    <refpurpose>Odczyt plików binarnie bezpieczny</refpurpose>
    </refnamediv>
    <refsect1>
-    <title>Description</title>
+    <title>Opis</title>
     <funcsynopsis>
      <funcprototype>
       <funcdef>string <function>fread</function></funcdef>
       <paramdef>int <parameter>fp</parameter></paramdef>
-      <paramdef>int <parameter>length</parameter></paramdef>
+      <paramdef>int <parameter>d³ugo¶æ</parameter></paramdef>
      </funcprototype>
     </funcsynopsis>
     <simpara>
-     <function>fread</function> reads up to
-     <parameter>length</parameter> bytes from the file pointer
-     referenced by <parameter>fp</parameter>. Reading stops when
-     <parameter>length</parameter> bytes have been read or EOF is
-     reached, whichever comes first.
-    </simpara> 
+     <function>fread</function> odczytuje do
+     <parameter>d³ugo¶æ</parameter> bajtów ze wska¼nika pliku
+     <parameter>fp</parameter>. Czytanie koñczy siê gdy
+     odczytano ju¿ <parameter>d³ugo¶æ</parameter> bajtów
+     lub osi±gniêto EOF, cokolwiek nast±pi pierwsze.
+    </simpara>
     <para>
      <informalexample>
       <programlisting role="php">
-// get contents of a file into a string
+<![CDATA[
+// pobierz zawarto¶æ pliku do ³añcucha
 $filename = "/usr/local/something.txt";
 $fd = fopen ($filename, "r");
 $contents = fread ($fd, filesize ($filename));
 fclose ($fd);
+]]>
       </programlisting>
      </informalexample>
     </para>
     <note>
      <para>
-      On systems which differentiate between binary and text files 
-      (i.e. Windows) the file must be opened with 'b' included in
-      <function>fopen</function> mode parameter.
+      W systemach, które rozró¿niaj± pliki na binarne i tekstowe
+      (np. Windows) plik musi zostaæ otworzony z 'b' w³±czonym do
+      parametru tryb funkcji <function>fopen</function>.
      </para>
     </note>
     <para>
      <informalexample>
       <programlisting role="php">
+<![CDATA[
 $filename = "c:\\files\\somepic.gif";
 $fd = fopen ($filename, "rb");
 $contents = fread ($fd, filesize ($filename));
 fclose ($fd);
+]]>
       </programlisting>
      </informalexample>
     </para>
     <simpara>
-     See also <function>fwrite</function>, <function>fopen</function>,
+     Patrz tak¿e <function>fwrite</function>, <function>fopen</function>,
      <function>fsockopen</function>, <function>popen</function>,
      <function>fgets</function>, <function>fgetss</function>,
-     <function>fscanf</function>, <function>file</function>, and
+     <function>fscanf</function>, <function>file</function> i
      <function>fpassthru</function>.
     </simpara>
    </refsect1>
@@ -1434,55 +1460,59 @@ fclose ($fd);
   <refentry id="function.fscanf">
    <refnamediv>
     <refname>fscanf</refname>
-    <refpurpose>Parses input from a file according to a format</refpurpose>
+    <refpurpose>Przetwarza dane z pliku wed³ug formatu</refpurpose>
    </refnamediv>
    <refsect1>
-    <title>Description</title>
+    <title>Opis</title>
     <funcsynopsis>
      <funcprototype>
       <funcdef>mixed <function>fscanf</function></funcdef>
-      <paramdef>int <parameter>handle</parameter></paramdef>
+      <paramdef>int <parameter>uchwyt</parameter></paramdef>
       <paramdef>string <parameter>format</parameter></paramdef>
-      <paramdef>string 
-       <parameter><optional>var1</optional></parameter>...
+      <paramdef>string
+       <parameter><optional>war1</optional></parameter>...
       </paramdef>
      </funcprototype>
     </funcsynopsis>
     <para>
-     The function <function>fscanf</function> is similar to
-     <function>sscanf</function>, but it takes its input from a file
-     associated with <parameter>handle</parameter> and interprets the
-     input according to the specified
-     <parameter>format</parameter>. If only two parameters were passed
-     to this function, the values parsed will be returned as an array.
-     Otherwise, if optional parameters are passed, the function will
-     return the number of assigned values. The optional parameters
-     must be passed by reference.
+     Funkcja <function>fscanf</function> jest podobna do
+     <function>sscanf</function>, ale pobiera dane wej¶ciowe z pliku
+     skojarzonego z <parameter>uchwyt</parameter>em i interpretuje je
+     zgodnie z podanych <parameter>format</parameter>em.
+     Je¶li tylko dwa parametry zostan± podane do funkcji, przetworzone
+     warto¶ci zostan± zwrócone w tablicy.
+     W przeciwnym razie, je¶li opcjonalne parametry zostan± podane,
+     funkcja zwróci numer przypisany do warto¶ci. Opcjonalny parametr
+     musi byæ podawany przez referencje.
      <example>
-      <title><function>fscanf</function> Example</title>
+      <title><function>fscanf</function> Przyk³ad</title>
       <programlisting role="php">
+<![CDATA[
 $fp = fopen ("users.txt","r");
 while ($userinfo = fscanf ($fp, "%s\t%s\t%s\n")) {
     list ($name, $profession, $countrycode) = $userinfo;
-    //... do something with the values
+    //... zrób co¶ z warto¶ciami
 }
 fclose($fp);
+]]>
       </programlisting>
      </example>
      <example>
       <title>users.txt</title>
       <programlisting>
+<![CDATA[
 javier  argonaut        pe
 hiroshi sculptor        jp
 robert  slacker us
 luigi   florist it
+]]>
       </programlisting>
      </example>
     </para>
     <para>
-     See also <function>fread</function>, <function>fgets</function>,
+     Patrz tak¿e <function>fread</function>, <function>fgets</function>,
      <function>fgetss</function>, <function>sscanf</function>,
-     <function>printf</function>, and <function>sprintf</function>.
+     <function>printf</function> i <function>sprintf</function>.
     </para>
    </refsect1>
   </refentry>
@@ -1499,7 +1529,7 @@ luigi   florist it
       <funcdef>int <function>fseek</function></funcdef>
       <paramdef>int <parameter>fp</parameter></paramdef>
       <paramdef>int <parameter>offset</parameter></paramdef>
-      <paramdef>int 
+      <paramdef>int
        <parameter><optional>whence</optional></parameter>
       </paramdef>
      </funcprototype>
@@ -1548,11 +1578,11 @@ luigi   florist it
    <refnamediv>
     <refname>fstat</refname>
     <refpurpose>
-     Gets information about a file using an open file pointer
+     Pobiera informacje o pliku u¿ywaj±c otwartego wska¼nika pliku
     </refpurpose>
    </refnamediv>
    <refsect1>
-    <title>Description</title>
+    <title>Opis</title>
     <funcsynopsis>
      <funcprototype>
       <funcdef>array <function>fstat</function></funcdef>
@@ -1560,33 +1590,32 @@ luigi   florist it
      </funcprototype>
     </funcsynopsis>
     <para>
-     Gathers the statistics of the file opened by the file
-     pointer fp.  This function is similar to the
-     <function>stat</function> function except that it operates
-     on an open file pointer instead of a filename.
+     Zbiera statystyki otwartego pliku przez wska¼nik pliku fp.
+     Ta funkcja jest podobna do funkcji
+     <function>stat</function> z wyj±tkiem tego, ¿e operuje na otwartym
+     wska¼niku pliku zamiast na nazwiê pliku.
     </para>
     <para>
-     Returns an array with the statistics of the file with the
-     following elements:
+     Zwraca tablicê ze statystyk± pliku z nastêpuj±cymi elementami:
      <orderedlist>
-      <listitem><simpara>device</simpara></listitem>
-      <listitem><simpara>inode</simpara></listitem>
-      <listitem><simpara>number of links</simpara></listitem>
-      <listitem><simpara>user id of owner</simpara></listitem>
-      <listitem><simpara>group id owner</simpara></listitem>
-      <listitem><simpara>device type if inode device *</simpara></listitem>
-      <listitem><simpara>size in bytes</simpara></listitem>
-      <listitem><simpara>time of last access</simpara></listitem>
-      <listitem><simpara>time of last modification</simpara></listitem>
-      <listitem><simpara>time of last change</simpara></listitem>
-      <listitem><simpara>blocksize for filesystem I/O *</simpara></listitem>
-      <listitem><simpara>number of blocks allocated</simpara></listitem>
+      <listitem><simpara>urz±dzenie</simpara></listitem>
+      <listitem><simpara>i-wêze³</simpara></listitem>
+      <listitem><simpara>liczba dowi±zañ</simpara></listitem>
+      <listitem><simpara>identyfikator w³a¶ciciela</simpara></listitem>
+      <listitem><simpara>identyfikator grupy w³a¶ciciela</simpara></listitem>
+      <listitem><simpara>typ urz±dzenia (je¶li urz±dzenie inode)*</simpara></listitem>
+      <listitem><simpara>rozmiar w bajtach</simpara></listitem>
+      <listitem><simpara>czas ostatniego dostêpu</simpara></listitem>
+      <listitem><simpara>czas ostatniej modyfikacji</simpara></listitem>
+      <listitem><simpara>czas ostatniej zmiany</simpara></listitem>
+      <listitem><simpara>rozmiar bloku w systemie plików I/O *</simpara></listitem>
+      <listitem><simpara>liczba przydzielonych bloków</simpara></listitem>
      </orderedlist>
-     * - only valid on systems supporting the st_blksize type--other
-     systems (i.e. Windows) return -1</para>
+     * - poprawny tylko w systemach obs³uguj±cych type st_blksize -- inne systemy
+     (np. Windows) zwracaj± -1</para>
     <para>
-     The results of this function are cached. See
-     <function>clearstatcache</function> for more details.
+     Wyniki tej funkcji s± cachowane. Zobacz
+     <function>clearstatcache</function> aby uzyskaæ wiêcej szczegó³ów.
     </para>
    </refsect1>
   </refentry>
@@ -1616,7 +1645,7 @@ luigi   florist it
      successfully opened by <function>fopen</function> or
      <function>popen</function>.
     </para>
-    <para> 
+    <para>
      See also <function>fopen</function>, <function>popen</function>,
      <function>fseek</function> and <function>rewind</function>.
     </para>
@@ -1627,21 +1656,21 @@ luigi   florist it
    <refnamediv>
     <refname>ftruncate</refname>
     <refpurpose>
-     Truncates a file to a given length.
+     Przycina plik do podanej d³ugo¶ci.
     </refpurpose>
    </refnamediv>
    <refsect1>
-    <title>Description</title>
+    <title>Opis</title>
     <funcsynopsis>
      <funcprototype>
       <funcdef>int <function>ftruncate</function></funcdef>
       <paramdef>int <parameter>fp</parameter></paramdef>
-      <paramdef>int <parameter>size</parameter></paramdef>
+      <paramdef>int <parameter>rozmiar</parameter></paramdef>
      </funcprototype>
     </funcsynopsis>
     <para>
-     Takes the filepointer, fp, and truncates the file to length, size.
-     This function returns &true; on success and &false; on failure.
+     Pobiera wska¼nik pliku, fp, i przycina plik do d³ugo¶ci, rozmiar.
+     Funkcja zwraca &true; gdy sukces i &false; gdy niepowodzenie.
     </para>
    </refsect1>
   </refentry>
@@ -1658,7 +1687,7 @@ luigi   florist it
       <funcdef>int <function>fwrite</function></funcdef>
       <paramdef>int <parameter>fp</parameter></paramdef>
       <paramdef>string <parameter>string</parameter></paramdef>
-      <paramdef>int 
+      <paramdef>int
        <parameter>
         <optional>length</optional>
        </parameter>
@@ -1683,7 +1712,7 @@ luigi   florist it
     </simpara>
     <note>
      <para>
-      On systems which differentiate between binary and text files 
+      On systems which differentiate between binary and text files
       (i.e. Windows) the file must be opened with 'b' included in
       <function>fopen</function> mode parameter.
      </para>
@@ -1734,12 +1763,14 @@ luigi   florist it
      <example>
       <title><function>set_file_buffer</function> example</title>
       <programlisting role="php">
+<![CDATA[
 $fp=fopen($file, "w");
 if($fp){
   set_file_buffer($fp, 0);
   fputs($fp, $output);
   fclose($fp);
 }
+]]>
       </programlisting>
      </example>
     </para>
@@ -1753,30 +1784,30 @@ if($fp){
   <refentry id="function.is-dir">
    <refnamediv>
     <refname>is_dir</refname>
-    <refpurpose>Tells whether the filename is a directory</refpurpose>
+    <refpurpose>Mówi czy nazwa_pliku jest katalogiem</refpurpose>
    </refnamediv>
    <refsect1>
-    <title>Description</title>
+    <title>Opis</title>
     <funcsynopsis>
      <funcprototype>
       <funcdef>bool <function>is_dir</function></funcdef>
-      <paramdef>string <parameter>filename</parameter></paramdef>
+      <paramdef>string <parameter>nazwa_pliku</parameter></paramdef>
      </funcprototype>
     </funcsynopsis>
     <para>
-     Returns &true; if the filename exists and is a directory.
+     Zwraca &true; je¶li nazwa_pliku istnieje i jest katalogiem.
     </para>
     <para>
-     The results of this function are cached. See
-     <function>clearstatcache</function> for more details.
+     Wyniki tej funkcji s± cachowane. Zobacz
+     <function>clearstatcache</function> aby uzyskaæ wiêcej szczegó³ów.
     </para>
     <simpara>
-     This function will not work on <link
-     linkend="features.remote-files">remote files</link>; the file to
-     be examined must be accessible via the server's filesystem.
+     Ta funkcja nie dzia³a
+     <link linkend="features.remote-files">na zdalnych plikach</link>; sprawdzany
+     plik musi byæ dostêpny przez system plików serwera.
     </simpara>
     <para>
-     See also <function>is_file</function> and
+     Patrz tak¿e <function>is_file</function> i
      <function>is_link</function>.
     </para>
    </refsect1>
@@ -1785,30 +1816,30 @@ if($fp){
   <refentry id="function.is-executable">
    <refnamediv>
     <refname>is_executable</refname>
-    <refpurpose>Tells whether the filename is executable</refpurpose>
+    <refpurpose>Mówi czy plik jest wykonywalny</refpurpose>
    </refnamediv>
    <refsect1>
-    <title>Description</title>
+    <title>Opis</title>
     <funcsynopsis>
      <funcprototype>
       <funcdef>bool <function>is_executable</function></funcdef>
-      <paramdef>string <parameter>filename</parameter></paramdef>
+      <paramdef>string <parameter>nazwa_pliku</parameter></paramdef>
      </funcprototype>
     </funcsynopsis>
     <para>
-     Returns &true; if the filename exists and is executable.
+     Zwraca &true; je¶li plik istnieje i jest wykonywalny.
     </para>
     <para>
-     The results of this function are cached. See
-     <function>clearstatcache</function> for more details.
+     Wyniki tej funkcji s± cachowane. Zobacz
+     <function>clearstatcache</function> aby uzyskaæ wiêcej szczegó³ów.
     </para>
     <simpara>
-     This function will not work on <link
-     linkend="features.remote-files">remote files</link>; the file to
-     be examined must be accessible via the server's filesystem.
+     Ta funkcja nie dzia³a
+     <link linkend="features.remote-files">na zdalnych plikach</link>; sprawdzany
+     plik musi byæ dostêpny przez system plików serwera.
     </simpara>
     <para>
-     See also <function>is_file</function> and
+     Patrz tak¿e <function>is_file</function> i
      <function>is_link</function>.
     </para>
    </refsect1>
@@ -1818,26 +1849,26 @@ if($fp){
    <refnamediv>
     <refname>is_file</refname>
     <refpurpose>
-     Tells whether the filename is a regular file
+     Mówi czy nazwa_pliku jest zwyk³ym plikiem
     </refpurpose>
    </refnamediv>
    <refsect1>
-    <title>Description</title>
+    <title>Opis</title>
     <funcsynopsis>
      <funcprototype>
       <funcdef>bool <function>is_file</function></funcdef>
-      <paramdef>string <parameter>filename</parameter></paramdef>
+      <paramdef>string <parameter>nazwa_pliku</parameter></paramdef>
      </funcprototype>
     </funcsynopsis>
     <para>
-     Returns &true; if the filename exists and is a regular file.
+     Zwraca &true; jesli nazwa_pliku istnieje i jest zwyk³ym plikiem.
     </para>
     <para>
-     The results of this function are cached. See
-     <function>clearstatcache</function> for more details.
+     Wyniki tej funkcji s± cachowane. Zobacz
+     <function>clearstatcache</function> aby uzyskaæ wiêcej szczegó³ów.
     </para>
     <para>
-     See also <function>is_dir</function> and
+     Patrz tak¿e <function>is_dir</function> i
      <function>is_link</function>.
     </para>
    </refsect1>
@@ -1847,36 +1878,36 @@ if($fp){
    <refnamediv>
     <refname>is_link</refname>
     <refpurpose>
-     Tells whether the filename is a symbolic link
+     Mówi czy nazwa_pliku jest dowi±zaniem symbolicznym
     </refpurpose>
    </refnamediv>
    <refsect1>
-    <title>Description</title>
+    <title>Opis</title>
     <funcsynopsis>
      <funcprototype>
       <funcdef>bool <function>is_link</function></funcdef>
-      <paramdef>string <parameter>filename</parameter></paramdef>
+      <paramdef>string <parameter>nazwa_pliku</parameter></paramdef>
      </funcprototype>
     </funcsynopsis>
     <para>
-     Returns &true; if the filename exists and is a symbolic link.
+     Zwraca &true; je¶li nazwa_pliku istnieje i jest dowi±zaniem symbolicznym.
     </para>
     <para>
-     The results of this function are cached. See
-     <function>clearstatcache</function> for more details.
+     Wyniki tej funkcji s± cachowane. Zobacz
+     <function>clearstatcache</function> aby uzyskaæ wiêcej szczegó³ów.
     </para>
     <para>
-     See also <function>is_dir</function> and
+     Patrz tak¿e <function>is_dir</function> i
      <function>is_file</function>.
     </para>
     <simpara>
-     This function will not work on <link
-     linkend="features.remote-files">remote files</link>; the file to
-     be examined must be accessible via the server's filesystem.
+     Ta funkcja nie dzia³a
+     <link linkend="features.remote-files">na zdalnych plikach</link>; sprawdzany
+     plik musi byæ dostêpny przez system plików serwera.
     </simpara>
     <note>
      <simpara>
-     This function does not work on Windows systems
+      Ta funkcja nie dzia³a w systemach Windows.
      </simpara>
     </note>
    </refsect1>
@@ -1980,41 +2011,42 @@ if($fp){
   <refentry id="function.is-uploaded-file">
    <refnamediv>
     <refname>is_uploaded_file</refname>
-    <refpurpose>Tells whether the file was uploaded via HTTP POST.</refpurpose>
+    <refpurpose>Mówi czy plik zosta³ przys³any przez HTTP POST.</refpurpose>
    </refnamediv>
    <refsect1>
     <title>Description</title>
     <funcsynopsis>
      <funcprototype>
       <funcdef>bool <function>is_uploaded_file</function></funcdef>
-      <paramdef>string <parameter>filename</parameter></paramdef>
+      <paramdef>string <parameter>nazwa_pliku</parameter></paramdef>
      </funcprototype>
     </funcsynopsis>
 
     <para>
-     This function is available only in versions of PHP 3 after PHP
-     3.0.16, and in versions of PHP 4 after 4.0.2.
+     Ta funkcja jest dostêpna tylko w wersjach PHP 3 pó¼niejszych od
+     3.0.16 i w wersjach PHP 4 pó¼niejszych od 4.0.2.
     </para>
 
     <para>
-     Returns &true; if the file named by <varname>filename</varname> was
-     uploaded via HTTP POST. This is useful to help ensure that a
-     malicious user hasn't tried to trick the script into working on
-     files upon which it should not be working--for instance,
+     Zwraca &true; je¶li plik o nazwie <varname>nazwa_pliku</varname>
+     zosta³ przys³any (upload) przez HTTP POST. To pomaga upewniæ siê,
+     czy z³o¶liwy u¿ytkownik nie próbuje oszukaæ skryptu pracuj±cego
+     na plikach, tak aby dzia³a³ on na plikach na których nie powinien
+     -- na przyk³ad
      <filename>/etc/passwd</filename>.
     </para>
 
     <para>
-     This sort of check is especially important if there is any chance
-     that anything done with uploaded files could reveal their
-     contents to the user, or even to other users on the same
-     system.
+     Ten rodzaj testów jest szczególnie wa¿ny je¶li istnieje szansa, ¿e
+     cokolwiek robimy z przys³anymi plikami mo¿e zdradziæ ich
+     tre¶æ u¿ytkownikowi lub nawet innym u¿ytkownikom tego samego
+     systemu.
     </para>
 
     <para>
-     See also <function>move_uploaded_file</function>, and the section
+     Patrz tak¿e <function>move_uploaded_file</function> i sekcjê
      <link linkend="features.file-upload">Handling file uploads</link>
-     for a simple usage example.
+     aby zobaczyæ przyk³adowe skrypty.
     </para>
    </refsect1>
   </refentry>
@@ -2105,7 +2137,9 @@ if($fp){
      can change using <function>umask</function>.
      <informalexample>
       <programlisting role="php">
+<![CDATA[
 mkdir ("/path/to/my/dir", 0700);
+]]>
       </programlisting>
      </informalexample>
     </para>
@@ -2220,6 +2254,7 @@ mkdir ("/path/to/my/dir", 0700);
      <example>
       <title>Contents of sample.ini</title>
       <programlisting>
+<![CDATA[
 ; This is a sample configuration file
 ; Comments start with ';', as in php.ini
 
@@ -2229,6 +2264,7 @@ five = 5
 
 [second_section]
 path = /usr/local/bin
+]]>
       </programlisting>
      </example>
     </para>
@@ -2256,6 +2292,7 @@ print_r($ini_array);
      Would produce:
      <informalexample>
       <programlisting>
+<![CDATA[
 Array
 (
     [one] => 1
@@ -2276,6 +2313,7 @@ Array
         )
 
 )
+]]>
       </programlisting>
      </informalexample>
     </para>
@@ -2306,7 +2344,8 @@ Array
      <example>
       <title><function>pathinfo</function> Example</title>
       <programlisting role="php">
-&lt;?php
+<![CDATA[
+<?php
 
 $path_parts = pathinfo("/www/htdocs/index.html");
 
@@ -2314,7 +2353,8 @@ echo $path_parts["dirname"] . "\n";
 echo $path_parts["basename"] . "\n";
 echo $path_parts["extension"] . "\n";
 
-?&gt;
+?>
+]]>
       </programlisting>
      </example>
     </para>
@@ -2322,9 +2362,11 @@ echo $path_parts["extension"] . "\n";
      Would produce:
      <informalexample>
       <programlisting>
+<![CDATA[
 /www/htdocs
 index.html
 html
+]]>
       </programlisting>
      </informalexample>
     </para>
@@ -2349,14 +2391,14 @@ html
       <paramdef>int <parameter>fp</parameter></paramdef>
      </funcprototype>
     </funcsynopsis>
-    <para> 
+    <para>
      Closes a file pointer to a pipe opened by
      <function>popen</function>.
-    </para> 
-    <para> 
+    </para>
+    <para>
      The file pointer must be valid, and must have been returned by a
      successful call to <function>popen</function>.
-    </para> 
+    </para>
     <para>
      Returns the termination status of the process that was
      run.
@@ -2381,11 +2423,11 @@ html
       <paramdef>string <parameter>mode</parameter></paramdef>
      </funcprototype>
     </funcsynopsis>
-    <para> 
+    <para>
      Opens a pipe to a process executed by forking the command given
      by command.
     </para>
-    <para> 
+    <para>
      Returns a file pointer identical to that returned by
      <function>fopen</function>, except that it is unidirectional (may
      only be used for reading or writing) and must be closed with
@@ -2399,7 +2441,9 @@ html
     <para>
      <informalexample>
       <programlisting role="php">
+<![CDATA[
 $fp = popen ("/bin/ls", "r");
+]]>
       </programlisting>
      </informalexample>
     </para>
@@ -2420,7 +2464,7 @@ $fp = popen ("/bin/ls", "r");
      <funcprototype>
       <funcdef>int <function>readfile</function></funcdef>
       <paramdef>string <parameter>filename</parameter></paramdef>
-      <paramdef>int 
+      <paramdef>int
        <parameter>
         <optional>use_include_path</optional>
        </parameter>
@@ -2515,11 +2559,11 @@ $fp = popen ("/bin/ls", "r");
       <paramdef>string <parameter>newname</parameter></paramdef>
      </funcprototype>
     </funcsynopsis>
-    <para> 
+    <para>
      Attempts to rename <parameter>oldname</parameter> to
      <parameter>newname</parameter>.
-    </para> 
-    <para> 
+    </para>
+    <para>
      Returns &true; on success and &false; on failure.
     </para>
    </refsect1>
@@ -2538,7 +2582,7 @@ $fp = popen ("/bin/ls", "r");
       <paramdef>int <parameter>fp</parameter></paramdef>
      </funcprototype>
     </funcsynopsis>
-    <para>    
+    <para>
      Sets the file position indicator for fp to the beginning of the
      file stream.</para> <para> If an error occurs, returns 0.</para>
      <para> The file pointer must be valid, and must point to a file
@@ -2565,12 +2609,12 @@ $fp = popen ("/bin/ls", "r");
       <paramdef>string <parameter>dirname</parameter></paramdef>
      </funcprototype>
     </funcsynopsis>
-    <para> 
+    <para>
      Attempts to remove the directory named by pathname. The directory
      must be empty, and the relevant permissions must permit.
      this.
-    </para> 
-    <para> 
+    </para>
+    <para>
      If an error occurs, returns 0.
     </para>
     <para>
@@ -2703,7 +2747,9 @@ $fp = popen ("/bin/ls", "r");
      <example>
       <title><function>realpath</function> example</title>
       <programlisting role="php">
+<![CDATA[
 $real_path = realpath ("../../index.php");
+]]>
       </programlisting>
      </example>
     </para>
@@ -2745,7 +2791,7 @@ $real_path = realpath ("../../index.php");
   <refentry id="function.tempnam">
    <refnamediv>
     <refname>tempnam</refname>
-    <refpurpose>Creates unique file name</refpurpose>
+   <refpurpose>Create file with unique file name</refpurpose>
    </refnamediv>
    <refsect1>
     <title>Description</title>
@@ -2757,9 +2803,10 @@ $real_path = realpath ("../../index.php");
      </funcprototype>
     </funcsynopsis>
     <para>
-     Creates a unique temporary filename in the specified directory.
+     Creates a file with a unique filename in the specified directory.
      If the directory does not exist, <function>tempnam</function> may
-     generate a filename in the system's temporary directory.
+     generate a file in the system's temporary directory, and return
+     the name of that.
     </para>
     <para>
      Prior to PHP 4.0.6, the behaviour of the
@@ -2772,12 +2819,22 @@ $real_path = realpath ("../../index.php");
      tempnam(3) function if in doubt.
     </para>
     <para>
-     Returns the new temporary filename, or the &null; string on
+     Returns the new temporary filename, or the &false; string on
      failure.
      <example>
       <title><function>tempnam</function> example</title>
       <programlisting role="php">
+<![CDATA[
 $tmpfname = tempnam ("/tmp", "FOO");
+
+$fp = fopen($tmpfname, "w");
+fwrite($fp, "writing to tempfile");
+fclose($fp);
+
+// do here something
+
+unlink($tmpfname);
+]]>
       </programlisting>
      </example>
     </para>
@@ -2786,11 +2843,13 @@ $tmpfname = tempnam ("/tmp", "FOO");
       This function's behavior changed in 4.0.3. The temporary file is also
       created to avoid a race condition where the file might appear in the
       filesystem between the time the string was generated and before the
-      the script gets around to creating the file. 
+      the script gets around to creating the file. Note, that you need
+      to remove the file in case you need it no more, it is not done
+      automatically.
      </simpara>
     </note>
     <para>
-     See also <function>tmpfile</function>.
+     See also <function>tmpfile</function>, <function>unlink</function>.
     </para>
    </refsect1>
   </refentry>
@@ -2821,6 +2880,18 @@ $tmpfname = tempnam ("/tmp", "FOO");
      <filename>stdio.h</filename> header file.
     </para>
     <para>
+     <example>
+      <title><function>tmpfile</function> example</title>
+      <programlisting role="php">
+<![CDATA[
+$temp = tmpfile();
+fwrite($temp, "writing to tempfile");
+fclose($temp); // this removes the file
+]]>
+      </programlisting>
+     </example>
+    </para>
+    <para>
      See also <function>tempnam</function>.
     </para>
    </refsect1>
@@ -2838,7 +2909,7 @@ $tmpfname = tempnam ("/tmp", "FOO");
      <funcprototype>
       <funcdef>int <function>touch</function></funcdef>
       <paramdef>string <parameter>filename</parameter></paramdef>
-      <paramdef>int 
+      <paramdef>int
         <parameter>
          <optional>time</optional>
         </parameter>
@@ -2858,12 +2929,14 @@ $tmpfname = tempnam ("/tmp", "FOO");
      <example>
       <title><function>touch</function> example</title>
       <programlisting role="php">
+<![CDATA[
 if (touch ($FileName)) {
-    print "$FileName modification time has been 
+    print "$FileName modification time has been
            changed to todays date and time";
 } else {
     print "Sorry Could Not change modification time of $FileName";
 }
+]]>
       </programlisting>
      </example>
     </para>
