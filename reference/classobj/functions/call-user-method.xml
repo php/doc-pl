@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: dombal Status: Ready -->
-<!-- $Revision: 1.3 $ -->
+<!-- EN-Revision: 1.8 Maintainer: dombal Status: Ready -->
+<!-- $Revision: 1.4 $ -->
   <refentry id="function.call-user-method">
    <refnamediv>
     <refname>call_user_method</refname>
@@ -20,7 +20,7 @@
     <warning>
      <para>
       Funkcja <function>call_user_method</function> jest przestarzała od
-      PHP 4.1.0, zamiast niej użyj wariacji funkcji <function>call_user_func</function>
+      PHP 4.1.0, zamiast niej użyj funkcji <function>call_user_func</function>
       posługując się składnią <literal>array(&amp;$obiekt, "nazwa_metody")</literal>.
      </para>
     </warning>
@@ -43,28 +43,27 @@ class Kraj {
         $this->TLD = $tld;
     }
 
-    function drukuj_info($przedc="") {
+    function drukuj_info($przedc = "") {
         echo $przedc."Kraj: ".$this->NAZWA."\n";
         echo $przedc."Domena TLD: ".$this->TLD."\n";
     }
 }
 
-$krj = new Kraj("Peru","pe");
+$kraj = new Kraj("Peru", "pe");
 
-echo "* Wywołuję metodę na obiekcie bezpośrednio\n";
-$krj->drukuj_info();
+echo "* Wywołuję metodę bezpośrednio na obiekcie\n";
+$kraj->drukuj_info();
 
 echo "\n* Wywołuję tę samą metodę pośrednio\n";
-call_user_method ("drukuj_info", $krj, "\t");
+call_user_method ("drukuj_info", $kraj, "\t");
 ?>
 ]]>
       </programlisting>
      </informalexample>
     </para>
     <simpara>
-     Patrz także: <function>call_user_func_array</function>,
-     <function>call_user_func</function>,
-     <function>call_user_method_array</function>.
+     Patrz także: <function>call_user_func_array</function> i
+     <function>call_user_func</function>.
     </simpara>
    </refsect1>
   </refentry>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: dombal Status: Ready -->
-<!-- $Revision: 1.3 $ -->
+<!-- EN-Revision: 1.6 Maintainer: dombal Status: Ready -->
+<!-- $Revision: 1.4 $ -->
   <refentry id="function.get-object-vars">
    <refnamediv>
     <refname>get_object_vars</refname>
@@ -14,12 +14,20 @@
      </methodsynopsis>
     <para>
      Funkcja ta zwraca tablicę asocjacyjną zdfiniowanych właściwości 
-     określonego obiektu <parameter>obiekt</parameter>. Jeżeli zmienne 
-     zadeklarowane w klasie której <parameter>obiekt</parameter> jest 
-     egzemplarzem, nie mają przypisanej wartości, to te nie będą zwrócone
-     w tablicy.
+     określonego obiektu <parameter>obiekt</parameter>.
+    </para>
+    <note>
+     <para>
+      W wersjach PHP wcześniejszych niż 4.2.0, jeżeli zmienne 
+      zadeklarowane w klasie której <parameter>obiekt</parameter> jest 
+      egzemplarzem, nie mają przypisanej wartości, to te nie będą zwrócone
+      w tablicy. W wersjach późniejszych tablica będzie zawierała klucz z
+      przypisaną wartością NULL.
+     </para>
+    </note>
+    <para>
      <example>
-      <title>Użycie <function>get_object_vars</function></title>
+      <title>Przykład użycia <function>get_object_vars</function></title>
       <programlisting role="php">
 <![CDATA[
 <?php
@@ -53,14 +61,16 @@ print_r(get_object_vars($p1));
 ?>
 ]]>
       </programlisting>
-     </example>
-     Wynikiem powyższego programu będzie:
-     <screen>
+      <para>
+       Wynikiem powyższego programu będzie:
+      </para>
+      <screen>
 <![CDATA[
  Array
  (
      [x] => 1.233
      [y] => 3.445
+     [label] =>
  )
 
  Array
@@ -70,11 +80,12 @@ print_r(get_object_vars($p1));
      [opis] => punkt #1
  )
 ]]>
-     </screen>
+      </screen>
+     </example>
     </para>
     <simpara>
      Patrz także: <function>get_class_methods</function>,
-     <function>get_class_vars</function>!
+     <function>get_class_vars</function>.
     </simpara>
    </refsect1>
   </refentry>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: dombal Status: Ready -->
-<!-- $Revision: 1.3 $ -->
+<!-- EN-Revision: 1.5 Maintainer: dombal Status: Ready -->
+<!-- $Revision: 1.4 $ -->
   <refentry id="function.get-parent-class">
    <refnamediv>
     <refname>get_parent_class</refname>
-    <refpurpose>Pobiera nazwę klasy przodka obiektu bądź klasy</refpurpose>
+    <refpurpose>Pobiera nazwę klasy przodka dla obiektu lub klasy</refpurpose>
    </refnamediv>
    <refsect1>
     <title>Opis</title>
@@ -20,6 +20,51 @@
      Jeżeli <parameter>obiekt</parameter> jest ciągiem znakowym, zwraca 
      nazwę klasy przodka klasy o tej nazwie. Ta funkcjonalność została dodana
      w PHP 4.0.5.
+    </para>
+    <para>
+     <example>
+      <title>Przykład użycia <function>get_parent_class</function></title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+
+class tata {
+    function tata() 
+    {
+    // implementacja jakiejś logiki...
+    }
+}
+
+class dziecko extends tata {
+    function dziecko() 
+    {
+        echo "Moim prodkiem jest " , get_parent_class($this) , "\n";
+    }
+}
+
+class dziecko2 extends tata {
+    function dziecko2() 
+    {
+        echo "Moim przodkiem także jest " , get_parent_class('dziecko2') , "\n";
+    }
+}
+
+$foo = new dzicko();
+$bar = new dziecko2();
+
+?>
+]]>
+      </programlisting>
+      <para>
+       Wynikiem jest:
+      </para>
+      <screen>
+<![CDATA[
+Moim przodkiem jest tata
+Moim przodkiem także jest tata
+]]>
+      </screen>
+     </example>
     </para>
     <simpara>
      Patrz także: <function>get_class</function>,

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.3 Maintainer: dombal Status: Ready -->
-<!-- $Revision: 1.3 $ -->
+<!-- EN-Revision: 1.12 Maintainer: dombal Status: Ready -->
+<!-- $Revision: 1.4 $ -->
  <reference id="ref.classobj">
   <title>Klasy/Obiekty</title>
   <titleabbrev>Klasy/Obiekty</titleabbrev>
@@ -16,6 +16,32 @@
      ustalić jego przodków (np. jaką klasę rozszerza klasa tego obiektu).
     </para>
    </section>
+
+   <section id="classobj.requirements">
+    &reftitle.required;
+    &no.requirement;
+   </section>
+
+   <section id="classobj.installation">
+    &reftitle.install;
+    &no.install;
+   </section>
+
+   <section id="classobj.configuration">
+    &reftitle.runtime;
+    &no.config;
+   </section>
+
+   <section id="classobj.resources">
+    &reftitle.resources;
+    &no.resource;
+   </section>
+
+   <section id="classobj.constants">
+    &reftitle.constants;
+    &no.constants;
+   </section>
+
    <section id="classobj.examples">
     &reftitle.examples;
     <para>
@@ -38,12 +64,12 @@ class Warzywo {
     var $jadalne;
     var $kolor;
 
-    function Warzywo( $jadalne, $kolor="zielony" ) {
+    function Warzywo($jadalne, $kolor="zielony") {
         $this->jadalne = $jadalne;
         $this->kolor = $kolor;
     }
 
-    function jest_jadalne() {
+    function czy_jadalne() {
         return $this->jadalne;
     }
 
@@ -59,14 +85,14 @@ class Szpinak extends Warzywo {
     var $ugotowane = false;
 
     function Szpinak() {
-        $this->Warzywo( true, "zielone" );
+        $this->Warzywo(true, "zielone");
     }
 
     function ugotuj() {
         $this->ugotowane = true;
     }
 
-    function jest_ugotowane() {
+    function czy_ugotowane() {
         return $this->ugotowane;
     }
 
@@ -109,9 +135,9 @@ function drukuj_metody($obj) {
 
 function przodkowie_klasy($obj, $klasa) {
     global $$obj;
-    if (is_subclass_of($$obj, $klasa)) {
+    if (is_subclass_of($GLOBALS[$obj], $klasa)) {
         echo "Obiekt $obj należy do klasy ".get_class($$obj);
-        echo ", podklasy $klass\n";
+        echo ", podklasy $klasa\n";
     } else {
         echo "Obiekt $obj nie należy do podklasy $klass\n";
     }
@@ -119,7 +145,7 @@ function przodkowie_klasy($obj, $klasa) {
 
 // tworzymy 2 egzemplarze obiektów
 
-$warzywko = new Warzywo(true,"niebieski");
+$warzywko = new Warzywo(true, "niebieski");
 $lisciaste = new Szpinak();
 
 // wydrukujemy informację o obiektach
@@ -127,7 +153,7 @@ echo "warzywko: KLASA ".get_class($warzywko)."\n";
 echo "lisciaste: KLASA ".get_class($lisciaste);
 echo ", PRZODEK ".get_parent_class($lisciaste)."\n";
 
-// pokażym właściwości warzywka
+// pokażmy właściwości warzywka
 echo "\nwarzywko: Właściwości\n";
 drukuj_wlasciwosci($warzywko);
 

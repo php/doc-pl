@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.3 Maintainer: dombal Status: Ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.7 Maintainer: dombal Status: Ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.get-class-vars">
    <refnamediv>
     <refname>get_class_vars</refname>
@@ -16,30 +16,34 @@
      </methodsynopsis>
     <para>
      Funkcja ta zwróci tablicę asocjacyjną domyślnych właściwości klasy.
-     Elementy wynikowej tablicy są w formie <parameter>nazwzmien => wartość</parameter>
+     Elementy wynikowej tablicy są w formie <parameter>nazwa_właściwości =>
+      wartość</parameter>
     </para>
     <note>
      <para>
-      Niezainicjalizowane zmienne klasy nie będą raportowane przez funkcję
-      <function>get_class_vars</function>.
+      W PHP w wersjach do 4.2.0 niezainicjalizowane zmienne klasy nie będą
+      raportowane przez funkcję <function>get_class_vars</function>.
      </para>
     </note>
     <para>
      <example>
-      <title><function>get_class_vars</function> przykład</title>
+      <title>Przykład użycia <function>get_class_vars</function></title>
       <programlisting role="php">
 <![CDATA[
 <?php
 
 class mojaklasa {
 
-    var $zm1; // ta nie ma domyślenj wartości...
+    var $zm1; // ta nie ma domyślnej wartości...
     var $zm2 = "xyz";
     var $zm3 = 100;
 
     // konstruktor
     function mojaklasa() {
-        return(TRUE);
+        // zmieńmy trochę właściwości
+        $this->zm1 = "foo";
+        $this->zm2 = "bar";
+        return true;
     }
 
 }
@@ -55,18 +59,22 @@ foreach ($wlasciwosci_klasy as $nazwa => $wartosc) {
 ?>
 ]]>
       </programlisting>
-     </example>
-    </para>
-    <para>
-     Wyświetli:
-     <informalexample>
-      <programlisting>
+      <para>
+       Wyświetli:
+      </para>
+      <screen>
 <![CDATA[
+// Przed PHP 4.2.0
+zm2 : xyz
+zm3 : 100
+
+// PHP 4.2.0 i późniejsze wersje
+zm1 :
 zm2 : xyz
 zm3 : 100
 ]]>
-      </programlisting>
-     </informalexample>
+      </screen>
+     </example>
     </para>
     <simpara>
      Patrz także: <function>get_class_methods</function>,
