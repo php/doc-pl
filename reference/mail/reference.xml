@@ -1,89 +1,40 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.7 $ -->
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- EN-Revision: 1.8 Maintainer: qrak Status: ready -->
+<!-- $Revision: 1.8 $ -->
  <reference id="ref.mail">
   <title>Poczta elektroniczna</title>
-  <titleabbrev>Poczta</titleabbrev>
+  <titleabbrev>E-Mail</titleabbrev>
   <partintro>
-   <simpara>
-    Funkcja <function>mail</function> pozwala ci wysyłać listy e-mail.
-   </simpara>
-   <variablelist>
-    <title>Dyrektywy konfiguracyjne poczty elektronicznej</title>
 
-    <varlistentry id="ini.smtp">
-     <term>
-      <parameter>SMTP</parameter>
-      <type>string</type>
-     </term>
-     <listitem>
-      <para>
-       Używane tylko w systemie Windows: nazwa DNS lub adres IP serwera
-       <literal>SMTP</literal>,
-       którego <literal>PHP</literal> powinien użyć do wysyłania
-       poczty za pomocą funkcji
-       <function>mail</function>.
-      </para>
-     </listitem>
-    </varlistentry>
-    
-    <varlistentry id="ini.smtp-port">
-     <term>
-      <parameter>SMTP</parameter>
-      <type>int</type>
-     </term>
-     <listitem>
-      <para>
-       Używane tylko w systemie Windows: numer portu, na którym pracuje serwer
-       <literal>SMTP</literal> przeznaczony do wysyłania poczty za pomocą
-       funkcji <function>mail</function>; domyślnie jest to 25. Dyrektywa ta
-       jest dostępna od PHP 4.3.0 .
-      </para>
-     </listitem>
-    </varlistentry>
+   <section id="mail.intro">
+    &reftitle.intro;
+    <para>
+     Funkcja <function>mail</function> umożliwia wysyłanie e-maili.
+    </para>
+   </section>
 
-    <varlistentry id="ini.sendmail-from">
-     <term>
-      <parameter>sendmail_from</parameter>
-      <type>string</type>
-     </term>
-     <listitem>
-      <para>
-       Określa adres pocztowy w polu "From:" w listach wysyłanych z PHP pod
-       Windowsem.
-      </para>
-     </listitem>
-    </varlistentry>
+   <section id="mail.requirements">
+    &reftitle.required;
+    &no.requirement;
+   </section>
 
-    <varlistentry id="ini.sendmail-path">
-     <term>
-      <parameter>sendmail_path</parameter>
-      <type>string</type>
-     </term>
-     <listitem>
-      <para>
-       Określa, gdzie znajduje się program <command>sendmail</command>, zwykle
-       <filename>/usr/sbin/sendmail</filename> lub 
-       <filename>/usr/lib/sendmail</filename>
-       <command>configure</command> próbuje samodzielnie zlokalizować ten
-       program i ucznić go domyślnym, ale w przypadku niepowodzenia, można
-       ręcznie ustawić ścieżkę za pomocš tej dyrektywy.
-      </para>
-      <para>
-       W systemach nie używających sendmaila, dyrektywa ta powinna wskazywać
-       na program będący odpowiednikiem sendmaila, o ile jest taki program
-       w tym systemie.
-       Na przykład użytkownicy programu <ulink url="&url.qmail;">Qmail</ulink>
-       mogą ustawić ścieżkę na <filename>/var/qmail/bin/sendmail</filename> lub
-       <filename>/var/qmail/bin/qmail-inject</filename>.
-      </para>
-      <para>
-       <command>qmail-inject</command> nie potrzebuje żadnych opcji, żeby
-       poprawnie wysłać wiadomość pocztową.
-      </para>
-     </listitem>
-    </varlistentry>
-   </variablelist>
+   <section id="mail.installation">
+    &reftitle.install;
+    &no.install;
+   </section>
+
+   &reference.mail.ini;
+
+   <section id="mail.resources">
+    &reftitle.resources;
+    &no.resource;
+   </section>
+
+   <section id="mail.constants">
+    &reftitle.constants;
+    &no.constants;
+   </section>
+
   </partintro>
 
 &reference.mail.functions;
