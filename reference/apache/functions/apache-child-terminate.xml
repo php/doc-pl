@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
 <!-- splitted from ./pl/functions/apache.xml, last change in rev 1.11 -->
 <!-- last change to 'apache-child-terminate' in en/ tree in rev 1.20 -->
-<!-- EN-Revision: 1.2 Maintainer: Qrak Status: ready -->
+<!-- EN-Revision: 1.4 Maintainer: Qrak Status: ready -->
 <!-- OLD-Revision: 1.24/EN.1.20 -->
     <refentry id="function.apache-child-terminate">
      <refnamediv>
@@ -12,16 +12,28 @@
      <refsect1>
       <title>Opis</title>
        <methodsynopsis>
-        <type>string</type><methodname>apache_child_terminate</methodname>
+        <type>bool</type><methodname>apache_child_terminate</methodname>
         <void/>
        </methodsynopsis>
       <para>
-       <function>apache_child_terminate</function> zakończy proces Apache'a,
-       wykonujący aktualne zapytanie PHP, kiedy tylko zapytanie zostanie
-       zakończone. Można tego używać do zakończenia procesu po uruchomieniu
+       <function>apache_child_terminate</function> zarejestruje proces Apache'a,
+       wykonujący aktualne zapytanie, do zakończenia, jak tylko zakończy się
+       wykonywanie kodu PHP. 
+       Można tego używać do zakończenia procesu po uruchomieniu
        skryptu o dużych zapotrzebowaniach na pamięć, gdyż zwykle pamięć zostaje
        zwolniona wewnętrznie, ale nie zwrócona systemowi operacyjnemu.
       </para>
+      <note> 
+       <simpara>
+        Dostępność tego mechanizmu jest kontrolowana przez dyrektywę
+        <option>apache.child_terminate</option>, zawartą w &php.ini;,
+        która domyślnie ustawiona jest na <literal>off</literal>.
+       </simpara> 
+       <simpara>
+        Mechanizm ten nie jest także dostępny na wielowątkowych wersja serwera
+        Apache, jak np. wersja dla Win32.
+       </simpara> 
+      </note> 
       <para>
        Zobacz też <function>exit</function>.
       </para>
