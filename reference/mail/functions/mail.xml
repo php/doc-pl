@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.8 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.7 $ -->
+<!-- EN-Revision: 1.11 Maintainer: qrak Status: ready -->
+<!-- $Revision: 1.8 $ -->
   <refentry id="function.mail">
    <refnamediv>
     <refname>mail</refname>
@@ -102,11 +102,11 @@ mail("nobody@example.com", "temat", $message,
     </para>
     <para>
      Argumentu <parameter>dodatkowe_parametry</parameter> używa się do
-     przekazania dodatkowych paramterów do programu wysyłającego pocztę
+     przekazania dodatkowego paramteru do programu wysyłającego pocztę
      skonfigurowanego w dyrektywie <literal>sendmail_path</literal>.
      Używa się tego na przykład do ustawienia adresu zwrotnego koperty 
      (envelope sender adress) przy wysyłaniu
-     listy za pomocą sendmaila. Możesz być zmuszony dodać użytkownika jakim
+     listu za pomocą sendmaila. Możesz być zmuszony dodać użytkownika jakim
      jest twój serwer www do listy zaufanych użytkowników w pliku
      konfiguracyjnym sendmaila, aby sendmail nie dodał nagłówka "X-warning" do
      wiadomości przy wysyłaniu koperty (envelope) tą metodą.  
@@ -123,7 +123,10 @@ mail("nobody@example.com", "temat", $message,
      <note>
       <para>
        Piąty argument funkcji <function>mail</function> został dodany w 
-       PHP 4.0.5.
+       PHP 4.0.5. Począwszy od PHP 4.2.3 argument ten jest zablokowany w
+       <link linkend="ini.safe-mode">trybie bezpiecznym</link>. W przypadku
+       próby użycia, funkcja <function>mail</function> wygeneruje ostrzeżenie
+       i zwróci &false;.
       </para>
      </note>
      <para>
@@ -134,7 +137,7 @@ mail("nobody@example.com", "temat", $message,
       <programlisting>
 <![CDATA[
 /* adresaci */
-$to  = "Mary <mary@example.com>" . ", " ; //zwróc uwagę na przecinek
+$to  = "Mary <mary@example.com>" . ", " ; // zwróc uwagę na przecinek
 $to .= "Kelly <kelly@example.com>";
 
 /* temat */
