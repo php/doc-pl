@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.65 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.6 $ -->
+<!-- EN-Revision: 1.69 Maintainer: qrak Status: ready -->
+<!-- $Revision: 1.7 $ -->
  <chapter id="control-structures">
   <title>Struktury kontrolne</title>
 
@@ -520,6 +520,7 @@ foreach(wyrażenie_tablicowe as $klucz => $wartość) wyrażenie
     <informalexample>
      <programlisting role="php">
 <![CDATA[
+$arr = array("jeden", "dwa", "trzy");
 reset ($tabl);
 while (list(, $wartość) = each ($tabl)) {
     echo "Wartość: $wartość<br>\n";
@@ -714,11 +715,9 @@ while ($i++ < 5) {
 <![CDATA[
 if ($i == 0) {
     print "i jest równe 0";
-}
-if ($i == 1) {
+} elseif ($i == 1) {
     print "i jest równe 1";
-}
-if ($i == 2) {
+} elseif ($i == 2) {
     print "i jest równe 2";
 }
 
@@ -983,9 +982,8 @@ print_r (profile (TRUE));
     zostanie wywołana w głównym pliku skryptowym, nastąpi zakończenie całego
     skryptu. Jeśli dany skrypt został wywołany przez dyrektywy konfiguracyjne
     <link linkend="ini.auto-prepend-file">auto_prepend_file</link> lub <link
-    linkend="ini.auto-append-file">auto_append_file</link> w <link
-    linkend="configuration.file">plik konfiguracyjnym</link>, wtedy wykonywnie
-    tego pliku skryptowego zostanie zakończone.
+    linkend="ini.auto-append-file">auto_append_file</link> w &php.ini;,
+    wtedy wykonywnie tego pliku skryptowego zostanie zakończone.
    </simpara>
    <simpara>Więcej informacji w rozdziale <link
    linkend="functions.returning-values">zwracanie wartości</link>.
