@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- splitted from ./pl/functions/array.xml, last change in rev 1.1 -->
-<!-- last change to 'array-unshift' in en/ tree in rev 1.2 -->
-<!-- EN-Revision: 1.2 Maintainer: leszek Status: ready -->
-<!-- OLD-Revision: 1.130/EN.1.2 -->
+<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.3 $ -->
   <refentry id="function.array-unshift">
    <refnamediv>
     <refname>array_unshift</refname>
@@ -35,15 +33,25 @@
       <title>Przykład użycia <function>array_unshift</function></title>
       <programlisting role="php">
 <![CDATA[
-$kolejka = array ("p1", "p3");
-array_unshift ($kolejka, "p4", "p5", "p6");
+$kolejka = array ("pomarańcza", "banan");
+array_unshift ($kolejka, "jabłko", "malina");
 ]]>
       </programlisting>
+      <para>
+       Zmienna <varname>$kolejka</varname> będzie miała następujące elementy:
+       <screen>
+<![CDATA[
+Array
+(
+    [0] => jabłko
+    [1] => malina
+    [2] => pomarańcza
+    [3] => banan
+)
+]]>
+       </screen>
+      </para>
      </example>
-    </para>
-    <para>
-     Po wykonaniu powyższego kodu zmienna <varname>$kolejka</varname> będzie
-     zawierała 5 elementów: "p4", "p5", "p6", "p1", and "p3".
     </para>
     <para>
      Patrz także <function>array_shift</function>,

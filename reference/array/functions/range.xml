@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- splitted from ./pl/functions/array.xml, last change in rev 1.1 -->
-<!-- last change to 'range' in en/ tree in rev 1.2 -->
-<!-- EN-Revision: 1.2 Maintainer: leszek Status: ready -->
-<!-- OLD-Revision: 1.130/EN.1.2 -->
+<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.3 $ -->
   <refentry id="function.range">
    <refnamediv>
     <refname>range</refname>
@@ -21,9 +19,10 @@
      <function>range</function> zwraca tablicę elementów od
      <parameter>dolny</parameter> do <parameter>górny</parameter>, włącznie.
      Jeśli dolny > górny, to sekwencja będzie od górnego do dolnego.
-     <example>
-      <title>Przykłady użycia <function>range</function></title>
-      <programlisting role="php">
+    </para>
+    <example>
+     <title>Przykłady użycia <function>range</function></title>
+     <programlisting role="php">
 <![CDATA[
 foreach(range(0, 9) as $liczba) {
     echo $liczba;
@@ -35,15 +34,31 @@ foreach(range('z', 'a') as $litera) {
     echo $litera;
 }
 ]]>
-      </programlisting>
-     </example>
-    </para>
+     </programlisting>
+    </example>
     <note>
      <para>
       Do wersji 4.1.0, funkcja <function>range</function> generowała tylko
       rosnące tablice liczbowe. Obsługa dla sekwencji znakowych i tablic
       malejących została dodana w 4.1.0.
      </para>
+     <example>
+      <title>Symulowanie sekwencji malejących i znakowych</title>
+      <programlisting role="php">
+<![CDATA[
+# do odwrócenia kolejności sekwencji można użyć array_reverse
+foreach(array_reverse(range(0,9)) as $liczba) {
+    echo $liczba;
+}
+
+# funkcja array_map() może być użyta do zamiany liczb całkowitych na znaki
+# używając chr()
+foreach(array_map('chr', range(ord('a'),ord('z'))) as $znak){
+    echo $znak;
+}
+]]>
+      </programlisting>
+     </example>
     </note>
     <para>
      Patrz także <function>shuffle</function> aby zobaczyć inny przykład

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- splitted from ./pl/functions/array.xml, last change in rev 1.1 -->
-<!-- last change to 'array-reverse' in en/ tree in rev 1.62 -->
-<!-- EN-Revision: 1.2 Maintainer: leszek Status: ready -->
-<!-- OLD-Revision: 1.130/EN.1.62 -->
+<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.3 $ -->
   <refentry id="function.array-reverse">
    <refnamediv>
     <refname>array_reverse</refname>
@@ -29,18 +27,43 @@
       <programlisting role="php">
 <![CDATA[
 $wejscie = array ("php", 4.0, array ("zielony", "czerwony"));
-$wynik = array_reverse ($wejscie);
+$wynik   = array_reverse ($wejscie);
 $wynik_kluczowany = array_reverse ($input, TRUE);
 ]]>
       </programlisting>
+      <para>
+       W tym przykładzie i <varname>$wynik</varname> i
+       <varname>$wynik_kluczowny</varname> będą zawierały te same elementy,
+       ale trzeba zauważyć różnicę w kluczach. Tablice te będą wyglądały
+       następująco:
+       <screen>
+<![CDATA[
+Array
+(
+    [0] => Array
+        (
+            [0] => zielony
+            [1] => czerwony
+        )
+
+    [1] => 4
+    [2] => php
+)
+Array
+(
+    [2] => Array
+        (
+            [0] => zielony
+            [1] => czerwony
+        )
+
+    [1] => 4
+    [0] => php
+)
+]]>
+       </screen>
+      </para>
      </example>
-    </para>
-    <para>
-     I <varname>$wynik</varname> i <varname>$wynik_kluczowany</varname> 
-     będą zawierały <literal>array(array
-     ("zielony", "czerwony"), 4.0, "php")</literal>. Ale
-     <varname>$wynik_kluczowany[0]</varname> ciągle będzie zawierał
-     <literal>"php"</literal>.
     </para>
     <note>
      <para>

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- splitted from ./pl/functions/array.xml, last change in rev 1.1 -->
-<!-- last change to 'array-merge' in en/ tree in rev 1.2 -->
-<!-- EN-Revision: 1.2 Maintainer: leszek Status: ready -->
-<!-- OLD-Revision: 1.130/EN.1.2 -->
+<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.3 $ -->
   <refentry id="function.array-merge">
    <refnamediv>
     <refname>array_merge</refname>
@@ -23,7 +21,7 @@
     </para>
     <para>
      Jeśli tablice wejściowe mają takie same klucze tekstowe, najnowsza
-     wartość nadpisze starszą. Jednakże jeśłi tablice będą miały takie same
+     wartość nadpisze starszą. Jednakże jeśli tablice będą miały takie same
      klucze liczbowe, późniejsza wartość nie nadpisze starszej, lecz zostanie
      dopisana na koniec tablicy.
     </para>
@@ -34,15 +32,27 @@
 <![CDATA[
 $tablica1 = array ("kolor" => "czerwony", 2, 4);
 $tablica2 = array ("a", "b", "kolor" => "zielony", "kształt" => "trapezoid", 4);
-$wynik = array_merge ($tablica1, $tablica2);
+print_r(array_merge ($tablica1, $tablica2));
 ]]>
       </programlisting>
+      <para>
+       Powyższy przykład wyświetli:
+       <screen>
+<![CDATA[
+Array
+(
+    [kolor] => zielony
+    [0] => 2
+    [1] => 4
+    [2] => a
+    [3] => b
+    [kształt] => trapezoid
+    [4] => 4
+)
+]]>
+       </screen>
+      </para>
      </example>
-    </para>
-    <para>
-     W powyższym przykładze tablica <varname>$wynik</varname> zawiera
-     <literal>array("kolor" =&gt; "zielony", 2, 4,
-     "a", "b", "kształt" =&gt; "trapezoid", 4)</literal>.
     </para>
     <para>
      Patrz także <function>array_merge_recursive</function>.

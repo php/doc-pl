@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- splitted from ./pl/functions/array.xml, last change in rev 1.1 -->
-<!-- last change to 'array-unique' in en/ tree in rev 1.2 -->
-<!-- EN-Revision: 1.2 Maintainer: leszek Status: ready -->
-<!-- OLD-Revision: 1.130/EN.1.2 -->
+<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.3 $ -->
   <refentry id="function.array-unique">
    <refnamediv>
     <refname>array_unique</refname>
@@ -21,8 +19,10 @@
     </para>
     <para>
      Zauważ, że klucze są zachowywane. <function>array_unique</function>
-     zachowa pierwszy napotkany klucz dla każdej wartości ignorując wszystkie
-     pozostałe.
+     najpierw sortuje wartości skonwertowane na ciągi a później zachowuje
+     pierwszy napotkany klucz dla każdej wartości ignorując wszystkie
+     pozostałe klucze. Nie oznacza to, że klucz pierwszej związanej wartości z
+     nieposortowanej tablicy będzie zachowany.
     </para>
     <note>
      <simpara>
@@ -49,15 +49,21 @@
 $wejscie = array ("a" => "zielony", "czerwony", "b" => "zielony", "niebieski", "czerwony");
 $wynik = array_unique ($wejscie);
 print_r($wynik);
-// wyświetli się :
-//Array
-//(
-//    [a] => zielony
-//    [0] => czerwony
-//    [1] => niebieski
-//)
 ]]>
       </programlisting>
+      <para>
+       Powyższy przykład wyświetli:
+       <screen>
+<![CDATA[
+Array
+(
+    [a] => zielony
+    [0] => czerwony
+    [1] => niebieski
+)
+]]>
+       </screen>
+      </para>
      </example>
     </para>
     <para>
@@ -68,17 +74,21 @@ print_r($wynik);
 $wejscie = array (4,"4","3",4,3,"3");
 $wynik = array_unique ($wejscie);
 var_dump($wynik);
-
-/* wyjście:
+]]>
+      </programlisting>
+      <para>
+       Powyższy przykład wyświetli:
+       <screen>
+<![CDATA[
 array(2) {
    [0]=>
    int(4)
    [1]=>
    string(1) "3"
 }
-*/
 ]]>
-      </programlisting>
+       </screen>
+      </para>
      </example>
     </para>
    </refsect1>

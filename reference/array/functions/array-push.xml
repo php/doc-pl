@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- splitted from ./pl/functions/array.xml, last change in rev 1.1 -->
-<!-- last change to 'array-push' in en/ tree in rev 1.2 -->
-<!-- EN-Revision: 1.2 Maintainer: leszek Status: ready -->
-<!-- OLD-Revision: 1.130/EN.1.2 -->
+<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.3 $ -->
   <refentry id="function.array-push">
    <refnamediv>
     <refname>array_push</refname>
@@ -38,18 +36,29 @@ $tablica[] = $wartosc;
       <title>Przykład użycia <function>array_push</function></title>
       <programlisting role="php">
 <![CDATA[
-$stos = array (1, 2);
-array_push ($stos, "+", 3);
+$stos = array ("pomarańcza", "banan");
+array_push ($stos, "jabłko", "malina");
+print_r($stos);
 ]]>
       </programlisting>
+      <para>
+       Powyższy przykład wyświetli:
+       <screen>
+<![CDATA[
+Array
+(
+    [0] => pomarańcza
+    [1] => banan
+    [2] => jabłko
+    [3] => malina
+)
+]]>
+       </screen>
+      </para>
      </example>
     </para>
     <para>
-     Po wykonaniu powyższego kodu zmienna <varname>$stos</varname> będzie
-     zawierała 4 elementy: 1, 2, "+" i 3.
-    </para>
-    <para>
-     Patrz także <function>array_pop</function>,
+     Patrz także: <function>array_pop</function>,
      <function>array_shift</function> i
      <function>array_unshift</function>.
     </para>

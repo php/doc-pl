@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- splitted from ./pl/functions/array.xml, last change in rev 1.1 -->
-<!-- last change to 'array-walk' in en/ tree in rev 1.2 -->
-<!-- EN-Revision: 1.2 Maintainer: leszek Status: ready -->
-<!-- OLD-Revision: 1.130/EN.1.2 -->
+<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.3 $ -->
   <refentry id="function.array-walk">
    <refnamediv>
     <refname>array_walk</refname>
@@ -32,6 +30,7 @@
      zawierającą <function>str2lower</function> i przekazać tą funkcję jako
      parametr.
     </simpara>
+    &note.func-callback;
     <simpara>
      Jeśli <parameter>funk</parameter> wymaga więcej niż dwóch lub trzech
      parametrów, zależnie od parametru <parameter>dane</parameter>,
@@ -48,6 +47,10 @@
       przypadku wszystkie zmiany dokonane przez tą funkcję będą dokonywane
       bezpośrednio na tablicy.
      </para>
+     <para>
+      Modyfikacja tablicy z wnętrza <parameter>funk</parameter> może powodować
+      nieprzewidziane błędy.
+     </para>
     </note>
     <note>
      <para>
@@ -58,6 +61,12 @@
       W PHP 4 konieczne jest wywołanie <function>reset</function> ponieważ
       <function>array_walk</function> nie resetuje tablicy domyślnie.
      </para>
+     <para>
+      Użytkownicy nie mogą zmieniać samej tablicy z wnętrza funkcji zwrotnej,
+      to jest dodawać/usuwać elementy, usuwać tablicę na której jest
+      wywoływana funkcja <function>array_walk</function>. Jeśli ta tablica
+      zostanie zmieniona, funkcja może się zachowywać w sposób nieokreślony.
+     </para>
     </note>
     <para>
      <example>
@@ -66,21 +75,39 @@
 <![CDATA[
 $owoce = array ("d"=>"cytryna", "a"=>"pomarańcza", "b"=>"banan", "c"=>"jabłko");
 
-function test_zmiana (&amp;$element1, $klucz, $prefiks) {
+function test_zmiana (&$element1, $klucz, $prefiks) {
     $element1 = "$prefiks: $element1";
 }
 
 function test_wyswietlanie ($element2, $klucz) {
     echo "$klucz. $element2<br>\n";
 }
-
+echo "Przed ...:\n";
 array_walk ($owoce, 'test_wyswietlanie');
 reset ($owoce);
 array_walk ($owoce, 'test_zmiana', 'owoc');
+echo "... i po:\n";
 reset ($owoce);
 array_walk ($owoce, 'test_wyswietlanie');
 ]]>
       </programlisting>
+      <para>
+       Powyższy przykład wyświetli:
+       <screen>
+<![CDATA[
+Przed ...:
+d. cytryna
+a. pomarańcza
+b. banan
+c. jabłko
+... i po:
+d. owoc: cytryna
+a. owoc: pomarańcza
+b. owoc: banan
+c. owoc: jabłko
+]]>
+       </screen>
+      </para>
      </example>
     </para>
     <simpara>

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- splitted from ./pl/functions/array.xml, last change in rev 1.1 -->
-<!-- last change to 'array-merge-recursive' in en/ tree in rev 1.12 -->
-<!-- EN-Revision: 1.2 Maintainer: leszek Status: ready -->
-<!-- OLD-Revision: 1.130/EN.1.12 -->
+<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.3 $ -->
   <refentry id="function.array-merge-recursive">
    <refnamediv>
     <refname>array_merge_recursive</refname>
@@ -36,15 +34,32 @@
 <![CDATA[
 $tbl1 = array ("kolor" => array ("ulubiony" => "czerwony"), 5);
 $tbl2 = array (10, "kolor" => array ("ulubiony" => "zielony", "niebieski"));
-$wynik = array_merge_recursive ($tbl1, $tbl2);
+print_r(array_merge_recursive ($tbl1, $tbl2));
 ]]>
       </programlisting>
+      <para>
+       <screen>
+<![CDATA[
+Array
+(
+    [kolor] => Array
+        (
+            [ulubiony] => Array
+                (
+                    [0] => czerwony
+                    [1] => zielony
+                )
+
+            [0] => niebieski
+        )
+
+    [0] => 5
+    [1] => 10
+)
+]]>
+       </screen>
+      </para>
      </example>
-    </para>
-    <para>
-     W powyższym przykładzie tablica <varname>$wynik</varname> zawiera
-     <literal>array ("kolor" =&gt; array ("ulubiony" =&gt; array ("czerwony",
-     "zielony"), "niebieski"), 5, 10)</literal>.
     </para>
     <para>
      Patrz także <function>array_merge</function>.

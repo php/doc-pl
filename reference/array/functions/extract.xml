@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- splitted from ./pl/functions/array.xml, last change in rev 1.1 -->
-<!-- last change to 'extract' in en/ tree in rev 1.2 -->
-<!-- EN-Revision: 1.2 Maintainer: leszek Status: ready -->
-<!-- OLD-Revision: 1.130/EN.1.2 -->
+<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.3 $ -->
   <refentry id="function.extract">
    <refnamediv>
     <refname>extract</refname>
     <refpurpose>
-     Importuj zmienne do tabeli symboli z tablicy
+     Importuj zmienne do bieżącej tabeli symboli z tablicy
     </refpurpose>
    </refnamediv>
    <refsect1>
@@ -30,6 +28,11 @@
     <note>
      <para>
       Od wersji 4.0.5 ta funkcja zwraca liczbę wyekstraktowanych zmiennych.
+     </para>
+    </note>
+    <note>
+     <para>
+      Stałe EXTR_IF_EXISTS i EXTR_PREFIX_IF_EXISTS zostały dodane w PHP 4.2.0.
      </para>
     </note>
     <para>
@@ -83,6 +86,27 @@
         </simpara>
        </listitem>
       </varlistentry>
+      <varlistentry>
+       <term>EXTR_IF_EXISTS</term>
+       <listitem>
+        <simpara>
+         Nadpisz tylko zmienną już istniejącą w bieżącej tablicy symboli. Jest
+         to przydatne do definiowania listy poprawnych zmiennych i ekstraktuj
+         tylko te zmienne które zdefiniowano na przykład w $_REQUEST. Flaga ta
+         została dodana w PHP 4.2.0.
+        </simpara>
+       </listitem>
+      </varlistentry>
+      <varlistentry>
+       <term>EXTR_PREFIX_IF_EXISTS</term>
+       <listitem>
+        <simpara>
+         Przedrostek zostanie dodany tylko do zmiennych których odpowiedniki
+         bez przedrostka już istnieją w bieżącej tablicy symboli. Flaga ta
+         została dodana w PHP 4.2.0.
+        </simpara>
+       </listitem>
+      </varlistentry>
      </variablelist>
     </para>
     <para>
@@ -92,9 +116,9 @@
     <para>
      Zauważ, że parametr <parameter>prefiks</parameter> jest wymagany tylko
      jeśli <parameter>typ_ekstrakcji</parameter> to EXTR_PREFIX_SAME,
-     EXTR_PREFIX_ALL i EXTR_PREFIX_INVALID. Jeśli nazwa zmiennej po dodaniu
-     prefiksa nie jest prawidłową nazwą zmiennej, nie jest portowana do
-     tablicy symboli.
+     EXTR_PREFIX_ALL, EXTR_PREFIX_INVALID lub EXTR_PREFIX_IF_EXISTS. Jeśli
+     nazwa zmiennej po dodaniu prefiksu nie jest prawidłową nazwą zmiennej,
+     nie jest importowana do tablicy symboli.
     </para>
     <para>
      <function>extract</function> zwraca liczbę zmiennych szczęśliwie
@@ -148,7 +172,8 @@ niebieski, duży, kulisty, średni
     </para>
     <para>
      Musisz użyć tablic asocjacyjnych. Tablica indeksowana liczbowo nie da
-     żadnych efektów.
+     żadnych efektów, chyba że zostanie użyta flaga EXTR_PREFIX_ALL lub
+     EXTR_PREFIX_INVALID.
     </para>
     <para>
      Patrz także <function>compact</function>.
