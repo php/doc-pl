@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.20 Maintainer: slawek Status: ready -->
-<!-- $Revision: 1.11 $ -->
+<!-- EN-Revision: 1.21 Maintainer: slawek Status: ready -->
+<!-- $Revision: 1.12 $ -->
  <chapter id="features.safe-mode">
   <title>Tryb bezpieczny</title>
 
@@ -17,8 +17,10 @@
    <programlisting role="ini">
 <![CDATA[
 safe_mode = Off
-open_basedir =
+safe_mode_gid = 0
+safe_mode_include_dir =
 safe_mode_exec_dir =
+open_basedir =
 safe_mode_allowed_env_vars = PHP_
 safe_mode_protected_env_vars = LD_LIBRARY_PATH
 disable_functions =
@@ -159,7 +161,7 @@ Warning: readfile() has been disabled for security reasons in
        <row>
         <entry><function>putenv</function></entry>
         <entry>Podlega dyrektywom safe_mode_protected_env_vars i
-        safe_mode_allowed_env_vars w php.ini. Zobacz również dokumantację
+        safe_mode_allowed_env_vars w &php.ini;. Zobacz również dokumantację
         do <function>putenv</function></entry>
         <!-- TODO: document those directives in chapters/config.xml -->
        </row>
