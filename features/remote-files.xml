@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.18 Maintainer: slawek Status: ready -->
-<!-- $Revision: 1.10 $ -->
+<!-- EN-Revision: 1.21 Maintainer: slawek Status: ready -->
+<!-- $Revision: 1.11 $ -->
  <chapter id="features.remote-files">
   <title>Korzystanie ze zdalnych plików</title>
 
   <para>
-   Jeżeli PHP zostanie skonfigurowany z włączoną obsługą
-   &quot;URL fopen wrapper&quot;, będzie można używać adresów HTTP i FTP
-   w większości funkcji, które jako parametr przyjmują nazwę pliku,
-   włączając w to instrukcje <function>require</function> i
-   <function>include</function>. Obsługa &quot;URL fopen wrapper&quot;
-   jest włączona domyślnie, chyba, że dodasz opcję
-   <option>--disable-url-fopen-wrapper</option> do ./configure
-   (w wersjach do 4.0.3) lub ustawisz <parameter>allow_url_fopen</parameter>
-   na <literal>off</literal> w pliku &php.ini; (w nowszych wersjach).
+   Jeśli parametr <parameter>allow_url_fopen</parameter> w pliku &php.ini;
+   zostanie włączony, będzie można używać adresów HTTP i FTP w większości
+   funkcji, które jako parametr przyjmują nazwę pliku, włączając w to instrukcje
+   <function>include</function>, <function>include_once</function>,
+   <function>require</function> oraz <function>require_once</function>. 
+   Więcej informacji o protokołach obsługiwanych przez <literal>PHP</literal>
+   znajduje się w <xref linkend="wrappers"/>.
   </para>
   <para>
    <note>
     <para>
-     <literal>PHP</literal> w wersji dla Windows nie obsługuje zdalnego
-     dostępu do plików przy użyciu funkcji: 
+     <literal>PHP</literal> dla Windows, w wersji wcześniejszej niż 4.3 nie
+     obsługiwało zdalnego dostępu do plików przy użyciu instrukcji:
      <function>include</function>, <function>include_once</function>,
-     <function>require</function> i <function>require_once</function>.
+     <function>require</function> i <function>require_once</function> oraz
+     rodziny funkcji imagecreatefromXXX z rozszerzenia
+     <xref linkend="ref.image"/>.
     </para>
    </note>
   </para>
@@ -56,13 +56,10 @@ fclose($file);
    </example>
   </para>
   <para>
-   Możesz również zapisywać pliki na serwerach FTP, jeśli połączysz się
-   jako użytkownik z odpowiednimi prawami dostepu i jeśli plik wcześniej
-   nie istniał. Aby połączyć się jako użytkownik inny niż 'anonymous',
-   musisz przesłać nazwę użytkonika (i najprawdopodobniej hasło) w URLu,
-   np. 'ftp://uzytkownik:haslo@ftp.example.com/sciezka/do/pliku'. Możesz
-   użyć tej samej składni przy dostępie do plików przez HTTP, jeśli
-   wymagana jest autoryzacja.
+   Możesz również zapisywać pliki na serwerach FTP (zakładając, że połączyłeś
+   się jako użytkownik z odpowiednimi prawami dostepu). Przy użyciu tej metody
+   możesz jedynie tworzyć nowe pliki. Jeśli spróbujesz nadpisać istniejący
+   plik, wywołanie funkcji <function>fopen</function> zwróci błąd.
   </para>
   <para>
    <example>
@@ -87,9 +84,10 @@ fclose ($file);
    <note>
     <para>
      Być może powyższy przykład nasunął ci pomysł, by użyć tej metody
-     do zdalnego zapisywania logów, ale, jak wspomniano wyżej, możesz
-     tworzyć jedynie nowe pliki. Aby zrealizować zdalne logowanie powinieneś
-     przyjrzeć się funkcji <function>syslog</function>.
+     do zdalnego zapisywania logów. Niestety taka próba się nie powiedzie,
+     gdyż wywołanie <function>fopen</function> zwróci błąd, jeśli zdalny
+     plik już istnieje. Aby zrealizować zdalne logowanie powinieneś przyjrzeć
+     się funkcji <function>syslog</function>.
     </para> 
    </note>
   </para>
