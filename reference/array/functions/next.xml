@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.7 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.next">
    <refnamediv>
     <refname>next</refname>
@@ -12,7 +12,7 @@
     <title>Opis</title>
      <methodsynopsis>
       <type>mixed</type><methodname>next</methodname>
-      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+      <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
      </methodsynopsis>
     <para>
      Przesuwa wewnętrzny wskaźnik tablicy i jedną pozycję do przodu i zwraca
@@ -22,9 +22,9 @@
     <para>
      <function>next</function> zachowuje się jak
      <function>current</function>, ale z jedną różnicą. Przesuwa wewnętrzny
-     wskaźnik tablicy o jeden element do przodu przed zwróceniem elementu.
-     Oznacza to, że zwraca następny element tablicy i przesuwa wewnętrzny
-     wskaźnik tablicy o jeden element do przodu. Jeśli przesunięcie
+     wskaźnik tablicy o jeden element do przodu przed zwróceniem wartości
+     elementu. Oznacza to, że zwraca następny element tablicy i przesuwa
+     wewnętrzny wskaźnik tablicy o jeden element do przodu. Jeśli przesunięcie
      wewnętrznego wskaźnika tablicy powoduje przesunięcie poza koniec listy
      elementów, <function>next</function> zwraca &false;.
      <warning>
@@ -36,6 +36,23 @@
        <function>each</function>.
       </para>
      </warning>
+    </para>
+    <para>
+     <example>
+      <title>Przykład użycia funkcji <function>next</function> i podobnych</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+$transport = array('stopa', 'rower', 'samochód', 'samolot');
+$tryb = current($transport); // $tryb = 'stopa';
+$tryb = next($transport);    // $tryb = 'rower';
+$tryb = next($transport);    // $tryb = 'samochód';
+$tryb = prev($transport);    // $tryb = 'rower';
+$tryb = end($transport);     // $tryb = 'samolot';
+?>
+]]>
+      </programlisting>
+     </example>
     </para>
     <para>
      Patrz także: <function>current</function>, <function>end</function>,

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.7 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.prev">
    <refnamediv>
     <refname>prev</refname>
@@ -10,10 +10,10 @@
     <title>Opis</title>
      <methodsynopsis>
       <type>mixed</type><methodname>prev</methodname>
-      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+      <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
      </methodsynopsis>
     <para>
-     Zwraca element tablicy z miejsca poprzedniego od tego na które wskazywał
+     Zwraca wartość z tablicy z miejsca poprzedniego od tego na które wskazywał
      wewnętrzny wskaźnik pliku, lub &false; jeśli nie ma już więcej elementów.
      <warning>
       <para>
@@ -27,6 +27,23 @@
      <function>prev</function> zachowuje się tak jak
      <function>next</function>, z tym że cofa wewnętrzny wskaźnik tablicy o
      jeden element do tyłu, zamiast przesuwać go do przodu.
+    </para>
+    <para>
+     <example>
+      <title>Przykład użycia funkcji <function>prev</function> i podobnych</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+$transport = array('stopa', 'rower', 'samochód', 'samolot');
+$tryb = current($transport); // $tryb = 'stopa';
+$tryb = next($transport);    // $tryb = 'rower';
+$tryb = next($transport);    // $tryb = 'samochód';
+$tryb = prev($transport);    // $tryb = 'rower';
+$tryb = end($transport);     // $tryb = 'samolot';
+?>
+]]>
+      </programlisting>
+     </example>
     </para>
     <para>
      Patrz także: <function>current</function>, <function>end</function>,
