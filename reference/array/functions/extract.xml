@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.18 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.extract">
    <refnamediv>
     <refname>extract</refname>
@@ -27,12 +27,18 @@
     </para>
     <note>
      <para>
-      Od wersji 4.0.5 ta funkcja zwraca liczbę wyekstraktowanych zmiennych.
+      Od wersji 4.0.5 ta funkcja zwraca liczbę wyekstrahowanych zmiennych.
      </para>
     </note>
     <note>
      <para>
-      Stałe EXTR_IF_EXISTS i EXTR_PREFIX_IF_EXISTS zostały dodane w PHP 4.2.0.
+      Stałe <constant>EXTR_IF_EXISTS</constant> i
+      <constant>EXTR_PREFIX_IF_EXISTS</constant> zostały dodane w PHP 4.2.0.
+     </para>
+    </note>
+    <note>
+     <para>
+      Stała <constant>EXTR_REFS</constant> została dodana w PHP 4.3.0.
      </para>
     </note>
     <para>
@@ -44,7 +50,7 @@
      wartości:
      <variablelist>
       <varlistentry>
-       <term>EXTR_OVERWRITE</term>
+       <term><constant>EXTR_OVERWRITE</term></constant>
        <listitem>
         <simpara>
          Jeśli istnieje kolizja, nadpisz istniejącą zmienną.
@@ -52,7 +58,7 @@
        </listitem>
       </varlistentry>
       <varlistentry>
-       <term>EXTR_SKIP</term>
+       <term><constant>EXTR_SKIP</term></constant>
        <listitem>
         <simpara>
          Jeśli istnieje kolizja, nie nadpisuj istniejącej zmiennej.
@@ -60,7 +66,7 @@
        </listitem>
       </varlistentry>
       <varlistentry>
-       <term>EXTR_PREFIX_SAME</term>
+       <term><constant>EXTR_PREFIX_SAME</term></constant>
        <listitem>
         <simpara>
          Jeśli istnieje kolizja, na początek nazwy zmiennej wstaw
@@ -69,7 +75,7 @@
        </listitem>
       </varlistentry>
       <varlistentry>
-       <term>EXTR_PREFIX_ALL</term>
+       <term><constant>EXTR_PREFIX_ALL</term></constant>
        <listitem>
         <simpara>
          Na początek każdej nazwy zmiennej wstaw <parameter>prefiks</parameter>.
@@ -78,7 +84,7 @@
        </listitem>
       </varlistentry>
       <varlistentry>
-       <term>EXTR_PREFIX_INVALID</term>
+       <term><constant>EXTR_PREFIX_INVALID</term></constant>
        <listitem>
         <simpara>
          Wstaw <parameter>prefiks</parameter> na początek złych/numerycznych
@@ -87,18 +93,18 @@
        </listitem>
       </varlistentry>
       <varlistentry>
-       <term>EXTR_IF_EXISTS</term>
+       <term><constant>EXTR_IF_EXISTS</term></constant>
        <listitem>
         <simpara>
          Nadpisz tylko zmienną już istniejącą w bieżącej tablicy symboli. Jest
-         to przydatne do definiowania listy poprawnych zmiennych i ekstraktuj
+         to przydatne do definiowania listy poprawnych zmiennych i ekstrahuj
          tylko te zmienne które zdefiniowano na przykład w $_REQUEST. Flaga ta
          została dodana w PHP 4.2.0.
         </simpara>
        </listitem>
       </varlistentry>
       <varlistentry>
-       <term>EXTR_PREFIX_IF_EXISTS</term>
+       <term><constant>EXTR_PREFIX_IF_EXISTS</term></constant>
        <listitem>
         <simpara>
          Przedrostek zostanie dodany tylko do zmiennych których odpowiedniki
@@ -107,25 +113,56 @@
         </simpara>
        </listitem>
       </varlistentry>
+      <varlistentry>
+       <term><constant>EXTR_REFS</constant></term>
+       <listitem>
+        <simpara>
+         Ekstraktuje zmienne jako referencje. Oznacza to, że wartości
+         zaimportowanych zmiennych ciągle odnoszą się do wartości parametru
+         <parameter>tablica_zmiennych</parameter>. Flaga ta może być użyta
+         sama lub w połączaniu z innymi flagami poprzez użycie operacji OR na
+         parametrze <parameter>typ_ekstrakcji</parameter>. Została ona dodana
+         w PHP 4.3.0.
+        </simpara>
+       </listitem>
+      </varlistentry>
      </variablelist>
     </para>
     <para>
      Jeśli <parameter>typ_ekstrakcji</parameter> nie został podany, to
-     zakładana jest opcja EXTR_OVERWRITE.
+     zakładana jest opcja <constant>EXTR_OVERWRITE</constant>.
     </para>
     <para>
      Zauważ, że parametr <parameter>prefiks</parameter> jest wymagany tylko
-     jeśli <parameter>typ_ekstrakcji</parameter> to EXTR_PREFIX_SAME,
-     EXTR_PREFIX_ALL, EXTR_PREFIX_INVALID lub EXTR_PREFIX_IF_EXISTS. Jeśli
-     nazwa zmiennej po dodaniu prefiksu nie jest prawidłową nazwą zmiennej,
-     nie jest importowana do tablicy symboli.
+     jeśli <parameter>typ_ekstrakcji</parameter> to
+     <constant>EXTR_PREFIX_SAME</constant>,
+     <constant>EXTR_PREFIX_ALL</constant>,
+     <constant>EXTR_PREFIX_INVALID<constant> lub
+     <constant>EXTR_PREFIX_IF_EXISTS</constant>. Jeśli nazwa zmiennej po
+     dodaniu prefiksu nie jest prawidłową nazwą zmiennej, nie jest
+     importowana do tablicy symboli.
     </para>
     <para>
      <function>extract</function> zwraca liczbę zmiennych szczęśliwie
      zaimportowanych do tablicy symboli.
     </para>
+    <warning>
+     <para>
+      Nie należy używać funkcji <function>extract</function> na niepewnych
+      danych, jak na przykład danych odebranych od użytkownika ($_GET, ...).
+      Można tak zrobić na przykład w celu tymczasowego uruchomienia starych
+      skryptów, które zależne są od ustawienia <link
+       linkend="security.globals">register_globals</link>. Należy jednak użyć
+      nie nadpisującego parametru <parameter>typ_ekstrakcji</parameter>, jak
+      na przykład <constant>EXTR_SKIP</constant>. Trzeba też pamiętać aby
+      ekstrahować zmienne <varname>$_SERVER</varname>,
+      <varname>$_SESSION</varname>, <varname>$_COOKIE</varname>,
+      <varname>$_POST</varname> <varname>$_GET</varname> w tej właśnie
+      kolejności.
+     </para>
+    </warning>
     <para>
-     Możliwy jest import zmiennych zawartych w tablicy asocjacyjnej zwróconej
+     Możliwa jest ekstrakcja zmiennych zawartych w tablicy asocjacyjnej zwróconej
      przez <function>wddx_deserialize</function>.
     </para>
     <para>
@@ -139,41 +176,40 @@
    wddx_deserialize */
 
 $rozmiar = "duży";
-$tablica_zmiennych = array ("kolor"    => "niebieski",
-                            "rozmiar"  => "średni",
-                            "ksztalt"  => "kulisty");
-extract ($tablica_zmiennych, EXTR_PREFIX_SAME, "wddx");
+$tablica_zmiennych = array("kolor"    => "niebieski",
+                           "rozmiar"  => "średni",
+                           "ksztalt"  => "kulisty");
+extract($tablica_zmiennych, EXTR_PREFIX_SAME, "wddx");
 
-print "$kolor, $rozmiar, $ksztalt, $wddx_rozmiar\n";
+echo "$kolor, $rozmiar, $ksztalt, $wddx_rozmiar\n";
 
 ?>
 ]]>
       </programlisting>
-     </example>
-    </para>
-    <para>
-     Powyższy przykład wyświetli:
-     <programlisting>
+      <screen>
 <![CDATA[
 niebieski, duży, kulisty, średni
 ]]>
-     </programlisting>
+      </screen>
+     </example>
     </para>
     <para>
      <varname>$rozmiar</varname> nie został nadpisany, ponieważ podany został
-     parametr EXTR_PREFIX_SAME, przez co stworzona został zmienna
-     <varname>$wddx_rozmiar</varname>.  Jeśli podana by była flaga EXTR_SKIP,
-     to zmienna <varname>$wddx_rozmiar</varname> nie zostałaby stworzona.
-     Flaga EXTR_OVERWRITE spowodowałaby, że zmienna <varname>$rozmiar</varname>
-     miałaby wartość "średni", a EXTR_PREFIX_ALL spowodowałaby że wszystkie
-     nowe zmienne zostałyby nazwane <varname>$wddx_kolor</varname>,
-     <varname>$wddx_rozmiar</varname>, and
-     <varname>$wddx_ksztalt</varname>.
+     parametr <constant>EXTR_PREFIX_SAME</constant>, przez co stworzona został
+     zmienna <varname>$wddx_rozmiar</varname>.  Jeśli podana by była flaga
+     <constant>EXTR_SKIP</constant>, to zmienna
+     <varname>$wddx_rozmiar</varname> nie zostałaby stworzona.  Flaga
+     <constant>EXTR_OVERWRITE</constant> spowodowałaby, że zmienna
+     <varname>$rozmiar</varname> miałaby wartość "średni", a
+     <constant>EXTR_PREFIX_ALL</constant> spowodowałaby że wszystkie nowe
+     zmienne zostałyby nazwane <varname>$wddx_kolor</varname>,
+     <varname>$wddx_rozmiar</varname>, and <varname>$wddx_ksztalt</varname>.
     </para>
     <para>
      Musisz użyć tablic asocjacyjnych. Tablica indeksowana liczbowo nie da
-     żadnych efektów, chyba że zostanie użyta flaga EXTR_PREFIX_ALL lub
-     EXTR_PREFIX_INVALID.
+     żadnych efektów, chyba że zostanie użyta flaga
+     <constant>EXTR_PREFIX_ALL</constant> lub
+     <constant>EXTR_PREFIX_INVALID</constant>.
     </para>
     <para>
      Patrz także: <function>compact</function>.
