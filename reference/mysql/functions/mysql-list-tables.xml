@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- splitted from ./pl/functions/mysql.xml, last change in rev 1.16 -->
-<!-- last change to 'mysql-list-tables' in en/ tree in rev 1.2 -->
-<!-- EN-Revision: 1.2 Maintainer: slawek Status: ready -->
-<!-- OLD-Revision: 1.100/EN.1.2 -->
+<!-- EN-Revision: 1.3 Maintainer: slawek Status: ready -->
+<!-- $Revision: 1.3 $ -->
   <refentry id="function.mysql-list-tables">
    <refnamediv>
     <refname>mysql_list_tables</refname>
@@ -20,7 +18,7 @@
     <para> 
      <function>mysql_list_tables</function> przyjmuje jako argument
      nazwę bazy i zwraca wskaźnik wyniku podobnie jak funkcja
-     <function>mysql_db_query</function>. Żeby uzyskać nazwy tabel
+     <function>mysql_query</function>. Żeby uzyskać nazwy tabel
      za wskaźnika wyniku należy użyć funkcji
      <function>mysql_tablename</function> lub innej operującej na
      tablicach wyników.
@@ -28,6 +26,29 @@
     <para>
      Aby zachować zgodność z poprzednimi wersjami, można użyć również 
      <function>mysql_listtables</function>. Jest to jednak niezalecane.
+    </para>
+    <example>
+     <title>Przykład użycia mysql_list_tables</title>
+          <programlisting role="php">
+<![CDATA[
+<?php
+mysql_connect('localhost', 'uzytkownik', 'haslo') or
+    die('Nie można się połączyć');
+mysql_select_db('baza');
+
+$result = mysql_list_tables();
+
+while (($row = mysql_fetch_row($result))
+    printf ("Tabela: %s\n", $row[0]);  
+
+mysql_free_result($result);
+?>
+]]>
+     </programlisting>
+    </example>
+    <para>
+     Patrz także: <function>mysql_list_dbs</function>,
+     <function>mysql_tablename</function>.
     </para>
    </refsect1>
   </refentry>

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- splitted from ./pl/functions/mysql.xml, last change in rev 1.16 -->
-<!-- last change to 'mysql-data-seek' in en/ tree in rev 1.2 -->
-<!-- EN-Revision: 1.2 Maintainer: slawek Status: ready -->
-<!-- OLD-Revision: 1.100/EN.1.2 -->
+<!-- EN-Revision: 1.4 Maintainer: slawek Status: ready -->
+<!-- $Revision: 1.4 $ -->
   <refentry id="function.mysql-data-seek">
    <refnamediv>
     <refname>mysql_data_seek</refname>
@@ -25,22 +23,30 @@
      wywołanie <function>mysql_fetch_row</function> zwróci ten wiersz.
     </para>
     <para>
-     <parameter>numer_wiersza</parameter> liczony jest od 0.
+     <parameter>numer_wiersza</parameter> liczony jest od 0. Zakres wartości
+     od 0 do mysql_num_rows - 1.
     </para>
+    <note>
+     <para>
+      Funkcję <function>mysql_data_seek</function> można stosować jedynie w
+      połączeniu z <function>mysql_query</function>, nie z
+      <function>mysql_unbuffered_query</function>.
+     </para>
+    </note>
     <example>
      <title>mysql_data_seek</title>
      <programlisting role="php">
 <![CDATA[
 <?php
-    $link = mysql_pconnect("serwer", "uzytkownik", "haslo")
-        or die("Nie można się połączyć");
+    $link = mysql_pconnect('serwer', 'uzytkownik', 'haslo')
+        or die('Nie można się połączyć');
 
-    mysql_select_db("baza")
-        or die("Nie można wybrać bazy danych");
+    mysql_select_db('baza')
+        or die('Nie można wybrać bazy danych');
 
-    $query = "SELECT last_name, first_name FROM friends";
+    $query = 'SELECT last_name, first_name FROM friends';
     $result = mysql_query($query)
-        or die("Zapytanie zakończone niepowodzeniem");
+        or die('Zapytanie zakończone niepowodzeniem');
 
     /* pobieramy wiersze w odwrotnej kolejności */
     for ($i = mysql_num_rows($result) - 1; $i >=0; $i--) {
@@ -60,6 +66,10 @@
 ]]>
      </programlisting>
     </example>
+    <para>
+     Patrz także: <function>mysql_query</function>,
+     <function>mysql_num_rows</function>.
+    </para>
    </refsect1>
   </refentry>
 

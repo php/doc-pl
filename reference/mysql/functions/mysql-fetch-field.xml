@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- splitted from ./pl/functions/mysql.xml, last change in rev 1.16 -->
-<!-- last change to 'mysql-fetch-field' in en/ tree in rev 1.2 -->
 <!-- EN-Revision: 1.2 Maintainer: slawek Status: ready -->
-<!-- OLD-Revision: 1.100/EN.1.2 -->
+<!-- $Revision: 1.4 $ -->
   <refentry id="function.mysql-fetch-field">
    <refnamediv>
     <refname>mysql_fetch_field</refname>
@@ -98,11 +96,11 @@
      <programlisting role="php">
 <![CDATA[
 <?php
-mysql_connect("serwer","uzytkownik","haslo");
-    or die ("Nie można się połączyć");
-mysql_select_db("baza");
-$result = mysql_query("select * from tabela")
-    or die("Zapytanie zakończone niepowodzeniem");
+mysql_connect('localhost','uzytkownik','haslo');
+    or die ('Nie można się połączyć');
+mysql_select_db('baza');
+$result = mysql_query('select * from tabela')
+    or die('Zapytanie zakończone niepowodzeniem');
 /* pobieramy dane kolumny */
 $i = 0;
 while ($i < mysql_num_fields($result)) {

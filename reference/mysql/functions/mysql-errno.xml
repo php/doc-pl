@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- splitted from ./pl/functions/mysql.xml, last change in rev 1.16 -->
-<!-- last change to 'mysql-errno' in en/ tree in rev 1.2 -->
-<!-- EN-Revision: 1.2 Maintainer: slawek Status: ready -->
-<!-- OLD-Revision: 1.100/EN.1.2 -->
+<!-- EN-Revision: 1.4 Maintainer: slawek Status: ready -->
+<!-- $Revision: 1.4 $ -->
   <refentry id="function.mysql-errno">
    <refnamediv>
     <refname>mysql_errno</refname> 
@@ -30,20 +28,32 @@
      <function>mysql_error</function> i <function>mysql_errno</function>),
      dlatego jeśli jej używasz, upewnij się, by zrobić to przed użyciem
      następnej funkcji MySQL.
-     <informalexample>
+     <example>
+      <title>Przykład użycia mysql_errno</title>
       <programlisting role="php">
 <![CDATA[
 <?php
-mysql_connect("nieistniejacyserwer");
-echo mysql_errno().": ".mysql_error()."<BR>";
-mysql_select_db("niematakiejbazy");
-echo mysql_errno().": ".mysql_error()."<BR>";
-$conn = mysql_query("SELECT * FROM niematakiejtabeli");
-echo mysql_errno().": ".mysql_error()."<BR>";
+mysql_connect('localhost', 'uzytkownik', 'haslo');
+
+mysql_select_db('niematakiejbazy');
+echo mysql_errno() . ": " . mysql_error(). "\n";
+
+mysql_select_db('takiejbazytezniema');
+mysql_query('SELECT * FROM niematakiejtabeli');
+echo mysql_errno() . ": " . mysql_error() . "\n";
 ?>
 ]]>
       </programlisting>
-     </informalexample>
+      <para>
+       Powyższy przykład da następujący wynik:
+      </para>
+      <screen>
+<![CDATA[
+1049: Unknown database 'niematakiejbazy'
+1146: Table 'takiejbazytezniema.niematakiejtabeli' doesn't exist
+]]>
+      </screen>
+     </example>
     </para>
     <para> 
      Patrz także: <function>mysql_error</function>

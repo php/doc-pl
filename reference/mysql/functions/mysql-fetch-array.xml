@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- splitted from ./pl/functions/mysql.xml, last change in rev 1.16 -->
-<!-- last change to 'mysql-fetch-array' in en/ tree in rev 1.27 -->
-<!-- EN-Revision: 1.2 Maintainer: slawek Status: ready -->
-<!-- OLD-Revision: 1.100/EN.1.27 -->
+<!-- EN-Revision: 1.4 Maintainer: slawek Status: ready -->
+<!-- $Revision: 1.3 $ -->
   <refentry id="function.mysql-fetch-array">
    <refnamediv>
     <refname>mysql_fetch_array</refname> 
@@ -36,13 +34,14 @@
      lub przez stworzenie aliasa. Po stworzeniu aliasa nie można
      już odwoływać się do danej kolumny używając jej prawdziwej nazwy
      (w tym przykładzie używając <literal>'pole'</literal>).
-     <informalexample>
+     <example>
+      <title>Zapytanie z powtarzającymi się nazwami pól</title>
       <programlisting role="sql">
 <![CDATA[
-select tjeden.pole as cos tdwa.pole as cos2 from tjeden, tdwa
+select table1.field as foo table2.field as bar from table1, table2
 ]]>
       </programlisting>
-     </informalexample>
+     </example>
     </para>
     <para>
      Godne uwagi jest to, że użycie <function>mysql_fetch_array</function>
@@ -62,30 +61,68 @@ select tjeden.pole as cos tdwa.pole as cos2 from tjeden, tdwa
      MYSQL_NUM indeksowanej tylko numerycznie (jak w
      <function>mysql_fetch_row</function>).
     </para>
-    <para>
-     Po dalsze szczegóły patrz także
-     <function>mysql_fetch_row</function> i
-     <function>mysql_fetch_assoc</function>.
-    </para>
     <example>
-     <title><function>mysql_fetch_array</function></title>
+     <title>mysql_fetch_array z MYSQL_NUM</title>
      <programlisting role="php">
 <![CDATA[
 <?php
-mysql_connect("serwer","uzytkownik","haslo");
-mysql_select_db("baza"); 
-$result = mysql_query("select id_uzytkownika, pelna_nazwa from tabela");
-while ($row = mysql_fetch_array($result)) {
-    echo "id_uzytkownika: ".$row["id_uzytkownika"]."<br>\n";
-    echo "id_uzytkownika: ".$row[0]."<br>\n";
-    echo "pelna_nazwa: ".$row["pelna_nazwa"]."<br>\n";
-    echo "pelna_nazwa: ".$row[1]."<br>\n";
-}
+mysql_connect('localhost', 'uzytkownik', 'haslo') or
+    die('Nie można się połączyć');
+mysql_select_db('baza');
+
+$result = mysql_query("SELECT id, nazwa FROM tabela");
+
+while (($row = mysql_fetch_array($result, MYSQL_NUM))
+    printf ("ID: %s  Nazwa: %s", $row[0], $row[1]);  
+
 mysql_free_result($result);
 ?>
 ]]>
      </programlisting>
     </example>
+    <example>
+     <title>mysql_fetch_array z MYSQL_ASSOC</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+mysql_connect('localhost', 'uzytkownik', 'haslo') or
+    die('Nie można się połączyć');
+mysql_select_db('baza');
+
+$result = mysql_query("SELECT id, nazwa FROM tabela");
+
+while (($row = mysql_fetch_array($result, MYSQL_ASSOC))
+    printf ("ID: %s  Nazwa: %s", $row["id"], $row["nazwa"]);  
+
+mysql_free_result($result);
+?>
+]]>
+     </programlisting>
+    </example>
+    <example>
+     <title>mysql_fetch_array z MYSQL_BOTH</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+mysql_connect('localhost', 'uzytkownik', 'haslo') or
+    die('Nie można się połączyć');
+mysql_select_db('baza');
+
+$result = mysql_query("SELECT id, nazwa FROM tabela");
+
+while (($row = mysql_fetch_array($result, MYSQL_BOTH))
+    printf ("ID: %s  Nazwa: %s", $row[0], $row["nazwa"]);  
+
+mysql_free_result($result);
+?>
+]]>
+     </programlisting>
+    </example>
+    <para>
+     Patrz także:
+     <function>mysql_fetch_row</function>,
+     <function>mysql_fetch_assoc</function>.
+    </para>
    </refsect1>
   </refentry>
 

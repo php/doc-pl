@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- splitted from ./pl/functions/mysql.xml, last change in rev 1.16 -->
-<!-- last change to 'mysql-get-proto-info' in en/ tree in rev 1.62 -->
-<!-- EN-Revision: 1.2 Maintainer: slawek Status: ready -->
-<!-- OLD-Revision: 1.100/EN.1.62 -->
+<!-- EN-Revision: 1.4 Maintainer: slawek Status: ready -->
+<!-- $Revision: 1.3 $ -->
   <refentry id="function.mysql-get-proto-info">
    <refnamediv>
     <refname>mysql_get_proto_info</refname>
@@ -21,8 +19,30 @@
      <parameter>identyfikator_połączenia</parameter> nie zostanie podany,
      wykorzystane zostanie ostatnio otwarte połączenie.
     </para>
+    <example>
+     <title>mysql_get_proto_info</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+mysql_connect('localhost', 'uzytkownik', 'haslo') or
+    die('Nie można się połączyć');
+printf ("MySQL protocol version: %s\n", mysql_get_proto_info());
+?>
+]]>
+     </programlisting>
+     <para>
+      Powyższy przykład da następujący wynik:
+     </para>
+     <screen>
+<![CDATA[
+MySQL protocol version : 10
+]]>
+     </screen>
+    </example>
     <para>
-     <function>mysql_get_proto_info</function> dodano w PHP 4.0.5.
+     Patrz także: <function>mysql_get_client_info</function>,
+     <function>mysql_get_host_info</function> i
+     <function>mysql_get_server_info</function>.
     </para>
    </refsect1>
   </refentry>
