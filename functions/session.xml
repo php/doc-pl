@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.55 Maintainer: leon Status: ready -->
-<!-- $Revision: 1.7 $ -->
+<!-- EN-Revision: 1.70 Maintainer: leon Status: ready -->
+<!-- $Revision: 1.8 $ -->
  <reference id="ref.session">
   <title>Funkje obsługi sesji</title>
   <titleabbrev>Sesje</titleabbrev>
@@ -149,7 +149,7 @@ session_register ("count");
 $count++;
 ?>
 
-Witaj gościu. Oglądasz tą stronę &lt;?php echo $count; ?&gt; raz.&lt;p&gt;
+Witaj gościu. Oglądasz tą stronę <?php echo $count; ?> raz.<p>
 
 <?php
 # <?=SID?> jest konieczne do zachowania identyfikatora sesji jeśli
@@ -356,13 +356,21 @@ Aby kontynuować, <A HREF="nextpage.php?<?=SID?>">kliknij tutaj</A>
     <simpara>
      <function>session_start</function> tworzy sesję (lub odtwarza bieżącą
       w oparciu o identyfikator sesji przekazywany przez zmienne GET lub
-      ciasteczko).</simpara>
+      ciasteczko).
+    </simpara>
+    <simpara>
+     Jeśli chcesz, aby sesja była nazwana, przed wywołaniem
+     <function>session_start</function> musisz wywołać
+     <function>session_name</function>.
+    </simpara>
     <simpara>
      Ta funkcja zawsze zwraca warotść &true;.
     </simpara>
     <note>
      <para>
-      Ta funkcja została dodana w PHP 4.0.
+      Jeśli używasz sesji opartych o ciasteczka, to
+      <function>session_start</function> musi być wywołane przed wysłaniem
+      jakichkolwiek danych do przeglądarki.
      </para>
     </note>
    </refsect1>
@@ -383,12 +391,33 @@ Aby kontynuować, <A HREF="nextpage.php?<?=SID?>">kliknij tutaj</A>
     </funcsynopsis>
     <simpara>
      <function>session_destroy</function> niszczy wszystkie dane skojarzone z
-     bieżącą sesją.
+     bieżącą sesją. Nie usuwa żadnych globalnych zmiennych związanych z sesją.
+     Nie usuwa też ciasteczka sesyjnego.
     </simpara>
     <simpara>
      Funkcja ta zawraca &true; w przypadku sukcesu w niszczeniu danych sesji.
      W przeciwnym przypadku zwracana jest wartość &false;.
     </simpara>
+    <para>
+     <example>
+      <title>Niszczenie sesji</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+
+# Inicjalizuj sesję
+# Jeśli używasz sesion_name("cośtam"), nie zapomnij o tym teraz!
+session_start();
+# Usuń wszystkie zmienne sesyjne
+session_unset();
+# Na koniec, zniszcz sesję
+session_destroy();
+
+?>       
+]]>
+      </programlisting>
+     </example>
+    </para>
    </refsect1>
   </refentry>
 
@@ -437,11 +466,6 @@ echo "Poprzednią nazwą sesji było $poprzednia_nazwa<p>";
 ]]>
      </programlisting>
     </example>
-    <note>
-     <para>
-      Funkcja ta została dodana w PHP 4.0.
-     </para>
-    </note>
    </refsect1>
   </refentry>
 
@@ -464,11 +488,6 @@ echo "Poprzednią nazwą sesji było $poprzednia_nazwa<p>";
      <function>session_module_name</function> zwraca nazwę bieżącego modułu
      sesji. Jeśli podany został parametr <parameter>moduł</parameter>, użyty
      zostanie nowo podany moduł.
-     <note>
-      <para>
-       Ta funkcja została dodana w PHP 4.0.
-      </para>
-     </note>
     </para>
    </refsect1>
   </refentry>
@@ -499,11 +518,6 @@ echo "Poprzednią nazwą sesji było $poprzednia_nazwa<p>";
        systemu plików, który lepiej obsługuje duże ilości małych plików. Na
        przykład na Linuksie reiserfs w takich warunkach ma lepszą wydajność
        niż ext2fs.
-      </para>
-     </note>
-     <note>
-      <para>
-       Ta funkcja została dodana w PHP 4.0.
       </para>
      </note>
     </para>
@@ -560,9 +574,39 @@ echo "Poprzednią nazwą sesji było $poprzednia_nazwa<p>";
      każdej napotkanej nazwy zmiennej, <function>session_register</function>
      rejestruje w bieżącej sesji globalną zmienną o danej nazwie.
     </para>
+    <caution>
+     <para>
+      Funkcja ta rejestruje <emphasis>globalną</emphasis> zmienną. Jeśli
+      chcesz zarejestrować zmienną w sesji z wnętrza funkcji, musisz się
+      upewnić że jest ona globalna prez użycie <function>global</function> lub
+      używając tablic sesyjnych, tak jak to opisano poniżej.
+     </para>
+    </caution>
     <para>
-     Funkcja ta zwraca wartość &true; jeśli zmienna została pomyślnie
-     zarejestrowana w sesji.
+     Funkcja ta zwraca wartość &true; jeśli wszystkie zmienne zostały
+     pomyślnie zarejestrowane w sesji.
+    </para>
+    <para>
+     Jeśli przed wywołaniem tej funkcji nie wywołano
+     <function>session_start</function>, dokonane zostanie niejawne wywołanie
+     <function>session_start</function> bez żadnych parametrów.
+    </para>
+    <para>
+     Możesz tworzyć zmienne sesyjne poprostu przez dopisywanie odpowiednicz
+     wpisów do tablic $HTTP_SESSION_VARS lub $_SESSION (PHP >= 4.1.0).
+     <informalexample>
+      <programlisting role="php">
+<![CDATA[
+$barney = "Duży fioletowy dinozaur.";
+session_register("barney");
+
+$HTTP_SESSION_VARS["zim"] = "Najeźdźca z innej planety.";
+
+# tablica $_SESSION typu auto-global została wprowadzona w PHP 4.1.0
+#_SESSION["spongebob"] = "Ma kwadratowe spodnie.";
+]]>       
+      </programlisting>
+     </informalexample>
     </para>
     <note>
      <para>
@@ -576,11 +620,10 @@ echo "Poprzednią nazwą sesji było $poprzednia_nazwa<p>";
       <link linkend="resource">typy zasobów</link>.
      </para>
     </note>
-    <note>
-     <para>
-      Funkcja ta została dodana w PHP 4.0.
-     </para>
-    </note>
+    <para>
+     Patrz także <function>session_is_registered</function> i
+     <function>session_unregister</function>.
+    </para>
    </refsect1>
   </refentry>
 
@@ -606,12 +649,15 @@ echo "Poprzednią nazwą sesji było $poprzednia_nazwa<p>";
     <para>
      Funkcja ta zwraca wartość &true; jeśli zmienna została pomyślnie
      wyrejestrowana z sesji.
-     <note>
-      <para>
-       Funkcja ta została dodana w PHP 4.0.
-      </para>
-     </note>
     </para>
+    <caution>
+     <para>
+      Ta funkcja nie usuwa zmiennej globalnej o nazwie
+      <parameter>nazwa</parameter>, a jedynie zapobiega zapisaniu tej zmiennej
+      jako części sesji. Jeśli chcesz usunąć odpowiednią zmienną globalną,
+      musisz użyć funkcji <function>unset</function>.
+     </para>
+    </caution>
    </refsect1>
   </refentry>
   
@@ -656,11 +702,6 @@ echo "Poprzednią nazwą sesji było $poprzednia_nazwa<p>";
      <function>session_is_registered</function> zwraca wartość &true; jeśli w
      bieżącej sesji zarejestrowana jest zmienna o nazwie
      <parameter>nazwa</parameter>.
-     <note>
-      <para>
-       Funkcja ta została dodana w PHP 4.0.
-      </para>
-     </note>
     </para>
    </refsect1>
   </refentry>
@@ -700,6 +741,12 @@ echo "Poprzednią nazwą sesji było $poprzednia_nazwa<p>";
       <listitem>
        <simpara>
         "domain" -  Domena ciasteczka.
+       </simpara>
+      </listitem>
+      <listitem>
+       <simpara>
+        "secure" - Ciasteczko powinno być przesłane tylko przez bezpieczne
+        połączenie. (Ten element został dodany w PHP 4.0.4.)
        </simpara>
       </listitem>
      </itemizedlist>
@@ -754,11 +801,6 @@ echo "Poprzednią nazwą sesji było $poprzednia_nazwa<p>";
      <function>session_decode</function> dekofuje dane sesji zawarte w
      parametrze <parameter>dane</parameter>, ustawiając zmienne zachowane w
      sesji.
-     <note>
-      <para>
-       Ta funkcja została dodana w PHP 4.0.
-      </para>
-     </note>
     </para>
    </refsect1>
   </refentry>
@@ -781,11 +823,6 @@ echo "Poprzednią nazwą sesji było $poprzednia_nazwa<p>";
     <para>
      <function>session_encode</function> zwraca string zawierający zakodowane
      dane bieżącej sesji.
-     <note>
-      <para>
-       Ta funkcja została dodana w PHP 4.0.
-      </para>
-     </note>
     </para>
    </refsect1>
   </refentry>
@@ -987,11 +1024,29 @@ echo "Ogranicznikiem pamięci podręcznej jest teraz $cache_limiter<p>";
 ]]>
      </programlisting>
     </example>
-    <note>
-     <para>
-      Funkcja ta została dodana w PHP 4.0.3.
-     </para>
-    </note>
+   </refsect1>
+  </refentry>
+
+  <refentry id='function.session-cache-expire'>
+   <refnamediv>
+    <refname>session_cache_expire</refname>
+    <refpurpose>Zwróć bieżący czas przedawnienia pamięci podręcznej</refpurpose>
+   </refnamediv>
+   <refsect1>
+    <title>Opis</title>
+    <funcsynopsis>
+     <funcprototype>
+      <funcdef>int <function>session_cache_expire</function></funcdef>
+      <paramdef>int
+       <parameter><optional>nowy_czas</optional></parameter></paramdef>
+     </funcprototype>
+    </funcsynopsis>
+    <para>
+     <function>session_cache_expire</function> zwraca aktualny czas
+     przedawnienia pamięci podręcznej. Jeśli podany zostanie 
+     <parameter>nowy_czas</parameter>, to bieżący czas zostanie
+     zastąpiony przez ten podany w parametrze.
+    </para>
    </refsect1>
   </refentry>
 
