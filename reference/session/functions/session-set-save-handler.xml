@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.11 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.session-set-save-handler">
    <refnamediv>
     <refname>session_set_save_handler</refname>
@@ -12,7 +12,12 @@
     <title>Opis</title>
      <methodsynopsis>
       <type>bool</type><methodname>session_set_save_handler</methodname>
-      <methodparam><type>string</type><parameter>otwórz</parameter></methodparam><methodparam><type>string</type><parameter>zamknij</parameter></methodparam><methodparam><type>string</type><parameter>czytaj</parameter></methodparam><methodparam><type>string</type><parameter>zapisz</parameter></methodparam><methodparam><type>string</type><parameter>niszcz</parameter></methodparam><methodparam><type>string</type><parameter>gc</parameter></methodparam>
+      <methodparam><type>string</type><parameter>otwórz</parameter></methodparam>
+      <methodparam><type>string</type><parameter>zamknij</parameter></methodparam>
+      <methodparam><type>string</type><parameter>czytaj</parameter></methodparam>
+      <methodparam><type>string</type><parameter>zapisz</parameter></methodparam>
+      <methodparam><type>string</type><parameter>niszcz</parameter></methodparam>
+      <methodparam><type>string</type><parameter>gc</parameter></methodparam>
      </methodsynopsis>
     <para>
      <function>session_set_save_handler</function> ustawia funkcje użytkownika
@@ -25,27 +30,11 @@
     </para>
     <note>
      <para>
-      W swoim pliku &php.ini; musisz ustawić opcję konfiguracji
-      <parameter>session.save_handler</parameter> na
-      <parameter>user</parameter> aby
-      <function>session_set_save_handler</function> zadziałało.
-     </para>
-    </note>
-    <note>
-     <para>
       Procedura obsługi "zapisz" nie będzie wywołana dopóki strumień wyjściowy
       jest otwarty. W związku z tym, wyjście instrukcji debugowania zawartych
       w procedurze "zapisz" nigdy nie będzie widoczne w oknie przeglądarki.
       Jeśli konieczne jest wyjście debugowania, sugerowane jest zapisanie tego
       wyjścia do pliku.
-     </para>
-    </note>
-    <note>
-     <para>
-      Procedura obsługi zapisywania nei jest wywoływana jeśli sesja nie
-      zawiera danych. Dotyczty to także sytuacji, kiedy zarejestrowane zmienne
-      są puste. Różni się to od domyślnej obsługi sesji opartej na plikach,
-      która tworzy także puste pliki sesji.
      </para>
     </note>
     <para>
@@ -58,7 +47,7 @@
      Funkcja czytająca zawsze musi zwracać ciąg aby procedura obsługi działała
      zgodnie z przewidywaniami. Zwróć pusty ciąg jeśli nie ma żadnych danych
      do odczytania. Wartości zwracane przez inne procedury obsługi są
-     konwertowane na wyrażenia logiczne. TRUE dla sukcesu, FALSE dla
+     konwertowane na wyrażenia logiczne. &true; dla sukcesu, &false; dla
      niepowodzenia.
     </para>
     <para>
@@ -70,7 +59,8 @@
 <![CDATA[
 <?php
 
-function open ($save_path, $session_name) {
+function open ($save_path, $session_name)
+{
   global $sess_save_path, $sess_session_name;
        
   $sess_save_path = $save_path;
@@ -78,11 +68,13 @@ function open ($save_path, $session_name) {
   return(true);
 }
 
-function close() {
+function close()
+{
   return(true);
 }
 
-function read ($id) {
+function read ($id)
+{
   global $sess_save_path, $sess_session_name;
 
   $sess_file = "$sess_save_path/sess_$id";
@@ -95,7 +87,8 @@ function read ($id) {
 
 }
 
-function write ($id, $sess_data) {
+function write ($id, $sess_data)
+{
   global $sess_save_path, $sess_session_name;
 
   $sess_file = "$sess_save_path/sess_$id";
@@ -107,7 +100,8 @@ function write ($id, $sess_data) {
 
 }
 
-function destroy ($id) {
+function destroy ($id)
+{
   global $sess_save_path, $sess_session_name;
        
   $sess_file = "$sess_save_path/sess_$id";
@@ -118,7 +112,8 @@ function destroy ($id) {
  * UWAGA: Musisz sam zaimplementować obsługę *
  * zbierania śmieci (gc)                     *
  *********************************************/
-function gc ($maxlifetime) {
+ function gc ($maxlifetime)
+ {
   return true;
 }
 
@@ -132,6 +127,10 @@ session_start();
 ]]>
       </programlisting>
      </example>
+    </para>
+    <para>
+     Zobacz także opis dyrektywy konfiguracji <link
+      linkend="ini.session.save-handler">session.save_handler</link>.
     </para>
    </refsect1>
   </refentry>
