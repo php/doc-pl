@@ -1,41 +1,46 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.19 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.9 $ -->
+<!-- EN-Revision: 1.22 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.10 $ -->
  <chapter id="language.expressions">
    <title>Wyrażenia</title>
 
    <simpara>
     Wyrażenia są naważniejszymi elementami składowymi PHP. W PHP prawie
     wszystko co napiszesz jest wyrażeniem. Najprostszą i najdokładniejszą
-    definicją wyrażenia jest "wszystko co ma wartość". </simpara>
+    definicją wyrażenia jest "wszystko co ma wartość".
+   </simpara>
 
    <simpara>
     Najbardziej podstawową formą wyrażeń są stałe i zmienna. Jeśli napiszesz
     "$a = 5" przypisujesz '5' do '$a'. '5' ma oczywiście wartość 5, lub innymi
     słowy '5' jest wyrażeniem o wartości 5 (w tym przypadku, '5' jest stałą
-    liczbą całkowitą).</simpara>
+    liczbą całkowitą).
+   </simpara>
 
    <simpara>
     Po tym przypisaniu możesz się spodziwać, że wartością $a jest także 5, więc
     jeśli napiszesz "$b = $a" możesz się spodziewać, że będzie to równoznaczne
     z napisaniem "$b = 5". Innymi słowy, $a jest wyrażeniem o wartości 5.
-    Jeśli wszystko działa prawidłowo, to wszystko będzie tak jak się
-    spodziewałeś.</simpara>
+    Jeśli wszystko działa prawidłowo, wszystko będzie się dziać tak jak
+    napisano wyżej.
+   </simpara>
 
    <para>
     Trochę bardziej złożonymi przykładami wyrażeń są funkcje. Przyjrzyj się
     poniższej funkcji:
-
     <informalexample>
      <programlisting role="php">
 <![CDATA[
+<?php
 function foo ()
 {
     return 5;
 }
+?>
 ]]>
      </programlisting>
-    </informalexample></para>
+    </informalexample>
+   </para>
 
    <simpara>
     Zakładając że oswoiłeś się z koncepcją funkcji (jeśli nie, przejrzyj
@@ -44,7 +49,7 @@ function foo ()
     <literal>$c = 5</literal>, i masz racię. Funkcje są wyrażeniami o wartości
     którą zwracają. Ponieważ foo() zwraca 5, wartością wyrażenia 'foo()' jest
     5. Zazwyczaj funkcje nie zwracają statycznej wartości, ale coś obliczają.
-    </simpara>
+   </simpara>
 
    <simpara>
     Oczywiście wartości w PHP nie muszą być liczbami całkowitymi, i bardzo
@@ -53,10 +58,11 @@ function foo ()
     to takie, których nie możesz 'rozbić' na mniejsze kawałki, w
     przeciwieństwie do np. tablic). PHP obsługuje także dwa złożone
     (nieskalarne) typy danych: tablice i obiekty. Każdą z tych wartości można
-    przypisać do zmiennych lub może być zwrócona przez funkcję. </simpara>
+    przypisać do zmiennych lub może być zwrócona przez funkcję.
+   </simpara>
 
    <simpara>
-    Jak narazie, użytkownicy PHP/FI 2 nie powinni odczuć żadnej zmiany.
+    Jak na razie, użytkownicy PHP/FI 2 nie powinni odczuć żadnej zmiany.
     Jednakże PHP rozwija wyrażenia znacznie bardziej, podobnie jak wiele
     innych języków programowania. PHP jest językiem zorientowanym na
     wyrażenia, co oznacza że prawie wszystko jest wyrażeniem. Przyjrzyj się
@@ -68,7 +74,8 @@ function foo ()
     5', niezależnie co to robi, jest wyrażeniem o wartości 5. Wynika z tego,
     że napisanie '$b = ($a = 5)' jest równoznaczne napisaniu '$a = 5; $b = 5;'
     (średnik oznacza koniec instrukcji). Ponieważ przypisania są przetwarzane
-    od prawej do lewej, możesz także napisać '$b = $a = 5'.</simpara>
+    od prawej do lewej, możesz także napisać '$b = $a = 5'.
+   </simpara>
 
    <simpara>
     Kolejnym dobrym przykładem orientacji wyrażeniowej jest pre- i
@@ -86,7 +93,8 @@ function foo ()
     dlatego nazywa się to 'pre-inkrementacją'). Postinkrementacja, która jest
     oznaczana jako '$zmienna++', zwraca orginalną wartość $zmienna przed
     zwiększeniem jej wartości (PHP zwiększa wartość po odczytaniu jej
-    wartości, stąd nazwa 'post-inkrementacja').</simpara>
+    wartości, stąd nazwa 'post-inkrementacja').
+   </simpara>
 
    <simpara>
     Popularnym typem wyrażeń są wyrażenia porównania. Te wyrażenia zwracają
@@ -94,7 +102,8 @@ function foo ()
     &gt; (większy), &gt;= (większy lub równy), == (równy), != (nie równy),
     &lt; (mniejszy) i &lt;= (mniejszy lub równy). Wyrażenia te są powszechnie
     używane przy sprawdzaniu warunków, jak na przykład instrukcje
-    <literal>if</literal>.</simpara>
+    <literal>if</literal>.
+   </simpara>
 
    <simpara>
     Ostatnim przykładem, którym będziemy się tu zajmować są połączone
@@ -121,25 +130,32 @@ function foo ()
    <para>
     Jest jeszcze jedno wyrażenie, które może się wydać dziwne jeśli nie
     widziałeś go w innych językac, trójoperandowy operator warunkowy:
-
-    <informalexample><programlisting role="php">
+   </para>
+   <para>
+    <informalexample>
+     <programlisting role="php">
 <![CDATA[
+<?php
 $pierwsze ? $drugie : $trzecie
+?>
 ]]>
-    </programlisting></informalexample>
-    
+     </programlisting>
+    </informalexample>
+   </para>
+   <para> 
     Jeśli wartością pierwszego podwyrażenia jest &true; (rózna od zera), to
     zwracany jest drugie podwyrażanie, i jest to wynik wyrażenia warunkowego.
     W przeciwnym wypadku, zwracana jest wartość trzeciego podwyrażenia.
    </para>
-
    <para>
     Poniższy przykład powinien pomóc w lepszym zrozumieniu pre- i
     postinkrementacji i ogólnie koncepcji wyrażeń:
-
+   </para>
+   <para>
     <informalexample>
      <programlisting role="php">
 <![CDATA[
+<?php
 function double($i)
 {
     return $i*2;
@@ -152,13 +168,14 @@ $e = $d = ++$b;     /* preinkrementuj, przypisz zwiększoną wartość
 
 /* w tym momencie i $d i $e są równe 6 */
 
-$f = double($d++);  /* przypisz podwojoną wartość $d <emphasis>sprzed</emphasis>
+$f = double($d++);  /* przypisz podwojoną wartość $d przed
                        inkrementacji, 2*6 = 12 do $f */
-$g = double(++$e);  /* przypisz podwojoną wartość $e <emphasis>po</emphasis>
+$g = double(++$e);  /* przypisz podwojoną wartość $e po
                        inkrementacji, 2*7 = 14 do $g */
 $h = $g += 10;      /* na początku $g jest zwiększane o 10 i przyjmuje 
                        wartość 24; wartość przypisania (24) jest później
                        przypisywana do $h, które przyjmuje wartość 24. */
+?>
 ]]>
      </programlisting>
     </informalexample>
@@ -191,7 +208,8 @@ $h = $g += 10;      /* na początku $g jest zwiększane o 10 i przyjmuje
     dać ci ogólne pojęcie czym są wyrażenia i jak możesz konstruować przydatne
     wyrażenia. Przez resztę podręcznika będziemy pisać
     <replaceable>expr</replaceable> aby oznaczyć dowolne poprawne wyrażenie
-    PHP.</simpara>
+    PHP.
+   </simpara>
 
   </chapter>
  
@@ -212,6 +230,6 @@ sgml-local-catalogs:nil
 sgml-local-ecat-files:nil
 End:
 vim600: syn=xml fen fdm=syntax fdl=2 si
-vim: et tw=78 syn=sgml
+vim: et tw=78 syn=sgml encoding=iso-8859-2
 vi: ts=1 sw=1
 -->
