@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="iso-8859-2"?>
+<!-- EN-Revision: 1.12 Maintainer: leniwiec Status: ready -->
+<!-- $Revision: 1.1 $ -->
+<!-- splitted from ./en/functions/dir.xml, last change in rev 1.2 -->
+  <refentry id="function.opendir">
+   <refnamediv>
+    <refname>opendir</refname>
+    <refpurpose>Otwiera katalog</refpurpose>
+   </refnamediv>
+   <refsect1>
+    &reftitle.description;
+     <methodsynopsis>
+      <type>resource</type><methodname>opendir</methodname>
+      <methodparam><type>string</type><parameter>path</parameter></methodparam>
+     </methodsynopsis>
+    <para> 
+     Zwraca wskaźnik do otwartego katalogu, który może być następnie
+     wykorzystany przez
+     <function>closedir</function>, <function>readdir</function>, oraz
+     <function>rewinddir</function>.
+    </para>
+    <para>
+     Jeśli <parameter>path</parameter> nie jest katalogiem lub jeśli katalog nie
+     posiada odpowiednich praw dostępu, lub gdy system plików zawiódł  
+     <function>opendir</function> zwróci &false; i
+     wygeneruje błąd PHP <link linkend="errorfunc.constants">
+      E_WARNING</link>. Można wyłączyć wyświetlanie błędów 
+     <function>opendir</function> poprzez postawienie znaku 
+     '<link linkend="language.operators.errorcontrol">@</link>' przed
+     wywołaniem funkcji.
+    </para>
+    <para>
+     <example>
+      <title>Przykład użycia <function>opendir</function></title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+$dir = "/etc/php5/";
+
+// Otwarcie prawidłowego katalogu i pobranie jego zawartości
+if (is_dir($dir)) {
+    if ($dh = opendir($dir)) {
+        while (($file = readdir($dh)) !== false) {
+            echo "filename: $file : filetype: " . filetype($dir . $file) . "\n";
+        }
+        closedir($dh);
+    }
+}
+?>
+]]>
+      </programlisting>
+      &example.outputs.similar;
+      <screen>
+<![CDATA[
+filename: . : filetype: dir
+filename: .. : filetype: dir
+filename: apache : filetype: dir
+filename: cgi : filetype: dir
+filename: cli : filetype: dir
+]]>
+      </screen>
+     </example>
+    </para>
+    <para>
+     Od wersji PHP 4.3.0 <parameter>path</parameter> może być również
+     URL-em odnoszącym się do katalogu, jednak tylko <literal>file://</literal>
+     URL wrapper jest wspierany w wersji PHP 4.3. Od wersji 
+     PHP 5.0.0, został dodany <literal>ftp://</literal>
+     URL wrapper. 
+    </para>
+    <para>
+    Patrz także: <function>is_dir</function>,
+     <function>readdir</function>, oraz 
+     <link linkend="class.dir">Dir</link>
+     </para>
+   </refsect1>
+  </refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"../../../../manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
