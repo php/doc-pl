@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.5 $ -->
+<!-- EN-Revision: 1.3 Maintainer: qrak Status: ready -->
+<!-- $Revision: 1.6 $ -->
   <refentry id="function.min">
    <refnamediv>
     <refname>min</refname>
@@ -25,7 +25,8 @@
     <para>
      W pierwszym wariancie, po podaniu co najmniej dwóch argumentów,
      <function>min</function> zwróci najmniejszy z nich. Można porównywać
-     nieograniczoną ilość wartości.
+     nieograniczoną ilość wartości, jednak jeśli jedna z wartości jest
+     niezdefiniowana, funkcja <function>min</function> wygeneruje błąd.
     </para>
     <para>
      W drugim wariancie, <function>min</function> zwróci najmniejszą wartość
@@ -38,6 +39,36 @@
      Jeśli żadna spośród wartości nie jest typu <type>float</type>, wszystkie
      zostaną potraktowane jako <type>integer</type> i zwrócona zostanie
      wartość całkowita.
+     W razie błędu, <function>min</function> zwraca wartość <type>NULL</type>
+     i generuje błąd na poziomie <constant>E_WARNING</constant>.
+    </para>
+    <para>
+     <informalexample>  
+      <programlisting>  
+<![CDATA[  
+<?php  
+$a = 4;  
+$b = 9;  
+$c = 3;  
+$arr = array(99, 34, 11);  
+
+// Możesz chcieć zaimplementować własną obsługę błędów  
+// na wypadek błędu (niezdefioniowana wartość.  
+if (!$min_value = @min($a, $b, $c)) {  
+    echo "Nie można obliczyć wartości minimalnej. Spróbuj ponownie.";  
+} else {  
+    echo "Wartością minimalną jest $min_value";  
+}  
+
+print min($arr);  // 11  
+
+?>  
+]]>  
+      </programlisting>  
+     </informalexample>  
+    </para>
+    <para>    
+    Patrz także: <function>max</function>.
     </para>
    </refsect1>
   </refentry>
