@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
 <!-- EN-Revision: 1.5 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.8 $ -->
+<!-- $Revision: 1.9 $ -->
   <refentry id="function.header">
    <refnamediv>
     <refname>header</refname>
@@ -31,9 +31,11 @@
      to nowy nagłówek zostanie dodany do już istniejących. Na przykład:
      <informalexample>
       <programlisting role="php">
-<![CDATA[      
+<![CDATA[
+<?php
 header('WWW-Authenticate: Negociate');
 header('WWW-Authenticate: NTLM', FALSE);
+?>
 ]]>
       </programlisting>
      </informalexample>
@@ -54,11 +56,11 @@ header('WWW-Authenticate: NTLM', FALSE);
      generuje właściwy kod statusu. 
        <informalexample>  
         <programlisting role="php">  
-  <![CDATA[  
-  <?php  
-    header("HTTP/1.0 404 Not Found");  
-  ?>  
-  ]]>  
+<![CDATA[
+<?php
+header("HTTP/1.0 404 Not Found");
+?>
+]]>
         </programlisting>  
        </informalexample>  
        <note>  
@@ -78,9 +80,11 @@ header('WWW-Authenticate: NTLM', FALSE);
          za pomocą nagłówka <literal>Status</literal>.
          <informalexample>  
           <programlisting role="php">  
-  <![CDATA[  
-  header("Status: 404 Not Found");  
-  ]]>  
+<![CDATA[
+<?php
+header("Status: 404 Not Found");
+?>
+]]>
           </programlisting>  
          </informalexample>  
         </para>  
@@ -96,9 +100,11 @@ header('WWW-Authenticate: NTLM', FALSE);
      <informalexample>
       <programlisting role="php">
 <![CDATA[
+<?php
 header("Location: http://www.example.com/"); /* Przekieruj przeglądarkę */
 exit;                 /* Upewnij się, że kod poniżej nie zostanie wykonany 
                          po przekierowaniu. */
+?>
 ]]>
       </programlisting>
      </informalexample>
@@ -117,9 +123,11 @@ exit;                 /* Upewnij się, że kod poniżej nie zostanie wykonany
       <informalexample>
        <programlisting>
 <![CDATA[
+<?php
 header("Location: http://".$_SERVER['HTTP_HOST']
                        ."/".dirname($_SERVER['PHP_SELF'])
                        ."/".$względny_url);
+?>
 ]]>
        </programlisting>
       </informalexample>
@@ -133,12 +141,14 @@ header("Location: http://".$_SERVER['HTTP_HOST']
      <informalexample>
       <programlisting role="php">
 <![CDATA[
+<?php
 header ("Expires: Mon, 26 Jul 1997 05:00:00 GMT");    // data w przeszłości
 header ("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT"); 
                                                       // ciągle modyfikowany
 header("Cache-Control: no-store, no-cache, must-revalidate");  // HTTP/1.1
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");                          // HTTP/1.0
+?>
 ]]>
       </programlisting>
      </informalexample>
@@ -171,9 +181,12 @@ header("Pragma: no-cache");                          // HTTP/1.0
      <informalexample>
       <programlisting role="php">
 <![CDATA[
-
-<?php header ("Content-Type: audio/x-pn-realaudio"); ?>
-// skrypt nie działa - zauważ puste linie ponad funkcją header
+<html>
+<?php
+// Ten kod powoduje powstanie błędu. Proszę zauważyć, że
+// ponad wywołaniem funkcji header() znajduje się jakaś treść.
+header('Location: http://www.na_przyklad.com/');
+?>
 ]]>
       </programlisting>
      </informalexample>
@@ -193,15 +206,20 @@ header("Pragma: no-cache");                          // HTTP/1.0
      Aby użytkownik został monitowany o zapisanie wysyłanych danych,
      takich jak np. wygenerowany plik PDF, można użyć nagłówka <ulink
      url="&url.rfc2183;">Content-Disposition</ulink> aby podać zalecaną nazwę
-     pliku i zmusić przeglądarkę do wyświetlenia okienka Zapisz jako.
+     pliku i zmusić przeglądarkę do wyświetlenia okienka zapisu pliku.
      <informalexample>
       <programlisting role="php">
 <![CDATA[
-&lt;?php
+<?php
+// przesyłamy plik PDF
 header("Content-type: application/pdf");
+
+// ustawiamy jego nazwę na downloaded.pdf
 header("Content-Disposition: attachment; filename=downloaded.pdf");
 
-/* ... treść pliku pdf ... */
+// treść znajduje się w pliku original.pdf
+readfile('original.pdf');
+?>
 ]]>
       </programlisting>
      </informalexample>
