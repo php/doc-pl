@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="iso-8859-2"?>
+<!-- splitted from ./pl/functions/session.xml, last change in rev 1.1 -->
+<!-- last change to 'session-write-close' in en/ tree in rev 1.38 -->
+<!-- EN-Revision: 1.1 Maintainer: leszek Status: ready -->
+<!-- OLD-Revision: 1.70/EN.1.38 -->
+  <refentry id="function.session-write-close">
+   <refnamediv>
+    <refname>session_write_close</refname>
+    <refpurpose>Zapisz dane i zakończ sesję</refpurpose>
+   </refnamediv>
+   <refsect1>
+    <title>Opis</title>
+     <methodsynopsis>
+      <type>void</type><methodname>session_write_close</methodname>
+      <void/>
+     </methodsynopsis>
+    <para>
+     Zakończ bieżącą sesję i zachowaj dane sesji.
+    </para>
+    <para>
+     Dane sesji są zazwyczaj przechowywane do czasu zakończenie działania
+     skryptu bez konieczności wywołania <function>session_write_close
+     </function>, ale ponieważ dane sesji są blokowane w celu zapobieżenia
+     równoległym zapisom, tylko jeden skrypt może operować na sesji w danej
+     chwili. Używając ramek HTMLowych razem z sesjami napotkasz problemy
+     związane z jednoczesnym korzystaniem z jednej sesji przez kilka skryptów.
+     Możesz zmniejszyć czas niezbędny do wczytania wszystkich ramek przez
+     kończenie sesji jak tylko wykonane są wszystkie zmiany w zmiennych
+     sesyjnych.
+    </para>
+<!-- wykomentowane do czasu ostatecznej decyzji o implementacji
+    <para>
+     Zobacz także: <function>session_readonly</function>.
+    </para>
+-->
+   </refsect1>
+  </refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"../../../../manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

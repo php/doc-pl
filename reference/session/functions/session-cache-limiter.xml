@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="iso-8859-2"?>
+<!-- splitted from ./pl/functions/session.xml, last change in rev 1.8 -->
+<!-- last change to 'session-cache-limiter' in en/ tree in rev 1.62 -->
+<!-- EN-Revision: 1.1 Maintainer: leszek Status: ready -->
+<!-- OLD-Revision: 1.70/EN.1.62 -->
+  <refentry id="function.session-cache-limiter">
+   <refnamediv>
+    <refname>session_cache_limiter</refname>
+    <refpurpose>
+     Pobierz i/lub ustaw bieżący ogranicznik pamięci podręcznej
+    </refpurpose>
+   </refnamediv>
+   <refsect1>
+    <title>Opis</title>
+     <methodsynopsis>
+      <type>string</type><methodname>session_cache_limiter</methodname>
+      <methodparam choice="opt"><type>string</type><parameter>ogranicznik</parameter></methodparam>
+     </methodsynopsis>
+    <para>
+     <function>session_cache_limiter</function> zwraca nazwę bieżącego
+     ogranicznika pamięci podręcznej. Jeśli podany został parametr
+     <parameter>ogranicznik</parameter>, nazwa bieżącego ogranicznego zostanie
+     zmieniona na nową wartość.
+    </para>
+    <para>
+     Ogranicznik pamięci podręcznej kontroluje nagłówki HTTP wysyłane do
+     klienta. Nagłówki te ustalają zasady, według których zawartość strony
+     może być przechowywana w pamięci podręcznej przeglądarki. Ustawiając
+     ogranicznik pamięci podręcznej na przykład na<literal>nocache</literal>,
+     zabronimy jakiekolwiek zachowywanie strony po stronie klienta. Wartość
+     <literal>public</literal> pozwoli na takie przechywanie. Ogranicznikiem
+     może być też <literal>private</literal>, który jest troszkę bardziej
+     restrykcyjny niż <literal>public</literal>.
+    </para>
+    <para>
+     W trybie <literal>private</literal>, nagłówek <literal>Expire</literal>,
+     który jest wysyłany do klienta, może spowodować nieoczekiwane działanie
+     niektórych przeglądarem, między innymi Mozilli. Możesz uniknąć tego
+     problemu używając trybu <literal>private_no_expire</literal>. Nagłówek
+     <literal>Expire</literal> nie jest w tym wypadku wysyłany do klienta.
+    </para>
+    <note>
+     <para>
+      <literal>private_no_expire</literal> zostało dodane w PHP 4.2.0dev.
+     </para>
+    </note>
+    <para>
+     Ogranicznik pamięci podręcznej w momencie wywołania skryptu jest zerowany
+     do wartości domyślnej przechowywanej w 
+     <literal>session.cache_limiter</literal>. W związku z tym niezbędne jest
+     wywołanie <function>session_cache_limiter</function> dla każdego
+     wywołania skryptu (i przed wywołaniem <function>session_start</function>).
+    </para>
+    <example>
+     <title>Przykłady <function>session_cache_limiter</function></title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+
+# Ustaw ogranicznik pamięci podręcznej na 'private'
+
+session_cache_limiter('private');
+$cache_limiter = session_cache_limiter();
+
+echo "Ogranicznikiem pamięci podręcznej jest teraz $cache_limiter<p>";
+?>
+]]>
+     </programlisting>
+    </example>
+   </refsect1>
+  </refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"../../../../manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="iso-8859-2"?>
+<!-- $Revision: 1.1 $ -->
+ <reference id="ref.session">
+  <title>Sesje</title>
+  <titleabbrev>Sesje</titleabbrev>
+	
+  <partintro>
+   <para>
+    Obsługa sesji w PHP ma na celu zapewnienie sposobu na zachowanie pewnych
+    danych w trakcie następujących po sobie wywołań strony. Pozwala to na
+    budowanie bardziej spersonalizowanych aplikacji i zwiększenie
+    atrakcyjności twojej strony internetowej.
+   </para>
+   <para>
+    Jeśli jesteś zaznajomiony z zarządzaniem sesją w PHPLIB, zauważysz że
+    pewnie koncepcje są podobne w obłudze sesji PHP.
+   </para>
+   <para>
+    Gość wchodzący na twoją stronę WWW otrzymuje unikalny identyfikator, tzw.
+    id sesji. Jest ono przechowywane albo jako ciasteczko po stronie
+    użytkownika lub propagowane w URL'u.
+   </para>
+   <para>
+    Obsługa sesji pozwala ci na rejestrowanie dowolnej ilości zmiennych, które
+    mają być przekazywane pomiędzy stronami. Kiedy gość wchodzi na twoją
+    strone, PHP automatycznie sprawdzi (jeśli session.auto_start jest ustawione
+    na 1) lub na twoje życzenie (jawnie przez wywołanie
+    <function>session_start</function> lub niejawnie przez wywołanie
+    <function>session_register</function>) czy specyficzne id sesji zostało
+    przypisane. Jeśli tak, poprzednio zachowane środowisko jest odtwarzane.
+   </para>
+   <para>
+    Wszystkie zarejestrowane zmienne są serializowane po wykonaniu całego kodu
+    strony. Zarejestrowane zmienne, które są niezdefiniowane, są zaznaczane
+    jako niezdefijiowane. Nie są one definiowane przez moduł sesji w
+    następujących po sobie wywołaniach, chyba że użytkownik zdefiniuje je
+    później.
+   </para>
+   <para>
+    Opcje konfiguracyjne <link
+    linkend="ini.track-vars"><literal>track_vars</literal></link> i
+    <link
+    linkend="ini.register-globals"><literal>register_globals</literal></link>
+    wpływają na to, jak zmienne sesyjne są przechowywane i odtwarzane.
+   </para>
+
+   <note>
+    <para>
+     Od PHP w wersji 4.0.3 opcja <link
+     linkend="ini.track-vars"><literal>track_vars</literal></link> jest zawsze
+     włączona.
+    </para>
+   </note>
+
+   <para>
+    Jeśli włączona jest opcja <link
+    linkend="ini.track-vars"><literal>track_vars</literal></link> a
+    <link
+    linkend="ini.register-globals"><literal>register_globals</literal></link>
+    jest wyłączona, tylko pozycje należące do zmiennej asocjacyjnej
+    $HTTP_SESSION_VARS mogą być zarejestrowane jako zmienne sesyjne.
+    Odtworzone zmienne sesyjne będą dostępne tylko w zmiennej
+    $HTTP_SESSION_VARS.
+  <example>
+     <title>
+      Rejestracja zmiennej z włączoną opcją <link
+      linkend="ini.track-vars"><literal>track_vars</literal></link>
+     </title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+session_register("count");
+$HTTP_SESSION_VARS["count"]++;
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   <para>
+    Jeśli włączona jest opcja <link
+    linkend="ini.register-globals"><literal>register_globals</literal></link>,
+    wszystkie globalne zmienne mogą być zarejestrowane jako zmienne sesyjne a
+    zmienne sesyjne będą odtworzone do odpowiadających im zmiennych
+    globalnych.
+  <example>
+     <title>
+      Rejestracja zminnych z włączoną opcją <link
+      linkend="ini.register-globals"><literal>register_globals</literal></link>
+     </title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+session_register("count");
+$count++;
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   <para>
+    Jeśli włączone są obie opcje, <link
+    linkend="ini.track-vars"><literal>track_vars</literal></link> i
+    <link
+    linkend="ini.register-globals"><literal>register_globals</literal></link>,
+    globalne zmienne i wpisy w $HTTP_SESSION_VARS będą referencjami do tej
+    samej wartości.
+   </para>
+   <para>
+    Istnieją dwie metody propagacji identyfikatora sesji:
+    <itemizedlist>
+     <listitem>
+      <simpara>
+       Ciasteczka
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       Parametry URL'a
+      </simpara>
+     </listitem>
+    </itemizedlist>
+   </para>
+   <para>
+    Moduł sesji obsługuje obie metody. Ciasteczka są metodą optymalną, ale
+    ponieważ nie są one pewne (klienci nie muszą ich akceptować), nie możemy
+    na nich polegać. Druga metora wstawia identyfikatory sesji bezpośrednio do
+    URL'i.
+   </para>
+   <para>
+    PHP może to robić 'przezroczyście' jeśli został skompilowany z opcją
+    <link linkend="install.configure.enable-trans-sid">
+    <literal>--enable-trans-sid</literal></link>. Jeśli włączysz tą opcję,
+    względne URI zostaną automatycznie podmienione tak, aby zawierały
+    identyfikator sesji. Możesz także użyć stałej <literal>SID</literal> która
+    jest definiowana jeśli klient nie wysłał odpowiedniego ciastka. <literal>
+    SID</literal> jest albo w postaci <literal>nazwa_sesji=id_sesji</literal>
+    lub pustym stringiem.
+   </para>
+   <para>
+    Poniższy przykład demonstruje jak zarejestrować zmienną i jak prawidłowo
+    wstawić link do kolejnej strony korzystając ze stałej SID.
+    <example>
+     <title>Zliczanie ilości odwiedzin pojedyńczego użytkownika</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+session_register ("count");
+$count++;
+?>
+
+Witaj gościu. Oglądasz tą stronę <?php echo $count; ?> raz.<p>
+
+<?php
+# <?=SID?> jest konieczne do zachowania identyfikatora sesji jeśli
+# użytkownik wyłączył ciastka
+?>
+
+Aby kontynuować, <A HREF="nextpage.php?<?=SID?>">kliknij tutaj</A>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   <para>
+    <literal>&lt;?=SID?&gt;</literal> nie jest konieczne jeśli przy kompilacji
+    PHP użyta została opcja
+    <link linkend="install.configure.enable-trans-sid">
+    <literal>--enable-trans-sid</literal></link>.
+   </para>
+   <note>
+    <para>
+     PHP zakłada, że bezwzględne URLe odnoszą się do zewnętrznych serwisów,
+     więc nie trzeba przekazywać SID, ponieważ istniałoby niebezpieczeństwo
+     podkradania SIDów przez inny serwer.
+    </para>
+   </note>
+   <para>
+    Aby zaimplementować przechowywanie danych sesyjnych w bazie danych lub w
+    dowolnej innej postaci, musisz użyć
+    <function>session_set_save_handler</function> do stworzenia zestawu
+    funkcji przechowujących dane.
+   </para>
+   <para>
+    System zarządzania sesją obsługuje wiele opcji konfiguracyjnych, które
+    możesz wstawić do swojego pliku php.ini. Oto ich krótki przegląd.
+    <itemizedlist>
+     <listitem>
+      <simpara>
+       <literal>session.save_handler</literal> definiuje nazwę procedury
+       obsługi, która jest używana do przechowywania i odczytu danych
+       skojarzonych z sesją. Domyślnie <literal>files</literal>.
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       <literal>session.save_path</literal> definiuje argument, który jest
+       przekazywany procedurze obsługi zapisu danych. Jeśli wybierzesz
+       domyślną procedurę obsługi, jest to ścieżka gdzie tworzone będą pliki z
+       danymi. Domyślnie <literal>/tmp</literal>.
+      </simpara>
+      <warning>
+       <para>
+        Jeśli w tej opcji ustawisz katalog, który jest ogólnie dostępny, jak
+        na przykład <filename>/tmp</filename> (domyślna wartość), inni
+        użytkownicy serwera będą w stanie przechwycić sesję przez pobranie
+        listy plików z tego katalogu.
+       </para>
+      </warning>
+     </listitem>
+     <listitem>
+      <simpara>
+       <literal>session.name</literal> określa nazwę sesji, która jest używana
+       jako nazwa ciastka. Powinna zawierać tylko znaki alfanumeryczne.
+       Domyślnie <literal>PHPSESSID</literal>.
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       <literal>session.auto_start</literal> określa, czy moduł sesji
+       rozpoczyna sesję na początku wywołania. Domyślnie
+       <literal>0</literal> (wyłączony).
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       <literal>session.cookie_lifetime</literal> określa długość życia w
+       sekundach ciastka przesyłanego do przeglądarki. Wartość 0 oznacza
+       "dopóki przeglądarka nie została zamknięta". Domyślnie
+       <literal>0</literal>.
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       <literal>session.serialize_handler</literal> określa nazwę procedury
+       obsługi, która zostanie użyta do serializacji/odserializacji danych.
+       Obecnie obsługiwany jest wewnętrzny format PHP (nazwa <literal>php
+       </literal> i WDDX (nazwa <literal>wddx</literal>). WDDX jest jedynym
+       dostępnym formatem jeśli PHP zostało skompilowane z
+       <link linkend="ref.wddx">obsługą WDDX</link>. Domyślnie
+       <literal>php</literal>.
+       </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       <literal>session.gc_probability</literal> określa prawdopodobieństwo w
+       procentach rozpoczęcia procedury gc (garbage collection - zbieranie
+       śmieci) przy każdym wywołaniu. Domyślnie <literal>1</literal>.
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       <literal>session.gc_maxlifetime</literal> określa ilość sekund, po
+       jakich dane będą rozpoznawane jako 'śmieci' i usuwane.
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       <literal>session.referer_check</literal> zawiera podciąg, z którym
+       HTTP_REFERER ma być sprawdzany. Jeśli HTTP_REFERER został wysłany przez
+       klienta i nie zawierał podanego podciągu, identyfikator sesji podany
+       przez takiego klienta zostanie uznany za nieważny. Domyślnie jest to
+       ciąg pusty. 
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       <literal>session.entropy_file</literal> podaje ścieżkę do zewnętrznego
+       zasobu (pliku), który będzie użyty jako dodatkowe źródło entropii w
+       procesie tworzenia identyfikatora sesji. Przykłady to
+       <literal>/dev/random</literal> lub
+       <literal>/dev/urandom</literal>, które są dostępne na wielu systemach
+       Unix.
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       <literal>session.entropy_length</literal> określa liczbę bajtów, która
+       będzie odczytana z pliku podanego powyżej. Domyślnie
+       <literal>0</literal> (wyłączona).
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       <literal>session.use_cookies</literal> określa czy moduł będzie używał
+       ciasteczek do przechowywania identyfikatora sesji po stronie klienta.
+       Domyślnie <literal>1</literal> (włączona).
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       <literal>session.cookie_path</literal> określa ścieżkę która będzie
+       podana w session_cookie. Domyślnie <literal>/</literal>.
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       <literal>session.cookie_domain</literal> określa domenę która ma być
+       podana w session_cookie. Domyślnie - pusta.
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       <literal>session.cache_limiter</literal> określa metodę używaną do
+       przechowywania stron sesyjnych w pamięci podręcznej 
+       (nocache/private/private_no_expire/public). Domyślnie
+       <literal>nocache</literal>.
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       <literal>session.cache_expire</literal> określa czas życia w minutach
+        stron sesyjnych zachowanych w pamięci podręcznej. Nie ma to efektu dla
+        metody <literal>nocache</literal>. Domyślnie <literal>180</literal>
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       <literal>session.use_trans_sid</literal> określa czy będzie używana
+       obsługa przezroczystego przekazywania identyfikatora sesji. Opcja brana
+       pod uwagę tylko jeśli PHP zostało skompilowane z opcją
+       <link linkend="install.configure.enable-trans-sid">
+       <literal>--enable-trans-sid</literal></link>.
+       Domyślnie <literal>1</literal> (włączona).
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       <literal>url_rewriter.tags</literal> określa które tagi HTML zostają
+       przepisane w celu dopisania identyfikatora sesji jeśli włączona została
+       opcja przezroczystego przekazywania identyfikatora sesji. Domyślnie
+       <literal>a=href,area=href,frame=src,input=src,form=fakeentry</literal>
+      </simpara>
+     </listitem>
+    </itemizedlist>
+    <note>
+     <para>
+      Obsługa sesji została dodana w PHP 4.0.
+     </para>
+    </note>
+   </para>
+  </partintro>
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+
+
+
+<!-- wykomentowane do czasu ostatecznej decyzji o implementacji
+-->
+&reference.session.functions;
+
+ </reference>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil 
+sgml-parent-document:nil
+sgml-default-dtd-file:"../../../manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
+

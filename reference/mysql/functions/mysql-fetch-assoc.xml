@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="iso-8859-2"?>
+<!-- splitted from ./pl/functions/mysql.xml, last change in rev 1.16 -->
+<!-- last change to 'mysql-fetch-assoc' in en/ tree in rev 1.45 -->
+<!-- EN-Revision: 1.1 Maintainer: slawek Status: ready -->
+<!-- OLD-Revision: 1.100/EN.1.45 -->
+  <refentry id="function.mysql-fetch-assoc">
+   <refnamediv>
+    <refname>mysql_fetch_assoc</refname> 
+    <refpurpose>
+     Zapisuje wiersz wyniku w tablicy asocjacyjnej
+    </refpurpose>
+   </refnamediv>
+   <refsect1>
+    <title>Opis</title>
+     <methodsynopsis>
+      <type>array</type><methodname>mysql_fetch_assoc</methodname>
+      <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
+     </methodsynopsis>
+    <para> 
+     Zwraca tablicę zawierającą pobrany wiersz, lub
+     &false; jeżeli nie ma więcej wierszy w <parameter>wynik</parameter>.
+    </para>
+    <para>
+     Użycie <function>mysql_fetch_assoc</function> jest równoznaczne z
+     wywołaniem <function>mysql_fetch_array</function> podając jako
+     drugi argument MYSQL_ASSOC. Zwraca jedynie tablicę asocjacyjną.
+     Początkowo tak właśnie zachowywała się funkcja 
+     <function>mysql_fetch_array</function>. Jeśli oprócz indeksowania
+     asocjacyjnego potrzebujesz także numeryczne, użyj funkcji
+     <function>mysql_fetch_array</function>.
+    </para>
+    <para>
+     Jeżeli dwie lub więcej kolumn wyniku ma te same nazwy, ostatnia
+     kolumna będzie brana pod uwagę. Dostęp do innych kolumn o tej
+     samej nazwie jest możliwy przy użyciu funkcji
+     <function>mysql_fetch_array</function>, która wprowadzi również
+     indeksowanie numeryczne.
+    </para>
+    <para>
+     Godne uwagi jest to, że użycie <function>mysql_fetch_assoc</function>
+     <emphasis>nie</emphasis> jest znacząco wolniejsze od użycia
+     <function>mysql_fetch_row</function>, a jest bardziej funkcjonalne.
+    </para>
+    <para>
+     Po dalsze szczegóły patrz także
+     <function>mysql_fetch_row</function> i
+     <function>mysql_fetch_array</function>.
+    </para>
+    <example>
+     <title><function>mysql_fetch_assoc</function></title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+mysql_connect("serwer","uzytkownik","haslo");
+mysql_select_db("baza"); 
+$result = mysql_query("select * from tabela");
+while ($row = mysql_fetch_assoc($result)) {
+    echo $row["id_uzytkownika"];
+    echo $row["pelna_nazwa"];
+}
+mysql_free_result($result);
+?>
+]]>
+     </programlisting>
+    </example>
+   </refsect1>
+  </refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"../../../../manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

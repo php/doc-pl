@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="iso-8859-2"?>
+<!-- splitted from ./pl/functions/session.xml, last change in rev 1.1 -->
+<!-- last change to 'session-destroy' in en/ tree in rev 1.2 -->
+<!-- EN-Revision: 1.1 Maintainer: leszek Status: ready -->
+<!-- OLD-Revision: 1.70/EN.1.2 -->
+  <refentry id="function.session-destroy">
+   <refnamediv>
+    <refname>session_destroy</refname>
+    <refpurpose>Niszczy wszystkie dane zarejestrowane w sesji</refpurpose>
+   </refnamediv>
+   <refsect1>
+    <title>Opis</title>
+     <methodsynopsis>
+      <type>bool</type><methodname>session_destroy</methodname>
+      <void/>
+     </methodsynopsis>
+    <simpara>
+     <function>session_destroy</function> niszczy wszystkie dane skojarzone z
+     bieżącą sesją. Nie usuwa żadnych globalnych zmiennych związanych z sesją.
+     Nie usuwa też ciasteczka sesyjnego.
+    </simpara>
+    <simpara>
+     Funkcja ta zawraca &true; w przypadku sukcesu w niszczeniu danych sesji.
+     W przeciwnym przypadku zwracana jest wartość &false;.
+    </simpara>
+    <para>
+     <example>
+      <title>Niszczenie sesji</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+
+# Inicjalizuj sesję
+# Jeśli używasz sesion_name("cośtam"), nie zapomnij o tym teraz!
+session_start();
+# Usuń wszystkie zmienne sesyjne
+session_unset();
+# Na koniec, zniszcz sesję
+session_destroy();
+
+?>       
+]]>
+      </programlisting>
+     </example>
+    </para>
+   </refsect1>
+  </refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"../../../../manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
