@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.5 $ -->
+<!-- EN-Revision: 1.4 Maintainer: qrak Status: ready -->
+<!-- $Revision: 1.6 $ -->
   <refentry id="function.getallheaders">
    <refnamediv>
     <refname>getallheaders</refname>
-    <refpurpose>Odczytuje wszystkie nagłówki HTTP z aktualnego zapytania
+    <refpurpose>
+     Odczytuje wszystkie nagłówki HTTP z aktualnego zapytania
     </refpurpose>
    </refnamediv>
    <refsect1>
@@ -14,41 +15,23 @@
       <void/>
      </methodsynopsis>
     <para>
-     Funkcja zwraca tablicę asocjacyjną zawierającą wszystkie nagłówki HTTP z
-     aktualnego zapytania.
+     <function>getallheaders</function> jest aliasem funkcji
+     <function>apache_request_headers</function>.
+     Zwraca tablicę asocjacyjną wszystkich nagłówków HTTP wysłanych w aktualnym
+     zapytaniu. Więcej na ten temat w dokumentacji funkcji
+     <function>apache_request_headers</function>.
     </para>
+    <note>
+       <para>
+        W PHP 4.3.0 <function>getallheaders</function> stała się aliasem
+        funkcji <function>apache_request_headers</function>. Dokładnie rzecz
+        biorąc, nadano jej nową nazwę, zgodną z kanonem nazw PHP, ponieważ
+        funkcja ta działa tylko wtedy, kiedy PHP jest skompilowane jako moduł
+        <productname>Apache</productname>'a.
+       </para>
+      </note>
     <para>
-     <note>
-      <para>
-       Można też odczytywać wartość typowych zmiennych CGI ze środowiska, co
-       działa niezależnie od tego, czy PHP jest modułem Apache'a, czy nie.
-       Użyj funkcji <function>phpinfo</function> aby zapoznać się z listą
-       wszystkich dostępnych zmiennych środowiskowych.
-      </para>
-     </note>
-    </para>
-    <para>
-     <example>
-      <title>Przykład zastosowania <function>getallheaders</function></title>
-      <programlisting role="php">
-<![CDATA[
-$naglowki = getallheaders();
-while (list ($naglowek, $wartosc) = each ($naglowki)) {
-    echo "$naglowek: $wartosc&lt;br&gt;\n";
-}
-]]>
-      </programlisting>
-     </example>
-    </para>
-    <para>
-     Powyższy przykład wyświetli wszystkie nagłówki z aktualnego zapytania.
-     <note>
-      <simpara>
-       Funkcja <function>getallheaders</function> aktualnie działa tylko
-       wówczas, kiedy PHP działa jako moduł serwera
-       <productname>Apache</productname>.
-      </simpara>
-     </note>
+     Patrz także: <function>apache_request_headers</function>.
     </para>
    </refsect1>
   </refentry>
