@@ -1,0 +1,119 @@
+<?xml encoding="iso-8859-1"?>
+<!-- $Revision: 1.1 $ -->
+ <chapter id="features.persistent-connections">
+  <title>Sta³e po³±czenia z bazami danych</title>
+
+  <simpara>
+   Sta³e po³±czenia (persistent connections) to po³±czenia, które nie s±
+   zamykane po wykonaniu skryptu. Kiedy skrypt próbuje nawi±zaæ sta³e
+   po³±czenie, PHP sprawdza czy istnieje ju¿ identyczne po³±czenie (otwarte
+   wcze¶niej) i je¶li istnieje, u¿ywa go. Je¿eli nie, tworzone
+   jest nowe. Po³±czenie 'identyczne' to po³±czenie z tym samym hostem,
+   z tak± sam± nazw± u¿ytkownika i has³em.
+  </simpara>
+  <simpara>
+   Ludzie niezbyt dobrze znaj±cy zasady dzia³ania serwerów mog± czasem
+   braæ sta³e po³±czenia za co¶, czym te nie s±. Sta³e po³±czenia
+   <emphasis>nie</emphasis> stwarzaj± mo¿liwo¶ci otwarcia po³±czenia dla
+   konkretnego u¿ytkonika, <emphasis>nie</emphasis> pozwalaj± na skuteczne
+   stworzenie systemu transakcji, i nie robi± wielu innych rzeczy.
+   Powiedzmy to jasno, sta³e po³±czenia nie oferuj± <emphasis>nic</emphasis>
+   ponad to, co robi± 'zwyk³e' po³±czenia.
+  </simpara>
+  <simpara>
+   Dlaczego?
+  </simpara> 
+  <simpara>
+   Jest to zwi±zane z zasad± dzia³ania serwerów. S± trzy sposoby na
+   które serwer mo¿e wykorzystac PHP do generowania stron.
+  </simpara>
+  <simpara>
+   Pierwsza metoda to wykorzystanie PHP jako "wrappera" CGI. Przy wywo³aniu
+   skryptu ka¿dorazowo uruchamiany i niszczony jest egzamplarz PHP. Jako, ¿e
+   jest on niszczony po ka¿dym wywo³aniu, wszystkie zasoby przez niego
+   posiadane (na przyk³ad po³±czenia z baz± danych) s± tracone. W tym przypadku
+   u¿ywanie sta³ych po³±czeñ nie przynosi korzy¶ci, one po prostu nie s± sta³e.
+  </simpara>
+  <simpara>
+   Druga, najpopularniejsza metoda, to uruchomienie PHP jako modu³u
+   w wieloprocesowym serwerze, co obecnie dotyczy jedynie serwera Apache.
+   Serwer wieloprocesowy zwykle uruchamia jeden proces (rodzica), który
+   koordynuje inne procesy (potomne) zajmuj±ce siê dostarczaniem stron.
+   Kiedy nadchodzi ¿±danie od klienta, jest ono przekazywane jednemu z
+   procesów potomnych, który w danym momencie nie obs³uguje innego klienta.
+   Oznacza to, ¿e gdy ten sam klient wy¶le do serwera kolejne ¿±danie, mo¿e
+   zostaæ obs³u¿ony przez inny proces ni¿ za pierwszym razem. Sta³e po³±czenie
+   w tym przypadku oznacza, ¿e ka¿dy proces potomny ustanawia po³±czenie
+   z serwerem SQL przy pierwszym wywo³aniu strony, która takiego po³±czenia
+   u¿ywa. Je¶li inna strona potrzebuje po³±czenia z serwerem SQL, mo¿e
+   wykorzystaæ po³±czenie, które dany proces ustanowi³ wcze¶niej.
+  </simpara>
+  <simpara>
+   Ustatnia metoda to wykorzystanie PHP jako wtyczki (plug-in) do
+   serwera wielow±tkowego. Obecnie PHP4 zawiera obs³ugê mechanizmów
+   ISAPI, WSAPI i NSAPI (w Windows), które umo¿liwiaj± uruchomienie PHP
+   jako wtyczki do wielow±tkowych serwerów takich jak Netscape FastTrack
+   (iPlanet), Microsoft Internet Information Server (IIS) i O'Reilly WebSite
+   Pro. Zachowanie PHP jest zasadniczo takie samo jak w przypadku opisanego
+   wcze¶niej modelu wieloprocesowego. Mechanizmy SAPI nie s± obs³ugiwane
+   przez PHP 3.
+  </simpara>
+  <simpara>
+   Skoro sta³e po³±czenia nie dostarczaj± wiêkszej funkcjonalno¶ci, do czego
+   mog± byæ przydatne?
+  </simpara>
+  <simpara>
+   Odpowied¼ jest niezwykle prosta -- wydajno¶æ. Sta³e po³±czenia
+   sprawdzaj± siê w przypadku, gdy koszt nawi±zania po³±czenia z SQL
+   serwerem jest wysoki. To czy koszt jest du¿y czy nie zale¿y od wielu
+   czynników. Na przyk³ad od typu bazy danych, od tego czy znajduje siê
+   ona na tym samym serwerze, od obci±¿enia maszyny, która obs³uguje serwer
+   SQL, itd. Je¶li zatem koszt po³±czenia jest wysoki, sta³e po³±czenia
+   znacznie pomagaj±. Sprawiaj±, ¿e proces potomny ³±czy siê z serwerem SQL
+   tylko raz podczas swojego ¿ycia, zamiast otwieraæ po³±czenie za ka¿dym
+   razem gdy za¿±da tego skrypt. Oznacza to, ¿e ka¿dy proces potomny, który
+   nawi±za³ sta³e po³±czenie, bêdzie posiada³ w³asne po³±czenie z serwerem
+   bazy danych. Dla przyk³adu, je¿eli 20 procesów potomnych uruchomi skrypt,
+   który ustanowi sta³e po³±czenie z serwerem SQL, bêdziesz mieæ 20 ró¿nych
+   po³±czeñ z serwerem, jedno na ka¿dy proces.
+  </simpara>
+  <simpara>
+   Trzeba jednak zauwa¿yæ, ¿e mo¿e to mieæ swoje ujemne strony w przypadku
+   gdy, limit po³±czeñ do bazy danych zostanie przekroczony przez sta³e
+   po³±czenia z procesów potomnych. Je¶li twoja baza danych posiada limit
+   szesnastu jednoczesnych po³±czeñ, a w danej chwili obci±¿enie jest
+   wysokie, siedemnasty proces nie bêdzie móg³ siê po³±czyæ. Je¶li twoje
+   skrypty zawieraj± b³êdy, które nie pozwalaj± zamkn±æ po³±czeñ (na przyk³±d
+   nieskoñczone pêtle), baza danych z limitem 32 po³±czeñ mo¿e szybko zostaæ
+   zapchana. Poszukaj w dokumentacji swojej bazy danych w jaki sposób radzi
+   sobie ona z porzuconymi lub bezczynnymi po³±czeniami.
+  </simpara>
+  <simpara>
+   Wa¿ne podsumowanie. Sta³e po³±czenia zosta³y zaprojektowane tak, by
+   odpowiadaæ zwyk³ym po³±czeniom. Oznacza to, ¿e <emphasis>zawsze</emphasis>
+   mo¿esz zast±piæ sta³e po³±czenia zwyk³ymi i nie zmieni to zachowania
+   skryptu. Natomiast <emphasis>mo¿e</emphasis> zmieniæ (i pewnie zmieni)
+   jego wydajno¶æ!
+  </simpara>
+
+ </chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+sgml-parent-document:nil
+sgml-default-dtd-file:"../../manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

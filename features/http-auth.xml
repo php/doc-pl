@@ -1,0 +1,148 @@
+<?xml encoding="iso-8859-1"?>
+<!-- $Revision: 1.1 $ -->
+ <chapter id="features.http-auth">
+  <title>Autoryzacja HTTP w PHP</title>
+
+  <simpara>
+   Autoryzacja HTTP jest obs³ugiwana przez PHP tylko wtedy, gdy PHP pracuje
+   jako modu³ Apache'a, nie jest dostêpna w trybie CGI. W skrypcie mo¿na u¿yæ
+   funkcji <function>header</function> by wys³aæ do przegl±darki komunikat
+   "Wymagana autoryzacja", co spowoduje wy¶wietlenie okienka z polami
+   U¿ytkownik i Has³o. Po wype³nieniu przez u¿ytkownika tych pól, URL
+   zawieraj±cy skrypt PHP zostanie ponownie wywo³any ze zmiennymi
+   $PHP_AUTH_USER, $PHP_AUTH_PW i $PHP_AUTH_TYPE zawieraj±cymi odpowiednio
+   nazwê u¿ytkownika, has³o i typ autoryzacji. Obecnie obs³ugiwany jest
+   jedynie typ "Basic". Wiêcej informacji znajdziesz w opisie funkcji
+   <function>header</function>.
+  <para>
+   Przyk³adowy skrypt wymuszaj±cy autoryzacjê klienta:
+   <example>
+    <title>Autoryzacja HTTP</title>
+    <programlisting role="php">
+&lt;?php
+  if(!isset($PHP_AUTH_USER)) {
+    header(&quot;WWW-Authenticate: Basic realm=\&quot;My Realm\&quot;&quot;);
+    header(&quot;HTTP/1.0 401 Unauthorized&quot;);
+    echo &quot;Tekst do wys³ania, je¶li u¿ytkownik wci¶nie przycisk Anuluj\n&quot;;
+    exit;
+  } else {
+    echo &quot;&lt;p&gt;Hej $PHP_AUTH_USER.&lt;/p&gt;&quot;;
+    echo &quot;&lt;p&gt;Twoje has³o to $PHP_AUTH_PW.&lt;/p&gt;&quot;;
+  }
+?>
+    </programlisting>
+   </example></para>
+
+  <note>
+   <para>
+    Nale¿y uwa¿aæ z linijkami dodawanymi do nag³ówka HTTP. W celu zachowania
+    maksymalnej zgodno¶ci ze wszystkimi klientami, s³owo Basic powinno
+    zaczynaæ siê du¿± liter± "B", warto¶æ realm powinna byæ otoczona
+    cudzys³owami (nie apostrofami), i dok³adnie jeden znak odstêpu powinien
+    poprzedzaæ kod 401 w linii "HTTP/1.0 401".
+   </para>
+  </note>
+
+  <para>
+   Zamiast wy¶wietlaæ warto¶ci $PHP_AUTH_USER i $PHP_AUTH_PW, zapewne
+   zechcesz sprawdziæ poprawno¶æ nazwy u¿ytkownika i has³a. Na przyk³ad
+   poprzez zapytanie do bazy danych lub odnalezienie u¿ytkownika w pliku dbm.
+  </para>
+
+  <para>
+   Nale¿y uwa¿aæ na kapry¶ne przegl±darki Internet Explorer. S± wra¿liwe na
+   kolejno¶æ wysy³anych nag³ówków HTTP. Wys³anie nag³owka
+   <emphasis>WWW-Authenticate</emphasis> przed
+   <errorcode>HTTP/1.0 401</errorcode> powinno rozwi±zaæ problem.
+  </para>
+
+  <simpara>
+   Aby zapobiec sytuacji w której kto¶ napisze skrypt wykradaj±cy has³o
+   wys³ane tradycyjnym zewnêtrznym mechanizmem, zmienne PHP_AUTH nie bêd±
+   ustawiane, je¶li dla danej strony aktywna jest autoryzacja zewnêtrzna.
+   W tym wypadku, aby uzyskaæ nazwê u¿ytkownika zautoryzowanego zewnêtrznie,
+   nale¿y skorzystaæ ze zmiennej $REMOTE_USER.
+  </simpara>
+
+  <note>
+   <para>
+    Aby wykryæ czy mia³a miejsce zewnêtrzna autoryzacja, PHP sprwadza
+    obecno¶æ dyrektywy <literal>AuthType</literal>. Pamiêtaj zatem, by
+    nie stosowaæ tej dyrektywy w miejscach, gdzie bêdzie u¿ywana autoryzacja
+    PHP. Inaczej ka¿da próba autoryzacji zakoñczy siê niepowodzeniem.
+   </para>
+  </note>
+
+  <simpara>
+   Powy¿sza metoda nie zapobiega jednak wykradaniu hase³ do stron wymagaj±cych
+   autoryzacji przez kogo¶, kto na tym samym serwerze kontroluje strony nie
+   wymagaj±ce autoryzacji.
+  </simpara>
+  <simpara>
+   Zarówno Netscape Navigator jak i Internet Explorer opró¿ni± bufor
+   autoryzacji po otrzymaniu od serwera kodu 401. Mo¿na w ten sposób
+   wylogowaniæ u¿ytkownika i zmusiæ go do ponownego wys³ania nazwy u¿ytkownika
+   i has³a. Tej metody mo¿na u¿yæ do wylogowania u¿ytkownika po okre¶lonym
+   czasie lub stworzenia przycisku "Wyloguj".
+  </simpara>
+  <simpara></simpara>
+   <example>
+     <title>Autoryzacja HTTP z wymuszeniem przelogowania</title>
+     <programlisting role="php">
+&lt;?php
+  function authenticate() {
+    header( &quot;WWW-Authenticate: Basic realm=\&quot;Testowy system autoryzacji\&quot;&quot;);
+    header( &quot;HTTP/1.0 401 Unauthorized&quot;);
+    echo &quot;Musisz podaæ poprawny login i has³o by wej¶æ na tê stronê\n&quot;;
+    exit;
+  }
+ 
+  if(!isset($PHP_AUTH_USER) || ($SeenBefore == 1 &amp;&amp; !strcmp($OldAuth, $PHP_AUTH_USER)) ) {
+   authenticate();
+  } 
+  else {
+   echo &quot;&lt;/p&gt;Witaj: $PHP_AUTH_USER&lt;br&gt;&quot;;
+   echo &quot;Poprzenio: $OldAuth&quot;;
+   echo &quot;&lt;form action=\&quot;$PHP_SELF\&quot; METHOD=POST&gt;\n&quot;;
+   echo &quot;&lt;input type=\&quot;hidden\&quot; name=\&quot;SeenBefore\&quot; value=\&quot;1\&quot;&gt;\n&quot;;
+   echo &quot;&lt;input type=\&quot;hidden\&quot; name=\&quot;OldAuth\&quot; value=\&quot;$PHP_AUTH_USER\&quot;&gt;\n&quot;;
+   echo &quot;&lt;input type=\&quot;submit\&quot; value=\&quot;Re Authenticate\&quot;&gt;\n&quot;;
+   echo &quot;&lt;/form&gt;&lt;/p&gt;\n&quot;;
+  }
+?>
+   </programlisting>
+  </example>
+  <simpara>
+   Powy¿sza metoda nie jest wymagana przez autoryzacjê HTTP typu "Basic",
+   wiêc nie mo¿na na niej polegaæ. Testy z przegl±dark± Lynx pokaza³y, ¿e
+   Lynx nie usuwa danych o autoryzacji po odebraniu od serwera kodu 401,
+   zatem przej¶cie wstecz a nastêpnie do przodu otworzy stronê, chyba, ¿e
+   wymagania co do danych autoryzacji zmieni³y siê. U¿ytkownik mo¿e jednak
+   u¿yæ klawisza '_' by usun±c dane o autoryzacji.
+  </simpara>
+  <simpara>
+   Autoryzacja HTTP nie dzia³a je¶li u¿ywasz serwera Microsoft IIS i
+   PHP w wersji CGI. Powodem s± pewne ograniczenia IIS.
+  </simpara>
+
+ </chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+sgml-parent-document:nil
+sgml-default-dtd-file:"../../manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
