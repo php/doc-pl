@@ -1,23 +1,40 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.6 $ -->
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- EN-Revision: 1.4 Maintainer: qrak Status: ready -->
+<!-- $Revision: 1.7 $ -->
+<!-- splitted from ./en/functions/http.xml, last change in rev 1.7 -->
   <refentry id="function.headers-sent">
    <refnamediv>
     <refname>headers_sent</refname>
-    <refpurpose>Zwraca &true; jeśli nagłówki zostały już wysłane</refpurpose>
+    <refpurpose>Zwraca &true; jeśli nagłówki już zostały wysłane</refpurpose>
    </refnamediv>
    <refsect1>
     <title>Opis</title>
      <methodsynopsis>
-      <type>bool</type><methodname>headers_sent</methodname>
-      <void/>
+      <type>bool</type><methodname>headers_sent</methodname>      
+      <methodparam choice="opt"><type>string</type><parameter>&amp;plik</parameter></methodparam>
+      <methodparam choice="opt"><type>int</type><parameter>&amp;linia</parameter></methodparam>
      </methodsynopsis>
     <para>
-     <function>headers_sent</function> zwraca &true; jeśli nagłówki HTTP już
-     zostały wysłane, lub &false; w przeciwnym wypadku.
+     Funkcja zwraca &true; jeśli nagłówki HTTP już zostały wysłane, lub &false;
+     w przeciwnym razie. Nie można dodać nowych linii nagłówka, jeśli
+     blok nagłówkowy został już wysłany. Użycie tej funkcji pozwala także
+     zabezpieczyć się przed otrzymywaniem komunikatów błędu "Duplicate headers
+     ...".
     </para>
     <para>
-     Patrz także: <function>header</function>
+     Funkcja może też sprawdzić konkretny <parameter>plik</parameter> i konkretną
+     linię w tym pliku, czy nastąpiło już w niej wysłanie nagłówków.
+    </para>
+    <note>
+     <simpara>
+     Argumenty
+      <parameter>plik</parameter> i <parameter>linia</parameter> zostały dodane
+      w PHP 4.3.0.
+     </simpara>
+    </note>
+    <para>
+     Patrz także do opisu funkcji <function>header</function> gdzie znajduje
+     się bardziej szczegółowa dyskusja nt. wysyłania nagłówków HTTP.
     </para>
    </refsect1>
   </refentry>
