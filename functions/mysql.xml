@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.95 Maintainer: slawek Status: ready -->
-<!-- $Revision: 1.24 $ -->
+<!-- EN-Revision: 1.100 Maintainer: slawek Status: ready -->
+<!-- $Revision: 1.25 $ -->
  <reference id="ref.mysql">
   <title>MySQL</title>
   <titleabbrev>MySQL</titleabbrev>
@@ -287,6 +287,48 @@ mysql_close($link);
       późniejszej. Nie jest dostępna w PHP 4.
      </para>
     </note>
+   </refsect1>
+  </refentry>
+
+  <refentry id="function.mysql-character_set_name">
+   <refnamediv>
+    <refname>mysql_character_set_name</refname>
+    <refpurpose>Zwraca nazwę zestawu znaków</refpurpose>
+   </refnamediv>
+   <refsect1>
+    <title>Opis</title>
+    <methodsynopsis>
+     <type>int</type><methodname>mysql_character_set_name</methodname>
+     <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+    </methodsynopsis>
+    <para>
+     <function>mysql_character_set_name</function> zwraca domyślny zestaw znaków
+     dla bieżącego połączenia.
+    </para>
+     <example>
+      <title>przykład użycia <function>mysql_character_set_name</function></title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+$link = mysql_connect('localhost', 'użytkownik', 'hasło');
+$charset = mysql_character_set_name($link);
+printf ("obecny zestaw znaków to %s\n", $charset);
+?>
+]]>
+      </programlisting>
+      <para>
+       Powyższy przykład da następujący wynik:
+       <screen>
+<![CDATA[
+latin1
+]]>
+       </screen>
+      </para>
+     </example>
+    <para>
+     Patrz także:
+     <function>mysql_real_escape_string</function>
+    </para>
    </refsect1>
   </refentry>
 
@@ -792,7 +834,39 @@ echo mysql_errno().": ".mysql_error()."<BR>";
       <function>mysql_escape_string</function> nie dotyczy znaków
       <literal>%</literal> i <literal>_</literal>.
      </simpara>
+     <simpara>
+      Funkcja ta działa identycznie jak <function>mysql_real_escape_string</function>,
+      z tym wyjątkiem, że mysql_real_escape_string() pobiera identyfikator
+      połączenia i wstawia znaki unikowe zgodnie z bieżącym zestawem znaków.
+      <function>mysql_escape_string</function> nie pobiera identyfikatora
+      połączenia i nie bierze pod uwagę bieżącego zestawu znaków.
+     </simpara>
     </note>
+    <example>
+     <title>przykład użycia <function>mysql_real_escape_string</function></title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+    $link = mysql_connect('localhost', 'użytkownik', 'hasło');
+    $item = "Zak's Laptop";
+    $escaped_item = mysql_real_escape_string($item);
+    printf ("Łańcuch ze znakami unikowymi: %s\n", $escaped_item);
+?>
+]]>
+     </programlisting>
+     <para>
+      Powyższy przykład da następujący wynik:
+      <screen>
+<![CDATA[
+Łańcuch ze znakami unikowymi: Zak\'s Laptop
+]]>
+      </screen>
+     </para>
+    </example>
+    <para>
+     Patrz także:
+     <function>mysql_real_escape_string</function>
+    </para>
    </refsect1>
   </refentry>
 
@@ -1647,6 +1721,58 @@ pole3
    </refsect1>
   </refentry>
 
+  <refentry id="function.mysql-list-processes">
+   <refnamediv>
+    <refname>mysql_list_processes</refname>
+    <refpurpose>Zwraca listę procesów MySQL</refpurpose>
+   </refnamediv>
+   <refsect1>
+    <title>Opis</title>
+     <methodsynopsis>
+      <type>resource</type><methodname>mysql_list_processes</methodname>
+      <methodparam choice="opt"><type>resource</type><parameter>
+        identyfikator_połączenia
+       </parameter></methodparam>
+     </methodsynopsis>
+    <para>
+     <function>mysql_list_processes</function> zwraca wskaźnik wyniku
+     zawierającego opis aktualnych wątków serwera.
+    </para>
+    <para>
+     <example>
+      <title>przykład użycia <function>mysql_list_processes</function></title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+$link = mysql_connect('localhost', 'użytkownik', 'hasło');
+
+$result = mysql_list_processes($link);
+while ($row = mysql_fetch_row($result)){
+    printf("%s %s %s %s %s\n", $row["Id"], $row["Host"], $row["db"],
+       $row["Command"], $row["Time"]);
+}
+mysql_free_result ($result);
+?>
+]]>
+      </programlisting>
+      <para>
+       Powyższy przykład da następujący wynik:
+       <screen>
+<![CDATA[
+1 localhost test Processlist 0
+4 localhost mysql sleep 5
+]]>
+       </screen>
+      </para>
+     </example>
+    </para>
+    <para>
+     Patrz także:
+     <function>mysql_thread_id</function>
+    </para>
+   </refsect1>
+  </refentry>
+
   <refentry id="function.mysql-list-tables">
    <refnamediv>
     <refname>mysql_list_tables</refname>
@@ -1832,6 +1958,36 @@ echo "$num_rows wierszy\n";
    </refsect1>
   </refentry>
 
+  <refentry id="function.mysql-ping">
+   <refnamediv>
+    <refname>mysql_ping</refname>
+    <refpurpose>Sprawdza połączenie z serwerem, lub nazwiązuje połączenie, jeśli go nie było</refpurpose>
+   </refnamediv>
+   <refsect1>
+    <title>Opis</title>
+     <methodsynopsis>
+      <type>bool</type><methodname>mysql_ping</methodname>
+      <methodparam choice="opt"><type>resource</type><parameter>
+       identyfikator_połączenia
+       </parameter></methodparam>
+     </methodsynopsis>
+    <para>
+     <function>mysql_ping</function> checks whether or not the connection to
+     the server is working. If it has gone down, an automatic reconnection is
+     attempted. This function can be used by scripts that remain idle for a
+     long while, to check whether or not the server has closed the connection
+     and reconnect if necessary.
+     <function>mysql_ping</function> returns &true; if the connection to the
+     server is working, otherwise &false;.
+    </para>
+    <para>
+     Patrz także:
+     <function>mysql_thread_id</function>
+     <function>mysql_list_processes</function>
+    </para>
+   </refsect1>
+  </refentry>
+
   <refentry id="function.mysql-query">
    <refnamediv>
     <refname>mysql_query</refname>
@@ -1978,6 +2134,61 @@ $result = mysql_query("SELECT kolumna FROM tabela")
    </refsect1>
   </refentry>
 
+  <refentry id="function.mysql-real-escape-string">
+   <refnamediv>
+    <refname>mysql_real_escape_string</refname>
+    <refpurpose>
+     Escapes special characters in a string for use in a SQL statement, taking into account the current charset of the connection.
+    </refpurpose>
+   </refnamediv>
+   <refsect1>
+    <title>Description</title>
+     <methodsynopsis>
+      <type>string</type><methodname>mysql_real_escape_string</methodname>
+      <methodparam><type>string</type><parameter>unescaped_string</parameter></methodparam>
+      <methodparam choice="opt"><type>resource</type><parameter>link_identifier</parameter></methodparam>
+     </methodsynopsis>
+    <para>
+     This function will escape special characters in the
+     <parameter>unescaped_string</parameter>, taking into account the current
+     charset of the connection so that it is safe to place it in a
+     <function>mysql_query</function>. 
+    </para>
+    <note>
+     <simpara>
+      <function>mysql_real_escape_string</function> does not escape
+      <literal>%</literal> and <literal>_</literal>.
+     </simpara>
+    </note>
+     <example>
+      <title><function>mysql_real_escape_string</function> example</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+$link = mysql_connect('localhost', 'mysql_user', 'mysql_password');
+$item = "Zak's and Derick's Laptop";
+$escaped_item = mysql_real_escape_string($item);
+printf ("Escaped string: %s\n", $escaped_item);
+?>
+]]>
+      </programlisting>
+      <para>
+       The above example would produce the following output:
+       <screen>
+<![CDATA[
+Escaped string: Zak\'s and Derick\'s Laptop
+]]>
+       </screen>
+      </para>
+     </example>
+    <para>
+     See also:
+     <function>mysql_escape_string</function>
+     <function>mysql_character_set_name</function>
+    </para>
+   </refsect1>
+  </refentry>
+
   <refentry id="function.mysql-result">
    <refnamediv>
     <refname>mysql_result</refname>
@@ -2100,6 +2311,50 @@ for ($i = 0; $i < mysql_num_rows($result); $i++) {
    </refsect1>
   </refentry>
 
+  <refentry id="function.mysql-thread-id">
+   <refnamediv>
+    <refname>mysql_thread_id</refname>
+    <refpurpose>Return the current thread id</refpurpose>
+   </refnamediv>
+   <refsect1>
+    <title>Description</title>
+    <methodsynopsis>
+     <type>int</type><methodname>mysql_thread_id</methodname>
+     <methodparam choice="opt"><type>resource</type><parameter>link_identifier</parameter></methodparam>
+    </methodsynopsis>
+    <para>
+     <function>mysql_thread_id</function> returns the current thread id. If the connection is lost and you reconnect with <function>mysql_ping</function>, the thread ID will change. This means you should not get the thread ID and store it for later. You should get it when you need it.
+    </para>
+     <example>
+      <title><function>mysql_list_processes</function> example</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+$link = mysql_connect('localhost', 'mysql_user', 'mysql_password');
+$thread_id = mysql_thread_id($link);
+if ($thread_id){
+    printf ("current thread id is %d\n", $thread_id);
+}
+?>
+]]>
+      </programlisting>
+      <para>
+       The above example would produce the following output:
+       <screen>
+<![CDATA[
+current thread id is 73
+]]>
+       </screen>
+      </para>
+     </example>
+    <para>
+     See also:
+     <function>mysql_ping</function>
+     <function>mysql_list_processes</function>
+    </para>
+   </refsect1>
+  </refentry>
+
   <refentry id="function.mysql-get-client-info">
    <refnamediv>
     <refname>mysql_get_client_info</refname>
@@ -2190,6 +2445,53 @@ for ($i = 0; $i < mysql_num_rows($result); $i++) {
     </para>
     <para>
      <function>mysql_get_server_info</function> dodano w PHP 4.0.5.
+    </para>
+   </refsect1>
+  </refentry>
+
+  <refentry id="function.mysql-stat">
+   <refnamediv>
+    <refname>mysql_stat</refname>
+    <refpurpose>Pobiera aktualny stan systemu</refpurpose>
+   </refnamediv>
+   <refsect1>
+    <title>Opis</title>
+     <methodsynopsis>
+      <type>string</type><methodname>mysql_stat</methodname>
+      <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+     </methodsynopsis>
+    <para>
+     <function>mysql_stat</function> zwraca aktualny stan serwera.
+    </para>
+    <note>
+     <para>
+     <function>mysql_stat</function> w chwili obecnej zwraca jedynie czas
+      pracy serwera, liczbę wątków, zapytań, otwartych tabel, oraz liczbę
+      zapytań na sekundę. Pełną listę parametrów opisujących stan można uzyskać
+      wydając komendę SQL: SHOW STATUS.
+     </para>
+    </note>
+    <para>
+     <example>
+      <title>przykład użycia <function>mysql_stat</function></title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+$link = mysql_connect('localhost', 'użytkownik', 'hasło');
+printf("%s\n", mysql_stat($link));
+?>
+]]>
+      </programlisting>
+      <para>
+       Powyższy przykład da następujący wynik:
+       <screen>
+<![CDATA[
+Uptime: 5380  Threads: 1  Questions: 1321299  Slow queries: 1  Opens: 26 Flush tables: 1  Open tables: 17  Queries per second avg: 245.595
+
+]]>
+       </screen>
+      </para>
+     </example>
     </para>
    </refsect1>
   </refentry>
