@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
 <!-- EN-Revision: 1.65 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.5 $ -->
+<!-- $Revision: 1.6 $ -->
  <chapter id="control-structures">
   <title>Struktury kontrolne</title>
 
@@ -498,10 +498,14 @@ foreach(wyrażenie_tablicowe as $klucz => $wartość) wyrażenie
     <note>
      <para>
       Proszę także pamiętać, że konstrukcja <literal>foreach</literal> operuje
-      na kopii tablicy, a nie na oryginale, więc położenie wskaźnika tablicy
+      na kopii tablicy, a nie na oryginale, więc położenie kursora tablicy
       nie jest modyfikowane jak w konstrukcji <function>each</function>,
       a zmiany dokonane na pobranym elemencie tablicy nie oddziałują na
-      oryginalną tablicę.
+      oryginalną tablicę. Jednakże wewnętrzny kursor oryginalnej tablicy
+      <emphasis>jest</emphasis> przesuwany w trakcie trawersowania tablicy.
+      Zakładając, że pętla <literal>foreach</literal> będzie działać aż
+      do przetworzenia całej tablicy, kursor tablicy będzie się znajdował na
+      końcu tablicy.
      </para>
     </note>
    </para>
