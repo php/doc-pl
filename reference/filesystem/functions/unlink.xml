@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
 <!-- splitted from ./pl/functions/filesystem.xml, last change in rev 1.1 -->
 <!-- last change to 'unlink' in en/ tree in rev 1.2 -->
-<!-- EN-Revision: 1.2 Maintainer: adi Status: partial -->
+<!-- EN-Revision: 1.8 Maintainer: adi Status: partial -->
 <!-- OLD-Revision: 1.115/EN.1.2 -->
 <refentry id="function.unlink">
    <refnamediv>
@@ -11,16 +11,26 @@
    <refsect1>
     <title>Opis</title>
      <methodsynopsis>
-      <type>int</type><methodname>unlink</methodname>
+      <type>bool</type><methodname>unlink</methodname>
       <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
+	   <methodparam choice="opt"><type>resource</type><parameter>kontekst</parameter></methodparam>
      </methodsynopsis>
     <para>
      Kasuje <parameter>nazwa_pliku</parameter>. Podobnie do funkcji unlink() 
-     z Unix'owego C.
+     z Unix'owego C. &return.success; 
     </para>
-    <para>
-     &return.success;
-    </para>
+    <note> 
+       <simpara> 
+        W PHP 5.0.0 <function>unlink</function> może być użyta z niektórymi
+		wrapperami URL. Skorzystaj z <xref linkend="wrappers"/> 
+        aby uzyskać listę wrapperów, które obsługują <function>unlink</function>. 
+	   </simpara> 
+      </note> 
+      <note> 
+       <simpara> 
+        Parametr <parameter>kontekst</parameter> został dodany w PHP 5.0.0. 
+       </simpara> 
+      </note> 
     <para>
      Patrz także: <function>rmdir</function> do kasowania katalogów.
     </para>
