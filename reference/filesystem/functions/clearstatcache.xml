@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- splitted from ./pl/functions/filesystem.xml, last change in rev 1.1 -->
-<!-- last change to 'clearstatcache' in en/ tree in rev 1.2 -->
-<!-- EN-Revision: 1.2 Maintainer: adi Status: partial -->
-<!-- OLD-Revision: 1.115/EN.1.2 -->
+<!-- EN-Revision: 1.8 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.3 $ -->
   <refentry id="function.clearstatcache">
    <refnamediv>
     <refname>clearstatcache</refname>
-    <refpurpose>Czyści cache statystki pliku</refpurpose>
+    <refpurpose>Czyści bufor statusu pliku</refpurpose>
    </refnamediv>
    <refsect1>
     <title>Opis</title>
@@ -15,18 +13,30 @@
       <void/>
      </methodsynopsis>
     <para>
-     Wywoływanie systemowych <systemitem>stat</systemitem> lub
-     <systemitem>lstat</systemitem> w większości systemów jest
-     zbyt kosztowne. Dlatego, wynik ostatniego wywołania każdej z funkcji
-     statusowej (przedstawionej poniżej) jest przechowywany do wykorzystania
-     go przy następnym wywołaniu funkcji z tą samą nazwą pliku.
-     Jeśli chcesz wymusić ponowne sprawdzenie statusu, pliku który jest
-     sprawdzany wielokrotnie i mógł się zmienić lub zniknąć, użyj tej
-     funkcji aby wyczyścić wyniki ostatniego wywołania tych funkcji z pamięci.
-    </para>
+	 Kiedy używasz <function>stat</function>, <function>lstat</function> lub
+	 dowolnej z funkcji wymienionej niżej, PHP buforuje informacje, zwrócone
+	 przez te funkcje w celu zapewnienia większej wydajności. Jednakże, 
+	 w kilku przypadkach, możesz chcieć wyczyścić zbuforowane informacje.
+	 W przypadku, gdy ten sam plik jest sprawdzany wiele razy w tym samym
+	 skrypcie i istnieje obawa, że plik ten zostanie zmieniony lub usunięty
+	 podczas pracy skryptu, możesz wywołać czyszczenie bufora stanu.
+	 W takim przypadku, możesz użyć funkcji <function>clearstatcache</function>
+	 do wyczyszczenia informacji o pliku zbuforowanej przez PHP.
+	</para>
     <para>
-     Te wartości są cachowane tylko przez czas działania pojedynczego wywołania.
-    </para>
+      Weź pod uwagę, że PHP nie buforuje informacji o nie istniejących plikach.
+	  Jeśli wywołasz <function>file_exists</function> na pliku, który nie istnieje
+	  zostanie zwrócone &false; dopóki nie stworzysz tego pliku. Jeśli go utworzysz
+	  funkcja zwróci &true; nawet jeśli go później skasujesz. 
+	 </para>
+	 <note> 
+       <para> 
+     	Ta funkcja buforuje informacje o podanych nazwach plików, więc potrzebujesz
+		wywoływać <function>clearstatcache</function> jeśli wykonujesz wiele 
+		operacji na tym samym pliku i potrzebujesz aby informacje o tym
+		pliku nie były buforowane. 
+       </para> 
+     </note> 
     <para>
      Dotyczy funkcji <function>stat</function>,
      <function>lstat</function>,
