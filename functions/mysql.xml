@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.81 Maintainer: slawek Status: ready -->
-<!-- $Revision: 1.14 $ -->
+<!-- EN-Revision: 1.82 Maintainer: slawek Status: ready -->
+<!-- $Revision: 1.15 $ -->
  <reference id="ref.mysql">
   <title>Funkcje MySQL</title>
   <titleabbrev>MySQL</titleabbrev>
@@ -2125,10 +2125,9 @@ $result = mysql_query("SELECT kolumna FROM tabela")
 mysql_connect("serwer");
 $result = mysql_list_tables("baza");
 $i = 0;
-while ($i < mysql_num_rows($result)) {
+for ($i = 0; $i < mysql_num_rows($result); $i++) {
     $tb_names[$i] = mysql_tablename($result, $i);
     echo $tb_names[$i] . "<BR>";
-    $i++;
 }
 ?>
 ]]>
