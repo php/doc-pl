@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.5 Maintainer: dombal Status: Ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.7 Maintainer: dombal Status: Ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.get-class">
    <refnamediv>
     <refname>get_class</refname>
@@ -19,9 +19,10 @@
     </para>
     <note>
      <simpara>
-      <function>get_class</function> zwraca nazwę klasy zdefiniowanej przez
-      użytkownika małymi literami. Klasa zdefiniowana w rozszerzeniu PHP
-      jest zwracana w jej oryginalnej notacji.
+	  Klasa zdefiniowana w rozszerzeniu PHP zwracana jest w oryginalnej notacji.
+	  W PHP 4, <function>get_class</function> zwraca nazwę klasy zdefiniowanej przez
+      użytkownika małymi literami, ale w PHP 5 nazwa klasy zostanie zwrócona
+	  również w oryginalnej notacji, tak jak nazwy klas z rozszerzeń PHP.
      </simpara>
     </note>
     <para>
@@ -55,9 +56,7 @@ $bar->nazwa();
 ?>
 ]]>
       </programlisting>
-      <para>
-       Wynikiem jest:
-      </para>
+      &example.outputs; 
       <screen>
 <![CDATA[
 Jego nazwa to foo
