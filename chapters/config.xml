@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.55 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.12 $ -->
+<!-- EN-Revision: 1.57 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.13 $ -->
  <chapter id="configuration">
   <title>Konfiguracja</title>
 
@@ -11,8 +11,19 @@
     Plik konfiguracyjny (nazywający się <filename>php3.ini</filename> w
     PHP 3.0, i po prostu &php.ini; od PHP 4.0) jest czytany
     w momencie startu PHP. W przypadku PHP w wersji modułu serwera, dzieje się
-    tylko tylko raz, przy starcie serwera. Dla wersji <acronym>CGI</acronym>
-    dzieje się to dla każdego uruchomienia.</simpara>
+    to tylko tylko raz, przy starcie serwera. W wersjach
+    <acronym>CGI</acronym> i <acronym>CLI</acronym>
+    dzieje się to dla każdego uruchomienia.
+   </simpara>
+   <para>
+    Domyślne położenie pliku &php.ini; jest opcją czasu kompilacji (zobacz
+    pozycję w <link linkend="faq.installation.phpini">FAQ</link>), ale może
+    być zmieniona w wersji <acronym>CGI</acronym> i <acronym>CLI</acronym>
+    parametrem <literal>-c</literal> podawanym z <link
+    linkend="features.commandline">linii poleceń</link>. Można także
+    skorzystać ze zmiennej środowiskowej <literal>PHPRC</literal> aby dodać
+    katalog do ścieżki poszukiwań pliku &php.ini;.
+   </para>
    <para>
     <example>
      <title>Przykład &php.ini;</title>
@@ -153,6 +164,14 @@ include_path = ".;c:\php\lib"
 wrapper</parameter></link>.
          </para>
         </note>
+        <warning>
+         <para>
+          Na systemach Windows poniższe funkcje nie obsługują dostępu do
+          zdalnych plików: <function>include</function>,
+          <function>include_once</function>, <function>require</function> i
+          <function>require_once</function>.
+         </para>
+        </warning>
 
        </listitem>
       </varlistentry>
