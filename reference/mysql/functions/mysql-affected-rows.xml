@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.5 Maintainer: slawek Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.6 Maintainer: slawek Status: ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.mysql-affected-rows">
    <refnamediv>
     <refname>mysql_affected_rows</refname> 
@@ -57,7 +57,7 @@
 <?php
 /* łączenie z bazą */
 mysql_pconnect('localhost', 'uzytkownik', 'haslo') or
-    die ('Nie można się połączyć');
+    die("Nie można się połączyć: " . mysql_error()); 
 
 /* to powinno zwrócić poprawną liczbę usuniętych rekordów */
 mysql_query("DELETE FROM mytable WHERE id < 10");
@@ -86,7 +86,7 @@ Usuniętych rekordów: 0
 <?php
 /* łączenie z bazą */
 mysql_pconnect('localhost', 'uzytkownik', 'haslo') or
-    die ('Nie można się połączyć');
+    die("Nie można się połączyć: " . mysql_error()); 
 
 /* aktualizacja rekordów */
 mysql_query("UPDATE mytable SET used=1 WHERE id < 10");
