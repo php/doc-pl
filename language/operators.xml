@@ -1,0 +1,624 @@
+<?xml encoding="iso-8859-2"?>
+<!-- $Revision: 1.1 $ -->
+ <chapter id="language.operators">
+  <title>Operatory</title>
+  <simpara>
+  </simpara>
+  
+  <sect1 id="language.operators.arithmetic">
+   <title>Operatory Arytmetyczne</title>
+   <simpara>
+    Czy pamiętasz podstawy arytmetyki ze szkoły? W PHP operatory działają
+    niemalże tak samo.
+   </simpara>
+   <table>
+    <title>Operatory Arytmetyczne</title>
+    <tgroup cols="3">
+     <thead>
+      <row>
+       <entry>Przykład</entry>
+       <entry>Nazwa</entry>
+       <entry>Opis</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>$a + $b</entry>
+       <entry>Dodawanie</entry>
+       <entry>Suma $a i $b.</entry>
+      </row>
+      <row>
+       <entry>$a - $b</entry>
+       <entry>Odejmowanie</entry>
+       <entry>Różnica $a od $b.</entry>
+      </row>
+      <row>
+       <entry>$a * $b</entry>
+       <entry>Mnożenie</entry>
+       <entry>Iloczyn $a i $b.</entry>
+      </row>
+      <row>
+       <entry>$a / $b</entry>
+       <entry>Dzielenie</entry>
+       <entry>Iloraz $a przez $b.</entry>
+      </row>
+      <row>
+       <entry>$a % $b</entry>
+       <entry>Modulo</entry>
+       <entry>Reszta z dzielenia $a przez $b.</entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </table>
+   
+   <simpara>
+    Operator dzielenia ("/") zwraca wartość całkowitą (wynikiem dzielenia jest
+    liczba całkowita) jeśli obydwa operandy są całkowite (lub są łańcuchami 
+    znaków skonwertowanymi do liczba całkowitych) i wynik ich dzielenia jest 
+    całkowity. Jeśli jednak któryś z operandów jest zmiennoprzecinkowy lub 
+    wynikiem dzielenia jest liczba niecałkowita, operator dzielenia zwraca 
+    wartość zmiennoprzecinkową.
+   </simpara>
+  </sect1>
+  
+  <sect1 id="language.operators.assignment">
+   <title>Operatory Przypisania</title>
+   <simpara>
+    Podstawowym operatorem przypisania jest "=". Twoim pierwszym skojarzeniem 
+    może być "jest równy". Nie! Tak naprawdę oznacza to, że operand z lewej
+    strony operatora "=" otrzymuje wartość wyrażenia stojącego po prawej stronie
+    (tak właśnie się tłumaczy: "otrzymuje wartość wyrażenia po prawej").
+   </simpara>
+   <para>
+    Wartością całego wyrażenia przypisania jest wartość przypisywana do 
+    zmiennej stojacej po lewej. Na przykład wartością "$a = 3" jest 3. To 
+    pozwala na wykonywanie bardziej skomplikowanych przypisań: 
+    <informalexample>
+     <programlisting role="php"> 
+$a = ($b = 4) + 5; // teraz $a jest równe 9, a $b jest równe 4.
+     </programlisting>
+    </informalexample>
+   </para>
+   <para>
+    Poza podstawowym operatorem przypisania, istnieją jeszcze złożone operatory 
+    odnoszące się do wszystkich arytmetycznych i łańcuchowych operatorów. 
+    Pozwalają one użyć jednej zmiennej jako jednego z operandów, a następnie 
+    zapisanać wynik działania w tej właśnie zmiennej. Na przykład:
+    <informalexample>
+     <programlisting role="php">
+$a = 3;
+$a += 5; // ustawia wartość $a na 8, tak jakby napisać: $a = $a + 5;
+$b = "Witaj ";
+$b .= "Świecie!"; // ustawia wartość $b na "Witaj Świecie!", dokładnie tak jak 
+$b = $b . "Świecie!";
+     </programlisting>
+    </informalexample>
+   </para>
+   <para>
+    Zwróć uwagę, że przypisanie kopiuje wartość oryginalnej zmiennej do nowej
+    zmiennej (tzw. przypisanie przez wartość). Skutki tego mogą być widoczne
+    przy kopiowaniu np. dużej tablicy wewnątrz zwartej (ciasnej) pętli (ang.
+    tight loop). PHP 4 pozwala na przypisanie przez
+    referencję (odniesienie), za pomocą składni <computeroutput>$zmienna =
+    &amp;$innaZmienna;</computeroutput>. Taka możliwość pojawiła się dopiero 
+    w PHP 4 i nie była dostępna w PHP 3. "Przypisanie przez referencję" oznacza,
+    że obydwie zmienne wskazują te same wartości, natomiast nic się nie
+    kopiuje. Aby dowiedzieć się więcej na temat referencji, przeczytaj rodział
+    <link linkend="language.references">wyjaśnienie referencji</link>.
+   </para>
+  </sect1>
+
+  <sect1 id="language.operators.bitwise">
+   <title>Operatory Bitowe</title>
+   <simpara>
+    Operatory bitowe służą do operowania na wartościach konkretnych bitów w 
+    liczbie.
+   </simpara>
+   <table>
+    <title>Operatory Bitowe</title>
+    <tgroup cols="3">
+     <thead>
+      <row>
+       <entry>Przykład</entry>
+       <entry>Nazwa</entry>
+       <entry>Opis</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>$a &amp; $b</entry>
+       <entry>Mnożenie</entry>
+       <entry>Dany bit wynikowy jest równy 1 tylko jeśli obydwa bity składowe 
+       są równe 1.</entry>
+      </row>
+      <row>
+       <entry>$a | $b</entry>
+       <entry>Sumowanie</entry>
+       <entry>Dany bit wynikowy jest równy 1 jeśli conajmniej jeden bit 
+       składowy jest równy 1.</entry>
+      </row>
+      <row>
+       <entry>$a ^ $b</entry>
+       <entry>Sumowanie modulo 2</entry>
+       <entry>Dany bit wynikowy jest równy 1 tylko jeśli jeden z bitów 
+       składowych jest równy 1 a drugi jest równy 0.</entry>
+      </row>
+      <row>
+       <entry>~ $a</entry>
+       <entry>Negacja</entry>
+       <entry>Bity w zmiennej $a mające wartość 1 otrzymują wartość 0 i na 
+       odwrót.</entry>
+      </row>
+      <row>
+       <entry>$a &lt;&lt; $b</entry>
+       <entry>Przesunięcie w lewo</entry>
+       <entry>
+	Przesuwa bity w zmiennej $a o $b kroków w lewo (każdy krok znaczy "pomnożone
+    przez dwa").
+       </entry>
+      </row>
+      <row>
+       <entry>$a &gt;&gt; $b</entry>
+       <entry>Przesunięcie w prawo</entry>
+       <entry>
+	Przesuwa bity w zmiennej $a o $b kroków w prawo (każdy krok znaczy 
+    "podzielone przez dwa").
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </table>
+  </sect1>
+
+  <sect1 id="language.operators.comparison">
+   <title>Operatory Porównania</title>
+   <simpara>
+    Jak wskazuje ich nazwa, operatory te służą do porównywania dwóch wartości.
+   </simpara>
+   <table>
+    <title>Operaatory Porównania</title>
+    <tgroup cols="3">
+     <thead>
+      <row>
+       <entry>Przykład</entry>
+       <entry>Nazwa</entry>
+       <entry>Opis</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>$a == $b</entry>
+       <entry>Równy</entry>
+       <entry>&true; jesli $a jest równe $b</entry>
+      </row>
+      <row>
+       <entry>$a === $b</entry>
+       <entry>Identyczny</entry>
+       <entry>
+	&true; jeśli $a jest równe $b, i obydwa operandy są tego samego typu.
+    (tylko w PHP 4)
+       </entry>
+      </row>
+      <row>
+       <entry>$a != $b</entry>
+       <entry>Różny</entry>
+       <entry>&true; jeśli $a nie jest równy $b.</entry>
+      </row>
+      <row>
+       <entry>$a &lt;> $b</entry>
+       <entry>Różny</entry>
+       <entry>&true; jeśli $a nie jest równy $b.</entry>
+      </row>
+      <row>
+       <entry>$a !== $b</entry>
+       <entry>Nie identyczny</entry>
+       <entry>
+	&true; jeśli $a nie jest równy $b, lub nie są tego samego typu. 
+    (tylko w PHP 4)
+       </entry>
+      </row>
+      <row>
+       <entry>$a &lt; $b</entry>
+       <entry>Mniejszy niż</entry>
+       <entry>&true; jeśli $a jest mniejszy od $b.</entry>
+      </row>
+      <row>
+       <entry>$a &gt; $b</entry>
+       <entry>Większy niż</entry>
+       <entry>&true; jeśli $a jest większy od $b.</entry>
+      </row>
+      <row>
+       <entry>$a &lt;= $b</entry>
+       <entry>Mniejszy lub równy</entry>
+       <entry>&true; jeśli $a jest mniejszy lub równy $b.</entry>
+      </row>
+      <row>
+       <entry>$a &gt;= $b</entry>
+       <entry>Większy lub równy</entry>
+       <entry>&true; jeśli $a jest większy lub równy $b.</entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </table>
+   <para>
+    Jeszcze jednym operatorem warunkowym jest operator "?:", działający tak jak
+    w C i wielu innych językach.
+    <informalexample>
+     <programlisting>
+(expr1) ? (expr2) : (expr3);
+     </programlisting>
+    </informalexample> 
+    Wartościa wyrażenia jest <replaceable>expr2</replaceable> jeśli
+    <replaceable>expr1</replaceable> jest równe &true;, lub
+    <replaceable>expr3</replaceable> jeśli
+    <replaceable>expr1</replaceable> jest równe &false;.
+   </para>
+  </sect1>
+
+  <sect1 id="language.operators.errorcontrol">
+   <title>Operatory Kontroli Błędów</title>
+   <simpara>
+    PHP obsługuje obecnie jeden operator kontroli błędów: znak małpy (@). Jeśli
+    znak ten zostanie postawiony przed dowolnym wyrażeniem w PHP, jakiekolwiek 
+    powiadomienia o błędach wygenerowane przez to wyrażenie zostaną pominięte 
+    (nie będą wyświetlone). 
+   </simpara>
+   <simpara>
+    Jeśli mechanizm <link linkend="ini.track-errors">track_errors</link>
+    został włączony, jakiekolwiek powiadomienie o błędzie zostanie zapisane do 
+    zmiennej globalnej $php_errormsg. Należy jednak pamiętać, że zawartość tej 
+    zmiennej jest nadpisywana przy każdym błędzie, więc po wystąpieniu kolejnego
+    błędu w skrypcie, informacja o poprzednim błędzie jest tracona.
+   </simpara>
+   <para>
+    <informalexample>
+     <programlisting role="php">
+&lt;?php
+/* Zamierzony błąd obsługi pliku */
+$my_file = @file ('non_existent_file') or
+    die ("Failed opening file: error was '$php_errormsg'");
+
+// mechanizm ten działa dla wszystkich wyrażeń, nie tylko dla funkcji:
+$value = @$cache[$key]; 
+// spowoduje niewyświetlenie powiadomienia, jeśli nie istnieje wpis do tablicy o
+indeksie $key.
+
+?&gt;
+     </programlisting>
+    </informalexample>
+   </para>
+   <note>
+    <simpara>
+     Operator @ działa tylko na wyrażeniach. Tłumacząc to łopatologicznie: jeśli
+     da się pobrać wartość czegoś, można postawić operator @ przed tym czymś. 
+     Zgodnie z powyższą regułą, można postawić @ przed zmiennymi, wywołaniami 
+     funkcji, instrukcjami <function>include</function>, stałymi, itp. Nie można
+     stawiać @ przed definicjami funkcji bądź klasy, lub strukturami
+     warunkowymi, takimi jak <literal>if</literal> lub
+     <literal>foreach</literal>, itd.
+    </simpara>
+   </note>
+   <simpara>
+    Zobacz także <function>error_reporting</function>.
+   </simpara>
+   <warning>
+    <para>
+     Obecnie operator kontroli błędów "@" wyłączy wyświetlanie powiadomienia 
+     o błędzie nawet dla błędów krytycznych, które przerwą wykonywanie skryptu.
+     Oznacza to, że jeśli użyjesz tego operatora przed wywołaniem funkcji, która
+     jest nieosiągalna lub ma literówkę w nazwie, skrypt przerwie pracę 
+     nie powiadamiając dlaczego.
+    </para>
+   </warning>
+  </sect1>
+  
+  <sect1 id="language.operators.execution">
+   <title>Operatory Wykonania Polecenia Systemowego</title>
+   <para>
+    PHP posiada jeden operator wykoania polecenia systemowego: apostrof wsteczny
+    (``). Zauważ że jest to coś innego niż apostrof zwykły! Zawartość apostrofu
+    wstecznego zostanie wykonana jako polecenie systemowe. Wynik polecenia 
+    zostanie zwrócony (tzn. nie będzie wysłany do przeglądarki tylko będzie 
+    dostępny do przypisania do zmiennej).
+    <informalexample>
+     <programlisting role="php">
+$output = `ls -al`;
+echo "&lt;pre&gt;$output&lt;/pre&gt;";
+     </programlisting>
+    </informalexample>
+   </para>
+   <note>
+    <para>
+     Operator ten nie działa kiedy <link
+     linkend="ini.safe-mode">safe mode</link> jest włączony.
+    </para>
+   </note>
+   <para>
+    Zobacz też <function>system</function>,
+    <function>passthru</function>, <function>exec</function>,
+    <function>popen</function>, and
+    <function>escapeshellcmd</function>.
+   </para>
+  </sect1>
+
+  <sect1 id="language.operators.increment">
+   <title>Operatory Inkrementacji i Dekrementacji</title>
+   <para>
+    PHP obsługuje te operatory w stylu języka C.
+   </para>
+   <table>
+    <title>Operatory Inkrementacji i Dekrementacji</title>
+    <tgroup cols="3">
+     <thead>
+      <row>
+       <entry>Przykład</entry>
+       <entry>Nazwa</entry>
+       <entry>Opis</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>++$a</entry>
+       <entry>Pre-inkrementacja</entry>
+       <entry>Najpierw zwiększa wartość $a o jeden, potem zwraca $a.</entry>
+      </row>
+      <row>
+       <entry>$a++</entry>
+       <entry>Post-inkrementacja</entry>
+       <entry>Najpierw zwraca $a, potem zwiększa $a o jeden.</entry>
+      </row>
+      <row>
+       <entry>--$a</entry>
+       <entry>Pre-dekrementacja</entry>
+       <entry>Najpierw zmniejsza wartość $a o jeden, potem zwraca $a.</entry>
+      </row>
+      <row>
+       <entry>$a--</entry>
+       <entry>Post-dekrementacja</entry>
+       <entry>Najpierw zwraca $a, potem zmniejsza $a o jeden.</entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </table>
+   <para>
+    Prosty skrypt przykładowy:
+    <informalexample>
+     <programlisting role="php">
+&lt;?php
+echo "&lt;h3&gt;Post-inkrementacja&lt;/h3&gt;";
+$a = 5;
+echo "Powinno być 5: " . $a++ . "&lt;br&gt;\n";
+echo "Powinno być 6: " . $a . "&lt;br&gt;\n";
+
+echo "&lt;h3&gt;Pre-inkrementacja&lt;/h3&gt;";
+$a = 5;
+echo "Powinno być 6: " . ++$a . "&lt;br&gt;\n";
+echo "Powinno być 6: " . $a . "&lt;br&gt;\n";
+
+echo "&lt;h3&gt;Post-dekrementacja&lt;/h3&gt;";
+$a = 5;
+echo "Powinno być 5: " . $a-- . "&lt;br&gt;\n";
+echo "Powinno być 4: " . $a . "&lt;br&gt;\n";
+
+echo "&lt;h3&gt;Pre-dekrementacja&lt;/h3&gt;";
+$a = 5;
+echo "Powinno być 4: " . --$a . "&lt;br&gt;\n";
+echo "Powinno być 4: " . $a . "&lt;br&gt;\n";
+?&gt;
+     </programlisting>
+    </informalexample>
+   </para>
+  </sect1>
+
+  <sect1 id="language.operators.logical">
+   <title>Operatory Logiczne</title>
+
+   <table>
+    <title>Opearotory Logiczne</title>
+    <tgroup cols="3">
+     <thead>
+      <row>
+       <entry>Przykład</entry>
+       <entry>Nazwa</entry>
+       <entry>Opis</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>$a and $b</entry>
+       <entry>I</entry>
+       <entry>&true; jeśli zarówno $a jak i $b są &true;.</entry>
+      </row>
+      <row>
+       <entry>$a or $b</entry>
+       <entry>Lub</entry>
+       <entry>&true; jeśli $a lub $b jest &true;.</entry>
+      </row>
+      <row>
+       <entry>$a xor $b</entry>
+       <entry>Wyłacznie-Lub</entry>
+       <entry>&true; jeśli $a lub $b jest &true;, ale nie jednocześnie.</entry>
+      </row>
+      <row>
+       <entry>! $a</entry>
+       <entry>Nie</entry>
+       <entry>&true; jeśli $a nie jest &true;.</entry>
+      </row>
+      <row>
+       <entry>$a &amp;&amp; $b</entry>
+       <entry>I</entry>
+       <entry>&true; jeśli zarówno $a jak i $b są &true;.</entry>
+      </row>
+      <row>
+       <entry>$a || $b</entry>
+       <entry>Lub</entry>
+       <entry>&true; jeśli $a lub $b jest &true;.</entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </table>
+   <simpara>
+    Operatory "or" i "and" mają inny priorytet niż "||" i "&&" i właśnie z tego
+    powodu w PHP są dwa rodzaje operatorów "lub" i "i". (Zobacz
+    <link linkend="language.operators.precedence">Priorytety Operatorów</link>.)
+   </simpara>
+  </sect1>
+
+  <sect1 id="language.operators.precedence">
+   <title>Priorytety operatorów</title>
+   <para>
+    Priorytet operatora określa, jak "silnie" operator wiąże ze sobą dwa stojące
+    obok niego wyrażenia. Na przykład, w wyrażeniu <literal>1 +
+    5 * 3</literal>, wynik wynosi <literal>16</literal>, nie
+    <literal>18</literal> ponieważ operator mnożenia ("*") ma wyższy priorytet 
+    niż operator dodawania ("+"). Za pomocą nawiasów można zmieniać priorytet 
+    działań według reguł arytmetyki. Na przykład: <literal>(1 + 5) * 3</literal>
+    jest równe <literal>18</literal>.
+   </para>
+   <para>
+    Poniższa tabela zawiera priorytet operatorów, od najniższego priorytetu na 
+    górze.
+    <table>
+     <title>Priorytety operatorów</title>
+     <tgroup cols="2">
+      <thead>
+       <row>
+        <entry>Powiązanie</entry>
+        <entry>Operator</entry>
+       </row>
+      </thead>
+      <tbody>
+       <row>
+        <entry>lewe</entry>
+        <entry>,</entry>
+       </row>
+       <row>
+        <entry>lewe</entry>
+        <entry>or</entry>
+       </row>
+       <row>
+        <entry>lewe</entry>
+        <entry>xor</entry>
+       </row>
+       <row>
+        <entry>lewe</entry>
+        <entry>and</entry>
+       </row>
+       <row>
+        <entry>prawe</entry>
+        <entry>print</entry>
+       </row>
+       <row>
+        <entry>lewe</entry>
+        <entry>
+         = += -= *= /= .= %= &amp;= |= ^= ~= &lt;&lt;= &gt;&gt;=
+        </entry>
+       </row>
+       <row>
+        <entry>lewe</entry>
+        <entry>? :</entry>
+       </row>
+       <row>
+        <entry>lewe</entry>
+        <entry>||</entry>
+       </row>
+       <row>
+        <entry>lewe</entry>
+        <entry>&amp;&amp;</entry>
+       </row>
+       <row>
+        <entry>lewe</entry>
+        <entry>|</entry>
+       </row>
+       <row>
+        <entry>lewe</entry>
+        <entry>^</entry>
+       </row>
+       <row>
+        <entry>lewe</entry>
+        <entry>&amp;</entry>
+       </row>
+       <row>
+        <entry>bez powiązania</entry>
+        <entry>== != === !==</entry>
+       </row>
+       <row>
+        <entry>bez powiązania</entry>
+        <entry>&lt; &lt;= &gt; &gt;=</entry>
+       </row>
+       <row>
+        <entry>lewe</entry>
+        <entry>&lt;&lt; &gt;&gt;</entry>
+       </row>
+       <row>
+        <entry>lewe</entry>
+        <entry>+ - .</entry>
+       </row>
+       <row>
+        <entry>lewe</entry>
+        <entry>* / %</entry>
+       </row>
+       <row>
+        <entry>prawe</entry>
+        <entry>! ~ ++ -- (int) (double) (string) (array) (object) @</entry>
+       </row>
+       <row>
+        <entry>prawe</entry>
+        <entry>[</entry>
+       </row>
+       <row>
+        <entry>bez powiązania</entry>
+        <entry>new</entry>
+       </row>
+      </tbody>
+     </tgroup>
+    </table>
+   </para>
+  </sect1>
+
+  <sect1 id="language.operators.string">
+   <title>Operatory Łańcuchowe</title>
+   <simpara>
+    W PHP są dwa operatory operujące na łańcuchach znaków (stringach). Pierwszym
+    z nich jest operator konkatenacji (połączenia) ('.'), który zwraca łańcuch 
+    będący połączeniem zawartości lewego i prawego operandu. Drugim z nich jest
+    operator przypisania konkatenacyjnego ('.='), który dołšcza zawartość 
+    wyrażenia stojacego z prawej strony do zmiennej stojacej z lewej strony. 
+    Zobacz także <link
+    linkend="language.operators.assignment">Operatory Przypisania</link>.
+   </simpara>
+
+   <para>
+    <informalexample>
+     <programlisting role="php">
+$a = "Witaj ";
+$b = $a . "Świecie!"; // teraz $b zawiera ciąg "Witaj Świecie!"
+
+$a = "Witaj ";
+$a .= "Świecie!";     // teraz $a zawiera ciąg "Witaj Świecie!"
+     </programlisting>
+    </informalexample>
+   </para>
+  </sect1>
+
+ </chapter>
+ 
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+sgml-parent-document:nil
+sgml-default-dtd-file:"../../manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
