@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.45 Maintainer: Qrak Status: ready -->
-<!-- $Revision: 1.9 $ -->
+<!-- EN-Revision: 1.46 Maintainer: Qrak Status: ready -->
+<!-- $Revision: 1.10 $ -->
  <chapter id="language.variables">
   <title>Zmienne</title>
   
@@ -1105,7 +1105,13 @@ echo "$a $witaj";
     <varname>${$a[1]}</varname> dla pierwszego przypadku a
     <varname>${$a}[1]</varname> dla drugiego.
    </simpara>
-  
+   <simpara>
+    Proszę pamiętać, że zmienne zmienne nie mogą być używane z nowymi
+    superglobalami PHP. Oznacza to, że nie będą działać wyrażenia typu
+    <varname>${$_GET}</varname>. Jeśli szukasz sposobu na obsługę
+    osiągalności superglobali i starych tablic $HTTP_*_VARS, spróbuj użyć
+    <link linkend="language.references">referencji</link>.    
+   </simpara>
   </sect1>
 
   <sect1 id="language.variables.external">
@@ -1183,8 +1189,8 @@ echo "$a $witaj";
     Piwo: <br>
     <select multiple name="piwo[]">
         <option value="zywiec">Żywiec
+        <option value="tyskie">Tyskie
         <option value="lech">Lech
-        <option value="cooler">Cooler
         </select>
     <input type="submit">
 </form>
