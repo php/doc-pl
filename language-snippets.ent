@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.58 Maintainer: leszek Status: ready -->
+<!-- EN-Revision: 1.73 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 
 <!ENTITY warn.experimental '<warning><simpara>Ten moduł jest w stadium
@@ -46,6 +46,11 @@ możliwe jest podanie jako nazwy pliku adresu URL. Zobacz opis funkcji
 <link linkend="ini.allow-url-fopen">fopen wrappers</link> aby uzyskać listę
 obsługiwanych protokołów.
 </simpara></tip>'>
+
+<!ENTITY tip.fopen-wrapper.stat '<tip><simpara>Od wersji 5.0.0 PHP ta funkcja
+może być użyta także z <emphasis>niektórymi</emphasis> wrapperami URL. Zobacz
+<xref linkend="wrappers"/> aby uzyskać listę wrapperów które obsługują
+funkcjonalność z rodziny <function>stat</function>.</simpara></tip>'>
 
 <!ENTITY return.success 'Zwraca &true; w przypadku sukcesu, &false; w
 przypadku porażki.'>
@@ -94,8 +99,12 @@ mogą być wyłączone dyrektywą konfiguracji
 </title><para>Domyślną wartością dyrektywy konfiguracji PHP 
 <link linkend="ini.magic-quotes-gpc">magic_quotes_gpc</link> jest <literal>on</literal>.
 Powoduje ona wykonywanie funkcji <function>addslashes</function> na wszystkich
-danych GET,  POST i COOKIE. Można użyć funkcji
-<function>stripslashes</function> aby usunąć dodane znaki slash.</para></note>'> 
+danych GET,  POST i COOKIE. Można użyć funkcji <function>stripslashes</function>
+aby usunąć dodane znaki slash.</para></note>'> 
+
+<!ENTITY note.config.t1lib '<note><simpara>Ta funkcja jest dostępna tylko jeśli
+PHP zostało skompilowane z dyrektywą <option
+role="configure">--enable-t1lib</option>.</simpara></note>'>
 
 <!-- Various notes -->
 <!ENTITY note.randomseed '<note><simpara>Od PHP w wersji 4.2.0 nie ma potrzeby
@@ -171,6 +180,8 @@ Są one częścią jądra PHP.</para>'>
 <!ENTITY ini.descriptions.title '<para>Oto krótkie wyjaśnienie dyrektyw
 konfiguracji.</para>'>  
 
+<!-- Common pieces for reference part BEGIN-->
+
 <!-- Used in reference/$extname/ini.xml -->  
 <!ENTITY extension.runtime '<simpara>  
 Na działanie tych funcji wpływają ustawienia zawarte w pliku
@@ -194,6 +205,28 @@ jeśli rozszerzenie to będzie wkompilowane w PHP lub dynamicznie dołączone w
 trakcie pracy.
 </simpara>'> 
 
+<!-- These are using in reference/$extname/reference.xml and other
+supplemental files to mark section titles -->
+<!ENTITY reftitle.intro         '<title>Wprowadzenie</title>'>
+<!ENTITY reftitle.required      '<title>Wymagania</title>'>
+<!ENTITY reftitle.install       '<title>Instalacja</title>'>
+<!ENTITY reftitle.runtime       '<title>Konfiguracja startowa</title>'>
+<!ENTITY reftitle.resources     '<title>Typy zasobów</title>'>
+<!ENTITY reftitle.constants     '<title>Predefiniowane stałe</title>'>
+<!ENTITY reftitle.classes       '<title>Predefiniowane klasy</title>'>
+<!ENTITY reftitle.constructor   '<title>Konstruktor</title>'>
+<!ENTITY reftitle.methods       '<title>Metody</title>'>
+<!ENTITY reftitle.properties    '<title>Pola</title>'>
+<!ENTITY reftitle.returnvalues  '<title>Zwracane wartości</title>'>
+<!ENTITY reftitle.examples      '<title>Przykłady</title>'>
+<!ENTITY reftitle.seealso       '<title>Zobacz również</title>'>
+
+<!ENTITY note.pecl-php5 '<note><simpara>To rozszerzenie zostało usunięte w PHP
+5 i przeniesione do repozytorium <ulink url="&url.pecl;">PECL</ulink>.
+</simpara></note>'>
+
+<!-- Common pieces for reference part END-->
+
 <!ENTITY windows.builtin '<simpara><literal>PHP</literal> w wersji dla systemów
 Windows posiada wbudowaną obsługę dla tego rozszerzenia. Nie trzeba ładować
 żadnych dodatkowych rozszerzeń aby korzystać z tych funkcji.</simpara>'> 
@@ -201,6 +234,12 @@ Windows posiada wbudowaną obsługę dla tego rozszerzenia. Nie trzeba ładować
 <!-- These are here as helpers for manual consistency and brievety--> 
 <!ENTITY php '<literal>PHP</literal>'> 
 <!ENTITY safemode '<link linkend="ini.safe-mode">tryb bezpieczny</link>'> 
+
+<!-- SimpleXML Notes -->
+<!ENTITY simplexml.iteration '<note><simpara>W SimpleXML wprowadzono zasadę
+dodawania pól iteracyjnych dla większości metod. Nie mogą być one przeglądane
+przez <function>var_dump</function> ani przez nic innego co bada obiekty.
+</simpara></note>'>
 
 <!-- Database Notes --> 
 <!ENTITY database.field-case '<note><simpara>Nazwy pól zwracane przez tą
@@ -221,22 +260,22 @@ taka jednostka jaka została podana dla strony. W przeciwnym przypadku
 koordynaty są mierzone w punktach postscriptowych ignorując bieżącą jednostkę.
 </para>'> 
 
-<!-- These are using in reference/$extname/reference.xml and other
-supplemental files to mark section titles -->
-<!ENTITY reftitle.intro     '<title>Wprowadzenie</title>'>
-<!ENTITY reftitle.required  '<title>Wymagania</title>'>
-<!ENTITY reftitle.install   '<title>Instalacja</title>'>
-<!ENTITY reftitle.runtime   '<title>Konfiguracja startowa</title>'>
-<!ENTITY reftitle.resources '<title>Typy zasobów</title>'>
-<!ENTITY reftitle.constants '<title>Predefiniowane stałe</title>'>
-<!ENTITY reftitle.classes   '<title>Predefiniowane klasy</title>'>
-<!ENTITY reftitle.examples  '<title>Przykłady</title>'>
-<!ENTITY reftitle.seealso   '<title>Zobacz również</title>'>
-
 <!-- Notes for IPv6 --> 
 <!ENTITY ipv6.brackets '<note><simpara>Podając numeryczny adres IPv6
 (np. fe80::1), adres musi być objęty nawiasami kwadratowymi. Na przykład
 <literal>tcp://[fe80::1]:80</literal>.</simpara></note>'> 
 
 <!ENTITY ipv6.php5 '<note><simpara>Obsługa protokołu IPv6 została dodana w
-<literal>PHP 5.0.0 </literal>.</simpara></note>'> 
+<literal>PHP 5.0.0 </literal>.</simpara></note>'>
+
+<!-- Notes for tidy -->
+<!ENTITY note.tidy.ze2 '<note><simpara>Ta funkcja jest dostępna tylko z Zend
+Engine 2, co oznacza PHP &gt;= 5.0.0.</simpara></note>'>
+
+<!ENTITY note.tidy.1only '<note><simpara>Ta funkcja jest dostępna tylko w Tidy
+1.0. W wersji 2.0 stała się niepotrzebna i w związku z tym została usunięta.
+</simpara></note>'>
+
+<!ENTITY note.tidy.2only '<note><simpara>Opcjonalne parametry
+<literal>config_options</literal> i <literal>encoding</literal> zostały dodane
+w Tidy 2.0.</simpara></note>'>
