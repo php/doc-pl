@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- splitted from ./pl/functions/filesystem.xml, last change in rev 1.1 -->
-<!-- last change to 'fopen' in en/ tree in rev 1.2 -->
-<!-- EN-Revision: 1.2 Maintainer: adi Status: partial -->
-<!-- OLD-Revision: 1.115/EN.1.2 -->
+<!-- EN-Revision: 1.2 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.4 $ -->
   <refentry id="function.fopen">
    <refnamediv>
     <refname>fopen</refname>
@@ -14,22 +12,31 @@
       <type>int</type><methodname>fopen</methodname>
       <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
       <methodparam><type>string</type><parameter>tryb</parameter></methodparam>
-      <methodparam choice="opt"><type>int</type><parameter>
-        użyj_include_path
-       </parameter></methodparam>
+      <methodparam choice="opt"><type>int</type><parameter>użyj_include_path</parameter></methodparam>
      </methodsynopsis>
     <simpara>
      Jeśli <parameter>nazwa_pliku</parameter> zaczyna się od "http://" (nie
-     jest rozróżniana wielość liter), jest otwierane połączenie HTTP 1.0
+     jest rozróżniana wielkość liter), jest otwierane połączenie HTTP 1.0
      do wybranego serwera, strona jest żądana używając metody HTTP GET
      i wskaźnik pliku jest ustawiany na początku ciała odpowiedzi.
      Nagłówek 'Host:' jest wysyłany z żądaniem pozwalającym
      uchwycić oparte o nazwę wirtualne hosty.
     </simpara>
     <simpara>
-     Zauważ, że wskaźnik pliku pozwala tobie wydobyć tylko
-     <emphasis>ciało</emphasis> odpowiedzi; Nie możesz
-     dostać się do nagłówka HTTP używając tej funkcji.
+     W PHP 4.3.0 (jeszcze nie udostępnionym), jeśli masz wkompilowane sparcie dla
+     OpenSSL, możesz użyć "https://" aby otworzyć połączenie HTTP po SSL.
+    </simpara>
+    <simpara>
+     Zauważ, że wskaźnik pliku pozwala tobie odczytać tylko
+     <emphasis>ciało</emphasis> odpowiedzi; aby uzyskać nagłówek HTTP
+     musisz użyć wersji PHP 4.0.5 lub nowszej.
+     Nagłówki są przechowywane w zmiennej $http_response_header.
+     W PHP 4.3.0 (jeszcze nie udostępnionym), informacja z nagłowka może
+     być pobrana używając funkcji <function>file_get_wrapper_data</function>.
+    </simpara>
+    <simpara>
+     Połączenia HTTP są tylko do odczytu, nie możesz zapisać danych lub
+     kopiować plików do zasobu HTTP.
     </simpara>
     <simpara>
      Wersje przed PHP 4.0.5 nie obsługują przekierowań HTTP. Z tego powodu
@@ -41,13 +48,17 @@
      ftp do podanego serwera i zwracany jest wskaźnik do żądanego pliku.
      jeśli serwer nie obsługuje trybu pasywnego ftp, ta funkcja zawiedzie.
      Możesz otwierać pliki albo do odczytu lub zapisu przez ftp (ale nie
-     oba tryby równocześnie).
+     oba tryby równocześnie). Jeśli zdalny plik już istnieje na serwerze FTP
+     i spróbujesz otworzyć go do zapisu, ta funkcja zawiedzie.
+     jeśli potrzebujesz zmodyfikować istniejące pliki przez FTP, użyj
+     <function>ftp_connect</function>.
     </simpara>
     <simpara>
      Jeśli <parameter>nazwa_pliku</parameter> jest jedną z możliwości
      "php://stdin", "php://stdout" lub "php://stderr" zostanie otworzony
      odpowiedni strumień stdio.  (To zostało wprowadzone w PHP 3.0.13;
-     w wcześniejszych wersjach, aby dostać się do strumienia stdio
+     we wcześniejszych wersjach, aby dostać się do strumienia stdio
+     
      nazwa_pliku musi mieć postać "/dev/stdin" lub "/dev/fd/0".)
     </simpara>
     <simpara>
@@ -56,7 +67,7 @@
      pliku.
     </simpara>
     <simpara>
-     Jeśli otwieranie zwiedzie, funkcja zwróci &false;.
+     Jeśli otwieranie się nie powiedzie, funkcja zwróci &false;.
     </simpara>
     <para>
      <parameter>tryb</parameter> może być dowolny z poniższych:
@@ -85,13 +96,13 @@
         'w+' - Otwórz do odczytu i zapisu; ustawia wskaźnik pliku na początku
         pliku i obcina plik (zeruje) do 0 długości.
         Jeśli plik nie istnieje to próbuje go utworzyć.
-      </simpara>
+       </simpara>
       </listitem>
       <listitem>
        <simpara>
-        'a' - Otwórz tylko do zapisu; ustawia wskaźnik pliku na końcu
+       'a' - Otwórz tylko do zapisu; ustawia wskaźnik pliku na końcu
         pliku. Jeśli plik nie istnieje to próbuje go utworzyć.
-      </simpara>
+       </simpara>
       </listitem>
       <listitem>
        <simpara>
@@ -108,10 +119,10 @@
       pliki pomiędzy binarne i tekstowe (np. Windows. To jest
       bezużyteczne na Unixach)
       Jeśli nie potrzebne zostanie zignorowane.
-     </para>
+      </para>
     </note>
     <para>
-     Możesz użyć opcjonalnego 3 parametru i ustawić go na "1", jeśli
+      Możesz użyć opcjonalnego 3 parametru i ustawić go na "1", jeśli
      chcesz szukać pliku także w
      <link linkend="ini.include-path">include_path</link>.
     </para>
@@ -122,7 +133,7 @@
 <![CDATA[
 $fp = fopen ("/home/rasmus/file.txt", "r");
 $fp = fopen ("/home/rasmus/file.gif", "wb");
-$fp = fopen ("http://www.php.net/", "r");
+$fp = fopen ("http://www.example.com/", "r");
 $fp = fopen ("ftp://user:password@example.com/", "w");
 ]]>
       </programlisting>
@@ -138,7 +149,7 @@ $fp = fopen ("ftp://user:password@example.com/", "w");
      dla wszystkich użytych w ścieżce do pliku backslashy, lub
      użyj slash'y.
      <informalexample>
-      <programlisting role="php">
+      <programlisting role="php"> 
 <![CDATA[
 $fp = fopen ("c:\\data\\info.txt", "r");
 ]]>
