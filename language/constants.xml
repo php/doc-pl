@@ -1,244 +1,244 @@
-<?xml encoding="iso-8859-1"?>
-<!-- $Revision: 1.1 $ -->
+<?xml encoding="iso-8859-2"?>
+<!-- $Revision: 1.2 $ -->
  <chapter id="language.constants">
-  <title>Constants</title>
+  <title>Sta³e</title>
 
   <simpara>
-   A constant is a identifier (name) for a simple value. As the name
-   suggests, that value cannot change during the execution of the script
-   (the magic constants <constant>__FILE__</constant> and 
-   <constant>__LINE__</constant> are the only exception). A constant
-   is case-sensitive by default. By convention constants are always
-   uppercase.
+   Sta³a jest identyfikatorem (nazw±) dla prostej warto¶ci. Jak sama
+   nazwa wskazuje, warto¶æ ta nie mo¿e siê zmieniaæ podczas dzia³ania
+   skryptu (poza wyj±tkami: <constant>__FILE__</constant>
+   i <constant>__LINE__</constant>). Domy¶lnie, przy sta³ych
+   uwzglêdniana jest wielko¶æ liter. Przyjêto, ¿e sta³e s± pisane du¿ymi
+   literami.
   </simpara>
   <para>
-   The name of a constant follows the same rules as any label in PHP. A 
-   valid constant name starts with a letter or underscore, followed
-   by any number of letters, numbers, or underscores. As a regular
-   expression, it would be expressed thus:
+   Nazwa sta³ej podlega takim samym zasadom jak ka¿da inna w PHP.
+   Prawid³owa nazwa sta³ej rozpoczyna siê liter±, znakiem podkre¶lenia
+   ("_"), nastêpnie mog± wystêpowaæ litery, cyfry lub znaki podkre¶lenia.
+   Dobrze reprezentuje to takie wyra¿enie regularne:
    <literal>[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*</literal>
 
    <!-- TODO: Example of valid & invalid constant names -->
   </para>
-				      
+
   <note>
    <simpara>
-    For our purposes here, a letter is a-z, A-Z, and the ASCII
-    characters from 127 through 255 (0x7f-0xff).
+    Na nasze potrzeby, litery to a-z, A-Z, oraz znaki ASCII
+    od 127 do 255 (0x7f-0xff).
    </simpara>
   </note>
   <simpara>
-   The scope of a constant is global.
+   Zakres sta³ej jest globalny.
   </simpara>
   <sect1 id="language.constants.syntax">
-   <title>Syntax</title>
+   <title>Sk³adnia</title>
    <simpara>
-    You can define a constant by using the 
-    <function>define</function>-function. Once a constant is defined,
-    it can never be changed or undefined.
+    Mo¿esz definiowaæ sta³± u¿ywaj±c funkcji <function>define</function>.
+    Kiedy sta³a zostanie zdefiniowana, nie mo¿e byæ ju¿ zmieniona albo
+    undefined.
    </simpara>
    <simpara>
-    Only scalar data (<type>boolean</type>, <type>integer</type>, 
-    <type>double</type> and <type>string</type>) can be contained 
-    in constants.
+    Tylko skalarne typy danych
+    (<type>boolean</type>, <type>integer</type>, <type>double</type>
+    i <type>string</type>) mog± byæ zawarte w sta³ych.
    </simpara>
    <simpara>
-    You can get the value of a constant by simply specifying its name.
-    Unlike with variables, you should <emphasis>not</emphasis> prepend
-    a constant with a <literal>$</literal>.
-    You can also use the function <function>constant</function>, to
-    read a constant's value, if you are to obtain the constant's name
-    dynamically. 
-    Use <function>get_defined_constants</function> to get a list of 
-    all defined constants.
+    Mo¿esz u¿yæ warto¶ci sta³ej poprzez zwyk³e u¿ycie jej nazwy.
+    Inaczej ni¿ przy zmiennych, w sta³ych <emphasis>NIE</emphasis>
+    powiniene¶ prepend sta³ej znakiem <literal>$</literal>.
+    Mo¿esz tak¿e u¿yæ funkcji <function>constant</function>, aby
+    odczytaæ warto¶æ sta³ej, której nazwa jest przekazywana dynamicznie.
+    U¿yj funkcji <function>get_defined_constants</function> aby otrzymaæ
+    listê zdefiniowanych sta³ych.
    </simpara>
    <note>
     <simpara>
-     Constants and (global) variables are in a different namespace. 
-     This implies that for example &true; and 
-     <varname>$TRUE</varname> are generally different.
+     Sta³e i globlane zmienne s± pisane inaczej, a to oznacza, ¿e np.
+     &true; i <varname>$TRUE</varname> s± ró¿ne.
     </simpara>
    </note>
    <simpara>
-    If you use an undefined constant, PHP assumes that you mean
-    the name of the constant itself. A 
-    <link linkend="features.error-handling">notice</link> will be issued
-    when this happens. Use the <function>defined</function>-function if 
-    you want to know if a constant is set.
+    Je¶li u¿yjesz niezdefiniowanej sta³ej, PHP przyjmuje, ¿e chcesz u¿yæ
+    nazwy sta³ej samej w sobie. Zostanie wtedy wys³ane
+    <link linkend="features.error-handling">ostrze¿enie</link>.
+    U¿yj funkcji <function>defined</function> je¶li chcesz siê dowiedzieæ
+    czy sta³a jest zdefiniowana.
    </simpara>
    <para>
-    This are the differences with variables:
+    Ró¿nice pomiêdzy sta³ymi, a zmiennymi:
      <itemizedlist>
       <listitem>
        <simpara>
-    Constants do not have a dollar sign (<literal>$</literal>) before them;
+    Sta³e nie maj± znaku dolara (<literal>$</literal>) przed nazw±;
        </simpara>
       </listitem>
       <listitem>
        <simpara>
-    Constants may be defined and accessed anywhere without regard to variable
-    scoping rules;
+    Sta³e mog± byæ definiowane oraz u¿ywane wszêdzie bez zwa¿ania na
+    zasady dotycz±ce zakresu ich dostêpno¶ci;
        </simpara>
       </listitem>
       <listitem>
        <simpara>
-    Constants may not be redefined or undefined once they have
-    been set; and
+    Sta³e nie mog± byæ redefiniowane lub undefined po tym jak raz zosta³y
+    zdefiniowane; i
        </simpara>
       </listitem>
       <listitem>
        <simpara>
-    Constants may only evaluate to scalar values.
+    Sta³e mog± zawieraæ tylko warto¶ci skalarne.
        </simpara>
       </listitem>
      </itemizedlist>
     </para>
-    
+
    <para>
     <example>
-     <title>Defining Constants</title>
+     <title>Definiowanie sta³ych</title>
      <programlisting>
 &lt;?php
-define("CONSTANT", "Hello world.");
-echo CONSTANT; // outputs "Hello world."
-echo Constant; // outputs "Constant" and issues a notice.
+define("STALA", "Hello world!");
+echo STALA; // wy¶wietli "Hello world!"
+echo Stala; // wy¶wietli "Stala" i zg³osi ostrze¿enie
 ?&gt;
      </programlisting>
     </example>
 
    </para>
-   
+
   </sect1>
-  
+
   <sect1 id="language.constants.predefined">
-   <title>Predefined constants</title>
+   <title>Predefiniowane sta³e</title>
   <para>
-   The predefined constants (always available) are:
+   Predefiniowanymi sta³ymi (zawsze dostêpnymi) s±:
 
    <variablelist>
 
     <varlistentry>
-     <term>__FILE__  (case-insensitive)</term>
+     <term>__FILE__  (niewa¿na wielko¶æ liter)</term>
      <listitem>
       <simpara>
-       The name of the script file presently being parsed. If used
-       within a file which has been included or required, then the
-       name of the included file is given, and not the name of the
-       parent file.
+       Nazwa pliku ze skryptem PHP, który jest aktualnie parsowany
+       (przetwarzany); sta³a u¿yta w pliku, który zosta³, który zosta³
+       w³±czony (include) lub jest wymagany (require), zwraca nazwê
+       tego w³a¶nie pliku, a nie nazwê pliku g³ównego.
       </simpara>
      </listitem>
     </varlistentry>
-    
+
     <varlistentry>
-     <term>__LINE__  (case-insensitive)</term>
+     <term>__LINE__  (niewa¿na wielko¶æ liter)</term>
      <listitem>
       <simpara>
-       The number of the line within the current script file which is
-       being parsed. If used within a file which has been included or
-       required, then the position within the included file is given.
+       Numer linii w pliku, który jest aktualnie parsowany (przetwarzany).
+       Sta³a u¿yta w pliku w³±czonym (include) zwraca pozycjê w tym pliku.
       </simpara>
      </listitem>
     </varlistentry>
-    
+
     <varlistentry>
      <term>PHP_VERSION</term>
      <listitem>
       <simpara>
-       The string representation of the version of the PHP parser
-       presently in use; e.g. '4.0.7-dev'.
+       £añcuch reprezentuj±cy aktualnie u¿ywan± wersjê parsera PHP, np.
+       '4.0.7-dev'.
       </simpara>
      </listitem>
     </varlistentry>
-    
+
     <varlistentry>
      <term>PHP_OS</term>
      <listitem>
       <simpara>
-       The name of the operating system on which the PHP parser is
-       executing;. Possible values may be : 
+       Nazwa systemu operacyjnego, na którym uruchomiony jest parser
+       PHP. Mo¿liwe warto¶ci to:
        "AIX", "Darwin" (MacOS), "Linux", "SunOS", "WIN32", "WINNT".
-       Note: other values may be available too.
+       Uwaga: inne warto¶ci równie¿ mog± byæ dostêpne.
       </simpara>
      </listitem>
     </varlistentry>
-    
+
     <varlistentry>
-     <term>&true;  (case-insensitive)</term>
+     <term>&true;  (niewa¿na wielko¶æ liter)</term>
      <listitem>
       <simpara>
-       A &true; value (see the <type>boolean</type> type).
+       Warto¶æ &true; (zobacz: typ <type>boolean</type>).
       </simpara>
      </listitem>
     </varlistentry>
-    
+
     <varlistentry>
-     <term>&false;  (case-insensitive)</term>
+     <term>&false;  (niewa¿na wielko¶æ liter)</term>
      <listitem>
       <simpara>
-       A &false; value (see the <type>boolean</type> type).
+       Warto¶æ &false; (zobacz: typ<type>boolean</type>).
       </simpara>
      </listitem>
     </varlistentry>
-    
+
     <varlistentry>
-     <term>&null;  (case-insensitive)</term>
+     <term>&null;  (niewa¿na wielko¶æ liter)</term>
      <listitem>
       <simpara>
-       A &null; value (see the <type>null</type> type).
+       Warto¶æ &null; (zobacz: typ <type>null</type>).
       </simpara>
      </listitem>
     </varlistentry>
-    
+
     <varlistentry>
      <term>E_ERROR</term>
      <listitem>
       <simpara>
-       Denotes an error other than a parsing error from which
-       recovery is not possible. 
+       Oznacza b³±d inny ni¿ b³±d przy parsowaniu (przetwarzaniu),
+       którego naprawienie nie jest mo¿liwe.
       </simpara>
      </listitem>
     </varlistentry>
-    
+
     <varlistentry>
      <term>E_WARNING</term>
      <listitem>
       <simpara>
-       Denotes a condition where PHP knows something is wrong, but
-       will continue anyway; these can be caught by the script
-       itself. An example would be an invalid regexp in
+       Oznacza stan, w którym PHP "wie", ¿e co¶ jest ¼le, ale
+       kontynuuje dzia³anie; b³êdy takie mog± byæ przechwycone przez sam
+       skrypt.
+       Przyk³adem mo¿e byæ nieprawid³owe wyra¿enie regularne w funkcji
        <function>ereg</function>.
       </simpara>
      </listitem>
     </varlistentry>
-    
+
     <varlistentry>
      <term>E_PARSE</term>
      <listitem>
       <simpara>
-       The parser choked on invalid syntax in the script
-       file. Recovery is not possible.
+       Parser stan±³ przy nieprawid³owej sk³adni w skrypcie. Naprawa
+       b³êdu i kontynuacja nie jest mo¿liwa.
       </simpara>
      </listitem>
     </varlistentry>
-    
+
     <varlistentry>
      <term>E_NOTICE</term>
      <listitem>
       <simpara>
-       Something happened which may or may not be an error. Execution
-       continues. Examples include using an unquoted string as an array
-       index, or accessing a variable which has not been set.
+       Zdarzy³o siê co¶ co mo¿e acz nie musi byæ b³êdem. PHP kontynuuje
+       dzia³anie. Przyk³adem mo¿e byæ u¿ywanie niepodanego ³añcucha jako
+       indeksu w tablicy albo ¿adanie dostêpu do niezadeklarowanej
+       zmiennej.
       </simpara>
      </listitem>
     </varlistentry>
-    
+
     <varlistentry>
      <term>E_ALL</term>
      <listitem>
       <simpara>
-       All of the E_* constants rolled into one. If used with
-       <function>error_reporting</function>, will cause any and all
-       problems noticed by PHP to be reported.
+       Wszystkie sta³e E_* w jednej. Je¶li sta³a ta zostanie u¿yta z
+       funkcj± <function>error_reporting</function>, spowoduje to, ¿e
+       jakiekolwiek problemy zauwa¿one przez PHP bêd± zg³aszane przez
+       funkcjê.
       </simpara>
      </listitem>
     </varlistentry>
@@ -247,28 +247,28 @@ echo Constant; // outputs "Constant" and issues a notice.
   </para>
 
    <para>
-    The <literal>E_*</literal> constants are typically used with the
-    <function>error_reporting</function> function for setting the
-    error reporting level. See all these constants at
-    <link linkend="features.error-handling">Error handling</link>.
+    Sta³e <literal>E_*</literal> s± zwykle u¿ywane z funkcj±
+    <function>error_reporting</function> aby ustawiæ poziom zg³aszania
+    b³êdów. Zobacz wszystkie takie sta³e w rozdziale
+    <link linkend="features.error-handling">Obs³uga b³êdów</link>.
 
     <example>
-     <title>Using __FILE__ and __LINE__</title>
+     <title>U¿ywanie __FILE__ i __LINE__</title>
      <programlisting>
 &lt;?php
-function report_error($file, $line, $message)
+function report_error($plik, $linia, $komunikat)
 {
-    echo "An error occured in $file on line $line: $message.";
+    echo "Wyst±pi³ b³±d w $plik w linii $linia: $message.";
 }
 
-report_error(__FILE__, __LINE__, "Something went wrong!");
+report_error(__FILE__, __LINE__, "Co¶ posz³o ¼le!");
 ?&gt;
      </programlisting>
     </example>
    </para>
   </sect1>
  </chapter>
- 
+
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

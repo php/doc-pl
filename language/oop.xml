@@ -1,5 +1,5 @@
 <?xml encoding="iso-8859-2"?>
-<!-- $Revision: 1.1 $ -->
+<!-- $Revision: 1.2 $ -->
  <chapter id="language.oop">
   <title>Klasy i Obiekty</title>
 
@@ -108,13 +108,11 @@ class Koszyk
      </programlisting>
     </informalexample>
    </note>
-<!--              ???                     -->
    <para>
-    Classes are types, that is, they are blueprints for actual
-    variables. You have to create a variable of the desired type with
-    the <literal>new</literal> operator.
+    Klasy są typami, które są w zasadzie tylko schematami dla właściwych
+    zmiennych. Zmienne pożądanego typu musisz stworzyć korzystając z operatora
+    <literal>new</literal>.
    </para>
-<!--              ???                     -->
  
    <informalexample>
     <programlisting role="php">
@@ -134,50 +132,45 @@ $inny_koszyk->dodaj_produkt("0815", 3);
    </para>
    
    <para>
-    Both, $cart and $another_cart, have functions add_item(),
-    remove_item() and a variable items. These are distinct
-    functions and variables. You can think of the objects as
-    something similar to directories in a filesystem. In a
-    filesystem you can have two different files README.TXT, as
-    long as they are in different directories.  Just like with
-    directories where you'll have to type the full pathname in
-    order to reach each file from the toplevel directory, you
-    have to specify the complete name of the function you want
-    to call: In PHP terms, the toplevel directory would be the
-    global namespace, and the pathname separator would be -&gt;. 
-    Thus, the names $cart-&gt;items and $another_cart-&gt;items
-    name two different variables. Note that the variable is
-    named $cart-&gt;items, not $cart-&gt;$items, that is, a
-    variable name in PHP has only a single dollar sign.
+    I $koszyk i $inny_koszyk mają funkcje dodaj_produkt(), usun_produkt() i
+    zmienne. Są to osobne funkcje i zmienne. Obiekty mogą być postrzegane jako
+    katalogi w systemie plików. W systemie plików możesz mieć dwa różne pliki
+    README.TXT, ale tylko jeśli istnieją w osobnych katalogach. Aby odczytać
+    plik, będąc w głównym katalogu, musisz podać pełną ścieżkę do tego pliku.
+    Tak samo jest przy obiektach: musisz podać pełną nazwę funkcji, z której
+    chcesz skorzystać. W terminologii PHP katalogiem głównym będzie globalna
+    przestrzeń nazw a separatorem ścieżki będzie -&gt;. W związku z tym nazwy
+    $koszyk i $inny_koszyk zawierają zupełnie inne zmienne. Zauważ, że zmienna
+    nazywa się $koszyk-&gt;artykuly, a nie $koszyk-&gt;$artykuly, ponieważ
+    nazwa zmiennej może zawierać tylko jeden znak dolara.
    </para>
 
    <informalexample>
     <programlisting role="php">
-// correct, single $
-$cart->items = array("10" => 1); 
+// poprawnie, jeden $
+$koszyk->artykuly = array("10" => 1); 
 
-// invalid, because $cart->$items becomes $cart->""
-$cart->$items = array("10" => 1);
+// niepoprawnie, poniważ $koszyk->$artykuly zamienia się na $koszyk->""
+$koszyk->$artykuly = array("10" => 1);
 
-// correct, but may or may not be what was intended:
-// $cart->$myvar becomes $cart->items
-$myvar = 'items';
-$cart->$myvar = array("10" => 1);  
+// poprawnie, ale może (ale nie musi) nie być tym, co zamierzaliśmy:
+// $koszyk->$zmienna staje się $koszyk->artykuly
+$zmienna = 'artykuly';
+$koszyk->$zmienna = array("10" => 1);  
     </programlisting>
    </informalexample>
 
    <para>
-    Within a class definition, you do not know under which name the object will
-    be accessible in your program: At the time the Cart class was 
-    written, it was unknown that the object will be named $cart or
-    $another_cart later. Thus, you cannot write $cart-&gt;items within
-    the Cart class itself. Instead, in order to be able to access it's own
-    functions and variables from within a class, one can use the
-    pseudo-variable $this which can be read as 'my own' or
-    'current object'. Thus, '$this->items[$artnr] += $num' can
-    be read as 'add $num to the $artnr counter of my own items
-    array' or 'add $num to the $artnr counter of the items array
-    within the current object'.
+    Wewnątrz definicji klasy, nie wiesz pod jaką nazwą obiekt będzie dostępny
+    dla twojego programu: w momencie pisania klasy Koszyk, nie było wiadomo,
+    że obiekty będą się nazywać $koszyk lub $inny_koszyk. W związku z tym nie
+    możesz napisać $koszyk-&gt;artykuly wewnątrz klasy Koszyk. Zamiast tego,
+    aby uzyskać dostęp do funkcji i zmiennych zawartych w klasie, można użyć
+    pseudo-zmiennej $this, która może być odczytana jako 'moje własne' lub
+    'bieżący obiekt'. A więc '$this-&gt;artykuly[$nrart] += $liczba' może być
+    odczytane jako 'dodaj $liczba do licznika $nrart z mojej własnej tablicy
+    artykuly' lub 'dodaj $liczba do licznika $nrartz tablicy artykuly zawartej
+    w bieżącym obiekcie'.
    </para>
   </sect1>
   
@@ -185,123 +178,122 @@ $cart->$myvar = array("10" => 1);
    <title><literal>extends</literal></title>
 
    <para>
-    Often you need classes with similar variables and functions
-    to another existing class. In fact, it is good practice to
-    define a generic class which can be used in all your
-    projects and adapt this class for the needs of each of your
-    specific projects. To facilitate this, classes can be
-    extensions of other classes.  The extended or derived class
-    has all variables and functions of the base class (this is
-    called 'inheritance' despite the fact that nobody died) and what
-    you add in the extended definition. It is not possible to
-    substract from a class, that is, to undefine any existing 
-    functions or variables. An extended class is always dependent
-    on a single base class, that is, multiple inheritance is
-    not supported. Classes are extended using the keyword 'extends'.
+    Bardzo często zachodzi potrzeba stworzenia klasy o funkcjach i zmiennych
+    podobnych do już istniejącej klasy. Zasadniczo dobrze jest stworzyć
+    szablonową klasę, która może być użyta we wszystkich twoich projektach i
+    przystosowywać ją do specyficznych potrzeb twojego projektu. Aby ułatwić
+    ten proces, klasy mogą być rozszerzeniami innych klas. Rozszerzone, lub
+    mówiąc inaczej 'dziedziczone', klasy mają wszystkie zmienne i funkcje
+    klasy podstawowej (nazywa się to dziedziczeniem, mimo że nikt nie
+    umarł) oraz to co do niej dodałeś w definicji rozszerzenia. Nie można
+    odjąć pewnych rzeczy z klasy podstawowej, czyli oddefiniować istniejących
+    w klasie podstawowej funkcji i zmiennych. Rozszerzona klasa jest zawsze
+    zależna od jednej klasy bazowej - dziedziczenie wielokrotne nie jest
+    obsługiwane. Klasy można rozszerzyć używając słowa kluczowego 'extends'.
    </para>
  
    <informalexample>
     <programlisting role="php">
-class Named_Cart extends Cart
+class Nazwany_Koszyk extends Koszyk
 {
-    var $owner;
+    var $wlasciciel;
   
-    function set_owner ($name)
+    function ustaw_wlasciciela ($nazwa)
     {
-        $this->owner = $name;
+        $this->wlasciciel = $nazwa;
     }
 }
     </programlisting>
    </informalexample>
  
    <para>
-    This defines a class Named_Cart that has all variables and
-    functions of Cart plus an additional variable $owner and an
-    additional function set_owner(). You create a named cart the usual
-    way and can now set and get the carts owner. You can still use
-    normal cart functions on named carts:
+    Definiuje to klasę Nazwany_Koszyk, który ma wszystkie zmienne i funkcje
+    klasy Koszyk plus dodatkowa zmienna $wlasciciel i dodatkowa funkcja
+    ustaw_wlasciciela(). Nazwany koszyk tworzy się normalnym sposobem.
+    Możesz teraz ustawiać i pobierać nazwę właściciela koszyka. Cały czas
+    możesz używać zwykłych funkcji koszyka dla nazwanego koszyka:
    </para>
  
    <informalexample>
     <programlisting role="php">
-$ncart = new Named_Cart;    // Create a named cart
-$ncart->set_owner("kris");  // Name that cart
-print $ncart->owner;        // print the cart owners name
-$ncart->add_item("10", 1);  // (inherited functionality from cart)
+$nkoszyk = new Nazwany_Koszyk;        // Stwórz nazwany koszyk
+$nkoszyk->ustaw_wlasciciela("kris");  // Nazwij koszyk
+print $nkoszyk->wlasciciel;           // Wyświetl właściciela koszyka
+$nkoszyk->dodaj_przedmiot("10", 1);   // (funkcjonalność odziedziczona z
+                                      // koszyka)
     </programlisting>
    </informalexample>
 
   </sect1>
 
   <sect1 id="language.oop.constructor">
-   <title><literal>Constructors</literal></title>
+   <title><literal>Konstruktory</literal></title>
 
    <caution>
     <simpara>
-     In PHP 3 and PHP 4 constructors behave differently. The PHP 4
-     semantics are strongly preferred.
+     Konstruktory zachowują się inaczej w PHP 3 i w PHP 4. Semantyka PHP 4
+     jest mocno zalecana.
     </simpara>
    </caution>
 
    <para>
-    Constructors are functions in a class that are automatically
-    called when you create a new instance of a class with
-    <literal>new</literal>. In PHP 3, a
-    function becomes a constructor when it has the same name as 
-    the class. In PHP 4, a function becomes a constructor, when
-    it has the same name as the class it is defined in - the
-    difference is subtle, but crucial (see below).
+    Konstruktory są funkcjami klasy, które są automatycznie wywoływane przy
+    tworzeniu nowej instancji klasy korzystając z operatora
+    <literal>new</literal>. W PHP 3 funkcja staje się konstruktorem kiedy ma
+    taką samą nazwę jak klasa. W PHP 4 funkcja staje się konstruktorem, kiedy
+    ma taką samą nazwę jak klasa, w której ta funkcja została zdefiniowana -
+    różnica jest subtelna, ale bardzo ważna (zobacz poniżej)
    </para>
  
    <informalexample>
     <programlisting role="php">
-// Works in PHP 3 and PHP 4.
-class Auto_Cart extends Cart
+// Działa w PHP 3 i PHP 4.
+class Auto_Koszyk extends Koszyk
 {
-    function Auto_Cart()
+    function Auto_Koszyk()
     {
-        $this->add_item ("10", 1);
+        $this->dodaj_artykul ("10", 1);
     }
 }
     </programlisting>
    </informalexample>
  
    <para>
-    This defines a class Auto_Cart that is a Cart plus a constructor
-    which initializes the cart with one item of article number "10"
-    each time a new Auto_Cart is being made with "new". Constructors
-    can take arguments and these arguments can be optional, which
-    makes them much more useful. To be able to still use the class
-    without parameters, all parameters to constructors should be
-    made optional by providing default values.
+    Ten kod definiuję klasę Auto_Koszyk, który jest klasą Koszyk pluc
+    konstruktor, który inicjalizuje wózek z jednym artykułem "10" za każdym
+    razem, kiedy Auto_Koszyk jest tworzony operatorem "new". Konstruktory mogą
+    pobierać argumenty i te argumenty mogą być opcjonalne, przez co są jeszcze
+    bardziej użyteczne. Aby w dalszym ciągu móc używać klasy bez parametrów,
+    wszystkie parametry konstruktora powinny stać się opcjonalne przez dodanie
+    domyślnych wartości.
    </para>
  
    <informalexample>
     <programlisting role="php">
-// Works in PHP 3 and PHP 4.
-class Constructor_Cart extends Cart
+// Działa w PHP 3 i PHP 4.
+class Kontruktor_Koszyk extends Koszyk
 {
-    function Constructor_Cart($item = "10", $num = 1)
+    function Konstruktor_Koszyk($artykul = "10", $ilosc = 1)
     {
-        $this->add_item ($item, $num);
+        $this->dodaj_artykul ($artykul, $ilosc);
     }
 }
  
-// Shop the same old boring stuff.
+// Kup te same nudne rzeczy...
  
-$default_cart = new Constructor_Cart;
+$zwykly_koszyk = new Konstruktor_Koszyk;
  
-// Shop for real...
+// Czas na prawdziwe zakupy...
  
-$different_cart = new Constructor_Cart("20", 17);
+$inny_koszyk = new Konstruktor_Koszyk("20", 17);
     </programlisting>
    </informalexample>
 
    <caution>
     <simpara>
-     In PHP 3, derived classes and constructors have a number of
-     limitations. The following examples should be read carefully
-     to understand these limitations.
+     W PHP 3, dziedziczone klasy i konstruktory mają wiele ograniczeń.
+     Poniższe przykłady powinny być dokładnie przeczytane w celu zrozumienia
+     tych ograniczeń.
     </simpara> 
    </caution>
    
@@ -311,7 +303,7 @@ class A
 {
     function A()
     {
-      echo "I am the constructor of A.&lt;br>\n";
+      echo "Jestem konstruktorem klasy A.&lt;br>\n";
     }
 }
 
@@ -319,27 +311,27 @@ class B extends A
 {
     function C()
     {
-        echo "I am a regular function.&lt;br>\n";
+        echo "Zwykła funkcja.&lt;br>\n";
     }
 }
 
-// no constructor is being called in PHP 3.
+// W PHP 3 nie zostanie wywołany żaden konstruktor.
 $b = new B;
     </programlisting>
    </informalexample>
 
    <para>
-    In PHP 3, no constructor is being called in the above example.
-    The rule in PHP 3 is: 'A constructor is a function of the same
-    name as the class.'. The name of the class is B, and there is
-    no function called B() in class B. Nothing happens.
+    W PHP 3 w powyższym przykładzie nie będzie wywołany żaden konstruktor.
+    Zasadą PHP 3 jest: 'Konstruktor to funkcja o takiej samej nazwie jak
+    klasa'. Nazwą klasy jest B, a w klasie B nie ma funkcji o nazwie B(). Nic
+    się nie dzieje.
    </para>
    
    <para>
-    This is fixed in PHP 4 by introducing another rule: If a class
-    has no constructor, the constructor of the base class is being
-    called, if it exists. The above example would have printed
-    'I am the constructor of A.&lt;br>' in PHP 4.
+    Zostało to poprawione w PHP 4 przez wprowadzenie innej zasady: jeśli klasa
+    nie ma konstruktora, używany jest konstruktor klasy bazowej, jeśli taki
+    istnieje. W PHP 4 powyższy przykład wyświetli 'Jestem konstruktorem klasy
+    A.&lt;br>'.
    </para>
 
    <informalexample>
@@ -348,13 +340,13 @@ class A
 {
     function A()
     {
-        echo "I am the constructor of A.&lt;br>\n";
+        echo "Jestem konstruktorem klasy A.&lt;br>\n";
     }
 
     function B()
     {
-        echo "I am a regular function named B in class A.&lt;br>\n";
-        echo "I am not a constructor in A.&lt;br>\n";
+        echo "Jestem zwykłą funkcją o nazwie B w klasie A.&lt;br>\n";
+        echo "Nie jestem konstruktorem w klasie A.&lt;br>\n";
     }
 }
 
@@ -362,53 +354,51 @@ class B extends A
 {
     function C()
     {
-        echo "I am a regular function.&lt;br>\n";
+        echo "Jestem zwykłą funkcją.&lt;br>\n";
     }
 }
 
-// This will call B() as a constructor.
+// Wywoła to B() jako konstruktor.
 $b = new B;
     </programlisting>
    </informalexample>
    
    <para>
-    In PHP 3, the function B() in class A will suddenly become a
-    constructor in class B, although it was never intended to be.
-    The rule in PHP 3 is: 'A constructor is a function of the same
-    name as the class.'. PHP 3 does not care if the function is
-    being defined in class B, or if it has been inherited.
+    W PHP 3, funkcja B() z klasy A niespodziewanie stanie się konstruktorem w
+    klasie B, pomimo że wcale nie miała nim być. Zasadą PHP 3 jest:
+    'Konstruktor to funkcja o takiej samej nazwie co klasa'. PHP 3 nie
+    obchodzi czy funkcja została zdefiniowana w klasie B czy została
+    odziedziczona.
    </para>
    
    <para>
-    This is fixed in PHP 4 by modifying the rule to: 'A constructor
-    is a function of the same name as the class it is being defined
-    in.'. Thus in PHP 4, the class B would have no constructor function
-    of its own and the constructor of the base class would have been
-    called, printing 'I am the constructor of A.&lt;br>'.
+    Zostało to poprawione w PHP 4 przez modyfikację tej zasady do:
+    'Konstruktor to funkcja o tej samej nazwie co klasa w której została
+    zdefiniowana'. W związku z tym w PHP 4 clasa B nie miałaby własnego
+    konstruktora. Wywołany byłby tylko konstruktor klasy bazowej, wyświetlając
+    'Jestem konstruktorem klasy A.&lt;br>'.
    </para>
    
    <caution>
     <simpara>
-     Neither PHP 3 nor PHP 4 call constructors of the base class 
-     automatically from a constructor of a derived class. It is
-     your responsibility to propagate the call to constructors
-     upstream where appropriate.
+     Ani PHP 3 ani PHP 4 nie wywoła automatycznie konstruktora klasy bazowej z
+     kontruktora klasy pochodnej. Twoim zadaniem jest propagacja wywołań
+     konstruktorów klas nadrzędnych, jeśli to konieczne.
     </simpara>
    </caution>
    
    <note>
     <simpara>
-     There are no destructors in PHP 3 or PHP 4. You may use
-     <function>register_shutdown_function</function> instead
-     to simulate most effects of destructors.
+     Ani w PHP 3 ani w PHP 4 nie ma destruktorów. Zamiast tego możesz użyć
+     <function>register_shutdown_function</function> aby symulować działanie
+     destruktorów.
     </simpara>
    </note>
    
    <para>
-    Destructors are functions that are called automatically
-    when an object is destroyed, either with <function>unset</function>
-    or by simply going out of scope. There are no destructors
-    in PHP.
+    Destruktory są funkcjami, które są wywoływanie automatycznie kiedy obiekty
+    są niszczone albo przez użycie <function>unset</function> albo przez
+    wyjście z zasięgu. W PHP nie ma destruktorów.
    </para>
   </sect1>
 
@@ -417,82 +407,76 @@ $b = new B;
 
    <caution>
     <simpara>
-     The following is valid for PHP 4 only.
+     Poniższe dotyczy tylko PHP 4.
     </simpara>
    </caution>
 
    <para>
-    Sometimes it is useful to refer to functions and variables
-    in base classes or to refer to functions in classes that
-    have not yet any instances. The :: operator is being used
-    for this.
+    Czasami dobrze jest odnosić się do funkcji i zmiennych w klasie bazowej
+    lub odnosić się do funkcji i klas które nie mają jeszcze instancji. Służy
+    do tego operator ::.
    </para>
    
    <informalexample>
     <programlisting role="php">
 class A
 {
-    function example()
+    function przyklad()
     {
-        echo "I am the original function A::example().&lt;br>\n";
+        echo "Jestem orginalną funkcją A::przyklad().&lt;br>\n";
     }
 }
 
 class B extends A
 {
-    function example()
+    function przyklad()
     {
-        echo "I am the redefined function B::example().&lt;br>\n";
-        A::example();
+        echo "Jestem przedefiniowaną funkcją B::przyklad().&lt;br>\n";
+        A::przyklad();
     }
 }
 
-// there is no object of class A.
-// this will print
-//   I am the original function A::example().&lt;br>
-A::example();
+// nie ma obiektu klasy A.
+// poniższe wyświetli
+//   Jestem orginalną funkcją A::przyklad().&lt;br>
+A::przyklad();
 
-// create an object of class B.
+// stwórz nowy obiekt klasy B.
 $b = new B;
 
-// this will print 
-//   I am the redefined function B::example().&lt;br>
-//   I am the original function A::example().&lt;br>
-$b->example();
+// poniższe wyświetli
+//   Jestem przedefiniowaną funkcją B::przyklad().&lt;br>
+//   Jestem orginalną funkcją A::przyklad().&lt;br>
+$b->przyklad();
     </programlisting>
    </informalexample>
 
    <para>
-    The above example calls the function example() in
-    class A, but there is no object of class A, so that
-    we cannot write $a->example() or similar. Instead we
-    call example() as a 'class function', that is, as a
-    function of the class itself, not any object of that
-    class.
+    Powyższy przekład wywołuje funkcję przyklad() z klasy A, ale nie tworząc
+    obiektu tej klasy, przez co nie możemy napisać nic w stylu $a->przyklad().
+    Zamiast tego możemy wywołać przyklad() jako 'funkcję klasy', czyli jako
+    funkcję tylko klasy, nie żadnego obiektu tej klasy.
    </para>
    
    <para>
-    There are class functions, but there are no class variables.
-    In fact, there is no object at all at the time of the call.
-    Thus, a class function may not use any object variables (but
-    it can use local and global variables), and it may no use
-    $this at all.
+    Istnieją funkcje klasy, ale nie ma zmiennych klasy. Faktycznie w czasie
+    wykonania nie ma żadnego obiektu. W związku z tym funkcje klasy nie mogą
+    używać żadnych zmiennych obiektu (ale mogą używać zmiennych lokalnych i
+    globalnych), ani w ogóle $this.
    </para>
 
    <para>
-    In the above example, class B redefines the function example(). 
-    The original definition in class A is shadowed
-    and no longer available, unless you are refering specifically
-    to the implementation of example() in class A using the 
-    ::-operator. Write A::example() to do this (in fact, you
-    should be writing parent::example(), as shown in the next
-    section).
+    W powyższym przykładzie, klasa B przedefiniowuje funkcję przyklad().
+    Orginalna definicja z klasy A jest zasłonięta i niedostępna, chyba że
+    odwołasz się do konkretnej implementacji poprzez operator ::. Aby to
+    zrobić, napisz A::przyklad() (powinieneś jednak użyć parent::przyklad(),
+    tak jak to pokazano w następnej części).
    </para>
    
    <para>
-    In this context, there is a current object and it may
-    have object variables. Thus, when used from WITHIN an
-    object function, you may use $this and object variables.
+    W tym kontekście, istnieje bieżący obiekt i który ma zmienne obiektu. W
+    związu z tym jeśli funkcja jest użyta Z WEWNĄTRZ funkcji obiektu, możesz
+    używać $this i zmiennych obiektu.
    </para>
 
  </sect1>
@@ -501,91 +485,85 @@ $b->example();
    <title><literal>parent</literal></title>
 
   <para>
-   You may find yourself writing code that refers to
-   variables and functions in base classes. This is
-   particularly true if your derived class is a refinement
-   or specialisation of code in your base class. 
+   Może się zdarzyć, że będziesz pisał kod, który odnosi się do funkcji i
+   zmiennych klasy bazowej. Jest to możliwe jeśli twoja klasa pochodna jest
+   uściśleniem lub specjalizacją klasy bazowej.
   </para>
   
   <para>
-   Instead of using the literal name of the base class in your
-   code, you should be using the special name
-   <literal>parent</literal>, which refers to the name of your
-   base class as given in the <literal>extends</literal>
-   declation of your class. By doing this, you avoid using the
-   name of your base class in more than one place. Should
-   your inheritance tree change during implementation, the
-   change is easily made by simply changing the 
-   <literal>extends</literal> declaration of your class.
+   Zamiast jawnego podawania nazwy klasy bazowej w kodzie, powinieneś użyć
+   specjalnej nazwy <literal>parent</literal>, która odnosi się do nazwy klasy
+   bazowej podanej przy <literal>extends</literal> podczas deklaracji twojej
+   klasy. Robiąc to, unikasz użycia nazwy klasy bazowej w więcej niż jednym
+   miejscu. Jeśli twoje drzewo dziedziczenia zmieniłoby się podczas
+   implementacji, zmiana będzie wymagała poprawki tylko w jednym miejscu -
+   przy słowie kluczowym <literal>extends</literal> w deklaracji klasy.
   </para>
 
   <informalexample>
    <programlisting role="php">
 class A
 {
-    function example()
+    function przyklad()
     {
-        echo "I am A::example() and provide basic functionality.&lt;br>\n";
+        echo "Jestem A::przyklad() I dostarczam podstawową funkcjonalność.&lt;br>\n";
     }
 }
 
 class B extends A
 {
-    function example()
+    function przyklad()
     {
-        echo "I am B::example() and provide additional functionality.&lt;br>\n";
-        parent::example();
+        echo "Jestem B::przyklad() i dostarczam dodatkową funkcjonalność.&lt;br>\n";
+        parent::przyklad();
     }
 }
 
 $b = new B;
 
-// This will call B::example(), which will in turn call A::example().
-$b->example();
+// Wywoła to B::przyklad(), który z kolei wywoła A::przyklad().
+$b->przyklad();
    </programlisting>
   </informalexample>
  </sect1>
 
  <sect1 id="language.oop.serialization">
-  <title>Serializing objects - objects in sessions</title>
+  <title>Serializacja obiektów - obiekty w sesjach</title>
 
   <note>
    <simpara>
-    In PHP 3, objects will lose their class association
-    throughout the process of serialization and unserialization. 
-    The resulting variable is of type object, but has no class
-    and no methods, thus it is pretty useless (it has become
-    just like an array with a funny syntax).
+    W PHP 3 obiekty tracą powiązania między klasami w czasie procesu
+    serializacji i odserializacji. Wynikowa zmienna będzie typu obiekt, ale
+    bez klasy i bez metod, a więc w zasadzie bezużyteczną (zostanie poprostu
+    zmienną ze śmieszną składnią).
    </simpara>
   </note>
 
   <caution>
    <simpara>
-    The following information is valid for PHP 4 only. 
+    Poniższe informacje dotyczą tylko PHP 4.
    </simpara>
   </caution>
 
   <para>
-   <function>serialize</function> returns a string containing a
-   byte-stream representation of any value that can be stored in
-   PHP. <function>unserialize</function> can use this string to
-   recreate the original variable values. Using serialize to
-   save an object will save all variables in an object.  The
-   functions in an object will not be saved, only the name of
-   the class.
+   <function>serialize</function> zwraca string będący reprezentacją dowolnej
+   wartości, która może być przechowywana przez PHP.
+   <function>unserialize</function> może użyć tego stringu aby odtworzyć
+   orginalne wartości zmiennej. Użycie serializacji do zapisania obiektu
+   zachowa wszystkie zmienne z obiektu. Zapisane nie będą funkcje z obiektu, a
+   jedynie nazwa klasy.
   </para>
   
   <para>
-   In order to be able to <function>unserialize</function> an
-   object, the class of that object needs to be defined. That
-   is, if you have an object $a of class A on page1.php and
-   serialize this, you'll get a string that refers to class A
-   and contains all values of variabled contained in $a. If
-   you want to be able to unserialize this on page2.php,
-   recreating $a of class A, the definition of class A must
-   be present in page2.php. This can be done for example
-   by storing the class defintion of class A in an include
-   file and including this file in both page1.php and page2.php.
+   Aby istniała możliwość użycia funkcji <function>unserialize</function> do
+   odzyskania obiektu, musi być zdefiniowana klasa tego obiektu. Oznacza to,
+   że jeśli obiekt $a klasy A istnieje na page1.php i zserializujesz go,
+   otrzymasz string, który odnosi się do klasy A i zawiera wartości wszystkich
+   zmiennych zawartych w $a. Jeśli chcesz, aby istniała możliwość
+   odserializacji tego obiektu na page2.php, na page2.php musi istnieć
+   definicja klasy A. Można to zrobić na przykład przez przechowywanie
+   definicji klasy A w zewnętrznym pliku includowanym przez page1.php i
+   page2.php.
   </para>
   
   <informalexample>
@@ -593,11 +571,11 @@ $b->example();
 classa.inc:
   class A 
   {
-      var $one = 1;
+      var $jeden = 1;
     
-      function show_one()
+      function pokaz_jeden()
       {
-          echo $this->one;
+          echo $this->jeden;
       }
   }
   
@@ -606,115 +584,110 @@ page1.php:
   
   $a = new A;
   $s = serialize($a);
-  // store $s somewhere where page2.php can find it.
+  // przechowaj $s gdzieś, gdzie page2.php będzie mogła go znaleźć
   $fp = fopen("store", "w");
   fputs($fp, $s);
   fclose($fp);
 
 page2.php:
-  // this is needed for the unserialize to work properly.
+  // to jest niezbędne aby funkcja unserialize działała prawidłowo.
   include("classa.inc");
 
   $s = implode("", @file("store"));
   $a = unserialize($s);
 
-  // now use the function show_one() of the $a object.  
-  $a->show_one();
+  // teraz użyj funkcji pokaz_jeden z obiektu $a.
+  $a->pokaz_jeden();
    </programlisting>
   </informalexample>
   
   <para>
-   If you are using sessions and use <function>session_register</function>
-   to register objects, these objects are serialized automatically
-   at the end of each PHP page, and are unserialized automatically on
-   each of the following pages. This basically means that these objects
-   can show up on any of your pages once they become part of your
-   session.
+   Jeśli używasz sesji i <function>session_register</function> do rejestracji
+   obiektów, te obiekty są serializowane automatycznie na końcu każdej strony
+   PHP i odserializowane automatycznie na każdej z następnych stron.
+   Zasadniczo znaczy to, że te obiekty mogą pokazać się na dowolnej z twoich
+   stron jeśli tylko staną się częścią twojej sesji.
   </para>
   
   <para>
-   It is strongly recommended that you include the class
-   definitions of all such registered objects on all of your
-   pages, even if you do not actually use these classes on all
-   of your pages. If you don't and an object is being
-   unserialized without its class definition being present, it
-   will lose its class association and become an object of class
-   <literal>stdClass</literal> without any functions available
-   at all, that is, it will become quite useless.
+   Mocno zalecane jest includowanie definicji klas wszystkich zarejestrowanych
+   obiektów na wszystkich twoich stronach, nawet jeśli nie używasz tych
+   zmiennych na twoich stronach. Jeśli tego nie zrobisz a obiekty zostaną
+   odserializowane bez definicji klasy, powiązania klasowe zostaną utracone a
+   obiek stanie się obiektem klasy <literal>stdClass</literal> bez żadnych
+   dostępnych funkcji, a więc będzie całkiem bezużyteczny.
   </para>
   
   <para>
-   So if in the example above $a became part of a session by
-   running <literal>session_register("a")</literal>, you should
-   include the file <literal>classa.inc</literal> on all of your
-   pages, not only page1.php and page2.php.
+   A więc jeśli w powyższym przykładzie $a stanie się częścią sesji przez
+   wywołanie <literal>session_register("a")</literal>, powinieneć includować
+   plik <literal>classa.inc</literal> na wszystkich stronach, nie tylko
+   page1.php i page2.php.
   </para>
  </sect1>
 
  <sect1 id="language.oop.magic-functions">
-  <title>The magic functions <literal>__sleep</literal> and <literal>__wakeup</literal></title>
+  <title>Magiczne funkcje <literal>__sleep</literal> i <literal>__wakeup</literal></title>
 
   <para>
-   <function>serialize</function> checks if your class has a function with
-   the magic name <literal>__sleep</literal>. If so, that function is
-   being run prior to any serialization. It can clean up the object
-   and is supposed to return an array with the names of all variables
-   of that object that should be serialized.
+   <function>serialize</function> sprawdza, czy twoja klasa zawiera funkcję o
+   magicznej nazwie <literal>__sleep</literal>. Jeśli tak, ta funkcja jest
+   wywoływana przed każdą serializacją. Może ona czyścić obiekt i powinna
+   zwracać tablicę z nazwami wszystkich zmiennych obiektu, które powinny być
+   serializowane.
   </para>
   
   <para>
-   The intended use of <literal>__sleep</literal> is to close any
-   database connections that object may have, committing pending
-   data or perform similar cleanup tasks. Also, the function is
-   useful if you have very large objects which need not be
-   saved completely.
+   Założonym użyciem <literal>__sleep</literal> jest zamknięcie wszystkich
+   połączeń do baz danych, które obiekt może utrzymywać, zatwierdzenie
+   wszystkich oczekujących danych lub wykonanie innych podobnych czynności
+   czyszczących. Funkcja ta jest także przydatna jeśli masz bardzo duże
+   obiekty, które nie muszą być zachowane w całości.
   </para>
   
   <para>
-   Conversely, <function>unserialize</function> checks for the
-   presence of a function with the magic name 
-   <literal>__wakeup</literal>. If present, this function can
-   reconstruct any ressources that object may have.
+   Analogicznie, <function>unserialize</function> sprawdza czy istnieje
+   funkcja o magicznej nazwie <literal>__wakeup</literal>. Jeśli tak, funkcja
+   może rekonstruować dowolne zasoby które obiekt może posiadać.
   </para>
   
   <para>
-    The intended use of <literal>__wakeup</literal> is to
-    reestablish any database connections that may have been lost
-    during serialization and perform other reinitialization
-    tasks.
+    Założonym użyciem <literal>__wakeup</literal> jest odnowienie połączeń z
+    bazami danych, które mogły zostac utracone w procesie serializacji, oraz
+    wykonanie innych czynności odbudowujących obiekt.
   </para>
  </sect1>
   
  <sect1 id="language.oop.newref">
-   <title>References inside the constructor</title>
+   <title>Referencje wewnątrz konstruktora</title>
    <para>
-    Creating references within the constructor can lead to confusing
-    results. This tutorial-like section helps you to avoid problems.
+    Tworzenie referencji wewnątrz konstruktora może prowadzić do dziwnych
+    efektów. Ten rozdział ma pomóc w unikaniu takich problemów.
  
     <informalexample>
      <programlisting role="php">
 
 class Foo
 {
-    function Foo($name)
+    function Foo($nazwa)
     {
-        // create a reference inside the global array $globalref
+        // stworz referencje wewnatrz globalnej tablicy $globalref
         global $globalref;
         $globalref[] = &amp;$this;
-        // set name to passed value
-        $this->setName($name);
-        // and put it out
-        $this->echoName();
+        // ustaw nazwę na przekazaną wartość
+        $this->ustawNazwe($nazwa);
+        // i wyświetl ją
+        $this->wyswietlNazwe();
     }
 
-    function echoName()
+    function wyswietlNazwe()
     {
-        echo "&lt;br&gt;",$this->name;
+        echo "&lt;br&gt;",$this->nazwa;
     }
 	
-    function setName($name)
+    function ustawNazwe($nazwa)
     {
-        $this->name = $name;
+        $this->nazwa = $nazwa;
     }
 }
     </programlisting>
@@ -722,86 +695,87 @@ class Foo
   </para>
     
    <para>
-    Let us check out if there is a difference between
-    <varname>$bar1</varname> which has been created using
-    the copy <literal>=</literal> operator and
-    <varname>$bar2</varname> which has been created using
-    the reference <literal>=&amp;</literal> operator...
+    Sprawdźmy, czy jest jakaś różnica pomiędzy
+    <varname>$bar1</varname>, który jest tworzony przy pomocy operatora
+    przypisania <literal>=</literal>, a <varname>$bar2</varname>, który został
+    stworzony używając operatora referencji <literal>=&amp;</literal>...
 
     <informalexample>
      <programlisting role="php">
 
-$bar1 = new Foo('set in constructor');
-$bar1->echoName();
-$globalref[0]->echoName();
+$bar1 = new Foo('ustawione w konstruktorze');
+$bar1->wyswietlNazwe();
+$globalref[0]->wyswietlNazwe();
 
-/* output:
-set in constructor
-set in constructor
-set in constructor */
+/* wyjście:
+ustawione w konstruktorze
+ustawione w konstruktorze
+ustawione w konstruktorze */
 
-$bar2 =&amp; new Foo('set in constructor');
-$bar2->echoName();
-$globalref[1]->echoName();
+$bar2 =&amp; new Foo('ustawione w konstruktorze');
+$bar2->wyswietlNazwe();
+$globalref[1]->wyswietlNazwe();
 
-/* output:
-set in constructor
-set in constructor
-set in constructor */
+/* wyjście:
+ustawione w konstruktorze
+ustawione w konstruktorze
+ustawione w konstruktorze */
 
      </programlisting>
     </informalexample>
    </para>
    <para>
-    Apparently there is no difference, but in fact there is a
-    very significant one: <varname>$bar1</varname> and
-    <varname>$globalref[0]</varname> are _NOT_ referenced, they
-    are NOT the same variable. This is because "new" does not
-    return a reference by default, instead it returns a copy.
+    Wydaje się, że nie ma żadnej różnicy, ale na prawdę jest jedna, i to
+    bardzo istotna: <varname>$bar1</varname> i
+    <varname>$globalref[0]</varname> <emphasis>NIE</emphasis> są referencjami,
+    <emphasis>NIE</emphasis> są tą samą zmienna. Dzieje się tak, ponieważ
+    "new" nie zwraca domyślnie referencji, ale kopię.
     <note>
      <simpara>
-      There is no performance loss (since PHP 4 and up use reference
-      counting) returning copies instead of references. On the
-      contrary it is most often better to simply work with copies
-      instead of references, because creating references takes some
-      time where creating copies virtually takes no time (unless none
-      of them is a large array or object and one of them gets changed
-      and the other(s) one(s) subsequently, then it would be wise to
-      use references to change them all concurrently).
+      Zwracanie kopii zamiast referencji nie powoduje utraty wydajności (od
+      PHP 4 używane jest zliczanie referencji). Jednakże zazwyczaj lepiej jest
+      pracować poprostu z kopiami zamiast referencji, poniewać tworzenie
+      referencji zabiera trochę czasu, podczas gdy tworzenie kopii obiektów
+      teoretycznie w ogóle nie zabiera czasu (chyba że któraś z tych zmiennych
+      jest dużą tablicą lub obiektem i jedno z nich ulega zmianie, po czym tej
+      samej zmianie ulegają pozostałe zmienne; wtedy lepiej jest użyć
+      referencji do zmieniania ich równolegle).
      </simpara>
     </note>
-    To prove what is written above let us watch the code below.
+    Aby udowodnić to, co zostało zapisane powyżej, przyjrzyjmy się poniższemu
+    programowi.
 
     <informalexample>
      <programlisting role="php">
-// now we will change the name. what do you expect?
-// you could expect that both $bar1 and $globalref[0] change their names...
-$bar1->setName('set from outside');
+// teraz zmienimy nazwę. czego się spodziewasz?
+// możesz się spodziewać, że i $bar1 i $globalref[0] zmienią swoje nazwy...
+$bar1->ustawNazwe('ustawiona z zewnątrz');
 
-// as mentioned before this is not the case.
-$bar1->echoName();
-$globalref[0]->echoName();
+// jak napisano powyżej, nic takiego się nie stanie
+$bar1->wyswietlNazwe();
+$globalref[0]->wyswietlNazwe();
 
-/* output:
-set from outside
-set in constructor */
+/* wyjście:
+ustawiona z zewnątrz
+ustawiona w konstruktorze */
 
-// let us see what is different with $bar2 and $globalref[1]
-$bar2->setName('set from outside');
+// zobaczmy co się dzieje z $bar2 i $globalref[1]
+$bar2->ustawNazwe('ustawiona z zewnątrz');
 
-// luckily they are not only equal, they are the same variable
-// thus $bar2->name and $globalref[1]->name are the same too
-$bar2->echoName();
-$globalref[1]->echoName();
+// na szczęście ta zmienna nie zachowuje się jak ta z poprzedniego przypadku
+// są to te same zmienne, z więc $bar2->nazwa i $globalref[1]->nazwa są także
+// tymi samymi zmiennymi
+$bar2->wyswietlNazwe();
+$globalref[1]->wyswietlNazwe();
 
-/* output:
-set from outside
-set from outside */
+/* wyjście:
+ustawiona z zewnątrz
+ustawiona z zewnątrz */
      </programlisting>
     </informalexample>   
    </para>   
    <para>
-   Another final example, try to understand it.
+   Ustatni przykład. Postaraj się go zrozumieć/
    
     <informalexample>
      <programlisting role="php">
@@ -809,19 +783,19 @@ class A
 {
     function A($i)
     {
-        $this->value = $i;
-        // try to figure out why we do not need a reference here
+        $this->wartosc = $i;
+        // domyśl się dlaczego nie potrzebujemy tutaj referencji
         $this->b = new B($this);
     }
 
-    function createRef()
+    function stworzRef()
     {
         $this->c = new B($this);
     }
 
-    function echoValue()
+    function wyswietlWartosc()
     {
-        echo "&lt;br&gt;","class ",get_class($this),': ',$this->value;
+        echo "&lt;br&gt;","klasa ",get_class($this),': ',$this->value;
     }
 }
 
@@ -833,35 +807,34 @@ class B
         $this->a = &amp;$a;
     }
 
-    function echoValue()
+    function wyswietlWartosc()
     {
-        echo "&lt;br&gt;","class ",get_class($this),': ',$this->a->value;
+        echo "&lt;br&gt;","klasa ",get_class($this),': ',$this->a->value;
     }
 }
-
-// try to undestand why using a simple copy here would yield
-// in an undesired result in the *-marked line
+// spróbuj zrozumieć dlaczego użycie tu prostego kopiowania może powodować
+// nieporządany efekt w linii uznaczonej znaczkiem '*'
 $a =&amp; new A(10);
-$a->createRef();
+$a->stworzRef();
 
-$a->echoValue();
-$a->b->echoValue();
-$a->c->echoValue();
+$a->wyswietlWartosc();
+$a->b->wyswietlWartosc();
+$a->c->wyswietlWartosc();
 
 $a->value = 11;
 
-$a->echoValue();
-$a->b->echoValue(); // *
-$a->c->echoValue();
+$a->wyswietlWartosc();
+$a->b->wyswietlWartosc(); // *
+$a->c->wyswietlWartosc();
 
 /*
-output:
-class A: 10
-class B: 10
-class B: 10
-class A: 11
-class B: 11
-class B: 11
+wyjście:
+klasa A: 10
+klasa B: 10
+klasa B: 10
+klasa A: 11
+klasa B: 11
+klasa B: 11
 */
      </programlisting>
     </informalexample>
