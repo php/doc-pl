@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.37 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.18 $ -->
+<!-- EN-Revision: 1.38 Maintainer: qrak Status: ready -->
+<!-- $Revision: 1.19 $ -->
  <chapter id="language.operators">
   <title>Operatory</title>
   <simpara>
@@ -618,7 +618,7 @@ echo "Powinno być 4: " . $a . "<br />\n";
 
   
   <sect1 id="language.operators.string">
-   <title>Operatory Łańcuchowe</title>
+   <title>Operatory Stringów</title>
    <simpara>
     W PHP są dwa operatory operujące na łańcuchach znaków (stringach). Pierwszym
     z nich jest operator konkatenacji (połączenia) ('.'), który zwraca łańcuch 
@@ -640,6 +640,42 @@ $a = "Witaj ";
 $a .= "Świecie!";     // teraz $a zawiera ciąg "Witaj Świecie!"
 ]]>
      </programlisting>
+    </informalexample>
+   </para>
+  </sect1>
+    
+  <sect1 id="language.operators.array">
+   <title>Operatory Tablicowe</title>
+   <simpara>
+    Jedynym operatorem tablicowym w PHP jest <literal>+</literal>. Dopisuje
+    on prawy operand tablicowy do lewego, przy czym zduplikowane klucze
+    NIE są nadpisywane.
+   </simpara>
+   <para>
+    <informalexample>
+     <programlisting role="php">
+<![CDATA[
+$a = array("a" => "jabłko", "b" => "banan");
+$b = array("a" =>"gruszka", "b" => "truskawka", "c" => "wisienka");
+
+$c = $a + $b;
+
+var_dump($c);
+]]>
+     </programlisting>
+     <screen role="php">
+<![CDATA[
+array(3) {
+  ["a"]=>
+  string(5) "jabłko"
+  ["b"]=>
+  string(6) "banan"
+  ["c"]=>
+  string(6) "wisienka"
+}
+
+]]>
+       </screen>
     </informalexample>
    </para>
   </sect1>
