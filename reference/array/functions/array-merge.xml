@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.6 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.7 $ -->
+<!-- EN-Revision: 1.18 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.8 $ -->
   <refentry id="function.array-merge">
    <refnamediv>
     <refname>array_merge</refname>
-    <refpurpose>Łączy dwie lub więcej tablic</refpurpose>
+    <refpurpose>Łączy jedną lub więcej tablic</refpurpose>
    </refnamediv>
    <refsect1>
     <title>Opis</title>
      <methodsynopsis>
       <type>array</type><methodname>array_merge</methodname>
       <methodparam><type>array</type><parameter>tablica1</parameter></methodparam>
-      <methodparam><type>array</type><parameter>tablica2</parameter></methodparam>
+      <methodparam choice="opt"><type>array</type><parameter>tablica2</parameter></methodparam>
       <methodparam choice="opt"><type>array</type><parameter>...</parameter></methodparam>
      </methodsynopsis>
     <para>
-     <function>array_merge</function> łączy elementy dwóch lub więcej tablic
+     <function>array_merge</function> łączy elementy jednej lub więcej tablic
      razem, tak że wartości jednej tablicy są wstawiane na koniec poprzedniej
      tablicy. Funkcja ta zwraca tablicę wynikową.
     </para>
@@ -27,18 +27,24 @@
      dopisana na koniec tablicy.
     </para>
     <para>
+     Jeśli podana zostanie tylko jedna tablica i jest ona indeksowana
+     numerycznie, to klucze tablicy zostaną przeindeksowane w sposób ciągły.
+    </para>
+    <para>
      <example>
       <title>Przykład użycia <function>array_merge</function></title>
       <programlisting role="php">
 <![CDATA[
-$tablica1 = array ("kolor" => "czerwony", 2, 4);
-$tablica2 = array ("a", "b", "kolor" => "zielony", "kształt" => "trapezoid", 4);
-print_r(array_merge ($tablica1, $tablica2));
+<?php
+$tablica1 = array("kolor" => "czerwony", 2, 4);
+$tablica2 = array("a", "b", "kolor" => "zielony", "kształt" => "trapezoid", 4);
+$wynik = array_merge($tablica1, $tablica2));
+print_r($wynik);
+?>
 ]]>
       </programlisting>
-      <para>
-       Powyższy przykład wyświetli:
-       <screen>
+      &example.outputs;
+      <screen>
 <![CDATA[
 Array
 (
@@ -51,8 +57,7 @@ Array
     [4] => 4
 )
 ]]>
-       </screen>
-      </para>
+      </screen>
      </example>
     </para>
     <para>
@@ -60,53 +65,88 @@ Array
       <title>Prosty przykład użycia <function>array_merge</function></title>
       <programlisting role="php">
 <![CDATA[
+<?php
 $tablica1 = array();
 $tablica2 = array(1 => "dane");
 $wynik    = array_merge($tablica1, $tablica2);
+?>
 ]]>
-       </programlisting>
-       <para>
-        Nie zapomnij że klucze numeryczne będą przenumerowane!
-        <screen role="php">
+      </programlisting>
+      <para>
+       Nie zapomnij że klucze numeryczne będą przenumerowane!
+      </para>
+      <screen role="php">
 <![CDATA[
 Array
 (
 [0] => dane
 )
 ]]>
-        </screen>
-       </para>
-       <para>
-        Jeśli chcesz całkowicie zachować tablice i tylko dodać jedną na końcu
-        drugiej, użyj operatora <literal>+</literal>:
-        <programlisting role="php">
+      </screen>
+      <para>
+       Jeśli chcesz całkowicie zachować tablice i tylko dodać jedną na końcu
+       drugiej, użyj operatora <literal>+</literal>:
+      </para>
+      <programlisting role="php">
 <![CDATA[
+<?php
 $tablica1 = array();
 $tablica2 = array(1 => "dane");
 $wynik = $tablica1 + $tablica2;
+?>
 ]]>
-        </programlisting>
-        Klucze numeryczne pozostaną zachowane a co za tym idzie asocjacje
-        zostaną niezmienione.
-        <screen role="php">
+      </programlisting>
+      <para>
+       Klucze numeryczne pozostaną zachowane a co za tym idzie asocjacje
+       zostaną niezmienione.
+      </para>
+      <screen role="php">
 <![CDATA[
 Array
 (
     [1] => dane
 )
 ]]>
-       </screen>
-      </para>
+      </screen>
      </example>
     </para>
-    <note>
+    <warning>
      <para>
-      Współdzielone klucze będą nadpisane na zasadzie pierwszy
-      przyszedł-pierwszy obsłużony.
+      Zachowanie <function>array_merge</function> zostało zmienione w PHP 5.
+      Inaczej niż w PHP 4, <function>array_merge</function> akceptuje teraz
+      tylko parametry typu <type>array</type>. Jednakże można użyć rzutowania
+      typów aby łączyć zmienne innych typów. Ilustruje to poniższy przykład.
      </para>
-    </note>
+     <para>
+      <example>
+       <title>Przykład użycia <function>array_merge</function> w PHP 5</title>
+       <programlisting role="php">
+ <![CDATA[
+ <?php
+ $poczatek = 'foo';
+ $koniec = array(1 => 'bar');
+ $wynik = array_merge((array)$poczatek, (array)$koniec);
+ print_r($wynik);
+ ?>
+ ]]>
+       </programlisting>
+       &example.outputs;
+       <screen role="php">
+ <![CDATA[
+ Array
+ (
+     [0] => foo
+     [1] => bar
+ )
+ ]]>
+       </screen>
+      </example>
+     </para>
+    </warning>
     <para>
-     Patrz także: <function>array_merge_recursive</function>.
+     Patrz także: <function>array_merge_recursive</function>,
+     <function>array_combine</function> i <link
+      linkend="language.operators.array">operatory tablic</link>.
     </para>
    </refsect1>
   </refentry>
