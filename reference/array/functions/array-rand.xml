@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.3 $ -->
+<!-- EN-Revision: 1.9 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.4 $ -->
   <refentry id="function.array-rand">
    <refnamediv>
     <refname>array_rand</refname>
@@ -28,23 +28,25 @@
      zawierająca klucze losowych wpisów. Dzieje się tak, żeby można było
      wyciągnąć jednocześnie klucze i wartości losowych elementów tablicy.
     </para>
-    <para>
-     Nie zapomnij wywołać <function>srand</function> aby zainicjować ziarno
-     generatora liczb pseudolosowych.
-    </para>
+    &note.randomseed;
     <para>
      <example>
       <title>Przykład użycia <function>array_rand</function></title>
       <programlisting role="php">
 <![CDATA[
-srand ((float) microtime() * 10000000);
+<?php
+srand((float) microtime() * 10000000);
 $wejscie = array ("Neo", "Morpheus", "Trinity", "Cypher", "Tank");
 $losowe_klucze = array_rand ($wejscie, 2);
-print $wejscie[$losowe_klucze[0]]."\n";
-print $wejscie[$losowe_klucze[1]]."\n";
+echo $wejscie[$losowe_klucze[0]] . "\n";
+echo $wejscie[$losowe_klucze[1]] . "\n";
+?>
 ]]>
       </programlisting>
      </example>
+    </para>
+    <para>
+     Patrz także: <function>shuffle</function>.
     </para>
    </refsect1>
   </refentry>
