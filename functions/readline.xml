@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
 <!-- EN-Revision: 1.13 Maintainer: leon Status: ready -->
-<!-- $Revision: 1.6 $ -->
+<!-- $Revision: 1.7 $ -->
  <reference id="ref.readline">
   <title>GNU Readline</title>
   <titleabbrev>Readline</titleabbrev>
@@ -29,14 +29,10 @@
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>string <function>readline</function></funcdef>
-      <paramdef>string 
-       <parameter><optional>prompt</optional></parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>string</type><methodname>readline</methodname>
+      <methodparam choice="opt"><type>string</type><parameter>prompt</parameter></methodparam>
+     </methodsynopsis>
     <para>
      Funkcja ta zwraca pojedyńczy string pobrany od użytkownika. Jako parametr
      funkcji można podać string zawierający prompt (znak zachęty) który będzie
@@ -72,12 +68,10 @@ print_r (readline_info());
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>void <function>readline_add_history</function></funcdef>
-      <paramdef>string <parameter>linia</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>void</type><methodname>readline_add_history</methodname>
+      <methodparam><type>string</type><parameter>linia</parameter></methodparam>
+     </methodsynopsis>
     <para>
      Funkcja ta dodaje linię do historii linii poleceń.
     </para>
@@ -91,12 +85,10 @@ print_r (readline_info());
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>bool <function>readline_clear_history</function></funcdef>
+     <methodsynopsis>
+      <type>bool</type><methodname>readline_clear_history</methodname>
       <void/>
-     </funcprototype>
-    </funcsynopsis>
+     </methodsynopsis>
     <para>
      Funkcja ta czyści całą historię linii poleceń.
     </para>
@@ -110,14 +102,10 @@ print_r (readline_info());
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>bool 
-       <function>readline_completion_function</function>
-      </funcdef>
-      <paramdef>string <parameter>linia</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>bool</type><methodname>readline_completion_function</methodname>
+      <methodparam><type>string</type><parameter>linia</parameter></methodparam>
+     </methodsynopsis>
     <para>
      Funkcja ta rejestruje funkcję dopełniania. Musisz podać nazwę istniejącej
      funkcji, która przyjmuje jako parametr częściowo wypełnioną linię i
@@ -134,17 +122,11 @@ print_r (readline_info());
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>mixed <function>readline_info</function></funcdef>
-      <paramdef>string 
-       <parameter><optional>nazwa_zmiennej</optional></parameter>
-      </paramdef>
-      <paramdef>string 
-       <parameter><optional>nowa_wartość</optional></parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>mixed</type><methodname>readline_info</methodname>
+      <methodparam choice="opt"><type>string</type><parameter>nazwa_zmiennej</parameter></methodparam>
+      <methodparam choice="opt"><type>string</type><parameter>nowa_wartość</parameter></methodparam>
+     </methodsynopsis>
     <para>
      Jeśli funkcja zostanie wywołana bez parametrów, to zwrócona zostanie
      tablica z wartościami wszystkich ustawień biblioteki readline. Elementy
@@ -167,12 +149,10 @@ print_r (readline_info());
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>array <function>readline_list_history</function></funcdef>
+     <methodsynopsis>
+      <type>array</type><methodname>readline_list_history</methodname>
       <void/>
-     </funcprototype>
-    </funcsynopsis>
+     </methodsynopsis>
     <para>
      Funkcja ta zwraca tablicę zawierającą całą historię linii poleceń.
      Elementy są indeksowane przez liczby całkowite poczynając od zera.
@@ -187,14 +167,10 @@ print_r (readline_info());
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>bool 
-       <function>readline_read_history</function>
-      </funcdef>
-      <paramdef>string <parameter>nazwa_pliku</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>bool</type><methodname>readline_read_history</methodname>
+      <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
+     </methodsynopsis>
     <para>
      Funkcja ta czyta historię poleceń z pliku.
     </para>
@@ -209,14 +185,10 @@ print_r (readline_info());
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>bool 
-       <function>readline_write_history</function>
-      </funcdef>
-      <paramdef>string <parameter>nazwa_pliku</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>bool</type><methodname>readline_write_history</methodname>
+      <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
+     </methodsynopsis>
     <para>
      Funkcja ta zapisuje historię poleceń do pliku.
     </para>
@@ -245,3 +217,4 @@ vim600: syn=xml fen fdm=syntax fdl=2 si
 vim: et tw=78 syn=sgml
 vi: ts=1 sw=1
 -->
+

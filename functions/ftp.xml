@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
 <!-- EN-Revision: 1.26 Maintainer: leon Status: ready -->
-<!-- $Revision: 1.10 $ -->
+<!-- $Revision: 1.11 $ -->
  <reference id="ref.ftp">
   <title>FTP</title>
   <titleabbrev>FTP</titleabbrev>
@@ -71,14 +71,12 @@ ftp_quit($conn_id);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>int <function>ftp_connect</function></funcdef>
-      <paramdef>string <parameter>host</parameter></paramdef>
-      <paramdef>int <parameter><optional>port</optional>
-       </parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>int</type><methodname>ftp_connect</methodname>
+      <methodparam><type>string</type><parameter>host</parameter></methodparam>
+      <methodparam choice="opt"><type>int</type><parameter>port
+       </parameter></methodparam>
+     </methodsynopsis>
     <para>
      Zwraca strumień FTP w przypadku sukcesu, lub wartość &false; w przypadku
      porażki.
@@ -100,14 +98,12 @@ ftp_quit($conn_id);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>int <function>ftp_login</function></funcdef>
-      <paramdef>int <parameter>strumien_ftp</parameter></paramdef>
-      <paramdef>string <parameter>nazwa_uzytkownika</parameter></paramdef>
-      <paramdef>string <parameter>haslo</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>int</type><methodname>ftp_login</methodname>
+      <methodparam><type>int</type><parameter>strumien_ftp</parameter></methodparam>
+      <methodparam><type>string</type><parameter>nazwa_uzytkownika</parameter></methodparam>
+      <methodparam><type>string</type><parameter>haslo</parameter></methodparam>
+     </methodsynopsis>
     <para> 
      Loguje się do podanego strumienia FTP.
     </para>
@@ -125,12 +121,10 @@ ftp_quit($conn_id);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>string <function>ftp_pwd</function></funcdef>
-      <paramdef>int <parameter>strumien_ftp</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>string</type><methodname>ftp_pwd</methodname>
+      <methodparam><type>int</type><parameter>strumien_ftp</parameter></methodparam>
+     </methodsynopsis>
     <para>
      Zwraca nazwę bieżącego katalogu lub &false; w przypadku napotkania błędu.
     </para>
@@ -144,12 +138,10 @@ ftp_quit($conn_id);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>int <function>ftp_cdup</function></funcdef>
-      <paramdef>int <parameter>strumien_ftp</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>int</type><methodname>ftp_cdup</methodname>
+      <methodparam><type>int</type><parameter>strumien_ftp</parameter></methodparam>
+     </methodsynopsis>
     <para> 
      Zmienia bieżący katalog na nadrzędny.
     </para>
@@ -167,13 +159,11 @@ ftp_quit($conn_id);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>int <function>ftp_chdir</function></funcdef>
-      <paramdef>int <parameter>strumien_ftp</parameter></paramdef>
-      <paramdef>string <parameter>katalog</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>int</type><methodname>ftp_chdir</methodname>
+      <methodparam><type>int</type><parameter>strumien_ftp</parameter></methodparam>
+      <methodparam><type>string</type><parameter>katalog</parameter></methodparam>
+     </methodsynopsis>
     <para> 
      Zmienia bieżący katalog na ten określony w parametrze
      <parameter>katalog</parameter>.
@@ -192,13 +182,11 @@ ftp_quit($conn_id);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>string <function>ftp_mkdir</function></funcdef>
-      <paramdef>int <parameter>strumien_ftp</parameter></paramdef>
-      <paramdef>string <parameter>katalog</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>string</type><methodname>ftp_mkdir</methodname>
+      <methodparam><type>int</type><parameter>strumien_ftp</parameter></methodparam>
+      <methodparam><type>string</type><parameter>katalog</parameter></methodparam>
+     </methodsynopsis>
     <para> 
      Tworzy podany <parameter>katalog</parameter>.
     </para>
@@ -216,13 +204,11 @@ ftp_quit($conn_id);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>int <function>ftp_rmdir</function></funcdef>
-      <paramdef>int <parameter>strumien_ftp</parameter></paramdef>
-      <paramdef>string <parameter>katalog</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>int</type><methodname>ftp_rmdir</methodname>
+      <methodparam><type>int</type><parameter>strumien_ftp</parameter></methodparam>
+      <methodparam><type>string</type><parameter>katalog</parameter></methodparam>
+     </methodsynopsis>
     <para> 
      Tworzy podany <parameter>katalog</parameter>.
     </para>
@@ -240,13 +226,11 @@ ftp_quit($conn_id);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>array <function>ftp_nlist</function></funcdef>
-      <paramdef>int <parameter>strumien_ftp</parameter></paramdef>
-      <paramdef>string <parameter>katalog</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>array</type><methodname>ftp_nlist</methodname>
+      <methodparam><type>int</type><parameter>strumien_ftp</parameter></methodparam>
+      <methodparam><type>string</type><parameter>katalog</parameter></methodparam>
+     </methodsynopsis>
     <para>
      W przypadku sukcesu zwracana jest tablica z nazwami plików lub wartość
      &false; w przypadku napotkania błędu.
@@ -263,13 +247,11 @@ ftp_quit($conn_id);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>array <function>ftp_rawlist</function></funcdef>
-      <paramdef>int <parameter>strumien_ftp</parameter></paramdef>
-      <paramdef>string <parameter>katalog</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>array</type><methodname>ftp_rawlist</methodname>
+      <methodparam><type>int</type><parameter>strumien_ftp</parameter></methodparam>
+      <methodparam><type>string</type><parameter>katalog</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>ftp_rawlist</function> wykonuje polecenie FTP LIST i zwraca
      wynik tego polecenia jako tablicę. Każdy element odpowiada jednej linii
@@ -289,12 +271,10 @@ ftp_quit($conn_id);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>string <function>ftp_systype</function></funcdef>
-      <paramdef>int <parameter>strumien_ftp</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>string</type><methodname>ftp_systype</methodname>
+      <methodparam><type>int</type><parameter>strumien_ftp</parameter></methodparam>
+     </methodsynopsis>
     <para>
      Zwraca typ zdalnego systemu lub &false; w przypadku napotkania błędu.
     </para>
@@ -308,13 +288,11 @@ ftp_quit($conn_id);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>int <function>ftp_pasv</function></funcdef>
-      <paramdef>int <parameter>strumien_ftp</parameter></paramdef>
-      <paramdef>int <parameter>pasywny</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>int</type><methodname>ftp_pasv</methodname>
+      <methodparam><type>int</type><parameter>strumien_ftp</parameter></methodparam>
+      <methodparam><type>int</type><parameter>pasywny</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>ftp_pasv</function> włącza tryb pasywny jeśli parametr
      <parameter>pasywny</parameter> ma wartość &true; (wyłącza tryb pasywyny
@@ -336,15 +314,13 @@ ftp_quit($conn_id);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>int <function>ftp_get</function></funcdef>
-      <paramdef>int <parameter>strumien_ftp</parameter></paramdef>
-      <paramdef>string <parameter>plik_lokalny</parameter></paramdef>
-      <paramdef>string <parameter>plik_zdalny</parameter></paramdef>
-      <paramdef>int <parameter>tryb</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>int</type><methodname>ftp_get</methodname>
+      <methodparam><type>int</type><parameter>strumien_ftp</parameter></methodparam>
+      <methodparam><type>string</type><parameter>plik_lokalny</parameter></methodparam>
+      <methodparam><type>string</type><parameter>plik_zdalny</parameter></methodparam>
+      <methodparam><type>int</type><parameter>tryb</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>ftp_get</function> pobiera <parameter>plik_zdalny</parameter> z
      serwera FTP i zapisuje go lokalnie jako <parameter>plik_lokalny
@@ -367,15 +343,13 @@ ftp_quit($conn_id);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>int <function>ftp_fget</function></funcdef>
-      <paramdef>int <parameter>strumien_ftp</parameter></paramdef>
-      <paramdef>int <parameter>fp</parameter></paramdef>
-      <paramdef>string <parameter>plik_zdalny</parameter></paramdef>
-      <paramdef>int <parameter>tryb</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>int</type><methodname>ftp_fget</methodname>
+      <methodparam><type>int</type><parameter>strumien_ftp</parameter></methodparam>
+      <methodparam><type>int</type><parameter>fp</parameter></methodparam>
+      <methodparam><type>string</type><parameter>plik_zdalny</parameter></methodparam>
+      <methodparam><type>int</type><parameter>tryb</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>ftp_fget</function> pobiera <parameter>plik_zdalny</parameter>
      z serwera FTP i zapisuje go do podanego wskaźnika,
@@ -396,15 +370,13 @@ ftp_quit($conn_id);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>int <function>ftp_put</function></funcdef>
-      <paramdef>int <parameter>strumien_ftp</parameter></paramdef>
-      <paramdef>string <parameter>plik_zdalny</parameter></paramdef>
-      <paramdef>string <parameter>plik_lokalny</parameter></paramdef>
-      <paramdef>int <parameter>tryb</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>int</type><methodname>ftp_put</methodname>
+      <methodparam><type>int</type><parameter>strumien_ftp</parameter></methodparam>
+      <methodparam><type>string</type><parameter>plik_zdalny</parameter></methodparam>
+      <methodparam><type>string</type><parameter>plik_lokalny</parameter></methodparam>
+      <methodparam><type>int</type><parameter>tryb</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>ftp_put</function> umieszcza <parameter>plik_lokalny</parameter>
      na serwerze jako <parameter>plik_zdalny</parameter>. <parameter>tryb
@@ -435,15 +407,13 @@ $upload = ftp_put ($conn_id, "$plik_docelowy", "$plik_zrodlowy", FTP_ASCII);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>int <function>ftp_fput</function></funcdef>
-      <paramdef>int <parameter>strumien_ftp</parameter></paramdef>
-      <paramdef>string <parameter>plik_zdalny</parameter></paramdef>
-      <paramdef>int <parameter>fp</parameter></paramdef>
-      <paramdef>int <parameter>tryb</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>int</type><methodname>ftp_fput</methodname>
+      <methodparam><type>int</type><parameter>strumien_ftp</parameter></methodparam>
+      <methodparam><type>string</type><parameter>plik_zdalny</parameter></methodparam>
+      <methodparam><type>int</type><parameter>fp</parameter></methodparam>
+      <methodparam><type>int</type><parameter>tryb</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>ftp_fput</function> umieszcza na serwerze dane pobrane ze
      wskaźnika <parameter>fp</parameter> do końca pliku. <parameter>tryb
@@ -464,13 +434,11 @@ $upload = ftp_put ($conn_id, "$plik_docelowy", "$plik_zrodlowy", FTP_ASCII);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>int <function>ftp_size</function></funcdef>
-      <paramdef>int <parameter>strumien_ftp</parameter></paramdef>
-      <paramdef>string <parameter>plik_zdalny</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>int</type><methodname>ftp_size</methodname>
+      <methodparam><type>int</type><parameter>strumien_ftp</parameter></methodparam>
+      <methodparam><type>string</type><parameter>plik_zdalny</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>ftp_size</function> zwraca rozmiar zdalnego pliku. Jeśli
      napotkany zostanie błąd lub plik nie istnieje, zwracana jest
@@ -490,13 +458,11 @@ $upload = ftp_put ($conn_id, "$plik_docelowy", "$plik_zrodlowy", FTP_ASCII);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>int <function>ftp_mdtm</function></funcdef>
-      <paramdef>int <parameter>strumien_ftp</parameter></paramdef>
-      <paramdef>string <parameter>plik_zdalny</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>int</type><methodname>ftp_mdtm</methodname>
+      <methodparam><type>int</type><parameter>strumien_ftp</parameter></methodparam>
+      <methodparam><type>string</type><parameter>plik_zdalny</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>ftp_mdtm</function> sprawdza czas ostatniej modyfikacji
      podanego pliku i zwraca to jako UNIX timestamp (ilość sekund od
@@ -522,14 +488,12 @@ $upload = ftp_put ($conn_id, "$plik_docelowy", "$plik_zrodlowy", FTP_ASCII);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>boolean <function>ftp_rename</function></funcdef>
-      <paramdef>resource <parameter>strumien_ftp</parameter></paramdef>
-      <paramdef>string <parameter>z</parameter></paramdef>
-      <paramdef>string <parameter>na</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>boolean</type><methodname>ftp_rename</methodname>
+      <methodparam><type>resource</type><parameter>strumien_ftp</parameter></methodparam>
+      <methodparam><type>string</type><parameter>z</parameter></methodparam>
+      <methodparam><type>string</type><parameter>na</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>ftp_rename</function> zmienia nazwę pliku lub katalogu o
      aktualnej nazwie <parameter>z</parameter> na nową nazwę
@@ -550,13 +514,11 @@ $upload = ftp_put ($conn_id, "$plik_docelowy", "$plik_zrodlowy", FTP_ASCII);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>int <function>ftp_delete</function></funcdef>
-      <paramdef>int <parameter>strumien_ftp</parameter></paramdef>
-      <paramdef>string <parameter>sciezka</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>int</type><methodname>ftp_delete</methodname>
+      <methodparam><type>int</type><parameter>strumien_ftp</parameter></methodparam>
+      <methodparam><type>string</type><parameter>sciezka</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>ftp_delete</function> usuwa plik określony przez parametr
      <parameter>ściezka</parameter> z serwera FTP.
@@ -575,13 +537,11 @@ $upload = ftp_put ($conn_id, "$plik_docelowy", "$plik_zrodlowy", FTP_ASCII);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>int <function>ftp_site</function></funcdef>
-      <paramdef>int <parameter>strumien_ftp</parameter></paramdef>
-      <paramdef>string <parameter>cmd</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>int</type><methodname>ftp_site</methodname>
+      <methodparam><type>int</type><parameter>strumien_ftp</parameter></methodparam>
+      <methodparam><type>string</type><parameter>cmd</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>ftp_site</function> wysyła do serwera FTP komendę określoną
      przez parametr <parameter>cmd</parameter>. Komendy SITE nie są
@@ -603,12 +563,10 @@ $upload = ftp_put ($conn_id, "$plik_docelowy", "$plik_zrodlowy", FTP_ASCII);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>int <function>ftp_quit</function></funcdef>
-      <paramdef>int <parameter>strumien_ftp</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>int</type><methodname>ftp_quit</methodname>
+      <methodparam><type>int</type><parameter>strumien_ftp</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>ftp_quit</function> zamyka <parameter>strumien_ftp</parameter>.
     </para>
@@ -636,3 +594,4 @@ vim600: syn=xml fen fdm=syntax fdl=2 si
 vim: et tw=78 syn=xml
 vi: ts=1 sw=1
 -->
+

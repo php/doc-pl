@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
 <!-- EN-Revision: 1.22 Maintainer: Qrak Status: ready -->
-<!-- $Revision: 1.8 $ -->
+<!-- $Revision: 1.9 $ -->
  <reference id="ref.apache">
   <title>Apache</title>
   <titleabbrev>Apache</titleabbrev>
@@ -15,12 +15,10 @@
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>object <function>apache_lookup_uri</function></funcdef>
-      <paramdef>string <parameter>nazwa_pliku</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>object</type><methodname>apache_lookup_uri</methodname>
+      <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
+     </methodsynopsis>
     <para>
      Ta funkcja wywołuje wewnętrzne żądanie dla określonego URI. Funkcja zbiera
      wszystkie istotne informacje odnośnie podanego źródła informacji i zwraca
@@ -65,17 +63,13 @@
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>string <function>apache_note</function></funcdef>
-      <paramdef>string <parameter>nazwa_noty</parameter></paramdef>
-      <paramdef>string 
-       <parameter>
-        <optional>wartość_noty</optional>
-       </parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>string</type><methodname>apache_note</methodname>
+      <methodparam><type>string</type><parameter>nazwa_noty</parameter></methodparam>
+      <methodparam choice="opt"><type>string</type><parameter>
+        wartość_noty
+       </parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>apache_note</function> jest funkcją dotyczącą jedynie serwera
      Apache, która pobiera lub ustawia wartości <literal>not</literal>
@@ -95,12 +89,10 @@
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>int <function>ascii2ebcdic</function></funcdef>
-      <paramdef>string <parameter>łańcuch_ascii</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>int</type><methodname>ascii2ebcdic</methodname>
+      <methodparam><type>string</type><parameter>łańcuch_ascii</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>ascii2ebcdic</function> jest funkcją właściwą jedynie Apache'owi,
      dostępną wyłącznie w systemach EBCDIC (OS/390, BS2000). Funkcja konwertuje
@@ -120,12 +112,10 @@
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>int <function>ebcdic2ascii</function></funcdef>
-      <paramdef>string <parameter>łańcuch_ebcdic</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>int</type><methodname>ebcdic2ascii</methodname>
+      <methodparam><type>string</type><parameter>łańcuch_ebcdic</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>ebcdic2ascii</function> jest funkcją właściwą jedynie Apache'owi,
      dostępną wyłącznie w systemach EBCDIC (OS/390, BS2000). Funkcja konwertuje
@@ -146,12 +136,10 @@
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>array <function>getallheaders</function></funcdef>
+     <methodsynopsis>
+      <type>array</type><methodname>getallheaders</methodname>
       <void/>
-     </funcprototype>
-    </funcsynopsis>
+     </methodsynopsis>
     <para>
      Funkcja zwraca tablicę asocjacyjną zawierającą wszystkie nagłówki HTTP z
      aktualnego zapytania.
@@ -199,12 +187,10 @@ while (list ($naglowek, $wartosc) = each ($naglowki)) {
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>int <function>virtual</function></funcdef>
-      <paramdef>string <parameter>nazwa_pliku</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>int</type><methodname>virtual</methodname>
+      <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>virtual</function> jest funkcją właściwą jedynie Apache'owi,
      która jest odpowiednikiem &lt;!--#include virtual...--&gt; w mod_include.
@@ -227,12 +213,10 @@ while (list ($naglowek, $wartosc) = each ($naglowki)) {
      </refnamediv> 
      <refsect1> 
       <title>Opis</title> 
-      <funcsynopsis> 
-       <funcprototype> 
-        <funcdef>string <function>apache_child_terminate</function></funcdef> 
+       <methodsynopsis> 
+        <type>string</type><methodname>apache_child_terminate</methodname> 
         <void/> 
-       </funcprototype> 
-      </funcsynopsis> 
+       </methodsynopsis>
       <para>
        <function>apache_child_terminate</function> zakończy proces Apache'a,
        wykonujący aktualne zapytanie PHP, kiedy tylko zapytanie zostanie
@@ -253,14 +237,12 @@ while (list ($naglowek, $wartosc) = each ($naglowki)) {
      </refnamediv> 
      <refsect1> 
       <title>Opis</title> 
-      <funcsynopsis> 
-       <funcprototype> 
-        <funcdef>int <function>apache_setenv</function></funcdef> 
-        <paramdef>string <parameter>nazwa_zmiennej</parameter></paramdef> 
-        <paramdef>string <parameter>wartość</parameter></paramdef> 
-        <paramdef>bool <parameter><optional>nadrzędność</optional></parameter></paramdef> 
-       </funcprototype> 
-      </funcsynopsis> 
+       <methodsynopsis> 
+        <type>int</type><methodname>apache_setenv</methodname> 
+        <methodparam><type>string</type><parameter>nazwa_zmiennej</parameter></methodparam> 
+        <methodparam><type>string</type><parameter>wartość</parameter></methodparam> 
+        <methodparam choice="opt"><type>bool</type><parameter>nadrzędność</parameter></methodparam> 
+       </methodsynopsis>
       <para> 
        &warn.undocumented.func; 
       </para>
@@ -289,3 +271,4 @@ vim600: syn=xml fen fdm=syntax fdl=2 si
 vim: et tw=78 syn=sgml
 vi: ts=1 sw=1
 -->
+

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
 <!-- EN-Revision: 1.36 Maintainer: Qrak Status: ready -->
-<!-- $Revision: 1.8 $ -->
+<!-- $Revision: 1.9 $ -->
  <reference id="ref.mail">
   <title>Poczta elektroniczna</title>
   <titleabbrev>Poczta</titleabbrev>
@@ -70,21 +70,15 @@
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>bool <function>mail</function></funcdef>
-      <paramdef>string <parameter>do</parameter></paramdef>
-      <paramdef>string <parameter>temat</parameter></paramdef>
-      <paramdef>string <parameter>treść</parameter></paramdef>
-      <paramdef>string
-       <parameter><optional>dodatkowe_nagłówki</optional></parameter>
-      </paramdef>
-      <paramdef>string
-       <parameter><optional>dodatkowe_parametry</optional>
-       </parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>bool</type><methodname>mail</methodname>
+      <methodparam><type>string</type><parameter>do</parameter></methodparam>
+      <methodparam><type>string</type><parameter>temat</parameter></methodparam>
+      <methodparam><type>string</type><parameter>treść</parameter></methodparam>
+      <methodparam choice="opt"><type>string</type><parameter>dodatkowe_nagłówki</parameter></methodparam>
+      <methodparam choice="opt"><type>string</type><parameter>dodatkowe_parametry
+       </parameter></methodparam>
+     </methodsynopsis>
     <simpara>
      <function>mail</function> automatycznie wysyła wiadomość
      określoną w <parameter>treść</parameter> do odbiorcy
@@ -242,12 +236,10 @@ mail($to, $subject, $message, $headers);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>int <function>ezmlm_hash</function></funcdef>
-      <paramdef>string <parameter>adres_e-mail</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>int</type><methodname>ezmlm_hash</methodname>
+      <methodparam><type>string</type><parameter>adres_e-mail</parameter></methodparam>
+     </methodsynopsis>
     <simpara>
      <function>ezmlm_hash</function> oblicza wartość hash potrzebną
      przy przechowywaniu list adresatów programu EZMLM w bazie danych MySQL.
@@ -290,3 +282,4 @@ vim600: syn=xml fen fdm=syntax fdl=2 si
 vim: et tw=78 syn=sgml
 vi: ts=1 sw=1
 -->
+

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
 <!-- EN-Revision: 1.130 Maintainer: leon Status: ready -->
-<!-- $Revision: 1.7 $ -->
+<!-- $Revision: 1.8 $ -->
  <reference id="ref.array">
   <title>Tablice</title>
   <titleabbrev>Tablice</titleabbrev>
@@ -37,14 +37,10 @@
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>array <function>array</function></funcdef>
-      <paramdef>mixed 
-       <parameter><optional>...</optional></parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>array</type><methodname>array</methodname>
+      <methodparam choice="opt"><type>mixed</type><parameter>...</parameter></methodparam>
+     </methodsynopsis>
     <para>
      Zwraca tablicę stworzoną z podanych parametrów. Parametry mogą być
      indeksowane przy pomocy operatora <literal>=&gt;</literal> operator.
@@ -156,13 +152,11 @@ Array
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>array <function>array_change_key_case</function></funcdef>
-      <paramdef>array <parameter>wejście</parameter></paramdef>
-      <paramdef>int <parameter><optional>wielkość</optional></parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>array</type><methodname>array_change_key_case</methodname>
+      <methodparam><type>array</type><parameter>wejście</parameter></methodparam>
+      <methodparam choice="opt"><type>int</type><parameter>wielkość</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>array_change_key_case</function> zmienia klucze w tablicy
      <parameter>wejście</parameter> aby były pisane tylko dużymi lub tylko
@@ -204,14 +198,12 @@ Array
    </refnamediv>
    <refsect1>
     <title>Description</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>array <function>array_chunk</function></funcdef>
-      <paramdef>array <parameter>wejście</parameter></paramdef>
-      <paramdef>int <parameter>rozmiar</parameter></paramdef>
-      <paramdef>bool <parameter><optional>zachowaj_klucze</optional></parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>array</type><methodname>array_chunk</methodname>
+      <methodparam><type>array</type><parameter>wejście</parameter></methodparam>
+      <methodparam><type>int</type><parameter>rozmiar</parameter></methodparam>
+      <methodparam choice="opt"><type>bool</type><parameter>zachowaj_klucze</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>array_chunk</function> dzieli tablicę na kilka mniejszych,
      każda po <parameter>rozmiar</parameter> elementów. Istnieje możliwość, że
@@ -292,12 +284,10 @@ Array
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>array <function>array_count_values</function></funcdef>
-      <paramdef>array <parameter>wejście</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>array</type><methodname>array_count_values</methodname>
+      <methodparam><type>array</type><parameter>wejście</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>array_count_values</function> zwraca tablicę zawierającą
      wartości tablicy <parameter>wejście</parameter> jako klucze i częstość
@@ -324,16 +314,12 @@ array_count_values ($tablica); // zwraca tablicę (1=>2, "witaj"=>2, "świecie"=>1
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>array <function>array_diff</function></funcdef>
-      <paramdef>array <parameter>tabela1</parameter></paramdef>
-      <paramdef>array <parameter>tabela2</parameter></paramdef>
-      <paramdef>array
-       <parameter><optional> ...</optional></parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>array</type><methodname>array_diff</methodname>
+      <methodparam><type>array</type><parameter>tabela1</parameter></methodparam>
+      <methodparam><type>array</type><parameter>tabela2</parameter></methodparam>
+      <methodparam choice="opt"><type>array</type><parameter> ...</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>array_diff</function> zwraca tablicę zawierającą wszystkie
      wartości tablicy <parameter>tabela1</parameter> które nie są obecne w
@@ -385,15 +371,11 @@ $wynik = array_diff ($tablica1, $tablica2);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>array <function>array_filter</function></funcdef>
-      <paramdef>array <parameter>wejście</parameter></paramdef>
-      <paramdef>mixed 
-       <parameter><optional>funkcja_zwrotna</optional></parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>array</type><methodname>array_filter</methodname>
+      <methodparam><type>array</type><parameter>wejście</parameter></methodparam>
+      <methodparam choice="opt"><type>mixed</type><parameter>funkcja_zwrotna</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>array_filter</function> zwraca tablicę zawierającą wszystkie
      elementy tablicy <parameter>wejście</parameter> przefitrowane przez
@@ -442,12 +424,10 @@ $parzyste    = array_filter($tablica2, "parzyste");
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>array <function>array_flip</function></funcdef>
-      <paramdef>array <parameter>trans</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>array</type><methodname>array_flip</methodname>
+      <methodparam><type>array</type><parameter>trans</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>array_flip</function> zwraca tablicę w odwróconym porządku,
      tzn. klucze z tabeli <parameter>trans</parameter> stają się wartościami a
@@ -501,14 +481,12 @@ $trans = array_flip ($trans);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>array <function>array_fill</function></funcdef>
-      <paramdef>int <parameter>indeks_początkowy</parameter></paramdef>
-      <paramdef>int <parameter>num</parameter></paramdef>
-      <paramdef>mixed <parameter>wartość</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>array</type><methodname>array_fill</methodname>
+      <methodparam><type>int</type><parameter>indeks_początkowy</parameter></methodparam>
+      <methodparam><type>int</type><parameter>num</parameter></methodparam>
+      <methodparam><type>mixed</type><parameter>wartość</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>array_fill</function> wypełni tablicę wartością
      <parameter>value</parameter>, począwszy od indeksu
@@ -546,16 +524,12 @@ $a[10] = "banan";
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>array <function>array_intersect</function></funcdef>
-      <paramdef>array <parameter>tablica1</parameter></paramdef>
-      <paramdef>array <parameter>tablica2</parameter></paramdef>
-      <paramdef>array
-       <parameter><optional> ...</optional></parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>array</type><methodname>array_intersect</methodname>
+      <methodparam><type>array</type><parameter>tablica1</parameter></methodparam>
+      <methodparam><type>array</type><parameter>tablica2</parameter></methodparam>
+      <methodparam choice="opt"><type>array</type><parameter> ...</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>array_intersect</function> zwraca tablicę zawierającą wszystkie
      wartości tablicy <parameter>tablica1</parameter> które istnieją we
@@ -607,13 +581,11 @@ $wynik = array_intersect ($tablica1, $tablica2);
    </refnamediv>
    <refsect1>
     <title>Description</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>bool <function>array_key_exists</function></funcdef>
-      <paramdef>mixed <parameter>igła</parameter></paramdef>
-      <paramdef>array <parameter>stóg_siana</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>bool</type><methodname>array_key_exists</methodname>
+      <methodparam><type>mixed</type><parameter>igła</parameter></methodparam>
+      <methodparam><type>array</type><parameter>stóg_siana</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>array_key_exists</function> zwraca &true; jeśli
      <parameter>igła</parameter> jest ustawiona w tablicy
@@ -652,17 +624,13 @@ if (array_key_exists("pierwszy", $stog_siana)) {
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>array <function>array_keys</function></funcdef>
-      <paramdef>array <parameter>wejście</parameter></paramdef>
-      <paramdef>mixed
-       <parameter>
-        <optional>szukana_wartość</optional>
-       </parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>array</type><methodname>array_keys</methodname>
+      <methodparam><type>array</type><parameter>wejście</parameter></methodparam>
+      <methodparam choice="opt"><type>mixed</type><parameter>
+        szukana_wartość
+       </parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>array_keys</function> zwraca klucze, liczbowe i tekstowe, z
      tablicy <parameter>wejście</parameter>.
@@ -730,16 +698,12 @@ function array_keys ($arr, $term="") {
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>array <function>array_map</function></funcdef>
-      <paramdef>mixed <parameter>funkcja_zwrotna</parameter></paramdef>
-      <paramdef>array <parameter>tbl1</parameter></paramdef>
-      <paramdef>array
-       <parameter><optional>tbl2...</optional></parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>array</type><methodname>array_map</methodname>
+      <methodparam><type>mixed</type><parameter>funkcja_zwrotna</parameter></methodparam>
+      <methodparam><type>array</type><parameter>tbl1</parameter></methodparam>
+      <methodparam choice="opt"><type>array</type><parameter>tbl2...</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>array_map</function> zwraca tablicę zawierającą wszystkie
      elementy tablicy <parameter>tbl1</parameter> po użyciu na każdej z nich
@@ -921,16 +885,12 @@ print_r($e);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>array <function>array_merge</function></funcdef>
-      <paramdef>array <parameter>tablica1</parameter></paramdef>
-      <paramdef>array <parameter>tablica2</parameter></paramdef>
-      <paramdef>array
-       <parameter><optional>...</optional></parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>array</type><methodname>array_merge</methodname>
+      <methodparam><type>array</type><parameter>tablica1</parameter></methodparam>
+      <methodparam><type>array</type><parameter>tablica2</parameter></methodparam>
+      <methodparam choice="opt"><type>array</type><parameter>...</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>array_merge</function> łączy elementy dwóch lub więcej tablic
      razem, tak że wartości jednej tablicy są wstawiane na koniec poprzedniej
@@ -972,16 +932,12 @@ $wynik = array_merge ($tablica1, $tablica2);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>array <function>array_merge_recursive</function></funcdef>
-      <paramdef>array <parameter>tablica1</parameter></paramdef>
-      <paramdef>array <parameter>tablica2</parameter></paramdef>
-      <paramdef>array
-       <parameter><optional>...</optional></parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>array</type><methodname>array_merge_recursive</methodname>
+      <methodparam><type>array</type><parameter>tablica1</parameter></methodparam>
+      <methodparam><type>array</type><parameter>tablica2</parameter></methodparam>
+      <methodparam choice="opt"><type>array</type><parameter>...</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>array_merge_recursive</function> łączy elementy dwóch lub
      więcej tablic tak, że wartości jednej tablicy są dopisywane na koniec
@@ -1025,21 +981,13 @@ $wynik = array_merge_recursive ($tbl1, $tbl2);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>bool <function>array_multisort</function></funcdef>
-      <paramdef>array <parameter>tbl1</parameter></paramdef>
-      <paramdef>mixed
-       <parameter><optional>arg</optional></parameter>
-      </paramdef>
-      <paramdef>mixed
-       <parameter><optional>...</optional></parameter>
-      </paramdef>
-      <paramdef>array
-       <parameter><optional>...</optional></parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>bool</type><methodname>array_multisort</methodname>
+      <methodparam><type>array</type><parameter>tbl1</parameter></methodparam>
+      <methodparam choice="opt"><type>mixed</type><parameter>arg</parameter></methodparam>
+      <methodparam choice="opt"><type>mixed</type><parameter>...</parameter></methodparam>
+      <methodparam choice="opt"><type>array</type><parameter>...</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>array_multisort</function> może być użyta do sortowania kilku
      tablic na raz lub wielowymiarowej tablicy na podstawie jednego z większej
@@ -1140,14 +1088,12 @@ array_multisort ($tbl[0], SORT_ASC, SORT_STRING,
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>array <function>array_pad</function></funcdef>
-      <paramdef>array <parameter>wejście</parameter></paramdef>
-      <paramdef>int <parameter>rozmiar</parameter></paramdef>
-      <paramdef>mixed <parameter>wartość</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>array</type><methodname>array_pad</methodname>
+      <methodparam><type>array</type><parameter>wejście</parameter></methodparam>
+      <methodparam><type>int</type><parameter>rozmiar</parameter></methodparam>
+      <methodparam><type>mixed</type><parameter>wartość</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>array_pad</function> zwraca kopię tablicy
      <parameter>input</parameter> dopełnioną do rozmiaru określonego przez
@@ -1187,12 +1133,10 @@ $wynik = array_pad ($wejscie, 2, "noop");
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>mixed <function>array_pop</function></funcdef>
-      <paramdef>array <parameter>tablica</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>mixed</type><methodname>array_pop</methodname>
+      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>array_pop</function> zdejmuje i zwraca ostatnią wartość tablicy
      <parameter>tablica</parameter>, skracając tą tablicę o jeden element.
@@ -1232,16 +1176,12 @@ $owoc = array_pop ($stos);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>int <function>array_push</function></funcdef>
-      <paramdef>array <parameter>tablica</parameter></paramdef>
-      <paramdef>mixed <parameter>wartosc</parameter></paramdef>
-      <paramdef>mixed
-       <parameter><optional>...</optional></parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>int</type><methodname>array_push</methodname>
+      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+      <methodparam><type>mixed</type><parameter>wartosc</parameter></methodparam>
+      <methodparam choice="opt"><type>mixed</type><parameter>...</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>array_push</function> traktuje zmienną <parameter>tablica
      </parameter> jako stos i wstawia przekazane parametry na koniec podanej
@@ -1289,15 +1229,11 @@ array_push ($stos, "+", 3);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>mixed <function>array_rand</function></funcdef>
-      <paramdef>array <parameter>wejście</parameter></paramdef>
-      <paramdef>int
-       <parameter><optional>ilość</optional></parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>mixed</type><methodname>array_rand</methodname>
+      <methodparam><type>array</type><parameter>wejście</parameter></methodparam>
+      <methodparam choice="opt"><type>int</type><parameter>ilość</parameter></methodparam>
+     </methodsynopsis>
     <para>
      Funkcja <function>array_rand</function> jest przydatna jeśli chcesz
      wyciągnąć jeden lub więcej losowych elementów z tablicy. Jako parametry
@@ -1341,15 +1277,11 @@ print $wejscie[$losowe_klucze[1]]."\n";
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>array <function>array_reverse</function></funcdef>
-      <paramdef>array <parameter>wejście</parameter></paramdef>
-      <paramdef>bool 
-       <parameter><optional>zachowaj_klucze</optional></parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>array</type><methodname>array_reverse</methodname>
+      <methodparam><type>array</type><parameter>wejście</parameter></methodparam>
+      <methodparam choice="opt"><type>bool</type><parameter>zachowaj_klucze</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>array_reverse</function> pobiera tablicę
      <parameter>wejście</parameter> i zwraca nową tablicę z odwróconym
@@ -1393,16 +1325,12 @@ $wynik_kluczowany = array_reverse ($input, TRUE);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>mixed <function>array_reduce</function></funcdef>
-      <paramdef>array <parameter>wejście</parameter></paramdef>
-      <paramdef>mixed <parameter>funkcja_zwrotna</parameter></paramdef>
-      <paramdef>int
-       <parameter><optional>początek</optional></parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>mixed</type><methodname>array_reduce</methodname>
+      <methodparam><type>array</type><parameter>wejście</parameter></methodparam>
+      <methodparam><type>mixed</type><parameter>funkcja_zwrotna</parameter></methodparam>
+      <methodparam choice="opt"><type>int</type><parameter>początek</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>array_reduce</function> iteracyjnie stosuje funkcję
      <parameter>funkcja_zwrotna</parameter> na każdym elemencie tablicy
@@ -1457,12 +1385,10 @@ $d = array_reduce($x, "rsum", 1);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>mixed <function>array_shift</function></funcdef>
-      <paramdef>array <parameter>tablica</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>mixed</type><methodname>array_shift</methodname>
+      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>array_shift</function> usuwa pierwszą wartość parametru
      <parameter>tablica</parameter> i zwraca go skracając tą tablicę o jeden
@@ -1501,18 +1427,14 @@ $opcja = array_shift ($argument);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>array <function>array_slice</function></funcdef>
-      <paramdef>array <parameter>tablica</parameter></paramdef>
-      <paramdef>int <parameter>przesunięcie</parameter></paramdef>
-      <paramdef>int
-       <parameter>
-        <optional>długość</optional>
-       </parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>array</type><methodname>array_slice</methodname>
+      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+      <methodparam><type>int</type><parameter>przesunięcie</parameter></methodparam>
+      <methodparam choice="opt"><type>int</type><parameter>
+        długość
+       </parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>array_slice</function> zwraca sekwencję elementów z tablicy
      <parameter>tablica</parameter> określony przez parametry
@@ -1563,21 +1485,15 @@ $wyjscie = array_slice ($wejscie, 0, 3);   // zwraca "a", "b" i "c"
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>array <function>array_splice</function></funcdef>
-      <paramdef>array <parameter>wejście</parameter></paramdef>
-      <paramdef>int <parameter>przesunięcie</parameter></paramdef>
-      <paramdef>int
-       <parameter><optional>długość</optional></parameter>
-      </paramdef>
-      <paramdef>array
-       <parameter>
-        <optional>zamiennik</optional>
-       </parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>array</type><methodname>array_splice</methodname>
+      <methodparam><type>array</type><parameter>wejście</parameter></methodparam>
+      <methodparam><type>int</type><parameter>przesunięcie</parameter></methodparam>
+      <methodparam choice="opt"><type>int</type><parameter>długość</parameter></methodparam>
+      <methodparam choice="opt"><type>array</type><parameter>
+        zamiennik
+       </parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>array_splice</function> usuwa z tablicy <parameter>wejście
      </parameter> elementy określone przez parametry
@@ -1669,12 +1585,10 @@ array_splice ($wejscie, -1, 1, array("czarny", "kasztanowy"));
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>mixed <function>array_sum</function></funcdef>
-      <paramdef>array <parameter>tablica</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>mixed</type><methodname>array_sum</methodname>
+      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>array_sum</function> zwraca sumę wszystkich wartości w tablicy
      jako liczbę całkowitą lub rzeczywistą.
@@ -1705,12 +1619,10 @@ echo "sum(b) = ".array_sum($b)."\n";
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>array <function>array_unique</function></funcdef>
-      <paramdef>array <parameter>tablica</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>array</type><methodname>array_unique</methodname>
+      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>array_unique</function> pobiera parametr
      <parameter>tablica</parameter> i zwraca nową tablicę bez duplikatów
@@ -1790,18 +1702,14 @@ array(2) {
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>int <function>array_unshift</function></funcdef>
-      <paramdef>array <parameter>tablica</parameter></paramdef>
-      <paramdef>mixed <parameter>wartość</parameter></paramdef>
-      <paramdef>mixed
-       <parameter>
-        <optional>...</optional>
-       </parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>int</type><methodname>array_unshift</methodname>
+      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+      <methodparam><type>mixed</type><parameter>wartość</parameter></methodparam>
+      <methodparam choice="opt"><type>mixed</type><parameter>
+        ...
+       </parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>array_unshift</function> wstawia jeden lub więcej przekazanych
      jako parametry elementów na początek tablicy
@@ -1842,12 +1750,10 @@ array_unshift ($kolejka, "p4", "p5", "p6");
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>array <function>array_values</function></funcdef>
-      <paramdef>array <parameter>wejście</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>array</type><methodname>array_values</methodname>
+      <methodparam><type>array</type><parameter>wejście</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>array_values</function> zwraca wszystkie wartości z tablicy
      <parameter>wejście</parameter>.
@@ -1901,16 +1807,12 @@ function array_values ($arr) {
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>int <function>array_walk</function></funcdef>
-      <paramdef>array <parameter>tbl</parameter></paramdef>
-      <paramdef>string <parameter>funk</parameter></paramdef>
-      <paramdef>mixed 
-       <parameter><optional>dane</optional></parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>int</type><methodname>array_walk</methodname>
+      <methodparam><type>array</type><parameter>tbl</parameter></methodparam>
+      <methodparam><type>string</type><parameter>funk</parameter></methodparam>
+      <methodparam choice="opt"><type>mixed</type><parameter>dane</parameter></methodparam>
+     </methodsynopsis>
     <simpara>
      Wykonuje zdefuniowaną przez użytkownika funkcję o nazwie 
      <parameter>funk</parameter> na każdym elemencie tablicy 
@@ -1991,15 +1893,11 @@ array_walk ($owoce, 'test_wyswietlanie');
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>void <function>arsort</function></funcdef>
-      <paramdef>array <parameter>tablica</parameter></paramdef>
-      <paramdef>int 
-       <parameter><optional>flagi</optional></parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>void</type><methodname>arsort</methodname>
+      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+      <methodparam choice="opt"><type>int</type><parameter>flagi</parameter></methodparam>
+     </methodsynopsis>
     <para>
      Ta funkcja sortuje tablicę w taki sposób, że klucze zachowują przypisanie
      do odpowiednich wartości. Ten sposób sortowania jest używany głównie przy
@@ -2053,15 +1951,11 @@ b = banan
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>void <function>asort</function></funcdef>
-      <paramdef>array <parameter>tablica</parameter></paramdef>
-      <paramdef>int 
-       <parameter><optional>flagi</optional></parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>void</type><methodname>asort</methodname>
+      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+      <methodparam choice="opt"><type>int</type><parameter>flagi</parameter></methodparam>
+     </methodsynopsis>
     <para>
      Funkcja ta sortuje tablicę w taki sposób, że klucze zachowują przypisanie
      do odpowiednich wartości. Ten sposób sortowania jest używany głównie przy
@@ -2117,15 +2011,11 @@ a = pomarańcza
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>array <function>compact</function></funcdef>
-      <paramdef>mixed <parameter>nazwa_zmiennej</parameter></paramdef>
-      <paramdef>mixed
-       <parameter><optional>...</optional></parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>array</type><methodname>compact</methodname>
+      <methodparam><type>mixed</type><parameter>nazwa_zmiennej</parameter></methodparam>
+      <methodparam choice="opt"><type>mixed</type><parameter>...</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>compact</function> pobiera zmienną liczbę parametrów. Każdy
      parametr może być albo stringiem zawierającym nazwę zmiennej lub
@@ -2177,12 +2067,10 @@ $wynik = compact ("wydarzenie", "nic", $zmienne_lokalizacyjne);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>int <function>count</function></funcdef>
-      <paramdef>mixed <parameter>zmienna</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>int</type><methodname>count</methodname>
+      <methodparam><type>mixed</type><parameter>zmienna</parameter></methodparam>
+     </methodsynopsis>
     <para>
      Zwraca ilość elementów w parametrze <parameter>zmienna</parameter>,
      która zazwyczaj będzie tablicą (ponieważ wszstko inne będzie miało
@@ -2249,12 +2137,10 @@ $wynik = count ($b);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>mixed <function>current</function></funcdef>
-      <paramdef>array <parameter>tablica</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>mixed</type><methodname>current</methodname>
+      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+     </methodsynopsis>
     <para>
      Każda tablica ma wewnętrzny wskaźnik bo swojego "bieżącego" elementu,
      który jest inicjalizowany do pierwszego elementu wstawionego do
@@ -2292,12 +2178,10 @@ $wynik = count ($b);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>array <function>each</function></funcdef>
-      <paramdef>array <parameter>tablica</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>array</type><methodname>each</methodname>
+      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+     </methodsynopsis>
     <para>
      Zwraca bieżącą parę klucza i wartości z tablicy
      <parameter>tablica</parameter> i przesuwa wewnętrzny wskaźnik tablicy do
@@ -2393,12 +2277,10 @@ while (list ($key, $val) = each ($HTTP_POST_VARS)) {
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>mixed <function>end</function></funcdef>
-      <paramdef>array <parameter>tablica</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>mixed</type><methodname>end</methodname>
+      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>end</function> przesuwa wewnętrzny wskaźnik tablicy
      <parameter>tablica</parameter> na ostatnim elemencie i zwraca ten
@@ -2421,18 +2303,12 @@ while (list ($key, $val) = each ($HTTP_POST_VARS)) {
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>int <function>extract</function></funcdef>
-      <paramdef>array <parameter>tablica_zmiennych</parameter></paramdef>
-      <paramdef>int 
-       <parameter><optional>typ_ekstrakcji</optional></parameter>
-      </paramdef>
-      <paramdef>string 
-       <parameter><optional>prefiks</optional></parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>int</type><methodname>extract</methodname>
+      <methodparam><type>array</type><parameter>tablica_zmiennych</parameter></methodparam>
+      <methodparam choice="opt"><type>int</type><parameter>typ_ekstrakcji</parameter></methodparam>
+      <methodparam choice="opt"><type>string</type><parameter>prefiks</parameter></methodparam>
+     </methodsynopsis>
     <para>
      Ta funkcja służy do importowania zmiennych z tablicy do bieżącej tabeli
      symboli. Pobiera jako parametr tablicę asocjacyjną
@@ -2578,16 +2454,12 @@ niebieski, duży, kulisty, średni
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>bool <function>in_array</function></funcdef>
-      <paramdef>mixed <parameter>igła</parameter></paramdef>
-      <paramdef>array <parameter>stóg_siana</parameter></paramdef>
-      <paramdef>bool 
-       <parameter><optional>ścisłe</optional></parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>bool</type><methodname>in_array</methodname>
+      <methodparam><type>mixed</type><parameter>igła</parameter></methodparam>
+      <methodparam><type>array</type><parameter>stóg_siana</parameter></methodparam>
+      <methodparam choice="opt"><type>bool</type><parameter>ścisłe</parameter></methodparam>
+     </methodsynopsis>
     <para>
      Przeszukuje <parameter>stóg_siana</parameter> w poszukiwaniu parametru
      <parameter>igła</parameter> i zwraca &true; jeśli wartość została
@@ -2651,14 +2523,12 @@ if (in_array(1.13, $a, TRUE))
    </refnamediv>
    <refsect1>
     <title>Opis</title> 
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>mixed <function>array_search</function></funcdef>
-      <paramdef>mixed <parameter>igła</parameter></paramdef>
-      <paramdef>array <parameter>stóg_siana</parameter></paramdef>
-      <paramdef>bool <parameter><optional>ścisły</optional></parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>mixed</type><methodname>array_search</methodname>
+      <methodparam><type>mixed</type><parameter>igła</parameter></methodparam>
+      <methodparam><type>array</type><parameter>stóg_siana</parameter></methodparam>
+      <methodparam choice="opt"><type>bool</type><parameter>ścisły</parameter></methodparam>
+     </methodsynopsis>
     <para>
      Przeszukuje <parameter>stóg_siana</parameter> w poszukiwaniu parametru
      <parameter>igła</parameter> i zwraca odpowiedni klucz jeśli został on
@@ -2683,12 +2553,10 @@ if (in_array(1.13, $a, TRUE))
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>mixed <function>key</function></funcdef>
-      <paramdef>array <parameter>tablica</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>mixed</type><methodname>key</methodname>
+      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>key</function> zwraza klucz bieżącego elementu z tablicy
      asocjacyjnej.
@@ -2706,15 +2574,11 @@ if (in_array(1.13, $a, TRUE))
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>int <function>krsort</function></funcdef>
-      <paramdef>array <parameter>tablica</parameter></paramdef>
-      <paramdef>int 
-       <parameter><optional>flagi</optional></parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>int</type><methodname>krsort</methodname>
+      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+      <methodparam choice="opt"><type>int</type><parameter>flagi</parameter></methodparam>
+     </methodsynopsis>
     <para>
      Sortuje trablicę według klucza w porządku odwrotnym utrzymując
      skojarzenia kluczy z danymi. Jest to przydatne głównie w przypadku
@@ -2768,15 +2632,11 @@ a = pomarańcza
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>int <function>ksort</function></funcdef>
-      <paramdef>array <parameter>tablica</parameter></paramdef>
-      <paramdef>int 
-       <parameter><optional>flagi</optional></parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>int</type><methodname>ksort</methodname>
+      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+      <methodparam choice="opt"><type>int</type><parameter>flagi</parameter></methodparam>
+     </methodsynopsis>
     <para>
      Sortuje tablicę według klucza zachowując skojarzenia kluczy z danymi.
      Jest to przydatne głównie w przypadku tablic asocjacyjnych.
@@ -2836,12 +2696,10 @@ d = cytryna
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>void <function>list</function></funcdef>
-      <varargs/>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>void</type><methodname>list</methodname>
+      <methodparam rep="repeat"><type>mixed</type><parameter>...</parameter></methodparam>
+     </methodsynopsis>
     <para>
      Podobna do <function>array</function>, ale to nie jest na prawdę funkcja,
      ale składnia języka. Instrukcja <function>list</function> jest używana do
@@ -2888,12 +2746,10 @@ while (list ($id, $nazwisko, $pensja) = mysql_fetch_row ($wynik)) {
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>void <function>natsort</function></funcdef>
-      <paramdef>array <parameter>tablica</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>void</type><methodname>natsort</methodname>
+      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+     </methodsynopsis>
     <para>
      Funkcja ta implementuje algorytm sortowania, który sortuje stringi
      alfanumeryczne tak, jak posortowałby je człowiek. Jest on określany jako
@@ -2967,12 +2823,10 @@ Array
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>void <function>natcasesort</function></funcdef>
-      <paramdef>array <parameter>tablica</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>void</type><methodname>natcasesort</methodname>
+      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+     </methodsynopsis>
     <para>
      Ta funkcja implementuje algorytm sortowania który porządkuje stringi
      alfanumeryczne tak, jak zrobiłby to człowiek. Jest on określany jako
@@ -3006,12 +2860,10 @@ Array
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>mixed <function>next</function></funcdef>
-      <paramdef>array <parameter>tablica</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>mixed</type><methodname>next</methodname>
+      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+     </methodsynopsis>
     <para>
      Przesuwa wewnętrzny wskaźnik tablicy i jedną pozycję do przodu i zwraca
      element tablicy aktualnie wskazywany przez wskaźnik, lub &false; jeśli
@@ -3049,12 +2901,10 @@ Array
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>mixed <function>pos</function></funcdef>
-      <paramdef>array <parameter>tablica</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>mixed</type><methodname>pos</methodname>
+      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+     </methodsynopsis>
     <simpara>
      Jest to alias dla funkcji <function>current</function>.
     </simpara>
@@ -3072,12 +2922,10 @@ Array
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>mixed <function>prev</function></funcdef>
-      <paramdef>array <parameter>tablica</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>mixed</type><methodname>prev</methodname>
+      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+     </methodsynopsis>
     <para>
      Zwraca element tablicy z miejsca poprzedniego od tego na które wskazywał
      wewnętrzny wskaźnik pliku, lub &false; jeśli nie ma już więcej elementów.
@@ -3110,13 +2958,11 @@ Array
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>array <function>range</function></funcdef>
-      <paramdef>mixed <parameter>dolny</parameter></paramdef>
-      <paramdef>mixed <parameter>górny</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>array</type><methodname>range</methodname>
+      <methodparam><type>mixed</type><parameter>dolny</parameter></methodparam>
+      <methodparam><type>mixed</type><parameter>górny</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>range</function> zwraca tablicę elementów od
      <parameter>dolny</parameter> do <parameter>górny</parameter>, włącznie.
@@ -3161,12 +3007,10 @@ foreach(range('z', 'a') as $litera) {
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>mixed <function>reset</function></funcdef>
-      <paramdef>array <parameter>tablica</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>mixed</type><methodname>reset</methodname>
+      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>reset</function> przewija wewnętrzny wskaźnik tablicy parametru
      <parameter>tablica</parameter> na jego pierwszy element.
@@ -3189,15 +3033,11 @@ foreach(range('z', 'a') as $litera) {
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>void <function>rsort</function></funcdef>
-      <paramdef>array <parameter>tablica</parameter></paramdef>
-      <paramdef>int 
-       <parameter><optional>flagi</optional></parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>void</type><methodname>rsort</methodname>
+      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+      <methodparam choice="opt"><type>int</type><parameter>flagi</parameter></methodparam>
+     </methodsynopsis>
     <para>
      Ta funkcja sortuje tablicę w porządku odwrotnym (od największego do
      najmniejszego).
@@ -3253,12 +3093,10 @@ while (list ($key, $val) = each ($owoce)) {
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>void <function>shuffle</function></funcdef>
-      <paramdef>array <parameter>tablica</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>void</type><methodname>shuffle</methodname>
+      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+     </methodsynopsis>
     <para>
      Ta funkcja tasuje tablicę (losuje kolejność elementów w niej). Musisz
      użyć <function>srand</function> aby przygotować ziarno dla tej funkcji.
@@ -3291,12 +3129,10 @@ while (list (, $liczba) = each ($liczby)) {
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>int <function>sizeof</function></funcdef>
-      <paramdef>mixed <parameter>zmienna</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>int</type><methodname>sizeof</methodname>
+      <methodparam><type>mixed</type><parameter>zmienna</parameter></methodparam>
+     </methodsynopsis>
     <para>
      Funkcja <function>sizeof</function> jest aliasem funkcji
      <function>count</function>.
@@ -3314,15 +3150,11 @@ while (list (, $liczba) = each ($liczby)) {
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>void <function>sort</function></funcdef>
-      <paramdef>array <parameter>tablica</parameter></paramdef>
-      <paramdef>int 
-       <parameter><optional>flagi</optional></parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>void</type><methodname>sort</methodname>
+      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+      <methodparam choice="opt"><type>int</type><parameter>flagi</parameter></methodparam>
+     </methodsynopsis>
     <para>
      Funkcja ta sortuje tablicę. Po zakończeniu działania funkcji
      elementy będą ułożone od najmniejszego do najwiekszego.
@@ -3405,13 +3237,11 @@ owoce[3] = pomarańcza
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>void <function>uasort</function></funcdef>
-      <paramdef>array <parameter>tablica</parameter></paramdef>
-      <paramdef>function <parameter>funkcja_por</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>void</type><methodname>uasort</methodname>
+      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+      <methodparam><type>function</type><parameter>funkcja_por</parameter></methodparam>
+     </methodsynopsis>
     <para>
      Funkcja ta sortuje tablicę w taki sposób, że klucze zachowują przypisanie
      do odpowiednich wartości. Jest to używane głównie przy sortowaniu tablic
@@ -3444,13 +3274,11 @@ owoce[3] = pomarańcza
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>void <function>uksort</function></funcdef>
-      <paramdef>array <parameter>tablica</parameter></paramdef>
-      <paramdef>function <parameter>funkcja_por</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>void</type><methodname>uksort</methodname>
+      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+      <methodparam><type>function</type><parameter>funkcja_por</parameter></methodparam>
+     </methodsynopsis>
     <para>
      Funkcja ta posortuje tablicę wedłu kluczy korzystając z podanej przez
      użytkownika funkcji porównującej. Jeśli chcesz posortować tablicę według
@@ -3511,13 +3339,11 @@ while (list ($key, $value) = each ($a)) {
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>void <function>usort</function></funcdef>
-      <paramdef>array <parameter>tablica</parameter></paramdef>
-      <paramdef>string <parameter>funkcja_por</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>void</type><methodname>usort</methodname>
+      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+      <methodparam><type>string</type><parameter>funkcja_por</parameter></methodparam>
+     </methodsynopsis>
     <para>
      Funkcja ta posortuje tablicę według jej wartości korzystając z podanej
      przez użytkownika funkcji porównującej. Jeśli chcesz posortować tablicę
@@ -3712,3 +3538,4 @@ vim600: syn=xml fen fdm=syntax fdl=2 si
 vim: et tw=78 syn=sgml
 vi: ts=1 sw=1
 -->
+

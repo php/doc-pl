@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
 <!-- EN-Revision: 1.84 Maintainer: slawek Status: ready -->
-<!-- $Revision: 1.19 $ -->
+<!-- $Revision: 1.20 $ -->
  <reference id="ref.mysql">
   <title>MySQL</title>
   <titleabbrev>MySQL</titleabbrev>
@@ -128,16 +128,12 @@ mysql_close($link);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>int <function>mysql_affected_rows</function></funcdef>
-      <paramdef>resource 
-       <parameter>
-        <optional>identyfikator_połączenia</optional>
-       </parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>int</type><methodname>mysql_affected_rows</methodname>
+      <methodparam choice="opt"><type>resource</type><parameter>
+        identyfikator_połączenia
+       </parameter></methodparam>
+     </methodsynopsis>
     <para> 
      <function>mysql_affected_rows</function> zwraca ilość wierszy
      przetworzonych w ostatniej operacji INSERT, UPDATE lub DELETE
@@ -189,23 +185,17 @@ mysql_close($link);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>int <function>mysql_change_user</function></funcdef>
-      <paramdef>string <parameter>użytkowink</parameter></paramdef>
-      <paramdef>string <parameter>hasło</parameter></paramdef>
-      <paramdef>string 
-       <parameter>
-        <optional>baza</optional>
-       </parameter>
-      </paramdef>
-      <paramdef>resource 
-       <parameter>
-        <optional>identyfikator_połączenia</optional>
-       </parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>int</type><methodname>mysql_change_user</methodname>
+      <methodparam><type>string</type><parameter>użytkowink</parameter></methodparam>
+      <methodparam><type>string</type><parameter>hasło</parameter></methodparam>
+      <methodparam choice="opt"><type>string</type><parameter>
+        baza
+       </parameter></methodparam>
+      <methodparam choice="opt"><type>resource</type><parameter>
+        identyfikator_połączenia
+       </parameter></methodparam>
+     </methodsynopsis>
     <para> 
      <function>mysql_change_user</function> 
      zmienia użytkownika zalogowanego w aktywnym połączeniu lub
@@ -235,16 +225,12 @@ mysql_close($link);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>bool <function>mysql_close</function></funcdef>
-      <paramdef>resource 
-       <parameter>
-        <optional>identyfikator_połączenia</optional>                   
-       </parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>bool</type><methodname>mysql_close</methodname>
+      <methodparam choice="opt"><type>resource</type><parameter>
+        identyfikator_połączenia                   
+       </parameter></methodparam>
+     </methodsynopsis>
     <para>
      &return.success;
     </para>
@@ -294,27 +280,19 @@ mysql_close($link);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>resource <function>mysql_connect</function></funcdef>
-      <paramdef>string 
-       <parameter>
-        <optional>serwer
-        </optional>
-       </parameter>
-      </paramdef>
-      <paramdef>string 
-       <parameter>
-        <optional>użytkownik</optional>
-       </parameter>
-      </paramdef>
-      <paramdef>string 
-       <parameter>
-        <optional>hasło</optional>
-       </parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>resource</type><methodname>mysql_connect</methodname>
+      <methodparam choice="opt"><type>string</type><parameter>
+        serwer
+        
+       </parameter></methodparam>
+      <methodparam choice="opt"><type>string</type><parameter>
+        użytkownik
+       </parameter></methodparam>
+      <methodparam choice="opt"><type>string</type><parameter>
+        hasło
+       </parameter></methodparam>
+     </methodsynopsis>
     <para> 
      Zwraca identyfikator połączenia w przypadku powodzenia, lub
      &false; jeśli wystąpi błąd.
@@ -381,17 +359,13 @@ mysql_close($link);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>int <function>mysql_create_db</function></funcdef>
-      <paramdef>string <parameter>nazwa_bazy</parameter></paramdef>
-      <paramdef>resource 
-       <parameter>
-        <optional>identyfikator_połączenia</optional>
-       </parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>int</type><methodname>mysql_create_db</methodname>
+      <methodparam><type>string</type><parameter>nazwa_bazy</parameter></methodparam>
+      <methodparam choice="opt"><type>resource</type><parameter>
+        identyfikator_połączenia
+       </parameter></methodparam>
+     </methodsynopsis>
     <para> 
      <function>mysql_create_db</function>
      tworzy nową bazę na serwerze skojarzonym z podanym
@@ -433,13 +407,11 @@ mysql_close($link);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>bool <function>mysql_data_seek</function></funcdef>
-      <paramdef>resource <parameter>identyfikator_wyniku</parameter></paramdef>
-      <paramdef>int <parameter>numer_wiersza</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>bool</type><methodname>mysql_data_seek</methodname>
+      <methodparam><type>resource</type><parameter>identyfikator_wyniku</parameter></methodparam>
+      <methodparam><type>int</type><parameter>numer_wiersza</parameter></methodparam>
+     </methodsynopsis>
     <para> 
      &return.success;
     </para>
@@ -496,18 +468,14 @@ mysql_close($link);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>string <function>mysql_db_name</function></funcdef>
-      <paramdef>resource <parameter>wynik</parameter></paramdef>
-      <paramdef>int <parameter>wiersz</parameter></paramdef>
-      <paramdef>mixed 
-       <parameter>
-        <optional>pole</optional>
-       </parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>string</type><methodname>mysql_db_name</methodname>
+      <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
+      <methodparam><type>int</type><parameter>wiersz</parameter></methodparam>
+      <methodparam choice="opt"><type>mixed</type><parameter>
+        pole
+       </parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>mysql_db_name</function> przyjmuje jako pierwszy parametr
      wskaźnik wyniku zwrócony przez <function>mysql_list_dbs</function>.
@@ -552,18 +520,14 @@ while ($i < $cnt) {
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>resource <function>mysql_db_query</function></funcdef>
-      <paramdef>string <parameter>baza</parameter></paramdef>
-      <paramdef>string <parameter>zapytanie</parameter></paramdef>
-      <paramdef>resource 
-       <parameter>
-        <optional>identyfikator_połączenia</optional>
-       </parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>resource</type><methodname>mysql_db_query</methodname>
+      <methodparam><type>string</type><parameter>baza</parameter></methodparam>
+      <methodparam><type>string</type><parameter>zapytanie</parameter></methodparam>
+      <methodparam choice="opt"><type>resource</type><parameter>
+        identyfikator_połączenia
+       </parameter></methodparam>
+     </methodsynopsis>
     <para> 
      Zwraca dodatni identyfikator wyniku MySQL wskazujący na wynik
      zapytania, lub &false; w przypadku błędu.
@@ -600,17 +564,13 @@ while ($i < $cnt) {
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>bool <function>mysql_drop_db</function></funcdef>
-      <paramdef>string <parameter>nazwa_bazy</parameter></paramdef>
-      <paramdef>resource 
-       <parameter>
-        <optional>identyfikator_połączenia</optional>
-       </parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>bool</type><methodname>mysql_drop_db</methodname>
+      <methodparam><type>string</type><parameter>nazwa_bazy</parameter></methodparam>
+      <methodparam choice="opt"><type>resource</type><parameter>
+        identyfikator_połączenia
+       </parameter></methodparam>
+     </methodsynopsis>
     <para> 
      &return.success;
     </para>  
@@ -637,16 +597,12 @@ while ($i < $cnt) {
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>int <function>mysql_errno</function></funcdef>
-      <paramdef>resource 
-       <parameter>
-        <optional>identyfikator_połączenia</optional>
-       </parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>int</type><methodname>mysql_errno</methodname>
+      <methodparam choice="opt"><type>resource</type><parameter>
+        identyfikator_połączenia
+       </parameter></methodparam>
+     </methodsynopsis>
     <para>
      Zwraca numer błędu ostatniej operacji MySQL lub
      <literal>0</literal> (zero) jeśli wystąpi błąd.
@@ -689,16 +645,12 @@ echo mysql_errno().": ".mysql_error()."<BR>";
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>string <function>mysql_error</function></funcdef>
-      <paramdef>resource 
-       <parameter>
-        <optional>identyfikator_połączenia</optional>
-       </parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>string</type><methodname>mysql_error</methodname>
+      <methodparam choice="opt"><type>resource</type><parameter>
+        identyfikator_połączenia
+       </parameter></methodparam>
+     </methodsynopsis>
     <para>
      Zwraca tekst komunikatu błędu z ostatnio użytej funkcji MySQL, lub
      <literal>''</literal> (pusty łańcuch) jeśli wystąpi błąd.
@@ -741,12 +693,10 @@ echo mysql_errno().": ".mysql_error()."<BR>";
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>string <function>mysql_escape_string</function></funcdef>
-      <paramdef>string <parameter>łańcuch_bez_znaków_unikowych</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>string</type><methodname>mysql_escape_string</methodname>
+      <methodparam><type>string</type><parameter>łańcuch_bez_znaków_unikowych</parameter></methodparam>
+     </methodsynopsis>
     <para>
      Ta funkcja wstawi znaki unikowe do
      <parameter>łańcuch_bez_znaków_unikowych</parameter>, aby
@@ -770,17 +720,13 @@ echo mysql_errno().": ".mysql_error()."<BR>";
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>array <function>mysql_fetch_array</function></funcdef>
-      <paramdef>resource <parameter>wynik</parameter></paramdef>
-      <paramdef>int
-       <parameter>
-        <optional>typ_wyniku</optional>
-       </parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>array</type><methodname>mysql_fetch_array</methodname>
+      <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
+      <methodparam choice="opt"><type>int</type><parameter>
+        typ_wyniku
+       </parameter></methodparam>
+     </methodsynopsis>
     <para> 
      Zwraca tablicę zawierającą pobrany wiersz, lub
      &false; jeżeli nie ma więcej wierszy w <parameter>wynik</parameter>.
@@ -860,12 +806,10 @@ mysql_free_result($result);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>array <function>mysql_fetch_assoc</function></funcdef>
-      <paramdef>resource <parameter>wynik</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>array</type><methodname>mysql_fetch_assoc</methodname>
+      <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
+     </methodsynopsis>
     <para> 
      Zwraca tablicę zawierającą pobrany wiersz, lub
      &false; jeżeli nie ma więcej wierszy w <parameter>wynik</parameter>.
@@ -925,17 +869,13 @@ mysql_free_result($result);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>object <function>mysql_fetch_field</function></funcdef>
-      <paramdef>resource <parameter>wynik</parameter></paramdef>
-      <paramdef>int 
-       <parameter>
-        <optional>ofset_pola</optional>
-       </parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>object</type><methodname>mysql_fetch_field</methodname>
+      <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
+      <methodparam choice="opt"><type>int</type><parameter>
+        ofset_pola
+       </parameter></methodparam>
+     </methodsynopsis>
     <para>
      Zwraca obiekt zawierający informacje o polu.
     </para>  
@@ -1064,12 +1004,10 @@ mysql_free_result($result);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>array <function>mysql_fetch_lengths</function></funcdef>
-      <paramdef>resource <parameter>wynik</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>array</type><methodname>mysql_fetch_lengths</methodname>
+      <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
+     </methodsynopsis>
     <para> 
      Zwraca tablicę zawierającą długość każdego pola z wiersza
      ostatnio pobranego przez <function>mysql_fetch_row</function>,
@@ -1096,17 +1034,13 @@ mysql_free_result($result);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>object <function>mysql_fetch_object</function></funcdef>
-      <paramdef>resource <parameter>wynik</parameter></paramdef>
-      <paramdef>int
-       <parameter>
-        <optional>typ_wyniku</optional>
-       </parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>object</type><methodname>mysql_fetch_object</methodname>
+      <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
+      <methodparam choice="opt"><type>int</type><parameter>
+        typ_wyniku
+       </parameter></methodparam>
+     </methodsynopsis>
     <para> 
      Zwraca: obiekt, którego właściwości zawierają pobrany wiersz,
      lub &false;, jeżeli nie ma więcej wierszy.
@@ -1161,12 +1095,10 @@ mysql_free_result($result);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>array <function>mysql_fetch_row</function></funcdef>
-      <paramdef>resource <parameter>wynik</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>array</type><methodname>mysql_fetch_row</methodname>
+      <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
+     </methodsynopsis>
     <para> 
      Zwraca tablicę zawierającą wiersz lub &false; jeżeli
      nie ma więcej wierszy w <parameter>wynik</parameter>.
@@ -1200,13 +1132,11 @@ mysql_free_result($result);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>string <function>mysql_field_flags</function></funcdef>
-      <paramdef>resource <parameter>wynik</parameter></paramdef>
-      <paramdef>int <parameter>ofset_pola</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>string</type><methodname>mysql_field_flags</methodname>
+      <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
+      <methodparam><type>int</type><parameter>ofset_pola</parameter></methodparam>
+     </methodsynopsis>
     <para> 
      <function>mysql_field_flags</function> zwraca flagi podanego pola.
      Flagi są przedstawiane jako pojedyncze słowa oddzielone spacją tak,
@@ -1232,13 +1162,11 @@ mysql_free_result($result);
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>string <function>mysql_field_name</function></funcdef>
-      <paramdef>resource <parameter>wynik</parameter></paramdef>
-      <paramdef>int <parameter>indeks_pola</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>string</type><methodname>mysql_field_name</methodname>
+      <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
+      <methodparam><type>int</type><parameter>indeks_pola</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>mysql_field_name</function> zwraca nazwę danego pola.
      <parameter>wynik</parameter> musi być poprawnym identyfikatorem
@@ -1297,13 +1225,11 @@ haslo
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>int <function>mysql_field_len</function></funcdef>
-      <paramdef>resource <parameter>wynik</parameter></paramdef>
-      <paramdef>int <parameter>ofset_pola</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>int</type><methodname>mysql_field_len</methodname>
+      <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
+      <methodparam><type>int</type><parameter>ofset_pola</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>mysql_field_len</function> zwraca długość danego pola.
     </para>
@@ -1321,13 +1247,11 @@ haslo
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>int <function>mysql_field_seek</function></funcdef>
-      <paramdef>resource <parameter>wynik</parameter></paramdef>
-      <paramdef>int <parameter>ofset_pola</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>int</type><methodname>mysql_field_seek</methodname>
+      <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
+      <methodparam><type>int</type><parameter>ofset_pola</parameter></methodparam>
+     </methodsynopsis>
     <para>
      Przesuwa się na wybrane pole. Jeżeli kolejne wywołanie
      <function>mysql_fetch_field</function> nie będzie zawierać
@@ -1348,13 +1272,11 @@ haslo
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>string <function>mysql_field_table</function></funcdef>
-      <paramdef>resource <parameter>wynik</parameter></paramdef>
-      <paramdef>int <parameter>ofset_pola</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>string</type><methodname>mysql_field_table</methodname>
+      <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
+      <methodparam><type>int</type><parameter>ofset_pola</parameter></methodparam>
+     </methodsynopsis>
     <para> 
      Pobiera nazwę tabeli w której znajduje się dane pole
     </para>
@@ -1374,13 +1296,11 @@ haslo
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>string <function>mysql_field_type</function></funcdef>
-      <paramdef>iresource <parameter>wynik</parameter></paramdef>
-      <paramdef>int <parameter>ofset_pola</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>string</type><methodname>mysql_field_type</methodname>
+      <methodparam><type>iresource</type><parameter>wynik</parameter></methodparam>
+      <methodparam><type>int</type><parameter>ofset_pola</parameter></methodparam>
+     </methodsynopsis>
     <para>
      Funkcja <function>mysql_field_type</function> jest podobna do
      <function>mysql_field_name</function>. Argumenty są identyczne,
@@ -1430,12 +1350,10 @@ mysql_close();
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>bool <function>mysql_free_result</function></funcdef>
-      <paramdef>resource <parameter>wynik</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>bool</type><methodname>mysql_free_result</methodname>
+      <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>mysql_free_result</function> zwolni całą pamięć przydzieloną
      podanemu wskaźnikowi wyniku.
@@ -1467,16 +1385,12 @@ mysql_close();
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>int <function>mysql_insert_id</function></funcdef>
-      <paramdef>resource 
-       <parameter>
-        <optional>identyfikator_połączenia</optional>
-       </parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>int</type><methodname>mysql_insert_id</methodname>
+      <methodparam choice="opt"><type>resource</type><parameter>
+        identyfikator_połączenia
+       </parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>mysql_insert_id</function> zwraca ID wygenerowane dla
      pola z własnością AUTO_INCREMENT. Funkcja zwróci ID wygenerowane
@@ -1521,16 +1435,12 @@ mysql_close();
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>resource <function>mysql_list_dbs</function></funcdef>
-      <paramdef>resource 
-       <parameter>
-        <optional>identyfikator_połączenia</optional>
-       </parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>resource</type><methodname>mysql_list_dbs</methodname>
+      <methodparam choice="opt"><type>resource</type><parameter>
+        identyfikator_połączenia
+       </parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>mysql_list_dbs</function> zwróci wynik zawierający
      nazwy baz dostępnych na serwerze skojarzonym z identyfikatorem
@@ -1589,18 +1499,14 @@ baza3
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>resource <function>mysql_list_fields</function></funcdef>
-      <paramdef>string <parameter>baza</parameter></paramdef>
-      <paramdef>string <parameter>tabela</parameter></paramdef>
-      <paramdef>resource 
-       <parameter>
-        <optional>identyfikator_połączenia</optional>
-       </parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>resource</type><methodname>mysql_list_fields</methodname>
+      <methodparam><type>string</type><parameter>baza</parameter></methodparam>
+      <methodparam><type>string</type><parameter>tabela</parameter></methodparam>
+      <methodparam choice="opt"><type>resource</type><parameter>
+        identyfikator_połączenia
+       </parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>mysql_list_fields</function> 
      pobiera informacje o danej tabeli. Argumentami są nazwa bazy i
@@ -1658,17 +1564,13 @@ pole3
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>resource <function>mysql_list_tables</function></funcdef>
-      <paramdef>string <parameter>baza</parameter></paramdef>
-      <paramdef>resource 
-       <parameter>
-        <optional>identyfikator_połączenia</optional>
-       </parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>resource</type><methodname>mysql_list_tables</methodname>
+      <methodparam><type>string</type><parameter>baza</parameter></methodparam>
+      <methodparam choice="opt"><type>resource</type><parameter>
+        identyfikator_połączenia
+       </parameter></methodparam>
+     </methodsynopsis>
     <para> 
      <function>mysql_list_tables</function> przyjmuje jako argument
      nazwę bazy i zwraca wskaźnik wyniku podobnie jak funkcja
@@ -1691,12 +1593,10 @@ pole3
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>int <function>mysql_num_fields</function></funcdef>
-      <paramdef>resource <parameter>wynik</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>int</type><methodname>mysql_num_fields</methodname>
+      <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
+     </methodsynopsis>
     <para> 
      <function>mysql_num_fields</function> zwraca liczbę pól w wyniku.
     </para>
@@ -1720,12 +1620,10 @@ pole3
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>int <function>mysql_num_rows</function></funcdef>
-      <paramdef>resource <parameter>wynik</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>int</type><methodname>mysql_num_rows</methodname>
+      <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>mysql_num_rows</function> zwraca liczbę wierszy w wyniku.
      Tę funkcję stosuje się tylko do operacji SELECT. Aby pobrać ilość
@@ -1771,22 +1669,14 @@ echo "$num_rows wierszy\n";
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>resource <function>mysql_pconnect</function></funcdef>
-      <paramdef>string 
-       <parameter>
-        <optional>serwer</optional>
-       </parameter>
-      </paramdef>
-      <paramdef>string 
-       <parameter><optional>użytkownik</optional></parameter>
-      </paramdef>
-      <paramdef>string 
-       <parameter><optional>hasło</optional></parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>resource</type><methodname>mysql_pconnect</methodname>
+      <methodparam choice="opt"><type>string</type><parameter>
+        serwer
+       </parameter></methodparam>
+      <methodparam choice="opt"><type>string</type><parameter>użytkownik</parameter></methodparam>
+      <methodparam choice="opt"><type>string</type><parameter>hasło</parameter></methodparam>
+     </methodsynopsis>
     <para> 
      Zwraca identyfikator połączenia w przypadku powodzenia, lub
      &false; jeśli wystąpi błąd.
@@ -1859,15 +1749,11 @@ echo "$num_rows wierszy\n";
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>resource <function>mysql_query</function></funcdef>
-      <paramdef>string <parameter>zapytanie</parameter></paramdef>
-      <paramdef>resource 
-       <parameter><optional>identyfikator_połączenia</optional></parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>resource</type><methodname>mysql_query</methodname>
+      <methodparam><type>string</type><parameter>zapytanie</parameter></methodparam>
+      <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+     </methodsynopsis>
     <para> 
      <function>mysql_query</function> wysyła zapytanie do aktywnej
      bazy na serwerze skojarzonym z podanym identyfikatorem połączenia.
@@ -1969,15 +1855,11 @@ $result = mysql_query("SELECT kolumna FROM tabela")
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>resource <function>mysql_unbuffered_query</function></funcdef>
-      <paramdef>string <parameter>zapytanie</parameter></paramdef>
-      <paramdef>resource 
-       <parameter><optional>identyfikator_połączenia</optional></parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>resource</type><methodname>mysql_unbuffered_query</methodname>
+      <methodparam><type>string</type><parameter>zapytanie</parameter></methodparam>
+      <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>mysql_unbuffered_query</function> wysyła
      <parameter>zapytanie</parameter> SQL do serwera MySQL nie pobierając
@@ -2012,18 +1894,14 @@ $result = mysql_query("SELECT kolumna FROM tabela")
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>mixed <function>mysql_result</function></funcdef>
-      <paramdef>resource <parameter>wynik</parameter></paramdef>
-      <paramdef>int <parameter>wiersz</parameter></paramdef>
-      <paramdef>mixed 
-       <parameter>
-        <optional>pole</optional>
-       </parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>mixed</type><methodname>mysql_result</methodname>
+      <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
+      <methodparam><type>int</type><parameter>wiersz</parameter></methodparam>
+      <methodparam choice="opt"><type>mixed</type><parameter>
+        pole
+       </parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>mysql_result</function> zwraca zawartość jednej komórki
      z <parameter>wyniku</parameter>. Jako argument <parameter>pole</parameter>
@@ -2060,17 +1938,13 @@ $result = mysql_query("SELECT kolumna FROM tabela")
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>bool <function>mysql_select_db</function></funcdef>
-      <paramdef>string <parameter>nazwa_bazy</parameter></paramdef>
-      <paramdef>resource 
-       <parameter>
-        <optional>identyfikator_połączenia</optional>
-       </parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>bool</type><methodname>mysql_select_db</methodname>
+      <methodparam><type>string</type><parameter>nazwa_bazy</parameter></methodparam>
+      <methodparam choice="opt"><type>resource</type><parameter>
+        identyfikator_połączenia
+       </parameter></methodparam>
+     </methodsynopsis>
     <para> 
      &return.success;
     </para>
@@ -2105,13 +1979,11 @@ $result = mysql_query("SELECT kolumna FROM tabela")
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>string <function>mysql_tablename</function></funcdef>
-      <paramdef>resource <parameter>wynik</parameter></paramdef>
-      <paramdef>int <parameter>i</parameter></paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>string</type><methodname>mysql_tablename</methodname>
+      <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
+      <methodparam><type>int</type><parameter>i</parameter></methodparam>
+     </methodsynopsis>
     <para>
      <function>mysql_tablename</function> przyjmuje jako parametry wskaźnik
      wyniku zwrócony przez <function>mysql_list_tables</function> oraz
@@ -2144,12 +2016,10 @@ for ($i = 0; $i < mysql_num_rows($result); $i++) {
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>string <function>mysql_get_client_info</function></funcdef>
+     <methodsynopsis>
+      <type>string</type><methodname>mysql_get_client_info</methodname>
       <void/>
-     </funcprototype>
-    </funcsynopsis>
+     </methodsynopsis>
     <para> 
      <function>mysql_get_client_info</function> zwraca ciąg znaków
      zawierający wersję bibliotek klienta MySQL.
@@ -2167,14 +2037,10 @@ for ($i = 0; $i < mysql_num_rows($result); $i++) {
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>string <function>mysql_get_host_info</function></funcdef>
-      <paramdef>resource 
-       <parameter><optional>identyfikator_połączenia</optional></parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>string</type><methodname>mysql_get_host_info</methodname>
+      <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+     </methodsynopsis>
     <para> 
      <function>mysql_get_host_info</function> zwraca ciąg znaków opisujący
      typ połączenia wykorzystywany przez 
@@ -2196,14 +2062,10 @@ for ($i = 0; $i < mysql_num_rows($result); $i++) {
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>int <function>mysql_get_proto_info</function></funcdef>
-      <paramdef>resource 
-       <parameter><optional>identyfikator_połączenia</optional></parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>int</type><methodname>mysql_get_proto_info</methodname>
+      <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+     </methodsynopsis>
     <para> 
      <function>mysql_get_proto_info</function> zwraca wersję protokołu,
      używanego przez
@@ -2224,14 +2086,10 @@ for ($i = 0; $i < mysql_num_rows($result); $i++) {
    </refnamediv>
    <refsect1>
     <title>Opis</title>
-    <funcsynopsis>
-     <funcprototype>
-      <funcdef>int <function>mysql_get_server_info</function></funcdef>
-      <paramdef>resource 
-       <parameter><optional>identyfikator_połączenia</optional></parameter>
-      </paramdef>
-     </funcprototype>
-    </funcsynopsis>
+     <methodsynopsis>
+      <type>int</type><methodname>mysql_get_server_info</methodname>
+      <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+     </methodsynopsis>
     <para> 
      <function>mysql_get_server_info</function> zwraca wersję serwera,
      używanego przez
@@ -2266,3 +2124,4 @@ vim600: syn=xml fen fdm=syntax fdl=2 si
 vim: et tw=78 syn=sgml
 vi: ts=1 sw=1
 -->
+
