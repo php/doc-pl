@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.59 Maintainer: Qrak Status: ready -->
-<!-- $Revision: 1.5 $ -->
+<!-- EN-Revision: 1.64 Maintainer: Qrak Status: ready -->
+<!-- $Revision: 1.6 $ -->
  <reference id="ref.math">
   <title>Funkcje Matematyczne</title>
   <titleabbrev>Math</titleabbrev>
@@ -584,7 +584,30 @@ $binary = base_convert ($hexadecimal, 16, 2);
     </para>
    </refsect1>
   </refentry>
-
+  
+  <refentry id='function.expm1'>
+   <refnamediv>
+    <refname>expm1</refname>
+    <refpurpose>
+     Zwraca exp(liczba) - 1, obliczoną w taki sposób, że wartość jest dokładna,
+     nawet jeśli liczba jest bliska zeru
+    </refpurpose>
+   </refnamediv>
+   <refsect1>
+    <title>Opis</title>
+    <funcsynopsis>
+     <funcprototype>
+      <funcdef>float <function>expm1</function></funcdef>
+      <paramdef>float <parameter>liczba</parameter></paramdef>
+     </funcprototype>
+    </funcsynopsis>
+     &warn.experimental.func;
+    <para>
+     &warn.undocumented.func;
+    </para>
+   </refsect1>
+  </refentry>
+  
   <refentry id="function.floor">
    <refnamediv>
     <refname>floor</refname>
@@ -602,9 +625,18 @@ $binary = base_convert ($hexadecimal, 16, 2);
      Zwraca najbliższą liczbę całkowitą, mniejszą lub równą podanemu arumentowi
      <parameter>liczba</parameter>.
      Zwracana przez funkcję <function>floor</function> wartość jest nadal typu
-     <type>float</type> gdyż zakres tego typu jest zwykle większy niż zakres
+     <type>float</type> ponieważ zakres tego typu jest zwykle większy niż zakres
      typu <type>int</type>.
     </simpara>
+    <example>
+     <title>przykład zastosowania <function>floor</function></title>
+     <programlisting role="php">
+<![CDATA[
+$cztery = floor(4.3);   // $cztery = 4.0;
+$dziewięć = floor(9.999); // $dziewięć = 9.0;
+]]>
+     </programlisting>
+    </example>
     <simpara>
      Zobacz też <function>ceil</function> i
      <function>round</function>.
@@ -682,6 +714,29 @@ var_dump(hexdec("a0"));
     </para>
    </refsect1>
   </refentry>
+  
+  <refentry id='function.hypot'>
+   <refnamediv>
+    <refname>hypot</refname>
+    <refpurpose>
+     Zwraca sqrt( num1*num1 + num2*num2)
+    </refpurpose>
+   </refnamediv>
+   <refsect1>
+    <title>Opis</title>
+    <funcsynopsis>
+     <funcprototype>
+      <funcdef>float <function>hypot</function></funcdef>
+      <paramdef>float <parameter>num1</parameter></paramdef>
+      <paramdef>float <parameter>num2</parameter></paramdef>
+     </funcprototype>
+    </funcsynopsis>
+    &warn.experimental.func;
+    <para>
+     &warn.undocumented.func;
+    </para>
+   </refsect1>
+  </refentry>
 
   <refentry id="function.lcg-value">
    <refnamediv>
@@ -738,6 +793,29 @@ var_dump(hexdec("a0"));
     </funcsynopsis>
     <para>
      Zwraca logarytm dziesiętny z <parameter>argument</parameter>.
+    </para>
+   </refsect1>
+  </refentry>
+  
+  <refentry id='function.log1p'>
+   <refnamediv>
+    <refname>log1p</refname>
+    <refpurpose>
+    Zwraca log(1 + liczba), obliczony w taki sposób, że wartości są dokładne,
+    nawet, jeśli liczba jest bliska zeru
+    </refpurpose>
+   </refnamediv>
+   <refsect1>
+    <title>Opis</title>
+    <funcsynopsis>
+     <funcprototype>
+      <funcdef>float <function>log1p</function></funcdef>
+      <paramdef>float <parameter>liczba</parameter></paramdef>
+     </funcprototype>
+    </funcsynopsis>
+    &warn.experimental.func;
+    <para>
+     &warn.undocumented.func;
     </para>
    </refsect1>
   </refentry>
@@ -1123,7 +1201,7 @@ echo pi();
     </para>
     <example>
      <title>Parę przykładów z <function>pow</function></title>
-     <programlisting role="php">
+         <programlisting role="php">
 <![CDATA[
 <?php
 
@@ -1445,6 +1523,7 @@ sgml-minimize-attributes:nil
 sgml-always-quote-attributes:t
 sgml-indent-step:1
 sgml-indent-data:t
+indent-tabs-mode:nil
 sgml-parent-document:nil
 sgml-default-dtd-file:"../../manual.ced"
 sgml-exposed-tags:nil
