@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.3 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.7 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.5 $ -->
  <reference id="ref.session">
   <title>Sesje</title>
   <titleabbrev>Sesje</titleabbrev>
@@ -231,6 +231,13 @@ else {
     SID</literal> jest albo w postaci <literal>nazwa_sesji=id_sesji</literal>
     lub pustym stringiem.
    </para>
+   <note>
+    <para>
+     Dyrektywa <link linkend="ini.arg_separator.output">arg_separator.output
+     </link> którą można umieścić w pliku konfiguracyjnym &php.ini; pozwala
+     ustawić własny separator argumentów.
+    </para>
+   </note>
    <para>
     Poniższy przykład demonstruje jak zarejestrować zmienną i jak prawidłowo
     wstawić link do kolejnej strony korzystając ze stałej SID.
@@ -386,6 +393,17 @@ Aby kontynuować, <A HREF="nextpage.php?<?php echo SID?>">kliknij tutaj</A>
        <literal>session.use_cookies</literal> określa czy moduł będzie używał
        ciasteczek do przechowywania identyfikatora sesji po stronie klienta.
        Domyślnie <literal>1</literal> (włączona).
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       <literal>session.use_only_cookies</literal> określa czy moduł będzie
+       używał <emphasis role="strong">tylko</emphasis> ciasteczek do
+       przechowywania identyfikatora sesji po stronie klienta. Domyślna
+       wartość to <literal>0</literal> (dla wstecznej kompatybilności).
+       Włączenie tej opcji zapobiega atakom opartym o przekazywanie
+       identyfikatora sesji przez URL. Ta opcja została dodana w
+       <literal>PHP</literal> 4.3.0.
       </simpara>
      </listitem>
      <listitem>
