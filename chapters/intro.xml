@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.35 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.10 $ -->
+<!-- EN-Revision: 1.39 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.11 $ -->
  <chapter id="introduction">
   <title>Wprowadzenie</title>
 
@@ -62,7 +62,9 @@
    <para>
     Pomimo że PHP jest rozwijane pod kątem skryptowania server-side, może on
     znacznie więcej. Przeczytaj rozdział <link linkend="intro-whatcando">Co
-    potrafi PHP</link> aby uzyskać więcej informacji.
+    potrafi PHP</link> aby uzyskać więcej informacji, albo <link
+     linkend="tutorial">samouczek</link> w przypadku zainteresowania tylko
+    programowaniem dla celów www.
    </para>
   </sect1>
 
@@ -83,7 +85,8 @@
        pole działania PHP. Potrzebujesz 3 rzeczy aby to robić: parser PHP
        (plik wykonywalny CGI lub moduł serwera), serwer WWW i przeglądarka.
        Musisz uruchomić serwer WWW połączony z PHP. Dane wyjściowe programów
-       PHP możesz oglądać kożystając z przeglądarki poprzez serwer. Zobacz
+       PHP możesz oglądać korzystając z przeglądarki poprzez serwer. Wszystko
+       to można uruchomić na swoim domowym komputerze. Zobacz
        rozdział <link linkend="installation">Instalacja</link> aby uzyskać
        więcej informacji.
       </simpara>
@@ -126,11 +129,12 @@
     może pracować jako procesor CGI.
    </para>
    <para>
-    A więc z PHP istnieje wolnośc wyboru systemu operacyjnego i serwera WWW.
+    A więc z PHP istnieje wolność wyboru systemu operacyjnego i serwera WWW.
     Można także wybrać pomiędzy programowaniem proceduralnym a obiektowym, lub
     pomieszaniem ich obu. Pomimo że nie wszystkie standardy OOP są obsługiwane
-    w PHP, wiele bibliotek i dużych aplikacji (włączając w to biblioteki PEAR)
-		jest napisanych całkowicie w sposób obiektowy.
+    w PHP 4, wiele bibliotek i dużych aplikacji (włączając w to biblioteki PEAR)
+		  jest napisanych całkowicie w sposób obiektowy. W PHP 5 naprawiono
+    niedomagania OOP istniejące w PHP 4, implementując pełny model obiektowy.
    </para>
    <para>
     W PHP nie ma ograniczenia, że na wyjściu musi być HTML. Możliwości PHP
@@ -165,6 +169,7 @@
       <member>Oracle (OCI7 i OCI8)</member>
       <member>Ovrimos</member>
       <member>PostgreSQL</member>
+      <member>SQLite</member>
       <member>Solid</member>
       <member>Sybase</member>
       <member>Velocis</member>
@@ -190,24 +195,26 @@
    <para>
     PHP mam niezwykle przydatne możliwości do obróbki tekstów, od POSIX'owych
     i PERL'owych wyrażeń regularnych po parsowanie dokumentów XML. Do
-    parsowania i uzyskiwania dostępu do dokumentów XML wykorzystywane są
-    standardy SAX i XML. Możesz także użyć naszych rozszerzeń XSLT do
-    przetwarzania dokumentów XML.
+    parsowania i uzyskiwania dostępu do dokumentów XML w PHP 4 wykorzystywane
+    są standardy SAX i DOM, można także użyć rozszerzeń XSLT do przetwarzania
+    dokumentów XML. PHP 5 standaryzuje wszystkie rozszerzenia XML na solidnej
+    podstawie libxml2 i poszerza gamę możliwości dodając wsparcie dla
+    SimpleXML i XMLReader.
    </para>
    <para>
     PHP może być używane w sferze e-commerce, ponieważ obsługuje płatności
-    Cybercash, a także funkcje CyberMUT, VeriSign Payflow Pro i CCVS,
+    Cybercash, a także funkcje CyberMUT, VeriSign Payflow Pro i MCVE,
     przydatne przy płatnościach on-line.
    </para>
    <para>
     Na koniec warto wspomnieć, że w PHP istnieje wiele innych interesujących
-    rozszerzeń, takich jak funkcje przeszykiwawcze mnoGoSearch, funkcje bramki
+    rozszerzeń, takich jak funkcje przeszukiwawcze mnoGoSearch, funkcje bramki
     IRC, wiele narzędzi do kompresji (gzip, bz2), konwersji kalendarza,
     tłumaczeń...
    </para>
    <para>
     To co widać na tej stronie, to nie jest wszystko co ma do zaoferowanie
-    PHP. Przeczytaj rozdział o <link linkend="installation">instalacji</link>
+    PHP. Przeczytaj rozdział o <link linkend="install">instalacji</link>
     i zobacz <link linkend="funcref">przegląd funkcji</link> jeśli chcesz
     dowiedzieć się więcej o rozszerzeniach tutaj wspomnianych.
    </para>
