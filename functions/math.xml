@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
 <!-- EN-Revision: 1.69 Maintainer: Qrak Status: ready -->
-<!-- $Revision: 1.8 $ -->
+<!-- $Revision: 1.9 $ -->
  <reference id="ref.math">
   <title>Funkcje Matematyczne</title>
   <titleabbrev>Matematyka</titleabbrev>
@@ -120,7 +120,7 @@
     </tbody>
        </tgroup>
       </table>
-     Tylko stała M_PI była dostępna w wsześniejszych wersjach PHP do PHP 4.0.0.
+     Tylko stała M_PI była dostępna w wcześniejszych wersjach PHP do PHP 4.0.0.
      włącznie. Pozostałe pojawiły się w PHP 4.0.0. Stałe oznaczone [4.0.2]
      zostały dodane w PHP 4.0.2.
      </para>
@@ -142,8 +142,8 @@
      </funcprototype>
     </funcsynopsis>
     <para>
-     Zwraca wartość bezwzględną podanej liczby. Jeśli argument is typu 
-     <type>float</type>, zwracana wartość jest także <type>float</type>,
+     Zwraca wartość bezwzględną podanej liczby. Jeśli argument jest typu 
+     <type>float</type>, zwracana jest także wartość <type>float</type>,
      inaczej zwracana jest wartość <type>integer</type> (<type>float</type>
      ma zwykle szerszy zakres niż <type>integer</type>).
     </para>
@@ -198,7 +198,7 @@
     </funcsynopsis>
     <para>
      Zwraca odwrotny cosinus hiperboliczny z liczby <parameter>arg</parameter>,
-     tzn. taką wartość, której cosinus hiperboliczny równy 
+     tzn. taką wartość, której cosinus hiperboliczny jest równy 
      <parameter>arg</parameter>.
     </para>
     &note.no-windows;
@@ -389,12 +389,12 @@ $binary = base_convert ($hexadecimal, 16, 2);
      </funcprototype>
     </funcsynopsis>
     <para>
-     Zwraca liczbę dziesiętną odpowiadającą liczbie dwójkowej podane w
+     Zwraca liczbę dziesiętną odpowiadającą liczbie dwójkowej podanej w
      argumencie <parameter>liczba_dwójkowa</parameter>.
     </para>
     <para>
      <function>bindec</function> konwertuje liczby dwójkowe do liczb 
-     całkowitych. Największą konwertowaną liczbą jest 31 bitów 1 czyli
+     całkowitych. Największą konwertowaną liczbą jest 31 bitów jedynek, czyli
      2 147 483 647 dziesiętnie.
     </para>
     <para>
@@ -501,7 +501,7 @@ $binary = base_convert ($hexadecimal, 16, 2);
     <para>
      Zwraca łańcuch znaków stanowiący dwójkową reprezentację liczby dziesiętnej
      podanej jako argument. Największą liczbą możliwą do skonwertowania jest
-     4 294 967 295 dziesiętnie, co równe jest 32 bitom 1.
+     4 294 967 295 dziesiętnie, co równe jest 32 bitom jedynek.
     </para>
     <para>
      Zobacz też <function>bindec</function>.
@@ -548,7 +548,7 @@ $binary = base_convert ($hexadecimal, 16, 2);
     </funcsynopsis>
     <para>
      Zwraca łańcuch znaków zawierający ósemkową reprezentację podanej liczby
-     dziesiętnej. Największ liczbą, która może być skonwertowana jest
+     dziesiętnej. Największą liczbą, która może być skonwertowana jest
      2 147 483 647 dziesiętnie, co odpowiada "17777777777" ósemkowo.
     </para>
     <para>
@@ -703,7 +703,7 @@ $dziewięć = floor(9.999); // $dziewięć = 9.0;
     </funcsynopsis>
     <para>
      Zwraca dziesiętny odpowiednik liczby szesnastkowej podanej w argumencie
-     <parameter>hex_string</parameter>. <function>hexdec</function>kownertuje
+     <parameter>hex_string</parameter>. <function>hexdec</function> konwertuje
      szesnastkowy łańcuch znaków do postaci liczby dziesiętnej. Największą
      liczbą, która może być skonwertowana jest 7fffffff, czyli  2147483647
      dziesiętnie.
@@ -870,8 +870,8 @@ var_dump(hexdec("a0"));
      Jeśli jedna lub więcej podanych liczb jest zmiennoprzecinkowa, wszystkie
      liczby zostaną potraktowane jak zmiennoprzecinkowe i także liczba
      zmiennoprzecinkowa zostanie zwrócona. Jeśli żadna z liczb nie będzie
-     zmiennoprzecinkową, wszystkie zostaną potraktowane jako całkowite i liczba
-     całkowita zostanie zwrócona.
+     zmiennoprzecinkową, wszystkie zostaną potraktowane jako całkowite i
+     zwrócona zostanie liczba całkowita.
     </para>
    </refsect1>
   </refentry>
@@ -913,8 +913,8 @@ var_dump(hexdec("a0"));
      wartości zostaną potraktowane jako zmiennoprzecinkowe i taka też liczba
      zostanie zwrócona.
      Jeśli żadna spośród wartości nie jest typu <type>float</type>, wszystkie
-     zostaną potraktowane jako <type>integer</type> i wartość całkowita
-     zostanie zwrócona.
+     zostaną potraktowane jako <type>integer</type> i zwrócona zostanie
+     wartość całkowita.
     </para>
    </refsect1>
   </refentry>
@@ -942,7 +942,7 @@ var_dump(hexdec("a0"));
      </funcprototype>
     </funcsynopsis>
     <simpara>
-     Wiele generatorów liczb losowych w starych libc mają niepewne albo nieznane
+     Wiele generatorów liczb losowych w starych libc ma niepewne albo nieznane
      charakterystyki i są powolne. Domyślnie PHP używa generatora liczb losowych
      z libc w funkcji <function>rand</function>. Funkcja
      <function>mt_rand</function> jest jej zamiennikiem. Używa ona generatora
@@ -1085,7 +1085,7 @@ $randval = mt_rand();
     </para>
     <para>
      Kiedy wszystkie cztery parametry są podane, <parameter>liczba</parameter>
-     liczba będzie sformatowana z <parameter>miejsc_dziesiętnych</parameter>,
+     będzie sformatowana z <parameter>miejsc_dziesiętnych</parameter>,
      z <parameter>przecinek_dziesiętny</parameter> zamiast kropki (".") i 
      <parameter>separator_tysięcy</parameter> pomiędzy każdą grupą tysięcy.
     </para>
@@ -1107,7 +1107,7 @@ $randval = mt_rand();
      </para>
       <programlisting role="php">
 <![CDATA[
-&lt;?php
+<?php
 
     $liczba = 1234.56;
 
@@ -1126,7 +1126,7 @@ $randval = mt_rand();
     $notacja_angielska = number_format($liczba, 2, '.', '');
     // 1234.56
 
-?&gt;
+?>
 ]]>
       </programlisting>
      </example>
@@ -1155,10 +1155,8 @@ $randval = mt_rand();
     </funcsynopsis>
     <para>
      Zwraca dziesiętny odpowiednik liczby ósemkowej podanej jako argument
-     <parameter>liczba_ósemkowa</parameter>.
-     OctDec zamienia an łańcuch ósemkowy na liczbę dziesiętną. Największą
-     liczbą, jaka może być skonwertowana jest 17777777777 ósemkowo, czyli
-     2147483647 dziesiętnie.
+     <parameter>liczba_ósemkowa</parameter>. Największą liczbą, jaka może być
+     skonwertowana jest 17777777777 ósemkowo, czyli 2147483647 dziesiętnie.
     </para>
     <para>
      Zobacz też <function>decoct</function>.
@@ -1345,8 +1343,8 @@ echo pow(-1, 5.5); // błąd
     <para>
      Zwraca zaokrągloną wartość argumentu <parameter>wartość</parameter> do
      miejsca po przecinku określonego w <parameter>dokładność</parameter>.
-     <parameter>dokładność</parameter> może być także ujemny lub równy zero
-     (domyślnie).
+     Argument <parameter>dokładność</parameter> może być także ujemny lub równy
+     zero (domyślnie).
     </para>
     <para>
      <caution>
