@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.7 $ -->
+<!-- EN-Revision: 1.5 Maintainer: qrak Status: ready -->
+<!-- $Revision: 1.8 $ -->
   <refentry id="function.iconv-set-encoding">
    <refnamediv>
     <refname>iconv_set_encoding</refname>
@@ -9,14 +9,21 @@
    <refsect1>
     <title>Opis</title>
      <methodsynopsis>
-      <type>array</type><methodname>iconv_set_encoding</methodname>
+      <type>bool</type><methodname>iconv_set_encoding</methodname>
       <methodparam><type>string</type><parameter>typ</parameter></methodparam>
       <methodparam><type>string</type><parameter>zestaw_znaków</parameter></methodparam>
      </methodsynopsis>
     <para>
      Zmienia wartość zmiennej <parameter>typ</parameter> na 
-     <parameter>zestaw_znaków</parameter> i zwraca &true; jeśli zmiana się
-     powiedzie, lub &false; w przeciwnym razie.
+     <parameter>zestaw_znaków</parameter>. &return.success;
+    </para>
+    <para>
+     Argument <parameter>typ</parameter> może przyjmować następujące wartości:
+     <simplelist>
+      <member>input_encoding</member>
+      <member>output_encoding</member>
+      <member>internal_encoding</member>
+     </simplelist>
     </para>
     <para>
      <example>
