@@ -1,59 +1,94 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- splitted from ./pl/functions/filesystem.xml, last change in rev 1.1 -->
-<!-- last change to 'fread' in en/ tree in rev 1.25 -->
-<!-- EN-Revision: 1.2 Maintainer: adi Status: partial -->
-<!-- OLD-Revision: 1.115/EN.1.25 -->
-  <refentry id="function.fread">
+<!-- EN-Revision: 1.16 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.4 $ -->
+ <refentry id="function.fread">
    <refnamediv>
     <refname>fread</refname>
-    <refpurpose>Odczyt plików binarnie bezpieczny</refpurpose>
+    <refpurpose>Odczyt pliku binarnie bezpieczy</refpurpose>
    </refnamediv>
    <refsect1>
     <title>Opis</title>
      <methodsynopsis>
       <type>string</type><methodname>fread</methodname>
-      <methodparam><type>int</type><parameter>fp</parameter></methodparam>
+      <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam>
       <methodparam><type>int</type><parameter>długość</parameter></methodparam>
      </methodsynopsis>
     <simpara>
      <function>fread</function> odczytuje do
      <parameter>długość</parameter> bajtów ze wskaźnika pliku
-     <parameter>fp</parameter>. Czytanie kończy się gdy
-     odczytano już <parameter>długość</parameter> bajtów
-     lub osiągnięto EOF, cokolwiek nastąpi pierwsze.
-    </simpara>
+     określonego przez <parameter>uchwyt</parameter>. Czytanie kończy się
+	 gdy odczytano <parameter>długość</parameter> bajtów, osiągnięty
+	 został koniec pliku (EOF) lub (dla sieciowych strumieni), kiedy pakiet
+	 stanie się dostępny, cokolwiek nastąpi pierwsze.
+	</simpara> 
     <para>
      <informalexample>
       <programlisting role="php">
 <![CDATA[
+<?php
 // pobierz zawartość pliku do łańcucha
-$filename = "/usr/local/something.txt";
-$fd = fopen ($filename, "r");
-$contents = fread ($fd, filesize ($filename));
-fclose ($fd);
+$nazwa_pliku = "/usr/local/jakis.txt";
+$uchwyt = fopen($nazwa_pliku, "r");
+$tresc = fread($uchwyt, filesize($nazwa_pliku));
+fclose($uchwyt);
+?>
+]]>
+      </programlisting>
+     </informalexample>
+    </para>
+    <warning>
+     <para>
+	  W systemach, które rozróżniają pliki binarne i tekstowe
+	  (np. Windows) plik musi zostać otworzony z 'b' dołączonym do
+	  parametru tryb <function>fopen</function>.
+     </para>
+    </warning>
+    <para>
+     <informalexample>
+      <programlisting role="php">
+<![CDATA[
+<?php
+$nazwa_pliku = "c:\\pliki\\jakisobrazek.gif";
+$uchwyt = fopen($nazwa_pliku, "rb");
+$tresc = fread($uchwyt, filesize($nazwa_pliku));
+fclose($uchwyt);
+?>
+]]>
+      </programlisting>
+     </informalexample>
+    </para>
+
+    <warning>
+     <para>
+	  Kiedy następuje odczyt z sieciowych strumieni lub potoków, takich jak te zwrócone
+	  gdy odczytujesz <link linkend="features.remote-files">zdalne pliki</link> lub z
+	  <function>popen</function> i <function>fsockopen</function>, odczyt zakończy się
+	  po tym jak pakiet jest dostępny. To znaczy, że powinieneś gromadzić dane razem
+	  z kawałków jak pokazano na poniższym przykładzie.
+	  </para>
+    </warning>
+    <para>
+     <informalexample>
+      <programlisting role="php">
+<![CDATA[
+<?php
+$uchwyt = fopen("http://www.przykladowy.com/", "rb");
+$tresc = '';
+while (!feof($uchwyt)) {
+  $tresc .= fread($uchwyt, 8192);
+}
+fclose($uchwyt);
+?>
 ]]>
       </programlisting>
      </informalexample>
     </para>
     <note>
      <para>
-      W systemach, które rozróżniają pliki na binarne i tekstowe
-      (np. Windows) plik musi zostać otworzony z 'b' włączonym do
-      parametru tryb funkcji <function>fopen</function>.
+	  Jeśli po prostu chcesz otrzymać treść pliku w stringu, użyj <function>file_get_contents</function>
+	  dlatego, że ma to dużo lepszą wydajność niż kod powyżej.
      </para>
     </note>
-    <para>
-     <informalexample>
-      <programlisting role="php">
-<![CDATA[
-$filename = "c:\\files\\somepic.gif";
-$fd = fopen ($filename, "rb");
-$contents = fread ($fd, filesize ($filename));
-fclose ($fd);
-]]>
-      </programlisting>
-     </informalexample>
-    </para>
     <simpara>
      Patrz także: <function>fwrite</function>, <function>fopen</function>,
      <function>fsockopen</function>, <function>popen</function>,
@@ -84,3 +119,4 @@ vim600: syn=xml fen fdm=syntax fdl=2 si
 vim: et tw=78 syn=sgml
 vi: ts=1 sw=1
 -->
+
