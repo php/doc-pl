@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!-- EN-Revision: 1.6 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.1 $ -->
+<?xml version="1.0" encoding="iso-8859-2"?>
+<!-- EN-Revision: 1.7 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.2 $ -->
   <refentry id="function.array-diff-uassoc">
    <refnamediv>
     <refname>array_diff_uassoc</refname>
@@ -19,24 +19,27 @@
      <methodparam><type>callback</type><parameter>key_compare_func</parameter></methodparam>
     </methodsynopsis>
     <para>
-     <function>array_diff_uassoc</function> returns an <type>array</type>
-     containing all the values from <parameter>array1</parameter>
-     that are not present in any of the other arguments.
-     Note that the keys are used in the comparison unlike
-     <function>array_diff</function>. This comparison is done by a user supplied callback function.
-     It must return an integer less than, equal
-     to, or greater than zero if the first argument is considered to
-     be respectively less than, equal to, or greater than the
-     second. This is unlike <function>array_diff_assoc</function> where an
-     internal function for comparing the indices is used.
+     <function>array_diff_uassoc</function> zwraca <type>tablicê</type>
+     zawieraj±c± wszystkie warto¶ci z <parameter>tablica1</parameter> które
+     nie s± obecne w ¿adnym z pozosta³ych argumentów. Do porównania, w
+     przeciwieñstwie do funkcji <function>array_diff</function>, u¿ywane sa
+     klucze tablic.
+    </para>
+    <para>
+     Porównanie jest dokonywane przy pomocy podanej funkcji zwrotnej. Musi ona
+     zwracaæ liczbê ca³kowit± mniejsz±, równ± lub wiêksz± od zera je¶li
+     pierwszy klucz jest uznawany za mniejszy, równy lub wiêkszy drugiego.
+     Jest to zachowanie inne ni¿ w funkcji
+     <function>array_diff_assoc</function>, gdzie do porównañ kluczy u¿ywana
+     jest wewnêtrzna funkcja.
     </para>
     <para>
      <example>
-      <title><function>array_diff_uassoc</function> example</title>
+      <title>Przyk³ad u¿ycia <function>array_diff_uassoc</function></title>
       <programlisting role="php">
 <![CDATA[
 <?php
-function key_compare_func($a, $b) 
+function funk_porownujaca($a, $b) 
 {
     if ($a === $b) {
         return 0;
@@ -44,9 +47,10 @@ function key_compare_func($a, $b)
     return ($a > $b)? 1:-1;
 }
 
-$array1 = array("a" => "green", "b" => "brown", "c" => "blue", "red");
-$array2 = array("a" => "green", "yellow", "red");
-$result = array_diff_uassoc($array1, $array2, "key_compare_func");
+$tablica1 = array("a" => "zielony", "b" => "br±zowy", "c" => "niebieski", "czerwony");
+$tablica2 = array("a" => "zielony", "¿ó³ty", "czerwony");
+$wynik = array_diff_uassoc($tablica1, $tablica2, "funk_porownujaca");
+print_r($wynik);
 ?>
 ]]>
       </programlisting>
@@ -55,33 +59,34 @@ $result = array_diff_uassoc($array1, $array2, "key_compare_func");
 <![CDATA[
 Array
 (
-    [b] => brown
-    [c] => blue
-    [0] => red
+    [b] => br±zowy
+    [c] => niebieski
+    [0] => czerwony
 )
 ]]>
       </screen>
      </example>
     </para>
     <simpara>
-     In our example above you see the <literal>"a" =&gt; "green"</literal>
-     pair is present in both arrays and thus it is not in the ouput from the
-     function. Unlike this, the pair <literal>0 =&gt; "red"</literal>
-     is in the ouput because in the second argument <literal>"red"</literal>
-     has key which is <literal>1</literal>.
+     W powy¿szym przyk³adzie para <literal>"a" =&gt; "zielony"</literal> jest
+     obecna w obu tablicach, w zwi±zku z tym nie jest zwracana przez funkcjê.
+     Z kolei para <literal>0 =&gt; "czerwony"</literal> jest zawarta w wyniku
+     dzia³ania funkcji, poniewa¿ w drugim argumencie warto¶æ
+     <literal>"czerwony"</literal> ma klucz <literal>1</literal>.
     </simpara>
     <simpara>
-     The equality of 2 indices is checked by the user supplied callback function.
+     Równo¶æ dwóch indeksów jest sprawdzana przez podan± przez u¿ytkownika
+     funkcjê.
     </simpara>
     <note>
      <simpara>
-      Please note that this function only checks one dimension of a n-dimensional
-      array. Of course you can check deeper dimensions by using, for example,
-      <literal>array_diff_uassoc($array1[0], $array2[0], "key_compare_func");</literal>.
+      Funkcja ta sprawdza tylko jeden wymiar n-wymiarowej tablicy. Mo¿na
+      sprawdzaæ g³êbsze wymiary przez u¿ycie, na przyk³ad
+      <literal>array_diff_uassoc($tablica1[0], $tablica2[0], 'funkcja_zwrotna');</literal>.
      </simpara>
     </note>
     <para>
-     See also
+     Patrz tak¿e:
      <function>array_diff</function>,
      <function>array_diff_assoc</function>,
      <function>array_udiff</function>,
@@ -90,7 +95,7 @@ Array
      <function>array_intersect</function>,  
      <function>array_intersect_assoc</function>,
      <function>array_uintersect</function>,  
-     <function>array_uintersect_assoc</function> and 
+     <function>array_uintersect_assoc</function> i
      <function>array_uintersect_uassoc</function>.
     </para>
    </refsect1>
