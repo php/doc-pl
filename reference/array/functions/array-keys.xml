@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.8 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.array-keys">
    <refnamediv>
     <refname>array_keys</refname>
@@ -30,19 +30,23 @@
       <title>Przykład użycia <function>array_keys</function></title>
       <programlisting role="php">
 <![CDATA[
+<?php
 $tablica = array (0 => 100, "kolor" => "czerwony");
 print_r(array_keys ($tablica));
 
 $tablica = array ("niebieski", "czerwony", "zielony", "niebieski", "niebieski");
 print_r(array_keys ($tablica, "niebieski"));
 
-$tablica = array ("kolor" => array("niebieski", "czerwony", "zielony"), "rozmiar" => array("mały", "średni", "duży"));
+$tablica = array ("kolor" => array("niebieski", "czerwony", "zielony"),
+                  "rozmiar" => array("mały", "średni", "duży"));
 print_r(array_keys ($tablica));
+?>
 ]]>
       </programlisting>
       <para>
        Powyższy przykład wyświetli:
-       <screen>
+      </para>
+      <screen>
 <![CDATA[
 Array
 (
@@ -61,37 +65,12 @@ Array
     [1] => rozmiar
 )
 ]]>
-       </screen>
-      </para>
+      </screen>
      </example>
     </para>
-    <note>
-     <para>
-      Ta funkcja została dodana w PHP 4. Poniżej znajduje się implementacja
-      tej funkcji dla tych, którzy jeszcz używają PHP 3.
-      <example>
-       <title>
-        Implementacja <function>array_keys</function> dla użytkowników
-       </title>
-       <programlisting role="php">
-<![CDATA[
-function array_keys ($arr, $term="") {
-    $t = array();
-    while (list($k,$v) = each($arr)) {
-        if ($term && $v != $term) {
-            continue;
-        }
-        $t[] = $k;
-   }
-   return $t;
-}
-]]>
-       </programlisting>
-      </example>
-     </para>
-    </note>
     <para>
-     Patrz także: <function>array_values</function>.
+     Patrz także: <function>array_values</function> i
+     <function>array_key_exists</function>.
     </para>
    </refsect1>
   </refentry>
