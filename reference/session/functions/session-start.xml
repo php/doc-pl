@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.3 $ -->
+<!-- EN-Revision: 1.5 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.4 $ -->
   <refentry id="function.session-start">
    <refnamediv>
     <refname>session_start</refname>
@@ -13,9 +13,9 @@
       <void/>
      </methodsynopsis>
     <simpara>
-     <function>session_start</function> tworzy sesję (lub odtwarza bieżącą
-      w oparciu o identyfikator sesji przekazywany przez zmienne GET lub
-      ciasteczko).
+     <function>session_start</function> tworzy sesję lub wznawia bieżącą na
+     podstawie aktualnego identyfikatora sesji przekazanego przy wywołaniu,
+     poprzez metodę GET, POST lub ciasteczko.
     </simpara>
     <simpara>
      Jeśli chcesz, aby sesja była nazwana, przed wywołaniem
@@ -23,7 +23,7 @@
      <function>session_name</function>.
     </simpara>
     <simpara>
-     Ta funkcja zawsze zwraca warotść &true;.
+     Ta funkcja zawsze zwraca wartość &true;.
     </simpara>
     <note>
      <para>
@@ -32,6 +32,68 @@
       jakichkolwiek danych do przeglądarki.
      </para>
     </note>
+    <para>
+     <example>
+      <title>Przykład sesji: <filename>page1.php</filename></title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+// page1.php
+
+session_start();
+
+echo 'Witaj na stronie #1';
+
+$_SESSION['kolor']     = 'zielony';
+$_SESSION['zwierze']   = 'kot';
+$_SESSION['czas']      = time();
+
+// Działa jeśli ciasteczko sesyjne zostało zaakceptowane
+echo '<br /><a href="page2.php">strona 2</a>';
+
+// Lub może przekaż ciasteczko sesyjne, jeśli to konieczne
+echo '<br /><a href="page2.php?' . SID . '">strona 2</a>';
+?>
+]]>
+      </programlisting>
+     </example>
+    </para>
+    <para>
+     Po odwiedzeniu strony <filename>page1.php</filename>, druga strona,
+     <filename>page2.php</filename> będzie magicznie zawierała dane sesji. W
+     rozdziale <link linkend="ref.session">Sesje</link> znajduje się więcej
+     informacji na temat <link linkend="session.idpassing">propagowania
+      identyfikatora sesji</link>, gdzie można znaleźć na przykład
+     wytłumaczenie co zawiera stała <constant>SID</constant>.
+    </para>
+    <para>
+     <example>
+      <title>Przykład sesji: <filename>page2.php</filename></title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+// page2.php
+
+session_start();
+
+echo 'Witaj na stronie #2<br />';
+
+echo $_SESSION['kolor']; // zielony
+echo $_SESSION['zwierze'];   // not
+echo date('Y m d H:i:s', $_SESSION['time']);
+
+// Tu można wstawić SID, podobnie jak to był na page1.php
+echo '<br /><a href="page1.php">page 1</a>';
+?>
+]]>
+      </programlisting>
+     </example>
+    </para>
+    <simpara>
+     W celu stworzenia nazwanej sesji, niezbędne jest wywołanie funkcji
+     <function>session_name</function> przed wywołaniem
+     <function>session_start</function>.
+    </simpara>
     <simpara>
      <function>session_start</function> zarejestruje wewnętrzny uchwyt obsługi 
      wyjścia dla przepisywania URLi jeśli włączona jest opcja
@@ -43,10 +105,25 @@
     </simpara>
     <note>
      <simpara>
-      Wskazane jest użycie <literal>zlib.output_compression</literal> zamiast
-      <literal>ob_gzhandler</literal>
+      Wskazane jest użycie
+      <link linkend="ini.zlib.output-compression">zlib.output_compression</link>
+      zamiast <literal>ob_gzhandler</literal>
      </simpara>
     </note>
+    <note>
+     <para>
+      Od PHP 4.3.3, wywołanie <function>session_start</function> podczas gdy
+      sesja już została rozpoczęta, spowoduje błąd poziomu
+      <constant>E_NOTICE</constant>. Drugie rozpoczęcie sesji zostanie
+      zignorowane.
+     </para>
+    </note>
+    <para>
+     Patrz także:
+     <link linkend="reserved.variables.session">$_SESSION</link>,
+     <link linkend="ini.session.auto-start">session.auto_start</link> i
+     <function>session_id</function>.
+    </para>
    </refsect1>
   </refentry>
 
