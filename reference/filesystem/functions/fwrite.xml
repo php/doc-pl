@@ -1,50 +1,87 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- splitted from ./pl/functions/filesystem.xml, last change in rev 1.1 -->
-<!-- last change to 'fwrite' in en/ tree in rev 1.2 -->
-<!-- EN-Revision: 1.2 Maintainer: adi Status: partial -->
-<!-- OLD-Revision: 1.115/EN.1.2 -->
+<!-- EN-Revision: 1.10 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.3 $ -->
   <refentry id="function.fwrite">
    <refnamediv>
     <refname>fwrite</refname>
-    <refpurpose>Binary-safe file write</refpurpose>
+    <refpurpose>Zapis pliku binarnie bezpieczny</refpurpose>
    </refnamediv>
    <refsect1>
-    <title>Description</title>
+    <title>Opis</title>
      <methodsynopsis>
       <type>int</type><methodname>fwrite</methodname>
-      <methodparam><type>int</type><parameter>fp</parameter></methodparam>
-      <methodparam><type>string</type><parameter>string</parameter></methodparam>
-      <methodparam choice="opt"><type>int</type><parameter>
-        length
-       </parameter></methodparam>
+      <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam>
+      <methodparam><type>string</type><parameter>łańcuch</parameter></methodparam>
+      <methodparam choice="opt"><type>int</type><parameter>długość</parameter></methodparam>
      </methodsynopsis>
     <simpara>
-     <function>fwrite</function> writes the contents of
-     <parameter>string</parameter> to the file stream pointed to by
-     <parameter>fp</parameter>. If the <parameter>length</parameter>
-     argument is given, writing will stop after
-     <parameter>length</parameter> bytes have been written or the end
-     of <parameter>string</parameter> is reached, whichever comes
-     first.
+     <function>fwrite</function> zapisuje treść
+     <parameter>łańcuch</parameter> do strumienia pliku wskazanego przez
+     <parameter>uchwyt</parameter>. Jeśli argument <parameter>długość</parameter>
+     został podany, zapis zatrzymywany jest po zapisaniu
+     <parameter>długość</parameter> bajtów lub <parameter>łańcuch</parameter>
+     skończy się, cokolwiek nastąpi szybciej.
     </simpara>
     <simpara>
-     Note that if the <parameter>length</parameter> argument is given,
-     then the <link
+     <function>fwrite</function> zwraca liczbę zapisanych bajtów,
+     lub &false; w przypadku błędu.
+    </simpara>
+    <simpara>
+     Zauważ, że jeśli argument <parameter>długość</parameter> zosta podany,
+     to konfiguracja <link
      linkend="ini.magic-quotes-runtime">magic_quotes_runtime</link>
-     configuration option will be ignored and no slashes will be
-     stripped from <parameter>string</parameter>.
+     zostaje zignorowana i żadne slashe nie zostaną usunięte z
+     <parameter>łańcucha</parameter>.
     </simpara>
     <note>
      <para>
-      On systems which differentiate between binary and text files
-      (i.e. Windows) the file must be opened with 'b' included in
-      <function>fopen</function> mode parameter.
+      W systemach, które rozróżniają pliki na binarne i tekstowe
+      (np. Windows) plik musi zostać otworzony z 'b' włączonym do
+      parametru tryb funkcji <function>fopen</function>.
      </para>
     </note>
+	 <para> 
+       <example> 
+        <title>Prosty przykład fwrite</title> 
+        <programlisting role="php"> 
+  <![CDATA[ 
+  <?php 
+  $nazwapliku = 'test.txt'; 
+  $trochetresci = "Dodaj to do pliku\n"; 
+    
+  // Najpierw przekonaj się czy plik istnieje i jest zapisywalny. 
+  if (is_writable($nazwapliku)) { 
+    
+      // W naszym przykładzie otwieramy $nazwapliku w trybie dopisywania. 
+      // Wskaźnik pliku jest ustawiony na końcu pliku gdzie znajdzie 
+      // się zawartość $trochetresci po wykonaniu fwrite(). 
+      if (!$uchwyt = fopen($nazwapliku, 'a')) { 
+           echo "Nie mogę otworzyć pliku ($nazwapliku)"; 
+           exit; 
+      } 
+    
+      // Zapis $trochetresci do naszego otwartego pliku. 
+      if (fwrite($uchwyt, $trochetresci) === FALSE) { 
+          echo "Nie mogę zapisać do pliku ($nazwapliku)"; 
+          exit; 
+      } 
+    
+      echo "Sukces, zapisano ($trochetresci) do pliku ($nazwapliku)"; 
+    
+      fclose($uchwyt); 
+    
+  } else { 
+      echo "Plik $nazwapliku nie jest zapisywalny"; 
+  } 
+  ?> 
+  ]]> 
+        </programlisting> 
+       </example> 
+      </para> 
+
     <simpara>
-     See also <function>fread</function>, <function>fopen</function>,
-     <function>fsockopen</function>, <function>popen</function>, and
-     <function>fputs</function>.
+     Patrz także: <function>fread</function>, <function>fopen</function>,
+     <function>fsockopen</function> i <function>popen</function>.
     </simpara>
    </refsect1>
   </refentry>
