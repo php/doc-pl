@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.5 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.array-merge">
    <refnamediv>
     <refname>array_merge</refname>
@@ -22,7 +22,8 @@
     <para>
      Jeśli tablice wejściowe mają takie same klucze tekstowe, najnowsza
      wartość nadpisze starszą. Jednakże jeśli tablice będą miały takie same
-     klucze liczbowe, późniejsza wartość nie nadpisze starszej, lecz zostanie
+     klucze liczbowe, późniejsza wartość <emphasis
+     role="strong">nie</emphasis> nadpisze starszej, lecz zostanie
      dopisana na koniec tablicy.
     </para>
     <para>
@@ -48,6 +49,50 @@ Array
     [3] => b
     [kształt] => trapezoid
     [4] => 4
+)
+]]>
+       </screen>
+      </para>
+     </example>
+    </para>
+    <para>
+     <example>
+      <title>Prosty przykład użycia <function>array_merge</function></title>
+      <programlisting role="php">
+<![CDATA[
+$tablica1 = array();
+$tablica2 = array(1 => "dane");
+$wynik    = array_merge($tablica1, $tablica2);
+]]>
+       </programlisting>
+       <para>
+        Nie zapomnij że klucze numeryczne będą przenumerowane!
+        <screen role="php">
+<![CDATA[
+Array
+(
+[0] => dane
+)
+]]>
+        </screen>
+       </para>
+       <para>
+        Jeśli chcesz całkowicie zachować tablice i tylko dodać jedną na końcu
+        drugiej, użyj operatora <literal>+</literal>:
+        <programlisting role="php">
+<![CDATA[
+$tablica1 = array();
+$tablica2 = array(1 => "dane");
+$wynik = $tablica1 + $tablica2;
+]]>
+        </programlisting>
+        Klucze numeryczne pozostaną zachowane a co za tym idzie asocjacje
+        zostaną niezmienione.
+        <screen role="php">
+<![CDATA[
+Array
+(
+    [1] => dane
 )
 ]]>
        </screen>
