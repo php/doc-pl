@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.18 Maintainer: leon Status: ready -->
-<!-- $Revision: 1.7 $ -->
+<!-- EN-Revision: 1.26 Maintainer: leon Status: ready -->
+<!-- $Revision: 1.8 $ -->
  <chapter id="functions">
   <title>Funkcje</title>
 
@@ -118,29 +118,6 @@ echo $str;    // wyświetla 'To jest string string, i coś extra.'
       </programlisting>
      </informalexample>
     </para>
- 
-    <para>
-     Jeśli chcesz przekazać zmienną przez referencję do funkcji, która tego
-     domyślnie tego nie robi, możesz wstawić ampersand przez nazwą argumentu
-     przy wywołaniu funkcji:
- 
-     <informalexample>
-      <programlisting role="php">
-<![CDATA[
-function foo ($bar)
-{
-    $bar .= ' i coś ekstra.';
-}
-$str = 'To jest string, ';
-foo ($str);
-echo $str;    // wyświetla 'To jest string, '
-foo (&$str);
-echo $str;    // wyświetla 'To jest string, i coś extra.'
-]]>
-      </programlisting>
-     </informalexample>
-    </para>
-
    </sect2>
  
    <sect2 id="functions.arguments.default">
@@ -259,8 +236,11 @@ Robię miskę acidophilus malinowy.
    <title>Zwracane wartości</title>
  
    <para>
-    Wartości są zwracana przy użyciu opcjonalnej instrukcji return. Może być
-    zwracany dowonlny typ, włączając w to tablice i obiekty.
+    Wartości są zwracane przy użyciu opcjonalnej instrukcji return. Może być
+    zwracany dowonlny typ, włączając w to tablice i obiekty. Spowoduje to
+    natychmiastowe zakończenie działania funkcji i przekazanie kontroli do
+    linii, z której była wywołana. Więcej informacji w opisie
+    <function>return</function>.
  
     <informalexample>
      <programlisting role="php">
@@ -307,7 +287,10 @@ $nowaref =& zwrocReferencje();
      </programlisting>
     </informalexample>
    </para>
-
+   <simpara>
+    Więcej informacji na temat referencji w rozdziale
+    <link linkend="language.references">References Explained</link>.
+   </simpara>
   </sect1>
  
   <sect1 id="functions.old-syntax">
@@ -375,6 +358,10 @@ $func('test');
      </programlisting>
     </example>
    </para>
+   <para>
+    Zobacz również <link linkend="language.variables.variable">
+    variable variables</link> i <function>function_exists</function>.
+   </para>
 
   </sect1>
 
@@ -389,6 +376,7 @@ sgml-minimize-attributes:nil
 sgml-always-quote-attributes:t
 sgml-indent-step:1
 sgml-indent-data:t
+indent-tabs-mode:nil
 sgml-parent-document:nil
 sgml-default-dtd-file:"../../manual.ced"
 sgml-exposed-tags:nil
