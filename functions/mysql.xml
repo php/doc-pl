@@ -1,92 +1,163 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.85 Maintainer: slawek Status: ready -->
-<!-- $Revision: 1.22 $ -->
+<!-- EN-Revision: 1.91 Maintainer: slawek Status: ready -->
+<!-- $Revision: 1.23 $ -->
  <reference id="ref.mysql">
   <title>MySQL</title>
   <titleabbrev>MySQL</titleabbrev>
   <partintro>
-   <simpara>
-    Funkcje te umożliwiają dostęp do serwerów baz danych MySQL. Aby je
-    uaktywnić musisz skompilować PHP z obsługą MySQL używając opcji
-    <option role="configure">--with-mysql</option>. Jeśli użyjesz tej opcji
-    bez podania ścieżki do MySQL, PHP wykorzysta własne biblioteki klienta.
-    Użytkownicy, którzy uruchamiają inne aplikacje korzystające z MySQL
-    (na przykład równocześnie PHP3 i PHP4 jako moduły apache, lub moduł
-    auth-mysql) powinni zawsze podawać ścieżkę do MySQL:
-    <option role="configure">--with-mysql=/sciezka/do/mysql</option>. To
-    wymusi na PHP użycie bibliotek zainstalowanych przez MySQL, co pozwoli
-    uniknąć konfliktów.
-   </simpara>
-   <simpara>
+   <para id="mysql.intro">
+    Funkcje te umożliwiają dostęp do serwerów baz danych MySQL.
     Więcej informacji o MySQL można znaleźć na stronie <ulink
     url="&url.mysql;">&url.mysql;</ulink>.
-   </simpara>
-   <simpara>
-    Dokumentacja do MySQL znajduje się pod adresem <ulink
-    url="&url.mysql.docs;">&url.mysql.docs;</ulink>.
-   </simpara>
-   <para>
-    Zachowanie funkcji MySQL zależy od ustawień w
-    <link linkend="configuration">pliku konfiguracyjnym</link>.
-    <table>
-     <title><link linkend="ini.sect.mysql">Opcje konfiguracyjne MySQL</link></title>
-     <tgroup cols="3">
-      <thead>
-       <row>
-        <entry>Nazwa</entry>
-        <entry>Domyślnie</entry>
-        <entry>Zmiana</entry>
-       </row>
-      </thead>
-      <tbody>
-       <row>
-        <entry>mysql.allow_persistent</entry>
-        <entry>"On"</entry>
-        <entry>PHP_INI_SYSTEM</entry>
-       </row>
-       <row>
-        <entry>mysql.max_persistent</entry>
-        <entry>"-1"</entry>
-        <entry>PHP_INI_SYSTEM</entry>
-       </row>
-       <row>
-        <entry>mysql.max_links</entry>
-        <entry>"-1"</entry>
-        <entry>PHP_INI_SYSTEM</entry>
-       </row>
-       <row>
-        <entry>mysql.default_port</entry>
-        <entry>NULL</entry>
-        <entry>PHP_INI_ALL</entry>
-       </row>
-       <row>
-        <entry>mysql.default_socket</entry>
-        <entry>NULL</entry>
-        <entry>PHP_INI_ALL</entry>
-       </row>
-       <row>
-        <entry>mysql.default_host</entry>
-        <entry>NULL</entry>
-        <entry>PHP_INI_ALL</entry>
-       </row>
-       <row>
-        <entry>mysql.default_user</entry>
-        <entry>NULL</entry>
-        <entry>PHP_INI_ALL</entry>
-       </row>
-      </tbody>
-     </tgroup>
-    </table>
-    By uzyskać więcej informacji na temat stałych PHP_INI_* zobacz <function>ini_set</function>.
    </para>
    <para>
-    Ten prosty przykład demonstruje jak się połączyć, wykonać zapytanie,
-    wyświetlić wyniki i rozłączyć z bazą MySQL.
-    <example>
-     <title>Wykorzystanie funkcji MySQL</title>
-     <programlisting role="php">
-<![CDATA[ 
+    Dokumentacja do MySQL znajduje się pod adresem <ulink
+    url="&url.mysql.docs;">&url.mysql.docs;</ulink>.
+   </para>
 
+   <section id="mysql.requirements">
+    <title>Wymagania</title>
+    <para>
+     Aby funkcje były dostępne, należy skompilować PHP z obsługą MySQL
+    </para>
+   </section>
+
+   <section id="mysql.installation">
+    <title>Installation</title>
+    <para>
+     Podając opcję konfiguracyjną <option role="configure">--with-mysql</option>
+     umożliwiasz PHP dostęp do baz MySQL. Jeśli użyjesz jej bez podania ścieżki
+     do MySQL, PHP wykorzysta własne biblioteki klienta.
+     W PHP4 obsługa MySQL jest zawsze włączona, więc jeśli nie podasz tej
+     opcji, PHP również użyje wbudowanych bibliotek. Użytkownicy, którzy
+     uruchamiają inne aplikacje korzystające z MySQL (na przykład równocześnie
+     PHP3 i PHP4 jako moduły apache, lub moduł auth-mysql) powinni zawsze
+     podawać ścieżkę do MySQL:
+     <option role="configure">--with-mysql=/sciezka/do/mysql</option>. To
+     wymusi na PHP użycie bibliotek zainstalowanych przez MySQL, co pozwoli
+     uniknąć konfliktów.
+    </para>
+   </section>
+
+   <section id="mysql.configuration">
+    <title>Konfiguracja</title>
+    <para>
+     Zachowanie funkcji MySQL zależy od ustawień w
+     <link linkend="configuration">pliku konfiguracyjnym</link>.
+     <table>
+      <title><link linkend="ini.sect.mysql">Opcje konfiguracyjne MySQL</link></title>
+      <tgroup cols="3">
+       <thead>
+        <row>
+         <entry>Nazwa</entry>
+         <entry>Domyślnie</entry>
+         <entry>Zmiana</entry>
+        </row>
+       </thead>
+       <tbody>
+        <row>
+         <entry>mysql.allow_persistent</entry>
+         <entry>"On"</entry>
+         <entry>PHP_INI_SYSTEM</entry>
+        </row>
+        <row>
+         <entry>mysql.max_persistent</entry>
+         <entry>"-1"</entry>
+         <entry>PHP_INI_SYSTEM</entry>
+        </row>
+        <row>
+         <entry>mysql.max_links</entry>
+         <entry>"-1"</entry>
+         <entry>PHP_INI_SYSTEM</entry>
+        </row>
+        <row>
+         <entry>mysql.default_port</entry>
+         <entry>NULL</entry>
+         <entry>PHP_INI_ALL</entry>
+        </row>
+        <row>
+         <entry>mysql.default_socket</entry>
+         <entry>NULL</entry>
+         <entry>PHP_INI_ALL</entry>
+        </row>
+        <row>
+         <entry>mysql.default_host</entry>
+         <entry>NULL</entry>
+         <entry>PHP_INI_ALL</entry>
+        </row>
+        <row>
+         <entry>mysql.default_user</entry>
+         <entry>NULL</entry>
+         <entry>PHP_INI_ALL</entry>
+        </row>
+       </tbody>
+      </tgroup>
+     </table>
+     Aby uzyskać więcej informacji na temat stałych PHP_INI_* zobacz
+     <function>ini_set</function>.
+    </para>
+   </section>
+
+   <section id="mysql.resources">
+    <title>Rodzaje zasobów</title>
+    <para>
+     Moduł MySQL wykorzystuje dwa rodzaje zasobów. Pierwszym jest identyfikator
+     połączenia z bazą danych, drugim zaś zasób wyniku, przechowujący rezultat
+     zapytania.
+    </para>
+   </section>
+
+   <section id="mysql.constants">
+    <title>Predefiniowane stałe</title>
+    <para>
+     Funkcja <function>mysql_fetch_array</function> używa stałych dla różnych
+     typów tablic wynikowych. Zdefiniowane są następujące stałe:
+     <table>
+      <title>Stałe pobierania MySQL</title>
+      <tgroup cols="2">
+       <thead>
+        <row>
+         <entry>stała</entry>
+         <entry>znaczenie</entry>
+        </row>
+       </thead>
+       <tbody>
+        <row>
+         <entry>MYSQL_ASSOC</entry>
+         <entry>
+          Kolumny są zwracane jako tablica, której indeks stanowią nazwy pól.
+         </entry>
+        </row>
+        <row>
+         <entry>MYSQL_BOTH</entry>
+         <entry>
+          Kolumny są zwracane jako tablica, indeksowana zarówno nazwami pól,
+          jak i numerycznie.
+         </entry>
+        </row>
+        <row>
+         <entry>MYSQL_NUM</entry>
+         <entry>
+          Kolumny są zwracane jako tablica indeksowana numerycznie. Indeks
+          zaczyna się od 0 i wskazuje na pierwsze pole w wyniku.
+         </entry>
+        </row>
+       </tbody>
+      </tgroup>
+     </table>
+    </para>
+   </section>
+
+
+   <section id="mysql.examples">
+    <title>Przykłady</title>
+    <para>
+     Ten prosty przykład demonstruje jak połączyć się, wykonać zapytanie,
+     wyświetlić wyniki i rozłączyć się z bazą MySQL.
+     <example>
+      <title>Wykorzystanie funkcji MySQL</title>
+      <programlisting role="php">
+<![CDATA[ 
 <?php
 // Łączenie i wybranie bazy
 $link = mysql_connect("host", "login", "haslo")
@@ -111,13 +182,17 @@ while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
 }
 print "</table>\n";
 
+// Zwalnianie pamięci
+mysql_free_result($result); 
+
 // Rozłączanie  
 mysql_close($link);
 ?>
 ]]> 
-     </programlisting>
-    </example>
-   </para>
+      </programlisting>
+     </example>
+    </para>
+   </section>
   </partintro>
 
   <refentry id="function.mysql-affected-rows">
@@ -292,6 +367,9 @@ mysql_close($link);
       <methodparam choice="opt"><type>string</type><parameter>
         hasło
        </parameter></methodparam>
+      <methodparam choice="opt"><type>bool</type><parameter> 
+        nowy_identyfikator 
+       </parameter></methodparam> 
      </methodsynopsis>
     <para> 
      Zwraca identyfikator połączenia w przypadku powodzenia, lub
@@ -318,15 +396,25 @@ mysql_close($link);
       </para>
       <para>
        Możesz pominąć wyświetlenie komunikatu błędu przy niepowodzeniu
-       poprzedzając nazwę funkcji znakiem '@'.
+       poprzedzając nazwę funkcji znakiem
+       <link linkend="language.operators.errorcontrol">@</link>.
       </para>
      </note>
     </para>
     <para>
      Przy drugim wywołaniu <function>mysql_connect</function> z tymi
      samymi argumentami, nie będzie nawiązywane nowe połączenie, lecz
-     zwrócony zostanie identyfikator już otwartego połączenia.
+     zwrócony zostanie identyfikator już otwartego połączenia. Argument
+     <parameter>nowy_identyfikator</parameter> zmienia to zachowanie,
+     powodując, że <function>mysql_connect</function> za każdym razem otwiera
+     nowe połączenie, nawet jeśli funkcja była wcześniej wywołana z identycznymi
+     parametrami.
     </para>
+    <note> 
+     <para> 
+      Argument <parameter>nowy_identyfikator</parameter> pojawił się w PHP 4.2.0
+     </para> 
+    </note> 
     <para>
      Połączenie z serwerem zostanie zamknięte zaraz po zakończeniu
      wykonywania skryptu, chyba że zostanie zamknięte wcześniej przez
@@ -1769,7 +1857,8 @@ echo "$num_rows wierszy\n";
     </note>
     <para>
      <function>mysql_query</function> zwraca identyfikator wyniku (lub &false;
-     w przypadku niepowodzenia) jedynie dla zapytań typu SELECT.
+     w przypadku niepowodzenia) jedynie dla zapytań typu SELECT, SHOW, EXPLAIN
+     i DESCRIBE.
      Dla innych zapytań SQL <function>mysql_query</function> zwraca &true;
      lub &false; informując czy zapytanie zakończyło się sukcesem czy też nie.
      Jeśli nie została zwrócona wartość &false; to znaczy, że zapytanie było
@@ -1822,11 +1911,11 @@ $result = mysql_query("SELECT kolumna FROM tabela")
      wierszy przetworzonych przez instrukcje DELETE, INSERT, REPLACE i UPDATE.
     </para>
     <para>
-     Jedynie po operacji SELECT, <function>mysql_query</function> zwróci
-     identyfikator wyniku, który można przekazać do
-     funkcji <function>mysql_result</function> lub innych funkcji operujących
-     na tablicach wyników. Po zakończeniu operacji na wyniku, można zwolnić
-     zasoby przez niego wykorzystywane wywołując
+     Jedynie po operacjach SELECT, SHOW, EXPLAIN i DESCRIBE
+     <function>mysql_query</function> zwróci identyfikator wyniku, który można
+     przekazać do funkcji <function>mysql_fetch_array</function> lub innych
+     funkcji operujących na tablicach wyników. Po wykonaniu operacji na
+     wyniku, można zwolnić zasoby przez niego wykorzystywane wywołując
      <function>mysql_free_result</function>. Po zakończeniu działania skryptu
      pamięć i tak będzie automatycznie zwolniona.
     </para>
