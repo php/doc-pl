@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.64 Maintainer: Qrak Status: ready -->
-<!-- $Revision: 1.6 $ -->
+<!-- EN-Revision: 1.69 Maintainer: Qrak Status: ready -->
+<!-- $Revision: 1.7 $ -->
  <reference id="ref.math">
   <title>Funkcje Matematyczne</title>
-  <titleabbrev>Math</titleabbrev>
+  <titleabbrev>Matematyka</titleabbrev>
   
   <partintro>
    <sect1 id="math.intro">
@@ -120,9 +120,9 @@
     </tbody>
        </tgroup>
       </table>
-     Tylko stała M_PI była dostępna w wsześniejszych wersjach PHP do PHP4RC1
-     włącznie. Pozostałe pojawiły się w PHP 4.0. Stałe oznaczone [4.0.2] zostały
-     dodane w PHP 4.0.2.
+     Tylko stała M_PI była dostępna w wsześniejszych wersjach PHP do PHP 4.0.0.
+     włącznie. Pozostałe pojawiły się w PHP 4.0.0. Stałe oznaczone [4.0.2]
+     zostały dodane w PHP 4.0.2.
      </para>
     </sect2>
    </sect1>
@@ -147,6 +147,16 @@
      inaczej zwracana jest wartość <type>integer</type> (<type>float</type>
      ma zwykle szerszy zakres niż <type>integer</type>).
     </para>
+    <example> 
+       <title>przykład <function>abs</function></title> 
+       <programlisting role="php"> 
+  <![CDATA[ 
+  $abs = abs(-4.2); // $abs = 4.2; (double/float) 
+  $abs2 = abs(5);   // $abs2 = 5; (integer) 
+  $abs3 = abs(-5);  // $abs3 = 5; (integer) 
+  ]]> 
+       </programlisting> 
+      </example> 
    </refsect1>
   </refentry>
 
@@ -413,6 +423,15 @@ $binary = base_convert ($hexadecimal, 16, 2);
      <type>float</type> gdyż zakres tego typu jest zwykle większy niż zakres
      typu <type>int</type>.
     </simpara>
+    <example> 
+       <title>przykłady <function>ceil</function></title> 
+       <programlisting role="php"> 
+  <![CDATA[ 
+  $pięć = ceil(4.3);       // $pięć = 5.0; 
+  $dziesięć = ceil(9.999); // $dziesięć = 10.0; 
+  ]]> 
+       </programlisting> 
+      </example> 
     <simpara>
      Zobacz też <function>floor</function> i
      <function>round</function>.
@@ -482,7 +501,7 @@ $binary = base_convert ($hexadecimal, 16, 2);
     <para>
      Zwraca łańcuch znaków stanowiący dwójkową reprezentację liczby dziesiętnej
      podanej jako argument. Największą liczbą możliwą do skonwertowania jest
-     2 147 483 647 dziesiętnie, co równe jest 31 bitom 1.
+     4 294 967 295 dziesiętnie, co równe jest 32 bitom 1.
     </para>
     <para>
      Zobacz też <function>bindec</function>.
@@ -1161,14 +1180,19 @@ $randval = mt_rand();
      </funcprototype>
     </funcsynopsis>
     <simpara>
-     Zwraca przybliżoną wartość liczby pi.
+     Zwraca przybliżoną wartość liczby pi. Zwracana wartość typu
+     <type>float</type> ma precyzję określoną w dyrektywie 
+     <link linkend="ini.precision">precision</link> w pliku 
+     <filename>php.ini</filename>, domyślnie równą <literal>14</literal>.
+     Można także użyć stałej <constant>M_PI</constant>, która daje taki sam
+     wynik jak funkcja <function>pi</function>.
     </simpara>
    <para>
     <informalexample>
      <programlisting>
 <![CDATA[
-echo pi();
-// wyświetli 3.1415926535898
+echo pi(); // 3.1415926535898
+echo M_PI; // 3.1415926535898 
 ]]>
      </programlisting>
     </informalexample>
@@ -1222,7 +1246,7 @@ echo pow(-1, 5.5); // błąd
      </para>
     </warning>
     <para> 
-     Zobacz też <function>exp</function>.
+     Zobacz też <function>exp</function> i <function>sqrt</function>.
     </para>
    </refsect1>
   </refentry>
