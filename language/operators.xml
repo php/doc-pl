@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.38 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.19 $ -->
+<!-- EN-Revision: 1.40 Maintainer: qrak Status: ready -->
+<!-- $Revision: 1.20 $ -->
  <chapter id="language.operators">
   <title>Operatory</title>
   <simpara>
@@ -284,7 +284,8 @@ $b = $b . "Świecie!";
       <row>
        <entry>$a ^ $b</entry>
        <entry>Sumowanie bitowe modulo 2</entry>
-       <entry>Dany bit wynikowy jest równy 1 tylko jeśli jeden z bitów 
+       <entry>Dany bit wynikowy jest równy 1 wtedy i tylko wtedy, kiedy jeden
+       z bitów 
        składowych jest równy 1 a drugi jest równy 0.</entry>
       </row>
       <row>
@@ -385,7 +386,8 @@ $b = $b . "Świecie!";
     </tgroup>
    </table>
    <para>
-    Jeszcze jednym operatorem warunkowym jest operator "?:" (tzw. ternariusz),
+    Jeszcze jednym operatorem warunkowym jest operator "?:" (tzw. ternariusz
+    - operator trójargumentowy),
     działający tak jak w C i wielu innych językach.
     <informalexample>
      <programlisting role="php">
@@ -412,7 +414,9 @@ $b = $b . "Świecie!";
    <simpara>
     Jeśli mechanizm <link linkend="ini.track-errors">track_errors</link>
     został włączony, jakiekolwiek powiadomienie o błędzie zostanie zapisane do 
-    zmiennej globalnej $php_errormsg. Należy jednak pamiętać, że zawartość tej 
+    zmiennej globalnej <link
+    linkend="reserved.variables.phperrormsg">$php_errormsg</link>.
+    Należy jednak pamiętać, że zawartość tej 
     zmiennej jest nadpisywana przy każdym błędzie, więc po wystąpieniu kolejnego
     błędu w skrypcie, informacja o poprzednim błędzie jest tracona.
    </simpara>
@@ -437,7 +441,9 @@ $value = @$cache[$key];
    </para>
    <note>
     <simpara>
-     Operator @ działa tylko na wyrażeniach. Tłumacząc to łopatologicznie: jeśli
+     Operator @ działa tylko na <link
+     linkend="language.expressions">wyrażeniach</link>. Tłumacząc to
+     łopatologicznie: jeśli
      da się pobrać wartość czegoś, można postawić operator @ przed tym czymś. 
      Zgodnie z powyższą regułą, można postawić @ przed zmiennymi, wywołaniami 
      funkcji, instrukcjami <function>include</function>, stałymi, itp. Nie można
@@ -447,8 +453,14 @@ $value = @$cache[$key];
     </simpara>
    </note>
    <simpara>
-    Zobacz także <function>error_reporting</function>.
+    Patrz także: <function>error_reporting</function>.
    </simpara>
+   <note>
+    <para>
+     Operator "@" nie ukrywa komunikatów o błędach, które są wynikiem błędu
+     parsowania (parse error).
+    </para>
+   </note>
    <warning>
     <para>
      Obecnie operator kontroli błędów "@" wyłączy wyświetlanie powiadomienia 
