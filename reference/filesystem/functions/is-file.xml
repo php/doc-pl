@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.6 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.7 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.is-file">
    <refnamediv>
     <refname>is_file</refname>
@@ -14,9 +14,29 @@
      </methodsynopsis>
     <para>
      Zwraca &true; jesli nazwa_pliku istnieje i jest zwykłym plikiem.
-    </para>
+    </para> 
+    <para> 
+     <example> 
+      <title><function>is_file</function> przykład</title> 
+      <programlisting role="php"> 
+<![CDATA[ 
+<? 
+var_dump(is_file('plik.txt')) . "\n"; 
+var_dump(is_file('/usr/bin/')) . "\n"; 
+?> 
+]]> 
+      </programlisting> 
+      &example.outputs; 
+      <screen> 
+<![CDATA[ 
+bool(true) 
+bool(false) 
+]]> 
+      </screen> 
+     </example> 
+   </para>
     &note.clearstatcache;
-	&tip.fopen-wrapper.stat; 
+	&tip.fopen-wrapper.stat;
     <para>
      Patrz także: <function>is_dir</function> i
      <function>is_link</function>.
