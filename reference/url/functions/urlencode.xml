@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.7 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.6 $ -->
+<!-- EN-Revision: 1.8 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.7 $ -->
   <refentry id="function.urlencode">
    <refnamediv>
     <refname>urlencode</refname>
@@ -43,15 +43,15 @@ echo '<a href="mycgi?foo=', urlencode($userinput), '">';
     przeglądarkę i ich aktualna postać jest używana dalej zamiast
     porządanej nazwy zmiennej.  To jest oczywisty problem, o którym W3C
     informuje ludzi od lat. Referencje są tutaj:
-    <ulink url="&url.argsep;">&url.argsep;</ulink> PHP obsługuje
+    <ulink url="&url.argsep;">&url.argsep;</ulink>. PHP obsługuje
     zmianę separatora argumentów na zalecany przez W3C średnik
     poprzez dyrektywę arg_separator .ini.  Niestety większość przeglądarek
     nie wysyła danych z formularza w formacie używającym średnik jako
     separator. Bardziej przenośnym rozwiązaniem jest użycie &amp;amp;
     jako separatora zamiast &amp;.  Nie musisz zmieniać PHP'owego
     arg_separator aby to uzyskać.  Zostaw separator jako &amp;, ale
-    koduj swoje URL'e używając
-    htmlentities(urlencode($data)).
+    koduj swoje URL'e używając <function>htmlentities</function>lub  
+    <function>htmlspecialchars</function>. 
 	</para>  
     <para>  
      <example>
@@ -60,7 +60,8 @@ echo '<a href="mycgi?foo=', urlencode($userinput), '">';
       <programlisting role="php">
 <![CDATA[
 <?php
-echo '<a href="mycgi?foo=', htmlentities(urlencode($userinput)), '">';
+$query_string = 'foo=' . urlencode($foo) . '&bar=' . urlencode($bar);
+echo '<a href="mycgi?' . htmlentities($query_string) . '">'; 
 ?>
 ]]>
       </programlisting>
