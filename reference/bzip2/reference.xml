@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.1 Maintainer: coder Status: ready -->
- <reference id="ref.bzip2">
+<!-- EN-Revision: 1.5 Maintainer: coder Status: ready -->
+  <reference id="ref.bzip2">
   <title>Kompresja Bzip2</title>
   <titleabbrev>Bzip2</titleabbrev>
 
@@ -8,15 +8,17 @@
    <section id="bzip2.intro">
     &reftitle.intro;
     <para>
-     Funkcje te umożliwiają odczyt i zapis skompresowanych plików bzip2 (.bz2).
+     Funkcje bzip2 są używane do przezroczystego odczytu i zapisu skompresowanych
+     plików bzip2 (.bz2).
     </para>
    </section>
-   
+
    <section id="bzip2.requirements">
     &reftitle.required;
     <para>
-     Ten moduł korzysta z funkcji biblioteki <ulink url="&url.bzip2;">bzip2
-     </ulink> w wersji >= 1.0.x autorstwa Juliana Sewarda.
+     Ten moduł używa funkcji z biblioteki <ulink url="&url.bzip2;">bzip2
+     </ulink> stworzonej przez Juliana Seward'a. Moduł wymaga bzip2/libbzip2
+     w wersji &gt;= 1.0.x.
     </para>
    </section>
 
@@ -30,7 +32,8 @@
    <section id="bzip2.resources">
     &reftitle.resources;
     <para>
-     Funkcje kompresji bzip2 wykorzystują jeden typ zasobów: uchwyt identyfikujący konkretny plik bz2.
+     Rozszeżenie to definiuje jeden typ zasobów: wskaźnik pliku identyfikujący
+     plik bz2 na którym pracuje.
     </para>
    </section>
 
@@ -42,35 +45,35 @@
    <section id="bzip2.examples">
     &reftitle.examples;
     <para>
-     Poniższy skrypt otwiera tymczasowy plik .bz2, zapisuje w nim
-     testowy łańcuch znaków, a następnie wyświetla całą zawartość pliku po dekompresji.
+     Ten przykład otwiera tymczasowy plik i zapisuje w nim testowy łańcuch
+     znaków, po czym wyświetla zawartość pliku.
     </para>
     <example>
-     <title>Kompresja bzip2 - przykład</title>
+     <title>Mały przykład bzip2</title>
      <programlisting role="php">
 <![CDATA[
 <?php
 
-$nazwa = "/tmp/test.bz2";
-$str = "To jest testowy łańcuch znaków.\n";
+$filename = "/tmp/testfile.bz2";
+$str = "To jest testowy lancuch znakow.\n";
 
-// otwórz plik do zapisu
-$bz = bzopen($nazwa, "w");
+// otwarcie pliku do zapisu
+$bz = bzopen($filename, "w");
 
-// zapisz testowy łańcuch znaków
+// zapisanie łańcucha znaków do pliku
 bzwrite($bz, $str);
 
-// zamknij plik
+// zamknięcie pliku
 bzclose($bz);
 
-// otwórz plik do odczytu
-$bz = bzopen($nazwa, "r");
+// otwarcie pliku do odczytu
+$bz = bzopen($filename, "r");
 
-// przeczytaj 10 znaków
-print bzread($bz, 10);
+// przeczytanie 10 znaków
+echo bzread($bz, 10);
 
-// wyświetl wszystko do końca pliku (lub następne 1024 znaki) i zamknij plik.
-print bzread($bz);
+// wyświetlaj dopóki nie nastąpi koniec pliku (lub następne 1024 znaki) i zamknij go.
+echo bzread($bz);
 
 bzclose($bz);
 
@@ -84,6 +87,7 @@ bzclose($bz);
 &reference.bzip2.functions;
 
  </reference>
+
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml
