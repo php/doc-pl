@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.17 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.5 $ -->
+<!-- EN-Revision: 1.18 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.6 $ -->
  <refentry id="function.fread">
    <refnamediv>
     <refname>fread</refname>
@@ -63,13 +63,27 @@ fclose($uchwyt);
 
     <warning>
      <para>
-	  Kiedy następuje odczyt z sieciowych strumieni lub potoków, takich jak te zwrócone
-	  gdy odczytujesz <link linkend="features.remote-files">zdalne pliki</link> lub z
+	  Kiedy następuje odczyt z czegokolwiek innego niż zwykłe lokalne pliki, takich jak
+	  strumienie zwrócone gdy odczytujesz <link linkend="features.remote-files">zdalne pliki</link> lub z
 	  <function>popen</function> i <function>fsockopen</function>, odczyt zakończy się
 	  po tym jak pakiet jest dostępny. To znaczy, że powinieneś gromadzić dane razem
-	  z kawałków jak pokazano na poniższym przykładzie.
+	  z kawałków jak pokazano na poniższych przykładach.
 	  </para>
     </warning>
+ <para> 
+       <informalexample> 
+        <programlisting role="php"> 
+<![CDATA[ 
+<?php 
+// dla PHP 5 i nowszych 
+$uchwyt = fopen("http://www.example.com/", "rb"); 
+$tresc = stream_get_contents($uchwyt); 
+fclose($uchwyt); 
+?> 
+]]> 
+        </programlisting> 
+       </informalexample> 
+     </para> 
     <para>
      <informalexample>
       <programlisting role="php">
