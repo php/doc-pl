@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.6 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.6 $ -->
+<!-- EN-Revision: 1.7 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.7 $ -->
   <refentry id="function.is-uploaded-file">
    <refnamediv>
     <refname>is_uploaded_file</refname>
@@ -68,7 +68,7 @@
 <![CDATA[
 <?php
 /* Test po stronie użytkownika na uploadowany plik */
- function is_uploaded_file($filename)  
+ function is_uploaded_file_4_0_2($filename)  
   {  
     if (!$tmp_file = get_cfg_var('upload_tmp_dir')) {
         $tmp_file = dirname(tempnam('', ''));
@@ -80,7 +80,7 @@
 
 /* Jak użyć tej funkcji, w starych wersjach nie masz także
  * move_uploaded_file(): */
-if (is_uploaded_file($HTTP_POST_FILES['userfile'])) {
+if (is_uploaded_file_4_0_2($HTTP_POST_FILES['userfile'])) {
     copy($HTTP_POST_FILES['userfile'], "/place/to/put/uploaded/file");
 } else {
     echo "Prawdopodobny atak przez uploadowanie pliku: '$HTTP_POST_FILES[userfile]'.";
