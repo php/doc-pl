@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.21 Maintainer: yagood Status: ready -->
-<!-- $Revision: 1.11 $ -->
+<!-- EN-Revision: 1.43 Maintainer: yagood Status: ready -->
+<!-- $Revision: 1.12 $ -->
  <chapter id="language.constants">
   <title>Stałe</title>
 
   <simpara>
    Stała jest identyfikatorem (nazwą) dla prostej wartości. Jak sama
    nazwa wskazuje, wartość ta nie może się zmieniać podczas działania
-   skryptu (poza wyjątkami: <constant>__FILE__</constant>
-   i <constant>__LINE__</constant>). Domyślnie, przy stałych
-   uwzględniana jest wielkość liter. Przyjęto, że stałe są pisane dużymi
-   literami.
+   skryptu (poza <link linkend="language.constants.predefined">magicznymi stałymi</link>,
+   które na właściwie nie są stałymi).
+   Domyślnie, przy stałych uwzględniana jest wielkość liter. Przyjęto, że
+   stałe są pisane dużymiliterami.
   </simpara>
   <para>
    Nazwa stałej podlega takim samym zasadom jak każda inna w PHP.
@@ -19,8 +19,34 @@
    Dobrze reprezentuje to takie wyrażenie regularne:
    <literal>[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*</literal>
 
-   <!-- TODO: Example of valid & invalid constant names -->
+  
   </para>
+ <para> 
+  <example> 
+	<title>Prawidłowe i nieprawidłowe nazwy stałych</title> 
+      <programlisting role="php"> 
+	<![CDATA[ 
+   <?php 
+     
+    // Poprawne nazwy stałych 
+    define("FOO",     "cokolwiek"); 
+    define("FOO2",    "cokolwiek innego"); 
+    define("FOO_BAR", "cokolwiek wiecej"); 
+     
+    // Nieprawidłowa nazwa stałej 
+    define("2FOO",    "cokolwiek"); 
+     
+	// To jest prawidłowe, ale powinno być unikane:
+	// PHP może pewnego dnia wprowdzić magiczą stałą
+    // która spowoduje załamanie Twojego skryptu	
+	 
+    define("__FOO__", "cokolwiek"); 
+     
+    ?> 
+    ]]> 
+        </programlisting> 
+       </example> 
+      </para> 
 
   <note>
    <simpara>
@@ -28,8 +54,12 @@
     od 127 do 255 (0x7f-0xff).
    </simpara>
   </note>
+  
   <simpara>
-   Zakres stałej jest globalny.
+   Tak jak i &link.superglobals;, zasięg stałych jest globalny.  Możesz
+   odwołać się do stałych w dowolnym miejscu w Twojego skryptu, bez uważania na zasięg.
+   Więcej informacji na temat zasięgu, przeczytasz w sekcji podręcznika
+   <link linkend="language.variables.scope">zasięg zmiennych</link>. 
   </simpara>
   <sect1 id="language.constants.syntax">
    <title>Składnia</title>
@@ -38,10 +68,11 @@
     Kiedy stała zostanie zdefiniowana, nie może być już zmieniona albo
     undefined.
    </simpara>
+   
    <simpara>
-    Tylko skalarne typy danych
-    (<type>boolean</type>, <type>integer</type>, <type>double</type>
+    Tylko skalarne typy danych (<type>boolean</type>, <type>integer</type>, <type>float</type>
     i <type>string</type>) mogą być zawarte w stałych.
+	Nie definiuj stałych typu <type>zasób</type>.
    </simpara>
    <simpara>
     Możesz użyć wartości stałej poprzez zwykłe użycie jej nazwy.
@@ -59,18 +90,28 @@
     </simpara>
    </note>
    <simpara>
-    Jeśli użyjesz niezdefiniowanej stałej, PHP przyjmuje, że chcesz użyć
-    nazwy stałej samej w sobie. Zostanie wtedy wysłane
-    <link linkend="features.error-handling">ostrzeżenie</link>.
-    Użyj funkcji <function>defined</function> jeśli chcesz się dowiedzieć
-    czy stała jest zdefiniowana.
+   Jeśli użyjesz niezdefiniowanej stałej, PHP przyjmuje, że chcesz użyć
+   nazwy stałej samej w sobie, poprostu tak jakbyś wywołał ją jako
+   <type>string</type> (STALA kontra "STALA"). Jeśli to nastąpi zostanie
+   wygenerowany błąd z poziomu <link linkend="ref.errorfunc">E_NOTICE</link>.
+   Zobacz także w podręczniku artykuł o tym dlaczego
+    <link linkend="language.types.array.foo-bar">$foo[bar]</link> jest błędne
+    (chyba, że wcześniej zdefiniujesz <function>define</function>
+    <literal>bar</literal> jako stałą).  Jeśli, chcesz sprawdzić czy stała jest
+	ustawiona, użyj funkcji <function>defined</function>.   
    </simpara>
    <para>
-    Różnice pomiędzy stałymi, a zmiennymi:
+     Różnice pomiędzy stałymi, a zmiennymi:
      <itemizedlist>
       <listitem>
        <simpara>
     Stałe nie mają znaku dolara (<literal>$</literal>) przed nazwą;
+	 </simpara> 
+         </listitem> 
+         <listitem> 
+          <simpara> 
+           Stałe mogą być zdefiniowane wyłącznie używając funkcji 
+           <function>define</function>, nie przez proste przypisanie; 
        </simpara>
       </listitem>
       <listitem>
@@ -97,176 +138,104 @@
     <example>
      <title>Definiowanie stałych</title>
      <programlisting role="php">
-&lt;?php
+<![CDATA[
+<?php
 define("STALA", "Hello world!");
 echo STALA; // wyświetli "Hello world!"
 echo Stala; // wyświetli "Stala" i zgłosi ostrzeżenie
-?&gt;
+?>
+]]>
      </programlisting>
     </example>
 
    </para>
+      <simpara>
+      Patrz także <link linkend="language.oop5.constants">Klasa Stałe</link>.
+      </simpara>
+ 
+   <sect1 id="language.constants.predefined">
+    <title>Magiczne stałe</title>
 
-  </sect1>
-
-  <sect1 id="language.constants.predefined">
-   <title>Predefiniowane stałe</title>
+	<simpara>
+	PHP zapewnia dużą liczbę <link
+    linkend="reserved.constants">predefiniowanych stałych</link> każdemu 
+	uruchamianemu skryptowi. Wiele z tych stałych, jednakże jest tworzona
+	przez rozmaite rozszeżenia, i mogą być jedynie obecne gdy te rozszeżenia
+	są dostępne, przez dynamiczne ładowanie (bibliotek) lub dlatego, że zostały one
+    wkompilowane.
+    </simpara>
+    
   <para>
-   Predefiniowanymi stałymi (zawsze dostępnymi) są:
+    Istnieje pięć magicznych stałych, których zmiana zależy od tego gdzie
+	zostaną użyte. Np. wartość <constant>__LINE__</constant> zależy
+	od numeru lini Twojego skryptu gdzie zostanie wstawiona. 
+    Specjalne stałe nie rozróżniają wielkich i małych liter i są to następujące:  
+    </para>
 
-   <variablelist>
 
-    <varlistentry>
-     <term>__FILE__  (nieważna wielkość liter)</term>
-     <listitem>
-      <simpara>
-       Nazwa pliku ze skryptem PHP, który jest aktualnie parsowany
-       (przetwarzany); stała użyta w pliku, który został
-       włączony (include) lub jest wymagany (require), zwraca nazwę
-       tego właśnie pliku, a nie nazwę pliku głównego.
-      </simpara>
-     </listitem>
-    </varlistentry>
-
-    <varlistentry>
-     <term>__LINE__  (nieważna wielkość liter)</term>
-     <listitem>
-      <simpara>
-       Numer linii w pliku, który jest aktualnie parsowany (przetwarzany).
-       Stała użyta w pliku włączonym (include) zwraca pozycję w tym pliku.
-      </simpara>
-     </listitem>
-    </varlistentry>
-
-    <varlistentry>
-     <term>PHP_VERSION</term>
-     <listitem>
-      <simpara>
-       Łańcuch reprezentujący aktualnie używaną wersję parsera PHP, np.
-       '4.0.7-dev'.
-      </simpara>
-     </listitem>
-    </varlistentry>
-
-    <varlistentry>
-     <term>PHP_OS</term>
-     <listitem>
-      <simpara>
-       Nazwa systemu operacyjnego, na którym uruchomiony jest parser
-       PHP. Możliwe wartości to:
-       "AIX", "Darwin" (MacOS), "Linux", "SunOS", "WIN32", "WINNT".
-       Uwaga: inne wartości również mogą być dostępne.
-      </simpara>
-     </listitem>
-    </varlistentry>
-
-    <varlistentry>
-     <term>&true;  (nieważna wielkość liter)</term>
-     <listitem>
-      <simpara>
-       Wartość &true; (zobacz: typ <type>boolean</type>).
-      </simpara>
-     </listitem>
-    </varlistentry>
-
-    <varlistentry>
-     <term>&false;  (nieważna wielkość liter)</term>
-     <listitem>
-      <simpara>
-       Wartość &false; (zobacz: typ<type>boolean</type>).
-      </simpara>
-     </listitem>
-    </varlistentry>
-
-    <varlistentry>
-     <term>&null;  (nieważna wielkość liter)</term>
-     <listitem>
-      <simpara>
-       Wartość &null; (zobacz: typ <type>null</type>).
-      </simpara>
-     </listitem>
-    </varlistentry>
-
-    <varlistentry>
-     <term>E_ERROR</term>
-     <listitem>
-      <simpara>
-       Oznacza błąd inny niż błąd przy parsowaniu (przetwarzaniu),
-       którego naprawienie nie jest możliwe.
-      </simpara>
-     </listitem>
-    </varlistentry>
-
-    <varlistentry>
-     <term>E_WARNING</term>
-     <listitem>
-      <simpara>
-       Oznacza stan, w którym PHP "wie", że coś jest źle, ale
-       kontynuuje działanie; błędy takie mogą być przechwycone przez sam
-       skrypt.
-       Przykładem może być nieprawidłowe wyrażenie regularne w funkcji
-       <function>ereg</function>.
-      </simpara>
-     </listitem>
-    </varlistentry>
-
-    <varlistentry>
-     <term>E_PARSE</term>
-     <listitem>
-      <simpara>
-       Parser stanął przy nieprawidłowej składni w skrypcie. Naprawa
-       błędu i kontynuacja nie jest możliwa.
-      </simpara>
-     </listitem>
-    </varlistentry>
-
-    <varlistentry>
-     <term>E_NOTICE</term>
-     <listitem>
-      <simpara>
-       Zdarzyło się coś co może acz nie musi być błędem. PHP kontynuuje
-       działanie. Przykładem może być używanie niepodanego łańcucha jako
-       indeksu w tablicy albo żadanie dostępu do niezadeklarowanej
-       zmiennej.
-      </simpara>
-     </listitem>
-    </varlistentry>
-
-    <varlistentry>
-     <term>E_ALL</term>
-     <listitem>
-      <simpara>
-       Wszystkie stałe E_* w jednej. Jeśli stała ta zostanie użyta z
-       funkcją <function>error_reporting</function>, spowoduje to, że
-       jakiekolwiek problemy zauważone przez PHP będą zgłaszane przez
-       funkcję.
-      </simpara>
-     </listitem>
-    </varlistentry>
-
-   </variablelist>
-  </para>
-
-   <para>
-    Stałe <literal>E_*</literal> są zwykle używane z funkcją
-    <function>error_reporting</function> aby ustawić poziom zgłaszania
-    błędów. Zobacz wszystkie takie stałe w rozdziale
-    <link linkend="features.error-handling">Obsługa błędów</link>.
-
-    <example>
-     <title>Używanie __FILE__ i __LINE__</title>
-     <programlisting role="php">
-&lt;?php
-function report_error($plik, $linia, $komunikat)
-{
-    echo "Wystąpił błąd w $plik w linii $linia: $komunikat.";
-}
-
-report_error(__FILE__, __LINE__, "Coś poszło źle!");
-?&gt;
-     </programlisting>
-    </example>
+<para>
+    <table>
+     <title>Kilka "magicznych" stałych PHP</title>
+     <tgroup cols="2">
+      <thead>
+       <row>
+        <entry>Nazwa</entry>
+        <entry>Opis</entry>
+       </row>
+      </thead>
+      <tbody>
+       <row>
+        <entry><constant>__LINE__</constant></entry>
+        <entry>
+		 Bieżący numer lini pliku.
+        </entry>
+       </row>
+       <row>
+        <entry><constant>__FILE__</constant></entry>
+        <entry>
+		Pełna ścieżka i nazwa pliku. Jeśli zostanie użyte w includowanym
+		pliku, zwracana jest nazwa includowanego pliku.
+		
+		Od PHP 4.0.2, <constant>__FILE__</constant> zawsze zawiera bezwzględną
+		ściężkę, we wcześniejszych wersjach zawierała w pewnych okolicznościach
+		ścieżkę względną.
+		</entry>
+       </row>
+       <row>
+        <entry><constant>__FUNCTION__</constant></entry>
+        <entry>
+		 Nazwa funkcji, (Dodano w PHP 4.3.0) Od PHP 5 ta stała zwracana
+		 nazwę funkcji tak jak została ona zadeklarowana (z rozróżnianiem wielkości znaków).
+		 W PHP 4 wartość zawsze była zamieniana na małe litery.
+        </entry>
+       </row>
+       <row>
+        <entry><constant>__CLASS__</constant></entry>
+        <entry>
+		 Nazwa klasy, (Dodano w PHP 4.3.0) Od PHP 5 ta stała zwracana
+		 nazwę klasy tak jak została ona zadeklarowana (z rozróżnianiem wielkości znaków).
+		 W PHP 4 wartość zawsze była zamieniana na małe litery.
+        </entry>
+       </row>
+       <row>
+        <entry><constant>__METHOD__</constant></entry>
+        <entry>
+		 Nazwa metody klasy, (Dodano w PHP 5.0.0) Nazwa metody jest zwracana
+		 tak jak została ona zadeklarowana (z rozróżnianiem wielkości znaków).
+        </entry>
+       </row>
+      </tbody>
+     </tgroup>
+    </table>
    </para>
+  <para>
+    Patrz także 
+    <function>get_class</function>,
+    <function>get_object_vars</function>,
+    <function>file_exists</function>&listendand;
+    <function>function_exists</function>.
+   </para>
+ 
   </sect1>
  </chapter>
 
