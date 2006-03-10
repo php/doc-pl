@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.7 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.5 $ -->
 <!-- splitted from ./en/functions/datetime.xml, last change in rev 1.2 -->
   <refentry id="function.time">
    <refnamediv>
@@ -17,6 +17,34 @@
      Zwraca aktualny czas, podawany jako liczba sekund, które upłynęły od
      uniksowej Epoki (1 stycznia 1970 00:00:00 GMT).
     </para>
+	  <tip>
+   <para>
+    Znacznik czasu od rozpoczęcia żądania jest dostępny w
+    <varname>$_SERVER['REQUEST_TIME']</varname> od PHP 5.1.
+   </para>
+  </tip>
+  <para>
+   <example>
+    <title><function>time</function> przykład</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$nextWeek = time() + (7 * 24 * 60 * 60);
+                   // 7 dni; 24 godziny; 60 minut; 60 sekund
+echo 'Teraz:       '. date('Y-m-d') ."\n";
+echo 'Za tydzień: '. date('Y-m-d', $nextWeek) ."\n";
+?>
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
+<![CDATA[
+Teraz:      2005-03-30
+Za tydzień: 2005-04-07
+]]>
+    </screen>
+   </example>
+  </para>
     <para>
      Patrz także <function>date</function> i <function>microtime</function>.
     </para>
