@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.6 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.10 $ -->
+<!-- EN-Revision: 1.11 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.11 $ -->
+<!-- Purpose: utilspec.server --> 
+<!-- Membership: bundled --> 
+
  <reference id="ref.apache">
   <title>Apache serwer</title>
   <titleabbrev>Apache</titleabbrev>
@@ -9,16 +12,30 @@
     &reftitle.intro;
     <para>
      Poniższe funkcje dostępne są jedynie wówczas, kiedy PHP pracuje jako moduł
-     serwera Apache w wersji 1.x.
+     Apache.
     </para>
+	<note>
+     <simpara>
+      <envar>PATH_TRANSLATED</envar> od wersji PHP 4.3.2 nie jest już domyślnie 
+	  ustawiana pod Apache 2 <acronym>SAPI</acronym> w odróżnieniu od sytuacji
+	  z Apache 1, gdzie jest ustawiana ta sama wartość co <envar>SCRIPT_FILENAME</envar>
+	  kiedy zmienna serwera nie jest podana przez Apache. Ta zmiana została
+      wprowadzona, aby być w zgodzie ze specyfikacją <acronym>CGI</acronym>, która
+	  zakłada, że <envar>PATH_TRANSLATED</envar> powinna istnieć tylko jeżeli
+	  <envar>PATH_INFO</envar> jest zdefiniowana.
+     </simpara>
+     <simpara>
+	  Użytkownicy Apache 2 mogą użyć <literal>AcceptPathInfo = On</literal>
+	  w <filename>httpd.conf</filename> aby zdefiniować <envar>PATH_INFO</envar>.
+     </simpara>
+    </note>
    </section>
 
    <section id="apache.installation">
     &reftitle.install;
     <para>
-     Instalacja modułu PHP dla serwera Apache 1.x opisana jest w rozdziale
-     instalacja, w sekcji poświęconej <link
-     linkend='install.apache'>serwerowi Apache</link>.
+     Instalacja PHP dla serwera Apache opisana jest w
+     <link linkend='install'>rozdziale instalacja</link>.
     </para>
    </section>
 
