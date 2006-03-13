@@ -1,24 +1,49 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.5 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.6 $ -->
+<!-- EN-Revision: 1.7 Maintainer: qrak Status: ready -->
+<!-- $Revision: 1.7 $ -->
   <refentry id="function.apache-lookup-uri">
    <refnamediv>
     <refname>apache_lookup_uri</refname>
-    <refpurpose>
-     Wywołuje wewnętrzne żądanie dla określonego URI i zwraca całą informację
-     o nim
-    </refpurpose>
+    <refpurpose>Wywołuje wewnętrzne żądanie dla określonego URI i zwraca całą informację
+     o nim</refpurpose>
    </refnamediv>
-   <refsect1>
-    <title>Opis</title>
+   <refsect1 role="description">
+    &reftitle.description;
      <methodsynopsis>
       <type>object</type><methodname>apache_lookup_uri</methodname>
       <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
      </methodsynopsis>
     <para>
      Ta funkcja wywołuje wewnętrzne żądanie dla określonego URI. Funkcja zbiera
-     wszystkie istotne informacje odnośnie podanego źródła informacji i zwraca
-     je w postaci klasy. Właściwości zwróconej klasy to:
+     wszystkie istotne informacje odnośnie podanego zasobu.
+	 </para>
+  &apache.req.module;
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>nazwa_pliku</parameter></term>
+     <listitem>
+      <para>
+	   Nazwa rządanego pliku (URI), lub &false; w przypadku niepowodzenia.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   <type>Obiekt</type> powiązany z informacjami URI. Własności tego 
+   <type>obiektu</type> to:
+  </para>
+  <para>
+
      <simplelist>
       <member>status</member>
       <member>the_request</member>
@@ -42,7 +67,11 @@
       <member>mtime</member>
       <member>request_time</member>
      </simplelist>
-	 </para> 
+	 </para>
+     </refsect1> 
+  
+     <refsect1 role="examples"> 
+     &reftitle.examples; 
       <para> 
        <example> 
         <title><function>apache_lookup_uri</function> przykład</title> 
@@ -86,12 +115,6 @@
         </screen> 
        </example> 
     </para>
-    <note>
-     <simpara>
-      <function>apache_lookup_uri</function> działa jedynie wówczas, kiedy
-      PHP jest zainstalowane jako moduł serwera Apache.
-     </simpara>
-    </note>
    </refsect1>
   </refentry>
 
