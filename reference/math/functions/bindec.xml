@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.3 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.6 $ -->
+<!-- EN-Revision: 1.8 Maintainer: qrak Status: ready -->
+<!-- $Revision: 1.7 $ -->
   <refentry id="function.bindec">
    <refnamediv>
     <refname>bindec</refname>
@@ -9,7 +9,7 @@
    <refsect1>
     <title>Opis</title>
      <methodsynopsis>
-      <type>int</type><methodname>bindec</methodname>
+      <type>number</type><methodname>bindec</methodname>
       <methodparam><type>string</type><parameter>liczba_dwójkowa</parameter></methodparam>
      </methodsynopsis>
     <para>
@@ -20,9 +20,37 @@
      <function>bindec</function> konwertuje liczby dwójkowe do liczb 
      całkowitych. Największą konwertowaną liczbą jest 31 bitów jedynek, czyli
      2 147 483 647 dziesiętnie.
+	 Od PHP 4.1.0, funkcja ta potrafi konwertować większe liczby.
+     W takim przypadku zwraca <type>float</type>.
     </para>
     <para>
-     Patrz także: <function>decbin</function>.
+     <example>
+      <title><function>bindec</function> przykład</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+echo bindec('110011') . "\n";
+echo bindec('000110011') . "\n";
+
+echo bindec('111');
+?>
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+51
+51
+7
+]]>
+      </screen>
+     </example>
+    </para>
+    <para>
+     Patrz także: <function>decbin</function>,
+     <function>octdec</function>,
+     <function>hexdec</function> i
+     <function>base_convert</function>.
     </para>
    </refsect1>
   </refentry>
