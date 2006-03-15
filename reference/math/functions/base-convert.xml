@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.5 $ -->
+<!-- EN-Revision: 1.6 Maintainer: qrak Status: ready -->
+<!-- $Revision: 1.6 $ -->
   <refentry id="function.base-convert">
    <refnamediv>
     <refname>base_convert</refname>
@@ -24,13 +24,35 @@
      włącznie. Cyfry w liczbach o bazie większej niż 10 są reprezentowane
      za pomocą liter a-z, gdzie a oznacza 10, b oznacza 11, a z oznacza 35.
      <example>
-      <title><function>base_convert</function></title>
+      <title><function>base_convert</function> przykład</title>
       <programlisting role="php">
 <![CDATA[      
-$binary = base_convert ($hexadecimal, 16, 2);
+<?php
+$hexadecimal = 'A37334';
+echo base_convert($hexadecimal, 16, 2);
+?>
 ]]>
       </programlisting>
+	   <para>
+       Wyświetli:
+      </para>
+      <screen>
+<![CDATA[
+101000110111001100110100
+]]>
+      </screen>
      </example>
+	 </para>
+    <warning>
+     <simpara>
+	  <function>base_convert</function> może tracić precyzję przy dużych liczbach
+	  z powodu odwoływania się do wewnętrznych typów "double" lub "float".
+	  Proszę zajrzeć do sekcji <link linkend="language.types.float">Liczby zmiennoprzecinkowe</link>
+	  podręcznika po szczegółowe informacje i ograniczenia.
+     </simpara>
+    </warning>
+    <para>
+     Patrz także: <function>intval</function>.
     </para>
    </refsect1>
   </refentry>
