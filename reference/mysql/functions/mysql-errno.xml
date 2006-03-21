@@ -1,72 +1,91 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.5 Maintainer: slawek Status: ready -->
-<!-- $Revision: 1.5 $ -->
-  <refentry id="function.mysql-errno">
-   <refnamediv>
-    <refname>mysql_errno</refname> 
-    <refpurpose>
-     Zwraca numer komunikatu błędu z ostatniej operacji MySQL
-    </refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>int</type><methodname>mysql_errno</methodname>
-      <methodparam choice="opt"><type>resource</type><parameter>
-        identyfikator_połączenia
-       </parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     Zwraca numer błędu ostatniej operacji MySQL lub
-     <literal>0</literal> (zero) jeśli wystąpi błąd.
-    </para>
-    <para>
-     Błędy pochodzące z klienta bazy MySQL już nie powodują wyświetlania
-     ostrzeżeń. Zamiast tego, użyj <function>mysql_errno</function>
-     by uzyskać numer błędu. Weź pod uwagę, że ta funkcja zwraca numer
-     błędu z ostatnio użytej funkcji MySQL (wyłączając
-     <function>mysql_error</function> i <function>mysql_errno</function>),
-     dlatego jeśli jej używasz, upewnij się, by zrobić to przed użyciem
-     następnej funkcji MySQL.
-     <example>
-      <title>Przykład użycia mysql_errno</title>
-      <programlisting role="php">
+<!-- $Revision: 1.6 $ -->
+<!-- EN-Revision: 1.14 Maintainer: leszek Status: ready -->
+<refentry id="function.mysql-errno">
+ <refnamediv>
+  <refname>mysql_errno</refname>
+  <refpurpose>Zwraca liczbową wartość kodu błędu z poprzedniej operacji MySQL</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>int</type><methodname>mysql_errno</methodname>
+   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Zwraca numer błędu z ostatniej operacji MySQL.
+  </para>
+  <para>
+   Błędy, zwracane z serwera MySQL, nie powodują generowania ostrzeżeń.
+   Zamiast tego, należy używać funkcji <function>mysql_errno</function> do
+   pobrania kodu błędu. Funkcja ta zwraca tylko kod błędu, wygenerowany przez
+   ostatnio wywołaną funkcję MySQL (nie licząc
+   <function>mysql_error</function> i <function>mysql_errno</function>), a
+   więc kod błędu należy sprawdzać przed wywołaniem kolejnej funkcji MySQL.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    &mysql.linkid.description;
+   </variablelist>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca numer błędu ostatnio wywołanej funkcji MySQL, lub
+   Returns the error number from the last MySQL function, or
+   <literal>0</literal> (zero) jeśli żaden błąd nie wystąpił.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykłady użycia <function>mysql_errno</function></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
-mysql_connect('localhost', 'uzytkownik', 'haslo');
+$link = mysql_connect("localhost", "mysql_user", "mysql_password");
 
-mysql_select_db('niematakiejbazy');
-echo mysql_errno() . ": " . mysql_error(). "\n";
+if (!mysql_select_db("nieistniejacabaza", $link)) {
+    echo mysql_errno($link) . ": " . mysql_error($link). "\n";
+}
 
-mysql_select_db('takiejbazytezniema');
-mysql_query('SELECT * FROM niematakiejtabeli');
-echo mysql_errno() . ": " . mysql_error() . "\n";
+mysql_select_db("kossu", $link);
+if (!mysql_query("SELECT * FROM nieistniejacatabela", $link)) {
+    echo mysql_errno($link) . ": " . mysql_error($link) . "\n";
+}
 ?>
 ]]>
-      </programlisting>
-      <para>
-       Powyższy przykład da następujący wynik:
-      </para>
-      <screen>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
 <![CDATA[
-1049: Unknown database 'niematakiejbazy'
-1146: Table 'takiejbazytezniema.niematakiejtabeli' doesn't exist
+1049: Unknown database 'nieistniejacabaza'
+1146: Table 'kossu.nieistniejacatabela' doesn't exist
 ]]>
-      </screen>
-     </example>
-    </para>
-    <note> 
-     <para>
-      Jeżeli jako opcjonalny argument zostanie podany identyfikator połączenia,
-      to zostanie on wykorzystany do wyciągnięcia numeru błędu. Jeśli nie,
-      wykorzystane zostanie ostatnio otwarte połączenie.
-     </para> 
-    </note> 
-    <para> 
-     Patrz także: <function>mysql_error</function>
-    </para>
-   </refsect1>
-  </refentry>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>mysql_error</function></member>
+    <member><ulink url="&url.mysql.docs.error;">Kody błędów MySQL</ulink></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
