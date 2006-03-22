@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.25 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.array-walk">
    <refnamediv>
     <refname>array_walk</refname>
@@ -11,89 +11,93 @@
    <refsect1>
     <title>Opis</title>
      <methodsynopsis>
-      <type>int</type><methodname>array_walk</methodname>
-      <methodparam><type>array</type><parameter>tbl</parameter></methodparam>
-      <methodparam><type>string</type><parameter>funk</parameter></methodparam>
+      <type>bool</type><methodname>array_walk</methodname>
+      <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
+      <methodparam><type>callback</type><parameter>nazwa_funkcji</parameter></methodparam>
       <methodparam choice="opt"><type>mixed</type><parameter>dane</parameter></methodparam>
      </methodsynopsis>
     <simpara>
-     Wykonuje zdefuniowaną przez użytkownika funkcję o nazwie 
-     <parameter>funk</parameter> na każdym elemencie tablicy 
-     <parameter>tbl</parameter>.
-     Wartość elementu będzie przekazana do <parameter>funk</parameter> jako
-     pierwszy parametr, a klucz jako drugi. Jeśli podany zostanie parametr
-     <parameter>dane</parameter>, to będzie on przekazany do funkcji jako
-     trzeci parametr. <parameter>funk</parameter> musi być funkcją
-     zdefiniowaną przez użytkownika, a nie natywną funkcją PHP. W związku z
-     tym nie możesz bezpośrednio użyć <function>array_walk</function> z
-     <function>str2lower</function>. Musisz najpierw napisać funkcję
-     zawierającą <function>str2lower</function> i przekazać tą funkcję jako
-     parametr.
+     &return.success;
     </simpara>
-    &note.func-callback;
     <simpara>
-     Jeśli <parameter>funk</parameter> wymaga więcej niż dwóch lub trzech
-     parametrów, zależnie od parametru <parameter>dane</parameter>,
-     wygenerowane będzie ostrzeżenie za każdym razem, kiedy
-     <function>array_walk</function> będzie wywoływała
-     <parameter>funk</parameter>. Ostrzeżenia te mogą być ukryte przez dodanie
-     znaku '@' przed wywołaniem <function>array_walk</function> lub używając
+     Wykonuje zdefiniowaną przez użytkownika funkcję
+     <parameter>nazwa_funkcji</parameter> na każdym elemencie tablicy
+     <parameter>tablica</parameter>. Zazwyczaj <parameter>nazwa_funkcji</parameter>
+     przyjmuje dwa argumenty. Pierwszym jest element tablicy
+     <parameter>tablica</parameter>, natomiast drugim klucz lub numer indeksu
+     tego elementu. Jeśli do funkcji <function>array_walk</function> podany
+     zostanie trzeci element, <parameter>dane</parameter>, będzie on
+     przekazany do <parameter>nazwa_funkcji</parameter> jako jej trzeci
+     argument.
+    </simpara>
+    <simpara>
+     Jeśli <parameter>nazwa_funkcji</parameter> wymaga więcej parametrów niż zostało
+     jej przekazanych, wygenerowany zostanie błąd poziomu <link
+      linkend="errorfunc.constants">E_WARNING</link> dla każdego wywołania
+     funkcji podanej jako parametr. Ostrzeżenia te mogą być wyciszone poprzez
+     skorzystanie z operatora kontroli błędów <link
+      linkend="language.operators.errorcontrol">@</link> przed wywołaniem
+     <function>array_walk</function>, lub też poprzez użycie funkcji
      <function>error_reporting</function>.
     </simpara>
     <note>
      <para>
-      Jeśli <parameter>funk</parameter> ma zmieniać wartości tablicy, określ
-      pierwszy parametr <parameter>funk</parameter> jako referencję. W tym
+      Jeśli <parameter>nazwa_funkcji</parameter> ma zmieniać wartości tablicy,
+      należy określić pierwszy argument <parameter>nazwa_funkcji</parameter>
+      jako <link linkend="language.references">referencję</link>. W tym
       przypadku wszystkie zmiany dokonane przez tą funkcję będą dokonywane
-      bezpośrednio na tablicy.
-     </para>
-     <para>
-      Modyfikacja tablicy z wnętrza <parameter>funk</parameter> może powodować
-      nieprzewidziane błędy.
+      bezpośrednio na oryginalnej tablicy.
      </para>
     </note>
     <note>
      <para>
-      Przekazywanie klucza i danych użytkownika do <parameter>funk</parameter>
-      zostało dodane w PHP 4.0
-     </para>
-     <para>
-      W PHP 4 konieczne jest wywołanie <function>reset</function> ponieważ
-      <function>array_walk</function> nie resetuje tablicy domyślnie.
-     </para>
-     <para>
-      Użytkownicy nie mogą zmieniać samej tablicy z wnętrza funkcji zwrotnej,
-      to jest dodawać/usuwać elementy, usuwać tablicę na której jest
-      wywoływana funkcja <function>array_walk</function>. Jeśli ta tablica
-      zostanie zmieniona, funkcja może się zachowywać w sposób nieokreślony.
+      Przekazywanie klucza i danych użytkownika do <parameter>nazwa_funkcji</parameter>
+      zostało dodane w PHP 4.0.0.
      </para>
     </note>
+    <para>
+     Na działanie <function>array_walk</function> nie wpływa pozycja
+     wewnętrznego wskaźnika tablicy. <function>array_walk</function>
+     przetworzy wszystkie elementy argumentu <parameter>tablica</parameter>,
+     niezależnie odpozycji jej wewnętrznego wskaźnika.
+    </para>
+    <para>
+     Użytkownicy nie mogą zmieniać samej tablicy z wnętrza funkcji zwrotnej,
+     to jest dodawać/usuwać elementy, usuwać elementy tablicy na której jest
+     wywoływana funkcja <function>array_walk</function>. Jeśli ta tablica
+     zostanie zmieniona, funkcja może się zachowywać w sposób nieokreślony i
+     nieprzewidywalny..
+    </para>
     <para>
      <example>
       <title>Przykład użycia <function>array_walk</function></title>
       <programlisting role="php">
 <![CDATA[
+<?php
 $owoce = array ("d"=>"cytryna", "a"=>"pomarańcza", "b"=>"banan", "c"=>"jabłko");
 
-function test_zmiana (&$element1, $klucz, $prefiks) {
+function test_zmiana (&$element1, $klucz, $prefiks)
+{
     $element1 = "$prefiks: $element1";
 }
 
-function test_wyswietlanie ($element2, $klucz) {
-    echo "$klucz. $element2<br>\n";
+function test_wyswietlanie ($element2, $klucz)
+{
+    echo "$klucz. $element2<br />\n";
 }
+
 echo "Przed ...:\n";
 array_walk ($owoce, 'test_wyswietlanie');
-reset ($owoce);
+
 array_walk ($owoce, 'test_zmiana', 'owoc');
 echo "... i po:\n";
-reset ($owoce);
+
 array_walk ($owoce, 'test_wyswietlanie');
+?>
 ]]>
       </programlisting>
-      <para>
-       Powyższy przykład wyświetli:
-       <screen>
+      &example.outputs;
+      <screen>
 <![CDATA[
 Przed ...:
 d. cytryna
@@ -106,12 +110,19 @@ a. owoc: pomarańcza
 b. owoc: banan
 c. owoc: jabłko
 ]]>
-       </screen>
-      </para>
+      </screen>
      </example>
     </para>
     <simpara>
-     Patrz także: <function>each</function> i <function>list</function>.
+     Patrz także: 
+     <function>array_walk_recursive</function>,
+     <function>create_function</function>,
+     <function>list</function>,
+     <link linkend="control-structures.foreach">foreach</link>,
+     <function>each</function>,
+     <function>call_user_func_array</function>, and
+     <function>array_map</function> i
+     &seealso.callback;.
     </simpara>
    </refsect1>
   </refentry>
