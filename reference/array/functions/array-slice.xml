@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.11 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.array-slice">
    <refnamediv>
     <refname>array_slice</refname>
@@ -12,9 +12,8 @@
       <type>array</type><methodname>array_slice</methodname>
       <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
       <methodparam><type>int</type><parameter>przesunięcie</parameter></methodparam>
-      <methodparam choice="opt"><type>int</type><parameter>
-        długość
-       </parameter></methodparam>
+      <methodparam choice="opt"><type>int</type><parameter>długość</parameter></methodparam>
+      <methodparam choice="opt"><type>bool</type><parameter>zachowaj_klucze</parameter></methodparam>
      </methodsynopsis>
     <para>
      <function>array_slice</function> zwraca sekwencję elementów z tablicy
@@ -22,7 +21,7 @@
      <parameter>przesunięcie</parameter> i <parameter>długość</parameter>.
     </para>
     <para>
-     Jeśli <parameter>przesunięcie</parameter> jest dodatnie, sekwencja
+     Jeśli <parameter>przesunięcie</parameter> jest nieujemne, sekwencja
      zacznie się od miejsca wskazanego w tym parametrze. Jeśli
      <parameter>przesunięcie</parameter> jest ujemne, sekwencja zacznie się o
      tyle elementów od końca tablicy <parameter>tablica</parameter>.
@@ -37,27 +36,51 @@
      <parameter>tablica</parameter>.
     </para>
     <para>
-     Zauważ, że <function>array_slice</function> zignoruje klucze i obliczy
-     długość i przesunięcie na podstawie aktualnych pozycji elementów w
-     tablicy.
+     Należy zauważyć, że <function>array_slice</function> domyślnie zresetuje
+     klucze tablicy. Od wersji PHP 5.0.2 możliwa jest zmiana tego zachowania
+     poprzez ustawienie wartości argumentu
+     <parameter>zachowaj_klucze</parameter> na &true;.
     </para>
     <para>
      <example>
       <title>Przykład użycia <function>array_slice</function></title>
       <programlisting role="php">
 <![CDATA[
+<?php
 $wejscie = array ("a", "b", "c", "d", "e");
 
 $wyjscie = array_slice ($wejscie, 2);      // zwraca "c", "d" i "e"
-$wyjscie = array_slice ($wejscie, 2, -1);  // zwraca "c", "d"
 $wyjscie = array_slice ($wejscie, -2, 1);  // zwraca "d"
 $wyjscie = array_slice ($wejscie, 0, 3);   // zwraca "a", "b" i "c"
+
+// note the differences in the array keys
+print_r(array_slice($wejscie, 2, -1));
+print_r(array_slice($wejscie, 2, -1, true));
+
+?>
 ]]>
       </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+Array
+(
+    [0] => c
+    [1] => d
+)
+
+Array
+(
+    [2] => c
+    [3] => d
+)
+]]>
+       </screen>
      </example>
     </para>
     <para>
-     Patrz także: <function>array_splice</function>.
+     Patrz także: <function>array_splice</function> i
+     <function>unset</function>.
     </para>
    </refsect1>
   </refentry>
