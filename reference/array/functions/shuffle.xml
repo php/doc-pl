@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.12 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.5 $ -->
+<!-- EN-Revision: 1.14 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.6 $ -->
   <refentry id="function.shuffle">
    <refnamediv>
     <refname>shuffle</refname>
@@ -14,6 +14,9 @@
      </methodsynopsis>
     <para>
      Ta funkcja tasuje tablicę (losuje kolejność elementów w niej).
+    </para>
+    &note.no-key-association;
+    <para>
      <example>
       <title>Przykład użycia <function>shuffle</function></title>
       <programlisting role="php">
@@ -22,6 +25,7 @@
 $liczby = range(1,20);
 srand((float)microtime()*1000000);
 shuffle($liczby);
+foreach ($numbers as $number) {
 while (list(, $liczba) = each($liczby)) {
     echo "$liczba ";
 }
