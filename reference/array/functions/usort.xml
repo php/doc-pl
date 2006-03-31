@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.21 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.8 $ -->
+<!-- EN-Revision: 1.23 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.9 $ -->
   <refentry id="function.usort">
    <refnamediv>
     <refname>usort</refname>
@@ -38,6 +38,7 @@
       </para>
      </note>
     </para>
+    &note.no-key-association;
     <para>
      &return.success;
     </para>
@@ -59,7 +60,7 @@ $a = array(3, 2, 5, 6, 1);
 
 usort($a, "cmp");
 
-while (list($key, $value) = each($a)) {
+foreach ($a as $key => $val) {
     echo "$key: $value\n";
 }
 ?>
