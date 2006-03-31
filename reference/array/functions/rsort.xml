@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.11 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.6 $ -->
+<!-- EN-Revision: 1.13 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.7 $ -->
   <refentry id="function.rsort">
    <refnamediv>
     <refname>rsort</refname>
@@ -16,7 +16,8 @@
     <para>
      Ta funkcja sortuje tablicę w porządku odwrotnym (od największego do
      najmniejszego).
-    </para> 
+    </para>
+    &note.no-key-association;
     <para> 
      &return.success; 
     </para> 
@@ -28,8 +29,7 @@
 <?php
 $owoce = array("cytryna", "pomarańcza", "banan", "jabłko");
 rsort($owoce);
-reset($owoce);
-while (list($key, $val) = each($owoce)) {
+foreach ($owoce as $key => $val) {
     echo "$key = $val\n";
 }
 ?>
@@ -57,7 +57,8 @@ while (list($key, $val) = each($owoce)) {
     <para>
      Patrz także: <function>arsort</function>,
      <function>asort</function>, <function>ksort</function>,
-     <function>sort</function> i <function>usort</function>.
+     <function>krsort</function>, <function>sort</function> i
+     <function>usort</function>.
     </para>
    </refsect1>
   </refentry>
