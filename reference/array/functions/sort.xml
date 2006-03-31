@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.18 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.6 $ -->
+<!-- EN-Revision: 1.23 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.7 $ -->
   <refentry id="function.sort">
    <refnamediv>
     <refname>sort</refname>
@@ -17,13 +17,7 @@
      Funkcja ta sortuje tablicę. Po zakończeniu działania funkcji
      elementy będą ułożone od najmniejszego do najwiekszego.
     </para>
-    <note>
-     <simpara>
-      Funkcja <function>sort</function> przypisuje nowe klucze do elementów
-      tablicy <parameter>tablica</parameter>. Wszystkie dotychczasowe klucze
-      zostaną usunięte.
-     </simpara>
-    </note>
+    &note.no-key-association;
     <para>
      &return.success;
     </para>
@@ -36,8 +30,7 @@
 
 $owoce = array("cytryna", "pomarańcza", "banan", "jabłko");
 sort($owoce);
-reset($owoce);
-while (list($key, $val) = each($owoce)) {
+foreach ($owoce as $key => $val) {
     echo "owoce[" . $key . "] = " . $val . "\n";
 }
 ]]>
@@ -83,7 +76,11 @@ owoce[3] = pomarańcza
       <listitem>
        <simpara>
         <constant>SORT_LOCALE_STRING</constant> - porównuj elementy jako ciągi
-        tekstowe, uwzględniając ustawienia Locale. Dodane w PHP 5.0.2.
+        tekstowe, uwzględniając ustawienia Locale. Dodane w PHP 4.4.0 i PHP 5.0.2.
+        W wersjach wcześniejszych niż PHP 6, używane jest locale systemowe,
+        które może być zmienione poprzez zastosowanie funkcji 
+        <function>setlocale</function>. Od PHP w wersji 6 niezbędne jest
+        użycie funkcji <function>i18n_loc_set_default</function>.
        </simpara>
       </listitem>
      </itemizedlist>
@@ -103,6 +100,7 @@ owoce[3] = pomarańcza
     <para>
      Patrz także: <function>arsort</function>,
      <function>asort</function>, <function>ksort</function>,
+     <function>krsort</function>,
      <function>natsort</function>, <function>natcasesort</function>,
      <function>rsort</function>, <function>usort</function>,
      <function>array_multisort</function> i
