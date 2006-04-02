@@ -1,39 +1,79 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.7 Maintainer: leniwiec Status: ready -->
-<!-- $Revision: 1.1 $ -->
-  <refentry id="function.scandir">
-   <refnamediv>
-    <refname>scandir</refname>
-    <refpurpose>Wypisze wszystkie pliki i katalogi z określonej lokalizacji
-    </refpurpose>
-   </refnamediv>
-   <refsect1>
-    &reftitle.description;
-     <methodsynopsis>
-      <type>array</type><methodname>scandir</methodname>
-      <methodparam><type>string</type><parameter>katalog</parameter></methodparam>
-      <methodparam choice="opt"><type>int</type><parameter>sorting_order</parameter></methodparam>
-      <methodparam choice="opt"><type>resource</type><parameter>context</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     Zwraca <type>array</type> z wszystkimi plikami i katalogami znajdującymi
-     się w <parameter>katalog</parameter>.  
-     Jeśli <parameter>katalog</parameter> nie jest katalogiem, zwraca &false;,
-     oraz ustawia błąd <constant>E_WARNING</constant>. 
-    </para>
-    <para>
-     Domyślnie, kolejność w zwróconej tablicy jest alfabetyczna, rosnąca.
-     Jeśli parametr <parameter>sorting_order</parameter> została podany
-     (ustawiony
-     na 1) wówczas kolejność jest alfabetyczna, malejąca.
-    </para>
-    <para>
-     Parametr <parameter>context</parameter> jest opisany w <xref linkend="ref.stream"/>.
-    </para>
-    <para>
-     <example>
-      <title>Prosty przykład użycia <function>scandir</function></title>
-      <programlisting role="php">
+<!-- EN-Revision: 1.9 Maintainer: leniwiec Status: ready -->
+<!-- $Revision: 1.2 $ -->
+<refentry id="function.scandir">
+ <refnamediv>
+  <refname>scandir</refname>
+  <refpurpose>Wypisze wszystkie pliki i katalogi z określonej lokalizacji</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>array</type><methodname>scandir</methodname>
+   <methodparam><type>string</type><parameter>katalog</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>sorting_order</parameter></methodparam>
+   <methodparam choice="opt"><type>resource</type><parameter>context</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Zwraca <type>tablicę</type> z wszystkimi plikami i katalogami znajdującymi się w 
+   <parameter>katalog</parameter>.
+  </para>
+
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>katalog</parameter></term>
+     <listitem>
+      <para>
+       Katalog, który ma być przeskanowany.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>sorting_order</parameter></term>
+     <listitem>
+      <para>
+       Domyślnie, kolejność w zwróconej tablicy jest alfabetyczna w porządku rosnącym.  Jeżeli
+       opcjonalny parametr <parameter>sorting_order</parameter> jest użyty (ustawiony na 1),
+       wówczas kolejność jest alfabetyczna w porządku malejącym.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>context</parameter></term>
+     <listitem>
+      <para>
+       Po opis parametru <parameter>context</parameter> , 
+       odsyłamy do <link linkend="ref.stream">sekcji strumienii</link> 
+       manuala.
+      </para> 
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca <type>tablicę</type> z nazwami plików w przypadku powodzenia lub &false; w przypadku
+   niepowodzenia. Jeżeli <parameter>katalog</parameter> nie jest w rzeczywistości katalogiem, wtedy 
+   zwracany jest &false; , oraz generowany jest błąd poziomu 
+   <constant>E_WARNING</constant>.
+  </para> 
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Prosty przykład użycia <function>scandir</function>e</title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 $dir    = '/tmp';
@@ -44,9 +84,9 @@ print_r($files1);
 print_r($files2);
 ?>
 ]]>
-      </programlisting>
-      &example.outputs.similar;
-      <screen>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
 <![CDATA[
 Array
 (
@@ -54,24 +94,24 @@ Array
     [1] => ..
     [2] => bar.php
     [3] => foo.txt
-    [4] => somedir
+    [4] => jakiśkatalog
 )
 Array
 (
-    [0] => somedir
+    [0] => jakiśkatalog
     [1] => foo.txt
     [2] => bar.php
     [3] => ..
     [4] => .
 )
 ]]>
-      </screen>
-     </example>
-    </para>
-    <para>
-     <example>
-      <title>Alternatywa dla <function>scandir</function> w PHP 4</title>
-      <programlisting role="php">
+    </screen>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Alternatywa dla<function>scandir</function>w PHP 4</title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 $dir = "/tmp";
@@ -90,9 +130,9 @@ print_r($files);
 
 ?>
 ]]>
-      </programlisting>
-      &example.outputs.similar;
-      <screen>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
 <![CDATA[
 Array
 (
@@ -100,30 +140,40 @@ Array
     [1] => ..
     [2] => bar.php
     [3] => foo.txt
-    [4] => somedir
+    [4] => jakiśkatalog
 )
 Array
 (
-    [0] => somedir
+    [0] => jakiśkatalog
     [1] => foo.txt
     [2] => bar.php
     [3] => ..
     [4] => .
 )
 ]]>
-      </screen>
-     </example>
-    </para>
-    &tip.fopen-wrapper;
-    <para>
-     Patrz także <function>opendir</function>,
-     <function>readdir</function>,
-     <function>glob</function>, 
-     <function>is_dir</function>, oraz
-     <function>sort</function>.
-    </para>
-   </refsect1>
-  </refentry>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  &tip.fopen-wrapper;
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>opendir</function></member>
+    <member><function>readdir</function></member>
+    <member><function>glob</function></member>
+    <member><function>is_dir</function></member>
+    <member><function>sort</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
