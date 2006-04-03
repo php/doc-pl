@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.8 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.6 $ -->
+<!-- EN-Revision: 1.9 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.7 $ -->
   <refentry id="function.array-reduce">
    <refnamediv>
     <refname>array_reduce</refname>
@@ -24,6 +24,8 @@
      wartości. Jeśli podany został opcjonalny parametr <parameter>początek
      </parameter>, będzie on użyty na początku procesu, lub jako zwracana
      wartość jeśli tablica jest pusta.
+     Jeśli tablica jest pusta, a parametr <parameter>początek</parameter> nie
+     zostanie przekazany, <function>array_reduce</function> zwraca &null;.
     </para>
     <para>
      <example>
@@ -56,7 +58,7 @@ $d = array_reduce($x, "rsum", 1);
     <para>
      Po wykonaniu powyższego kodu zmienna <varname>$b</varname> będzie
      zawierała <literal>15</literal>, <varname>$c</varname>
-     <literal>1200</literal> (= 1*2*3*4*5*10) a
+     <literal>1200</literal> (= 10*1*2*3*4*5) a
      <varname>$d</varname> containing <literal>1</literal>.
     </para>
     <para>
