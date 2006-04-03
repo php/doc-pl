@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.10 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.array-values">
    <refnamediv>
     <refname>array_values</refname>
@@ -14,7 +14,7 @@
      </methodsynopsis>
     <para>
      <function>array_values</function> zwraca wszystkie wartości z tablicy
-     <parameter>wejście</parameter>.
+     <parameter>wejście</parameter> i indeksuje tablicę liczbowo.
     </para>
     <para>
      <example>
@@ -25,8 +25,7 @@ $tablica = array ("rozmiar" => "XL", "kolor" => "złoty");
 print_r(array_values ($tablica));
 ]]>
       </programlisting>
-      <para>
-       Powyższy przykład wyświetli:
+      &example.outputs;
        <screen>
 <![CDATA[
 +Array
@@ -36,32 +35,8 @@ print_r(array_values ($tablica));
 )
 ]]>
        </screen>
-      </para>
-     </example>
-    </para>
-    <note>
-     <para>
-      Ta funkcja została dodana w PHP 4. Poniżej znajduje się implementacja
-      tej funkcji dla osób używających PHP 3.
-      <example>
-       <title>
-        Implementacja funkcji <function>array_values</function> dla
-        użytkowników PHP 3
-       </title>
-       <programlisting role="php">
-<![CDATA[
-function array_values ($arr) {
-    $t = array();
-    while (list($k, $v) = each ($arr)) {
-        $t[] = $v;
-    }
-    return $t;
-}
-]]>
-       </programlisting>
       </example>
      </para>
-    </note>
     <para>
      Patrz także: <function>array_keys</function>.
     </para>
