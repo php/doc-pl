@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.18 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.8 $ -->
+<!-- EN-Revision: 1.20 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.9 $ -->
   <refentry id="function.extract">
    <refnamediv>
     <refname>extract</refname>
@@ -140,7 +140,8 @@
      <constant>EXTR_PREFIX_INVALID</constant> lub
      <constant>EXTR_PREFIX_IF_EXISTS</constant>. Jeśli nazwa zmiennej po
      dodaniu prefiksu nie jest prawidłową nazwą zmiennej, nie jest
-     importowana do tablicy symboli.
+     importowana do tablicy symboli. Prefiksy są automatycznie oddzielane od
+     kluczy tablicy poprzez znak "_". 
     </para>
     <para>
      <function>extract</function> zwraca liczbę zmiennych szczęśliwie
@@ -155,10 +156,9 @@
        linkend="security.globals">register_globals</link>. Należy jednak użyć
       nie nadpisującego parametru <parameter>typ_ekstrakcji</parameter>, jak
       na przykład <constant>EXTR_SKIP</constant>. Trzeba też pamiętać aby
-      ekstrahować zmienne <varname>$_SERVER</varname>,
-      <varname>$_SESSION</varname>, <varname>$_COOKIE</varname>,
-      <varname>$_POST</varname> <varname>$_GET</varname> w tej właśnie
-      kolejności.
+      ekstrahować zmienne w kolejności określonej przez opcję <link
+       linkend="ini.variables-order">variables_order</link> pliku <link
+       linkend="ini">&php.ini;</link>.
      </para>
     </warning>
     <para>
