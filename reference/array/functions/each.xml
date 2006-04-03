@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.6 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.7 $ -->
+<!-- EN-Revision: 1.17 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.8 $ -->
   <refentry id="function.each">
    <refnamediv>
     <refname>each</refname> 
@@ -19,11 +19,11 @@
      <parameter>tablica</parameter> i przesuwa wewnętrzny wskaźnik tablicy do
      przodu o jeden element. Para ta jest zwracana jako czteroelementowa
      tablica, z kluczami
-     <emphasis>0</emphasis>, <emphasis>1</emphasis>,
-     <emphasis>key</emphasis> i
-     <emphasis>value</emphasis>. Elementy <emphasis>0</emphasis> i
-     <emphasis>key</emphasis> zawierają nazwę klucza elementu tablicy, a
-     <emphasis>1</emphasis> i <emphasis>value</emphasis> zawierają wartość
+     <literal>0</literal>, <literal>1</literal>,
+     <literal>key</literal> i
+     <literal>value</literal>. Elementy <literal>0</literal> i
+     <literal>key</literal> zawierają nazwę klucza elementu tablicy, a
+     <literal>1</literal> i <literal>value</literal> zawierają wartość
      elementu tablicy.
     </para>
     <para>
@@ -35,68 +35,104 @@
       <title>Przykłady użycia <function>each</function></title>
       <programlisting role="php">
 <![CDATA[
+<?php
 $foo = array ("bob", "fred", "jussi", "jouni", "egon", "marliese");
 $bar = each ($foo);
+print_r($bar);
+?>
 ]]>
       </programlisting>
       <para>
-       <varname>$bar</varname> zawiera teraz następujące pary klucz/wartość
-       <itemizedlist spacing="compact">
-        <listitem><simpara>0 =&gt; 0</simpara></listitem>
-        <listitem><simpara>1 =&gt; 'bob'</simpara></listitem>
-        <listitem><simpara>key =&gt; 0</simpara></listitem>
-        <listitem><simpara>value =&gt; 'bob'</simpara></listitem>
-       </itemizedlist>
-       <programlisting role="php">
-<![CDATA[
-$foo = array ("Robert" => "Bob", "Seppo" => "Sepi");
-$bar = each ($foo);
-]]>
-       </programlisting>
-      </para>
-      <para>
        <varname>$bar</varname> zawiera teraz następujące pary klucz/wartość:
-       <itemizedlist spacing="compact">
-        <listitem><simpara>0 =&gt; 'Robert'</simpara></listitem>
-        <listitem><simpara>1 =&gt; 'Bob'</simpara></listitem>
-        <listitem><simpara>key =&gt; 'Robert'</simpara></listitem>
-        <listitem><simpara>value =&gt; 'Bob'</simpara></listitem>
-       </itemizedlist>
       </para>
+      <screen>
+<![CDATA[
+Array
+(
+    [1] => bob
+    [value] => bob
+    [0] => 0
+    [key] => 0
+)
+]]>
+      </screen>
      </example>
     </para>
     <para>
-     <function>each</function> jest zazwyczaj używana w połączeniu z 
-     <function>list</function> aby przejść przez tablicę; na przykład
-     <varname>$_POST</varname>: 
-     <example>
-      <title>
-       Przechodzenie przez <varname>$_POST</varname> używając
-       <function>each</function>
-      </title>
+     <informalexample>
       <programlisting role="php">
 <![CDATA[
-echo "Wartości wysłane metodą POST: <br />\n";
-reset ($_POST);
-while (list ($key, $val) = each ($_POST)) {
-   echo "$key => $val<br />\n";
-}
+<?php
+$foo = array ("Robert" => "Bob", "Seppo" => "Sepi");
+$bar = each ($foo);
+print_r($bar);
+?>
 ]]>
       </programlisting>
+      <para>
+       <varname>$bar</varname> zawiera teraz następujące pary klucz/wartość:
+      </para>
+      <screen>
+<![CDATA[
+Array
+(
+    [1] => Bob
+    [value] => Bob
+    [0] => Robert
+    [key] => Robert
+)
+]]>
+      </screen>
+     </informalexample>
+    </para>
+    <para>
+     <function>each</function> jest zazwyczaj używana w połączeniu z 
+     <function>list</function> aby przejść przez tablicę. Oto przykład takiego
+     zastosowania:
+     <example>
+      <title>Przechodzenie przez zmienną korzystając z funkcji
+       <function>each</function></title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+$owoce = array('a' => 'jabłko', 'b' => 'banan', 'c' => 'truskawka');
+reset ($owoce);
+while (list ($klucz, $wartosc) = each ($owoce)) {
+   echo "$klucz => $wartosc\n";
+}
+?>   
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+a => jabłko
+b => banan
+c => truskawka
+]]>
+      </screen>
      </example>
     </para>
     <para>
      Po wykonaniu <function>each</function>, wewnętrzny wskaźnik tablicy
-     będzie pozostawiony na następnym elementcie tablicy, lub ostatnim
-     elemencie jeśli dojdzie ona do końca tablicy. Musisz użyć
+     będzie pozostawiony na następnym elementcie tablicy, lub za ostatnim
+     elementem jeśli dojdzie ona do końca tablicy. Musisz użyć
      <function>reset</function> jeśli chcesz przejść przez tablicę jeszcze raz
      korzystając z funkcji each.
     </para>
+    <caution>
+     <para>
+      Jako że przypisywanie tablicy do innej zmiennej zeruje wskaźnik tablicy,
+      powyższy przykład wszedłby w nieskończoną pętle, jeśli tablica
+      <varname>$owoce</varname> zostałaby przypisana do innej zmiennej
+      wewnątrz pętli.
+     </para>
+    </caution>
     <para>
      Patrz także: <function>key</function>, <function>list</function>,
      <function>current</function>, <function>reset</function>,
      <function>next</function>, <function>prev</function> i
-     <function>foreach</function>.
+     <link linkend="control-structures.foreach">foreach</link>.
     </para>
    </refsect1>
   </refentry>
