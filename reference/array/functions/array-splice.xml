@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.5 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.5 $ -->
+<!-- EN-Revision: 1.16 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.6 $ -->
   <refentry id="function.array-splice">
    <refnamediv>
     <refname>array_splice</refname>
@@ -12,7 +12,7 @@
     <title>Opis</title>
      <methodsynopsis>
       <type>array</type><methodname>array_splice</methodname>
-      <methodparam><type>array</type><parameter>wejście</parameter></methodparam>
+      <methodparam><type>array</type><parameter role="reference">wejście</parameter></methodparam>
       <methodparam><type>int</type><parameter>przesunięcie</parameter></methodparam>
       <methodparam choice="opt"><type>int</type><parameter>długość</parameter></methodparam>
       <methodparam choice="opt"><type>array</type><parameter>
@@ -26,6 +26,8 @@
      <parameter>długość</parameter>, i zamienia je przez elementy tablicy
      <parameter>zamiennik</parameter>, jeśli została ona podana. Funkcja
      zwraca tablice zawierającą usunięte elementy.
+     Liczbowe klucze tablicy <parameter>wejście</parameter> nie są
+     zachowywane.
     </para>
     <para>
      Jeśli <parameter>przesunięcie</parameter> jest dodatnie, to początek
@@ -51,22 +53,61 @@
      Jeśli <parameter>przesunięcie</parameter> i <parameter>długość</parameter>
      zostały podane tak, że żadne elementy nie zostaną usunięte, to elementy z
      tablicy <parameter>zamiennik</parameter> są wstawiane w miejsce określone
-     przez <parameter>przesunięcie</parameter>. Wskazówka: jeśli zamiennik to
-     tylko jeden element, to nie trzeba go wstawiać do
-     <literal>array()</literal>, chyba że element jest właśnie tablicą.
+     przez <parameter>przesunięcie</parameter>.  Klucze w zamienniku nie są
+     zachowywane.  Jeśli zamiennik to tylko jeden element, to nie trzeba go
+     wstawiać do <literal>array()</literal>, chyba że element jest właśnie
+     tablicą.
     </para>
     <para>
-     Równoznaczności kodu:
-     <programlisting role="php">
-<![CDATA[
-array_push ($wejscie, $x, $y)     array_splice ($wejscie, count ($wejscie), 0,
-                                               array ($x, $y))
-array_pop ($wejscie)              array_splice ($wejscie, -1)
-array_shift ($wejscie)            array_splice ($wejscie, 0, 1)
-array_unshift ($wejscie, $x, $y)  array_splice ($wejscie, 0, 0, array ($x, $y))
-$input[$x] = $y                   array_splice ($wejscie, $x, 1, $y)
-]]>
-     </programlisting>
+     Poniższe wyrażenia zmieniają wartość tablicy <varname>$wejscie</varname>
+     w ten sam sposób:
+   <table>
+    <title>Równoważności <function>array_splice</function></title>
+    <tgroup cols="2">
+     <tbody>
+      <row>
+       <entry>
+        array_push($wejscie, $x, $y) 
+       </entry>
+       <entry>
+        array_splice($wejscie, count($wejscie), 0, array($x, $y))
+       </entry>
+      </row>
+      <row>
+       <entry>
+        array_pop($wejscie) 
+       </entry>
+       <entry>
+        array_splice($wejscie, -1)
+       </entry>
+      </row>
+      <row>
+       <entry>
+        array_shift($wejscie)
+       </entry>
+       <entry>
+        array_splice($wejscie, 0, 1)
+       </entry>
+      </row>
+      <row>
+       <entry>
+        array_unshift($wejscie, $x, $y)
+       </entry>
+       <entry>
+        array_splice($wejscie, 0, 0, array($x, $y))
+       </entry>
+      </row>
+      <row>
+       <entry>
+        $wejscie[$x] = $y // dla tablic gdzie klucz jest równy przesunięciu
+       </entry>
+       <entry>
+        array_splice($wejscie, $x, 1, $y)
+       </entry>
+      </row>
+     </tbody>      
+    </tgroup>
+   </table>
     </para>
     <para>
      Funkcja zwraca tablicę zawierającą usunięte elementy.
@@ -76,6 +117,7 @@ $input[$x] = $y                   array_splice ($wejscie, $x, 1, $y)
       <title>Przykład użycia <function>array_splice</function></title>
       <programlisting role="php">
 <![CDATA[
+<?php
 $wejscie = array ("czerwony", "zielony", "niebieski", "żółty");
 array_splice ($wejscie, 2);      
 // $wejscie to teraz array ("czerwony", "zielony")
@@ -92,12 +134,19 @@ $wejscie = array ("czerwony", "zielony", "niebieski", "żółty");
 array_splice ($wejscie, -1, 1, array("czarny", "kasztanowy")); 
 // $wejscie to teraz array ("czerwony", "zielony", 
 //          "niebieski", "czarny", "kasztanowy")
+
+$wejscie = array("czerwony", "zielony", "niebieski", "żółty");
+array_splice($wejscie, 3, 0, "fioletowy");
+// $wejscie to teraz array("czerwony", "zielony",
+//          "niebieski", "fioletowy", "żółty");
+?>
 ]]>
       </programlisting>
      </example>
     </para>
     <para>
-     Patrz także: <function>array_slice</function>.
+     Patrz także: <function>array_slice</function>,
+     <function>unset</function> i <function>array_merge</function>.
     </para>
    </refsect1>
   </refentry>
