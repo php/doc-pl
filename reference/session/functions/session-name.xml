@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.6 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.session-name">
    <refnamediv>
     <refname>session_name</refname>
@@ -27,6 +27,13 @@
      każdej strony (przed wywołaniem w niej <function>session_start</function>
      i <function>session_register</function>).
     </para>
+    <warning>
+     <para>
+      Nazwa sesji nie może składać się tylko z cyfr - musi zawierać
+      przynajmniej jedną literę. W przeciwnym przypadku za każdym odwołaniem
+      generowana będzie nowa sesja.
+     </para>
+    </warning>
     <example>
      <title>Przykłady <function>session_name</function></title>
      <programlisting role="php">
