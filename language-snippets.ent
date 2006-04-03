@@ -1,4 +1,4 @@
-<!-- EN-Revision: 1.137 Maintainer: leszek Status: ready -->
+<!-- EN-Revision: 1.164 Maintainer: leszek Status: ready -->
 <!-- Keep 'em sorted -->
 
 
@@ -14,7 +14,8 @@ buforowane. Zobacz opis funkcji <function>clearstatcache</function> aby uzyskać
 więcej informacji.</simpara></note>'>
 
 <!ENTITY note.context-support '<note><simpara>Wsparcie dla kontekstów zostało
-dodane w <literal>PHP 5.0.0</literal>.</simpara></note>'>
+dodane w <literal>PHP 5.0.0</literal>. Opis <literal>kontekstów</literal>
+znajduje się w rozdziale <xref linkend="ref.stream"/>.</simpara></note>'>
 
 <!ENTITY note.exec-bg '<note><para>Jeśli ta funkcja zostanie użyta do
 uruchomienia programu który ma działać w tle, należy upewnić się, że wyjście
@@ -25,6 +26,12 @@ wykonywanego programu.</para></note>'>
 <!ENTITY note.func-callback '<note><simpara>Zamiast nazwy funkcji może zostać
 przekazana tablica zawierająca referencję do obiektu i nazwę metody
 </simpara></note>'>
+
+<!ENTITY note.funcnoparam '<note><para>Jako że działanie tej funcji zależy od
+aktualnego zasięgu, nie może ona być użyta jako parametr funkcji. Jeśli
+konieczne jest przekazanie tej wartości, należy przypisać wynik działania tej
+funkcji do zmiennej, a następnie, jako parametr, przekazać tą
+zmienną.</para></note>'>
 
 <!ENTITY note.line-endings '<note><simpara>W przypadku problemów z
 rozpoznawaniem znaków końca linii przez <literal>PHP</literal> przy czytaniu
@@ -39,6 +46,10 @@ przetwarzany plik musi być dostępny poprzez system plików serwera.
 
 <!ENTITY note.not-bin-safe '<warning><simpara>Ta funkcja nie jest (jeszcze)
 bezpieczna dla danych binarnych!</simpara></warning>'>
+
+<!ENTITY note.no-key-association '<note><simpara> Ta funkcja przypisuje nowe
+klucze dla elementów argumentu <parameter>tablica</parameter>. Wszystkie
+istniejące klucze zostaną usunięte.</simpara></note>'>
 
 <!ENTITY note.no-windows '<note><simpara>Ta funkcja nie jest dostępna na
 platformie Windows.</simpara></note>'>
@@ -63,6 +74,10 @@ dostępności</title><para>Od PHP w wersji 4.1.0, udostępnione zostały tablice
 superglobalne takie jak <varname>$_GET</varname>, <varname>$_POST</varname>
 czy <varname>$_SERVER</varname>. Więcej informacji można znaleźć w rozdziale
 &link.superglobals;</para></note>'> 
+
+<!ENTITY note.uses-ob '<note><para>Ta funkcja używa wewnętrznie buforowania
+wyjścia, więc nie może być użyta wewnątrz funkcji callback podanej w wywołaniu
+<function>ob_start</function>.</para></note>'>
 
 <!-- Tips -->
 
@@ -104,17 +119,17 @@ nazwa, w zasadzie wszystko udokumentowane tutaj może zostać zmienione w
 przyszłych wersjach PHP bez wcześniejszego uprzedzenia. Używaj tej funkcji na
 własne ryzyko.</simpara></warning>'>
 
-<!ENTITY warn.imaprecodeyaz '<warning><simpara>Rozszerzenie <link 
-linkend="ref.imap">IMAP</link> nie może być używane w połączeniu z
-rozszerzeniami <link linkend="ref.recode">recode</link> i <link 
-linkend="ref.yaz">YAZ</link>. Dzieje się tak z powodu dzielenia tego samego
-symbolu wewnętrznego.</simpara></warning>'> 
+<!ENTITY warn.imaprecodeyaz '<warning><simpara>Rozszerzenia <link 
+linkend="ref.imap">IMAP</link>, <link linkend="ref.recode">recode</link>, <link 
+linkend="ref.yaz">YAZ</link> i <link linkend="ref.cyrus">Cyrus</link> nie mogą
+być używane razem. Dzieje się tak z powodu współdzielenia tego samego symbolu
+wewnętrznego.</simpara></warning>'> 
 
 <!ENTITY warn.install.cgi '<warning><para>
-By using the CGI setup, your server
-is open to several possible attacks. Please read our
-<link linkend="security.cgi-bin">CGI security section</link> to learn how to
-defend yourself from those attacks.</para></warning>'>
+Używając instalacji CGI, serwer jest podatny na wiele potencjalnych ataków.
+Sposoby obrony przed nimi zostały opisane w rozdziale o <link
+linkend="security.cgi-bin">bezpieczeństwie instalacji CGI</link>.
+</para></warning>'>
 
 <!ENTITY note.magicquotes.gpc '<note><title>uwaga na temat dyrektywy: magic_quotes_gpc 
 </title><para>Domyślną wartością dyrektywy konfiguracji PHP 
@@ -168,6 +183,15 @@ mogą być wyłączone dyrektywą konfiguracji
 notacji skrótowej opisanej w <link
 linkend="faq.using.shorthandbytes">FAQ</link>.</simpara>'>
 
+<!ENTITY info.deprecated.alias 'Dla zachowania kompatybilności wstecznej,
+możliwe jest użycie poniższych aliasów: '>
+
+<!ENTITY info.function.alias 'Ta funkcja jest aliasem dla: '>
+
+<!ENTITY info.function.alias.deprecated '<simpara>Ten alias jest nie zalecany i
+istnieje tylko dla zachowania kompatybilności wstecznej. Zaleca się nie
+używanie tego aliasu, jako że może on zostać usunięty z PHP.</simpara>'>
+
 <!-- Returns -->
 
 <!ENTITY return.success 'Zwraca &true; w przypadku sukcesu, &false; w
@@ -212,7 +236,8 @@ linkend="function.dom-domnode-appendchild">DOMNode->appendChild()</link>.'>
 <!-- FileSystem entities -->
 <!ENTITY fs.validfp.all '<para>Wskaźnik na plik musi być poprawny i musi
 wskazywać na plik pomyślnie otwarty przez funkcję <function>fopen</function>
-lub <function>fsockopen</function>.</para>'>
+lub <function>fsockopen</function> (a jednocześnie nie zamknięty jeszcze przez
+<function>fclose</function>).</para>'>
 
 <!-- Oracle -->
 <!ENTITY oci.charset "<para>Używając serwera Oracle w wersji 9.2 lub nowszej
@@ -220,6 +245,11 @@ można podać parametr <parameter>charset</parameter>, który zostanie użyty pr
 nowym połączeniu. Używając serwera Oracle &lt; 9.2 ten parametr zostanie
 zignorowany, a zamiast niego użyta zostanie zmienna środowiskowa
 NLS_LANG.</para>">
+
+<!ENTITY oci.datatypes '<para>Więcej szczegółów na temat mapowania typów danych
+dokonywanego przez sterownik oci8 można uzyskać w rozdziale
+dotyczącym <link linkend="oci8.datatypes">typów danych obsługiwanych przez ten
+sterownik</link></para>'>
 
 <!-- PCNTL Notes -->
 <!ENTITY pcntl.parameter.status '<para>Parametr <parameter>status</parameter>
@@ -243,7 +273,7 @@ linkend="features.safe-mode">tryb bezpieczny</link>, PHP sprawdza czy
 katalog, na którym chcesz operować, ma takie same UID (owner) jak skrypt,
 który jest aktualnie wykonywany.</simpara></note>'>
 
-<!ENTITY note.open-basedir.func '<note><para>This function is affected by <link 
+<!ENTITY note.open-basedir.func '<note><para>Ta funkcja podlega restrykcjom <link 
 linkend="ini.open-basedir">open_basedir</link>.</para></note>'>
 
 <!ENTITY note.language-construct '<note><simpara>Ponieważ jest to element
@@ -259,11 +289,11 @@ przeprowadzane operacje, mają takie same UID (owner) jak skrypt, który jest
 aktualnie wykonywany.'>
 
 <!ENTITY warn.sm.exec '<warning><simpara>Jeśli włączony jest <link
-linkend="features.safe-mode">tryb bezpieczny</link>, wszystkie słowa
-następujące po nazwie polecenia są traktowane jako pojedyńczy argument. A więc,
-polecenie <literal>echo y | echo x</literal> staje się 
-<literal>echo "y | echo x"</literal>.</simpara></warning>'>
- 
+linkend="features.safe-mode">tryb bezpieczny</link>, ciągi zawierające
+polecenia są filtrowane przez funkcję <function>escapeshellcmd</function>. W
+związku z tym,  <literal>echo y | echo x</literal> staje się <literal>echo y \|
+echo x</literal>.</simpara></warning>'>
+   
 <!ENTITY note.exec-path '<note><simpara>Jeśli
 <link linkend="features.safe-mode">tryb bezpieczny</link> został włączony, możliwe
 jest wykonywanie programów tylko z katalogu określonego przez 
@@ -323,6 +353,18 @@ trakcie pracy.
 <!ENTITY note.extension.php5 '<note><simpara>
 To rozszerzenie wymaga PHP 5.</simpara></note>'>
 
+<!-- PDO entities -->
+<!ENTITY pdo.driver-constants '<simpara>
+Poniższe stałe są definiowane przez ten sterownik, i będą dostępne tylko kiedy
+to rozszerzenie będzie wkompilowane w PHP lub dynamicznie dołączone przy
+starcie. Dodatkowo, te specyficzne dla sterownika stałe powinny być używane
+tylko przy użyciu tego konkretnego sterownika. Używanie atrybutów bazy mysql
+przy użyciu sterownika postgres może prowadzić do nieprzewidzianego zachowania.
+Jeśli skrypt korzysta z wielu sterowników, do pobrania atrybutu
+<constant>PDO_ATTR_DRIVER_NAME</constant>, zawierającego
+nazwę sterownika, można zastosować funkcję
+<function>PDO::getAttribute</function>.</simpara>'>
+
 <!-- PECL entities -->
 <!ENTITY pecl.moved 'To rozszerzenie <ulink url="&url.pecl;">PECL</ulink> nie
 jest dołączane do PHP.'>
@@ -372,11 +414,16 @@ Windows posiada wbudowaną obsługę dla tego rozszerzenia. Nie trzeba ładować
 <!-- These are here as helpers for manual consistency and brievety--> 
 <!ENTITY safemode '<link linkend="ini.safe-mode">tryb bezpieczny</link>'> 
 
+<!ENTITY sqlsafemode '<link linkend="ini.sql.safe-mode">tryb bezpieczny SQL</link>'>
+
 <!-- Notes for SAPI/Apache -->
 <!ENTITY note.apache.nsapi-module '<note><para>Od PHP w wersji 4.3.3 możliwe
 jest użycie tej funkcji przy pracy w trybie
 <link linkend="ref.nsapi">modułu NSAPI serwera</link> także w serwerach
 Netscape/iPlanet/SunONE.</para></note>'>
+
+<!ENTITY apache.req.module '<simpara>Funkcja ta jest dostępna tylko jeśli PHP
+jest zaistalowane jako moduł serwera Apache.</simpara>'>
 
 <!-- SimpleXML Notes -->
 <!ENTITY simplexml.iteration '<note><simpara>W SimpleXML wprowadzono zasadę
@@ -418,15 +465,70 @@ domyślną wartością dla tej funkcji.</para>'>
 <!ENTITY database.field-case '<note><simpara>Nazwy pól zwracane przez tą
 funkcję <emphasis>rozróżniają wielkość znaków</emphasis>.</simpara></note>'> 
 
-<!ENTITY database.fetch-null '<note><simpara>This function sets NULL fields to
-      PHP &null; value.</simpara></note>'>
+<!ENTITY database.fetch-null '<note><simpara>Ta funkcja ustala wartość pól NULL
+na &null;.</simpara></note>'>
 
+<!-- MSQL Notes -->
+<!-- The msql.*.description entities are used in the parameters refsect1 -->
+<!ENTITY msql.linkid.description '<varlistentry><term><parameter>
+identyfikator_połączenia</parameter></term><listitem><para>Połączenie mSQL.
+Jeśli nie zostanie podany, używane jest ostatnie połączenie otwarte przez
+<function>msql_connect</function>. Jeśli nie zostanie ono znalezione, funkcja
+spróbuje nawiązać połączenie tak, jakby wywołana została funkcja
+<function>msql_connect</function>, i użyje je.
+</para></listitem></varlistentry>'>
+
+<!ENTITY msql.result.description '<varlistentry><term><parameter>
+wynik</parameter></term><listitem><para>Wynik w postaci zmiennej typu
+<type>resource</type>, który jest przetwarzany. Wynik pochodzi z wywołania
+funkcji <function>msql_query</function>.</para></listitem></varlistentry>'>
+
+<!ENTITY msql.field-offset.req.description '<varlistentry><term><parameter>
+przesunięcie_pola</parameter></term><listitem><para>Liczbowe przesunięcie pola. 
+<parameter>przesunięcie_pola</parameter> zaczyna się od wartości
+<literal>1</literal>.</para></listitem></varlistentry>'>
+
+<!-- MySQL Notes -->
+<!-- The mysql.*.description entities are used in the parameters refsect1 -->
+<!ENTITY mysql.linkid.description '<varlistentry><term><parameter>
+identyfikator_połączenia</parameter></term><listitem><para>Połączenie MySQL.
+Jeśli identyfikator połączenia nie zostanie podany, użyte zostanie ostatnie
+połączenie otwarte przez <function>mysql_connect</function>. Jeśli połączenie
+takie nie zostanie znalezione, funkcja spróbuje nawiązać połączenie tak, jakby
+wywołana została funkcja <function>mysql_connect</function> bez argumentów.
+Jeśli żadne połączenie nie zostanie znalezione lub nawiązane, wygenerowane
+zostanie ostrzeżenie poziomu <constant>E_WARNING</constant>.</para></listitem>
+</varlistentry>'>
+
+<!ENTITY mysql.result.description '<varlistentry><term><parameter>
+wynik</parameter></term><listitem><para>Wynik w postaci zmiennej typu
+<type>resource</type>, które jest przetwarzane. Wynik ten pochodzi z wywołania
+funkcji <function>mysql_query</function>.</para></listitem></varlistentry>'>
+
+<!ENTITY mysql.field-offset.req.description '<varlistentry><term><parameter>
+przesunięcie_pola</parameter></term><listitem><para>Liczbowe przesunięcie pola. 
+<parameter>przesunięcie_pola</parameter> zaczyna się od wartości
+<literal>0</literal>. Jeśli
+<parameter>przesunięcie_pola</parameter> nie istnieje, wygenerowane zostanie
+ostrzeżenie poziomu
+<constant>E_WARNING</constant>.</para></listitem></varlistentry>'>
+      
 <!-- Sybase Notes --> 
 <!ENTITY sybase.ct.only '<note><simpara>Ta funkcja jest dostępna tylko jeśli za
 interfejs do Sybase służy biblioteka CT, nie DB.</simpara></note>'> 
 
 <!ENTITY sybase.db.only '<note><simpara>Ta funkcja jest dostępna tylko jeśli za
 interfejs do Sybase służy biblioteka DB, nie CT.</simpara></note>'>
+
+<!ENTITY sybase.linkid.description '<varlistentry><term><parameter>
+identyfikator_połączenia</parameter></term><listitem><para>Połączenie Sybase.
+Jeśli identyfikator połączenia nie zostanie podany, używane jest ostatnie
+połączenie otwarte przez <function>sybase_connect</function>. Jeśli nie ma
+takiego połączenia, funkcja spróbuje nawiązać je tak, jakby wywołana została
+funkcja <function>sybase_connect</function> bez argumentów. Jeśli żadne
+połączenie nie zostało znalezione lub nawiązane, wygenerowane zostanie
+ostrzeżenie poziomu <constant>E_WARNING</constant>.</para></listitem>
+</varlistentry>'>
 
 <!-- CPDF Unit length --> 
 <!ENTITY cpdf.ul '<para>Opcjonalny parametr <parameter>tryb</parameter> określa
@@ -477,8 +579,9 @@ win1252, utf16le, utf16be, utf16, big5 i shiftjis.</para>'>
 <!ENTITY warn.apache2.compat '<warning><para>Nie zalecamy korzystania z
 wątkowanego MPM na produkcyjnych serwerach Apache2. Zamiast niego wskazane jest
 używanie preforkowanego MPM, lub używanie Apache1. Wyjaśnienie powodów można
-znaleźć w 
-<link linkend="faq.installation.apache2">FAQ</link></para></warning>'>
+znaleźć w odpowiednim punkcie FAQ, dotyczącym używania
+<link linkend="faq.installation.apache2">Apache2 z wątkowanym
+MPM</link></para></warning>'>
 
 <!ENTITY note.apache.slashes '<note><simpara>Nalezy pamiętać, że podając
 ścieżki w plikach konfiguracyjnych Apache w systemie Windows, wszystkie znaki
@@ -514,6 +617,30 @@ zarządzaniem notatkami:'>
 
 <!ENTITY listendand ' i'>
 
-<!-- classkit entities -->
+<!-- classkit and runkit entities -->
 <!ENTITY note.classkit.selfmanipulation '<note><simpara>Ta funkcja nie może być
 użyta do manipulowania aktualnie wykonywaną metodą.</simpara></note>'>
+
+<!ENTITY note.runkit.selfmanipulation '<note><simpara>Ta funkcja nie może być
+użyta do manipulacji aktualnie działającej (lub powiązanej) metody.
+This function cannot</simpara></note>'>
+
+<!ENTITY note.runkit.sandbox '<note><simpara>Obsługa rozszerzenia Sandbox
+(wymagane dla <function>runkit_lint</function>,
+ <function>runkit_lint_file</function> i klasy Runkit_Sandbox) jest dostępne
+tylko w PHP 5.1 lub specjalnie załatanych wersjach PHP 5.0, i wymaga, aby
+włączone zostało bezpieczeństwo wątków. Więcej informacji można znaleźć w pliku
+README dołączonym do pakietu runkit.</simpara></note>'>
+
+<!ENTITY note.runkit.internal-override '<note><simpara>Domyślnie, tylko funkcje
+przestrzeni użytkownika mogą być usunięte, przemianowane lub zmodyfikowane. Aby
+uzyskać możliwość modyfikacji funkcji wewnętrznych, należy włączyć opcję
+<literal>runkit.internal_override</literal> ogólnosystemowego pliku
+php.ini.</simpara></note>'>
+
+<!-- SSH2 Extension -->
+<!ENTITY note.ssh2.subsystem.publickey '<note><simpara>
+Podsystem publickey używany jest do zarządzania kluczami publicznymi na serwerze do którego klient
+<emphasis>już jest</emphasis> autoryzowany. Aby autoryzować się do zdalnego
+systemu używając autoryzacji publickey, należy skorzystać z funkcji
+<function>ssh2_auth_pubkey_file</function>.</simpara></note>'>
