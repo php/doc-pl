@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.11 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.5 $ -->
+<!-- EN-Revision: 1.13 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.6 $ -->
   <refentry id="function.session-set-save-handler">
    <refnamediv>
     <refname>session_set_save_handler</refname>
@@ -12,12 +12,12 @@
     <title>Opis</title>
      <methodsynopsis>
       <type>bool</type><methodname>session_set_save_handler</methodname>
-      <methodparam><type>string</type><parameter>otwórz</parameter></methodparam>
-      <methodparam><type>string</type><parameter>zamknij</parameter></methodparam>
-      <methodparam><type>string</type><parameter>czytaj</parameter></methodparam>
-      <methodparam><type>string</type><parameter>zapisz</parameter></methodparam>
-      <methodparam><type>string</type><parameter>niszcz</parameter></methodparam>
-      <methodparam><type>string</type><parameter>gc</parameter></methodparam>
+      <methodparam><type>callback</type><parameter>otwórz</parameter></methodparam>
+      <methodparam><type>callback</type><parameter>zamknij</parameter></methodparam>
+      <methodparam><type>callback</type><parameter>czytaj</parameter></methodparam>
+      <methodparam><type>callback</type><parameter>zapisz</parameter></methodparam>
+      <methodparam><type>callback</type><parameter>niszcz</parameter></methodparam>
+      <methodparam><type>callback</type><parameter>gc</parameter></methodparam>
      </methodsynopsis>
     <para>
      <function>session_set_save_handler</function> ustawia funkcje użytkownika
@@ -50,6 +50,16 @@
      konwertowane na wyrażenia logiczne. &true; dla sukcesu, &false; dla
      niepowodzenia.
     </para>
+    <warning>
+     <para>
+      Od wersji PHP 5.0.5, funkcje obsługi zapisu i zamykania wywoływane są po
+      zniszczeniu obiektów. W związku z tym, destruktory mogą używać sesji,
+      ale nie mogą używać obiektów. W wersjach wcześniejszych, wywoływane były
+      w odwrotnej koljeności. Możliwe jest wywołanie
+      <function>session_write_close</function> z destruktora aby rozwiązać ten
+      problem kury i jajka.
+     </para>
+    </warning>
     <para>
      <example>
       <title>
