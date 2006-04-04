@@ -1,28 +1,39 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.3 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.12 Maintainer: qrak Status: ready -->
+<!-- $Revision: 1.5 $ -->
+<!-- Purpose: calendar --> 
+<!-- Membership: core --> 
  <reference id="ref.datetime">
   <title>Data i Czas</title>
-  <titleabbrev>Data/czas</titleabbrev>
+  <titleabbrev>Data/Czas</titleabbrev>
   <partintro>
    <section id="datetime.intro">
     &reftitle.intro;
     <para>
-     Funkcje opisane w tym rozdziale służą do obsługi daty i czasu. Pozwalają
-     one na pobieranie aktualnej daty i czasu z serwera, na którym pracuje PHP.
-     Posiadają one możliwości formatowania daty i czasu na wyjściu na wiele
-     różnych sposobów.
+	Funkcje te pozwalają Tobie pobrać datę i czas z serwera
+	na którym uruchomione są Twoje skrypty. Możesz uzyć tych funkcji do formatowania
+    daty i czasu na wiele różnych sposobów.
     </para>
     <note>
      <simpara>
       Proszę pamiętać, że poniższe funkcje są zależne od lokalnych ustawień
-      danego serwera. Należy tu szczególnie wziąć pod uwagę czas letni/zimowy
-      i lata przestępne.
+      danego serwera. Upewnij się, że bieżesz czas zimowy (użyj np.
+      <literal>$date = strtotime('+7 days', $date)</literal>, a nie
+      <literal>$date += 7*24*60*60</literal>)
+      i lata przestępne pod uwagę kiedy pracujesz 
+	  z tymi funkcjami.
+     </simpara>
+    </note>
+    <note>
+     <simpara>
+	  Strefy czasowe do których odwołujemy się w tym rozdziale możesz znaleźć w
+      <xref linkend="timezones"/>.
      </simpara>
     </note>
 
    </section>
    
+	
    <section id="datetime.required">
     &reftitle.required;
     &no.requirement;
@@ -38,15 +49,14 @@
     &no.config;
    </section>
 
+	&reference.datetime.ini;
+
    <section id="datetime.resources">
     &reftitle.resources;
     &no.resource;
    </section>
    
-   <section id="datetime.constants">
-    &reftitle.constants;
-    &no.constants;
-   </section>
+   &reference.datetime.constants;
    
   </partintro>
 
