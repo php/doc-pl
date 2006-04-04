@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.3 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.7 Maintainer: qrak Status: ready -->
+<!-- $Revision: 1.5 $ -->
 <!-- splitted from ./en/functions/datetime.xml, last change in rev 1.10 -->
   <refentry id="function.localtime">
    <refnamediv>
@@ -11,12 +11,8 @@
     <title>Opis</title>
      <methodsynopsis>
       <type>array</type><methodname>localtime</methodname>
-      <methodparam choice="opt"><type>int</type><parameter>
-        znacznik_czasu
-       </parameter></methodparam>
-      <methodparam choice="opt"><type>bool</type><parameter>
-        asocjacyjna
-       </parameter></methodparam>
+      <methodparam choice="opt"><type>int</type><parameter>znacznik_czasu</parameter></methodparam>
+      <methodparam choice="opt"><type>bool</type><parameter>asocjacyjna</parameter></methodparam>
      </methodsynopsis>
     <para>
      Funkcja <function>localtime</function> zwraca tablicę identyczną do tej
@@ -24,9 +20,9 @@
      argumentem funkcji jest znacznik czasu. Jeśli żaden znacznik czasu nie
      zostanie podany, funkcja wykorzystuje aktualny czas, taki jak zwrócony przez
 	 <function>time</function>. 
-	 Drugi argument, <parameter>asocjacyjna</parameter>, jeśli jest ustawiony na 0, lub nie
+	 Drugi argument, <parameter>asocjacyjna</parameter>, jeśli jest ustawiony na &false;, lub nie
      jest podany, powoduje zwrócenie zwykłej, indeksowanej liczbowo tablicy.
-     Jeśli zaś jest ustawiony na 1, to funkcja zwróci tablicę asocjacyjną
+     Jeśli zaś jest ustawiony na &true;, to funkcja zwróci tablicę asocjacyjną
      zawierającą wszystkie rozmaite elementy struktury zwracanej przez wywołanie
      funkcji w C. Nazwy kluczy tablicy są następujące:
      <itemizedlist>
@@ -77,6 +73,56 @@
       </listitem>
      </itemizedlist>
     </para>
+ <note>
+   <simpara>
+    Miesiące rozpoczynają się od 0 (Sty) do 11 (Gru) i dni tygodnia rozpoczynają się od 0 (Nie) do 6 (Sob).
+   </simpara>
+  </note>
+  <para>
+   <example>
+    <title><function>time</function> przykład</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$localtime = localtime();
+$localtime_assoc = localtime(time(), true);
+print_r($localtime);
+print_r($localtime_assoc);
+?>
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
+<![CDATA[
+Array
+(
+    [0] => 24
+    [1] => 3
+    [2] => 19
+    [3] => 3
+    [4] => 3
+    [5] => 105
+    [6] => 0
+    [7] => 92
+    [9] => 1
+)
+
+Array
+(
+    [tm_sec] => 24
+    [tm_min] => 3
+    [tm_hour] => 19
+    [tm_mday] => 3
+    [tm_mon] => 3
+    [tm_year] => 105
+    [tm_wday] => 0
+    [tm_yday] => 92
+    [tm_isdst] => 1
+)
+]]>
+    </screen>
+   </example>
+  </para>	
    </refsect1>
   </refentry>
 
