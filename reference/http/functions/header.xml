@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.11 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.10 $ -->
+<!-- EN-Revision: 1.31 Maintainer: qrak Status: ready -->
+<!-- $Revision: 1.11 $ -->
   <refentry id="function.header">
    <refnamediv>
     <refname>header</refname>
@@ -9,19 +9,25 @@
    <refsect1>
     <title>Opis</title>
      <methodsynopsis>
-      <type>int</type><methodname>header</methodname>
+      <type>void</type><methodname>header</methodname>
       <methodparam><type>string</type><parameter>treść_nagłówka</parameter></methodparam>
-      <methodparam
-      choice="opt"><type>bool</type><parameter>zamień</parameter></methodparam>
-      <methodparam
-      choice="opt"><type>int</type><parameter>kod_odpowiedzi_http</parameter></methodparam>
+      <methodparam choice="opt"><type>bool</type><parameter>zamień</parameter></methodparam>
+      <methodparam choice="opt"><type>int</type><parameter>kod_odpowiedzi_http</parameter></methodparam>
      </methodsynopsis>
     <para>
      <function>header</function> służy do wysłania surowego
      nagłówka <acronym>HTTP</acronym>.
-     Zajrzyj do <ulink url="&spec.http1.1;">Specyfikacji HTTP 1.1</ulink>
+     Zajrzyj do <ulink url="&url.rfc;2616">Specyfikacji HTTP 1.1</ulink>
      aby dowiedzieć się więcej na temat nagłówków <acronym>HTTP</acronym>.
     </para>
+	<note> 
+       <para> 
+		Począwszy od PHP 4.4.2 i PHP 5.1.2 funkcja nie pozwala na wysłanie
+		więcej niż jednego nagłowka za jednym razem aby zapobiegać przeciwko
+		ataką typu iniekcja nagłowka (header injection).
+        </para> 
+     </note> 
+
     <para>
      Pierwszy argument opcjonalny <parameter>zamień</parameter> określa,
      czy funkcja
@@ -29,12 +35,14 @@
      czy dodać jeszcze jeden. Domyślnie, oryginalny
      nagłówek zostanie zastąpiony, ale jeśli ustawisz ten argument na &false;,
      to nowy nagłówek zostanie dodany do już istniejących. Na przykład:
-     <informalexample>
+	 </para> 
+    <para> 
+    <informalexample>
       <programlisting role="php">
 <![CDATA[
 <?php
 header('WWW-Authenticate: Negociate');
-header('WWW-Authenticate: NTLM', FALSE);
+header('WWW-Authenticate: NTLM', false);
 ?>
 ]]>
       </programlisting>
@@ -53,7 +61,10 @@ header('WWW-Authenticate: NTLM', FALSE);
      HTTP. Na przykład, jeśli skonfigurowałeś serwer Apache aby używał skryptu
      PHP do wyświetlania komunikatów o brakujących plikach (za pomocą dyrektywy
      <literal>ErrorDocument</literal>), możesz chcieć wypróbować, czy skrypt
-     generuje właściwy kod statusu. 
+     generuje właściwy kod statusu.
+     </para> 
+     <para> 
+	 
        <informalexample>  
         <programlisting role="php">  
 <![CDATA[
@@ -73,37 +84,22 @@ header("HTTP/1.0 404 Not Found");
          nagłówki zostaną wysłane.
         </para>  
        </note>  
-       <note>  
-        <para>
-         W PHP 3 funkcja ta działa tylko, jeżeli PHP jest skompilowane jako
-         moduł Apache'a. Identyczny rezultat do powyższego można uzyskać
-         za pomocą nagłówka <literal>Status</literal>.
-         <informalexample>  
-          <programlisting role="php">  
-<![CDATA[
-<?php
-header("Status: 404 Not Found");
-?>
-]]>
-          </programlisting>  
-         </informalexample>  
-        </para>  
-       </note>  
-      </para>  
       <para>
        Drugim specjalnym wywołaniem funkcji header jest nagłówek
        "Location:". W tej sytuacji, do klienta wysyłany jest nie tylko ten
        nagłówek, ale także status przekierowania <literal>REDIRECT</literal>
        (302), o ile inny status zapytania <literal>3xx</literal> nie został
        już wysłany.  
-
-     <informalexample>
+      </para> 
+      <para> 
+       <informalexample>
       <programlisting role="php">
 <![CDATA[
 <?php
 header("Location: http://www.example.com/"); /* Przekieruj przeglądarkę */
-exit;                 /* Upewnij się, że kod poniżej nie zostanie wykonany 
-                         po przekierowaniu. */
+/* Upewnij się, że kod poniżej nie zostanie wykonany po przekierowaniu. */
+exit;                 
+
 ?>
 ]]>
       </programlisting>
@@ -121,37 +117,46 @@ exit;                 /* Upewnij się, że kod poniżej nie zostanie wykonany
       funkcji <function>dirname</function> by wygenerować bezwględny 
       <acronym>URI</acronym>:
       <informalexample>
-       <programlisting>
+       <programlisting role="php">
 <![CDATA[
 <?php
-header("Location: http://".$_SERVER['HTTP_HOST']
-                       ."/".dirname($_SERVER['PHP_SELF'])
-                       ."/".$względny_url);
+/* Przekieruj do innej strony w tym samym katalogu z którego nastąpiło żądanie */
+$host  = $_SERVER['HTTP_HOST'];
+$uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+$extra = 'mypage.php';
+header("Location: http://$host$uri/$extra");
+exit;
 ?>
 ]]>
        </programlisting>
       </informalexample>
      </para>
     </note>
-    
+     <note> 
+      <para>
+        Identyfikator sesji nie jest przekazywany w nagłówku Location chociażby <link 
+        linkend="ini.session.use-trans-sid">session.use_trans_sid</link> był 
+        włączony. Musi zostać przekazanyIt must by ręcznie używając stałej <constant>SID</constant>.
+      </para> 
+    </note> 
+
     <para>
      Skrypty PHP często służą do generowania dynamiczej treści, która
      nie może być buforowana przez klienta czy serwer proxy. Pamięć cache
      (bufor) w większości tych urządzeń da się wyłączyć dzięki:
+	 </para> 
+    <para> 
      <informalexample>
       <programlisting role="php">
 <![CDATA[
 <?php
-header ("Expires: Mon, 26 Jul 1997 05:00:00 GMT");    // data w przeszłości
-header ("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT"); 
-                                                      // ciągle modyfikowany
-header("Cache-Control: no-store, no-cache, must-revalidate");  // HTTP/1.1
-header("Cache-Control: post-check=0, pre-check=0", false);
-header("Pragma: no-cache");                          // HTTP/1.0
+header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1 
+header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");    // data w przeszłości
 ?>
 ]]>
       </programlisting>
      </informalexample>
+	 </para>
      <note>
       <para>
        Możesz zaobserwować, że strony nie są buforowane, nawet jeśli
@@ -168,7 +173,7 @@ header("Pragma: no-cache");                          // HTTP/1.0
        kiedy sesje są w użyciu.
       </para>
      </note>
-    </para>
+    
     <para>
      Pamiętaj, że <function>header</function> może być wywoływana 
      jedynie do momentu nim zostanie wysłana jakakolwiek treść, tzn. 
@@ -178,21 +183,24 @@ header("Pragma: no-cache");                          // HTTP/1.0
      wywołaniem funkcji <function>header</function>. 
      Problem ten pojawia się również w skryptach opartych na
      pojedynczym pliku PHP/HTML.
+	 </para>
+	 <para>
      <informalexample>
       <programlisting role="php">
 <![CDATA[
 <html>
 <?php
-// Ten kod powoduje powstanie błędu. Proszę zauważyć, że
-// ponad wywołaniem funkcji header() znajduje się jakaś treść.
+/*  Ten kod powoduje powstanie błędu. Proszę zauważyć, że
+ * ponad wywołaniem funkcji header() znajduje się jakaś treść. */
 header('Location: http://www.na_przyklad.com/');
 ?>
 ]]>
       </programlisting>
      </informalexample>
+	 </para>
      <note>
       <para>
-       W PHP 4 można użyć buforowania wyjścia aby ominąć ten problem.
+       Od PHP 4 można użyć buforowania wyjścia aby ominąć ten problem.
        Wszystko, co skrypt wyśle do przeglądarki zostanie zatrzymane na
        serwerze do momentu, kiedy pojawi się instrukcja wysłania danych.
        Można to zrobić za pomocą funkcji <function>ob_start</function> i
@@ -201,21 +209,23 @@ header('Location: http://www.na_przyklad.com/');
        lub w plikach konfiguracyjnych serwera.
       </para>
      </note>
-    </para>
+    
     <para>
      Aby użytkownik został monitowany o zapisanie wysyłanych danych,
      takich jak np. wygenerowany plik PDF, można użyć nagłówka <ulink
      url="&url.rfc2183;">Content-Disposition</ulink> aby podać zalecaną nazwę
      pliku i zmusić przeglądarkę do wyświetlenia okienka zapisu pliku.
+	 </para>
+	 <para>
      <informalexample>
       <programlisting role="php">
 <![CDATA[
 <?php
 // przesyłamy plik PDF
-header("Content-type: application/pdf");
+header('Content-type: application/pdf');
 
 // ustawiamy jego nazwę na downloaded.pdf
-header("Content-Disposition: attachment; filename=downloaded.pdf");
+header('Content-Disposition: attachment; filename="downloaded.pdf"');
 
 // treść znajduje się w pliku original.pdf
 readfile('original.pdf');
@@ -223,6 +233,7 @@ readfile('original.pdf');
 ]]>
       </programlisting>
      </informalexample>
+	 </para>
      <note>
       <para>
        W Microsoft Internet Explorer 4.01 jest błąd, który uniemożliwia
@@ -232,7 +243,7 @@ readfile('original.pdf');
        lub późniejszy.
       </para>
      </note>
-    </para>
+    
     <note> 
        <simpara>
         Jeśli <link linkend="ini.safe-mode">tryb bezpieczny</link> jest
