@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.15 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.6 $ -->
+<!-- EN-Revision: 1.16 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.7 $ -->
   <refentry id="function.fgets">
    <refnamediv>
     <refname>fgets</refname>
@@ -19,7 +19,8 @@
 	 <parameter>długość</parameter> - 1 bajtów lub gdy wystąpi znak nowej linii
 	 (jest on dołączany do zwracanego wyniku) lub gdy wystąpi znak końca pliku EOF
 	 (którykolwiek przypadek zdarzy się pierwszy). Jeśli nie została określona długość,
-     domyślnie przyjmuje 1k (1024 bajty).
+     będzie następowało czytanie ze strumienia dopóki nie zostanie osišgnięty
+	 koniec linii.
     </para>
     <para>
      W przypadku błędu, zwraca &false;.
@@ -56,9 +57,7 @@ fclose ($uchwyt);
      <simpara>
       Parametr <parameter>długość</parameter> stał się opcjonalny w PHP 4.2.0
 	  jeśli został pominięty, to powinien przyjąć wartość 1024.  
-      W PHP 4.3, pominięcie <parameter>długość</parameter> powoduje odczytywanie
-	  ze strumienia do chwili osiągnięcia końca lini,
-	  Jeśli większość lini w pliku jest dłuższa od 8KB, dużo efektywniejsze
+      Jeśli większość lini w pliku jest dłuższa od 8KB, dużo efektywniejsze
 	  jest podanie maksymalnej długości linii.
      </simpara>
     </note>
