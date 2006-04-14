@@ -1,29 +1,85 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.1 $ -->
-  <refentry id="function.ftp-close">
-   <refnamediv>
-    <refname>ftp_close</refname>
-    <refpurpose>Zamyka połączenie FTP</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>void</type><methodname>ftp_close</methodname>
-      <methodparam><type>resource</type><parameter>strumień_ftp</parameter></methodparam>
-     </methodsynopsis>
-    <note>
-     <para>
-      Funkcja ta dostępna jest tylko w wersji CVS.
-     </para>
-    </note>
-    <para>
-     <function>ftp_close</function> zamyka <parameter>strumień_ftp</parameter>
-     i zwalnia zasób. Nie można ponownie używać tego zasobu, lecz trzeba go
-     ponownie otworzyć korzystając z funkcji <function>ftp_connect</function>.
-    </para>
-   </refsect1>
-  </refentry>
+<!-- EN-Revision: 1.7 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.2 $ -->
+<refentry id="function.ftp-close">
+ <refnamediv>
+  <refname>ftp_close</refname>
+  <refpurpose>Zamyka połączenie FTP</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>bool</type><methodname>ftp_close</methodname>
+   <methodparam><type>resource</type><parameter>strumień_ftp</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>ftp_close</function> zamyka połączenie o podanym identyfikatorze
+   i zwalnia przypisane do niego zasoby.
+  </para>
+  <note>
+   <para>
+    Po wywołaniu tej funkcji nie jest możliwe korzystanie z danego połączenia
+    FTP - należy stworzyć nowe za pomocą funkcji
+    <function>ftp_connect</function>.
+   </para>
+  </note>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>strumień_ftp</parameter></term>
+     <listitem>
+      <para>
+       Identyfikator połączenia z serwerem FTP.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;
+  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład użycia <function>ftp_close</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+// Nawiązanie połączenia
+$conn_id = ftp_connect($ftp_server);
+
+// Logowanie
+$login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass);
+
+// Wyświetlenie bieżącego katalogu
+echo ftp_pwd($conn_id); // /
+
+// Zamknięcie połączenia
+ftp_close($conn_id);
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>ftp_connect</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
