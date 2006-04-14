@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.17 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.10 $ -->
+<!-- EN-Revision: 1.18 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.11 $ -->
   <refentry id="function.uksort">
    <refnamediv>
     <refname>uksort</refname>
@@ -38,13 +38,12 @@
 <?php
 function cmp($a, $b)
 {
-    if ($a == $b) {
-        return 0;
-    }
-    return ($a > $b) ? 1 : -1;
+    $a = ereg_replace('^(a|an|the) ', '', $a);
+    $b = ereg_replace('^(a|an|the) ', '', $b);
+    return strcasecmp($a, $b);
 }
 
-$a = array(4 => "cztery", 3 => "trzy", 20 => "dwadzieścia", 10 => "dziesięć");
+$a = array("John" => 1, "the Earth" => 2, "an apple" => 3, "a banana" => 4);
 
 uksort($a, "cmp");
 
@@ -57,10 +56,10 @@ foreach ($a as $key => $val) {
      &example.outputs;
      <screen>
 <![CDATA[
-20: dwadzieścia
-10: dziesięć
-4: cztery
-3: trzy
+an apple: 3
+a banana: 4
+the Earth: 2
+John: 1
 ]]>
      </screen>
     </example>
