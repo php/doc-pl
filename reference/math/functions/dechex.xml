@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.3 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.6 $ -->
+<!-- EN-Revision: 1.7 Maintainer: qrak Status: ready -->
+<!-- $Revision: 1.7 $ -->
   <refentry id="function.dechex">
    <refnamediv>
     <refname>dechex</refname>
@@ -14,12 +14,34 @@
      </methodsynopsis>
     <para>
      Zwraca łańcuch znaków stanowiący szesnastkową reprezentację 
-     liczby dziesiętnej <parameter>liczba</parameter>. Największą liczbą,
-     która może być skonwertowana
-     jest 2 147 483 647 dziesiętnie, co odpowiada "7fffffff" szesnastkowo.
+     liczby dziesiętnej <parameter>liczba</parameter>. Największą liczbą, która 
+	 może być skonwertowana jest 4 294 967 295 dziesiętnie, co odpowiada "ffffffff" szesnastkowo.
     </para>
     <para>
-     Patrz także: <function>hexdec</function>.
+     <example>
+      <title><function>dechex</function> przykład</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+echo dechex(10) . "\n";
+echo dechex(47);
+?>
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+a
+2f
+]]>
+      </screen>
+     </example>
+    </para>
+    <para>
+     Patrz także: <function>hexdec</function>,
+     <function>decbin</function>,
+     <function>decoct</function> i
+     <function>base_convert</function>.
     </para>
    </refsect1>
   </refentry>

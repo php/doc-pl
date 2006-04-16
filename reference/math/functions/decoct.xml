@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.3 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.6 $ -->
+<!-- EN-Revision: 1.7 Maintainer: qrak Status: ready -->
+<!-- $Revision: 1.7 $ -->
   <refentry id="function.decoct">
    <refnamediv>
     <refname>decoct</refname>
@@ -16,10 +16,33 @@
      Zwraca łańcuch znaków zawierający ósemkową reprezentację liczby
      dziesiętnej <parameter>liczba</parameter>. Największą liczbą,
      która może być skonwertowana jest
-     2 147 483 647 dziesiętnie, co odpowiada "17777777777" ósemkowo.
+     4 294 967 295 dziesiętnie, co odpowiada "37777777777" ósemkowo.
+    </para>
+   <para>
+     <example>
+      <title><function>decoct</function> przykład</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+echo decoct(15) . "\n";
+echo decoct(264);
+?>
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+17
+410
+]]>
+      </screen>
+     </example>
     </para>
     <para>
-     Patrz także: <function>octdec</function>.
+     Patrz także <function>octdec</function>,
+     <function>decbin</function>,
+     <function>dechex</function> i
+     <function>base_convert</function>.
     </para>
    </refsect1>
   </refentry>
