@@ -1,57 +1,99 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.3 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.1 $ -->
-  <refentry id='function.ftp-get-option'>
-   <refnamediv>
-    <refname>ftp_get_option</refname>
-    <refpurpose>Pobiera różne opcje startowe strumienia FTP</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>mixed</type><methodname>ftp_get_option</methodname>
-      <methodparam><type>resource</type><parameter>ftp_stream</parameter></methodparam>
-      <methodparam><type>int</type><parameter>parametr</parameter></methodparam>
-     </methodsynopsis>
-    <note>
-     <para>
-      Funkcja ta dostępna jest tylko w wersji CVS.
-     </para>
-    </note>
-    <para>
-     Funkcja zwraca odpowiednią wartość w przypadku powodzenia lub &false;
-     jeśli podany <parameter>parametr</parameter> nie jest obsługiwany. W tym
-     drugim przypadku wyświetlany jest komunikat z ostrzeżeniem.
-    </para>
-    <para>
-     Funkcja ta zwraca wartość żądanego <parameter>parametru</parameter> z
-     podanego <parameter>strumienia_ftp</parameter>. W chwili obecnej
-     następujące parametry są obsługiwane:
-     <table>
-      <title>Lista opcji startowych FTP</title>
-      <tgroup cols="2">
-       <tbody>
-        <row>
-         <entry>FTP_TIMEOUT_SEC</entry>
-         <entry>Zwraca biężący limit czasu na operacje sieciowe.</entry>
-        </row>
-       </tbody>
-      </tgroup>
-     </table>
-    </para>
-    <para>
-     <example>
-      <title>Przykład użycia <function>ftp_get_option</function></title>
-      <programlisting role="php">
+<!-- EN-Revision: 1.7 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.2 $ -->
+<refentry id='function.ftp-get-option'>
+ <refnamediv>
+  <refname>ftp_get_option</refname>
+  <refpurpose>Pobiera ustawienia dotyczące strumienia FTP</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>mixed</type><methodname>ftp_get_option</methodname>
+   <methodparam><type>resource</type><parameter>strumień_ftp</parameter></methodparam>
+   <methodparam><type>int</type><parameter>opcja</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Funkcja ta zwraca wartość opcji podanej jako drugi argument dla wybranego
+   połączenia FTP.
+  </para>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>strumień_ftp</parameter></term>
+     <listitem>
+      <para>
+       Identyfikator połączenia z serwerem FTP.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>opcja</parameter></term>
+     <listitem>
+      <para>
+       W chwili obecnej obsługiwane są poniższe opcje:
+       <table>
+        <title>Obsługiwane opcje połączenia FTP</title>
+        <tgroup cols="2">
+         <tbody>
+          <row>
+           <entry><constant>FTP_TIMEOUT_SEC</constant></entry>
+           <entry>
+            Zwraca bieżący czas przedawnienia dla operacji sieciowych.
+           </entry>
+          </row>
+          <row>
+           <entry><constant>FTP_AUTOSEEK</constant></entry>
+           <entry>
+            Zwraca &true; jeśli ta opcja jest włączona, &false; w przeciwnym
+            przypadku.
+           </entry>
+          </row>
+         </tbody>
+        </tgroup>
+       </table>
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   W przypadku powodzenia zwracana jest wartość opcji, lub &false; jeśli
+   podana <parameter>opcja</parameter> nie jest obsługiwana. W tym drugim
+   przypadku wyświetlany jest także komunikat ostrzeżenia.
+  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład użycia <function>ftp_get_option</function></title>
+    <programlisting role="php">
 <![CDATA[
-// Pobież limit czasu z podanego strumienia FTP
+<?php
+// Pobranie czasu przedawnienia operacji sieciowych
 $timeout = ftp_get_option($conn_id, FTP_TIMEOUT_SEC);
+?>
 ]]>
-      </programlisting>
-     </example>
-    </para>
-   </refsect1>
-  </refentry>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>ftp_set_option</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
