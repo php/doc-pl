@@ -1,31 +1,90 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.4 $ -->
-  <refentry id="function.ftp-pasv">
-   <refnamediv>
-    <refname>ftp_pasv</refname>
-    <refpurpose>Włącza/wyłącza tryb pasywny</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>int</type><methodname>ftp_pasv</methodname>
-      <methodparam><type>int</type><parameter>strumien_ftp</parameter></methodparam>
-      <methodparam><type>int</type><parameter>pasywny</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     <function>ftp_pasv</function> włącza tryb pasywny jeśli parametr
-     <parameter>pasywny</parameter> ma wartość &true; (wyłącza tryb pasywyny
-     jeśli parametr <parameter>pasywny</parameter> ma wartość &false;.) W
-     trybie pasywnym, połączenia danych są inicjowane przez klienta a nie
-     przez serwer.
-    </para>
-    <para>
-     Zwraca wartość &true; w przypadku sukcesu lub &false; w przypadku
-     napotkania błędu.
-    </para>
-   </refsect1>
-  </refentry>
+<!-- EN-Revision: 1.7 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.5 $ -->
+<refentry id="function.ftp-pasv">
+ <refnamediv>
+  <refname>ftp_pasv</refname>
+  <refpurpose>Włącza lub wyłącza tryb pasywny</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>bool</type><methodname>ftp_pasv</methodname>
+   <methodparam><type>resource</type><parameter>strumień_ftp</parameter></methodparam>
+   <methodparam><type>bool</type><parameter>pasv</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>ftp_pasv</function> włącza lub wyłącza tryb pasywny, w którym
+   połączenia danych inicjowane są przez klienta, a nie przez serwer. Tryb
+   taki może być niezbędny, jeśli klient jest za firewallem.
+  </para>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>strumień_ftp</parameter></term>
+     <listitem>
+      <para>
+       Identyfikator połączenia z serwerem FTP.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>pasv</parameter></term>
+     <listitem>
+      <para>
+       Jeśli argument ten ma wartośc &true;, tryb pasywny jest włączany. Jeśli
+       nie, zostaje wyłączony.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;
+  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład użycia <function>ftp_pasv</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$plik = 'plik.txt';
+$plik_zdalny = 'readme.txt';
+
+// nawiązanie połączenia
+$conn_id = ftp_connect($ftp_server);
+
+// logowanie
+$login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass);
+
+// włączenie trybu pasywnego
+ftp_pasv($conn_id, true);
+
+// przesłanie pliku
+if (ftp_put($conn_id, $plik_zdalny, $plik, FTP_ASCII)) {
+ echo "Plik $plik został pomyślnie przesłany\n";
+} else {
+ echo "Napotkano problemy w czasie przesyłania pliku $plik\n";
+}
+
+// zamknięcie połączenia
+ftp_close($conn_id);
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
