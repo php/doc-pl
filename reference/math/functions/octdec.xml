@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.6 $ -->
+<!-- EN-Revision: 1.8 Maintainer: qrak Status: ready -->
+<!-- $Revision: 1.7 $ -->
   <refentry id="function.octdec">
    <refnamediv>
     <refname>octdec</refname>
@@ -9,16 +9,42 @@
    <refsect1>
     <title>Opis</title>
      <methodsynopsis>
-      <type>int</type><methodname>octdec</methodname>
+      <type>number</type><methodname>octdec</methodname>
       <methodparam><type>string</type><parameter>liczba_ósemkowa</parameter></methodparam>
      </methodsynopsis>
     <para>
      Zwraca dziesiętny odpowiednik liczby ósemkowej podanej jako argument
      <parameter>liczba_ósemkowa</parameter>. Największą liczbą, jaka może być
      skonwertowana jest 17777777777 ósemkowo, czyli 2147483647 dziesiętnie.
+	 Od PHP 4.1.0, funkcja potrafi skowartować większe liczby. Wtedy zwraca
+     <type>float</type>.
     </para>
     <para>
-     Patrz także: <function>decoct</function>.
+	<example>
+      <title><function>octdec</function> przykład</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+echo octdec('77') . "\n";
+echo octdec(decoct(45));
+?>
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+63
+45
+]]>
+      </screen>
+     </example>
+    </para>
+    <para>
+     Patrz także:
+     <function>decoct</function>,
+     <function>bindec</function>,
+     <function>hexdec</function> i
+     <function>base_convert</function>.
     </para>
    </refsect1>
   </refentry>
