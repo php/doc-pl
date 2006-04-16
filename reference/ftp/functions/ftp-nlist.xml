@@ -1,24 +1,102 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.4 $ -->
-  <refentry id="function.ftp-nlist">
-   <refnamediv>
-    <refname>ftp_nlist</refname>
-    <refpurpose>Zwraca listę plików w podanym katalogu</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>array</type><methodname>ftp_nlist</methodname>
-      <methodparam><type>int</type><parameter>strumien_ftp</parameter></methodparam>
-      <methodparam><type>string</type><parameter>katalog</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     W przypadku sukcesu zwracana jest tablica z nazwami plików z podanego
-     katalogu lub wartość &false; w przypadku napotkania błędu.
-    </para>
-   </refsect1>
-  </refentry>
+<!-- EN-Revision: 1.10 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.5 $ -->
+<refentry id="function.ftp-nlist">
+ <refnamediv>
+  <refname>ftp_nlist</refname>
+  <refpurpose>Zwraca listę plików z podanego katalogu</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>array</type><methodname>ftp_nlist</methodname>
+   <methodparam><type>resource</type><parameter>strumień_ftp</parameter></methodparam>
+   <methodparam><type>string</type><parameter>katalog</parameter></methodparam>
+  </methodsynopsis>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>strumień_ftp</parameter></term>
+     <listitem>
+      <para>
+       Identyfikator połączenia z serwerem FTP.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>katalog</parameter></term>
+     <listitem>
+      <para>
+       Katalog, którego zawartość ma być zwrócona. Parametr ten może także
+       zawierać argumenty, na przykład
+       ftp_nlist($conn_id, "-la /twój/katalog");
+       Należy pamiętać, że parametr ten nie jest dalej przetwarzany, więc mogą
+       się pojawić pewne problemy z nazwami plików zawierającymi spacje i inne
+       znaki.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca tablicę nazw plików z podanego katalogu w przypadku powodzenia, lub
+   &false; w przypadku błędu.
+  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład użycia <function>ftp_nlist</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+// nawiązanie połączenia
+$conn_id = ftp_connect($ftp_server);
+
+// logowanie
+$login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass);
+
+// pobranie zawartości bieżącego katalogu
+$zawartosc = ftp_nlist($conn_id, ".");
+
+// wyświetlenie zawartości
+var_dump($zawartosc);
+
+?>
+]]>  
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
+<![CDATA[
+array(3) {
+  [0]=>
+  string(11) "public_html"
+  [1]=>
+  string(10) "public_ftp"
+  [2]=>
+  string(3) "www"
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>ftp_rawlist</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
