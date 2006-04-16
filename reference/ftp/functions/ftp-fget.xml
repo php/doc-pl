@@ -1,46 +1,153 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.3 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.4 $ -->
-  <refentry id="function.ftp-fget">
-   <refnamediv>
-    <refname>ftp_fget</refname>
-    <refpurpose>
-     Pobiera plik z serwera FTP i zapisuje go do otwartego pliku.
-    </refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>int</type><methodname>ftp_fget</methodname>
-      <methodparam><type>int</type><parameter>strumien_ftp</parameter></methodparam>
-      <methodparam><type>int</type><parameter>fp</parameter></methodparam>
-      <methodparam><type>string</type><parameter>plik_zdalny</parameter></methodparam>
-      <methodparam><type>int</type><parameter>tryb</parameter></methodparam>
-      <methodparam choice="opt">
-       <type>int</type><parameter>pozycja_wznowienia</parameter>
-      </methodparam>
-     </methodsynopsis>
-    <para>
-     <function>ftp_fget</function> pobiera <parameter>plik_zdalny</parameter>
-     z serwera FTP i zapisuje go do podanego wskaźnika,
-     <parameter>fp</parameter>.  <parameter>tryb</parameter> musi być podany
-     jako <constant>FTP_ASCII</constant> lub <constant>FTP_BINARY</constant>.
-    </para>
-    <note> 
-     <para> 
-      Parametr <parameter>pozycja_wznowienia</parameter> został dodany w PHP
-      4.3.0.
-     </para> 
-    </note> 
-    <para>
-     Zwraca wartość &true; w przypadku sukcesu lub &false; w przypadku
-     napotkania błędu.
-    </para> 
-      <para> 
-       Patrz także: <function>ftp_get</function>. 
-    </para>
-   </refsect1>
-  </refentry>
+<!-- EN-Revision: 1.13 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.5 $ -->
+<refentry id="function.ftp-fget">
+ <refnamediv>
+  <refname>ftp_fget</refname>
+  <refpurpose>Pobiera plik z serwera FTP i zapisuje do otwartego pliku</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>bool</type><methodname>ftp_fget</methodname>
+   <methodparam><type>resource</type><parameter>strumień_ftp</parameter></methodparam>
+   <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam>
+   <methodparam><type>string</type><parameter>plik_zdalny</parameter></methodparam>
+   <methodparam><type>int</type><parameter>tryb</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>pozycja_wznowienia</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>ftp_fget</function> pobiera <parameter>plik_zdalny</parameter> z
+   serwera FTP i zapisuje go do podanego uchwytu pliku.
+  </para>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>strumień_ftp</parameter></term>
+     <listitem>
+      <para>
+       Identyfikator połączenia z serwerem FTP.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>uchwyt</parameter></term>
+     <listitem>
+      <para>
+       Otwarty uchwyt do pliku, w którym będą zapisane dane.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>plik_zdalny</parameter></term>
+     <listitem>
+      <para>
+       Ścieżka do pliku zdalnego.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>tryb</parameter></term>
+     <listitem>
+      <para>
+       Tryb transferu. Musi to być <constant>FTP_ASCII</constant> lub
+       <constant>FTP_BINARY</constant>.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>resumepos</parameter></term>
+     <listitem>
+      <para>
+       Pozycja w pliku zdalnym, od której rozpoczęte zostanie pobieranie.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;
+  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład użycia <function>ftp_fget</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+// ścieżki do plików
+$plik_zdalny = 'jakis_plik.txt';
+$plik_lokalny = 'plik_lokalny.txt';
+
+// otwarcie pliku do zapisu
+$uchwyt = fopen($plik_lokalny, 'w');
+
+// nawiązanie połączenia
+$conn_id = ftp_connect($ftp_server);
+
+// logowanie
+$login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass);
+
+// próba pobrania pliku $plik_zdalny
+if (ftp_fget($conn_id, $uchwyt, $plik_zdalny, FTP_ASCII, 0)) {
+ echo "pomyślnie pobrano plik $plik_zdalny\n";
+} else {
+ echo "próba pobrania pliku $plik_zdalny do $plik_lokalny nie powiodła się\n";
+}
+
+// zamknięcie połączenia i uchwytu
+ftp_close($conn_id);
+fclose($uchwyt);
+
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>4.3.0</entry>
+       <entry>
+        Dodany argument <parameter>resumepos</parameter>.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>ftp_get</function></member>
+    <member><function>ftp_nb_get</function></member>
+    <member><function>ftp_nb_fget</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
