@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.3 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.6 $ -->
+<!-- EN-Revision: 1.9 Maintainer: qrak Status: ready -->
+<!-- $Revision: 1.7 $ -->
   <refentry id="function.hexdec">
    <refnamediv>
     <refname>hexdec</refname>
@@ -9,7 +9,7 @@
    <refsect1>
     <title>Opis</title>
      <methodsynopsis>
-      <type>int</type><methodname>hexdec</methodname>
+      <type>number</type><methodname>hexdec</methodname>
       <methodparam><type>string</type><parameter>hex_string</parameter></methodparam>
      </methodsynopsis>
     <para>
@@ -18,29 +18,33 @@
      szesnastkowy łańcuch znaków do postaci liczby dziesiętnej. Największą
      liczbą, która może być skonwertowana jest 7fffffff, czyli  2147483647
      dziesiętnie.
+	 Od PHP 4.1.0, funkcja potrafi konwertować także większe liczby. W takim
+	 przypadku zwraca <type>float</type>  
     </para>
     <para>
-     <function>hexdec</function> zastąpi każdy znak, nie będący cyfrą w systemie
-     szesnastkowym liczbą <literal>0</literal>. W ten sposób, wszystko zera
-     stojące z lewej strony są ignorowane, ale zera z prawej strony są brane
-     pod uwagę.
+     <function>hexdec</function> zignoruje wszelkie nie szesnastkowe znaki, które
+	 napotka.
      <example>
       <title>Przykład zastosowania <function>hexdec</function></title>
       <programlisting role="php">
 <![CDATA[
+<?php
 var_dump(hexdec("See"));
 var_dump(hexdec("ee"));
 // obydwa zwracają "int(238)"
 
-var_dump(hexdec("that"));
-var_dump(hexdec("a0"));
-// obydwa zwracają int(160)
+var_dump(hexdec("that")); // print "int(10)"
+var_dump(hexdec("a0")); // print "int(160)"
+?>
 ]]>
       </programlisting>
      </example>
     </para>
     <para>
-     Patrz także: <function>dechex</function>.
+     Patrz także: <function>dechex</function>,
+	 <function>bindec</function>, 
+     <function>octdec</function> i 
+     <function>base_convert</function>. 
     </para>
    </refsect1>
   </refentry>
