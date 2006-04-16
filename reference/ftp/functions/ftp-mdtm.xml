@@ -1,35 +1,100 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.4 $ -->
-  <refentry id="function.ftp-mdtm">
-   <refnamediv>
-    <refname>ftp_mdtm</refname>
-    <refpurpose>Zwraca czas ostaniej modyfikacji podanego pliku</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>int</type><methodname>ftp_mdtm</methodname>
-      <methodparam><type>int</type><parameter>strumien_ftp</parameter></methodparam>
-      <methodparam><type>string</type><parameter>plik_zdalny</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     <function>ftp_mdtm</function> sprawdza czas ostatniej modyfikacji
-     podanego pliku i zwraca to jako UNIX timestamp (ilość sekund od
-     1.1.1970). Jeśli napotkany zostanie błąd lub plik nie istnieje, zwracana
-     jest wartość -1. Zauważ, że nie wszystkie serwery obsługują tą opcję.
-    </para>
-    <para>
-     W przypadku sukcesu zwraca UNIX timestamp lub -1 w przypadku napotkania
-     błędu.
-    </para>
-    <note>
-     <para>
-      <function>ftp_mdtm</function> nie działa dla katalogów.
-     </para>
-    </note>
-   </refsect1>
-  </refentry>
+<!-- EN-Revision: 1.9 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.5 $ -->
+<refentry id="function.ftp-mdtm">
+ <refnamediv>
+  <refname>ftp_mdtm</refname>
+  <refpurpose>Zwraca czas ostatniej modyfikacji podanego pliku</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>int</type><methodname>ftp_mdtm</methodname>
+   <methodparam><type>resource</type><parameter>strumień_ftp</parameter></methodparam>
+   <methodparam><type>string</type><parameter>plik_zdalny</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>ftp_mdtm</function> zwraca czas ostatniej modyfikacji pliku
+   zdalnego.
+  </para>
+  <note>
+   <para>
+    Nie wszystkie serwery FTP obsługują tą opcję.
+   </para>
+  </note>
+  <note>
+   <para>
+    <function>ftp_mdtm</function> nie działa dla katalogów.
+   </para>
+  </note>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>strumień_ftp</parameter></term>
+     <listitem>
+      <para>
+       Identyfikator połączenia z serwerem FTP.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>plik_zdalny</parameter></term>
+     <listitem>
+      <para>
+       Plik, którego data ostatniej modyfikacji ma być zwrócona.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca czas ostatniej modyfikacji w postaci Uniksowego znacznika czasu
+   (timestamp) w przypadku sukcesu, lub -1 w przypadku błędu.
+  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład użycia <function>ftp_mdtm</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+$plik = 'plik.txt';
+
+// nawiązanie połączenia
+$conn_id = ftp_connect($ftp_server);
+
+// logowanie
+$login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass);
+
+//  pobranie czasu ostatniej modyfikacji
+$buff = ftp_mdtm($conn_id, $plik);
+
+if ($buff != -1) {
+    // plik.txt został zmodyfikowany 26.03.2003 14:16:41.
+    echo "$plik został zmodyfikowany " . date("d.m.Y H:i:s.", $buff);
+} else {
+    echo "Data modyfikacji nie została pobrana.";
+}
+
+// zamknięcie połączenia
+ftp_close($conn_id);
+
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
