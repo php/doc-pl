@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.22 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.11 $ -->
+<!-- EN-Revision: 1.30 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.12 $ -->
  <chapter id="language.expressions">
    <title>Wyrażenia</title>
 
@@ -44,17 +44,19 @@ function foo ()
 
    <simpara>
     Zakładając że oswoiłeś się z koncepcją funkcji (jeśli nie, przejrzyj
-    najpierw rozdział o funkcjach), możesz założyć, że napisanie
-    <literal>$c = foo()</literal> jest równoznaczne z napisaniem
-    <literal>$c = 5</literal>, i masz racię. Funkcje są wyrażeniami o wartości
-    którą zwracają. Ponieważ foo() zwraca 5, wartością wyrażenia 'foo()' jest
-    5. Zazwyczaj funkcje nie zwracają statycznej wartości, ale coś obliczają.
+    najpierw rozdział o <link linkend="language.functions">funkcjach</link>),
+    możesz założyć, że napisanie <literal>$c = foo()</literal> jest
+    równoznaczne z napisaniem <literal>$c = 5</literal>, i masz racię. Funkcje
+    są wyrażeniami o wartości którą zwracają. Ponieważ foo() zwraca 5,
+    wartością wyrażenia 'foo()' jest 5. Zazwyczaj funkcje nie zwracają
+    statycznej wartości, ale coś obliczają.
    </simpara>
 
    <simpara>
     Oczywiście wartości w PHP nie muszą być liczbami całkowitymi, i bardzo
     często nie są nimi. PHP obsługuje 3 skalarne warotści danych: wartości
-    całkowite, wartości rzeczywiste i ciągi znaków (string) (wartości skalarne
+    całkowite (<type>integer</type>), wartości rzeczywiste (<type>float</type>
+    i ciągi znaków (<type>string</type>) (wartości skalarne
     to takie, których nie możesz 'rozbić' na mniejsze kawałki, w
     przeciwieństwie do np. tablic). PHP obsługuje także dwa złożone
     (nieskalarne) typy danych: tablice i obiekty. Każdą z tych wartości można
@@ -62,14 +64,13 @@ function foo ()
    </simpara>
 
    <simpara>
-    Jak na razie, użytkownicy PHP/FI 2 nie powinni odczuć żadnej zmiany.
-    Jednakże PHP rozwija wyrażenia znacznie bardziej, podobnie jak wiele
-    innych języków programowania. PHP jest językiem zorientowanym na
-    wyrażenia, co oznacza że prawie wszystko jest wyrażeniem. Przyjrzyj się
-    przykładowi który już analizowaliśmy, '$a = 5'. Łatwo jest zauważyć, że są
-    tu dwie wartości. Wartość stałej całkowitej '5', a także wartość $a, która
-    zostanie zamieniona na 5. Ale tak naprawdę jest tu jeszcze jedna wartość,
-    którą jest wartość operacji przypisania. Przypisanie przyjmuje wartość
+    PHP rozwija wyrażenia znacznie bardziej, podobnie jak wiele innych języków
+    programowania.  PHP jest językiem zorientowanym na wyrażenia, co oznacza
+    że prawie wszystko jest wyrażeniem. Przyjrzyj się przykładowi który już
+    analizowaliśmy, '$a = 5'. Łatwo jest zauważyć, że są tu dwie wartości.
+    Wartość stałej całkowitej '5', a także wartość $a, która zostanie
+    zamieniona na 5. Ale tak naprawdę jest tu jeszcze jedna wartość, którą
+    jest wartość operacji przypisania. Przypisanie przyjmuje wartość
     przypisywanej wartości, w tym przypadku 5. W praktyce oznacza to, że '$a =
     5', niezależnie co to robi, jest wyrażeniem o wartości 5. Wynika z tego,
     że napisanie '$b = ($a = 5)' jest równoznaczne napisaniu '$a = 5; $b = 5;'
@@ -79,13 +80,14 @@ function foo ()
 
    <simpara>
     Kolejnym dobrym przykładem orientacji wyrażeniowej jest pre- i
-    postinkrementacja i dekrementacja. Użytkownicy PHP/FI 2 i wielu innych
+    postinkrementacja i dekrementacja. Użytkownicy PHP i wielu innych
     języków mogą być już zaznajomieni z notacją zmienna++ i zmienna--. Są to
-    operatory inkrementacji i dekrementacji. W PHP/FI 2 instrukcja '$a++' nie
-    ma wartości (nie jest wyrażeniem), więc nie możesz jej przypisać lub użyć
-    w jakikolwiek sposób. PHP rozszerza możliwości inkrementacji/dekrementacji
-    robiąc także z nich wyrażenia, podobnie jak w C. W PHP, tak jak w C, sa
-    dwa typy inkrementacji: preinkrementacja i postinkrementacja. I pre- i
+    <link linkend="language.operators.increment">operatory inkrementacji i
+     dekrementacji</link>. W PHP/FI 2 instrukcja '$a++' nie ma wartości (nie
+    jest wyrażeniem), więc nie możesz jej przypisać lub użyć w jakikolwiek
+    sposób. PHP rozszerza możliwości inkrementacji/dekrementacji robiąc także
+    z nich wyrażenia, podobnie jak w C. W PHP, tak jak w C, sa dwa typy
+    inkrementacji: preinkrementacja i postinkrementacja. I pre- i
     postinkrementacja zwiększają wartość zmiannej, więc efekt w stosunku do
     zmiennej jest taki sam. Różnica jest w wartości wyrażenia inkrementacji.
     Preinkrementacja, która jest oznaczana jako '++$zmienna', zwraca
@@ -97,11 +99,14 @@ function foo ()
    </simpara>
 
    <simpara>
-    Popularnym typem wyrażeń są wyrażenia porównania. Te wyrażenia zwracają
-    wartość 0 lub 1, oznaczając odpowiednio &false; lub &true;. PHP obsługuje
-    &gt; (większy), &gt;= (większy lub równy), == (równy), != (nie równy),
-    &lt; (mniejszy) i &lt;= (mniejszy lub równy). Wyrażenia te są powszechnie
-    używane przy sprawdzaniu warunków, jak na przykład instrukcje
+    Popularnym typem wyrażeń są <link
+     linkend="language.operators.comparison">porównania</link>. Wyrażenia te
+    zwracają wartość &false; lub &true;. PHP
+    obsługuje &gt; (większy), &gt;= (większy lub równy), == (równy), != (nie
+    równy), &lt; (mniejszy) i &lt;= (mniejszy lub równy). Język obsługuje
+    także zbiór operatorów ścisłego porównania: === (równy i tego samego typu)
+    i !== (nie równy lub różnego typu).  Wyrażenia te są powszechnie używane
+    przy sprawdzaniu warunków, jak na przykład instrukcje
     <literal>if</literal>.
    </simpara>
 
@@ -184,7 +189,9 @@ $h = $g += 10;      /* na początku $g jest zwiększane o 10 i przyjmuje
    <simpara>
     Na początku rozdziału powiedzieliśmy, że będziemy opisywać różne typy
     instrukcji, i tak jak obiecywaliśmy, wyrażenia mogą być instrukcjami.
-    Jednakże nie każde wyrażenie jest instrukcją. W tym przypadku ma postać
+    Jednakże nie każde wyrażenie jest instrukcją. 
+
+    Niektóre wyrażenia mogą być instrukcjami. Ten przypadek ma postać
     'wyrażenie' ';', czyli wyrażenie a po nim średnik. W '$b=$a=5;', $a=5 jest
     poprawnym wyrażeniem, ale nie jest instrukcją. Jednakże '$b=$a=$b;' jest
     poprawną intrukcją.</simpara>
@@ -207,7 +214,7 @@ $h = $g += 10;      /* na początku $g jest zwiększane o 10 i przyjmuje
     dokumentacja przekracza ramy tego podręcznika. Powyższe przykłady powinny
     dać ci ogólne pojęcie czym są wyrażenia i jak możesz konstruować przydatne
     wyrażenia. Przez resztę podręcznika będziemy pisać
-    <replaceable>expr</replaceable> aby oznaczyć dowolne poprawne wyrażenie
+    <varname>expr</varname> aby oznaczyć dowolne poprawne wyrażenie
     PHP.
    </simpara>
 
