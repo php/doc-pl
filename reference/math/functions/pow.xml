@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.6 $ -->
+<!-- EN-Revision: 1.7 Maintainer: qrak Status: ready -->
+<!-- $Revision: 1.7 $ -->
   <refentry id="function.pow">
    <refnamediv>
     <refname>pow</refname>
@@ -20,8 +20,14 @@
     </para>
     <para>
      Jeśli nie da się obliczyć potęgi, zostanie wyświetlone ostrzeżenie
-     a funkcja <function>pow</function> zwróci &false;.
+     a funkcja <function>pow</function> zwróci &false;. Począwszy od PHP 4.2.0 
+     <function>pow</function> nie emituje żadnych ostrzeżeń. 
     </para>
+	<note> 
+      <para> 
+      PHP nie może cannot operować na ujemnej <parameter>podstawie</parameter>s. 
+      </para> 
+    </note> 
     <example>
      <title>Parę przykładów z <function>pow</function></title>
          <programlisting role="php">
@@ -45,7 +51,11 @@ echo pow(-1, 5.5); // błąd
      </para>
     </warning>
     <para> 
-     Patrz także: <function>exp</function> i <function>sqrt</function>.
+     Patrz także: 
+	 <function>exp</function> 
+	 <function>sqrt</function>,
+	 <function>bcpow</function> i	 
+	 <function>gmp_pow</function>,
     </para>
    </refsect1>
   </refentry>
