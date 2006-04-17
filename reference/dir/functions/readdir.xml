@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.7 Maintainer: leniwiec Status: ready -->
-<!-- $Revision: 1.1 $ -->
+<!-- EN-Revision: 1.9 Maintainer: leniwiec Status: ready -->
+<!-- $Revision: 1.2 $ -->
 <!-- splitted from ./en/functions/dir.xml, last change in rev 1.2 -->
   <refentry id="function.readdir">
    <refnamediv>
     <refname>readdir</refname>
     <refpurpose>Czyta zawartość katalogu</refpurpose>
    </refnamediv>
-   <refsect1>
+   
+   <refsect1 role="description">
     &reftitle.description;
      <methodsynopsis>
       <type>string</type><methodname>readdir</methodname>
@@ -16,6 +17,37 @@
     <para>
      Zwraca nazwy plików w katalogu, w kolejności podanej przez system plików.
     </para>
+  </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>uchwyt_katalogu</parameter></term>
+     <listitem>
+      <para>
+	   Uchwyt katalogu typu <type>zasób</type> uprzednio otworzony
+       przez <function>opendir</function>.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca nazwę pliku w przypadku sukcesu, lub &false; porażki.
+  </para> 
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Lista wszystkich plików w katalogu</title>
     <para>
      Sposób w jaki zwrócona przez <function>readdir</function> wartość powinna
      być sprawdzona, obrazuje poniższy przykład. Należy sprawdzić czy zwrócona
@@ -25,9 +57,6 @@
      również "0")
      znajdujący się w czytanym katalogu zatrzymał by pętle. 
     </para>
-    <para>
-     <example>
-      <title>Lista wszystkich plików w wskazanym katalogu</title>
       <programlisting role="php">
 <![CDATA[
 <?php
@@ -55,9 +84,6 @@ if ($handle = opendir('/path/to/files')) {
      </example>
     </para>
     <para>
-     <function>readdir</function> zwraca również <literal>.</literal> 
-     oraz
-     <literal>..</literal> . 
      <example>
       <title>
       Lista wszystkich plików w wskazanym katalogu oprócz <literal>.</literal> 
@@ -79,9 +105,15 @@ if ($handle = opendir('.')) {
       </programlisting>
      </example>
     </para>
+   </refsect1> 
+  
+   <refsect1 role="seealso"> 
+   &reftitle.seealso; 
     <para>
-     Patrz również <function>is_dir</function> oraz
-     <function>glob</function>.
+     <simplelist>
+	  <member><function>is_dir</function></member>
+	  <member><function>glob</function></member>
+     </simplelist>
     </para>
    </refsect1>
   </refentry>
