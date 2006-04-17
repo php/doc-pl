@@ -1,36 +1,37 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.36 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.14 $ -->
+<!-- EN-Revision: 1.64 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.15 $ -->
  <chapter id="language.oop">
-  <title>Klasy i Obiekty</title>
+  <title>Klasy i obiekty (PHP 4)</title>
 
   <sect1 id="keyword.class">
    <title><literal>klasa</literal></title>
    <para>
     Klasa jest to zbiór zmiennych i funkcji operujących na tych zmiennych.
     Do definicji klasy używana jest następująca składnia:
- 
+   </para>
+   <para>
     <informalexample>
      <programlisting role="php">
 <![CDATA[
 <?php
-class Koszyk
-{
+class Koszyk {
     var $zakupy;  // Zakupy w naszym koszyku
    
     // Dodaj $num artykułów typu $artnr do wózka
  
-    function dodaj_produkt ($artnr, $num)
-    {
+    function dodaj_produkt ($artnr, $num) {
         $this->zakupy[$artnr] += $num;
     }
    
     // Usuń $num artykułów typu $artnr z wózka
  
-    function usun_produkt ($artnr, $num)
-    {
+    function usun_produkt ($artnr, $num) {
         if ($this->zakupy[$artnr] > $num) {
             $this->zakupy[$artnr] -= $num;
+            return true;
+        } elseif ($this->zakupy[$artnr] == $num) {
+            unset($this->zakupy[$artnr]);
             return true;
         } else {
             return false;
@@ -49,24 +50,71 @@ class Koszyk
     produktów z koszyka.
    </para>
 
-   <caution>
+   <warning>
     <simpara>
-     Poniższe uwagi dotyczą PHP 4.
+     <emphasis>NIE</emphasis> jest możliwe rozbicie definicji klasy na wiele
+     plików. Także <emphasis>NIE</emphasis> jest możliwe rozbicie definicji
+     klasy na wiele bloków PHP, chyba że rozbicie to znajduje się wewnątrz
+     definicji metody. Poniższy kod nie będzie działać.
     </simpara>
+    <para>
+     <informalexample>
+      <programlisting role="php">
+<![CDATA[
+<?php
+class test {
+?>
+<?php
+    function test() {
+        print 'OK';
+    }
+}
+?>
+]]>
+      </programlisting>
+     </informalexample>
+    </para>
+    <simpara>
+     Jednakże poniższy kod jest dozwolony:
+    </simpara>
+    <para>
+     <informalexample>
+      <programlisting role="php">
+<![CDATA[
+<?php
+class test {
+    function test() {
+        ?>
+        <?php
+        print 'OK';
+    }
+}
+?>
+]]>
+      </programlisting>
+     </informalexample>
+    </para>
+   </warning>
+   <simpara>
+    Poniższe uwagi dotyczą PHP 4.
+   </simpara>
     
+   <caution>
     <simpara>
      Nazwa <literal>stdClass</literal> jest używana wewnętrznie przez Zend i
      jest zarezerwowana. W PHP nie możesz zdefiniować klasy o nazwie
      <literal>stdClass</literal>.
     </simpara>
-    
+   </caution>
+   <caution>
     <simpara>
       Nazwy funkcji <literal>__sleep</literal> i <literal>__wakeup</literal>
       mają magiczne znaczenie dla klas w PHP. Klasy nie mogą zawierać funkcji
       o tych nazwach, chyba że zgadzasz się na przypisanie do nich magicznej
       funkcjonalności. Poniżej możesz znaleźć więcej informacji.
     </simpara>
-    
+   </caution>
+   <caution>
     <simpara>
       PHP rezerwuje wszystkie nazwy funkcji zaczynające się od __ na funkcje
       magiczne. Zalecane jest nieużywanie funkcji z nazwami zaczynającymi się
@@ -74,47 +122,42 @@ class Koszyk
     </simpara>
    </caution>
 
-   <note>
-    <simpara>
-     W PHP 4 dozwolone są tylko stałe inicjalizatory zmiennych
-     <literal>var</literal>. Aby zainicjalizować zmienne z nie-stałymi
-     wartościami, potrzebujesz funkcję inicjalizacyjną, która jest wywoływana
-     automatycznie zaraz po utworzeniu obiektu z danej klasy. Taka funkcja
-     zwana jest konstruktorem (zobacz poniżej).
-    </simpara>
-    <informalexample>
-     <programlisting role="php">
+   <simpara>
+    W PHP 4 dozwolone są tylko stałe inicjalizatory zmiennych
+    <literal>var</literal>. Aby zainicjalizować zmienne z nie-stałymi
+    wartościami, potrzebujesz funkcję inicjalizacyjną, która jest wywoływana
+    automatycznie zaraz po utworzeniu obiektu z danej klasy. Taka funkcja
+    zwana jest konstruktorem (zobacz poniżej).
+   </simpara>
+   <informalexample>
+    <programlisting role="php">
 <![CDATA[
 <?php
+class Koszyk {
 /* Nic z tego nie będzie działać w PHP 4. */
-class Koszyk
-{
     var $dzisiejsza_data = date("Y-m-d");
     var $nazwa = $imie;
     var $wlasciciel = 'Fred ' . 'Jones';
+/* Jednakże tablice zawierające stałe - będą */
     var $artykuly = array("VCR", "TV");
 }
 
 /* Teraz wszystko zadziala. */
-class Koszyk
-{
+class Koszyk {
     var $dzisiejsza_data;
     var $nazwa;
     var $wlasciciel;
-    var $artykuly;
+    var $artykuly = array("VCR", "TV");
 
-    function Koszyk()
-    {
+    function Koszyk() {
         $this->dzisiejsza_data = date("Y-m-d");
         $this->nazwa = $GLOBALS['imie'];
         /* itp. . . */
     }
-    }
 ?>
 ]]>
-     </programlisting>
-    </informalexample>
-   </note>
+    </programlisting>
+   </informalexample>
    <para>
     Klasy są typami, które są w zasadzie tylko schematami dla właściwych
     zmiennych. Zmienne pożądanego typu musisz stworzyć korzystając z operatora
@@ -135,29 +178,34 @@ $inny_koszyk->dodaj_produkt("0815", 3);
    </informalexample>
  
    <para>
-    Kod ten tworzy obiekty $koszyk i $inny_koszyk, oba klasy Koszyk. Funkcja
-    dodaj_produkt() obiektu $koszyk zostaje wywołana w celu dodania 1 artykułu
-    typu "10" do koszyka $koszyk. 4 przedmioty typu "0815" dodawane są do
-    koszyka $inny_koszyk.
+    Kod ten tworzy obiekty <varname>$koszyk</varname> i
+    <varname>$inny_koszyk</varname>, oba klasy Koszyk. Funkcja dodaj_produkt()
+    obiektu <varname>$koszyk</varname> zostaje wywołana w celu dodania 1
+    artykułu typu "10" do koszyka <varname>$koszyk</varname>. 3 przedmioty
+    typu "0815" dodawane są do koszyka <varname>$inny_koszyk</varname>.
    </para>
    
    <para>
-    I $koszyk i $inny_koszyk mają funkcje dodaj_produkt(), usun_produkt() i
-    zmienne. Są to osobne funkcje i zmienne. Obiekty mogą być postrzegane jako
-    katalogi w systemie plików. W systemie plików możesz mieć dwa różne pliki
-    README.TXT, ale tylko jeśli istnieją w osobnych katalogach. Aby odczytać
-    plik, będąc w głównym katalogu, musisz podać pełną ścieżkę do tego pliku.
-    Tak samo jest przy obiektach: musisz podać pełną nazwę funkcji, z której
-    chcesz skorzystać. W terminologii PHP katalogiem głównym będzie globalna
-    przestrzeń nazw a separatorem ścieżki będzie -&gt;. W związku z tym nazwy
-    $koszyk i $inny_koszyk zawierają zupełnie inne zmienne. Zauważ, że zmienna
-    nazywa się $koszyk-&gt;artykuly, a nie $koszyk-&gt;$artykuly, ponieważ
-    nazwa zmiennej może zawierać tylko jeden znak dolara.
+    I <varname>$koszyk</varname> i <varname>$inny_koszyk</varname> mają
+    funkcje dodaj_produkt(), usun_produkt() i zmienne. Są to osobne funkcje i
+    zmienne. Obiekty mogą być postrzegane jako katalogi w systemie plików. W
+    systemie plików możesz mieć dwa różne pliki
+    <filename>README.TXT</filename>, ale tylko jeśli istnieją w osobnych
+    katalogach. Aby odczytać plik, będąc w głównym katalogu, musisz podać
+    pełną ścieżkę do tego pliku.  Tak samo jest przy obiektach: musisz podać
+    pełną nazwę funkcji, z której chcesz skorzystać. W terminologii PHP
+    katalogiem głównym będzie globalna przestrzeń nazw a separatorem ścieżki
+    będzie -&gt;. W związku z tym nazwy $koszyk i $inny_koszyk zawierają
+    zupełnie inne zmienne. Zauważ, że zmienna nazywa się
+    <varname>$koszyk-&gt;artykuly</varname>, a nie
+    <varname>$koszyk-&gt;$artykuly</varname>, ponieważ nazwa zmiennej może
+    zawierać tylko jeden znak dolara.
    </para>
 
    <informalexample>
     <programlisting role="php">
 <![CDATA[
+<?php
 // poprawnie, jeden $
 $koszyk->artykuly = array("10" => 1); 
 
@@ -167,7 +215,8 @@ $koszyk->$artykuly = array("10" => 1);
 // poprawnie, ale może (ale nie musi) nie być tym, co zamierzaliśmy:
 // $koszyk->$zmienna staje się $koszyk->artykuly
 $zmienna = 'artykuly';
-$koszyk->$zmienna = array("10" => 1);  
+$koszyk->$zmienna = array("10" => 1);
+?>
 ]]>
     </programlisting>
    </informalexample>
@@ -175,21 +224,81 @@ $koszyk->$zmienna = array("10" => 1);
    <para>
     Wewnątrz definicji klasy, nie wiesz pod jaką nazwą obiekt będzie dostępny
     dla twojego programu: w momencie pisania klasy Koszyk, nie było wiadomo,
-    że obiekty będą się nazywać $koszyk lub $inny_koszyk. W związku z tym nie
-    możesz napisać $koszyk-&gt;artykuly wewnątrz klasy Koszyk. Zamiast tego,
-    aby uzyskać dostęp do funkcji i zmiennych zawartych w klasie, można użyć
-    pseudo-zmiennej $this, która może być odczytana jako 'moje własne' lub
-    'bieżący obiekt'. A więc '$this-&gt;artykuly[$nrart] += $liczba' może być
-    odczytane jako 'dodaj $liczba do licznika $nrart z mojej własnej tablicy
-    artykuly' lub 'dodaj $liczba do licznika $nrartz tablicy artykuly zawartej
-    w bieżącym obiekcie'.
+    że obiekty będą się nazywać <varname>$koszyk</varname> lub
+    <varname>$inny_koszyk</varname>. W związku z tym nie możesz napisać
+    <varname>$koszyk-&gt;artykuly</varname> wewnątrz klasy Koszyk. Zamiast
+    tego, aby uzyskać dostęp do funkcji i zmiennych zawartych w klasie, można
+    użyć pseudo-zmiennej $this, która może być odczytana jako 'moje własne'
+    lub 'bieżący obiekt'. A więc
+    '<varname>$this-&gt;artykuly[$nrart]</varname> +=
+    <varname>$liczba</varname>' może być odczytane jako 'dodaj
+    <varname>$liczba</varname> do licznika <varname>$nrart</varname> z mojej
+    własnej tablicy artykuly' lub 'dodaj <varname>$liczba</varname> do
+    licznika <varname>$nrartz</varname> tablicy artykuly zawartej w bieżącym
+    obiekcie'.
    </para>
+   <!-- TODO -->
+   <note>
+    <para>
+     The <varname>$this</varname> pseudo-variable is not usually defined if
+     the method in which it is hosted is called statically. This is not,
+     however, a strict rule: <varname>$this</varname> is defined if a method is
+     called statically from within another object. In this case, the value of
+     <varname>$this</varname> is that of the calling object. This is
+     illustrated in the following example:
+     <informalexample>
+      <programlisting role="php">
+<![CDATA[
+<?php
+class A
+{
+    function foo()
+    {
+        if (isset($this)) {
+            echo '$this is defined (';
+            echo get_class($this);
+            echo ")\n";
+        } else {
+            echo "\$this is not defined.\n";
+        }
+    }
+}
+
+class B
+{
+    function bar()
+    {
+        A::foo();
+    }
+}
+
+$a = new A();
+$a->foo();
+A::foo();
+$b = new B();
+$b->bar();
+B::bar();
+?>
+]]>     
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+$this is defined (a)
+$this is not defined.
+$this is defined (b)
+$this is not defined.
+]]>
+      </screen>
+     </informalexample>
+    </para>
+   </note>
 
    <note>
     <para>
      Istnieje kilka przyjemnych funkcji do obsługi klas i obiektów. Możesz je
      zobaczyć w rozdziale <link linkend="ref.classobj">Funkcje obsługi klas i
-      obiektów</link>
+      obiektów</link>.
     </para>
    </note>
   </sect1>
@@ -215,35 +324,37 @@ $koszyk->$zmienna = array("10" => 1);
    <informalexample>
     <programlisting role="php">
 <![CDATA[
-class Nazwany_Koszyk extends Koszyk
-{
+<?php
+class Nazwany_Koszyk extends Koszyk {
     var $wlasciciel;
   
-    function ustaw_wlasciciela ($nazwa)
-    {
+    function ustaw_wlasciciela ($nazwa) {
         $this->wlasciciel = $nazwa;
     }
 }
+?>
 ]]>
     </programlisting>
    </informalexample>
  
    <para>
     Definiuje to klasę Nazwany_Koszyk, który ma wszystkie zmienne i funkcje
-    klasy Koszyk plus dodatkowa zmienna $wlasciciel i dodatkowa funkcja
-    ustaw_wlasciciela(). Nazwany koszyk tworzy się normalnym sposobem.
-    Możesz teraz ustawiać i pobierać nazwę właściciela koszyka. Cały czas
-    możesz używać zwykłych funkcji koszyka dla nazwanego koszyka:
+    klasy Koszyk plus dodatkowa zmienna <varname>$wlasciciel</varname> i
+    dodatkowa funkcja ustaw_wlasciciela(). Nazwany koszyk tworzy się normalnym
+    sposobem.  Możesz teraz ustawiać i pobierać nazwę właściciela koszyka.
+    Cały czas możesz używać zwykłych funkcji koszyka dla nazwanego koszyka:
    </para>
  
    <informalexample>
     <programlisting role="php">
 <![CDATA[
+<?php
 $nkoszyk = new Nazwany_Koszyk;        // Stwórz nazwany koszyk
 $nkoszyk->ustaw_wlasciciela("kris");  // Nazwij koszyk
 print $nkoszyk->wlasciciel;           // Wyświetl właściciela koszyka
 $nkoszyk->dodaj_przedmiot("10", 1);   // (funkcjonalność odziedziczona z
                                       // koszyka)
+?>
 ]]>
     </programlisting>
    </informalexample>
@@ -268,35 +379,27 @@ $nkoszyk->dodaj_przedmiot("10", 1);   // (funkcjonalność odziedziczona z
   </sect1>
 
   <sect1 id="language.oop.constructor">
-   <title><literal>Konstruktory</literal></title>
-
-   <caution>
-    <simpara>
-     Konstruktory zachowują się inaczej w PHP 3 i w PHP 4. Semantyka PHP 4
-     jest mocno zalecana.
-    </simpara>
-   </caution>
+   <title>Konstruktory</title>
 
    <para>
     Konstruktory są funkcjami klasy, które są automatycznie wywoływane przy
     tworzeniu nowej instancji klasy korzystając z operatora
-    <literal>new</literal>. W PHP 3 funkcja staje się konstruktorem kiedy ma
-    taką samą nazwę jak klasa. W PHP 4 funkcja staje się konstruktorem, kiedy
-    ma taką samą nazwę jak klasa, w której ta funkcja została zdefiniowana -
-    różnica jest subtelna, ale bardzo ważna (zobacz poniżej)
+    <literal>new</literal>. Funkcja staje się konstruktorem kiedy ma
+    taką samą nazwę jak klasa. Jeśli klasa nie ma konstruktora, użyty zostanie
+    konstruktor klasy nadrzędnej, jeśli taka istnieje.
    </para>
  
    <informalexample>
     <programlisting role="php">
 <![CDATA[
-// Działa w PHP 3 i PHP 4.
-class Auto_Koszyk extends Koszyk
-{
+<?php
+class Auto_Koszyk extends Koszyk {
     function Auto_Koszyk()
     {
         $this->dodaj_artykul ("10", 1);
     }
 }
+?>
 ]]>
     </programlisting>
    </informalexample>
@@ -314,9 +417,8 @@ class Auto_Koszyk extends Koszyk
    <informalexample>
     <programlisting role="php">
 <![CDATA[
-// Działa w PHP 3 i PHP 4.
-class Kontruktor_Koszyk extends Koszyk
-{
+<?php
+class Kontruktor_Koszyk extends Koszyk {
     function Konstruktor_Koszyk($artykul = "10", $ilosc = 1)
     {
         $this->dodaj_artykul ($artykul, $ilosc);
@@ -324,12 +426,11 @@ class Kontruktor_Koszyk extends Koszyk
 }
  
 // Kup te same nudne rzeczy...
- 
 $zwykly_koszyk = new Konstruktor_Koszyk;
  
 // Czas na prawdziwe zakupy...
- 
 $inny_koszyk = new Konstruktor_Koszyk("20", 17);
+?>
 ]]>
     </programlisting>
    </informalexample>
@@ -339,129 +440,66 @@ $inny_koszyk = new Konstruktor_Koszyk("20", 17);
     <emphasis>wyciszyć</emphasis> błędy zachodzące w konstruktorze, np.
     <literal>@new</literal>
    </para>
-   <caution>
-    <simpara>
-     W PHP 3, dziedziczone klasy i konstruktory mają wiele ograniczeń.
-     Poniższe przykłady powinny być dokładnie przeczytane w celu zrozumienia
-     tych ograniczeń.
-    </simpara> 
-   </caution>
-   
-   <informalexample>
-    <programlisting role="php">
-<![CDATA[
-class A
-{
-    function A()
-    {
-      echo "Jestem konstruktorem klasy A.<br>\n";
-    }
-}
-
-class B extends A
-{
-    function C()
-    {
-        echo "Zwykła funkcja.<br>\n";
-    }
-}
-
-// W PHP 3 nie zostanie wywołany żaden konstruktor.
-$b = new B;
-]]>
-    </programlisting>
-   </informalexample>
-
-   <para>
-    W PHP 3 w powyższym przykładzie nie będzie wywołany żaden konstruktor.
-    Zasadą PHP 3 jest: 'Konstruktor to funkcja o takiej samej nazwie jak
-    klasa'. Nazwą klasy jest B, a w klasie B nie ma funkcji o nazwie B(). Nic
-    się nie dzieje.
-   </para>
-   
-   <para>
-    Zostało to poprawione w PHP 4 przez wprowadzenie innej zasady: jeśli klasa
-    nie ma konstruktora, używany jest konstruktor klasy bazowej, jeśli taki
-    istnieje. W PHP 4 powyższy przykład wyświetli 'Jestem konstruktorem klasy
-    A.&lt;br>'.
-   </para>
 
    <informalexample>
     <programlisting role="php">
 <![CDATA[
+<?php
 class A
 {
     function A()
     {
-        echo "Jestem konstruktorem klasy A.<br>\n";
+        echo "Jestem konstruktorem klasy A.<br />\n";
     }
 
     function B()
     {
-        echo "Jestem zwykłą funkcją o nazwie B w klasie A.<br>\n";
-        echo "Nie jestem konstruktorem w klasie A.<br>\n";
+        echo "Jestem zwykłą funkcją o nazwie B w klasie A.<br />\n";
+        echo "Nie jestem konstruktorem w klasie A.<br />\n";
     }
 }
 
 class B extends A
 {
-    function C()
-    {
-        echo "Jestem zwykłą funkcją.<br>\n";
-    }
 }
 
 // Wywoła to B() jako konstruktor.
 $b = new B;
+?>
 ]]>
     </programlisting>
    </informalexample>
    
    <para>
-    W PHP 3, funkcja B() z klasy A niespodziewanie stanie się konstruktorem w
-    klasie B, pomimo że wcale nie miała nim być. Zasadą PHP 3 jest:
-    'Konstruktor to funkcja o takiej samej nazwie co klasa'. PHP 3 nie
+    Funkcja B() z klasy A niespodziewanie stanie się konstruktorem w
+    klasie B, pomimo że wcale nie miała nim być.  PHP 4 nie
     obchodzi czy funkcja została zdefiniowana w klasie B czy została
     odziedziczona.
    </para>
    
-   <para>
-    Zostało to poprawione w PHP 4 przez modyfikację tej zasady do:
-    'Konstruktor to funkcja o tej samej nazwie co klasa w której została
-    zdefiniowana'. W związku z tym w PHP 4 clasa B nie miałaby własnego
-    konstruktora. Wywołany byłby tylko konstruktor klasy bazowej, wyświetlając
-    'Jestem konstruktorem klasy A.&lt;br>'.
-   </para>
-   
    <caution>
     <simpara>
-     Ani PHP 3 ani PHP 4 nie wywoła automatycznie konstruktora klasy bazowej z
+     PHP 4 nie wywołuje automatycznie konstruktora klasy bazowej z
      kontruktora klasy pochodnej. Twoim zadaniem jest propagacja wywołań
      konstruktorów klas nadrzędnych, jeśli to konieczne.
     </simpara>
    </caution>
    
-   <note>
-    <simpara>
-     Ani w PHP 3 ani w PHP 4 nie ma destruktorów. Zamiast tego możesz użyć
-     <function>register_shutdown_function</function> aby symulować działanie
-     destruktorów.
-    </simpara>
-   </note>
-   
    <para>
     Destruktory są funkcjami, które są wywoływanie automatycznie kiedy obiekty
     są niszczone albo przez użycie <function>unset</function> albo przez
-    wyjście z zasięgu. W PHP nie ma destruktorów.
+    wyjście z zasięgu. W PHP nie ma destruktorów. Można jednak użyć funkcji
+    <function>register_shutdown_function</function> aby symulować działanie
+    destruktorów.
    </para>
   </sect1>
 
  <sect1 id="keyword.paamayim-nekudotayim"><!-- :-) -->
-   <title><literal>::</literal></title>
+   <title>Operator rozróżnienia zasięgu (<literal>::</literal>)</title>
 
    <caution>
     <simpara>
-     Poniższe dotyczy tylko PHP 4.
+     Poniższe dotyczy tylko PHP 4 i nowszych.
     </simpara>
    </caution>
 
@@ -474,35 +512,33 @@ $b = new B;
    <informalexample>
     <programlisting role="php">
 <![CDATA[
-class A
-{
-    function przyklad()
-    {
-        echo "Jestem orginalną funkcją A::przyklad().<br>\n";
+<?php
+class A {
+    function przyklad() {
+        echo "Jestem orginalną funkcją A::przyklad().<br />\n";
     }
 }
 
-class B extends A
-{
-    function przyklad()
-    {
-        echo "Jestem przedefiniowaną funkcją B::przyklad().<br>\n";
+class B extends A {
+    function przyklad() {
+        echo "Jestem przedefiniowaną funkcją B::przyklad().<br />\n";
         A::przyklad();
     }
 }
 
 // nie ma obiektu klasy A.
 // poniższe wyświetli
-//   Jestem orginalną funkcją A::przyklad().<br>
+//   Jestem orginalną funkcją A::przyklad().<br />
 A::przyklad();
 
 // stwórz nowy obiekt klasy B.
 $b = new B;
 
 // poniższe wyświetli
-//   Jestem przedefiniowaną funkcją B::przyklad().<br>
-//   Jestem orginalną funkcją A::przyklad().<br>
+//   Jestem przedefiniowaną funkcją B::przyklad().<br />
+//   Jestem orginalną funkcją A::przyklad().<br />
 $b->przyklad();
+?>
 ]]>
     </programlisting>
    </informalexample>
@@ -518,7 +554,7 @@ $b->przyklad();
     Istnieją funkcje klasy, ale nie ma zmiennych klasy. Faktycznie w czasie
     wykonania nie ma żadnego obiektu. W związku z tym funkcje klasy nie mogą
     używać żadnych zmiennych obiektu (ale mogą używać zmiennych lokalnych i
-    globalnych), ani w ogóle $this.
+    globalnych), ani w ogóle <varname>$this</varname>.
    </para>
 
    <para>
@@ -532,7 +568,7 @@ $b->przyklad();
    <para>
     W tym kontekście, istnieje bieżący obiekt i który ma zmienne obiektu. W
     związu z tym jeśli funkcja jest użyta Z WEWNĄTRZ funkcji obiektu, możesz
-    używać $this i zmiennych obiektu.
+    używać <varname>$this</varname> i zmiennych obiektu.
    </para>
 
  </sect1>
@@ -559,19 +595,16 @@ $b->przyklad();
   <informalexample>
    <programlisting role="php">
 <![CDATA[
-class A
-{
-    function przyklad()
-    {
-        echo "Jestem A::przyklad() I dostarczam podstawową funkcjonalność.<br>\n";
+<?php
+class A {
+    function przyklad() {
+        echo "Jestem A::przyklad() I dostarczam podstawową funkcjonalność.<br />\n";
     }
 }
 
-class B extends A
-{
-    function przyklad()
-    {
-        echo "Jestem B::przyklad() i dostarczam dodatkową funkcjonalność.<br>\n";
+class B extends A {
+    function przyklad() {
+        echo "Jestem B::przyklad() i dostarczam dodatkową funkcjonalność.<br />\n";
         parent::przyklad();
     }
 }
@@ -580,6 +613,7 @@ $b = new B;
 
 // Wywoła to B::przyklad(), który z kolei wywoła A::przyklad().
 $b->przyklad();
+?>
 ]]>
    </programlisting>
   </informalexample>
@@ -599,7 +633,7 @@ $b->przyklad();
 
   <caution>
    <simpara>
-    Poniższe informacje dotyczą tylko PHP 4.
+    Poniższe informacje dotyczą tylko PHP &gt; 4.
    </simpara>
   </caution>
 
@@ -615,40 +649,41 @@ $b->przyklad();
   <para>
    Aby istniała możliwość użycia funkcji <function>unserialize</function> do
    odzyskania obiektu, musi być zdefiniowana klasa tego obiektu. Oznacza to,
-   że jeśli obiekt $a klasy A istnieje na page1.php i zserializujesz go,
-   otrzymasz string, który odnosi się do klasy A i zawiera wartości wszystkich
-   zmiennych zawartych w $a. Jeśli chcesz, aby istniała możliwość
-   odserializacji tego obiektu na page2.php, na page2.php musi istnieć
-   definicja klasy A. Można to zrobić na przykład przez przechowywanie
-   definicji klasy A w zewnętrznym pliku includowanym przez page1.php i
-   page2.php.
+   że jeśli obiekt <varname>$a</varname> klasy A istnieje na page1.php i
+   zostanie on zserializowany, otrzymany zostanie ciąg znakowy, który odnosi
+   się do klasy A i zawiera wartości wszystkich zmiennych zawartych w
+   <varname>$a</varname>. Aby istniała możliwość deserializacji tego obiektu
+   na page2.php, na page2.php musi istnieć definicja klasy A. Można to zrobić
+   na przykład przez przechowywanie definicji klasy A w zewnętrznym pliku
+   dołączanym przez page1.php i page2.php.
   </para>
   
   <informalexample>
    <programlisting role="php">
 <![CDATA[
-classa.inc:
-  class A 
-  {
+<?php
+// classa.inc:
+  class A {
       var $jeden = 1;
     
-      function pokaz_jeden()
-      {
+      function pokaz_jeden() {
           echo $this->jeden;
       }
   }
   
-page1.php:
+// page1.php:
+
   include("classa.inc");
   
   $a = new A;
   $s = serialize($a);
   // przechowaj $s gdzieś, gdzie page2.php będzie mogła go znaleźć
   $fp = fopen("store", "w");
-  fputs($fp, $s);
+  fwrite($fp, $s);
   fclose($fp);
 
-page2.php:
+// page2.php:
+
   // to jest niezbędne aby funkcja unserialize działała prawidłowo.
   include("classa.inc");
 
@@ -657,6 +692,7 @@ page2.php:
 
   // teraz użyj funkcji pokaz_jeden z obiektu $a.
   $a->pokaz_jeden();
+?>
 ]]>
    </programlisting>
   </informalexample>
@@ -679,10 +715,10 @@ page2.php:
   </para>
   
   <para>
-   A więc jeśli w powyższym przykładzie $a stanie się częścią sesji przez
-   wywołanie <literal>session_register("a")</literal>, powinieneć includować
-   plik <literal>classa.inc</literal> na wszystkich stronach, nie tylko
-   page1.php i page2.php.
+   A więc jeśli w powyższym przykładzie <varname>$a</varname> stanie się
+   częścią sesji przez wywołanie <literal>session_register("a")</literal>,
+   powinieneć includować plik <literal>classa.inc</literal> na wszystkich
+   stronach, nie tylko page1.php i page2.php.
   </para>
  </sect1>
 
@@ -727,10 +763,9 @@ page2.php:
     <informalexample>
      <programlisting role="php">
 <![CDATA[
-class Foo
-{
-    function Foo($nazwa)
-    {
+<?php
+class Foo {
+    function Foo($nazwa) {
         // stworz referencje wewnatrz globalnej tablicy $globalref
         global $globalref;
         $globalref[] = &$this;
@@ -740,16 +775,15 @@ class Foo
         $this->wyswietlNazwe();
     }
 
-    function wyswietlNazwe()
-    {
-        echo "<br>",$this->nazwa;
+    function wyswietlNazwe() {
+        echo "<br />",$this->nazwa;
     }
 	
-    function ustawNazwe($nazwa)
-    {
+    function ustawNazwe($nazwa) {
         $this->nazwa = $nazwa;
     }
 }
+?>
 ]]>
     </programlisting>
    </informalexample>
@@ -764,6 +798,7 @@ class Foo
     <informalexample>
      <programlisting role="php">
 <![CDATA[
+<?php
 $bar1 = new Foo('ustawione w konstruktorze');
 $bar1->wyswietlNazwe();
 $globalref[0]->wyswietlNazwe();
@@ -781,6 +816,7 @@ $globalref[1]->wyswietlNazwe();
 ustawione w konstruktorze
 ustawione w konstruktorze
 ustawione w konstruktorze */
+?>
 ]]>
      </programlisting>
     </informalexample>
@@ -809,6 +845,7 @@ ustawione w konstruktorze */
     <informalexample>
      <programlisting role="php">
 <![CDATA[
+<?php
 // teraz zmienimy nazwę. czego się spodziewasz?
 // możesz się spodziewać, że i $bar1 i $globalref[0] zmienią swoje nazwy...
 $bar1->ustawNazwe('ustawiona z zewnątrz');
@@ -833,6 +870,7 @@ $globalref[1]->wyswietlNazwe();
 /* wyjście:
 ustawiona z zewnątrz
 ustawiona z zewnątrz */
+?>
 ]]>
      </programlisting>
     </informalexample>   
@@ -843,37 +881,31 @@ ustawiona z zewnątrz */
     <informalexample>
      <programlisting role="php">
 <![CDATA[
-class A
-{
-    function A($i)
-    {
+<?php
+class A {
+    function A($i) {
         $this->wartosc = $i;
         // domyśl się dlaczego nie potrzebujemy tutaj referencji
         $this->b = new B($this);
     }
 
-    function stworzRef()
-    {
+    function stworzRef() {
         $this->c = new B($this);
     }
 
-    function wyswietlWartosc()
-    {
-        echo "<br>","klasa ",get_class($this),': ',$this->value;
+    function wyswietlWartosc() {
+        echo "<br />","klasa ",get_class($this),': ',$this->value;
     }
 }
 
 
-class B
-{
-    function B(&$a)
-    {
+class B {
+    function B(&$a) {
         $this->a = &$a;
     }
 
-    function wyswietlWartosc()
-    {
-        echo "<br>","klasa ",get_class($this),': ',$this->a->value;
+    function wyswietlWartosc() {
+        echo "<br />","klasa ",get_class($this),': ',$this->a->value;
     }
 }
 // spróbuj zrozumieć dlaczego użycie tu prostego kopiowania może powodować
@@ -891,20 +923,181 @@ $a->wyswietlWartosc();
 $a->b->wyswietlWartosc(); // *
 $a->c->wyswietlWartosc();
 
-/*
-wyjście:
+?>
+]]>
+     </programlisting>
+     &example.outputs;
+     <screen>
+<![CDATA[
 klasa A: 10
 klasa B: 10
 klasa B: 10
 klasa A: 11
 klasa B: 11
 klasa B: 11
-*/
 ]]>
-     </programlisting>
+     </screen>
     </informalexample>
    </para>
   </sect1>
+  <sect1 id="language.oop.object-comparison">
+   <title>Porównywanie obiektów</title>
+   <para>
+    W PHP 4 obiekty są porównywane w bardzo prosty sposób, to znaczy dwie
+    instancje obiektów są uważane za równe, jeśli posiadają te same atrybuty i
+    ich wartości, a także są instancjami tej samej klasy. Podobne reguły są
+    stosowane, jeśli dwa obiekty są porównywane za pomocą operatora
+    identyczności (<literal>===</literal>).
+  </para>
+  <para>
+   <example>
+    <title>Przykład porównania obiektów w PHP 4</title>
+    <programlisting role='php'>
+<![CDATA[
+<?php
+function bool2str($bool) {
+    if ($bool === false) {
+            return 'FALSE';
+    } else {
+            return 'TRUE';
+    }
+}
+
+function porownajObiekty(&$o1, &$o2) {
+    echo 'o1 == o2 : '.bool2str($o1 == $o2)."\n";
+    echo 'o1 != o2 : '.bool2str($o1 != $o2)."\n";
+    echo 'o1 === o2 : '.bool2str($o1 === $o2)."\n";
+    echo 'o1 !== o2 : '.bool2str($o1 !== $o2)."\n";
+}
+
+class Flaga {
+    var $flag;
+
+    function Flaga($flag=true) {
+            $this->flag = $flag;
+    }
+}
+
+class przelaczalanaFlaga extends Flaga {
+
+    function turnOn() {
+        $this->flag = true;
+    }
+
+    function turnOff() {
+        $this->flag = false;
+    }
+}
+
+$o = new Flaga();
+$p = new Flaga(false);
+$q = new Flaga();
+
+$r = new przelaczalnaFlaga();
+
+echo "Porównaj instancje stworzone z tymi samymi argumentami\n";
+porownajObiekty($o, $q);
+
+echo "\nPorównaj instancje stworzone z różnymi argumentami\n";
+porownajObiekty($o, $p);
+
+echo "\nPorównaj instancję klasy nadrzędnej z instancją klasy podrzędnej\n";
+porownajObiekty($o, $r);
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[    
+Porównaj instancje stworzone z tymi samymi argumentami
+o1 == o2 : TRUE
+o1 != o2 : FALSE
+o1 === o2 : TRUE
+o1 !== o2 : FALSE
+
+Porównaj instancje stworzone z różnymi argumentami
+o1 == o2 : FALSE
+o1 != o2 : TRUE
+o1 === o2 : FALSE
+o1 !== o2 : TRUE
+
+Porównaj instancję klasy nadrzędnej z instancją klasy podrzędnej
+o1 == o2 : FALSE
+o1 != o2 : TRUE
+o1 === o2 : FALSE
+o1 !== o2 : TRUE
+]]>
+    </screen>
+   </example>   
+  </para>
+  <para>
+   Wynik działania powyższego skryptu jest całkowicie przewidywalny na
+   podstawie przedstawionych wyżej reguł. Tylko instancje o tych samych
+   wartościach tych samych atrybutów, pochodzące z tej samej klasy, są
+   uznawane za równe i identyczne.
+  </para>
+  <para>
+   Nawet w przypadku kompozycji obiektów stosowane są te same reguły
+   porównywania. W poniższym przykładzie stworzona została klasa-pojemnik,
+   która zawiera tablicę asocjacyjną obiektów klasy
+   <classname>Flaga</classname>.
+   <example>
+    <title>Porównywanie obiektów złożonych w PHP 4</title>
+    <programlisting role='php'>
+<![CDATA[
+<?php
+class ZbiorFlag {
+    var $set;
+
+    function ZbiorFlag($flagArr = array()) {
+        $this->set = $flagArr;
+    }
+
+    function addFlag($name, $flag) {
+        $this->set[$name] = $flag;
+    }
+
+    function removeFlag($name) {
+        if (array_key_exists($name, $this->set)) {
+            unset($this->set[$name]);
+        }
+    }
+}
+
+
+$u = new ZbiorFlag();
+$u->addFlag('flag1', $o);
+$u->addFlag('flag2', $p);
+$v = new ZbiorFlag(array('flag1'=>$q, 'flag2'=>$p));
+$w = new ZbiorFlag(array('flag1'=>$q));
+
+echo "\nObiekty złożone u(o,p) i v(q,p)\n";
+porownajObiekty($u, $v);
+
+echo "\nu(o,p) i w(q)\n";
+porownajObiekty($u, $w);
+?>     
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+Obiekty złożone u(o,p) i v(q,p)
+o1 == o2 : TRUE
+o1 != o2 : FALSE
+o1 === o2 : TRUE
+o1 !== o2 : FALSE
+
+u(o,p) i w(q)
+o1 == o2 : FALSE
+o1 != o2 : TRUE
+o1 === o2 : FALSE
+o1 !== o2 : TRUE
+]]>
+    </screen>
+   </example>
+  </para>
+ </sect1>
  </chapter>
  
 <!-- Keep this comment at the end of the file
