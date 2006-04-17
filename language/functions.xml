@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.28 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.12 $ -->
+<!-- EN-Revision: 1.60 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.13 $ -->
  <chapter id="functions">
   <title>Funkcje</title>
 
@@ -9,52 +9,161 @@
  
    <para>
     Funkcja może być zdefiniowana używając składni takiej jak poniższa:
- 
-    <informalexample>
+   </para>
+   <para>
+    <example>
+     <title>Pseudo-kod ilustrujący zastosowanie funkcji</title>
      <programlisting role="php">
 <![CDATA[
-function foo ($arg_1, $arg_2, ..., $arg_n)
+<?php
+function foo ($arg_1, $arg_2, /* ..., */ $arg_n)
 {
     echo "Przykładowa funkcja.\n";
     return $retval;
 }
+?>
 ]]>
      </programlisting>
-    </informalexample>
+    </example>
    </para>
    
-   <!--
-    
-    status of func(const $param) ?
-    zend doesn't care at all whether or not you specify it.
-    I've never seen it before... what's its use? (or was...)
-    
-    -->
-     
    <simpara>
     Dowolny poprawny kod PHP może się pojawić wewnątrz funkcji, także
-    definicje innych funkcji i  <link linkend="keyword.class">klas</link>.
+    definicje innych funkcji i <link linkend="keyword.class">klas</link>.
    </simpara>
+   <para>
+    Nazwy funkcji podlegają takim samym ograniczeniom jak wszystkie inne
+    etykiety w PHP. Poprawna nazwa funkcji zaczyna się od litery lub
+    podkreślenia, po których następuje dowolna liczba liter, liczb lub
+    podkreśleń. Powyższa zasada w postaci wyrażenia regularnego przedstawia
+    się następująco:
+    <literal>[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*</literal>.
+   </para>
    <simpara>
     W PHP 3, funkcje muszą być zdefiniowane przed odwołaniem do nich. W PHP 4
-    nie ma takiego wymagania.
+    nie ma takiego wymagania. <emphasis>Wyjątkiem</emphasis> jest warunkowe
+    definiowanie funkcji, tak jak pokazano to w dwóch przykładach
+    zamieszczonych poniżej.
    </simpara>
+   <para>
+    Kiedy funkcja jest definiowana w postaci warunkowej, tak jak to
+    przedstawiono na dwóch poniższych przykładach, jej definicja musi
+    następować <emphasis>przed</emphasis> jej wywołaniem.
+   </para>
+   <para>
+    <example>
+     <title>Funkcje warunkowe</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+
+$makefoo = true;
+
+/* Nie można wywołać foo() z tego miejsca,
+   ponieważ funkcja ta jeszcze nie istnieje.
+   Można natomiast wywołać bar() */
+
+bar();
+
+if ($makefoo) {
+  function foo()
+  {
+    echo "Nie istnieję dopóki wykonanie programu nie dojdzie do tego miejsca.\n";
+  }
+}
+
+/* W tym momencie można spokojnie wywołać foo()
+   ponieważ $makefoo ma wartość true */
+
+if ($makefoo) foo();
+
+function bar() 
+{
+  echo "Istnieję od samego początku działania programu.\n";
+}
+
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   <para>
+    <example>
+     <title>Funkcje wewnątrz funkcji</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+function foo() 
+{
+  function bar() 
+  {
+    echo "Nie istnieję dopóki foo() nie zostanie wywołana.\n";
+  }
+}
+
+/* Nie można wywołać bar()
+   ponieważ nie istnieje. */
+
+foo();
+
+/* Teraz można wywołać bar(),
+   ponieważ wywołanie foo() utworzyło
+   tą funkcję. */
+
+bar();
+
+?>  
+]]>
+     </programlisting>
+    </example>
+   </para>
+   <para>
+    Wszystkie funkcje i klasy w PHP mają zasięg globalny - można je wywołać
+    spoza ciała funkcji, nawet jeśli zostały w niej zdefiniowane, i vice
+    versa.
+   </para>
    <simpara>
     PHP nie obsługuje przeciążania funkcji. Nie jest także możliwa
     od-definiowanie lub przedefiniowanie wcześniej zadeklarowanych funkcji.
    </simpara>
+   <note>
+    <simpara>
+     W nazwach funkcji nie jest istotna wielkość znaków, jednakże dobrze jest
+     wywoływać funkcje tak, jak zostały zdeklarowane.
+    </simpara>
+   </note>   
    <simpara>
     PHP 3 nie obsługuje funkcji o zmiennej liczbie argumentów, ale obsługuje
     domyślne argumenty (zobacz rozdzial <link
     linkend="functions.arguments.default">Wartości domyślne argumentów
-    </link> aby uzyskać więcej informacji). PHP 4 obsługuje jedne i drugie:
-    zobacz <link
-    linkend="functions.variable-arg-list">Listy argumentów o zmiennej długości
-    </link> i opisy funkcji
-    <function>func_num_args</function>,
-    <function>func_get_arg</function>, i
+    </link> aby uzyskać więcej informacji). Od wersji PHP 4 obsługiwane są
+    jedne i drugie: zobacz <link linkend="functions.variable-arg-list">Listy
+     argumentów o zmiennej długości </link> i opisy funkcji
+    <function>func_num_args</function>, <function>func_get_arg</function>, i
     <function>func_get_args</function> aby uzyskać więcej informacji.
    </simpara>
+   <para>
+    W PHP możliwe jest rekurencyjne wywoływanie funkcji. Należy jednak unikać
+    rekurencyjnych wywołań funkcji lub metod o głębokości większej niż 100-200
+    poziomów, gdyż może to zniszczyć stos i spowodować przerwanie działania
+    skryptu.
+    <example>
+     <title>Funkcje rekurencyjne</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+function rekurencja($a)
+{
+    if ($a < 20) {
+        echo "$a\n";
+        rekurencja($a + 1);
+    }
+}
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
 
   </sect1>
  
@@ -63,7 +172,7 @@ function foo ($arg_1, $arg_2, ..., $arg_n)
  
    <simpara>
     Informacje mogą być przekazywane do funkcji przez listę argumentów, która
-    jest separowaną przecinkami listą zmiennych i/lub stałych.
+    jest separowaną przecinkami listą wyrażeń.
    </simpara> 
    <para>
      PHP obsługuje przekazywanie argumentów przez wartość (domyślnie), 
@@ -77,19 +186,21 @@ function foo ($arg_1, $arg_2, ..., $arg_n)
      <function>func_get_arg</function>, i
      <function>func_get_args</function> aby uzyskać więcej informacji. Podobny
      efekt może być uzyskany w PHP 3 przez przekazywanie tablicy argumentów do
-     funkcji:
- 
-    <informalexample>
-     <programlisting role="php">
+     funkcji.
+    </para>
+    <para>
+     <example>
+      <title>Przekazywanie tablic do funkcji</title>
+      <programlisting role="php">
 <![CDATA[
 function pobiera_tablice($wejscie)
 {
     echo "$wejscie[0] + $wejscie[1] = ", $wejscie[0]+$wejscie[1];
 }
 ]]>
-     </programlisting>
-    </informalexample>
-   </para>
+      </programlisting>
+     </example>
+    </para>
  
    <sect2 id="functions.arguments.by-reference">
     <title>Przekazywanie argumentów przez referencję</title>
@@ -103,10 +214,13 @@ function pobiera_tablice($wejscie)
     <para>
      Jeśli chcesz, aby argumenty były zawsze przekazywane przez referencję,
      przed nazwą zmiennej w definicji funkcji wstaw znak ampersand (&amp;):
- 
-     <informalexample>
+    </para>
+    <para>
+     <example>
+      <title>Przekazywanie argumentów przez referencję</title>
       <programlisting role="php">
 <![CDATA[
+<?php
 function dodaj_cos_extra(&$string)
 {
     $string .= 'i coś extra.';
@@ -114,9 +228,10 @@ function dodaj_cos_extra(&$string)
 $str = 'To jest string, ';
 dodaj_cos_extra($str);
 echo $str;    // wyświetla 'To jest string string, i coś extra.'
+?>
 ]]>
       </programlisting>
-     </informalexample>
+     </example>
     </para>
    </sect2>
  
@@ -124,59 +239,91 @@ echo $str;    // wyświetla 'To jest string string, i coś extra.'
     <title>Wartości domyślne argumentów</title>
  
     <para>
-     Funkcja może definiować, podobnie jest w C++,  wartości domyślne dla
-     argumentów skalarnych:
- 
-     <informalexample>
+     Funkcja może definiować, podobnie jest w C++, wartości domyślne dla
+     argumentów skalarnych.
+    </para>
+    <para>
+     <example>
+      <title>Użycie domyślnych wartości argumentów</title>
       <programlisting role="php">
 <![CDATA[
-function robkawe ($type = "cappucino")
+<?php
+function rob_kawe ($typ = "cappucino")
 {
-    return "Robię kubek $type.\n";
+    return "Robię kubek $typ.\n";
 }
-echo robkawe ();
-echo robkawe ("espresso");
+echo rob_kawe ();
+echo rob_kawe ("espresso");
+?>
 ]]>
       </programlisting>
-     </informalexample>
+     </example>
     </para>
- 
     <para>
      Powyższy kawałek kody wyświetli:
- 
+    </para>
+    <para>
      <screen>
 Robię kubek cappucino.
 Robię kubek espresso.
      </screen>
     </para>
+    <para>
+     PHP pozwala także na korzystanie z tablic i specjalnego typu NULL jako
+     wartości domyślnych.
+    </para>
+    <para>
+     <example>
+      <title>Używanie nieskalarnych typów jako wartości domyślne</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+function rob_kawe($typy = array("cappuccino"), $urzadzenie = NULL)
+{
+    $urzadzenie = is_null($urzadzenie) ? "rece" : $urzadzenie;
+    return "Robie kubek ".join(", ", $types)." poprzez $urzadzenie.\n";
+}
+echo rob_kawe();
+echo rob_kawe(array("cappuccino", "lavazza"), "ekspres");
+?>
+]]>
+      </programlisting>
+     </example>
+    
+    </para>
  
     <simpara>
-     Domyślna wartość musi być stałym wyrażeniem, nie (na przykład) zmienną
-     lub członkiem klasy.
+     Domyślna wartość musi być stałym wyrażeniem, nie (na przykład) zmienną.
+     członkiem klasy lub wywołaniem funkcji.
     </simpara>
     <para>
      Zauważ, że używając domyślnych argumentów, argumenty zawierające wartości
      domyślne powinny być po prawej stronie tych nie zawierających wartości
      domyślnych; w przeciwnym przypadku funkcja może nie działać tak jak się
-     tego spodziewałeś. Zobacz to na poniższym przykładzie:
- 
-     <informalexample>
+     tego spodziewałeś. Przedstawione to zostało na poniższym przykładzie.
+    </para>
+    <para>
+     <example>
+      <title>Błędne zastosowanie domyślnych argumentów funkcji</title>
       <programlisting role="php">
 <![CDATA[
+<?php
 function robjogurt ($typ = "acidophilus", $smak)
 {
     return "Robię miskę $typ $smak.\n";
 }
  
 echo robjogurt ("malinowy");   // nie działa tak jak się spodziewaliśmy
+?>
 ]]>
       </programlisting>
-     </informalexample>
+     </example>
     </para>
  
     <para>
-     Powyższa funkcja wyświetla:
- 
+     Powyższy przykład wyświetli:
+    </para>
+    <para>
      <screen>
 Warning: Missing argument 2 in call to robjogurt() in 
 /usr/local/etc/httpd/htdocs/php3test/functest.html on line 41
@@ -186,28 +333,39 @@ Robię miskę malinowy .
  
     <para>
      Porównaj powyższy przykład z tym:
- 
-     <informalexample>
+    </para>
+    <para>
+     <example>
+      <title>Poprawne użycie domyślnych argumentów funkcji</title>
       <programlisting role="php">
 <![CDATA[
+<?php
 function robjogurt ($smak, $typ = "acidophilus")
 {
     return "Robię miskę $type $flavour.\n";
 }
  
 echo robjogurt ("malinowy");   // działa tak jak się spodziewaliśmy
+?>
 ]]>
       </programlisting>
-     </informalexample>
+     </example>
     </para>
  
     <para>
-     Powyższy kod wyświetla:
- 
+     Powyższy kod wyświetli:
+    </para>
+    <para>
      <screen>
 Robię miskę acidophilus malinowy.
      </screen>
     </para>
+    <note>
+     <simpara>
+      Od PHP 5, domyślne argumenty funkcji mogą być przekazywane przez
+      referencję.
+     </simpara>
+    </note>
 
    </sect2>
 
@@ -215,7 +373,7 @@ Robię miskę acidophilus malinowy.
     <title>Listy argumentów o zmiennej długości</title>
 	
     <simpara>
-     PHP 4 obsługuje listy o zmiennej długości w funkcjach zdefiniowanych
+     PHP 4 i nowsze obsługują listy o zmiennej długości w funkcjach zdefiniowanych
      przez użytkownika. Jest naprawdę prostę przy użyciu funkcji
      <function>func_num_args</function>,
      <function>func_get_arg</function> i
@@ -241,51 +399,64 @@ Robię miskę acidophilus malinowy.
     natychmiastowe zakończenie działania funkcji i przekazanie kontroli do
     linii, z której była wywołana. Więcej informacji w opisie
     <function>return</function>.
- 
-    <informalexample>
+   </para>
+   <para>
+    <example>
+     <title>Zastosowanie <function>return</function></title>
      <programlisting role="php">
 <![CDATA[
+<?php
 function kwadrat ($num)
 {
     return $num * $num;
 }
 echo kwadrat (4);   // wyświetla '16'.
+?>
 ]]>
      </programlisting>
-    </informalexample>
+    </example>
    </para>
       
    <para>
-    Nie możesz zwracać zwracać wielu wartości z funkcji, ale podobne efekty
+    Nie można zwracać zwracać wielu wartości z funkcji, ale podobne efekty
     mogą być uzyskane przez zwracanie listy.
- 
-    <informalexample>
+   </para>
+   <para>
+    <example>
+     <title>Zwracanie tablicy dla uzyskania wielu wyników</title>
      <programlisting role="php">
 <![CDATA[
+<?php
 function maleLiczby()
 {
     return array (0, 1, 2);
 }
 list ($zero, $jeden, $dwa) = maleLiczby();
+?>
 ]]>
      </programlisting>
-    </informalexample>
+    </example>
    </para>
    <para>
     Aby funkcja zwracała referencję, musisz użyć operatora referencji &amp; i
-    w deklaracji funkcji i przy przypisywaniu zwracanej wartości do zmiennej:
-    <informalexample>
+    w deklaracji funkcji i przy przypisywaniu zwracanej wartości do zmiennej.
+   </para>
+   <para>
+    <example>
+     <title>Zwracanie referencji przez funkcję</title>
      <programlisting role="php">
 <![CDATA[
+<?php
 function &zwrocReferencje()
 {
     return $jakasref;
 }
 
 $nowaref =& zwrocReferencje();
+?>
 ]]>
      </programlisting>
-    </informalexample>
+    </example>
    </para>
    <simpara>
     Więcej informacji na temat referencji w rozdziale
@@ -293,31 +464,6 @@ $nowaref =& zwrocReferencje();
    </simpara>
   </sect1>
  
-  <sect1 id="functions.old-syntax">
-   <title><literal>old_function</literal></title>
- 
-   <simpara>
-    Instrukcja <literal>old_function</literal> pozwala na zadeklarowanie
-    funkcji korzystając ze składni takiej samej jak w PHP/FI2 (tylko że
-    zamiast 'function' musisz użyć 'old_function'.
-   </simpara>
-   <simpara>
-    Jest to niezalecana opcja i powinna być używana tylko przez konwerter
-    PHP/FI2->PHP 3.
-   </simpara>
-   <warning>
-    <para>
-     Funkcje zadekladowane jako <literal>old_function</literal> nie mogą być
-     wywołane z kodu wewnętrznego PHP. Między innymi oznacza to, że nie możesz
-     używać ich z takich funkcji jak <function>usort</function>,
-     <function>array_walk</function> i <function>register_shutdown_function
-     </function>. Możesz obejść to ograniczenie przez napisanie interfejsu (w
-     normalnej dla PHP 3 postaci) wywołującego <literal>old_function</literal>.
-    </para>
-   </warning>
-
-  </sect1>
-
   <sect1 id="functions.variable-functions">
    <title>Zmienne funkcje</title>
 
@@ -328,10 +474,13 @@ $nowaref =& zwrocReferencje();
     to użyte do implementacji funkcji callback, tablicy funkcji itp.
    </para>
    <para>
-    Zmienne funkcje nie będą działać z elementami składowymi języka, takimi
-    jak <function>echo</function>, <function>unset</function>,
-    <function>isset</function>, <function>empty</function>,
-    <function>include</function> i <function>print</function>.
+    Zmienne funkcje nie będą działać z elementami składowymi języka takimi
+    jak <function>echo</function>, <function>print</function>,
+    <function>unset</function>, <function>isset</function>,
+    <function>empty</function>, <function>include</function>,
+    <function>require</function> i innymi podobnymi. Aby zastosować zmienne
+    funkcje z takimi składowymi, niezbędne jest zastosowanie funkcji
+    obudowujących.
    </para>
    <para>
     <example>
@@ -339,32 +488,120 @@ $nowaref =& zwrocReferencje();
      <programlisting role="php">
 <![CDATA[
 <?php
-function foo()
-{
-    echo "W foo()<br>\n";
+function foo() {
+    echo "W foo()<br />\n";
 }
 
-function bar($arg = '')
-{
-    echo "W bar(); argumentem jest '$arg'.<br>\n";
+function bar($arg = '') {
+    echo "W bar(); argumentem jest '$arg'.<br />\n";
+}
+
+// Funkcja obudowująca składnię echo
+
+function echoIt($string) {
+    echo $string;
 }
 
 $func = 'foo';
-$func();
+$func(); // wywoła foo()
+
 $func = 'bar';
-$func('test');
+$func('test'); // wywoła bar()
+
+$func = 'echoIt';
+$func('test'); // wywoła echoIt()
 ?>
 ]]>
      </programlisting>
     </example>
    </para>
    <para>
-    Zobacz również <link linkend="language.variables.variable">
-    variable variables</link> i <function>function_exists</function>.
+    Możliwe jest także wywołanie metody obiektu korzystając z mechanizmu
+    zmiennych funkcji.
+    You can also call an object's method by using the variable functions
+    feature.
+    <example>
+     <title>Przykład zmiennych metod</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+class Foo
+{
+    function Zmienna()
+    {
+        $name = 'Bar';
+        $this->$name(); // Wywoła metodę Bar()
+    }
+    
+    function Bar()
+    {
+        echo "To jest Bar";
+    }
+}
+
+$foo = new Foo();
+$funkcja = "Zmienna";
+$foo->$funkcja();  // Wywoła $foo->Zmienna()
+
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   <para>
+    Patrz także <function>call_user_func</function>, <link
+     linkend="language.variables.variable"> variable variables</link> i
+    <function>function_exists</function>.
    </para>
 
   </sect1>
 
+  <sect1 id="functions.internal">
+   <title>Wewnętrzne (wbudowane) funkcje</title>
+   
+   <para>
+    PHP standardowo zawiera wiele funkcji i składni. Istnieje także wiele
+    funkcji, które wymagają skompilowania konkretnych rozszerzeń PHP, gdyż w
+    przeciwnym wypadku próba ich wywołania spowoduje błąd "undefined
+    function". Na przykład, aby używać funkcji
+    <link linkend="ref.image">przetwarzania obrazów</link>, jak na przykład
+    <function>imagecreatetruecolor</function>, niezbędne jest skompilowanie
+    PHP z obsługą <productname>GD</productname>. Podobnie, aby skorzystać z
+    funkcji <function>mysql_connect</function>, trzeba mieć PHP skompilowane z
+    obsługą <link linkend="ref.mysql">MySQL</link>. Jest także wiele funkji,
+    które są zawarte w każdej wersji PHP, jak na przykład funkcje obsługi
+    <link linkend="ref.strings">ciągów znakowych</link> czy
+    <link linkend="ref.var">zmiennych</link>. Listę załadowanych rozszerzeń
+    można uzyskać przez wywołanie funkcji <function>phpinfo</function> lub
+    <function>get_loaded_extensions</function>. Warto zauważyć, że niektóre
+    rozszerzenia są domyślnie włączone, a także że podręcznik PHP jest
+    podzielony według rozszerzeń. Informacje na temat przygotowania swojego
+    PHP można znaleźć w rozdziałach poświęconych <link
+     linkend="configuration">konfiguracji</link>,  <link
+     linkend="install">instalacji</link>, a także w rozdziałach dotyczących
+    poszczególnych rozszerzeń.
+   </para>
+   <para>
+    Czytanie i rozumienie prototypów funkcji zostało wyjaśnione w rozdziale
+    <link linkend="about.prototypes">Jak czytać definicje funkcji</link>.
+    Bardzo ważne jest zrozumienie co funkcja zwraca lub czy funkcja operuje
+    bezpośrednio na przekazywanych wartościach. Na przykład, 
+    <function>str_replace</function> zwróci zmodyfikowany ciąg znakowy,
+    natomiast <function>usort</function> pracuje bezpośrednio na tablicy
+    przekazanej jako argument. Każda strona podręcznika zawiera także
+    konkretne informacje na temat argumentów wywołania funkcji, zmian
+    zachowania, zwracanych wartościach, zarówno w przypadku powodzenia jak i
+    wystąpienia błędu, a także informacje o dostępności. Znajomość tych
+    ważnych, choć czasem subtelnych różnic, jest kluczowa dla pisania
+    poprawnego kodu PHP.
+   </para>
+   <para>
+    Patrz także <function>function_exists</function>, 
+    <link linkend="funcref">indeks funkcji</link>,
+    <function>get_extension_funcs</function> i 
+    <function>dl</function>.
+   </para>
+  </sect1>
  </chapter>
  
 <!-- Keep this comment at the end of the file
