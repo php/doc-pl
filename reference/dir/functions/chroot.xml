@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.8 Maintainer: leniwiec Status: ready -->
-<!-- $Revision: 1.1 $ -->
+<!-- EN-Revision: 1.11 Maintainer: leniwiec Status: ready -->
+<!-- $Revision: 1.2 $ -->
 <!-- splitted from ./en/functions/dir.xml, last change in rev 1.11 -->
   <refentry id="function.chroot">
    <refnamediv>
     <refname>chroot</refname>
     <refpurpose>Zmienia główny katalog</refpurpose>
    </refnamediv>
-   <refsect1>
+   
+   <refsect1 role="description">
     &reftitle.description;
      <methodsynopsis>
       <type>bool</type><methodname>chroot</methodname>
@@ -15,15 +16,40 @@
      </methodsynopsis>
     <para>
      Zmienia główny katalog wykonywanego procesu na 
-     <parameter>katalog</parameter>. &return.success;
+     <parameter>katalog</parameter>
     </para>
     <para>
      Ta funkcja jest dostępna tylko gdy system ją obsługuje i jest używany
-     CLI, CGI lub Embed SAPI.
+     CLI, CGI lub Embed SAPI. Również, ta funkcja wymaga praw superużytkownika.
     </para>
-    <note><simpara>Funkcja <function>chroot</function> wymaga uprawnień użytkownika
-      root.</simpara></note>
-    &note.no-windows;
+	 </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>katalog</parameter></term>
+     <listitem>
+      <para>
+       Nowy katalog
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;
+  </para> 
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  &note.no-windows;
    </refsect1>
   </refentry>
 
