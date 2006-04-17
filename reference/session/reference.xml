@@ -1,111 +1,189 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.7 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.6 $ -->
+<!-- EN-Revision: 1.57 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.7 $ -->
  <reference id="ref.session">
   <title>Sesje</title>
   <titleabbrev>Sesje</titleabbrev>
-	
-  <partintro>
-   <para>
-    Obsługa sesji w PHP ma na celu zapewnienie sposobu na zachowanie pewnych
-    danych w trakcie następujących po sobie wywołań strony. Pozwala to na
-    budowanie bardziej spersonalizowanych aplikacji i zwiększenie
-    atrakcyjności twojej strony internetowej.
-   </para>
-   <para>
-    Jeśli jesteś zaznajomiony z zarządzaniem sesją w PHPLIB, zauważysz że
-    pewnie koncepcje są podobne w obsłudze sesji PHP.
-   </para>
-   <para>
-    Gość wchodzący na twoją stronę WWW otrzymuje unikalny identyfikator, tzw.
-    id sesji. Jest ono przechowywane albo jako ciasteczko po stronie
-    użytkownika lub propagowane w URL'u.
-   </para>
-   <para>
-    Obsługa sesji pozwala ci na rejestrowanie dowolnej ilości zmiennych, które
-    mają być przekazywane pomiędzy stronami. Kiedy gość wchodzi na twoją
-    strone, PHP automatycznie sprawdzi (jeśli session.auto_start jest ustawione
-    na 1) lub na twoje życzenie (jawnie przez wywołanie
-    <function>session_start</function> lub niejawnie przez wywołanie
-    <function>session_register</function>) czy specyficzne id sesji zostało
-    przypisane. Jeśli tak, poprzednio zachowane środowisko jest odtwarzane.
-   </para>
-   <para>
-    Wszystkie zarejestrowane zmienne są serializowane po wykonaniu całego kodu
-    strony. Zarejestrowane zmienne, które są niezdefiniowane, są zaznaczane
-    jako niezdefiniowane. Nie są one definiowane przez moduł sesji w
-    następujących po sobie wywołaniach, chyba że użytkownik zdefiniuje je
-    później.
-   </para>
-   <para>
-    Opcje konfiguracyjne <link
-    linkend="ini.track-vars"><literal>track_vars</literal></link> i
-    <link
-    linkend="ini.register-globals"><literal>register_globals</literal></link>
-    wpływają na to, jak zmienne sesyjne są przechowywane i odtwarzane.
-   </para>
 
-   <note>
+  <partintro>
+   <section id="session.intro">
+    &reftitle.intro;
     <para>
-     Od PHP w wersji 4.0.3 opcja <link
-     linkend="ini.track-vars"><literal>track_vars</literal></link> jest zawsze
-     włączona.
+     Obsługa sesji w PHP ma na celu zapewnienie sposobu na zachowanie pewnych
+     danych w trakcie następujących po sobie wywołań strony. Pozwala to na
+     budowanie bardziej spersonalizowanych aplikacji i zwiększenie
+     atrakcyjności twojej strony internetowej.
     </para>
-   </note>
-   <note>
     <para>
-     Od wersji PHP 4.1.0 dostępna jest globalna zmienna
-     <varname>$_SESSION</varname>, podobnie jak <varname>$_POST</varname>,
-     <varname>$_GET</varname>, <varname>$_REQUEST</varname> i tak dalej. W
-     odróżnieniu od <varname>$HTTP_SESSION_VARS</varname>,
-     <varname>$_SESSION</varname> jest zawsze globalna. W związku z tym
-     <literal>global</literal> nie powinno być użyte do
+     Gość wchodzący na twoją stronę WWW otrzymuje unikalny identyfikator, tzw.
+     id sesji. Jest ono przechowywane albo jako ciasteczko po stronie
+     użytkownika lub propagowane w URL'u.
+    </para>
+    <para>
+     Obsługa sesji pozwala ci na rejestrowanie dowolnej ilości zmiennych, które
+     mają być przekazywane pomiędzy stronami. Kiedy gość wchodzi na twoją
+     strone, PHP automatycznie sprawdzi (jeśli <link
+      linkend="ini.session.auto-start">session.auto_start</link> jest ustawione
+     na 1) lub na twoje życzenie (jawnie przez wywołanie
+     <function>session_start</function> lub niejawnie przez wywołanie
+     <function>session_register</function>) czy specyficzne id sesji zostało
+     przypisane. Jeśli tak, poprzednio zachowane środowisko jest odtwarzane.
+    </para>
+    <caution>
+     <para>
+      Po włączeniu dyrektywy
+      <link linkend="ini.session.auto-start">session.auto_start</link> nie
+      jest możliwe dodawanie obiektów do sesji. Dzieje się tak, ponieważ
+      definicje klas muszą być załadowane przed rozpoczęciem sesji aby
+      możliwe było odtworzenie obiektów zawartych w sesji.
+     </para>
+    </caution>
+    <para>
+     Wszystkie zarejestrowane zmienne są serializowane po wykonaniu całego kodu
+     strony. Zarejestrowane zmienne, które są niezdefiniowane, są zaznaczane
+     jako niezdefiniowane. Nie są one definiowane przez moduł sesji w
+     następujących po sobie wywołaniach, chyba że użytkownik zdefiniuje je
+     później.
+    </para>
+    <warning>
+     <para>
+      Niektóre typy danych nie mogą być serializowane, a w związku z tym
+      przechowywane w sesjach. Do typów takich należą zasoby
+      (<type>resource</type>) lub obiekty z zapętlonymi referencjami (np.
+      obiekty, które przekazują referencje do siebie do innego obiektu).
+     </para>
+    </warning>
+    <note>
+     <para>
+      Obsługa sesji została dodana w PHP 4.0.
+     </para>
+    </note>
+    <note>
+     <para>
+      Należy zauważyć, że zapis sesji nie jest tworzony dopóki nie zostanie w
+      niej zarejestrowana zmienna poprzez funkcję
+      <function>session_register</function> lub przez dodanie klucza do tablicy
+      superglobalnej <varname>$_SESSION</varname>. Dzieje się tak nawet pomimo
+      faktu rozpoczęcia sesji poprzez wywołanie funkcji
+      <function>session_start</function>.
+     </para>
+    </note>
+   </section>
+   <section id="session.security">
+    <title>Bezpieczeństwo sesji</title>
+    <para>
+     Odnośnik zewnętrzny: <ulink url="&url.session-fixation;">Session
+      fixation</ulink>
+    </para>
+    <para>
+     Moduł sesji nie może zagwarantować, że informacje, które są przechowywane
+     w sesji, mogą być przeglądane tylko przez użytkownika, który stworzył tą
+     sesję. Niezbędne jest przedsięwzięcie dodatkowych działań aby ochronić
+     spójność sesji, zależnie od wartości do niej przypisanych.
+    </para>
+    <para>
+     Należy ocenić wartość danych przechowywanych w sesjach i zastosować
+     dodatkowe zabezpieczenia - działania takie są zazwyczaj powiązane ze
+     zmniejszeniem wygody użytkowników. Na przykład, aby ochronić użytkowników
+     przed prostymi sposobami social engineering, należy włączyć dyrektywę
+     <literal>session.use_only_cookies</literal>. W takim przypadku użytkownik
+     musi mieć w swojej przeglądarce włączone ciasteczka - inaczej sesje nie
+     będą działać.
+    </para>
+    <para>
+     Istnieje kilka dróg, przez które istniejący identyfikator sesji może
+     zostać przejęty przez osoby trzecie. Przejęty identyfikator sesji pozwala
+     osobom trzecim uzyskać dostęp do wszystkich zasobów powiązanych z daną
+     sesją. Po pierwsze, identyfikator może być przejęty poprzez URLe
+     zawierające identyfikatory sesji. Jeśli serwis zawiera linki do stron
+     zewnętrznych, URL zawierający identyfikator sesji może być zapisany w
+     logach odnośników (referrer) tego zewnętrznego serwisu. Po drugie,
+     bardziej aktywny napastnik może podsłuchać ruch sieciowy. Jeśli nie jest
+     on zaszyfrowany, identyfikatory będą przesyłane przez sieć czystym
+     tekstem. Rozwiązaniem tego problemu jest zaimplementowanie szyfrowania
+     SSL i uczynienie go obowiązkowym dla wszystkich użytkowników.
+    </para>
+   </section>
+   <section id="session.requirements">
+    &reftitle.required;
+    &no.requirement;
+    <note>
+     <para>
+      Opcjonalnie możliwe jest używanie do przechowywania sesji pamięci
+      współdzielonej (mm), co zostało zaimplementowane przez Ralfa S.
+      Engelschalla. Należy pobrać rozszerzenie
+      <ulink url="&url.mm;">mm</ulink> i zainstalować je. Opcja ta nie jest
+      dostępna na platformy Windows. Moduł przechowywania sesji mm nie
+      gwarantuje jednak, że równoczesny dostęp do tej samej sesji jest
+      właściwie blokowany. Bardziej poprawne może być zastosowanie systemów
+      plików opartych o pamięć współdzieloną (takich jak tmpfs w systemach
+      Solaris/Linux lub /dev/md na BSD) do przechowywania plików sesji,
+      poniważ są one prawidłowo blokowane. Dane sesji są przechowywane w
+      pamięci, a więc restart serwera HTTP powoduje ich usunięcie.
+     </para>
+    </note>
+   </section>
+
+   &reference.session.configure;
+
+   &reference.session.ini;
+
+   <section id="session.resources">
+    &reftitle.resources;
+    &no.resource;
+   </section>
+
+   &reference.session.constants;
+
+   <section id="session.examples">
+    &reftitle.examples;
+    <note>
+     <para>
+      Od wersji PHP 4.1.0 dostępna jest globalna zmienna
+      <varname>$_SESSION</varname>, podobnie jak <varname>$_POST</varname>,
+      <varname>$_GET</varname>, <varname>$_REQUEST</varname> i tak dalej.  W
+      odróżnieniu od <varname>$HTTP_SESSION_VARS</varname>,
+      <varname>$_SESSION</varname> jest zawsze globalna. W związku z tym, nie
+      ma konieczności stosowania słowa kluczowego <link
+       linkend="language.variables.scope"><command>global</command></link> dla
+      zmiennej <varname>$_SESSION</varname>. Należy pamiętać, że dokumentacja
+      została zmieniona tak, aby zalecać stosowanie wszędzie
+      <varname>$_SESSION</varname>. Możliwa jest jednak zamiana
+      <varname>$_SESSION</varname> na <varname>$HTTP_SESSION_VARS</varname>,
+      zależnie od preferencji. Należy także zauważyć, że aby zmienna
+      <varname>$_SESSION</varname> była dostępna, niezbędne jest rozpoczęcie
+      sesji poprzez użycie funkcji <function>session_start</function>.
+     </para>
+     <para>
+      Klucze tablicy asocjacyjnej <varname>$_SESSION</varname> podlegają tym
+      samym ograniczeniom co nazwy zwykłych zmiennych w PHP, tzn. nie mogą
+      rozpoczynać się od liczby i muszą rozpoczynać się od litery lub znaku
+      podkreślenia. Więcej szczegółów można znaleźć w rozdziale
+      <link linkend='language.variables'>zmienne</link>.
+     </para>
+    </note>
+    <para>
+     Jeśli opcja <link
+      linkend="ini.register-globals"><literal>register_globals</literal></link>
+     jest wyłączona, tylko pozycje należące do zmiennej asocjacyjnej
+     <varname>$_SESSION</varname> mogą być zarejestrowane jako
+     zmienne sesyjne. Odtworzone zmienne sesyjne będą dostępne tylko w zmiennej
      <varname>$_SESSION</varname>.
     </para>
-   </note>
-   <para>
-    Jeśli włączona jest opcja <link
-    linkend="ini.track-vars"><literal>track_vars</literal></link> a
-    <link
-    linkend="ini.register-globals"><literal>register_globals</literal></link>
-    jest wyłączona, tylko pozycje należące do zmiennej asocjacyjnej
-    <varname>$HTTP_SESSION_VARS</varname> mogą być zarejestrowane jako
-    zmienne sesyjne. Odtworzone zmienne sesyjne będą dostępne tylko w zmiennej
-    <varname>$HTTP_SESSION_VARS</varname>.
-    <example>
-     <title>
-      Rejestracja zmiennej z włączoną opcją <link
-      linkend="ini.track-vars"><literal>track_vars</literal></link>
-     </title>
-     <programlisting role="php">
-<![CDATA[
-<?php
-session_start();
-if (isset($HTTP_SESSION_VARS['count'])) {
-    $HTTP_SESSION_VARS['count']++;
-}
-else {
-    $HTTP_SESSION_VARS['count'] = 0;
-}
-?>
-]]>
-     </programlisting>
-    </example>
-   </para>
-   <para>
-    Użycie <varname>$_SESSION</varname> (lub
-    <varname>$HTTP_SESSION_VARS</varname> dla wersji PHP 4.0.6 i starszych)
-    jest wskazane ze względów bezpieczeństwa i czytelności kodu. Używając
-    <varname>$_SESSION</varname> lub <varname>$HTTP_SESSION_VARS</varname> nie
-    ma potrzeby używać funkcji
-    session_register()/session_unregister()/session_is_registered().
-    Użytkownicy mogą uzyskiwać dostęp do zmiennych sesyjnych tak jak do
-    normalnych zmiennych.
-    <example>
-     <title>
-      Rejestrowanie zmiennych przez $_SESSION
-     </title>
-     <programlisting role="php">
+    <para>
+     Użycie <varname>$_SESSION</varname> (lub
+     <varname>$HTTP_SESSION_VARS</varname> dla wersji PHP 4.0.6 i starszych)
+     jest wskazane ze względów poprawionego bezpieczeństwa i czytelności kodu. Używając
+     <varname>$_SESSION</varname> nie ma potrzeby używać funkcji
+     <function>session_register()</function>,
+     <function>session_unregister()</function> czy
+     <function>session_is_registered()</function>. Zmienne sesyjne są dostępne
+     tak jak wszystkie inne zmienne. 
+     <example>
+      <title>
+       Rejestrowanie zmiennych przez <varname>$_SESSION</varname>
+      </title>
+      <programlisting role="php">
 <![CDATA[
 <?php
 session_start();
@@ -117,13 +195,15 @@ if (!isset($_SESSION['count'])) {
 }
 ?>
 ]]>
-     </programlisting>
-    </example>
-    <example>
-     <title>
-      Wyrejestrowywanie zmiennej korzystając z $_SESSION
-     </title>
-     <programlisting role="php">
+      </programlisting>
+     </example>
+     <example>
+      <title>
+       Wyrejestrowywanie zmiennej korzystając z <varname>$_SESSION</varname>
+       przy wyłączonej dyrektywie <link
+        linkend="ini.register-globals">register_globals</link>
+      </title>
+      <programlisting role="php">
 <![CDATA[
 <?php
 session_start()
@@ -131,336 +211,172 @@ session_start()
 unset($_SESSION['count']);
 ?>
 ]]>
-     </programlisting>
-    </example>
-   </para>
-   <para>
-    Jeśli włączona jest opcja <link
-    linkend="ini.register-globals"><literal>register_globals</literal></link>,
-    wszystkie globalne zmienne mogą być zarejestrowane jako zmienne sesyjne a
-    zmienne sesyjne będą odtworzone do odpowiadających im zmiennych
-    globalnych. Ponieważ PHP musi wiedzieć które globalne zmienne są
-    zarejestrowane jako zmienne sesyjne, użytkownik musi użyć funkcji
-    session_register() podczas gdy
-    <varname>$HTTP_SESSION_VARS</varname>/<varname>$_SESSION</varname> nie
-    muszą używać session_register().
-    <caution>
-     <para>
-      Jeśli używane są tablice
-      <varname>$HTTP_SESSION_VARS</varname>/<varname>$_SESSION</varname> i
-      i wyłączona jest opcja <link
-       linkend="ini.register-globals"><literal>register_globals</literal></link>,
-      nie powinno się używać <function>session_register</function>,
-      <function>session_is_registered</function> i
-      <function>session_unregister</function>.
-     </para>
-     <para>
-      Jeśli włączona zostanie opcja <link
-       linkend="ini.register-globals"><literal>register_globals</literal></link>,
-      powinno się używać <function>session_unregister</function> ponieważ
-      zmienne sesyjne są rejestrowane jako zmienne globalne kiedy dane sesyjne
-      są deserializowane. Wyłączenie <link
-       linkend="ini.register-globals"><literal>register_globals</literal></link>
-      jest zalecane ze względów bezpieczeństwa i wydajności.
-     </para>
-    </caution>
-    <example>
-     <title>
-      Rejestracja zmiennych z włączoną opcją <link
-      linkend="ini.register-globals"><literal>register_globals</literal></link>
-     </title>
-     <programlisting role="php">
-<![CDATA[
-<?php
-if (!session_is_registered('count')) {
-    session_register('count');
-    $count = 0;
-}
-else {
-    $count++;
-}
-?>
-]]>
-     </programlisting>
-    </example>
-   </para>
-   <para>
-    Jeśli włączone są obie opcje, <link
-    linkend="ini.track-vars"><literal>track_vars</literal></link> i
-    <link
-    linkend="ini.register-globals"><literal>register_globals</literal></link>,
-    globalne zmienne i wpisy w
-    <varname>$HTTP_SESSION_VARS</varname>/<varname>$_SESSION</varname>
-    będą referencjami do tej samej, już zarejestrowanej zmiennej. 
-   </para>
-   <para>
-    Jeśli użytkownik użyje session_register() do zarejestrowania zmiennej
-    sesyjnej,
-    <varname>$HTTP_SESSION_VARS</varname>/<varname>$_SESSION</varname> nie
-    będą zawierały tych zmiennych w tablicy dopóki nie zostanie ona odczytana
-    z miejsca przechowywania sesji (np. do czasu następnego wywołania).
-   </para>
-   <para>
-    Istnieją dwie metody propagacji identyfikatora sesji:
-    <itemizedlist>
-     <listitem>
-      <simpara>
-       Ciasteczka
-      </simpara>
-     </listitem>
-     <listitem>
-      <simpara>
-       Parametry URL'a
-      </simpara>
-     </listitem>
-    </itemizedlist>
-   </para>
-   <para>
-    Moduł sesji obsługuje obie metody. Ciasteczka są metodą optymalną, ale
-    ponieważ nie są one pewne (klienci nie muszą ich akceptować), nie możemy
-    na nich polegać. Druga metora wstawia identyfikatory sesji bezpośrednio do
-    URL'i.
-   </para>
-   <para>
-    PHP może to robić 'przezroczyście' jeśli został skompilowany z opcją
-    <link linkend="install.configure.enable-trans-sid">
-    <literal>--enable-trans-sid</literal></link>. Jeśli włączysz tą opcję,
-    względne URI zostaną automatycznie podmienione tak, aby zawierały
-    identyfikator sesji. Możesz także użyć stałej <literal>SID</literal> która
-    jest definiowana jeśli klient nie wysłał odpowiedniego ciastka. <literal>
-    SID</literal> jest albo w postaci <literal>nazwa_sesji=id_sesji</literal>
-    lub pustym stringiem.
-   </para>
-   <note>
-    <para>
-     Dyrektywa <link linkend="ini.arg_separator.output">arg_separator.output
-     </link> którą można umieścić w pliku konfiguracyjnym &php.ini; pozwala
-     ustawić własny separator argumentów.
+      </programlisting>
+     </example>
     </para>
-   </note>
-   <para>
-    Poniższy przykład demonstruje jak zarejestrować zmienną i jak prawidłowo
-    wstawić link do kolejnej strony korzystając ze stałej SID.
-    <example>
-     <title>Zliczanie ilości odwiedzin pojedyńczego użytkownika</title>
-     <programlisting role="php">
+    <para>
+     <caution>
+      <para>
+       Nie należy usuwać całej tablicy <varname>$_SESSION</varname> wyrażeniem
+       <literal>unset($_SESSION)</literal>, jako że uniemożliwi to
+       rejestrowanie zmiennych sesyjnych poprzez tablicę superglobalną
+      </para>
+     </caution>
+    </para>
+    <warning>
+     <para>
+      W sesjach nie jest możliwe zapisywanie referencji, jako że nie ma
+      sensownej metody przywracania referencji do innych zmiennych.
+     </para>
+    </warning>
+    <para>
+     Jeśli włączona jest dyrektywa <link
+      linkend="ini.register-globals">register_globals</link>, każda globalna
+     zmienna może zostać zarejestrowana jako zmienna sesyjna. Po restarcie
+     sesji, zmienne te są przywracane jako odpowiednie zmienne globalne.
+     Ponieważ PHP musi wiedzieć które zmienne są zarejestrowane jako zmienne
+     sesji, nalezy je zarejestrować poprzez funkcję
+     <function>session_register</function>. Etap ten można pominąć poprzez
+     dodawanie wpisów do tablicy <varname>$_SESSION</varname>.
+     <caution>
+      <para> W wersjach wcześniejszych od PHP 4.3, używając tablicy
+       <varname>$_SESSION</varname> przy wyłączonej dyrektywie <link
+        linkend="ini.register-globals">register_globals</link>, nie należy
+       używać funkcji <function>session_register</function>,
+       <function>session_is_registered</function> i
+       <function>session_unregister</function>.  Wyłączenie <link
+        linkend="ini.register-globals">register_globals</link> jest zalecane
+       ze względów bezpieczeństwa i wydajności.
+      </para>
+     </caution>
+    </para>
+    <para>
+     Jeśli dyrektywa <link
+      linkend="ini.register-globals">register_globals</link> jest włączona, to
+     zmienne globalne i wpisy w tablicy <varname>$_SESSION</varname>
+     automatycznie wskazują na tą samą wartość, która została zarejestrowana w
+     poprzedniej instancji sesji. Jednakże jeśli zmienna została
+     zarejestrowana poprzez tablicę <varname>$_SESSION</varname>, to zmienna
+     globalna dostępna jest dopiero w następnym wywołaniu.
+    </para>
+    <para>
+     PHP w wersji 4.2.3 i wcześniejszych posiada pewien błąd. Przy rejestracji
+     w sesji nowej zmiennej poprzez funkcję
+     <function>session_register</function>, wpis w zasięgu globalnym i wpis w
+     <varname>$_SESSION</varname> nie będą referencjami do tej samej wartości
+     do czasu następnego wywołania <function>session_start</function>. Na
+     przykład, modyfikacja nowo zarejestrowanej zmiennej globalej nie znajdzie
+     odbicia we wpisie w tablicy <varname>$_SESSION</varname>. Błąd ten został
+     poprawiony w PHP 4.3.
+    </para>
+   </section>
+
+   <section id="session.idpassing">
+    <title>Przekazywanie identyfikatora sesji</title>
+    <para>
+     Istnieją dwie metody propagacji identyfikatora sesji:
+     <itemizedlist>
+      <listitem>
+       <simpara>
+        Ciasteczka
+       </simpara>
+      </listitem>
+      <listitem>
+       <simpara>
+        Parametry URL'a
+       </simpara>
+      </listitem>
+     </itemizedlist>
+    </para>
+    <para>
+     Moduł sesji obsługuje obie metody. Ciasteczka są metodą optymalną, ale
+     jako że nie są one zawsze dostępne, zapewniona jest także metoda
+     alternatywna. Metoda ta polega na dopisywaniu identyfikatora bezpośrednio
+     do adresu URL.
+    </para>
+    <para>
+     PHP jest zdolne do przezroczystego przetwarzania odnośników. Używając PHP
+     w wersji wcześniejszej niż 4.2, niezbędne jest ręczne włączenie tej opcji
+     przy kompilacji. W systemach Unix, należy dodać parametr
+     <link linkend="install.configure.enable-trans-sid">
+      <literal>--enable-trans-sid</literal></link> przy konfiguracji
+     kompilacji. Jeśli PHP zostanie skompilowane z tą opcją, a także włączona
+     zostanie dyrektywa konfiguracji <literal>session.use_trans_sid</literal>,
+     wszystkie względne adresy URI zostaną automatycznie poprawione tak, aby
+     zawierały identyfikator sesji. 
+    </para>
+    <note>
+     <para>
+      Dyrektywa <link linkend="ini.arg-separator.output">arg_separator.output
+      </link>, którą można umieścić w pliku konfiguracyjnym &php.ini;, pozwala
+      ustawić własny separator argumentów. Dla zachowania pełnej zgodności ze
+      standardem XHTML, należy w tym miejscu podać wartość &amp;amp;.
+     </para>
+    </note>
+    <para>
+     Możliwe jest także zastosowanie stałej <literal>SID</literal>, która jest
+     definiowana w momencie rozpoczęcia sesji. Jeśli klient nie przesłał
+     poprawnego ciasteczka sesyjnego, stała ta ma postać
+     <literal>nazwa_sesji=id_sesji</literal>. W przeciwnym przypadku jest to
+     pusty ciąg. W związku z tym, stała ta może być wstawiona do adresów bez
+     konieczności stosowania instrukcji warunkowych.
+    </para>
+    <para>
+     Poniższy przykład demonstruje jak zarejestrować zmienną i jak prawidłowo
+     wstawić link do kolejnej strony korzystając ze stałej SID.
+     <example>
+      <title>Zliczanie ilości odwiedzin pojedyńczego użytkownika</title>
+      <programlisting role="php">
 <![CDATA[
 <?php
 if (!session_is_registered('count')) {
     session_register('count');
     $count = 1;
-}
-else {
+} else {
     $count++;
 }
 ?>
 
-Witaj gościu. Oglądasz tą stronę <?php echo $count; ?> raz.<p>
+<p>
+ Witaj gościu. Oglądasz tą stronę <?php echo $count; ?> raz.
+</p>
 
-<?php
-# <?php echo SID?> (<?=SID?> może być użyte jeśli włączona jest możliwość
-# używania krótkich tagów) jest konieczne do zachowania identyfikatora
-# sesji jeśli użytkownik wyłączył ciastka
-?>
-
-Aby kontynuować, <A HREF="nextpage.php?<?php echo SID?>">kliknij tutaj</A>
+<p>
+ Aby kontynuować, <a href="nextpage.php?<?php echo strip_tags(SID); ?>">kliknij tutaj</A>
+</p>
 ]]>
-     </programlisting>
-    </example>
-   </para>
-   <para>
-    <literal>&lt;?=SID?&gt;</literal> nie jest konieczne jeśli przy kompilacji
-    PHP użyta została opcja
-    <link linkend="install.configure.enable-trans-sid">
-    <literal>--enable-trans-sid</literal></link>.
-   </para>
-   <note>
-    <para>
-     PHP zakłada, że bezwzględne URLe odnoszą się do zewnętrznych serwisów,
-     więc nie trzeba przekazywać SID, ponieważ istniałoby niebezpieczeństwo
-     podkradania SIDów przez inny serwer.
+      </programlisting>
+     </example>
     </para>
-   </note>
-   <para>
-    Aby zaimplementować przechowywanie danych sesyjnych w bazie danych lub w
-    dowolnej innej postaci, musisz użyć
-    <function>session_set_save_handler</function> do stworzenia zestawu
-    funkcji przechowujących dane.
-   </para>
-   <para>
-    System zarządzania sesją obsługuje wiele opcji konfiguracyjnych, które
-    możesz wstawić do swojego pliku &php.ini;. Oto ich krótki przegląd.
-    <itemizedlist>
-     <listitem>
-      <simpara>
-       <literal>session.save_handler</literal> definiuje nazwę procedury
-       obsługi, która jest używana do przechowywania i odczytu danych
-       skojarzonych z sesją. Domyślnie <literal>files</literal>.
-      </simpara>
-     </listitem>
-     <listitem>
-      <simpara>
-       <literal>session.save_path</literal> definiuje argument, który jest
-       przekazywany procedurze obsługi zapisu danych. Jeśli wybierzesz
-       domyślną procedurę obsługi, jest to ścieżka gdzie tworzone będą pliki z
-       danymi. Domyślnie <literal>/tmp</literal>. Jeśli głębokość ścieżki
-       określonej w parametrze <literal>session.save_path</literal> jest
-       większa niż 2, nie przeprowadzone zostanie zbieranie śmieci.
-      </simpara>
-      <warning>
-       <para>
-        Jeśli w tej opcji ustawisz katalog, który jest ogólnie dostępny, jak
-        na przykład <filename>/tmp</filename> (domyślna wartość), inni
-        użytkownicy serwera będą w stanie przechwycić sesję przez pobranie
-        listy plików z tego katalogu.
-       </para>
-      </warning>
-     </listitem>
-     <listitem>
-      <simpara>
-       <literal>session.name</literal> określa nazwę sesji, która jest używana
-       jako nazwa ciastka. Powinna zawierać tylko znaki alfanumeryczne.
-       Domyślnie <literal>PHPSESSID</literal>.
-      </simpara>
-     </listitem>
-     <listitem>
-      <simpara>
-       <literal>session.auto_start</literal> określa, czy moduł sesji
-       rozpoczyna sesję na początku wywołania. Domyślnie
-       <literal>0</literal> (wyłączony).
-      </simpara>
-     </listitem>
-     <listitem>
-      <simpara>
-       <literal>session.cookie_lifetime</literal> określa długość życia w
-       sekundach ciastka przesyłanego do przeglądarki. Wartość 0 oznacza
-       "dopóki przeglądarka nie została zamknięta". Domyślnie
-       <literal>0</literal>.
-      </simpara>
-     </listitem>
-     <listitem>
-      <simpara>
-       <literal>session.serialize_handler</literal> określa nazwę procedury
-       obsługi, która zostanie użyta do serializacji/odserializacji danych.
-       Obecnie obsługiwany jest wewnętrzny format PHP (nazwa <literal>php
-       </literal> i WDDX (nazwa <literal>wddx</literal>). WDDX jest jedynym
-       dostępnym formatem jeśli PHP zostało skompilowane z
-       <link linkend="ref.wddx">obsługą WDDX</link>. Domyślnie
-       <literal>php</literal>.
-       </simpara>
-     </listitem>
-     <listitem>
-      <simpara>
-       <literal>session.gc_probability</literal> określa prawdopodobieństwo w
-       procentach rozpoczęcia procedury gc (garbage collection - zbieranie
-       śmieci) przy każdym wywołaniu. Domyślnie <literal>1</literal>.
-      </simpara>
-     </listitem>
-     <listitem>
-      <simpara>
-       <literal>session.gc_maxlifetime</literal> określa ilość sekund, po
-       jakich dane będą rozpoznawane jako 'śmieci' i usuwane.
-      </simpara>
-     </listitem>
-     <listitem>
-      <simpara>
-       <literal>session.referer_check</literal> zawiera podciąg, z którym
-       HTTP_REFERER ma być sprawdzany. Jeśli HTTP_REFERER został wysłany przez
-       klienta i nie zawierał podanego podciągu, identyfikator sesji podany
-       przez takiego klienta zostanie uznany za nieważny. Domyślnie jest to
-       ciąg pusty. 
-      </simpara>
-     </listitem>
-     <listitem>
-      <simpara>
-       <literal>session.entropy_file</literal> podaje ścieżkę do zewnętrznego
-       zasobu (pliku), który będzie użyty jako dodatkowe źródło entropii w
-       procesie tworzenia identyfikatora sesji. Przykłady to
-       <literal>/dev/random</literal> lub
-       <literal>/dev/urandom</literal>, które są dostępne na wielu systemach
-       Unix.
-      </simpara>
-     </listitem>
-     <listitem>
-      <simpara>
-       <literal>session.entropy_length</literal> określa liczbę bajtów, która
-       będzie odczytana z pliku podanego powyżej. Domyślnie
-       <literal>0</literal> (wyłączona).
-      </simpara>
-     </listitem>
-     <listitem>
-      <simpara>
-       <literal>session.use_cookies</literal> określa czy moduł będzie używał
-       ciasteczek do przechowywania identyfikatora sesji po stronie klienta.
-       Domyślnie <literal>1</literal> (włączona).
-      </simpara>
-     </listitem>
-     <listitem>
-      <simpara>
-       <literal>session.use_only_cookies</literal> określa czy moduł będzie
-       używał <emphasis role="strong">tylko</emphasis> ciasteczek do
-       przechowywania identyfikatora sesji po stronie klienta. Domyślna
-       wartość to <literal>0</literal> (dla wstecznej kompatybilności).
-       Włączenie tej opcji zapobiega atakom opartym o przekazywanie
-       identyfikatora sesji przez URL. Ta opcja została dodana w
-       <literal>PHP</literal> 4.3.0.
-      </simpara>
-     </listitem>
-     <listitem>
-      <simpara>
-       <literal>session.cookie_path</literal> określa ścieżkę która będzie
-       podana w session_cookie. Domyślnie <literal>/</literal>.
-      </simpara>
-     </listitem>
-     <listitem>
-      <simpara>
-       <literal>session.cookie_domain</literal> określa domenę która ma być
-       podana w session_cookie. Domyślnie - pusta.
-      </simpara>
-     </listitem>
-     <listitem>
-      <simpara>
-       <literal>session.cache_limiter</literal> określa metodę używaną do
-       przechowywania stron sesyjnych w pamięci podręcznej 
-       (nocache/private/private_no_expire/public). Domyślnie
-       <literal>nocache</literal>.
-      </simpara>
-     </listitem>
-     <listitem>
-      <simpara>
-       <literal>session.cache_expire</literal> określa czas życia w minutach
-        stron sesyjnych zachowanych w pamięci podręcznej. Nie ma to efektu dla
-        metody <literal>nocache</literal>. Domyślnie <literal>180</literal>
-      </simpara>
-     </listitem>
-     <listitem>
-      <simpara>
-       <literal>session.use_trans_sid</literal> określa czy będzie używana
-       obsługa przezroczystego przekazywania identyfikatora sesji. Opcja brana
-       pod uwagę tylko jeśli PHP zostało skompilowane z opcją
-       <link linkend="install.configure.enable-trans-sid">
-       <literal>--enable-trans-sid</literal></link>.
-       Domyślnie <literal>1</literal> (włączona).
-      </simpara>
-     </listitem>
-     <listitem>
-      <simpara>
-       <literal>url_rewriter.tags</literal> określa które tagi HTML zostają
-       przepisane w celu dopisania identyfikatora sesji jeśli włączona została
-       opcja przezroczystego przekazywania identyfikatora sesji. Domyślnie
-       <literal>a=href,area=href,frame=src,input=src,form=fakeentry</literal>
-      </simpara>
-     </listitem>
-    </itemizedlist>
+    <para>
+     Funkcja <function>strip_tags</function> została zastosowana w celu
+     zapobieżenia atakom typu XSS. 
+    </para>
+    <para>
+     Dodawanie stałej SID do adresów, jak to zostało zrobione w powyższym
+     przykładzie, nie jest konieczne, jeśli PHP zostało skompilowane z opcją
+     <link linkend="ini.session.use-trans-sid">--enable-trans-sid</link>.
+    </para>
     <note>
      <para>
-      Obsługa sesji została dodana w PHP 4.0.
+      PHP zakłada, że bezwzględne URLe odnoszą się do zewnętrznych serwisów,
+      więc nie trzeba przekazywać SID, ponieważ istniałoby niebezpieczeństwo
+      podkradania SIDów przez inny serwer.
      </para>
     </note>
-   </para>
+   </section>
+   <section id="session.customhandler">
+    <title>Custom Session Handlers</title>
+    <para>
+     Aby zaimplementować przechowywanie danych sesyjnych w bazie danych lub w
+     dowolnej innej postaci, należy użyć
+     <function>session_set_save_handler</function> do stworzenia zestawu
+     funkcji przechowujących dane.
+    </para>
+   </section>
   </partintro>
 
-&reference.session.functions;
+  &reference.session.functions;
 
  </reference>
 
