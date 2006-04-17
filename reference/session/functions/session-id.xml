@@ -1,53 +1,84 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.8 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.6 $ -->
+<!-- EN-Revision: 1.11 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.7 $ -->
   <refentry id="function.session-id">
    <refnamediv>
     <refname>session_id</refname>
     <refpurpose>Pobierz i/lub ustaw identyfikator bieżącej sesji</refpurpose>
    </refnamediv>
-   <refsect1>
-    <title>Opis</title>
+   <refsect1 role="description">
+    &reftitle.description;
      <methodsynopsis>
       <type>string</type><methodname>session_id</methodname>
       <methodparam choice="opt"><type>string</type><parameter>id</parameter></methodparam>
      </methodsynopsis>
     <para>
-     <function>session_id</function> zwraca identyfikator sesji dla bieżącej
-     sesji.
+     Funkcja <function>session_id</function> jest używana do pobierania i
+     ustawiania identyfikatora dla bieżącej sesji.
     </para>
-    <para>
-     Jeśli podany został parametr <parameter>id</parameter>, zostanie
-     on użyty do zmiany identyfikatora bieżącej sesji. Przy takim użyciu
-     <function>session_id</function> musi być wywołane przed
-     <function>session_start</function>. Zależnie od funkcji obsługi sesji,
-     nie wszystkie znaki są dozwolone wewnątrz identyfikatora sesji. Na
-     przykład, funkcje obsługi sesji oparte na plikach pozwalają tylko na
-     znaki z przedziału <literal>a-z, A-Z i 0-9</literal>.
-    </para>
-    <note>
-     <simpara>
-      Używając ciasteczek sesyjnych, podanie parametru
-      <parameter>id</parameter> funkcji <function>session_id</function>
-      spowoduje wysłanie nowego ciasteczka przy wywołaniu funkcji
-      <function>session_start</function>, niezależnie od tego czy bieżący
-      identyfikator sesji jest identyczny z tym, który ma być ustawiony.
-     </simpara>
-    </note>
     <para>
      Do pobrania nazwy i identyfikatora bieżącej sesji moża być użyta także
      stała <systemitem>SID</systemitem>, która zawiera string odpowiedni do
-     dodawania go do URLi. Zauważ, że <systemitem>SID</systemitem> jest
-     zdefiniowane tylko jeśli klient nie wysłał prawidłowego ciasteczka.
-     Przeczytaj także rozdział <link linkend="ref.session">Obsługa sesji</link>
-    </para>
-    <para>
-     Patrz także: <function>session_start</function>,
-     <function>session_set_save_handler</function> i <link
-      linkend="ini.session.save-handler">session.save_handler</link>.
+     dodawania go do URLi.  Przeczytaj także rozdział <link
+      linkend="ref.session">Obsługa sesji</link>
     </para>
    </refsect1>
-  </refentry>
+
+   <refsect1 role="parameters">
+    &reftitle.parameters;
+    <para>
+     <variablelist>
+      <varlistentry>
+       <term><parameter>id</parameter></term>
+       <listitem>
+        <para>
+         Jeśli podany został parametr <parameter>id</parameter>, zostanie
+         on użyty do zmiany identyfikatora bieżącej sesji. Przy takim użyciu
+         <function>session_id</function> musi być wywołane przed
+         <function>session_start</function>. Zależnie od funkcji obsługi sesji,
+         nie wszystkie znaki są dozwolone wewnątrz identyfikatora sesji. Na
+         przykład, funkcje obsługi sesji oparte na plikach pozwalają tylko na
+         znaki z przedziału <literal>a-z, A-Z i 0-9</literal>.
+        </para>
+        <note>
+         <simpara>
+          Używając ciasteczek sesyjnych, podanie parametru
+          <parameter>id</parameter> funkcji <function>session_id</function>
+          spowoduje wysłanie nowego ciasteczka przy wywołaniu funkcji
+          <function>session_start</function>, niezależnie od tego czy bieżący
+          identyfikator sesji jest identyczny z tym, który ma być ustawiony.
+         </simpara>
+        </note>
+      </listitem>
+     </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   <function>session_id</function> zwraca identyfikator bieżącej sesji lub
+   pusty ciąg (<literal>""</literal>) jeśli nie ma bieżącej sesji (nie
+   istnieje bieżący identyfikator sesji).
+  </para>
+ </refsect1>
+
+<refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>session_regenerate_id</function></member>
+    <member><function>session_start</function></member>
+    <member><function>session_set_save_handler</function></member>
+    <member>
+     <link linkend="ini.session.save-handler">session.save_handler</link>
+    </member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+
 
 <!-- Keep this comment at the end of the file
 Local variables:
