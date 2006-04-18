@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.3 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.6 $ -->
+<!-- EN-Revision: 1.6 Maintainer: qrak Status: ready -->
+<!-- $Revision: 1.7 $ -->
   <refentry id="function.min">
    <refnamediv>
     <refname>min</refname>
@@ -9,13 +9,13 @@
    <refsect1>
     <title>Opis</title>
      <methodsynopsis>
-      <type>number</type><methodname>min</methodname>
+      <type>mixed</type><methodname>min</methodname>
       <methodparam><type>number</type><parameter>arg1</parameter></methodparam>
       <methodparam><type>number</type><parameter>arg2</parameter></methodparam>
-      <methodparam choice="opt"><parameter>...</parameter></methodparam>
+      <methodparam choice="opt"><type>number</type><parameter>...</parameter></methodparam>
      </methodsynopsis>
      <methodsynopsis>
-      <type>number</type><methodname>min</methodname>
+      <type>mixed</type><methodname>min</methodname>
       <methodparam><type>array</type><parameter>liczby</parameter></methodparam>
      </methodsynopsis>
     <para>
@@ -23,52 +23,52 @@
      argumentów.
     </para>
     <para>
-     W pierwszym wariancie, po podaniu co najmniej dwóch argumentów,
-     <function>min</function> zwróci najmniejszy z nich. Można porównywać
-     nieograniczoną ilość wartości, jednak jeśli jedna z wartości jest
-     niezdefiniowana, funkcja <function>min</function> wygeneruje błąd.
+     Jeśli pierwszym i jedynym argumentem funkcji jest tablica, zwrócona
+     zostanie najmniejsza wartość z tej tablicy. Jeśli pierwszym argumentem
+     jest liczba stałoprzecinkowa, ciąg znakowy lub liczba zmiennoprzecinkowa,
+     należy podać przynajmniej dwa argumenty, a <function>min</function>
+     zwróci najmniejszy z nich.  Można porównywać nieograniczoną ilość
+     wartości.
     </para>
+    <note>
+     <para>
+      PHP będzie uznawał nieliczbowe wartości typu <type>string</type> jako 
+      <literal>0</literal>, jednakże zwracany będzie ciąg znakowy, jesli
+      zostanie on oznany numerycznie za najmniejszą wartość. Jeśli wiele
+      argumentów zostanie uznanych za wartość
+      <literal>0</literal>, to <function>min</function> zwróci wartość
+      najmniejszą alfanumerycznie, jeśli zostały podane jakiekolwiek ciągi
+      znakowe. W przeciwnym przypadku zwrócona zostanie wartość
+      <literal>0</literal>.
+     </para>
+    </note>
     <para>
-     W drugim wariancie, <function>min</function> zwróci najmniejszą wartość
-     z tablicy <parameter>liczby</parameter>.
-    </para>
-    <para>
-     Jeśli jedna lub więcej wartości jest typu , wszystkie
-     wartości zostaną potraktowane jako zmiennoprzecinkowe i taka też liczba
-     zostanie zwrócona.
-     Jeśli żadna spośród wartości nie jest typu <type>float</type>, wszystkie
-     zostaną potraktowane jako <type>integer</type> i zwrócona zostanie
-     wartość całkowita.
-     W razie błędu, <function>min</function> zwraca wartość <type>NULL</type>
-     i generuje błąd na poziomie <constant>E_WARNING</constant>.
-    </para>
-    <para>
-     <informalexample>  
-      <programlisting>  
+     <example>  
+      <title>Przykłady użycia <function>min</function></title>
+      <programlisting role="php">
 <![CDATA[  
-<?php  
-$a = 4;  
-$b = 9;  
-$c = 3;  
-$arr = array(99, 34, 11);  
+<?php
+echo min(2, 3, 1, 6, 7);  // 1
+echo min(array(2, 4, 5)); // 2
+echo min(0, 'hello');     // 0
+echo min('hello', 0);     // hello
+echo min('hello', -1);    // -1
 
-// Możesz chcieć zaimplementować własną obsługę błędów  
-// na wypadek błędu (niezdefioniowana wartość.  
-if (!$min_value = @min($a, $b, $c)) {  
-    echo "Nie można obliczyć wartości minimalnej. Spróbuj ponownie.";  
-} else {  
-    echo "Wartością minimalną jest $min_value";  
-}  
+// W przypadku podania wielu tablic, min porównuje je od lewej do prawej, 
+// A więc w poniższym przykładzie 2 == 2, ale 4 < 5
+$val = min(array(2, 4, 8), array(2, 5, 1)); // array(2, 4, 8)
 
-print min($arr);  // 11  
+// Jeśli podane zostaną tablice i nie-tablice, nigdy nie jest zwracana
+// tablica, jako że zawsze jest uznawana za element największy
+$val = min('string', array(2, 5, 7), 42);   // string
 
 ?>  
 ]]>  
       </programlisting>  
-     </informalexample>  
+     </example>  
     </para>
     <para>    
-    Patrz także: <function>max</function>.
+     Patrz także: <function>max</function> i <function>count</function>.
     </para>
    </refsect1>
   </refentry>
