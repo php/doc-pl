@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.7 $ -->
+<!-- EN-Revision: 1.8 Maintainer: qrak Status: ready -->
+<!-- $Revision: 1.8 $ -->
   <refentry id="function.srand">
    <refnamediv>
     <refname>srand</refname>
@@ -10,34 +10,39 @@
     <title>Opis</title>
      <methodsynopsis>
       <type>void</type><methodname>srand</methodname>
-      <methodparam><type>int</type><parameter>ziarno</parameter></methodparam>
+      <methodparam choice="opt"><type>int</type><parameter>ziarno</parameter></methodparam>
      </methodsynopsis>
     <para>
-     Inicjuje generator liczb losowych za pomocą ziarna
-     <parameter>ziarno</parameter>.
-     <informalexample>
+     Inicjuje generator liczb losowych za pomocą argumentu
+     <parameter>ziarno</parameter>. W PHP 4.2.0 i nowszych, argument
+     <parameter>ziarno</parameter> jest opcjonalny - domyślnie generator
+     inicjowany jest wartością losową.
+    </para>
+    <para>
+     <example>
+      <title>Przykład użycia <function>srand</function></title>
       <programlisting role="php">
 <![CDATA[
-// naziarnij mikrosekundami
-function make_seed() {
+<?php
+// zainicjalizuj mikrosekundami
+function make_seed()
+{
     list($usec,$sec) = explode(" ", microtime());
     return ((float)$sec+(float)$usec) * 100000;
 }
 srand(make_seed());
 $randval = rand();
+?>
 ]]>
       </programlisting>
-     </informalexample>
+     </example>
     </para>
-    <note>
-     <para>
-      Począwszy od PHP 4.2.0, nie trzeba już inicjować generatora liczb
-      losowych przed użyciem.
-     </para>
-    </note>
+    &note.randomseed;
     <simpara>
-     Patrz także: <function>rand</function>,
-     <function>getrandmax</function>, <function>mt_srand</function>.
+     Patrz także:
+     <function>rand</function>,
+     <function>getrandmax</function> i
+     <function>mt_srand</function>.
     </simpara>    
    </refsect1>
   </refentry>
