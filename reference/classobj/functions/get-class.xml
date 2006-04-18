@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.7 Maintainer: dombal Status: Ready -->
-<!-- $Revision: 1.5 $ -->
+<!-- EN-Revision: 1.8 Maintainer: dombal Status: Ready -->
+<!-- $Revision: 1.6 $ -->
   <refentry id="function.get-class">
    <refnamediv>
     <refname>get_class</refname>
@@ -10,7 +10,7 @@
     <title>Opis</title>
      <methodsynopsis>
       <type>string</type><methodname>get_class</methodname>
-      <methodparam><type>object</type><parameter>obiekt</parameter></methodparam>
+      <methodparam choice="opt"><type>object</type><parameter>obiekt</parameter></methodparam>
      </methodsynopsis>
     <para>
      Funkcja ta zwraca nazwę klasy, której <parameter>obiekt</parameter>
@@ -19,11 +19,18 @@
     </para>
     <note>
      <simpara>
-	  Klasa zdefiniowana w rozszerzeniu PHP zwracana jest w oryginalnej notacji.
-	  W PHP 4, <function>get_class</function> zwraca nazwę klasy zdefiniowanej przez
-      użytkownika małymi literami, ale w PHP 5 nazwa klasy zostanie zwrócona
-	  również w oryginalnej notacji, tak jak nazwy klas z rozszerzeń PHP.
+      Klasa zdefiniowana w rozszerzeniu PHP zwracana jest w oryginalnej
+      notacji.  W PHP 4, <function>get_class</function> zwraca nazwę klasy
+      zdefiniowanej przez użytkownika małymi literami, ale w PHP 5 nazwa klasy
+      zostanie zwrócona również w oryginalnej notacji, tak jak nazwy klas z
+      rozszerzeń PHP.
      </simpara>
+    </note>
+    <note>
+     <para>
+      Od PHP 5, argument <parameter>obiekt</parameter> jest opcjonalny, jeśli
+      funkcja została wywołana z wnętrza metody obiektu.
+     </para>
     </note>
     <para>
      <example>

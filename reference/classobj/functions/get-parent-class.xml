@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.6 Maintainer: dombal Status: Ready -->
-<!-- $Revision: 1.5 $ -->
+<!-- EN-Revision: 1.8 Maintainer: dombal Status: Ready -->
+<!-- $Revision: 1.6 $ -->
   <refentry id="function.get-parent-class">
    <refnamediv>
     <refname>get_parent_class</refname>
@@ -10,7 +10,7 @@
     <title>Opis</title>
      <methodsynopsis>
       <type>string</type><methodname>get_parent_class</methodname>
-      <methodparam><type>mixed</type><parameter>obiekt</parameter></methodparam>
+      <methodparam choice="opt"><type>mixed</type><parameter>obiekt</parameter></methodparam>
      </methodsynopsis>
     <para>
      Jeżeli <parameter>obiekt</parameter> jest obiektem, zwraca nazwę klasy 
@@ -21,6 +21,14 @@
      nazwę klasy przodka klasy o tej nazwie. Ta funkcjonalność została dodana
      w PHP 4.0.5.
     </para>
+    <note>
+     <para>
+      Od PHP 5, argument <parameter>obiekt</parameter> jest opcjonalny, jeśli
+      funkcja została wywołana z wnętrza metody obiektu. Jeśli zostanie
+      wywołana bez argumentu spoza metody, zwrócona zostanie wartość &false;
+      (lub &null; razem z ostrzeżeniem w wersjach starszych niż PHP 5.1.0).
+     </para>
+    </note>
     <para>
      <example>
       <title>Przykład użycia <function>get_parent_class</function></title>
