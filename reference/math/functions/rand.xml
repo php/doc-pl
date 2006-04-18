@@ -1,34 +1,62 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.7 $ -->
+<!-- EN-Revision: 1.15 Maintainer: qrak Status: ready -->
+<!-- $Revision: 1.8 $ -->
   <refentry id="function.rand">
    <refnamediv>
     <refname>rand</refname>
-    <refpurpose>Wygeneruj liczbę losową</refpurpose>
+    <refpurpose>Generuje losową liczbę stałoprzecinkową</refpurpose>
    </refnamediv>
    <refsect1>
     <title>Opis</title>
      <methodsynopsis>
       <type>int</type><methodname>rand</methodname>
-      <void/>
-     </methodsynopsis>
-     <methodsynopsis>
-      <type>int</type><methodname>rand</methodname>
-      <methodparam><type>int</type><parameter>min</parameter></methodparam>
+      <methodparam choice="opt"><type>int</type><parameter>min</parameter></methodparam>
       <methodparam><type>int</type><parameter>max</parameter></methodparam>
      </methodsynopsis>
     <simpara>
      Jeśli wywołana bez opcjonalnych argumentów <parameter>min</parameter> i
-     <parameter>max</parameter>, funkcja <function>rand</function> zwraca liczbę
-     pseudolosową z przedziału pomiędzy 0 a <constant>RAND_MAX</constant>.
-     Jeśli potrzebujesz liczby losowej z przedziału np. od 5 do 15 (włącznie),
-     użyj <literal>rand (5,15)</literal>.
+     <parameter>max</parameter>, funkcja <function>rand</function> zwraca
+     pseudolosową liczbę stałoprzecinkową z przedziału pomiędzy 0 a
+     <constant>RAND_MAX</constant>.  Dla uzyskania liczby losowej z
+     przedziału np. od 5 do 15 (włącznie), należy wywołać <literal>rand
+      (5,15)</literal>.
     </simpara>
-    <simpara>
-     W starszych wersjach PHP trzeba było najpierw zainicjować generator liczb
-     losowych za pomocą funkcji <function>srand</function>. Począwszy od
-     PHP 4.2.0 nie jest to już konieczne.
-    </simpara>
+    <para>
+     <example>
+      <title>Przykład użycia <function>rand</function></title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+echo rand() . "\n";
+echo rand() . "\n";
+
+echo rand(5, 15);
+?>
+]]>
+      </programlisting>
+      &example.outputs.similar;
+      <screen>
+<![CDATA[
+7771
+22264
+11
+]]>
+      </screen>
+     </example>
+    </para>
+    <note>
+     <simpara>
+      Na niektórych platformach (jak na przykład Windows)
+      <constant>RAND_MAX</constant> to tylko 32768. Aby uzyskać wartości
+      większe niż 32768, należy podać odpowiednie wartości argumentów
+      <parameter>min</parameter> and <parameter>max</parameter>, co pozwoli na
+      wygenerowanie wartości większych niż RAND_MAX. Można też użyć funkcji
+      <function>mt_rand</function>.
+     </simpara>
+    </note>
+
+    &note.randomseed;
+
     <note>
      <para>
       W wersjach przed 3.0.7 argument <parameter>max</parameter> znaczył
@@ -38,8 +66,10 @@
      </para>
     </note>
     <simpara>
-     Patrz także: <function>srand</function>,
-     <function>getrandmax</function> i <function>mt_rand</function>.
+     Patrz także:
+     <function>srand</function>,
+     <function>getrandmax</function> i
+     <function>mt_rand</function>.
     </simpara>
    </refsect1>
   </refentry>
