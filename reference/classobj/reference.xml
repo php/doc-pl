@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.12 Maintainer: dombal Status: Ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.15 Maintainer: dombal Status: Ready -->
+<!-- $Revision: 1.5 $ -->
+<!-- Purpose: basic.vartype -->
+<!-- Membership: core -->
+
  <reference id="ref.classobj">
   <title>Klasy/Obiekty</title>
   <titleabbrev>Klasy/Obiekty</titleabbrev>
@@ -122,15 +125,16 @@ include "classes.inc";
 // funkcje użytkowe
 
 function drukuj_wlasciwosci($obj) {
-    $tab = get_object_vars($obj);
-    while (list($wlasc, $wart) = each($tab))
+    foreach (get_object_vars($obj) as $wlasc => $wart) {
         echo "\t$wlasc = $wart\n";
+    }
 }
 
 function drukuj_metody($obj) {
     $tab = get_class_methods(get_class($obj));
-    foreach ($tab as $metoda)
+    foreach ($tab as $metoda) {
         echo "\tfunkcja $metoda()\n";
+    }
 }
 
 function przodkowie_klasy($obj, $klasa) {
