@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.6 $ -->
+<!-- EN-Revision: 1.7 Maintainer: qrak Status: ready -->
+<!-- $Revision: 1.7 $ -->
   <refentry id="function.max">
    <refnamediv>
     <refname>max</refname>
@@ -9,32 +9,66 @@
    <refsect1>
     <title>Opis</title>
      <methodsynopsis>
-      <type>number</type><methodname>max</methodname>
-      <methodparam><type>mixed</type><parameter>arg1</parameter></methodparam>
-      <methodparam><type>mixed</type><parameter>arg2</parameter></methodparam>
-      <methodparam><type>mixed</type><parameter>argn</parameter></methodparam>
+      <type>mixed</type><methodname>max</methodname>
+      <methodparam><type>number</type><parameter>arg1</parameter></methodparam>
+      <methodparam><type>number</type><parameter>arg2</parameter></methodparam>
+      <methodparam choice="opt"><type>number</type><parameter>...</parameter></methodparam>
+     </methodsynopsis>
+     <methodsynopsis>
+      <type>mixed</type><methodname>max</methodname>
+      <methodparam><type>array</type><parameter>numbers</parameter></methodparam>
      </methodsynopsis>
     <para>
      <function>max</function> zwraca największą liczbę spośród podanych
      argumentów.
     </para>
     <para>
-     Jeśli pierwszy argument jest tablicą, <function>max</function> zwróci
-     największą liczbę z tej tablicy. Jeśli pierwszy argument jest liczbą
-     całkowitą, zmiennoprzecinkową czy łańcuchem znaków, musisz mieć conajmniej
-     dwa argumenty, spomiędzy których funkcja <function>max</function> zwróci
-     największą wartość. Za pomocą tej funkcji możesz porównywać nieograniczoną
-     ilość liczb.
+     Jeśli pierwszym i jedynym argumentem jest tablica,
+     <function>max</function> zwróci największą liczbę z tej tablicy. Jeśli
+     pierwszy argument jest liczbą całkowitą, zmiennoprzecinkową czy łańcuchem
+     znaków, musisz mieć conajmniej dwa argumenty, spomiędzy których funkcja
+     <function>max</function> zwróci największą wartość. Za pomocą tej funkcji
+     można porównywać nieograniczoną ilość liczb.
+    </para>
+    <note>
+     <para>
+      PHP będzie uznawał nieliczbowe wartości typu <type>string</type> jako 
+      <literal>0</literal>, jednakże zwracany będzie ciąg znakowy, jesli
+      zostanie on oznany numerycznie za najmniejszą wartość. Jeśli wiele
+      argumentów zostanie uznanych za wartość
+      <literal>0</literal>, to <function>min</function> zwróci wartość
+      najmniejszą alfanumerycznie, jeśli zostały podane jakiekolwiek ciągi
+      znakowe. W przeciwnym przypadku zwrócona zostanie wartość
+      <literal>0</literal>.
+     </para>
+    </note>
+    <para>
+     <example>
+      <title>Przykłady użycia <function>max</function></title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+echo max(1, 3, 5, 6, 7);  // 7
+echo max(array(2, 4, 5)); // 5
+
+echo max(0, 'hello');     // 0
+echo max('hello', 0);     // hello
+echo max(-1, 'hello');    // hello
+
+// W przypadku podania wielu tablic, min porównuje je od lewej do prawej, 
+// A więc w poniższym przykładzie 2 == 2, ale 4 < 5
+$val = max(array(2, 4, 8), array(2, 5, 7)); // array(2, 5, 7)
+
+// Jeśli podane zostaną tablice i nie-tablice, zawsze zwracana jest
+// tablica, jako że zawsze jest uznawana za element największy
+$val = max('string', array(2, 5, 7), 42);   // array(2, 5, 7)
+?>
+]]>
+      </programlisting>
+     </example>
     </para>
     <para>
-     Jeśli jedna lub więcej podanych liczb jest zmiennoprzecinkowa, wszystkie
-     liczby zostaną potraktowane jak zmiennoprzecinkowe i także liczba
-     zmiennoprzecinkowa zostanie zwrócona. Jeśli żadna z liczb nie będzie
-     zmiennoprzecinkową, wszystkie zostaną potraktowane jako całkowite i
-     zwrócona zostanie liczba całkowita.
-    </para>
-    <para>
-     Patrz także: <function>min</function>.
+     Patrz także: <function>min</function> i <function>count</function>.
     </para>
 
    </refsect1>
