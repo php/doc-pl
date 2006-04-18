@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.9 Maintainer: dombal Status: Ready -->
-<!-- $Revision: 1.6 $ -->
+<!-- EN-Revision: 1.12 Maintainer: dombal Status: Ready -->
+<!-- $Revision: 1.7 $ -->
   <refentry id="function.get-class-methods">
    <refnamediv>
     <refname>get_class_methods</refname>
@@ -14,7 +14,8 @@
      </methodsynopsis>
     <para>
      Funkcja ta zwraca tablicę nazw metod zdefiniowanych dla klasy określonej 
-     przez parametr <parameter>nazwa_klasy</parameter>.
+     przez parametr <parameter>nazwa_klasy</parameter>. W przypadku błędy
+     zwracana jest wartośc &null;.
     </para>
     <note>
      <para>
@@ -23,7 +24,9 @@
       <informalexample>
        <programlisting>
 <![CDATA[
-$metody_klasy = get_class_methods($moja_klasa); // zobacz niżej pełny przykład
+<?php
+$metody_klasy = get_class_methods($moj_obiekt); // zobacz poniższy pełny przykład
+?>
 ]]>
        </programlisting>
       </informalexample>
@@ -53,9 +56,9 @@ class mojaklasa {
     }
 }
 
-$moj_obiekt = new mojaklasa();
-
-$metody_klasy = get_class_methods(get_class($moj_obiekt));
+$metody_klasy = get_class_methods('mojaklasa');
+// lub
+$metody_klasy = get_class_methods(new mojaklasa());
 
 foreach ($metody_klasy as $nazwa_metody) {
     echo "$nazwa_metody\n";
@@ -74,14 +77,16 @@ mojafun2
       </screen>
      </example>
     </para>
-	 <warning> 
-       <para>
-	    Od PHP 5, funkcja zwraca nazwy metod tak jak zostały zadeklarowane
-		(z uwzględnieniem wielkości liter). W PHP 4 były one zmieniane na małe litery.
-       </para> 
-      </warning> 
+    <warning> 
+     <para>
+      Od PHP 5, funkcja zwraca nazwy metod tak jak zostały zadeklarowane
+      (z uwzględnieniem wielkości liter). W PHP 4 były one zmieniane na małe litery.
+     </para> 
+    </warning> 
     <simpara>
-     Patrz także: <function>get_class_vars</function>,
+     Patrz także:
+     <function>get_class</function>,
+     <function>get_class_vars</function>,
      <function>get_object_vars</function>.
     </simpara>
    </refsect1>
