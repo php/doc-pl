@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.3 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.6 $ -->
+<!-- EN-Revision: 1.9 Maintainer: qrak Status: ready -->
+<!-- $Revision: 1.7 $ -->
   <refentry id="function.log">
    <refnamediv>
     <refname>log</refname>
@@ -11,9 +11,27 @@
      <methodsynopsis>
       <type>float</type><methodname>log</methodname>
       <methodparam><type>float</type><parameter>argument</parameter></methodparam>
+      <methodparam choice="opt"><type>float</type><parameter>podstawa</parameter></methodparam>
      </methodsynopsis>
     <para>
-     Zwraca logarytm naturalny z liczby <parameter>argument</parameter>.
+     Jeśli opcjonalny argument <parameter>podstawa</parameter> został podany, 
+     <function>log</function> zwraca log<subscript>podstawa</subscript>
+     <parameter>argument</parameter>, w przeciwnym przypadku <function>log</function> 
+     zwraca logarytm naturalny z <parameter>argument</parameter>.
+    </para>
+    <note>
+     <para>
+      Argument <parameter>podstawa</parameter> został dodany w PHP 4.3.0
+     </para>
+     <para>
+      Zawsze logarytm o podstawie <literal>b</literal> z liczby
+      <literal>n</literal> można policzyć korzystając z wzoru
+      log<subscript>b</subscript>(n) = log(n)/log(b), gdzie log jest
+      logarytmem naturalnym.
+     </para>
+    </note>
+    <para>
+     Patrz także: <function>exp</function>.
     </para>
    </refsect1>
   </refentry>
