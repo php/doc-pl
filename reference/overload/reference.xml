@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.7 Maintainer: dombal Status: ready -->
-<!-- $Revision: 1.1 $ -->
+<!-- EN-Revision: 1.12 Maintainer: dombal Status: ready -->
+<!-- $Revision: 1.2 $ -->
+<!-- State: deprecated -->
+
  <reference id="ref.overload">
   <title>Przeciążanie właściwości obiektów i wołania ich metod</title>
   <titleabbrev>Przeciążanie obiektów</titleabbrev>
@@ -23,6 +25,14 @@
      normalnego dostępu do właściwości obiektu.
     </para>
     &warn.experimental;
+	<warning> 
+     <para> 
+     To rozszerzenie nie jest częścią PHP 5. PHP 5 obsługuje <literal>__get()</literal>, <literal>__set()</literal> i 
+     <literal>__call()</literal> natywnie. Zobacz stronę <link 
+     linkend="language.oop5.overloading">Przeciążanie w PHP 5</link>  
+     aby uzyskać więcej informacji. 
+     </para> 
+    </warning> 
    </section>
 
    <section id="overload.requirements">
@@ -86,10 +96,10 @@ class OO
 overload('OO');
 
 $o = new OO;
-print "\$o->a: $o->a\n"; // print: $o->a:
-print "\$o->b: $o->b\n"; // print: $o->b: 9
-print "\$o->c: $o->c\n"; // print: $o->c: 42
-print "\$o->d: $o->d\n"; // print: $o->d:
+echo "\$o->a: $o->a\n"; // print: $o->a: 111
+echo "\$o->b: $o->b\n"; // print: $o->b: 9
+echo "\$o->c: $o->c\n"; // print: $o->c: 42
+echo "\$o->d: $o->d\n"; // print: $o->d:
 
 // dodajemy nową pozycję do tablicy $elem w OO
 $o->x = 56; 
@@ -109,16 +119,6 @@ var_dump($o->a[0]->prop);
       </programlisting>
      </example>
     </para>
-    <warning>
-     <para>
-      Ponieważ jest to rozszerzenie eksperymentalne, nie wszystko działa.
-      Brakuje aktualnie wsparcia dla <literal>__call()</literal>, można
-      przeciążać tylko operacje pobierania i ustawiania właściwości obiektu.
-      Nie można także wołać funkcji obsługi przeciążania jak normalnych metod
-      istniejących w klasie, a <literal>__set()</literal> działa tylko do
-      jednego poziomu dostępu do właściwości.
-     </para>
-    </warning>
    </section>
   </partintro>
 
