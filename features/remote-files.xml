@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.21 Maintainer: slawek Status: ready -->
-<!-- $Revision: 1.11 $ -->
+<!-- EN-Revision: 1.26 Maintainer: slawek Status: ready -->
+<!-- $Revision: 1.12 $ -->
  <chapter id="features.remote-files">
   <title>Korzystanie ze zdalnych plików</title>
 
   <para>
-   Jeśli parametr <parameter>allow_url_fopen</parameter> w pliku &php.ini;
-   zostanie włączony, będzie można używać adresów HTTP i FTP w większości
+   Jeśli parametr <option>allow_url_fopen</option> w pliku &php.ini;
+   zostanie włączony, będzie można używać adresów <acronym>HTTP</acronym> i 
+   <acronym>FTP</acronym> w większości
    funkcji, które jako parametr przyjmują nazwę pliku, włączając w to instrukcje
    <function>include</function>, <function>include_once</function>,
    <function>require</function> oraz <function>require_once</function>. 
-   Więcej informacji o protokołach obsługiwanych przez <literal>PHP</literal>
+   Więcej informacji o protokołach obsługiwanych przez PHP.
    znajduje się w <xref linkend="wrappers"/>.
   </para>
   <para>
    <note>
     <para>
-     <literal>PHP</literal> dla Windows, w wersji wcześniejszej niż 4.3 nie
+     PHP dla Windows, w wersji wcześniejszej niż 4.3 nie
      obsługiwało zdalnego dostępu do plików przy użyciu instrukcji:
      <function>include</function>, <function>include_once</function>,
      <function>require</function> i <function>require_once</function> oraz
@@ -73,7 +74,7 @@ if (!$file) {
     exit;
 }
 /* Tutaj zapisujemy dane. */
-fputs ($file, $_SERVER['HTTP_USER_AGENT'] . "\n");
+fwrite ($file, $_SERVER['HTTP_USER_AGENT'] . "\n");
 fclose ($file);
 ?>
 ]]>  
