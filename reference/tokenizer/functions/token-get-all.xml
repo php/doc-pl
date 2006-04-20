@@ -1,40 +1,63 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.7 Maintainer: dombal Status: ready -->
-<!-- $Revision: 1.2 $ -->
+<!-- EN-Revision: 1.9 Maintainer: dombal Status: ready -->
+<!-- $Revision: 1.3 $ -->
   <refentry id="function.token-get-all">
    <refnamediv>
     <refname>token_get_all</refname>
     <refpurpose>Dzieli zadane źródło na tokeny PHP</refpurpose>
    </refnamediv>
-   <refsect1>
-    <title>Opis</title>
+   <refsect1 role="description">
+    &reftitle.description;
     <methodsynopsis>
      <type>array</type><methodname>token_get_all</methodname>
      <methodparam><type>string</type><parameter>źródło</parameter></methodparam>
     </methodsynopsis>
-    <simpara>
+    <para>
      <function>token_get_all</function> parsuje zadane
      <parameter>źródło</parameter>, czyli ciąg znaków zawierający kod PHP,
      zamieniając je na tokeny języka PHP przy użyciu analizy leksykalnej
-     silnika Zend. Funkcja ta zwraca tablicę identyfikatorów tokenów. Każdy
-     identyfikator tokena jest allbo pojedynczym znakiem (np.:
-     <constant>;</constant>, <constant>.</constant>,
-     <constant>&gt;</constant>, <constant>!</constant>, itd...), albo
-     dwuelementową tablicą zawierającą indeks tokena w elemencie 0, i
-     zawartość oryginalengo tokena w postaci ciągu znakowego w elemencie 1.
-    </simpara>
-    <simpara>
-     Listę tokenów identyfikowanych przez parser znajdziesz w <xref
+     silnika Zend.
+    </para>
+    <para>	
+    Listę tokenów identyfikowanych przez parser znajdziesz w <xref
       linkend="tokens"/>, możesz także użyć funkcji
      <function>token_name</function> by przetłumaczyć wartość tokena na jego
      nazwę.
-    </simpara>
+    </para>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>źródło</parameter></term>
+     <listitem>
+      <para>
+       Źródło PHP do sparsowania.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Tablica zindentyfikowanych tokenów. Każdy pojedynczy token identyfikowany
+   jest poprzez pojedynczy znak (np.: <literal>;</literal>, <literal>.</literal>, 
+   <literal>&gt;</literal>, <literal>!</literal>, etc...),
+   lub dwuelementową tablicę zawierającą indeks tokenu w elemencie 0 i
+   łąncuch znaków zawierający oryginalny token w elemencie 1.
+  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
     <example>
      <title>Przykłady użycia <function>token_get_all</function></title>
      <programlisting role="php">
 <![CDATA[
 <?php
-  $tokeny = token_get_all('<?php'); // => array(array(T_OPEN_TAG, '<?'));
   $tokeny = token_get_all('<?php echo; ?>'); /* => array(
                                                     array(T_OPEN_TAG, '<?php'), 
                                                     array(T_ECHO, 'echo'),
@@ -51,6 +74,7 @@
 ]]>
      </programlisting>
     </example>
+	</para>
    </refsect1>
   </refentry>
 
