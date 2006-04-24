@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.3 $ -->
+<!-- EN-Revision: 1.10 Maintainer: qrak Status: ready -->
+<!-- $Revision: 1.4 $ -->
 <!-- splitted from ./en/functions/datetime.xml, last change in rev 1.2 -->
   <refentry id="function.gmdate">
    <refnamediv>
     <refname>gmdate</refname>
-    <refpurpose>Formatuje datę/czas dla strefy GMT/CUT</refpurpose>
+    <refpurpose>Formatuje datę/czas dla strefy GMT/UTC</refpurpose>
    </refnamediv>
    <refsect1>
     <title>Opis</title>
@@ -24,12 +24,20 @@
       <title>przykład <function>gmdate</function></title>
       <programlisting role="php">
 <![CDATA[
+<?php
 echo date ("M d Y H:i:s", mktime (0,0,0,1,1,1998));
 echo gmdate ("M d Y H:i:s", mktime (0,0,0,1,1,1998));
+?>
 ]]>
       </programlisting>
      </example>
     </para>
+     <note> 
+      <para>
+       Przed PHP 5.1.0, ujemne znaczniki czasu (daty z przed 1970) nie działały na
+	   niektórych systemach (np. Windows). 
+     </para> 
+     </note> 
     <para>
      Patrz także <function>date</function>, <function>mktime</function>,
      <function>gmmktime</function> i <function>strftime</function>.
