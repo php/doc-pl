@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.3 Maintainer: slawek Status: ready -->
-<!-- $Revision: 1.3 $ -->
+<!-- EN-Revision: 1.10 Maintainer: slawek Status: ready -->
+<!-- $Revision: 1.4 $ -->
   <refentry id="function.mysql-unbuffered-query">
    <refnamediv>
     <refname>mysql_unbuffered_query</refname>
-    <refpurpose>
-     Wysyła zapytanie do serwera MySQL nie pobierając i buforując
-     wyniku
-    </refpurpose>
+    <refpurpose>Wysyła zapytanie do serwera MySQL nie pobierając i buforując wyniku</refpurpose>
    </refnamediv>
-   <refsect1>
-    <title>Opis</title>
+   <refsect1 role="description">
+    &reftitle.description;
      <methodsynopsis>
       <type>resource</type><methodname>mysql_unbuffered_query</methodname>
       <methodparam><type>string</type><parameter>zapytanie</parameter></methodparam>
       <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
-      <methodparam choice="opt"><type>int</type><parameter>typ_wyniku</parameter></methodparam>
      </methodsynopsis>
     <para>
      <function>mysql_unbuffered_query</function> wysyła
@@ -28,25 +24,60 @@
      bazy, należy dodać opcjonalny argument
      <parameter>identyfikator_połączenia</parameter>.
     </para>
-    <para>
-     Opcjonalny argument <parameter>result_mode</parameter> może przyjmować
-     wartość MYSQL_USE_RESULT lub MYSQL_STORE_RESULT. Domyślnie używana jest
-     wartość MYSQL_USE_RESULT, zatem wynik nie jest buforowany. Odpowiednikiem
-     użycia drugiej opcji jest funkcja <function>mysql_query</function>.
-    </para>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>zapytanie</parameter></term>
+     <listitem>
+      <para>
+       Zapytanie SQL
+      </para>
+     </listitem>
+    </varlistentry>
+    &mysql.linkid.description;
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Dla wyrażeń SELECT, SHOW, DESCRIBE lub EXPLAIN,
+   <function>mysql_unbuffered_query</function>
+   zwraca <type>zasób</type> w przypadku sukcesu lub &false; gdy
+   nastąpi niepowodzenie.
+  </para>
+  <para>
+   Dla innych typów wyrażeń SQL, UPDATE, DELETE, DROP, etc,
+   <function>mysql_unbuffered_query</function> zwróci &true; w przypadku
+   skucesu lub &false; gdy nastąpi niepowodzenie.
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
     <note>
      <para>
       Oprócz korzyści, funkcja <function>mysql_unbuffered_query</function>
-      wprowadza pewne ograniczenia: nie można użyć funkcji
-      <function>mysql_num_rows</function> na zbiorze wyników zwróconym przez
-      <function>mysql_unbuffered_query</function>. Trzeba także pobrać
-      wszystkie wiersze wyniku niebuforowanego zapytania SQL przed wysłaniem
+      wprowadza pewne ograniczenia: nie można użyć funkcji <function>mysql_num_rows</function> i
+	  <function>mysql_data_seek</function> na zbiorze wyników zwróconym przez 
+	  <function>mysql_unbuffered_query</function>.
+	  Trzeba także pobrać wszystkie wiersze wyniku niebuforowanego zapytania SQL przed wysłaniem
       kolejnego.
      </para>
     </note>
-    <para>
-     Patrz także: <function>mysql_query</function>.
-    </para>
+	 </refsect1> 
+     
+    <refsect1 role="seealso"> 
+     &reftitle.seealso; 
+     <para>
+      <simplelist>
+       <member><function>mysql_query</function></member>
+      </simplelist>
+     </para>
    </refsect1>
   </refentry>
 
