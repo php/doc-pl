@@ -1,25 +1,61 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.12 Maintainer: leniwiec Status: ready -->
-<!-- $Revision: 1.1 $ -->
+<!-- EN-Revision: 1.15 Maintainer: leniwiec Status: ready -->
+<!-- $Revision: 1.2 $ -->
 <!-- splitted from ./en/functions/dir.xml, last change in rev 1.2 -->
-  <refentry id="function.opendir">
-   <refnamediv>
-    <refname>opendir</refname>
-    <refpurpose>Otwiera katalog</refpurpose>
-   </refnamediv>
-   <refsect1>
-    &reftitle.description;
-     <methodsynopsis>
-      <type>resource</type><methodname>opendir</methodname>
-      <methodparam><type>string</type><parameter>path</parameter></methodparam>
-     </methodsynopsis>
-    <para> 
-     Zwraca wskaźnik do otwartego katalogu, który może być następnie
+<refentry id="function.opendir">
+ <refnamediv>
+  <refname>opendir</refname>
+  <refpurpose>Otwiera katalog</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>resource</type><methodname>opendir</methodname>
+   <methodparam><type>string</type><parameter>path</parameter></methodparam>
+   <methodparam choice="opt"><type>resource</type><parameter>context</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Zwraca wskaźnik do otwartego katalogu, który może być następnie
      wykorzystany przez
-     <function>closedir</function>, <function>readdir</function>, oraz
-     <function>rewinddir</function>.
-    </para>
-    <para>
+   <function>closedir</function>, <function>readdir</function>, and
+   <function>rewinddir</function> calls.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>path</parameter></term>
+     <listitem>
+      <para>
+       Ścieżka do katalogu który ma zostać otwarty
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>context</parameter></term>
+     <listitem>
+      <para>
+       Po opis parametru <parameter>context</parameter>, 
+       sięgnij do <link linkend="ref.stream">the streams section</link>
+      </para> 
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   W przypadku sukcesu zwraca wskaźnik do katalogu <type>resource</type>, w
+   przypadku niepowodzenia zwraca 
+   &false;.
+  </para> 
+  <para>
      Jeśli <parameter>path</parameter> nie jest katalogiem lub jeśli katalog nie
      posiada odpowiednich praw dostępu, lub gdy system plików zawiódł  
      <function>opendir</function> zwróci &false; i
@@ -28,11 +64,48 @@
      <function>opendir</function> poprzez postawienie znaku 
      '<link linkend="language.operators.errorcontrol">@</link>' przed
      wywołaniem funkcji.
-    </para>
-    <para>
-     <example>
-      <title>Przykład użycia <function>opendir</function></title>
-      <programlisting role="php">
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>5.0.0</entry>
+       <entry>
+        <parameter>path</parameter> wspiera <literal>ftp://</literal> 
+        URL wrapper.
+       </entry>
+      </row>
+      <row>
+       <entry>4.3.0</entry>
+       <entry>
+        <parameter>path</parameter> może być również
+        URL-em odnoszącym się do katalogu, jednak tylko <literal>file://</literal>
+        URL wrapper jest wspierany w wersji PHP 4.3. 
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>opendir</function> example</title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 $dir = "/etc/php5/";
@@ -48,9 +121,9 @@ if (is_dir($dir)) {
 }
 ?>
 ]]>
-      </programlisting>
-      &example.outputs.similar;
-      <screen>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
 <![CDATA[
 filename: . : filetype: dir
 filename: .. : filetype: dir
@@ -58,23 +131,22 @@ filename: apache : filetype: dir
 filename: cgi : filetype: dir
 filename: cli : filetype: dir
 ]]>
-      </screen>
-     </example>
-    </para>
-    <para>
-     Od wersji PHP 4.3.0 <parameter>path</parameter> może być również
-     URL-em odnoszącym się do katalogu, jednak tylko <literal>file://</literal>
-     URL wrapper jest wspierany w wersji PHP 4.3. Od wersji 
-     PHP 5.0.0, został dodany <literal>ftp://</literal>
-     URL wrapper. 
-    </para>
-    <para>
-    Patrz także: <function>is_dir</function>,
-     <function>readdir</function>, oraz 
-     <link linkend="class.dir">Dir</link>
-     </para>
-   </refsect1>
-  </refentry>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>is_dir</function></member>
+    <member><function>readdir</function></member>
+    <member><link linkend="class.dir">Dir</link></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
