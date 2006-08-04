@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.9 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.12 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.5 $ -->
 <!-- splitted from ./en/functions/filesystem.xml, last change in rev 1.61 -->
   <refentry id="function.pathinfo">
    <refnamediv>
@@ -25,9 +25,11 @@
 	 Możesz określić, który element zostanie zwórcony, za pomocą opcjonalnego
 	 parametru <parameter>opcje</parameter>. Składajego się z
      <constant>PATHINFO_DIRNAME</constant>,
-     <constant>PATHINFO_BASENAME</constant> i
-     <constant>PATHINFO_EXTENSION</constant>. Domyślnie zwracane są wszystkie
-     elementy. Funkcja zwraca łańcuch znaków jeśli nie wszystkie elementy są żądane.
+     <constant>PATHINFO_BASENAME</constant>,
+     <constant>PATHINFO_EXTENSION</constant> i
+	 <constant>PATHINFO_FILENAME</constant> (dostępne od PHP 5.2.0). 
+	 Domyślnie zwracane są wszystkie elementy. Funkcja zwraca łańcuch znaków jeśli nie
+	 wszystkie elementy są żądane.
     </para>
     <para>
      <example>
@@ -40,6 +42,7 @@ $path_parts = pathinfo('/www/htdocs/index.html');
 echo $path_parts['dirname'], "\n";
 echo $path_parts['basename'], "\n";
 echo $path_parts['extension'], "\n";
+echo $path_parts['filename'], "\n"; // od PHP 5.2.0
 ?>
 ]]>
       </programlisting>
@@ -51,6 +54,7 @@ echo $path_parts['extension'], "\n";
 /www/htdocs
 index.html
 html
+index
 ]]>
       </screen>
      </example>
