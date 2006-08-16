@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.13 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.7 $ -->
+<!-- EN-Revision: 1.14 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.8 $ -->
 <refentry id="function.parse-url">
  <refnamediv>
   <refname>parse_url</refname>
@@ -9,8 +9,9 @@
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
-   <type>array</type><methodname>parse_url</methodname>
+   <type>mixed</type><methodname>parse_url</methodname>
    <methodparam><type>string</type><parameter>url</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>składnik</parameter></methodparam>
   </methodsynopsis>
   <para>
    Funkcja przetwarza URL i zwraca tablicę asocjacyjną zawierającą każdy z 
@@ -37,6 +38,23 @@
      </listitem>
     </varlistentry>
    </variablelist>
+
+   <variablelist>
+    <varlistentry>
+     <term><parameter>składnik</parameter></term>
+     <listitem>
+      <para>
+       Podaj jedną ze stałych <constant>PHP_URL_SCHEME</constant>,
+       <constant>PHP_URL_HOST</constant>, <constant>PHP_URL_PORT</constant>,
+       <constant>PHP_URL_USER</constant>, <constant>PHP_URL_PASS</constant>,
+       <constant>PHP_URL_PATH</constant>, <constant>PHP_URL_QUERY</constant>
+       or <constant>PHP_URL_FRAGMENT</constant> aby otrzymać określony składnik URL
+	   jako <type>string</type>.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  
   </para>
  </refsect1>
 
@@ -88,7 +106,34 @@
     </simpara> 
 	</listitem> 
 	</itemizedlist> 
-	</para> 
+	</para>
+	<para>
+   Jeśli parametr <parameter>składnik</parameter> jest określony, zwracany jest
+   <type>string</type> zamiast <type>array</type>.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>5.1.2</entry>
+       <entry>Dodano parametr <parameter>składnik</parameter></entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+	
 </refsect1> 
 <refsect1 role="examples"> &reftitle.examples; 
 <para> 
@@ -100,6 +145,7 @@
 $url = 'http://uzytkownik:haslo@serwer/sciezka?arg=wartosc#kotwica';
 
 print_r(parse_url($url));
+echo parse_url($url, PHP_URL_PATH);
 ?>
 ]]> 
 </programlisting> 
@@ -116,6 +162,7 @@ Array
 	[query] => arg=wartosc
 	[fragment] => kotwica
 )
+/sciezka
 ]]>
 </screen> 
 </example>
@@ -142,6 +189,7 @@ jest to nieprawidłowe.
 <simplelist>
 <member><function>pathinfo</function></member>
 <member><function>parse_str</function></member>
+<member><function>http_build_query</function></member>
 <member><function>dirname</function></member>
 <member><function>basename</function></member>
 </simplelist>
