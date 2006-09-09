@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.29 Maintainer: slawek Status: ready -->
-<!-- $Revision: 1.14 $ -->
+<!-- EN-Revision: 1.47 Maintainer: slawek Status: ready -->
+<!-- $Revision: 1.15 $ -->
  <chapter id="features.http-auth">
   <title>Uwierzytelnianie HTTP w PHP</title>
 
   <simpara>
-   Uwierzytelnianie HTTP jest obsługiwana przez PHP tylko wtedy, gdy PHP pracuje
+   Uwierzytelnianie <acronym>HTTP</acronym> jest obsługiwana przez PHP tylko wtedy, gdy PHP pracuje
    jako moduł Apache'a, nie jest dostępna w trybie CGI. W skrypcie można użyć
    funkcji <function>header</function> by wysłać do przeglądarki komunikat
    "Wymagana autoryzacja", co spowoduje wyświetlenie okienka z polami
@@ -13,18 +13,30 @@
    zawierający skrypt PHP zostanie ponownie wywołany z ustawionymi
    <link linkend="reserved.variables">predefiniowanymi zmiennymi</link>
    <varname>PHP_AUTH_USER</varname>, <varname>PHP_AUTH_PW</varname> i
-   <varname>PHP_AUTH_TYPE</varname> zawierającymi odpowiednio
+   <varname>AUTH_TYPE</varname> zawierającymi odpowiednio
    nazwę użytkownika, hasło i typ autoryzacji. Zmienne te będą dostępne w
    tablicach <link linkend="reserved.variables.server">$_SERVER</link> oraz
-   <varname>$HTTP_SERVER_VARS</varname>. Obecnie obsługiwana jest jedynie
-   autoryzacja typu "Basic". Więcej informacji znajdziesz w opisie funkcji
-   <function>header</function>.</simpara>
+   <varname>$HTTP_SERVER_VARS</varname>. Obecnie obsługiwane są autoryzacje
+   typu "Basic" i "Digest" (od PHP 5.1.0). Więcej informacji znajdziesz w opisie funkcji
+   <function>header</function>.
+  </simpara>
+  <note>
+   <title>PHP Version Note</title>
+   <para>
+    <link linkend="language.variables.superglobals">Zmienne superglobalne</link>, 
+    takie jak <link linkend="reserved.variables.server">$_SERVER</link>, udostępniono
+    w PHP <ulink url="&url.php.release4.1.0;">4.1.0</ulink>. 
+    <varname>$HTTP_SERVER_VARS</varname> są dostępne od PHP 3.
+   </para>
+  </note>
+  
+  
   <para>
    Przykładowy skrypt wymuszający autoryzację klienta:
   </para>
   <para>
    <example>
-    <title>Uwierzytelnianie HTTP</title>
+    <title>Uwierzytelnianie Basic HTTP</title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -42,6 +54,71 @@
     </programlisting>
    </example>
   </para>
+   
+ <para>
+   <example>
+    <title>Przykład uwierzytelnianie Digest HTTP</title>
+    <para>
+     Ten przykład pokazuje jak zaimplementować proste umierzytelnianie
+	 Digest HTTP. Po więcej informacji przeczytaj <ulink url="&url.rfc;2617">RFC 2617</ulink>.
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$realm = 'Zastrzeżona strefa';
+
+//user => password
+$users = array('admin' => 'mypass', 'guest' => 'guest');
+
+
+if (empty($_SERVER['PHP_AUTH_DIGEST'])) {
+    header('HTTP/1.1 401 Unauthorized');
+    header('WWW-Authenticate: Digest realm="'.$realm.
+           '",qop="auth",nonce="'.uniqid().'",opaque="'.md5($realm).'"');
+
+    die('Tekst do wysłania kiedy użytkownik kliknie klawisz anuluj');
+}
+
+
+// analiza zmiennej PHP_AUTH_DIGEST
+if (!($data = http_digest_parse($_SERVER['PHP_AUTH_DIGEST'])) ||
+    !isset($users[$data['username']]))
+    die('Nieprawidłowe listy uwierzytelniające!');
+
+
+// tworzenie prawidłowej odpowiedzi
+$A1 = md5($data['username'] . ':' . $realm . ':' . $users[$data['username']]);
+$A2 = md5($_SERVER['REQUEST_METHOD'].':'.$data['uri']);
+$valid_response = md5($A1.':'.$data['nonce'].':'.$data['nc'].':'.$data['cnonce'].':'.$data['qop'].':'.$A2);
+
+if ($data['response'] != $valid_response)
+    die('Nieprawidłowe listy uwierzytelniające!');
+
+// ok, prawidłowa nazwa użytkownika i hasło
+echo 'Jesteś zalogowany jako: ' . $data['username'];
+
+
+// function to parse the http auth header
+function http_digest_parse($txt)
+{
+    // zabezpieczenie przeciwko brakującym informacjom
+    $needed_parts = array('nonce'=>1, 'nc'=>1, 'cnonce'=>1, 'qop'=>1, 'username'=>1, 'uri'=>1, 'response'=>1);
+    $data = array();
+
+    preg_match_all('@(\w+)=([\'"]?)([a-zA-Z0-9=./\_-]+)\2@', $txt, $matches, PREG_SET_ORDER);
+
+    foreach ($matches as $m) {
+        $data[$m[1]] = $m[3];
+        unset($needed_parts[$m[1]]);
+    }
+
+    return $needed_parts ? false : $data;
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
 
   <note>
    <title>Kompatybilność</title>
@@ -51,7 +128,8 @@
     zaczynać się dużą literą "B", wartość realm powinna być otoczona
     cudzysłowami (nie apostrofami), i dokładnie jeden znak odstępu powinien
     poprzedzać kod <emphasis>401</emphasis> w linii
-    <emphasis>HTTP/1.0 401</emphasis>.
+    <emphasis>HTTP/1.0 401</emphasis>. Parametry autoryzacyjne muszą być
+	oddzielone przecinkami jak pokazano to w przykładzie digest powyżej.
    </para>
   </note>
 
@@ -72,9 +150,10 @@
   <simpara>
    Aby zapobiec sytuacji w której ktoś napisze skrypt wykradający hasło
    wysłane tradycyjnym zewnętrznym mechanizmem, zmienne PHP_AUTH nie będą
-   ustawiane, jeśli dla danej strony aktywna jest autoryzacja zewnętrzna.
-   W tym wypadku, aby uzyskać nazwę użytkownika zautoryzowanego zewnętrznie,
-   należy skorzystać ze zmiennej <varname>REMOTE_USER</varname>. Zatem,
+   ustawiane, jeśli dla danej strony aktywna jest autoryzacja zewnętrzna
+   i &safemode; jest włączony.  Bez względu na to,
+   <varname>REMOTE_USER</varname> może zostać użyte do zidentyfikowania
+   użytkownika autoryzowanego zewnętrznie  Zatem, możesz użyć
    <varname>$_SERVER['REMOTE_USER']</varname>.
   </simpara>
 
@@ -82,9 +161,7 @@
    <title>Konfiguracja</title>
    <para>
     Aby wykryć czy miała miejsce zewnętrzna autoryzacja, PHP sprwadza
-    obecność dyrektywy <literal>AuthType</literal>. Pamiętaj zatem, by
-    nie stosować tej dyrektywy w miejscach, gdzie będzie używana autoryzacja
-    PHP. Inaczej każda próba autoryzacji zakończy się niepowodzeniem.
+    obecność dyrektywy <literal>AuthType</literal>.
    </para>
   </note>
 
@@ -113,18 +190,18 @@
     exit;
   }
  
-  if (!isset($_SERVER['PHP_AUTH_USER']) || ($_POST['SeenBefore'] == 1 && $_POST['OldAuth'] == $_SERVER['PHP_AUTH_USER'])) {
-   authenticate();
-  } 
-  else {
-   echo "<p>Witaj: {$_SERVER['PHP_AUTH_USER']}<br>";
-   echo "Poprzenio: {$_REQUEST['$OldAuth']}";
-   echo "<form action='{$_SERVER['PHP_SELF']}' METHOD='POST'>\n";
-   echo "<input type='hidden' name='SeenBefore' value='1'>\n";
-   echo "<input type='hidden' name='OldAuth' value='{$_SERVER['PHP_AUTH_USER']}'>\n";
-   echo "<input type='submit' value='Re Authenticate'>\n";
-   echo "</form></p>\n";
-  }
+  if (!isset($_SERVER['PHP_AUTH_USER']) ||
+    ($_POST['SeenBefore'] == 1 && $_POST['OldAuth'] == $_SERVER['PHP_AUTH_USER'])) {
+    authenticate();
+  } else {
+    echo "<p>Witaj: {$_SERVER['PHP_AUTH_USER']}<br />";
+    echo "Poprzednio: {$_REQUEST['OldAuth']}";
+    echo "<form action='{$_SERVER['PHP_SELF']}' METHOD='post'>\n";
+    echo "<input type='hidden' name='SeenBefore' value='1' />\n";
+    echo "<input type='hidden' name='OldAuth' value='{$_SERVER['PHP_AUTH_USER']}' />\n";
+    echo "<input type='submit' value='Re Authenticate' />\n";
+    echo "</form></p>\n";
+}
 ?>
 ]]>
     </programlisting>
@@ -139,10 +216,28 @@
    użyć klawisza '_' by usunąc dane o autoryzacji.
   </simpara>
   <simpara>
-   Uwierzytelnianie HTTP nie działa w połączeniu z serwerem Microsoft IIS i
-   PHP w wersji CGI. Powodem są pewne ograniczenia IIS.
+   Zwóć uwagę, że do wersji PHP 4.3.3, Autoryzacja HTTP nie działała
+   na serwerze Microsoft IIS z PHP w wersji CGI z powodu
+   ograniczeń IIS. Aby zmusić go do działania w PHP 4.3.3+
+   musisz wyedytować "Bezpieczeństwo katalogów" w konfiguracji IIS. Kliknij
+   na "Edytuj" i zaznacz wyłącznie "Anonimowy Dostęp", wszystkie inne pola
+   powinny pozostać nie zaznaczone.
   </simpara>
-
+  <simpara>
+   Inne ogranicznie jest jeśli używasz modułu IIS (ISAPI) i PHP 4, nie możesz
+   wtedy użyć zmiennych <literal>PHP_AUTH_*</literal> ale zamiast nich,
+   dostępna jest zmienna <literal>HTTP_AUTHORIZATION</literal>. Na przykład
+   rozważ następujący kod: <literal>list($user, $pw) = explode(':',
+   base64_decode(substr($_SERVER['HTTP_AUTHORIZATION'], 6)));</literal>
+  </simpara>
+  <note>
+   <title>Notatka IIS:</title>
+   <simpara>
+    Aby Autoryzacja HTTP działała z IIS, dyrektywa PHP
+    <link linkend="ini.cgi.rfc2616-headers">cgi.rfc2616_headers</link> musi
+    być ustawiona na <literal>0</literal> (domyślna wartość).
+   </simpara>
+  </note>
   <note>
    <para>
     Jeśli włączony jest <link linkend="ini.safe-mode">tryb bezpieczny</link>,
