@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.20 Maintainer: slawek Status: ready -->
-<!-- $Revision: 1.8 $ -->
+<!-- EN-Revision: 1.21 Maintainer: slawek Status: ready -->
+<!-- $Revision: 1.9 $ -->
  <chapter id="features.cookies">
   <title>Ciasteczka (cookies)</title>
 
@@ -19,18 +19,19 @@
   </para>
 
   <para>
-   Każde ciasteczko wysłane do ciebie od klienta, będzie automatycznie
-   przekształcone w zmienną PHP, podobnie, jak przy użyciu metod <literal>POST</literal>  i <literal>GET</literal>,
-   zależnie od ustawienia dyrektyw konfiguracyjnych
-   <literal>register_globals</literal> i <literal>variables_order</literal>.
-   Jeśli chcesz przypisać wiele wartości do pojedynczego ciasteczka, po prostu
+   Każde ciasteczko wysłane do ciebie od klienta, będzie automatycznie dołączone do
+   globalnej tablicy <link linkend="reserved.variables.cookies">$_COOKIE</link>
+   jeśli <link linkend="ini.variables-order">variables_order</link>
+   zawiera "C". Jeśli chcesz przypisać wiele wartości do pojedynczego ciasteczka, po prostu
    dodaj <literal>[]</literal> do nazwy ciasteczka.
   </para>
 
   <para>
-   W PHP 4.1.0 i późniejszych, tworzona jest globalna tablica
-   <varname>$_COOKIE</varname>, przechowująca wszystkie ciasteczka nadesłane
-   przez klienta. We wcześniejszych wersjach PHP, tworzona jest tablica
+   W zależności od <link linkend="ini.register-globals">register_globals</link>,  
+   z ciastek mogą zostać utworzone zwykłe zmienne PHP. Jednakże nie jest 
+   zalecane poleganie na nich, ponieważ ta właściwość jest często wyłączana ze
+   względu na bezpieczeństwo.
+   We wcześniejszych wersjach PHP, tworzona jest tablica
    <varname>$HTTP_COOKIE_VARS</varname>, jeśli ustawiona została dyrektywa
    konfiguracyjna <literal>track_vars</literal>. (To jest ustawione zawsze od PHP 4.0.3.) 
   </para>
