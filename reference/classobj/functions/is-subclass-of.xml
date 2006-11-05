@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.3 Maintainer: dombal Status: Ready -->
-<!-- $Revision: 1.5 $ -->
+<!-- EN-Revision: 1.5 Maintainer: dombal Status: Ready -->
+<!-- $Revision: 1.6 $ -->
   <refentry id="function.is-subclass-of">
    <refnamediv>
     <refname>is_subclass_of</refname>
@@ -12,13 +12,74 @@
     <title>Opis</title>
      <methodsynopsis>
       <type>bool</type><methodname>is_subclass_of</methodname>
-      <methodparam><type>object</type><parameter>obiekt</parameter></methodparam>
+      <methodparam><type>mixed</type><parameter>obiekt</parameter></methodparam>
       <methodparam><type>string</type><parameter>nazwa_klasy</parameter></methodparam>
      </methodsynopsis>
     <para>
      Funkcja ta zwraca &true; jeżeli obiekt <parameter>obiekt</parameter>
      należy do klasy która jest podklasą klasy <parameter>nazwa_klasy</parameter>,
      &false; w przeciwnym przypadku.
+    </para>
+    <note>
+     <para>
+      Od PHP 5.0.3 możesz określić parametr <parameter>object</parameter>
+      także jako łańcuch znaków (nazwę klasy). 
+     </para>
+    </note>
+    <para>
+      <example>
+        <title><function>is_subclass_of</function> przykład</title>
+        <programlisting role="php">
+<![CDATA[
+<?php
+// definicja klasy
+class WidgetFactory
+{
+  var $oink = 'moo';
+}
+
+// definicja klasy potomnej
+class WidgetFactory_Child extends WidgetFactory
+{
+  var $oink = 'oink';
+}
+
+// tworzenie nowego obiektu
+$WF = new WidgetFactory();
+$WFC = new WidgetFactory_Child();
+
+if (is_subclass_of($WFC, 'WidgetFactory')) {
+  echo "tak, \$WFC jest pod klasą WidgetFactory\n";
+} else {
+  echo "nie, \$WFC nie jest pod klasą WidgetFactory\n";
+}
+
+
+if (is_subclass_of($WF, 'WidgetFactory')) {
+  echo "tak, \$WF jest pod klasą WidgetFactory\n";
+} else {
+  echo "nie, \$WF nie jest pod klasą WidgetFactory\n";
+}
+
+
+// użyteczne dopiero od PHP 5.0.3
+if (is_subclass_of('WidgetFactory_Child', 'WidgetFactory')) {
+  echo "tak, WidgetFactory_Child jest pod klasą WidgetFactory\n";
+} else {
+  echo "nie, WidgetFactory_Child nie jest pod klasą WidgetFactory\n";
+}
+?>
+]]>
+        </programlisting>
+        &example.outputs;
+        <screen>
+<![CDATA[
+tak, $WFC jest pod klasą WidgetFactory
+nie, $WF nie jest pod klasą WidgetFactory
+tak, WidgetFactory_Child jest pod klasą WidgetFactory
+]]>
+      </screen>
+     </example>
     </para>
     <simpara>
      Patrz także: <function>get_class</function>,
