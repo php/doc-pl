@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.3 Maintainer: dombal Status: Ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.6 Maintainer: dombal Status: Ready -->
+<!-- $Revision: 1.5 $ -->
   <refentry id="function.class-exists">
    <refnamediv>
     <refname>class_exists</refname>
@@ -11,12 +11,69 @@
      <methodsynopsis>
       <type>bool</type><methodname>class_exists</methodname>
       <methodparam><type>string</type><parameter>nazwa_klasy</parameter></methodparam>
+      <methodparam choice="opt"><type>bool</type><parameter>autoload</parameter></methodparam>
      </methodsynopsis>
     <para>
      Funkcja ta zwraca &true; jeżeli klasa zadana przez parametr
      <parameter>nazwa_klasy</parameter> została zdefiniowana,
      &false; w przeciwnym wypadku.
     </para>
+<para>
+     <example>
+      <title><function>class_exists</function> przykład</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+// Sprawdź czy klasa istnieje przed próbą jej użycia
+if (class_exists('MyClass')) {
+    $myclass = new MyClass();
+}
+
+?>
+]]>
+      </programlisting>
+     </example>
+    </para>
+    <para>
+     <function>class_exists</function> domyślnie spróbuje wywołać &link.autoload;,
+     jeśli nie chcesz aby <function>class_exists</function> 
+     wywoływała &link.autoload;, możesz ustawić parametr <parameter>autoload</parameter>
+     na &false;.
+    </para>
+    <para>
+     <example>
+      <title>Przykład z parametrem <parameter>autoload</parameter></title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+function __autoload($class)
+{
+    include($class . '.php');
+
+    // Sprawdź czy w includowanym pliku była deklaracja klasy
+    if (!class_exists($class, false)) {
+        trigger_error("Nie mogę załadować klasy: $class", E_USER_WARNING);
+    }
+}
+    
+if (class_exists('MyClass')) {
+    $myclass = new MyClass();
+}
+
+?>
+]]>
+      </programlisting>
+     </example>
+    </para>
+    <note>
+     <para>
+      Parametr <parameter>autoload</parameter> został dodany w PHP 5
+     </para>
+    </note>
+    <simpara>
+     Patrz także <function>interface_exists</function> i
+     <function>get_declared_classes</function>.
+    </simpara>
    </refsect1>
   </refentry>
 
