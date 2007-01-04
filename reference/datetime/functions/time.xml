@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.8 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.6 $ -->
+<!-- EN-Revision: 1.9 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.7 $ -->
   <refentry id="function.time">
    <refnamediv>
     <refname>time</refname>
@@ -31,6 +31,8 @@ $nextWeek = time() + (7 * 24 * 60 * 60);
                    // 7 dni; 24 godziny; 60 minut; 60 sekund
 echo 'Teraz:       '. date('Y-m-d') ."\n";
 echo 'Za tydzień: '. date('Y-m-d', $nextWeek) ."\n";
+// lub używając strtotime():
+echo 'Za tydzień: '. date('Y-m-d', strtotime('+1 week')) ."\n";
 ?>
 ]]>
     </programlisting>
@@ -38,7 +40,8 @@ echo 'Za tydzień: '. date('Y-m-d', $nextWeek) ."\n";
     <screen>
 <![CDATA[
 Teraz:      2005-03-30
-Za tydzień: 2005-04-07
+Za tydzień: 2005-04-06
+Za tydzień: 2005-04-06
 ]]>
     </screen>
    </example>
