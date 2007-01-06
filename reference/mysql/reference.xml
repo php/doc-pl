@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.7 Maintainer: slawek Status: ready -->
-<!-- $Revision: 1.6 $ -->
+<!-- EN-Revision: 1.22 Maintainer: slawek Status: ready -->
+<!-- $Revision: 1.7 $ -->
+<!-- Purpose: database.vendors -->
+<!-- Membership: bundled, external -->
+
  <reference id="ref.mysql">
   <title>MySQL</title>
   <titleabbrev>MySQL</titleabbrev>
 
   <partintro>
-   <para id="mysql.intro">
+   <section id="mysql.intro">
+    &reftitle.intro;
     Funkcje te umożliwiają dostęp do serwerów baz danych MySQL.
     Więcej informacji o MySQL można znaleźć na stronie <ulink
     url="&url.mysql;">&url.mysql;</ulink>.
@@ -15,285 +19,46 @@
     Dokumentacja do MySQL znajduje się pod adresem <ulink
     url="&url.mysql.docs;">&url.mysql.docs;</ulink>.
    </para>
-
+   </section>
+   
    <section id="mysql.requirements">
-    <title>Wymagania</title>
+    &reftitle.required;
     <para>
-     Aby funkcje były dostępne, należy skompilować PHP z obsługą MySQL.
+     Aby funkcje były dostępne, należy skompilować PHP z
+     obsługą MySQL.
     </para>
    </section>
 
-   <section id="mysql.installation">
-    <title>Installation</title>
-    <para>
-     Podając opcję konfiguracyjną <option role="configure">--with-mysql</option>
-     umożliwiasz PHP dostęp do baz MySQL. Jeśli użyjesz jej bez podania ścieżki
-     do MySQL, PHP wykorzysta własne biblioteki klienta.
-     W PHP4 obsługa MySQL jest zawsze włączona, więc jeśli nie podasz tej
-     opcji, PHP również użyje wbudowanych bibliotek. Użytkownicy, którzy
-     uruchamiają inne aplikacje korzystające z MySQL (na przykład równocześnie
-     PHP3 i PHP4 jako moduły apache, lub moduł auth-mysql) powinni zawsze
-     podawać ścieżkę do MySQL:
-     <option role="configure">--with-mysql=/sciezka/do/mysql</option>. To
-     wymusi na PHP użycie bibliotek zainstalowanych przez MySQL, co pozwoli
-     uniknąć konfliktów.
-    </para>
-    <warning>
-     <para>
-      Jeśli to rozszerzenie używane jest razem z rozszerzeniem recode, mogą
-      występować awarie i problemy ze startem <literal>PHP</literal>.
-      Więcej informacji znajduje się w rozdziale dotyczącym rozszerzenia
-      <link linkend="ref.recode">recode</link>.
-     </para>
-    </warning>
-   </section>
-
-   <section id="mysql.configuration">
-    <title>Konfiguracja</title>
-    <para>
-     Zachowanie funkcji MySQL zależy od ustawień w
-     <link linkend="configuration.file">pliku konfiguracyjnym</link> &php.ini;.
-     <table>
-      <title>Opcje konfiguracyjne MySQL</title>
-      <tgroup cols="3">
-       <thead>
-        <row>
-         <entry>Nazwa</entry>
-         <entry>Domyślnie</entry>
-         <entry>Zmiana</entry>
-        </row>
-       </thead>
-       <tbody>
-        <row>
-         <entry>mysql.allow_persistent</entry>
-         <entry>"On"</entry>
-         <entry>PHP_INI_SYSTEM</entry>
-        </row>
-        <row>
-         <entry>mysql.max_persistent</entry>
-         <entry>"-1"</entry>
-         <entry>PHP_INI_SYSTEM</entry>
-        </row>
-        <row>
-         <entry>mysql.max_links</entry>
-         <entry>"-1"</entry>
-         <entry>PHP_INI_SYSTEM</entry>
-        </row>
-        <row>
-         <entry>mysql.default_port</entry>
-         <entry>NULL</entry>
-         <entry>PHP_INI_ALL</entry>
-        </row>
-        <row>
-         <entry>mysql.default_socket</entry>
-         <entry>NULL</entry>
-         <entry>PHP_INI_ALL</entry>
-        </row>
-        <row>
-         <entry>mysql.default_host</entry>
-         <entry>NULL</entry>
-         <entry>PHP_INI_ALL</entry>
-        </row>
-        <row>
-         <entry>mysql.default_user</entry>
-         <entry>NULL</entry>
-         <entry>PHP_INI_ALL</entry>
-        </row>
-        <row> 
-         <entry>mysql.default_password</entry> 
-         <entry>NULL</entry> 
-         <entry>PHP_INI_ALL</entry> 
-        </row> 
-       </tbody>
-      </tgroup>
-     </table>
-     Aby uzyskać więcej informacji na temat stałych PHP_INI_* zobacz
-     <function>ini_set</function>.
-    </para>
-    <para>
-    Oto krótki opis poszczególnych opcji konfiguracyjnych:
-    <variablelist>
-
-     <varlistentry id="ini.mysql.allow-persistent">
-      <term>
-       <parameter>mysql.allow_persistent</parameter>
-       <type>boolean</type>
-      </term>
-      <listitem>
-       <para>
-        Czy pozwalać na
-        <link linkend="features.persistent-connections">stałe połączenia</link>
-        z MySQL.
-       </para>
-      </listitem>
-     </varlistentry>
-     
-     <varlistentry id="ini.mysql.max-persistent">
-      <term>
-       <parameter>mysql.max_persistent</parameter>
-       <type>integer</type>
-      </term>
-      <listitem>
-       <para>
-        Maksymalna liczba stałych połączeń MySQL na każdy proces.
-       </para>
-      </listitem>
-     </varlistentry>
-     
-     <varlistentry id="ini.mysql.max-links">
-      <term>
-       <parameter>mysql.max_links</parameter>
-       <type>integer</type>
-      </term>
-      <listitem>
-       <para>
-        Maksymalna liczba połączeń MySQL na proces, włączając w to połączenia
-        stałe.
-       </para>
-      </listitem>
-     </varlistentry>
-
-     <varlistentry id="ini.mysql.default-port">
-      <term>
-       <parameter>mysql.default_port</parameter>
-       <type>string</type>
-      </term>
-      <listitem>
-       <para>
-        Domyślny numer portu TCP, który będzie użyty przy łączeniu się z
-        serwerm baz danych, jeśli nie zostanie podany żaden inny. Jeśli
-        nie będzie podany port domyślny, będzie on pobrany ze zmiennej
-        środowiskowej <literal>MYSQL_TCP_PORT</literal>, wpisu
-        <literal>mysql-tcp</literal> w pliku
-        <filename>/etc/services</filename> lub podanej przy kompilacji opcji
-        <literal>MYSQL_PORT</literal>, w tym właśnie porządku. Pod Win32 użyta
-        będzie tylko stała <literal>MYSQL_PORT</literal>.
-       </para>
-      </listitem>
-     </varlistentry>
-     
-     <varlistentry id="ini.mysql.default-socket">
-      <term>
-       <parameter>mysql.default_socket</parameter>
-       <type>string</type>
-      </term>
-      <listitem>
-       <para>
-        Domyślna nazwa gniazda, które będzie użyte do łączenia się z lokalnym
-        serwerem baz danych, jeśli nie zostanie podana żadna inna nazwa.
-       </para>
-      </listitem>
-     </varlistentry>
-
-     <varlistentry id="ini.mysql.default-host">
-      <term>
-       <parameter>mysql.default_host</parameter>
-       <type>string</type>
-      </term>
-      <listitem>
-       <para>
-        Domyślny serwer, który będzie używany przy łączeniu się z
-        bazą danych, jeśli nie zostanie podany żaden inny. Nie dotyczy
-        <link linkend="ini.safe-mode">trybu bezpiecznego</link>.
-       </para>
-      </listitem>
-     </varlistentry>
-     
-     <varlistentry id="ini.mysql.default-user">
-      <term>
-       <parameter>mysql.default_user</parameter>
-       <type>string</type>
-      </term>
-      <listitem>
-       <para>
-        Domyślna nazwa użytkownika, która będzie używana przy łączeniu się z
-        Nie dotyczy <link linkend="ini.safe-mode">trybu bezpiecznego</link>.
-       </para>
-      </listitem>
-     </varlistentry>
-     
-     <varlistentry id="ini.mysql.default-password">
-      <term>
-       <parameter>mysql.default_password</parameter>
-       <type>string</type>
-      </term>
-      <listitem>
-       <para>
-        Domyślne hasło, które będzie użyte przy łączeniu się z serwerem baz
-        danych, jeśli nie zostanie podane żadne inne. Nie dotyczy
-        <link linkend="ini.safe-mode">trybu bezpiecznego</link>.
-       </para>
-      </listitem>
-     </varlistentry>
-     
-    </variablelist>
-    </para>
-   </section>
+   &reference.mysql.configure;
+   
+   &reference.mysql.ini;
 
    <section id="mysql.resources">
-    <title>Rodzaje zasobów</title>
-    <para>
+    &reftitle.resources;
+   <para>
      Moduł MySQL wykorzystuje dwa rodzaje zasobów. Pierwszym jest identyfikator
      połączenia z bazą danych, drugim zaś zasób wyniku, przechowujący rezultat
      zapytania.
     </para>
    </section>
 
-   <section id="mysql.constants">
-    <title>Predefiniowane stałe</title>
-    <para>
-     Funkcja <function>mysql_fetch_array</function> używa stałych dla różnych
-     typów tablic wynikowych. Zdefiniowane są następujące stałe:
-     <table>
-      <title>Stałe pobierania MySQL</title>
-      <tgroup cols="2">
-       <thead>
-        <row>
-         <entry>stała</entry>
-         <entry>znaczenie</entry>
-        </row>
-       </thead>
-       <tbody>
-        <row>
-         <entry>MYSQL_ASSOC</entry>
-         <entry>
-          Kolumny są zwracane jako tablica, której indeks stanowią nazwy pól.
-         </entry>
-        </row>
-        <row>
-         <entry>MYSQL_BOTH</entry>
-         <entry>
-          Kolumny są zwracane jako tablica, indeksowana zarówno nazwami pól,
-          jak i numerycznie.
-         </entry>
-        </row>
-        <row>
-         <entry>MYSQL_NUM</entry>
-         <entry>
-          Kolumny są zwracane jako tablica indeksowana numerycznie. Indeks
-          zaczyna się od 0 i wskazuje na pierwsze pole w wyniku.
-         </entry>
-        </row>
-        <row>
-         <entry>MYSQL_STORE_RESULT</entry>
-         <entry>
-          Wynik operacji MySQL jest buforowany.
-         </entry>
-        </row>
-        <row>
-         <entry>MYSQL_USE_RESULT</entry>
-         <entry>
-          Wynik operacji MySQL nie jest buforowany.
-         </entry>
-        </row>
-       </tbody>
-      </tgroup>
-     </table>
-    </para>
+ &reference.mysql.constants;
+    
+  <section id="mysql.notes">
+   &reftitle.notes;
+    <note>
+     <para>
+      Większość funkcji MySQL akceptuje <parameter>identyfikator_połączenia</parameter> 
+      jako ostatni opcjonalny parametr. Jeśli, nie zostanie on podany, użyte zostanie
+      ostatnio otwarte połączenie. Jeśli, ono nie istnieje, zostanie podjęta
+      próba nawiązania połączenia z domyślnymi parametrami zdefiniowanymi w &php.ini.
+      Jeśli, się to nie powiedzie, funkcja zwraca &false;. 
+     </para>
+    </note>
    </section>
-
+							 
    <section id="mysql.examples">
-    <title>Przykłady</title>
+    &reftitle.examples;
     <para>
      Ten prosty przykład demonstruje jak połączyć się, wykonać zapytanie,
      wyświetlić wyniki i rozłączyć się z bazą MySQL.
@@ -302,31 +67,31 @@
       <programlisting role="php">
 <![CDATA[ 
 <?php
-/* Łączenie i wybranie bazy */
-$link = mysql_connect("localhost", "uzytkownik", "haslo")
-    or die ("Nie można się połączyć");
-print ("Połączenie nawiązane");
-mysql_select_db ("baza") or die ("Nie mozna wybrać bazy danych");
+// Łączenie i wybranie bazy
+$link = mysql_connect('host', 'uzytkownik', 'haslo')
+    or die('Nie można się połączyć: ' . mysql_error());
+echo 'Połączenie nawiązane';
+mysql_select_db('baza') or die ('Nie mozna wybrać bazy danych');
     
-/* Wysyłanie zapytania SQL */
-$query = "SELECT * FROM tabela";
-$result = mysql_query ($query) or die ("Zapytanie zakończone niepowodzeniem");
+// Wysyłanie zapytania SQL
+$query = 'SELECT * FROM tabela';
+$result = mysql_query($query) or die ('Zapytanie zakończone niepowodzeniem: ' . mysql_error());
 
-/* Wyświetlenie wyników w HTML */
-print "<table>\n";
+// Wyświetlenie wyników w HTML
+echo "<table>\n";
 while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
-   print "\t<tr>\n";
+   echo "\t<tr>\n";
    foreach ($line as $col_value) { 
-       print "\t\t<td>$col_value</td>\n"; 
+       echo "\t\t<td>$col_value</td>\n"; 
    }
-   print "\t</tr>\n";
+   echo "\t</tr>\n";
 }
-print "</table>\n";
+echo "</table>\n";
 
-/* Zwalnianie pamięci */
+// Zwalnianie pamięci
 mysql_free_result($result); 
 
-/* Rozłączanie */
+// Rozłączanie
 mysql_close($link);
 ?>
 ]]> 
@@ -360,4 +125,3 @@ vim600: syn=xml fen fdm=syntax fdl=2 si
 vim: et tw=78 syn=sgml
 vi: ts=1 sw=1
 -->
-
