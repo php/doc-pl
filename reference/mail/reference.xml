@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.8 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.9 $ -->
+<!-- EN-Revision: 1.11 Maintainer: qrak Status: ready -->
+<!-- $Revision: 1.10 $ -->
+<!-- Purpose: remote.mail -->
+<!-- Membership: core -->
+
  <reference id="ref.mail">
   <title>Poczta elektroniczna</title>
   <titleabbrev>E-Mail</titleabbrev>
@@ -15,7 +18,18 @@
 
    <section id="mail.requirements">
     &reftitle.required;
-    &no.requirement;
+    <para>
+     Aby funkcje poczty elektronicznej były dostępne, PHP musi mieć dostęp
+     w czasie kompilacji do binariów <literal>sendmail</literal> w Twoim systemie operacyjnym.
+     Jeśli używasz innych programów do wysyłania maili, takich jak qmail czy postfix,
+     upewnij się, że używają one odpowiednich nakładek do emulowania funkcji sendmail.
+     W pierwszej kolejności PHP powinien poszukiwać sendmaila w Twojej zmiennej środowiskowej
+     <literal>PATH</literal>, a potem w następujących katalogach:
+     <literal>/usr/bin:/usr/sbin:/usr/etc:/etc:/usr/ucblib:/usr/lib</literal>.
+     Bardzo ważne jest, aby mieć dostęp do sendmaila z Twojej zmiennej środowiskowej
+     <literal>PATH</literal>. Użytkownik który kompiluje PHP również musi mieć
+     uprawnienia dostępu do binariów sendmaila.
+    </para>
    </section>
 
    <section id="mail.installation">
