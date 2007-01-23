@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="iso-8859-2"?>
+<!-- EN-Revision: 1.8 Maintainer: joeaccord Status: ready -->
+<!-- $Revision: 1.1 $ -->
+<!-- splitted from ./en/functions/ibase.xml, last change in rev 1.9 -->
+  <refentry id="function.ibase-fetch-object">
+   <refnamediv>
+    <refname>ibase_fetch_object</refname>
+    <refpurpose>Pobiera wiersz wyniku zapytania w postaci obiektu</refpurpose>
+   </refnamediv>
+   <refsect1>
+    <title>Opis</title>
+     <methodsynopsis>
+      <type>object</type><methodname>ibase_fetch_object</methodname>
+      <methodparam><type>resource</type><parameter>identyfikator_wyniku</parameter></methodparam>
+      <methodparam choice="opt"><type>int</type><parameter>flaga_pobrania</parameter></methodparam>
+     </methodsynopsis>
+    <para>
+     Pobiera wiersz w postaci obiektu
+     z <parameter>identyfikatora_wyniku</parameter> uzyskanego wcześniej przez wywołanie
+     <function>ibase_query</function>
+     lub <function>ibase_execute</function>.
+     <informalexample>
+      <programlisting role="php">
+<![CDATA[
+<?php
+    $dbh = ibase_connect($host, $username, $password);
+    $stmt = 'SELECT * FROM tabela';
+    $sth = ibase_query($dbh, $stmt);
+    while ($row = ibase_fetch_object($sth)) {
+        echo $row->EMAIL . "\n";
+    }
+    ibase_close($dbh);
+?>
+]]>
+      </programlisting>
+     </informalexample>
+    </para>
+    <para>
+     Kolejne wywołanie <function>ibase_fetch_object</function>
+     zwróci następny wiersz ze zbioru wynikowego, lub &false; jeśli nie ma już więcej
+     wierszy.
+    </para>
+    <para>
+    <parameter>flaga_pobrania</parameter> jest kombinacją stałych IBASE_TEXT i IBASE_UNIXTIME
+    łączonych ze sobą przy pomocy operatora sumy bitowej. Przekazanie stałej IBASE_TEXT powoduje, że ta funkcja
+    zwraca zawartość BLOBa zamiast identyfikatora BLOBa. Przekazanie stałej IBASE_UNIXTIME powoduje, że ta funkcja
+    zwraca wartości daty/czasu w postaci unixowego znacznika czasu zamiast sformatowanego łańcucha.
+    </para>
+    <para>
+     Patrz także:
+     <function>ibase_fetch_row</function>
+     i <function>ibase_fetch_assoc</function>.
+    </para>
+   </refsect1>
+  </refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"../../../../manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
