@@ -1,4 +1,4 @@
-<!-- EN-Revision: 1.175 Maintainer: leszek Status: ready -->
+<!-- EN-Revision: 1.186 Maintainer: leszek Status: ready -->
 <!-- Keep 'em sorted -->
 
 
@@ -231,6 +231,44 @@ PHP zostało skompilowane ze wsparciem dla freetype (<option role="configure">--
 
 <!ENTITY note.gd.2 '<note><simpara>Ta funkcja wymaga GD 2.0.1 lub nowszej (2.0.28 lub nowsza jest zalecana).</simpara></note>'>
 
+<!ENTITY gd.image.description '<varlistentry><term><parameter>
+obraz</parameter></term><listitem><para>Zasób obrazu, zwrócony przez jedną z funkcji tworzących obrazy, 
+taką jak <function>imagecreatetruecolor</function>.</para></listitem></varlistentry>'>
+
+<!ENTITY gd.font.description '<varlistentry><term><parameter>
+czcionka</parameter></term><listitem><para>Może przyjąć 1, 2, 3, 4, 5 dla wbudowanych 
+czcionek (gdzie większy numer odpowiada większej czcionce) lub własny dowolny
+identyfikator czcionki zarejestrowany przez <function>imageloadfont</function>.
+</para></listitem></varlistentry>'>
+
+<!-- DBM notes -->
+
+<!ENTITY dbm.dbm-identifier.description '<varlistentry><term><parameter>
+dbm_identifier</parameter></term><listitem><para>Identyfikator połączenia DBM,
+zwrócony przez <function>dbmopen</function>.</para></listitem></varlistentry>'>
+
+<!-- cURL notes -->
+
+<!ENTITY curl.ch.description '<varlistentry><term><parameter>ch</parameter>
+</term><listitem><para>Uchwyt cURL zwrócony przez 
+<function>curl_init</function>.</para></listitem></varlistentry>'>
+
+<!ENTITY curl.mh.description '<varlistentry><term><parameter>mh</parameter>
+</term><listitem><para>Wielokrotny uchwyt cURL zwrócony przez 
+<function>curl_multi_init</function>.</para></listitem></varlistentry>'>
+
+<!-- IMAP notes -->
+
+<!ENTITY imap.imap-stream.description '<varlistentry><term><parameter>
+imap_stream</parameter></term><listitem><para>Strumień IMAP zwrócony przez 
+<function>imap_open</function>.</para></listitem></varlistentry>'>
+
+<!-- MCVE notes -->
+
+<!ENTITY mcve.conn.description '<varlistentry><term><parameter>
+conn</parameter></term><listitem><para>Zasób MCVE_CONN zwrócony przez 
+<function>m_initengine</function>.</para></listitem></varlistentry>'>
+
 <!-- Date and time entities -->
 <!ENTITY date.timezone.errors.description '<para>
 Każde wywołanie do funkcji date/time spowoduje wygenerowanie <constant>E_NOTICE</constant>
@@ -446,6 +484,32 @@ Windows posiada wbudowaną obsługę dla tego rozszerzenia. Nie trzeba ładować
 
 <!ENTITY sqlsafemode '<link linkend="ini.sql.safe-mode">tryb bezpieczny SQL</link>'>
 
+<!-- APD Notes -->
+<!ENTITY apd.debug-level.description '<varlistentry><term><parameter>
+poziom_debugowania</parameter></term><listitem><para>Liczba, która powstaje poprzez dodanie
+do siebie stałych <literal>XXX_TRACE</literal>.</para><para>Użycie <constant>MEMORY_TRACE</constant>
+nie jest zalecane. Jest bardzo powolne i nie wydaje się zbyt dokładne. 
+Stała <constant>ASSIGNMENT_TRACE</constant> nie jest jeszcze zaimplementowana.</para><para>Aby włączyć wszystkie
+funkcjonalne śledzenia (TIMING, FUNCTIONS, ARGS SUMMARY (takie jak strace -c)) użyj wartości 99</para>
+</listitem></varlistentry>'>
+
+
+<!-- FBSQL Notes -->
+<!ENTITY fbsql.link-identifier.description '<varlistentry><term><parameter>
+link_identifier</parameter></term><listitem><para>Identyfikator połączenia FrontBase
+zwrócony przez <function>fbsql_connect</function> lub 
+<function>fbsql_pconnect</function>.</para><para>Jeśli link jest opcjonalny i nie zostanie podany,
+funkcja spróbuje znaleźć otwarte połączenie do serwera FrontBase i jeśli
+takiego połączenia nie znajdzie, spróbuje utworzyć je tak jak
+<function>fbsql_connect</function> byłaby wywołana bez argumentów</para>
+</listitem></varlistentry>'>
+
+<!ENTITY fbsql.result.description '<varlistentry><term><parameter>
+result</parameter></term><listitem><para>Identyfikator wyniku
+zwrócony przez <function>fbsql_query</function> lub 
+<function>fbsql_db_query</function>.</para></listitem></varlistentry>'>
+
+
 <!-- Notes for SAPI/Apache -->
 <!ENTITY note.apache.nsapi-module '<note><para>Od PHP w wersji 4.3.3 możliwe
 jest użycie tej funkcji przy pracy w trybie
@@ -560,12 +624,22 @@ połączenie nie zostało znalezione lub nawiązane, wygenerowane zostanie
 ostrzeżenie poziomu <constant>E_WARNING</constant>.</para></listitem>
 </varlistentry>'>
 
-<!-- CPDF Unit length --> 
+<!-- CPDF notes --> 
 <!ENTITY cpdf.ul '<para>Opcjonalny parametr <parameter>tryb</parameter> określa
 długość jednostki. Jeśli jest to 0 lub parametr został pominięty, używana jest
 taka jednostka jaka została podana dla strony. W przeciwnym przypadku
 koordynaty są mierzone w punktach postscriptowych ignorując bieżącą jednostkę.
 </para>'> 
+
+<!ENTITY cpdf.mode.description '<varlistentry><term><parameter>
+mode</parameter></term><listitem><para>Opcjonalny parametr <parameter>tryb</parameter>
+określa jednostkę długości. Jeśli jest 0 lub pominięto go, użyta jest domyślna jednostka
+określona dla strony. W przeciwnym wypadku współrzędne są mierzone w punktach
+postscript'owych ignorując obecne jednostki.</para></listitem></varlistentry>'>
+
+<!ENTITY cpdf.pdf-document.description '<varlistentry><term><parameter>
+pdf_document</parameter></term><listitem><para>Uchwyt dokumentu, zwrócony przez
+<function>cpdf_open</function>.</para></listitem></varlistentry>'>
 
 <!-- Xattr entities -->
 <!ENTITY xattr.namespace '<para>Rozszerzone atrybuty mają dwie różne
@@ -686,3 +760,8 @@ systemu używając autoryzacji publickey, należy skorzystać z funkcji
 <!ENTITY link.http.request.options '<link linkend="http.request.options">Opcje żądania</link>'>
 <!ENTITY link.http.request.info '<link linkend="http.request.info">Informacje żądania/odpowiedzi</link>'>
 <!ENTITY returns.http.response 'Zwraca łańcuch znaków z odpowiedziami HTTP w przypadku powodzenia, lub FALSE w przypadku porażki'>
+
+<!-- XMLWriter Notes -->
+<!ENTITY xmlwriter.xmlwriter.description '<varlistentry><term><parameter>
+xmlwriter</parameter></term><listitem><para>Jedynie dla wywołań proceduralnych.
+<type>Zasób</type> XMLWriter, który jest modfikowany. Ten zasób pochodzi, z wywołania funkcji <function>xmlwriter_open_uri</function> lub <function>xmlwriter_open_memory</function>.</para></listitem></varlistentry>'>
