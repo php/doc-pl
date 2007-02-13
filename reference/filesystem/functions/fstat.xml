@@ -1,75 +1,75 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.10 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.4 $ -->
- <refentry id="function.fstat">
-   <refnamediv>
-    <refname>fstat</refname>
-    <refpurpose>Pobiera informacje o pliku używając otwartego wskaźnika pliku</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>array</type><methodname>fstat</methodname>
-      <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     Zbiera statystyki otwartego pliku przez wskaźnik pliku <parameter>uchwyt</parameter>.
-     Ta funkcja jest podobna do funkcji
-     <function>stat</function> z wyjątkiem tego, że operuje na otwartym
-     wskaźniku pliku zamiast na nazwię pliku.
-    </para>
-     <para>
-     Zwraca tablicę ze statystykami pliku; format tablicy szczegółowo jest
-	 opisany na stronie <function>stat</function> podręcznika. 
-	 </para>
-    <para>
-	<example> 
-    <title><function>fstat</function> przykład</title>  
-        <programlisting role="php">  
-  <![CDATA[  
-  <?php  
-    
-  // otwarcie pliku  
-  $fp = fopen("/etc/passwd", "r");  
-    
-  // zebranie statystyk 
-  $fstat = fstat($fp);  
-    
-  // zamknięcie pliku 
-  fclose($fp);  
-    
-  // wyświetlenie tylko części asocjacyjnej
-  print_r(array_slice($fstat, 13));  
-    
-  ?>  
-  ]]>  
-        </programlisting>  
-        &example.outputs.similar;  
-        <screen>  
-  <![CDATA[  
-  Array  
-  (  
-      [dev] => 771  
-      [ino] => 488704  
-      [mode] => 33188  
-      [nlink] => 1  
-      [uid] => 0  
-      [gid] => 0  
-      [rdev] => 0  
-      [size] => 1114  
-      [atime] => 1061067181  
-      [mtime] => 1056136526  
-      [ctime] => 1056136526  
-      [blksize] => 4096  
-      [blocks] => 8  
-  )  
-  ]]>  
-        </screen>  
-       </example>  
-    </para>
-      &note.no-remote; 
-   </refsect1>
-  </refentry>
+<!-- EN-Revision: 1.11 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.5 $ -->
+<refentry id="function.fstat">
+ <refnamediv>
+  <refname>fstat</refname>
+  <refpurpose>Pobiera informacje o pliku używając otwartego wskaźnika pliku</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Opis</title>
+  <methodsynopsis>
+   <type>array</type><methodname>fstat</methodname>
+   <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Zbiera statystyki otwartego pliku przez wskaźnik pliku <parameter>uchwyt</parameter>.
+   Ta funkcja jest podobna do funkcji
+   <function>stat</function> z wyjątkiem tego, że operuje na otwartym
+   wskaźniku pliku zamiast na nazwię pliku.
+  </para>
+  <para>
+   Zwraca tablicę ze statystykami pliku; format tablicy szczegółowo jest
+   opisany na stronie <function>stat</function> podręcznika.
+  </para>
+  <para>
+   <example>
+    <title><function>fstat</function> przykład</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+// otwarcie pliku
+$fp = fopen("/etc/passwd", "r");
+
+// zebranie statystyk
+$fstat = fstat($fp);
+
+// zamknięcie pliku
+fclose($fp);
+
+// wyświetlenie tylko części asocjacyjnej
+print_r(array_slice($fstat, 13));
+
+?>
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
+<![CDATA[
+Array
+(
+  [dev] => 771
+  [ino] => 488704
+  [mode] => 33188
+  [nlink] => 1
+  [uid] => 0
+  [gid] => 0
+  [rdev] => 0
+  [size] => 1114
+  [atime] => 1061067181
+  [mtime] => 1056136526
+  [ctime] => 1056136526
+  [blksize] => 4096
+  [blocks] => 8
+)
+]]>
+    </screen>
+   </example>
+  </para>
+  &note.no-remote;
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

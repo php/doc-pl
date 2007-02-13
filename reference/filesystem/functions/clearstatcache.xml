@@ -1,64 +1,64 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.8 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.3 $ -->
-  <refentry id="function.clearstatcache">
-   <refnamediv>
-    <refname>clearstatcache</refname>
-    <refpurpose>Czyści bufor statusu pliku</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>void</type><methodname>clearstatcache</methodname>
-      <void/>
-     </methodsynopsis>
-    <para>
-	 Kiedy używasz <function>stat</function>, <function>lstat</function> lub
-	 dowolnej z funkcji wymienionej niżej, PHP buforuje informacje, zwrócone
-	 przez te funkcje w celu zapewnienia większej wydajności. Jednakże, 
-	 w kilku przypadkach, możesz chcieć wyczyścić zbuforowane informacje.
-	 W przypadku, gdy ten sam plik jest sprawdzany wiele razy w tym samym
-	 skrypcie i istnieje obawa, że plik ten zostanie zmieniony lub usunięty
-	 podczas pracy skryptu, możesz wywołać czyszczenie bufora stanu.
-	 W takim przypadku, możesz użyć funkcji <function>clearstatcache</function>
-	 do wyczyszczenia informacji o pliku zbuforowanej przez PHP.
-	</para>
-    <para>
-      Weź pod uwagę, że PHP nie buforuje informacji o nie istniejących plikach.
-	  Jeśli wywołasz <function>file_exists</function> na pliku, który nie istnieje
-	  zostanie zwrócone &false; dopóki nie stworzysz tego pliku. Jeśli go utworzysz
-	  funkcja zwróci &true; nawet jeśli go później skasujesz. 
-	 </para>
-	 <note> 
-       <para> 
-     	Ta funkcja buforuje informacje o podanych nazwach plików, więc potrzebujesz
-		wywoływać <function>clearstatcache</function> jeśli wykonujesz wiele 
-		operacji na tym samym pliku i potrzebujesz aby informacje o tym
-		pliku nie były buforowane. 
-       </para> 
-     </note> 
-    <para>
-     Dotyczy funkcji <function>stat</function>,
-     <function>lstat</function>,
-     <function>file_exists</function>,
-     <function>is_writable</function>,
-     <function>is_readable</function>,
-     <function>is_executable</function>,
-     <function>is_file</function>,
-     <function>is_dir</function>,
-     <function>is_link</function>,
-     <function>filectime</function>,
-     <function>fileatime</function>,
-     <function>filemtime</function>,
-     <function>fileinode</function>,
-     <function>filegroup</function>,
-     <function>fileowner</function>,
-     <function>filesize</function>,
-     <function>filetype</function> i
-     <function>fileperms</function>.
-    </para>
-   </refsect1>
-  </refentry>
+<!-- EN-Revision: 1.9 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.4 $ -->
+<refentry id="function.clearstatcache">
+ <refnamediv>
+  <refname>clearstatcache</refname>
+  <refpurpose>Czyści bufor statusu pliku</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Opis</title>
+  <methodsynopsis>
+   <type>void</type><methodname>clearstatcache</methodname>
+   <void/>
+  </methodsynopsis>
+  <para>
+   Kiedy używasz <function>stat</function>, <function>lstat</function> lub
+   dowolnej z funkcji wymienionej niżej, PHP buforuje informacje, zwrócone
+   przez te funkcje w celu zapewnienia większej wydajności. Jednakże,
+   w kilku przypadkach, możesz chcieć wyczyścić zbuforowane informacje.
+   W przypadku, gdy ten sam plik jest sprawdzany wiele razy w tym samym
+   skrypcie i istnieje obawa, że plik ten zostanie zmieniony lub usunięty
+   podczas pracy skryptu, możesz wywołać czyszczenie bufora stanu.
+   W takim przypadku, możesz użyć funkcji <function>clearstatcache</function>
+   do wyczyszczenia informacji o pliku zbuforowanej przez PHP.
+  </para>
+  <para>
+   Weź pod uwagę, że PHP nie buforuje informacji o nie istniejących plikach.
+   Jeśli wywołasz <function>file_exists</function> na pliku, który nie istnieje
+   zostanie zwrócone &false; dopóki nie stworzysz tego pliku. Jeśli go utworzysz
+   funkcja zwróci &true; nawet jeśli go później skasujesz.
+  </para>
+  <note>
+   <para>
+    Ta funkcja buforuje informacje o podanych nazwach plików, więc potrzebujesz
+    wywoływać <function>clearstatcache</function> jeśli wykonujesz wiele
+    operacji na tym samym pliku i potrzebujesz aby informacje o tym
+    pliku nie były buforowane.
+   </para>
+  </note>
+  <para>
+   Dotyczy funkcji <function>stat</function>,
+   <function>lstat</function>,
+   <function>file_exists</function>,
+   <function>is_writable</function>,
+   <function>is_readable</function>,
+   <function>is_executable</function>,
+   <function>is_file</function>,
+   <function>is_dir</function>,
+   <function>is_link</function>,
+   <function>filectime</function>,
+   <function>fileatime</function>,
+   <function>filemtime</function>,
+   <function>fileinode</function>,
+   <function>filegroup</function>,
+   <function>fileowner</function>,
+   <function>filesize</function>,
+   <function>filetype</function> i
+   <function>fileperms</function>.
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

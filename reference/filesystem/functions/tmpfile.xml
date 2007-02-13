@@ -1,58 +1,59 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
+<!-- EN-Revision: 1.9 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.8 $ -->
 <!-- splitted from ./pl/functions/filesystem.xml, last change in rev 1.1 -->
 <!-- last change to 'tmpfile' in en/ tree in rev 1.32 -->
-<!-- EN-Revision: 1.8 Maintainer: adi Status: ready -->
 <!-- OLD-Revision: 1.115/EN.1.32 -->
-   <refentry id="function.tmpfile">
-   <refnamediv>
-    <refname>tmpfile</refname>
-    <refpurpose>Tworzy plik tymczasowy</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>resource</type><methodname>tmpfile</methodname>
-      <void/>
-     </methodsynopsis>
-    <para>
-     Tworzy plik tymczasowy o unikalnej nazwie i otwiera go 
-     w trybie do odczytu i zapisu (w+), zwraca uchwyt pliku, podobnie jak
-     <function>fopen</function>.
-     Plik jest automatycznie kasowany przy zamykaniu (po użyciu
-     <function>fclose</function>), lub gdy skrypt się zakończy.
-    </para>
-    <para>
-     Jeśli chcesz uzyskać więcej szczegółów, zajrzyj do dokumentacji
-     twojego systemu dotyczącej funkcji <literal>tmpfile(3)</literal>, 
-     albo do pliku nagłówkowego <filename>stdio.h</filename>.
-    </para>
-    <para>
-     <example>
-      <title><function>tmpfile</function> przykład</title>
-      <programlisting role="php">
+<refentry id="function.tmpfile">
+ <refnamediv>
+  <refname>tmpfile</refname>
+  <refpurpose>Tworzy plik tymczasowy</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Opis</title>
+  <methodsynopsis>
+   <type>resource</type><methodname>tmpfile</methodname>
+   <void/>
+  </methodsynopsis>
+  <para>
+   Tworzy plik tymczasowy o unikalnej nazwie i otwiera go
+   w trybie do odczytu i zapisu (w+), zwraca uchwyt pliku, podobnie jak
+   <function>fopen</function>.
+   Plik jest automatycznie kasowany przy zamykaniu (po użyciu
+   <function>fclose</function>), lub gdy skrypt się zakończy.
+  </para>
+  <para>
+   Jeśli chcesz uzyskać więcej szczegółów, zajrzyj do dokumentacji
+   twojego systemu dotyczącej funkcji <literal>tmpfile(3)</literal>,
+   albo do pliku nagłówkowego <filename>stdio.h</filename>.
+  </para>
+  <para>
+   <example>
+    <title><function>tmpfile</function> przykład</title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 $temp = tmpfile();
 fwrite($temp, "zapisywanie do pliku tymczasowego");
-fseek($temp, 0); 
-echo fread($temp, 1024); 
+fseek($temp, 0);
+echo fread($temp, 1024);
 fclose($temp); // to kasuje plik
 ?>
 ]]>
-      </programlisting>
-	  &example.outputs; 
-      <screen> 
-<![CDATA[ 
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
 zapisywanie do pliku tymczasowego
-]]> 
-      </screen> 
-     </example>
-    </para>
-    <para>
-     Patrz także: <function>tempnam</function>, <function>sys_get_temp_dir</function>.
-    </para>
-   </refsect1>
-  </refentry>
+]]>
+    </screen>
+   </example>
+  </para>
+  <para>
+   Patrz także: <function>tempnam</function>, <function>sys_get_temp_dir</function>.
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

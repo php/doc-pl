@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.6 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.4 $ -->
-  <refentry id="function.basename">
-   <refnamediv>
-    <refname>basename</refname>
-    <refpurpose>Zwraca nazwę pliku, będącego składową ścieżki</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>string</type><methodname>basename</methodname>
-      <methodparam><type>string</type><parameter>ścieżka</parameter></methodparam>
-      <methodparam choice="opt"><type>string</type><parameter>przyrostek</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     Z podanego łańcucha zawierającego ścieżkę do pliku, funkcja
-     zwraca samą nazwę pliku.
-     Jeśli koniec nazwy pliku pasuje do parametru <parameter>przyrostek</parameter>
-     to zostanie on także obcięty.
-    </para>
-    <para>
-      W Windows jako separator katalogów używany jest znak slash
-     (<literal>/</literal>) i backslash (<literal>\</literal>).  W
-     innych środowiskach jest to slash (<literal>/</literal>).
-    </para>
-    <para>
-     <example>
-      <title><function>basename</function> przykład</title>
-      <programlisting role="php">
+<!-- EN-Revision: 1.7 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.5 $ -->
+<refentry id="function.basename">
+ <refnamediv>
+  <refname>basename</refname>
+  <refpurpose>Zwraca nazwę pliku, będącego składową ścieżki</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Opis</title>
+  <methodsynopsis>
+   <type>string</type><methodname>basename</methodname>
+   <methodparam><type>string</type><parameter>ścieżka</parameter></methodparam>
+   <methodparam choice="opt"><type>string</type><parameter>przyrostek</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Z podanego łańcucha zawierającego ścieżkę do pliku, funkcja
+   zwraca samą nazwę pliku.
+   Jeśli koniec nazwy pliku pasuje do parametru <parameter>przyrostek</parameter>
+   to zostanie on także obcięty.
+  </para>
+  <para>
+   W Windows jako separator katalogów używany jest znak slash
+   (<literal>/</literal>) i backslash (<literal>\</literal>).  W
+   innych środowiskach jest to slash (<literal>/</literal>).
+  </para>
+  <para>
+   <example>
+    <title><function>basename</function> przykład</title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 $path = "/home/httpd/html/index.php";
@@ -35,19 +35,19 @@ $file = basename ($path);        // $file zawiera "index.php"
 $file = basename ($path, ".php"); // $file zawiera "index"
 ?>
 ]]>
-      </programlisting>
-     </example>
-    </para>
-    <note>
-     <para>
-      Parametr <parameter>przyrostek</parameter> został dodany w PHP 4.1.0.
-     </para>
-    </note>
-    <para>
-     Patrz także: <function>dirname</function>.
-    </para>
-   </refsect1>
-  </refentry>
+    </programlisting>
+   </example>
+  </para>
+  <note>
+   <para>
+    Parametr <parameter>przyrostek</parameter> został dodany w PHP 4.1.0.
+   </para>
+  </note>
+  <para>
+   Patrz także: <function>dirname</function>.
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

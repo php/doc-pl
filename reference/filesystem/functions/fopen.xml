@@ -1,221 +1,221 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.29 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.8 $ -->
- <refentry id="function.fopen">
-   <refnamediv>
-    <refname>fopen</refname>
-    <refpurpose>Otwiera plik lub URL</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>resource</type><methodname>fopen</methodname>
-      <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
-      <methodparam><type>string</type><parameter>tryb</parameter></methodparam>
-      <methodparam choice="opt"><type>bool</type><parameter>użyj_include_path</parameter></methodparam>
-      <methodparam choice="opt"><type>resource</type><parameter>kontekst</parameter></methodparam>
-     </methodsynopsis>
+<!-- EN-Revision: 1.30 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.9 $ -->
+<refentry id="function.fopen">
+ <refnamediv>
+  <refname>fopen</refname>
+  <refpurpose>Otwiera plik lub URL</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Opis</title>
+  <methodsynopsis>
+   <type>resource</type><methodname>fopen</methodname>
+   <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
+   <methodparam><type>string</type><parameter>tryb</parameter></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>użyj_include_path</parameter></methodparam>
+   <methodparam choice="opt"><type>resource</type><parameter>kontekst</parameter></methodparam>
+  </methodsynopsis>
+  <simpara>
+   <function>fopen</function> wiąże nazwany zasób, określony przez
+   przez <parameter>nazwa_pliku</parameter> do strumienia.  Jeśli
+   <parameter>nazwa_pliku</parameter> jest w formacie "schemat://...",
+   PHP przyjmuje, że to jest URL i rozpoczyna poszukiwanie programu
+   obsługi protokołu (róznież zwanego wrapperem) dla tego schematu.
+   Jeśli nie ma zarejestrowanego wrappera dla tego protokołu, PHP
+   wyświetli wiadomość aby pomóc Tobie namierzyć potencjalne
+   problemy w Twoim skrypcie i będzie kontynuować pracę, traktując
+   podany <parameter>nazwa_pliku</parameter> jako zwykły plik.
+  </simpara>
+  <simpara>
+   Jeśli PHP zdecyduje, że <parameter>nazwa_pliku</parameter> określa
+   lokalny plik, wtedy spróbuje otworzyć strumień na tym pliku.
+   Plik musi być dostępny dla PHP, więc musisz zapewnić prawa
+   dostępu do pliku pozwalające na taką operację.
+   Jeśli masz włączone  &safemode; lub  <link linkend="ini.open-basedir">open_basedir</link>
+   mogą mieć zastosowanie dodatkowe restrykcje.
+  </simpara>
+  <simpara>
+   Jeśli PHP zdecyduje, że <parameter>nazwa_pliku</parameter> określa
+   zarejestrowany protokół i ten protokół jest zarejestowany jako
+   sieciowy URL, PHP sprawdzi <link linkend="ini.allow-url-fopen">allow_url_fopen</link>
+   czy jest włączone. Jeśli jest wyłączone (off), PHP wyświetli ostrzeżenie
+   i wywołanie fopen zakończy się niepowodzeniem.
+  </simpara>
+   <note>
     <simpara>
-	 <function>fopen</function> wiąże nazwany zasób, określony przez
-	 przez <parameter>nazwa_pliku</parameter> do strumienia.  Jeśli
-     <parameter>nazwa_pliku</parameter> jest w formacie "schemat://...",
-     PHP przyjmuje, że to jest URL i rozpoczyna poszukiwanie programu
-	 obsługi protokołu (róznież zwanego wrapperem) dla tego schematu.
-	 Jeśli nie ma zarejestrowanego wrappera dla tego protokołu, PHP
-	 wyświetli wiadomość aby pomóc Tobie namierzyć potencjalne
-	 problemy w Twoim skrypcie i będzie kontynuować pracę, traktując
-	 podany <parameter>nazwa_pliku</parameter> jako zwykły plik.  
-	</simpara>
-    <simpara>
-     Jeśli PHP zdecyduje, że <parameter>nazwa_pliku</parameter> określa
-	 lokalny plik, wtedy spróbuje otworzyć strumień na tym pliku.
-	 Plik musi być dostępny dla PHP, więc musisz zapewnić prawa
-	 dostępu do pliku pozwalające na taką operację.
-	 Jeśli masz włączone  &safemode; lub  <link linkend="ini.open-basedir">open_basedir</link> 
-	 mogą mieć zastosowanie dodatkowe restrykcje.
+     Listę obsługiwanych protokołów możesz znaleźć w <xref linkend="wrappers"/>.
+     Niektóre protokoły (również określane przez <literal>wrappery</literal> obsługują
+     <literal>kontekst</literal> lub/i opcje &php.ini;.
+     Odwołaj się do konkretnej strony protokołu aby uzyskać listę opcji jakie
+     mogą zostać ustawione (np. &php.ini; wartość
+     <literal>user_agent</literal> używana przez wrapper <literal>http</literal>).
     </simpara>
+   </note>
+   &note.context-support;
+   <note>
     <simpara>
-	 Jeśli PHP zdecyduje, że <parameter>nazwa_pliku</parameter> określa
-	 zarejestrowany protokół i ten protokół jest zarejestowany jako
-	 sieciowy URL, PHP sprawdzi <link linkend="ini.allow-url-fopen">allow_url_fopen</link> 
-	 czy jest włączone. Jeśli jest wyłączone (off), PHP wyświetli ostrzeżenie
-	 i wywołanie fopen zakończy się niepowodzeniem.
-	</simpara>
-    <note>
-     <simpara>
-      Listę obsługiwanych protokołów możesz znaleźć w <xref linkend="wrappers"/>.
-	  Niektóre protokoły (również określane przez <literal>wrappery</literal> obsługują
-	  <literal>kontekst</literal> lub/i opcje &php.ini;.
-      Odwołaj się do konkretnej strony protokołu aby uzyskać listę opcji jakie
-	  mogą zostać ustawione (np. &php.ini; wartość 
-      <literal>user_agent</literal> używana przez wrapper <literal>http</literal>).
-	 </simpara>
-    </note>
-    &note.context-support;
-    <note>
-     <simpara>
-      Od PHP 4.3.2 domyślny tryb ustawiany jest na binarny, dla wszystkich
-	  platform, które rozróżniają tryby binarne i tekstowe. Jeśli masz
-	  problemy ze skryptem po aktualizacji, spróbuj użyć flagi <literal>'t'</literal>
-	  jako obejście dopóki nie uczynisz Twojego skryptu bardziej przenośnym
-	  jak opisano niżej.
-     </simpara>
-    </note>
-    <para>
-     Parametr <parameter>tryb</parameter> określa rodzaj dostępu jaki
-	 wymagasz do strumienia. Może być dowolny z następujących: 
-	 <table>
-      <title>
-       Lista możliwych trybów dla <function>fopen</function> 
-       używając <parameter>tryb</parameter>
-      </title>
-      <tgroup cols="2">
-       <thead>
-        <row>
-         <entry><parameter>tryb</parameter></entry>
-         <entry>Opis</entry>
-        </row>
-       </thead>
-       <tbody>
-        <row>
-         <entry><literal>'r'</literal></entry>
-         <entry>
-          Otwiera tylko do odczytu; umieszcza wskaźnik pliku na jego początku.
-         </entry>
-        </row>
-        <row>
-         <entry><literal>'r+'</literal></entry>
-         <entry>
-          Otwiera do odczytu i zapisu; umieszcza wskaźnik pliku na jego początku.
-         </entry>
-        </row>
-        <row>
-         <entry><literal>'w'</literal></entry>
-         <entry>
-          Otwiera tylko do zapisu; umieszcza wskaźnik pliku na jego początku
-		  i obcina plik do zerowej długości. Jeśli plik nie istnieje to
-		  próbuje go utworzyć.
-         </entry>
-        </row>
-        <row>
-         <entry><literal>'w+'</literal></entry>
-         <entry>
-          Otwiera do odczytu i zapisu; umieszcza wskaźnik pliku na jego początku
-		  i obcina plik do zerowej długości. Jeśli plik nie istnieje to
-		  próbuje go utworzyć.
-         </entry>
-        </row>
-        <row>
-         <entry><literal>'a'</literal></entry>
-         <entry>
-		  Otwiera tylko do zapisu; umieszcza wskaźnik pliku na jego końcu.
-		  Jeśli plik nie istnieje to próbuje go utworzyć.
-         </entry>
-        </row>
-        <row>
-         <entry><literal>'a+'</literal></entry>
-         <entry>
-		  Otwiera do odczytu i zapisu; umieszcza wskaźnik pliku na jego końcu.
-		  Jeśli plik nie istnieje to próbuje go utworzyć.
-         </entry>
-        </row>
-        <row>
-         <entry><literal>'x'</literal></entry>
-         <entry>
-		  Tworzy i otwiera plik tylko do zapisu; umieszcza wskaźnik pliku na 
-		  jego początku. Jeśli plik juz istnieje, wywołanie <function>fopen</function>
-		  nie powiedzie się, zwróci &false; i wygeneruje błąd na poziomie
-		  <constant>E_WARNING</constant>. Jeśli plik nie istnieje, spróbuje go
-		  utworzyć. To jest równoważne z określeniem flag <literal>O_EXCL|O_CREAT</literal>
-		  stosowanym w wywołaniu systemowym <literal>open(2)</literal>. Ta opcja
-		  jest obsługiwana w PHP 4.3.2 i późniejszych i działa tylko na plikach
-		  lokalnych.
-		 </entry>
-        </row>
-        <row>
-         <entry><literal>'x+'</literal></entry>
-         <entry>
-		  Tworzy i otwiera plik odczytu i zapisu; umieszcza wskaźnik pliku na 
-		  jego początku. Jeśli plik juz istnieje, wywołanie <function>fopen</function>
-		  nie powiedzie się, zwróci &false; i wygeneruje błąd na poziomie
-		  <constant>E_WARNING</constant>. Jeśli plik nie istnieje, spróbuje go
-		  utworzyć. To jest równoważne z okresleniem flag <literal>O_EXCL|O_CREAT</literal>
-		  stosowanym w wywołaniu systemowym <literal>open(2)</literal>. Ta opcja
-		  jest obsługiwana w PHP 4.3.2 i późniejszych i działa tylko na plikach
-		  lokalnych.
-		  </entry>
-        </row>
-       </tbody>
-      </tgroup>
-     </table>
-    </para>
-    <note>
-     <para>
-	  Różne rodziny systemów operacyjnych stosuja rózne konwencje końca lini.
-	  Kiedy zapisujesz plik tekstowy i chcesz wstawić łamanie lini, musisz
-	  użyć poprawnych dla twojego systemu operacyjnego znak(ów) końca lini.
-	  Systemy bazujące na Uniksie używają <literal>\n</literal> jako 
-	  znaku końca lini, systemy bazujące na Windowsie używają <literal>\r\n</literal>
-	  jako znaków końca lini, a systemy Macintosh używają <literal>\r</literal>
-	  jako znak końca lini.
-     </para>
-     <para>
-	  Jeśli użyjesz nieprawidłowego końca lini do zapisu pliku, możesz
-	  zaobserwować, w innych aplikacjach otwierając ten plik, że "wygląda on 
-	  zabawnie". 
-     </para>
-     <para>
-	  Windows oferuje flagę (<literal>'t'</literal>) konwertującą tryb tekstowy,
-	  która przezroczyście przekłada <literal>\n</literal> na
-      <literal>\r\n</literal> kiedy pracujesz z plikiem. Dla kontrastu, możesz
-	  także uzyć <literal>'b'</literal> aby wymusić tryb binarny, wtedy
-	  nie będzie konwertować twoich danych. Aby użyć tych flag, wstaw   
-	  <literal>'b'</literal> lub <literal>'t'</literal> jako ostatni
-	  znak w parametrze <parameter>tryb</parameter>.
-	  </para>
-     <para>
-	  Domyślnie tryb konwersji zależy od SAPI i wersji PHP jakiej używasz,
-	  więc namawiamy aby zawsze podawać stosowną flage w celu przenośności.
-	  Powinieneś użyć trybu <literal>'t'</literal> jeśli pracujesz ze
-	  zwykłymi plikami tekstowymi (plain-text)i używasz  <literal>\n</literal> 
-	  do ograniczenia konców lini w twoim skrypcie, ale wymagasz aby twój
-	  plik był czytelny w aplikacjach takich jak notatnik. Powinieneś uzyć
-	  <literal>'b'</literal> w każdym innym przypadku.
-	  </para>
-     <para>
-      Jeśli nie podasz flagi 'b' kiedy pracujesz na binarnych plikach, możesz
-	  doświadczyć dziwnych problemów z twoimi danymi, włączając uszkodzone pliki
-	  graficzne i dziwne problemy ze znakami <literal>\r\n</literal>.
-     </para>
-    </note>
-    <note>
-     <para>
-	  Dla przenośności, bardzo zalecane jest użycie zawsze flagi 'b'
-	  kiedy otwierasz pliki za pomocą <function>fopen</function>.
-     </para>
-    </note>
-    <note>
-     <para>
-	  Ponownie, dla przenośności, jest również bardzo zalecane abyś,
-	  przepisał swój kod, który używa lub polega na trybie <literal>'t'</literal>
-	  tak aby używał poprawnego końca lini oraz trybu <literal>'b'</literal>.
-     </para>
-    </note>
-    <para>
-	 Opcjonalny trzeci parametr <parameter>użyj_include_path</parameter>
-	 może być ustawiony na '1' lub &true; jeśli chcesz szukać pliku także w
-	 <link linkend="ini.include-path">include_path</link>.
-    </para>
-    <simpara>
-     Jeśli otwieranie się nie powiedzie, funkcja zwróci &false; i 
-	 wygenerowany zostanie błąd na poziomie <constant>E_WARNING</constant>.
-	 Możesz użyć <link linkend="language.operators.errorcontrol">@</link> aby
-	 zatuszować to ostrzeżenie.
+     Od PHP 4.3.2 domyślny tryb ustawiany jest na binarny, dla wszystkich
+     platform, które rozróżniają tryby binarne i tekstowe. Jeśli masz
+     problemy ze skryptem po aktualizacji, spróbuj użyć flagi <literal>'t'</literal>
+     jako obejście dopóki nie uczynisz Twojego skryptu bardziej przenośnym
+     jak opisano niżej.
     </simpara>
+   </note>
+   <para>
+    Parametr <parameter>tryb</parameter> określa rodzaj dostępu jaki
+    wymagasz do strumienia. Może być dowolny z następujących:
+   <table>
+    <title>
+      Lista możliwych trybów dla <function>fopen</function>
+      używając <parameter>tryb</parameter>
+     </title>
+     <tgroup cols="2">
+      <thead>
+       <row>
+        <entry><parameter>tryb</parameter></entry>
+        <entry>Opis</entry>
+       </row>
+      </thead>
+      <tbody>
+       <row>
+        <entry><literal>'r'</literal></entry>
+        <entry>
+         Otwiera tylko do odczytu; umieszcza wskaźnik pliku na jego początku.
+        </entry>
+       </row>
+       <row>
+        <entry><literal>'r+'</literal></entry>
+        <entry>
+         Otwiera do odczytu i zapisu; umieszcza wskaźnik pliku na jego początku.
+        </entry>
+       </row>
+       <row>
+        <entry><literal>'w'</literal></entry>
+        <entry>
+         Otwiera tylko do zapisu; umieszcza wskaźnik pliku na jego początku
+	 i obcina plik do zerowej długości. Jeśli plik nie istnieje to
+	 próbuje go utworzyć.
+        </entry>
+       </row>
+       <row>
+        <entry><literal>'w+'</literal></entry>
+        <entry>
+         Otwiera do odczytu i zapisu; umieszcza wskaźnik pliku na jego początku
+	 i obcina plik do zerowej długości. Jeśli plik nie istnieje to
+	 próbuje go utworzyć.
+        </entry>
+       </row>
+       <row>
+        <entry><literal>'a'</literal></entry>
+        <entry>
+	 Otwiera tylko do zapisu; umieszcza wskaźnik pliku na jego końcu.
+	 Jeśli plik nie istnieje to próbuje go utworzyć.
+        </entry>
+       </row>
+       <row>
+        <entry><literal>'a+'</literal></entry>
+        <entry>
+	 Otwiera do odczytu i zapisu; umieszcza wskaźnik pliku na jego końcu.
+	 Jeśli plik nie istnieje to próbuje go utworzyć.
+        </entry>
+       </row>
+       <row>
+        <entry><literal>'x'</literal></entry>
+        <entry>
+	 Tworzy i otwiera plik tylko do zapisu; umieszcza wskaźnik pliku na
+	 jego początku. Jeśli plik juz istnieje, wywołanie <function>fopen</function>
+	 nie powiedzie się, zwróci &false; i wygeneruje błąd na poziomie
+	 <constant>E_WARNING</constant>. Jeśli plik nie istnieje, spróbuje go
+	 utworzyć. To jest równoważne z określeniem flag <literal>O_EXCL|O_CREAT</literal>
+         stosowanym w wywołaniu systemowym <literal>open(2)</literal>. Ta opcja
+         jest obsługiwana w PHP 4.3.2 i późniejszych i działa tylko na plikach
+         lokalnych.
+        </entry>
+       </row>
+       <row>
+        <entry><literal>'x+'</literal></entry>
+        <entry>
+         Tworzy i otwiera plik odczytu i zapisu; umieszcza wskaźnik pliku na
+         jego początku. Jeśli plik juz istnieje, wywołanie <function>fopen</function>
+         nie powiedzie się, zwróci &false; i wygeneruje błąd na poziomie
+         <constant>E_WARNING</constant>. Jeśli plik nie istnieje, spróbuje go
+         utworzyć. To jest równoważne z okresleniem flag <literal>O_EXCL|O_CREAT</literal>
+         stosowanym w wywołaniu systemowym <literal>open(2)</literal>. Ta opcja
+         jest obsługiwana w PHP 4.3.2 i późniejszych i działa tylko na plikach
+         lokalnych.
+        </entry>
+       </row>
+      </tbody>
+     </tgroup>
+    </table>
+   </para>
+   <note>
     <para>
-     <example>
-      <title><function>fopen</function> przykłady</title>
-      <programlisting role="php">
+     Różne rodziny systemów operacyjnych stosuja rózne konwencje końca lini.
+     Kiedy zapisujesz plik tekstowy i chcesz wstawić łamanie lini, musisz
+     użyć poprawnych dla twojego systemu operacyjnego znak(ów) końca lini.
+     Systemy bazujące na Uniksie używają <literal>\n</literal> jako
+     znaku końca lini, systemy bazujące na Windowsie używają <literal>\r\n</literal>
+     jako znaków końca lini, a systemy Macintosh używają <literal>\r</literal>
+     jako znak końca lini.
+    </para>
+    <para>
+     Jeśli użyjesz nieprawidłowego końca lini do zapisu pliku, możesz
+     zaobserwować, w innych aplikacjach otwierając ten plik, że "wygląda on
+     zabawnie".
+    </para>
+    <para>
+     Windows oferuje flagę (<literal>'t'</literal>) konwertującą tryb tekstowy,
+     która przezroczyście przekłada <literal>\n</literal> na
+     <literal>\r\n</literal> kiedy pracujesz z plikiem. Dla kontrastu, możesz
+     także uzyć <literal>'b'</literal> aby wymusić tryb binarny, wtedy
+     nie będzie konwertować twoich danych. Aby użyć tych flag, wstaw
+     <literal>'b'</literal> lub <literal>'t'</literal> jako ostatni
+     znak w parametrze <parameter>tryb</parameter>.
+    </para>
+    <para>
+     Domyślnie tryb konwersji zależy od SAPI i wersji PHP jakiej używasz,
+     więc namawiamy aby zawsze podawać stosowną flage w celu przenośności.
+     Powinieneś użyć trybu <literal>'t'</literal> jeśli pracujesz ze
+     zwykłymi plikami tekstowymi (plain-text)i używasz  <literal>\n</literal>
+     do ograniczenia konców lini w twoim skrypcie, ale wymagasz aby twój
+     plik był czytelny w aplikacjach takich jak notatnik. Powinieneś uzyć
+     <literal>'b'</literal> w każdym innym przypadku.
+    </para>
+    <para>
+     Jeśli nie podasz flagi 'b' kiedy pracujesz na binarnych plikach, możesz
+     doświadczyć dziwnych problemów z twoimi danymi, włączając uszkodzone pliki
+     graficzne i dziwne problemy ze znakami <literal>\r\n</literal>.
+    </para>
+   </note>
+   <note>
+    <para>
+     Dla przenośności, bardzo zalecane jest użycie zawsze flagi 'b'
+     kiedy otwierasz pliki za pomocą <function>fopen</function>.
+    </para>
+   </note>
+   <note>
+    <para>
+     Ponownie, dla przenośności, jest również bardzo zalecane abyś,
+     przepisał swój kod, który używa lub polega na trybie <literal>'t'</literal>
+     tak aby używał poprawnego końca lini oraz trybu <literal>'b'</literal>.
+    </para>
+   </note>
+   <para>
+    Opcjonalny trzeci parametr <parameter>użyj_include_path</parameter>
+    może być ustawiony na '1' lub &true; jeśli chcesz szukać pliku także w
+    <link linkend="ini.include-path">include_path</link>.
+   </para>
+   <simpara>
+    Jeśli otwieranie się nie powiedzie, funkcja zwróci &false; i
+    wygenerowany zostanie błąd na poziomie <constant>E_WARNING</constant>.
+    Możesz użyć <link linkend="language.operators.errorcontrol">@</link> aby
+    zatuszować to ostrzeżenie.
+   </simpara>
+   <para>
+    <example>
+     <title><function>fopen</function> przykłady</title>
+     <programlisting role="php">
 <![CDATA[
 <?php
 $handle = fopen("/home/rasmus/plik.txt", "r");
@@ -224,46 +224,46 @@ $handle = fopen("http://www.przyklad.com/", "r");
 $handle = fopen("ftp://uzytkownik:haslo@przyklad.com/jakisplik.txt", "w");
 ?>
 ]]>
-      </programlisting>
-     </example>
-    </para>
-    <simpara>
-	 Jeśli doświadczasz problemów z odczytem lub zapisywaniem do plików i
-	 używasz PHP w postaci modułu serwera, pamiętaj, żeby się upewnić, że
-	 pliki i katalogi, których używasz są dostępne dla procesu serwera.
-	</simpara>
-    <para>
-     Na platformie Windows, dbaj aby wstawiać znaki ucieczki (escape)
-	 przed wszystkimi lewymi ukośnikami (backslash) użytymi w ścieżce do
-	 pliku lub używać ukośników (slash).
-     <informalexample>
-      <programlisting role="php"> 
+     </programlisting>
+    </example>
+   </para>
+  <simpara>
+   Jeśli doświadczasz problemów z odczytem lub zapisywaniem do plików i
+   używasz PHP w postaci modułu serwera, pamiętaj, żeby się upewnić, że
+   pliki i katalogi, których używasz są dostępne dla procesu serwera.
+  </simpara>
+  <para>
+   Na platformie Windows, dbaj aby wstawiać znaki ucieczki (escape)
+   przed wszystkimi lewymi ukośnikami (backslash) użytymi w ścieżce do
+   pliku lub używać ukośników (slash).
+   <informalexample>
+    <programlisting role="php">
 <![CDATA[
 <?php
 $handle = fopen("c:\\data\\info.txt", "r");
 ?>
 ]]>
-      </programlisting>
-     </informalexample>
-    </para>
-    &warn.ssl-non-standard;
-    &note.sm.uidcheck.dir;
-    <simpara>
-     Patrz także: <xref linkend="wrappers"/>,
-     <function>fclose</function>,
-     <function>fgets</function>, 
-     <function>fread</function>,
-     <function>fwrite</function>,
-     <function>fsockopen</function>,
-     <function>file</function>,
-     <function>file_exists</function>,
-     <function>is_readable</function>,
-     <function>stream_set_timeout</function>,
-     <function>popen</function> i
-	 <function>stream_context_create</function>.
-    </simpara>
-   </refsect1>
-  </refentry>
+    </programlisting>
+   </informalexample>
+  </para>
+  &warn.ssl-non-standard;
+  &note.sm.uidcheck.dir;
+  <simpara>
+   Patrz także: <xref linkend="wrappers"/>,
+   <function>fclose</function>,
+   <function>fgets</function>,
+   <function>fread</function>,
+   <function>fwrite</function>,
+   <function>fsockopen</function>,
+   <function>file</function>,
+   <function>file_exists</function>,
+   <function>is_readable</function>,
+   <function>stream_set_timeout</function>,
+   <function>popen</function> i
+   <function>stream_context_create</function>.
+  </simpara>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
@@ -284,4 +284,4 @@ End:
 vim600: syn=xml fen fdm=syntax fdl=2 si
 vim: et tw=78 syn=sgml
 vi: ts=1 sw=1
--->  
+-->

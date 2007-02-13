@@ -1,59 +1,59 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.7 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.4 $ -->
-  <refentry id="function.filectime">
-   <refnamediv>
-    <refname>filectime</refname>
-    <refpurpose>Pobiera i-węzłowy czas zmiany pliku</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>int</type><methodname>filectime</methodname>
-      <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
-     </methodsynopsis>
+<!-- EN-Revision: 1.8 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.5 $ -->
+<refentry id="function.filectime">
+ <refnamediv>
+  <refname>filectime</refname>
+  <refpurpose>Pobiera i-węzłowy czas zmiany pliku</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Opis</title>
+  <methodsynopsis>
+   <type>int</type><methodname>filectime</methodname>
+   <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Zwraca czas, ostatniej zmiany pliku lub &false; w
+   przypadku błędu. Czas jest zwracany w postaci unix'owego znacznika
+   czasu.
+  </para>
+  <para>
+   Uwaga: W większości Unixowych systemów plików, plik ulega zmianie
+   wtedy kiedy dane jego i-węzła zmieniają się; tj. kiedy prawa dostępu,
+   właściciel, grupa lub inne metadane z i-węzłą są nadpisywane.
+   Patrz także: <function>filemtime</function> (którą powinnieneś użyć, gdy chcesz stworzyć
+   stopkę strony "Ostatnia Modyfikacja") i
+   <function>fileatime</function>.
+  </para>
+  <para>Zauważ także, że w niektórych tekstach Unixowych ctime pliku jest
+   określany jako będący czasem stworzenia pliku. To jest nieprawidłowe.
+   Nie ma pojęcia czasu stworzenia dla plików Unixowych większości Unixowych systemów plików.
+  </para>
+    &note.clearstatcache;
+    &tip.fopen-wrapper.stat;
     <para>
-     Zwraca czas, ostatniej zmiany pliku lub &false; w
-     przypadku błędu. Czas jest zwracany w postaci unix'owego znacznika
-     czasu.
-    </para>
-    <para>
-     Uwaga: W większości Unixowych systemów plików, plik ulega zmianie
-     wtedy kiedy dane jego i-węzła zmieniają się; tj. kiedy prawa dostępu,
-     właściciel, grupa lub inne metadane z i-węzłą są nadpisywane.
-     Patrz także: <function>filemtime</function> (którą powinnieneś użyć, gdy chcesz stworzyć
-     stopkę strony "Ostatnia Modyfikacja") i
-     <function>fileatime</function>.
-    </para>
-    <para>Zauważ także, że w niektórych tekstach Unixowych ctime pliku jest
-     określany jako będący czasem stworzenia pliku. To jest nieprawidłowe.
-     Nie ma pojęcia czasu stworzenia dla plików Unixowych większości Unixowych systemów plików.
-    </para>
-      &note.clearstatcache; 
-      &tip.fopen-wrapper.stat; 
-      <para> 
-       <example> 
-        <title><function>filectime</function> przykład</title> 
-        <programlisting role="php"> 
-  <![CDATA[ 
-  <?php 
-    
-  // wyświetli np. jakisplik.txt został ostatnio zmieniony : December 29 2002 22:16:23. 
-    
-  $filename = 'jakisplik.txt'; 
-  if (file_exists($filename)) { 
-      echo "$filename został ostatnio zmieniony : " . date("F d Y H:i:s.", filectime($filename)); 
-  }     
-  ?> 
-  ]]> 
-        </programlisting> 
-       </example> 
-      </para> 
-    <simpara>
-     Patrz także: <function>filemtime</function> 
-    </simpara>
-   </refsect1>
-  </refentry>
+     <example>
+      <title><function>filectime</function> przykład</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+
+// wyświetli np. jakisplik.txt został ostatnio zmieniony : December 29 2002 22:16:23.
+
+$filename = 'jakisplik.txt';
+if (file_exists($filename)) {
+  echo "$filename został ostatnio zmieniony : " . date("F d Y H:i:s.", filectime($filename));
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <simpara>
+   Patrz także: <function>filemtime</function>
+  </simpara>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

@@ -1,46 +1,46 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.5 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.3 $ -->
-  <refentry id="function.fclose">
-   <refnamediv>
-    <refname>fclose</refname>
-    <refpurpose>Zamyka otwarty wskaźnik pliku</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>bool</type><methodname>fclose</methodname>
-      <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam>
-     </methodsynopsis>
+<!-- EN-Revision: 1.6 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.4 $ -->
+<refentry id="function.fclose">
+ <refnamediv>
+  <refname>fclose</refname>
+  <refpurpose>Zamyka otwarty wskaźnik pliku</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Opis</title>
+  <methodsynopsis>
+   <type>bool</type><methodname>fclose</methodname>
+   <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Zamyka wskaźnik pliku <parameter>uchwyt</parameter>.
+  </para>
+  <para>
+   &return.success;
+  </para>
+  <para>
+   Wskaźnik pliku musi być poprawny i musi wskazywać na plik
+   poprawnie otwarty przez <function>fopen</function> lub
+   <function>fsockopen</function>.
+  </para>
     <para>
-     Zamyka wskaźnik pliku <parameter>uchwyt</parameter>.
+     <example>
+      <title>Prosty przykład <function>fclose</function></title>
+      <programlisting role="php">
+  <![CDATA[
+  <?php
+
+    $uchwyt = fopen('plik.txt', 'r');
+
+    fclose($uchwyt);
+
+  ?>
+  ]]>
+      </programlisting>
+     </example>
     </para>
-    <para>
-     &return.success;
-    </para>
-    <para>
-     Wskaźnik pliku musi być poprawny i musi wskazywać na plik
-     poprawnie otwarty przez <function>fopen</function> lub
-     <function>fsockopen</function>.
-    </para>  
-      <para>  
-       <example>  
-        <title>Prosty przykład <function>fclose</function></title>  
-        <programlisting role="php">  
-  <![CDATA[  
-  <?php  
-    
-    $uchwyt = fopen('plik.txt', 'r');  
-    
-    fclose($uchwyt);  
-    
-  ?>  
-  ]]>  
-        </programlisting>  
-       </example>  
-      </para>  
-    </refsect1>
-  </refentry>
+  </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

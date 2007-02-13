@@ -1,58 +1,59 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
+<!-- EN-Revision: 1.14 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.4 $ -->
 <!-- splitted from ./pl/functions/filesystem.xml, last change in rev 1.1 -->
-<!-- EN-Revision: 1.13 Maintainer: adi Status: ready -->
-  <refentry id="function.popen">
-   <refnamediv>
-    <refname>popen</refname>
-    <refpurpose>Otwiera wskaźnik pliku do procesu</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>resource</type><methodname>popen</methodname>
-      <methodparam><type>string</type><parameter>polecenie</parameter></methodparam>
-      <methodparam><type>string</type><parameter>tryb</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-	 Otwiera potok do procesu uruchomionego przez rozwidlenie polecenia (ang. forking)
-	 podanego w parametrze polecenie.
-	</para>
-    <para> 
-     Zwraca wskaźnik pliku identyczny do tego zwracanego przez 
-	 <function>fopen</function> z wyjątkiem tego, że jest on jednokierunkowy
-	 (może być tylko użyty do odczytu lub zapisu) i musi być zamknięty za pomocą
-	 <function>pclose</function>. Wskaźnik ten może być użyty z
-     <function>fgets</function>, <function>fgetss</function> i
-     <function>fwrite</function>.
-     </para>
-    <para>
-     W przypadku błędu, zwraca &false;. 
-    </para>
-    <note>
-     <para>
-      Jeśli szukasz dwukierunkowej obsługi (w obie strony), użyj 
-      <function>proc_open</function>.
-     </para>
-    </note>
-    <para>
-     <example>
-      <title><function>popen</function> przykład</title>
-      <programlisting role="php">
+<refentry id="function.popen">
+ <refnamediv>
+  <refname>popen</refname>
+  <refpurpose>Otwiera wskaźnik pliku do procesu</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Opis</title>
+  <methodsynopsis>
+   <type>resource</type><methodname>popen</methodname>
+   <methodparam><type>string</type><parameter>polecenie</parameter></methodparam>
+   <methodparam><type>string</type><parameter>tryb</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Otwiera potok do procesu uruchomionego przez rozwidlenie polecenia (ang. forking)
+   podanego w parametrze polecenie.
+  </para>
+  <para>
+   Zwraca wskaźnik pliku identyczny do tego zwracanego przez
+   <function>fopen</function> z wyjątkiem tego, że jest on jednokierunkowy
+   (może być tylko użyty do odczytu lub zapisu) i musi być zamknięty za pomocą
+   <function>pclose</function>. Wskaźnik ten może być użyty z
+   <function>fgets</function>, <function>fgetss</function> i
+   <function>fwrite</function>.
+   </para>
+  <para>
+   W przypadku błędu, zwraca &false;.
+  </para>
+  <note>
+   <para>
+    Jeśli szukasz dwukierunkowej obsługi (w obie strony), użyj
+    <function>proc_open</function>.
+   </para>
+  </note>
+  <para>
+   <example>
+    <title><function>popen</function> przykład</title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 $uchwyt = popen("/bin/ls", "r");
 ?>
 ]]>
-      </programlisting>
-     </example>
-    </para>
-    <para>
-     Jeśli polecenie uruchamiane nie może zostać znalezione, poprawny
-	 zasób jest zwracany. To może wydawać się dziwne, ale ma sens;
-	 pozwala tobie na dostęp do wszystkich informacji o błędach zwracanych
-	 przez powłokę.
-	 <informalexample>
-      <programlisting role="php">
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   Jeśli polecenie uruchamiane nie może zostać znalezione, poprawny
+   zasób jest zwracany. To może wydawać się dziwne, ale ma sens;
+   pozwala tobie na dostęp do wszystkich informacji o błędach zwracanych
+   przez powłokę.
+   <informalexample>
+    <programlisting role="php">
 <![CDATA[
 <?php
 error_reporting(E_ALL);
@@ -65,17 +66,17 @@ echo $czytaj;
 pclose($uchwyt);
 ?>
 ]]>
-      </programlisting>
-     </informalexample>
-    </para>
-    &note.exec-path;
-    &warn.sm.exec;
-    <para>
-     Patrz także <function>pclose</function>, <function>fopen</function> i
-	 <function>proc_open</function>.
-    </para>
-   </refsect1>
-  </refentry>
+    </programlisting>
+   </informalexample>
+  </para>
+  &note.exec-path;
+  &warn.sm.exec;
+  <para>
+   Patrz także <function>pclose</function>, <function>fopen</function> i
+   <function>proc_open</function>.
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

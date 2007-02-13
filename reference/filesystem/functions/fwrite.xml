@@ -1,93 +1,93 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.13 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.5 $ -->
-  <refentry id="function.fwrite">
-   <refnamediv>
-    <refname>fwrite</refname>
-    <refpurpose>Zapis pliku binarnie bezpieczny</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>int</type><methodname>fwrite</methodname>
-      <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam>
-      <methodparam><type>string</type><parameter>łańcuch</parameter></methodparam>
-      <methodparam choice="opt"><type>int</type><parameter>długość</parameter></methodparam>
-     </methodsynopsis>
-    <simpara>
-     <function>fwrite</function> zapisuje treść
-     <parameter>łańcuch</parameter> do strumienia pliku wskazanego przez
-     <parameter>uchwyt</parameter>. Jeśli argument <parameter>długość</parameter>
-     został podany, zapis zatrzymywany jest po zapisaniu
-     <parameter>długość</parameter> bajtów lub <parameter>łańcuch</parameter>
-     skończy się, cokolwiek nastąpi szybciej.
-    </simpara>
-    <simpara>
-     <function>fwrite</function> zwraca liczbę zapisanych bajtów,
-     lub &false; w przypadku błędu.
-    </simpara>
-    <simpara>
-     Zauważ, że jeśli argument <parameter>długość</parameter> zosta podany,
-     to konfiguracja <link
-     linkend="ini.magic-quotes-runtime">magic_quotes_runtime</link>
-     zostaje zignorowana i żadne slashe nie zostaną usunięte z
-     <parameter>łańcucha</parameter>.
-    </simpara>
-    <note>
-     <para>
-      W systemach, które rozróżniają pliki na binarne i tekstowe
-      (np. Windows) plik musi zostać otworzony z 'b' włączonym do
-      parametru tryb funkcji <function>fopen</function>.
-     </para>
-    </note>
-	 <para> 
-       <example> 
-        <title>Prosty przykład <function>fwrite</function></title> 
-        <programlisting role="php"> 
-  <![CDATA[ 
-  <?php 
-  $nazwapliku = 'test.txt'; 
-  $trochetresci = "Dodaj to do pliku\n"; 
-    
-  // Najpierw przekonaj się czy plik istnieje i jest zapisywalny. 
-  if (is_writable($nazwapliku)) { 
-    
-      // W naszym przykładzie otwieramy $nazwapliku w trybie dopisywania. 
-      // Wskaźnik pliku jest ustawiony na końcu pliku gdzie znajdzie 
-      // się zawartość $trochetresci po wykonaniu fwrite(). 
-      if (!$uchwyt = fopen($nazwapliku, 'a')) { 
-           echo "Nie mogę otworzyć pliku ($nazwapliku)"; 
-           exit; 
-      } 
-    
-      // Zapis $trochetresci do naszego otwartego pliku. 
-      if (fwrite($uchwyt, $trochetresci) === FALSE) { 
-          echo "Nie mogę zapisać do pliku ($nazwapliku)"; 
-          exit; 
-      } 
-    
-      echo "Sukces, zapisano ($trochetresci) do pliku ($nazwapliku)"; 
-    
-      fclose($uchwyt); 
-    
-  } else { 
-      echo "Plik $nazwapliku nie jest zapisywalny"; 
-  } 
-  ?> 
-  ]]> 
-        </programlisting> 
-       </example> 
-      </para> 
+<!-- EN-Revision: 1.14 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.6 $ -->
+<refentry id="function.fwrite">
+ <refnamediv>
+  <refname>fwrite</refname>
+  <refpurpose>Zapis pliku binarnie bezpieczny</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Opis</title>
+  <methodsynopsis>
+   <type>int</type><methodname>fwrite</methodname>
+   <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam>
+   <methodparam><type>string</type><parameter>łańcuch</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>długość</parameter></methodparam>
+  </methodsynopsis>
+  <simpara>
+   <function>fwrite</function> zapisuje treść
+   <parameter>łańcuch</parameter> do strumienia pliku wskazanego przez
+   <parameter>uchwyt</parameter>. Jeśli argument <parameter>długość</parameter>
+   został podany, zapis zatrzymywany jest po zapisaniu
+   <parameter>długość</parameter> bajtów lub <parameter>łańcuch</parameter>
+   skończy się, cokolwiek nastąpi szybciej.
+  </simpara>
+  <simpara>
+   <function>fwrite</function> zwraca liczbę zapisanych bajtów,
+   lub &false; w przypadku błędu.
+  </simpara>
+  <simpara>
+   Zauważ, że jeśli argument <parameter>długość</parameter> zosta podany,
+   to konfiguracja <link
+   linkend="ini.magic-quotes-runtime">magic_quotes_runtime</link>
+   zostaje zignorowana i żadne slashe nie zostaną usunięte z
+   <parameter>łańcucha</parameter>.
+  </simpara>
+  <note>
+   <para>
+    W systemach, które rozróżniają pliki na binarne i tekstowe
+    (np. Windows) plik musi zostać otworzony z 'b' włączonym do
+    parametru tryb funkcji <function>fopen</function>.
+   </para>
+  </note>
+  <para>
+   <example>
+    <title>Prosty przykład <function>fwrite</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$nazwapliku = 'test.txt';
+$trochetresci = "Dodaj to do pliku\n";
 
-    <simpara>
-     Patrz także: <function>fread</function>, 
-	 <function>fopen</function>,  
-     <function>fsockopen</function>,  
-     <function>popen</function> i  
-     <function>file_put_contents</function>.  
-    </simpara>
-   </refsect1>
-  </refentry>
+// Najpierw przekonaj się czy plik istnieje i jest zapisywalny.
+if (is_writable($nazwapliku)) {
+
+// W naszym przykładzie otwieramy $nazwapliku w trybie dopisywania.
+// Wskaźnik pliku jest ustawiony na końcu pliku gdzie znajdzie
+// się zawartość $trochetresci po wykonaniu fwrite().
+if (!$uchwyt = fopen($nazwapliku, 'a')) {
+   echo "Nie mogę otworzyć pliku ($nazwapliku)";
+   exit;
+ }
+
+// Zapis $trochetresci do naszego otwartego pliku.
+if (fwrite($uchwyt, $trochetresci) === FALSE) {
+   echo "Nie mogę zapisać do pliku ($nazwapliku)";
+   exit;
+ }
+
+echo "Sukces, zapisano ($trochetresci) do pliku ($nazwapliku)";
+
+fclose($uchwyt);
+
+} else {
+  echo "Plik $nazwapliku nie jest zapisywalny";
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+
+  <simpara>
+   Patrz także: <function>fread</function>,
+	 <function>fopen</function>,
+   <function>fsockopen</function>,
+   <function>popen</function> i
+   <function>file_put_contents</function>.
+  </simpara>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

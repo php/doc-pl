@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.12 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.7 $ -->
-  <refentry id="function.feof">
-   <refnamediv>
-    <refname>feof</refname>
-    <refpurpose>Sprawdza czy wskaźnik pliku jest na końcu pliku (EOF)</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>bool</type><methodname>feof</methodname>
-      <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam>
-     </methodsynopsis>
+<!-- EN-Revision: 1.13 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.8 $ -->
+<refentry id="function.feof">
+ <refnamediv>
+  <refname>feof</refname>
+  <refpurpose>Sprawdza czy wskaźnik pliku jest na końcu pliku (EOF)</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Opis</title>
+  <methodsynopsis>
+   <type>bool</type><methodname>feof</methodname>
+   <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Zwraca &true; jeśli wskaźnik pliku jest na EOF lub gdy zdarzy się błąd
+   (także timeout połączena socket'owego);w przeciwnym wypadku zwraca &false;.
+  </para>
+  <warning>
+   <simpara>
+    Jeśli połączenie otworzone za pomocą <function>fsockopen</function> nie
+    zostanie zamknięte przez serwer, <function>feof</function> będzie
+    czekać aż timeout zostanie osiągniety, wtedy zwróci &true;.
+    Domyślny timeout to 60 sekund. Możesz użyć <function>stream_set_timeout</function>
+    aby zmienić tą wartość.
+   </simpara>
+  </warning>
+  &fs.validfp.all;
+   <warning>
     <para>
-	 Zwraca &true; jeśli wskaźnik pliku jest na EOF lub gdy zdarzy się błąd
-	 (także timeout połączena socket'owego);w przeciwnym wypadku zwraca &false;. 
-	</para>
-	<warning> 
-        <simpara>
-		Jeśli połączenie otworzone za pomocą <function>fsockopen</function> nie
-		zostanie zamknięte przez serwer, <function>feof</function> będzie
-		czekać aż timeout zostanie osiągniety, wtedy zwróci &true;.
-		Domyślny timeout to 60 sekund. Możesz użyć <function>stream_set_timeout</function>
-		aby zmienić tą wartość.		
-		</simpara> 
-       </warning> 
-    &fs.validfp.all;
-     <warning>
-      <para>
-	   Jeśli podano nieprawidłowy wskaźnik pliku to możesz uzyskać nieskończoną pętle,
-       ponieważ EOF w przypadku błędu zwraca TRUE.
-       <example>
-        <title><function>feof</function> przykład z nieprawidłowym wskaźnikiem pliku</title>
-        <programlisting role="php">
+     Jeśli podano nieprawidłowy wskaźnik pliku to możesz uzyskać nieskończoną pętle,
+     ponieważ EOF w przypadku błędu zwraca TRUE.
+     <example>
+      <title><function>feof</function> przykład z nieprawidłowym wskaźnikiem pliku</title>
+      <programlisting role="php">
  <![CDATA[
 <?php
 // jeśli plik nie może zostać odczytany lub nie istnieje funkcja fopen zwróci FALSE
@@ -45,12 +45,12 @@ while (!feof($file)) {
 fclose($file);
 ?>
 ]]>
-        </programlisting>
-       </example>
-      </para>
-     </warning>
-   </refsect1>
-  </refentry>
+      </programlisting>
+     </example>
+    </para>
+   </warning>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

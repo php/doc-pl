@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.6 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.4 $ -->
-  <refentry id="function.fgetss">
-   <refnamediv>
-    <refname>fgetss</refname>
-    <refpurpose>Pobiera linię ze wskaźnika pliku i usuwa tagi HTML</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>string</type><methodname>fgetss</methodname>
-      <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam>
-	  <methodparam choice="opt"><type>int</type><parameter>długość</parameter></methodparam> 
-      <methodparam choice="opt"><type>string</type><parameter>dozwolone_tagi</parameter></methodparam>
-     </methodsynopsis>
+<!-- EN-Revision: 1.7 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.5 $ -->
+<refentry id="function.fgetss">
+ <refnamediv>
+  <refname>fgetss</refname>
+  <refpurpose>Pobiera linię ze wskaźnika pliku i usuwa tagi HTML</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Opis</title>
+  <methodsynopsis>
+   <type>string</type><methodname>fgetss</methodname>
+   <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam>
+  <methodparam choice="opt"><type>int</type><parameter>długość</parameter></methodparam>
+   <methodparam choice="opt"><type>string</type><parameter>dozwolone_tagi</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Działa identycznie jak <function>fgets</function>, tylko że fgetss
+   dokonuje usunięcia wszystkich tagów HTML i PHP z tekstu, który
+   przeczyta.
+  </para>
+  <para>
+   Możesz określić opcjonalny 3 parametr aby wyszczególnić tagi, które
+   nie powinny zostać usunięte.
+   <note>
     <para>
-     Działa identycznie jak <function>fgets</function>, tylko że fgetss
-     dokonuje usunięcia wszystkich tagów HTML i PHP z tekstu, który
-     przeczyta.
+     <parameter>dozwolone_tagi</parameter> został dodany w PHP 3.0.13,
+     PHP 4.0.0
     </para>
-    <para>
-     Możesz określić opcjonalny 3 parametr aby wyszczególnić tagi, które
-     nie powinny zostać usunięte.
-     <note>
-      <para>
-       <parameter>dozwolone_tagi</parameter> został dodany w PHP 3.0.13,
-       PHP 4.0.0
-      </para> 
-     </note>
-    </para> 
-    <para> 
-      Parametr <parameter>długość</parameter> jest opcjonalny od PHP 5. 
-    </para>
-	  &note.line-endings;
-    <para>
-     Patrz także: <function>fgets</function>, <function>fopen</function>,
-     <function>fsockopen</function>, <function>popen</function> i
-     <function>strip_tags</function>.
-    </para>
-   </refsect1>
-  </refentry>
+   </note>
+  </para>
+  <para>
+   Parametr <parameter>długość</parameter> jest opcjonalny od PHP 5.
+  </para>
+  &note.line-endings;
+  <para>
+   Patrz także: <function>fgets</function>, <function>fopen</function>,
+   <function>fsockopen</function>, <function>popen</function> i
+   <function>strip_tags</function>.
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

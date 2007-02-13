@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.21 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.8 $ -->
- <refentry id="function.fread">
-   <refnamediv>
-    <refname>fread</refname>
-    <refpurpose>Odczyt pliku binarnie bezpieczy</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>string</type><methodname>fread</methodname>
-      <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam>
-      <methodparam><type>int</type><parameter>długość</parameter></methodparam>
-     </methodsynopsis>
-    <simpara>
-     <function>fread</function> odczytuje do
-     <parameter>długość</parameter> bajtów ze wskaźnika pliku
-     określonego przez <parameter>uchwyt</parameter>. Czytanie kończy się
-	 gdy odczytano <parameter>długość</parameter> bajtów, osiągnięty
-	 został koniec pliku (EOF),  (dla sieciowych strumieni), kiedy pakiet
-	 stanie się dostępny lub (po otwarciu strumienia z przestrzeni użytkownika)
-	 kiedy 8192 bajtów zostanie odczytanych, cokolwiek nastąpi pierwsze.
-	</simpara>
-	<simpara> 
-       Zwraca łańcuch znaków lub &false; w przypadku błędu. 
-    </simpara> 
-	<para>
-     <informalexample>
-      <programlisting role="php">
+<!-- EN-Revision: 1.22 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.9 $ -->
+<refentry id="function.fread">
+ <refnamediv>
+  <refname>fread</refname>
+  <refpurpose>Odczyt pliku binarnie bezpieczy</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Opis</title>
+  <methodsynopsis>
+   <type>string</type><methodname>fread</methodname>
+   <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam>
+   <methodparam><type>int</type><parameter>długość</parameter></methodparam>
+  </methodsynopsis>
+  <simpara>
+   <function>fread</function> odczytuje do
+   <parameter>długość</parameter> bajtów ze wskaźnika pliku
+   określonego przez <parameter>uchwyt</parameter>. Czytanie kończy się
+   gdy odczytano <parameter>długość</parameter> bajtów, osiągnięty
+   został koniec pliku (EOF),  (dla sieciowych strumieni), kiedy pakiet
+   stanie się dostępny lub (po otwarciu strumienia z przestrzeni użytkownika)
+   kiedy 8192 bajtów zostanie odczytanych, cokolwiek nastąpi pierwsze.
+  </simpara>
+  <simpara>
+   Zwraca łańcuch znaków lub &false; w przypadku błędu.
+  </simpara>
+  <para>
+   <informalexample>
+    <programlisting role="php">
 <![CDATA[
 <?php
 // pobierz zawartość pliku do łańcucha
@@ -37,19 +37,19 @@ $tresc = fread($uchwyt, filesize($nazwa_pliku));
 fclose($uchwyt);
 ?>
 ]]>
-      </programlisting>
-     </informalexample>
-    </para>
-    <warning>
-     <para>
-	  W systemach, które rozróżniają pliki binarne i tekstowe
-	  (np. Windows) plik musi zostać otworzony z 'b' dołączonym do
-	  parametru tryb <function>fopen</function>.
-     </para>
-    </warning>
+     </programlisting>
+    </informalexample>
+   </para>
+   <warning>
     <para>
-     <informalexample>
-      <programlisting role="php">
+     W systemach, które rozróżniają pliki binarne i tekstowe
+     (np. Windows) plik musi zostać otworzony z 'b' dołączonym do
+     parametru tryb <function>fopen</function>.
+    </para>
+   </warning>
+   <para>
+    <informalexample>
+     <programlisting role="php">
 <![CDATA[
 <?php
 $nazwa_pliku = "c:\\pliki\\jakisobrazek.gif";
@@ -58,36 +58,36 @@ $tresc = fread($uchwyt, filesize($nazwa_pliku));
 fclose($uchwyt);
 ?>
 ]]>
+     </programlisting>
+    </informalexample>
+   </para>
+
+   <warning>
+    <para>
+     Kiedy następuje odczyt z czegokolwiek innego niż zwykłe lokalne pliki, takich jak
+     strumienie zwrócone gdy odczytujesz <link linkend="features.remote-files">zdalne pliki</link> lub z
+     <function>popen</function> i <function>fsockopen</function>, odczyt zakończy się
+     po tym jak pakiet jest dostępny. To znaczy, że powinieneś gromadzić dane razem
+     z kawałków jak pokazano na poniższych przykładach.
+    </para>
+   </warning>
+   <para>
+    <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<?php
+// dla PHP 5 i nowszych
+$uchwyt = fopen("http://www.example.com/", "rb");
+$tresc = stream_get_contents($uchwyt);
+fclose($uchwyt);
+?>
+]]>
       </programlisting>
      </informalexample>
     </para>
-
-    <warning>
-     <para>
-	  Kiedy następuje odczyt z czegokolwiek innego niż zwykłe lokalne pliki, takich jak
-	  strumienie zwrócone gdy odczytujesz <link linkend="features.remote-files">zdalne pliki</link> lub z
-	  <function>popen</function> i <function>fsockopen</function>, odczyt zakończy się
-	  po tym jak pakiet jest dostępny. To znaczy, że powinieneś gromadzić dane razem
-	  z kawałków jak pokazano na poniższych przykładach.
-	  </para>
-    </warning>
- <para> 
-       <informalexample> 
-        <programlisting role="php"> 
-<![CDATA[ 
-<?php 
-// dla PHP 5 i nowszych 
-$uchwyt = fopen("http://www.example.com/", "rb"); 
-$tresc = stream_get_contents($uchwyt); 
-fclose($uchwyt); 
-?> 
-]]> 
-        </programlisting> 
-       </informalexample> 
-     </para> 
-    <para>
-     <informalexample>
-      <programlisting role="php">
+   <para>
+    <informalexample>
+     <programlisting role="php">
 <![CDATA[
 <?php
 $uchwyt = fopen("http://www.przykladowy.com/", "rb");
@@ -98,24 +98,24 @@ while (!feof($uchwyt)) {
 fclose($uchwyt);
 ?>
 ]]>
-      </programlisting>
-     </informalexample>
+     </programlisting>
+    </informalexample>
+   </para>
+   <note>
+    <para>
+     Jeśli po prostu chcesz otrzymać treść pliku w stringu, użyj <function>file_get_contents</function>
+     dlatego, że ma to dużo lepszą wydajność niż kod powyżej.
     </para>
-    <note>
-     <para>
-	  Jeśli po prostu chcesz otrzymać treść pliku w stringu, użyj <function>file_get_contents</function>
-	  dlatego, że ma to dużo lepszą wydajność niż kod powyżej.
-     </para>
-    </note>
-    <simpara>
-     Patrz także: <function>fwrite</function>, <function>fopen</function>,
-     <function>fsockopen</function>, <function>popen</function>,
-     <function>fgets</function>, <function>fgetss</function>,
-     <function>fscanf</function>, <function>file</function> i
-     <function>fpassthru</function>.
-    </simpara>
-   </refsect1>
-  </refentry>
+   </note>
+  <simpara>
+   Patrz także: <function>fwrite</function>, <function>fopen</function>,
+   <function>fsockopen</function>, <function>popen</function>,
+   <function>fgets</function>, <function>fgetss</function>, 
+   <function>fscanf</function>, <function>file</function> i
+   <function>fpassthru</function>.
+  </simpara>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

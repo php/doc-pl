@@ -1,80 +1,80 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.19 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.7 $ -->
-  <refentry id="function.file">
-   <refnamediv>
-    <refname>file</refname> 
-    <refpurpose>Czyta całą zawartość pliku do tablicy</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>array</type><methodname>file</methodname>
-      <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
-      <methodparam choice="opt"><type>int</type><parameter>użyj_include_path</parameter></methodparam>
-	  <methodparam choice="opt"><type>resource</type><parameter>kontekst</parameter></methodparam>
-     </methodsynopsis>
-    <para> 
-     Działa identycznie jak <function>file_get_contents</function>, tylko że
-     <function>file</function> zwraca plik w tablicy. Każdy
-     element tablicy odpowiada linii w pliku. Elementy tablicy zawierają
-     znak nowej linii. W przypadku błędu, <function>file</function>  
-     zwraca &false;.  
-    </para>
-    <para>
-     Możesz użyć opcjonalnego  parametru <parameter>use_include_path</parameter> i
-	 ustawić go na "1", jeśli chcesz szukać pliku także w
-     <link linkend="ini.include-path">include_path</link>.
-    </para>
-    <para>
-     <informalexample>
-      <programlisting role="php">
+<!-- EN-Revision: 1.20 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.8 $ -->
+<refentry id="function.file">
+ <refnamediv>
+  <refname>file</refname>
+  <refpurpose>Czyta całą zawartość pliku do tablicy</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Opis</title>
+  <methodsynopsis>
+   <type>array</type><methodname>file</methodname>
+   <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>użyj_include_path</parameter></methodparam>
+  <methodparam choice="opt"><type>resource</type><parameter>kontekst</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Działa identycznie jak <function>file_get_contents</function>, tylko że
+   <function>file</function> zwraca plik w tablicy. Każdy
+   element tablicy odpowiada linii w pliku. Elementy tablicy zawierają
+   znak nowej linii. W przypadku błędu, <function>file</function>
+   zwraca &false;.
+  </para>
+  <para>
+   Możesz użyć opcjonalnego  parametru <parameter>use_include_path</parameter> i
+   ustawić go na "1", jeśli chcesz szukać pliku także w
+   <link linkend="ini.include-path">include_path</link>.
+  </para>
+  <para>
+   <informalexample>
+    <programlisting role="php">
 <![CDATA[
 <?php
 // Pobierz plik do tablicy.  W tym przykładzie poprzez HTTP pobierzemy
 // źródło HTML z URL
-$lines = file('http://www.example.com/'); 
+$lines = file('http://www.example.com/');
 // Za pomocą pętli przeglądamy naszą tablicę i pokazujemy źródło strony w postaci
 // źródła HTML oraz numery linii.
-  foreach ($lines as $line_num => $line) {  
-      echo "Linia #<b>{$line_num}</b> : " . htmlspecialchars($line) . "<br />\n";  
+  foreach ($lines as $line_num => $line) {
+      echo "Linia #<b>{$line_num}</b> : " . htmlspecialchars($line) . "<br />\n";
 }
 
-// Kolejny przyklad pozwala pobrać stronę i umieścić ją w łańcuchu znaków  Zobacz także file_get_contents(). 
+// Kolejny przyklad pozwala pobrać stronę i umieścić ją w łańcuchu znaków  Zobacz także file_get_contents().
 $html = implode ('', file ('http://www.example.com/'));
 ?>
 ]]>
-      </programlisting>
-     </informalexample>
-    </para>
-	&tip.fopen-wrapper; 
-      <note> 
-       <para> 
-        Każda linia w wynikowej tabeli będzie zawierać znak(i) końca linii, 
-		jeśli nie chcesz ich musisz uzyć <function>rtrim</function>.
-       </para> 
-      </note> 
-      &note.line-endings; 
+    </programlisting>
+   </informalexample>
+  </para>
+    &tip.fopen-wrapper;
     <note>
      <para>
-      W PHP 4.3.0 możesz użyć <function>file_get_contents</function> aby
-      zwrócić zawartość pliku do łańcucha.
-	  </para>  
-       <para>  
-        W PHP 4.3.0 <function>file</function> stał się binarnie bezpieczny.  
-      </para>
+      Każda linia w wynikowej tabeli będzie zawierać znak(i) końca linii,
+      jeśli nie chcesz ich musisz uzyć <function>rtrim</function>.
+     </para>
     </note>
-      &note.context-support; 
-      &warn.ssl-non-standard;  
-    <para>
-     Patrz także: <function>readfile</function>,
-     <function>fopen</function>, <function>fsockopen</function>, 
-     <function>popen</function>, <function>file_get_contents</function>,
-     <function>include</function> i
-     <function>stream_context_create</function>.
-    </para>
-   </refsect1>
-  </refentry>
+    &note.line-endings;
+  <note>
+   <para>
+    W PHP 4.3.0 możesz użyć <function>file_get_contents</function> aby
+    zwrócić zawartość pliku do łańcucha.
+   </para>
+   <para>
+     W PHP 4.3.0 <function>file</function> stał się binarnie bezpieczny.
+   </para>
+  </note>
+    &note.context-support;
+    &warn.ssl-non-standard;
+  <para>
+   Patrz także: <function>readfile</function>,
+   <function>fopen</function>, <function>fsockopen</function>,
+   <function>popen</function>, <function>file_get_contents</function>,
+   <function>include</function> i
+   <function>stream_context_create</function>.
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

@@ -1,80 +1,80 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.9 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.6 $ -->
-  <refentry id="function.dirname">
-   <refnamediv>
-    <refname>dirname</refname>
-    <refpurpose>Zwraca nazwę katalogu, będącego składową ścieżki</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>string</type><methodname>dirname</methodname>
-      <methodparam><type>string</type><parameter>ścieżka</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     Z podanego łańcucha zawierającego ścieżkę do pliku, funkcja ta
-     zwróci nazwę katalogu.
-    </para>
-    <para>
-     W Windows jako separator katalogu używany jest znak slash
-     (<literal>/</literal>) i backslash (<literal>\</literal>).  W
-     innych środowiskach jest to slash (<literal>/</literal>).
-    </para>
-    <para>
-     <example>
-      <title><function>dirname</function> przykład</title>
-      <programlisting role="php">
+<!-- EN-Revision: 1.10 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.7 $ -->
+<refentry id="function.dirname">
+ <refnamediv>
+  <refname>dirname</refname>
+  <refpurpose>Zwraca nazwę katalogu, będącego składową ścieżki</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Opis</title>
+  <methodsynopsis>
+   <type>string</type><methodname>dirname</methodname>
+   <methodparam><type>string</type><parameter>ścieżka</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Z podanego łańcucha zawierającego ścieżkę do pliku, funkcja ta
+   zwróci nazwę katalogu.
+  </para>
+  <para>
+   W Windows jako separator katalogu używany jest znak slash
+   (<literal>/</literal>) i backslash (<literal>\</literal>).  W
+   innych środowiskach jest to slash (<literal>/</literal>).
+  </para>
+  <para>
+   <example>
+    <title><function>dirname</function> przykład</title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 $path = "/etc/passwd";
 $file = dirname($path); // $file zawiera "/etc"
 ?>
 ]]>
-      </programlisting>
-     </example>
-    </para>
-    <note>
-     <para>
-      W PHP 4.0.3, <function>dirname</function> została poprawiona aby być
-      zgodną z POSIX. To znaczy, że jeśli w parametrze <parameter>ścieżka</parameter>
-      nie ma slasha, to zostanie zwrócona kropka ('<literal>.</literal>'), oznaczająca
-      bieżący katalog. W przeciwnym wypadku, zostanie zwrócony łańcuch podany w
-      parametrze <parameter>path</parameter> z usuniętymi <literal>/komponentami</literal>.
-      Zauważ, że to oznacza uzyskiwanie slasha lub kropki z
-      <function>dirname</function> w sytuacjach w których starsza funkcjonalność
-      mogła dać Tobie pusty łańcuch.
-     </para>
-    </note>
-	 <para> 
-       Zachowanie <function>dirname</function> zostało zmienione w PHP 4.3.0. 
-       Sprawdź następujące przykłady: 
-       <informalexample> 
-        <programlisting role="php"> 
-  <![CDATA[ 
-  <?php 
-    
-  //przed PHP 4.3.0 
-  dirname('c:/'); // zwracało '.' 
-    
-  //po PHP 4.3.0 
-  dirname('c:/'); // zrwaca 'c:' 
-    
-  ?> 
-  ]]> 
-        </programlisting> 
-       </informalexample>
-     </para> 
-      <para> 
-       <function>dirname</function> jest binarnie bezpieczna od PHP 5.0.0 
-      </para> 
-    <para>
-     Patrz także: <function>basename</function>,
-	 <function>pathinfo</function>
-     i <function>realpath</function>.
-    </para>
-   </refsect1>
-  </refentry>
+    </programlisting>
+   </example>
+  </para>
+  <note>
+   <para>
+    W PHP 4.0.3, <function>dirname</function> została poprawiona aby być
+    zgodną z POSIX. To znaczy, że jeśli w parametrze <parameter>ścieżka</parameter>
+    nie ma slasha, to zostanie zwrócona kropka ('<literal>.</literal>'), oznaczająca
+    bieżący katalog. W przeciwnym wypadku, zostanie zwrócony łańcuch podany w
+    parametrze <parameter>path</parameter> z usuniętymi <literal>/komponentami</literal>.
+    Zauważ, że to oznacza uzyskiwanie slasha lub kropki z
+    <function>dirname</function> w sytuacjach w których starsza funkcjonalność
+    mogła dać Tobie pusty łańcuch.
+   </para>
+  </note>
+   <para>
+    Zachowanie <function>dirname</function> zostało zmienione w PHP 4.3.0.
+    Sprawdź następujące przykłady:
+   <informalexample>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+//przed PHP 4.3.0
+dirname('c:/'); // zwracało '.'
+
+//po PHP 4.3.0
+dirname('c:/'); // zrwaca 'c:'
+
+?>
+]]>
+    </programlisting>
+   </informalexample>
+  </para>
+  <para>
+   <function>dirname</function> jest binarnie bezpieczna od PHP 5.0.0
+  </para>
+  <para>
+    Patrz także: <function>basename</function>,
+    <function>pathinfo</function>
+    i <function>realpath</function>.
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

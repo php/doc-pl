@@ -1,66 +1,66 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.6 $ -->
-  <refentry id="function.move-uploaded-file">
-   <refnamediv>
-    <refname>move_uploaded_file</refname>
-    <refpurpose>Przenieś uploadowany plik do innej lokalizacji</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>bool</type><methodname>move_uploaded_file</methodname>
-      <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
-      <methodparam><type>string</type><parameter>przeznaczenie</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     Funkcja ta sprawdza czy na pewno plik określony przez
-     <parameter>nazwa_pliku</parameter> jest prawidło uploadowanym plikiem
-     (to znaczy, że został uploadowany przez PHPowy mechanizm uploadowania HTTP
-     POST). Jeśli plik jest prawidłowy, to zostanie przeniesiony do nazwy pliku
-     wskazanej przez <parameter>przeznaczenie</parameter>.
-    </para>
-    <para>
-     Jeśli <parameter>nazwa_pliku</parameter> nie jest prawidło uploadowanym plikiem,
-     to żadna akcja nie zostanie wykonana i <function>move_uploaded_file</function>
-     zwróci &false;.
-    </para>
-    <para>
-     Jeśli <parameter>nazwa_pliku</parameter> jest prawidłowo uploadowanym plikiem,
-     ale nie może zostać przeniesiony z jakiś powodów, żadna akcja nie zostanie wykonana
-     i <function>move_uploaded_file</function> zwróci &false;.
-     Dodatkowo, zostanie pokazane ostrzeżenie.
-    </para>
-    <para>
-     Ten rodzaj testów jest szczególnie ważny jeśli istnieje szansa, że
-     cokolwiek robimy z przysłanymi plikami może zdradzić ich
-     treść użytkownikowi lub nawet innym użytkownikom tego samego
-     systemu.
-    </para>
-     <note>
-     <para>
-	  Funkcja <function>move_uploaded_file</function> jest świadoma &safemode;
-      oraz <link linkend="ini.open-basedir">open_basedir</link>.
-	  Jednak, ograniczenia nałożone są tylko na ścieżkę 
-	  <parameter>przeznaczenie</parameter>, ponieważ pozwala na przenoszenie
-	  uploadowanych plików w których <parameter>nazwa_pliku</parameter> może
-	  kolidować z takimi ograniczeniami. <function>move_uploaded_file</function> zapewnia bezpieczeństwo
-	  tej operacji poprzez zezwolenie na przeniesienie tylko tych plików,
-	  które były uploadowane przez PHP.
-	 </para>
-    </note>
-    <warning>
-     <para>
-      Jeśli już istnieje plik docelowy, to zostanie on nadpisany.
-     </para>
-    </warning>
-    <para>
-     Patrz także: <function>is_uploaded_file</function> i rozdział
-     <link linkend="features.file-upload">Obsługa uploadowanych plików</link>
-     w celu uzyskania prostych przykładów użycia tej funkcji.
-    </para>
-   </refsect1>
-  </refentry>
+<!-- EN-Revision: 1.5 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.7 $ -->
+<refentry id="function.move-uploaded-file">
+ <refnamediv>
+  <refname>move_uploaded_file</refname>
+  <refpurpose>Przenieś uploadowany plik do innej lokalizacji</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Opis</title>
+  <methodsynopsis>
+   <type>bool</type><methodname>move_uploaded_file</methodname>
+   <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
+   <methodparam><type>string</type><parameter>przeznaczenie</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Funkcja ta sprawdza czy na pewno plik określony przez
+   <parameter>nazwa_pliku</parameter> jest prawidło uploadowanym plikiem
+   (to znaczy, że został uploadowany przez PHPowy mechanizm uploadowania HTTP
+   POST). Jeśli plik jest prawidłowy, to zostanie przeniesiony do nazwy pliku
+   wskazanej przez <parameter>przeznaczenie</parameter>.
+  </para>
+  <para>
+   Jeśli <parameter>nazwa_pliku</parameter> nie jest prawidło uploadowanym plikiem,
+   to żadna akcja nie zostanie wykonana i <function>move_uploaded_file</function>
+   zwróci &false;.
+  </para>
+  <para>
+   Jeśli <parameter>nazwa_pliku</parameter> jest prawidłowo uploadowanym plikiem,
+   ale nie może zostać przeniesiony z jakiś powodów, żadna akcja nie zostanie wykonana
+   i <function>move_uploaded_file</function> zwróci &false;.
+   Dodatkowo, zostanie pokazane ostrzeżenie.
+  </para>
+  <para>
+   Ten rodzaj testów jest szczególnie ważny jeśli istnieje szansa, że
+   cokolwiek robimy z przysłanymi plikami może zdradzić ich
+   treść użytkownikowi lub nawet innym użytkownikom tego samego
+   systemu.
+  </para>
+  <note>
+   <para>
+    Funkcja <function>move_uploaded_file</function> jest świadoma &safemode;
+    oraz <link linkend="ini.open-basedir">open_basedir</link>.
+    Jednak, ograniczenia nałożone są tylko na ścieżkę
+    <parameter>przeznaczenie</parameter>, ponieważ pozwala na przenoszenie
+    uploadowanych plików w których <parameter>nazwa_pliku</parameter> może
+    kolidować z takimi ograniczeniami. <function>move_uploaded_file</function> zapewnia bezpieczeństwo
+    tej operacji poprzez zezwolenie na przeniesienie tylko tych plików,
+    które były uploadowane przez PHP.
+   </para>
+  </note>
+  <warning>
+   <para>
+    Jeśli już istnieje plik docelowy, to zostanie on nadpisany.
+   </para>
+  </warning>
+  <para>
+   Patrz także: <function>is_uploaded_file</function> i rozdział
+   <link linkend="features.file-upload">Obsługa uploadowanych plików</link>
+   w celu uzyskania prostych przykładów użycia tej funkcji.
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

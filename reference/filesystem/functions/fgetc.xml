@@ -1,53 +1,53 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.10 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.4 $ -->
-  <refentry id="function.fgetc">
-   <refnamediv>
-    <refname>fgetc</refname>
-    <refpurpose>Pobiera znak ze wskaźnika pliku</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>string</type><methodname>fgetc</methodname>
-      <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     Zwraca łańcuch zawierający pojedynczy znak odczytany z
-     pliku wskazanego przez <parameter>uchwyt</parameter>.
-     Zwraca &false; gdy EOF (koniec pliku).
-    </para>
-    &fs.validfp.all;
-	&return.falseproblem; 
-    
-      <para> 
-       <example> 
-        <title>przykład <function>fgetc</function> </title> 
-        <programlisting role="php"> 
-  <![CDATA[ 
-  <?php 
-  $fp = fopen('plik.txt', 'r'); 
-  if (!$fp) { 
-      echo 'Nie można otworzyć plik.txt'; 
-  } 
-  while (false !== ($char = fgetc($fp))) { 
-      echo "$char\n"; 
-  } 
-  ?> 
-  ]]> 
-        </programlisting> 
-       </example> 
-      </para> 
-    
-      &note.bin-safe; 
+<!-- EN-Revision: 1.11 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.5 $ -->
+<refentry id="function.fgetc">
+ <refnamediv>
+  <refname>fgetc</refname>
+  <refpurpose>Pobiera znak ze wskaźnika pliku</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Opis</title>
+  <methodsynopsis>
+   <type>string</type><methodname>fgetc</methodname>
+   <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Zwraca łańcuch zawierający pojedynczy znak odczytany z
+   pliku wskazanego przez <parameter>uchwyt</parameter>.
+   Zwraca &false; gdy EOF (koniec pliku).
+  </para>
+  &fs.validfp.all;
+  &return.falseproblem;
 
-    <para> 
-     Patrz także: <function>fread</function>, <function>fopen</function>,
-     <function>popen</function>, <function>fsockopen</function> i
-     <function>fgets</function>.
-    </para>
-   </refsect1>
-  </refentry>
+  <para>
+   <example>
+    <title>przykład <function>fgetc</function> </title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$fp = fopen('plik.txt', 'r');
+if (!$fp) {
+  echo 'Nie można otworzyć plik.txt';
+}
+while (false !== ($char = fgetc($fp))) {
+  echo "$char\n";
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+
+  &note.bin-safe;
+
+  <para>
+   Patrz także: <function>fread</function>, <function>fopen</function>,
+   <function>popen</function>, <function>fsockopen</function> i
+   <function>fgets</function>.
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

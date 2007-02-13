@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.16 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.4 $ -->
-  <refentry id="function.fscanf">
-   <refnamediv>
-    <refname>fscanf</refname>
-    <refpurpose>Przetwarza dane z pliku według formatu</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>mixed</type><methodname>fscanf</methodname>
-      <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam> 
-      <methodparam><type>string</type><parameter>format</parameter></methodparam>
-      <methodparam choice="opt"><type>mixed</type><parameter role="reference">...</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     Funkcja <function>fscanf</function> jest podobna do
-     <function>sscanf</function>, ale pobiera dane wejściowe z pliku
-     skojarzonego z <parameter>uchwyt</parameter>em i interpretuje je
-     zgodnie z podanym <parameter>format</parameter>em, który opisany jest
-	 w dokumentacji do <function>sprintf</function>.
-     Jeśli tylko dwa parametry zostaną podane do funkcji, przetworzone
-     wartości zostaną zwrócone w tablicy.
-     W przeciwnym razie, jeśli opcjonalne parametry zostaną podane,
-     funkcja zwróci numer przypisany do wartości. Opcjonalny parametr
-     musi być podawany przez referencje.
-	 </para>  
-      <para>
-	   Dowolny biały znak w łańcuchu formatującym pasuje do dowolnego białego znaku
-	   w strumieniu wejściowym. To znaczy, że nawet tabulacja <literal>\t</literal>
-	   w łańcuchu formatującym może być dopasowana do pojedynczego znaku spacji
-	   w strumieniu wejściowym. 
-      </para>  
-      <para>  
-     <example>
-      <title><function>fscanf</function> Przykład</title>
-      <programlisting role="php">
+<!-- EN-Revision: 1.17 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.5 $ -->
+<refentry id="function.fscanf">
+ <refnamediv>
+  <refname>fscanf</refname>
+  <refpurpose>Przetwarza dane z pliku według formatu</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Opis</title>
+  <methodsynopsis>
+   <type>mixed</type><methodname>fscanf</methodname>
+   <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam>
+   <methodparam><type>string</type><parameter>format</parameter></methodparam>
+   <methodparam choice="opt"><type>mixed</type><parameter role="reference">...</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Funkcja <function>fscanf</function> jest podobna do
+   <function>sscanf</function>, ale pobiera dane wejściowe z pliku
+   skojarzonego z <parameter>uchwyt</parameter>em i interpretuje je
+   zgodnie z podanym <parameter>format</parameter>em, który opisany jest
+   w dokumentacji do <function>sprintf</function>.
+   Jeśli tylko dwa parametry zostaną podane do funkcji, przetworzone
+   wartości zostaną zwrócone w tablicy.
+   W przeciwnym razie, jeśli opcjonalne parametry zostaną podane,
+   funkcja zwróci numer przypisany do wartości. Opcjonalny parametr
+   musi być podawany przez referencje.
+  </para>
+  <para>
+   Dowolny biały znak w łańcuchu formatującym pasuje do dowolnego białego znaku
+   w strumieniu wejściowym. To znaczy, że nawet tabulacja <literal>\t</literal>
+   w łańcuchu formatującym może być dopasowana do pojedynczego znaku spacji
+   w strumieniu wejściowym.
+  </para>
+  <para>
+   <example>
+    <title><function>fscanf</function> Przykład</title>
+    <programlisting role="php">
 <![CDATA[
-<?php 
-$uchwyt = fopen("users.txt", "r"); 
+<?php
+$uchwyt = fopen("users.txt", "r");
 while ($userinfo = fscanf($uchwyt, "%s\t%s\t%s\n")) {
     list ($name, $profession, $countrycode) = $userinfo;
      //... zrób coś z wartościami
@@ -46,34 +46,34 @@ while ($userinfo = fscanf($uchwyt, "%s\t%s\t%s\n")) {
 fclose($uchwyt);
 ?>
 ]]>
-      </programlisting>
-     </example>
-     <example>
-   <title>Zawartość pliku users.txt</title>
-   <programlisting role="txt">  
+    </programlisting>
+   </example>
+   <example>
+    <title>Zawartość pliku users.txt</title>
+    <programlisting role="txt">
 <![CDATA[
 javier  argonaut        pe
 hiroshi sculptor        jp
 robert  slacker us
 luigi   florist it
 ]]>
-      </programlisting>
-     </example>
-    </para>
- 	<note> 
-       <simpara> 
-        Przed PHP 4.3.0, maksymalną liczbą znaków czytanych z pliku było
-		512 (lub do pierwszego wystąpienia \n, cokolwiek nastąpiło pierwsze).
-		Od PHP 4.3.0 dowolnie długie linie są czytane i skanowane.
-	    </simpara> 
-     </note> 
-    <para>
-     Patrz także: <function>fread</function>, <function>fgets</function>,
-     <function>fgetss</function>, <function>sscanf</function>,
-     <function>printf</function> i <function>sprintf</function>.
-    </para>
-   </refsect1>
-  </refentry>
+    </programlisting>
+   </example>
+  </para>
+  <note>
+   <simpara>
+    Przed PHP 4.3.0, maksymalną liczbą znaków czytanych z pliku było
+    512 (lub do pierwszego wystąpienia \n, cokolwiek nastąpiło pierwsze).
+    Od PHP 4.3.0 dowolnie długie linie są czytane i skanowane.
+   </simpara>
+  </note>
+  <para>
+   Patrz także: <function>fread</function>, <function>fgets</function>,
+   <function>fgetss</function>, <function>sscanf</function>,
+   <function>printf</function> i <function>sprintf</function>.
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

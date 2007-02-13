@@ -1,55 +1,55 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.7 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.4 $ -->
-  <refentry id="function.filesize">
-   <refnamediv>
-    <refname>filesize</refname>
-    <refpurpose>Pobiera rozmiar pliku</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>int</type><methodname>filesize</methodname>
-      <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-    Zwraca rozmiar pliku w bajtach, lub &false; (oraz zostanie wygenerowany błąd na poziomie
-	<constant>E_WARNING</constant>) w przypadku błędu.
-    </para>
-	<note> 
-       <simpara> 
-        Ponieważ PHPowy typ integer jest oznaczony (ang. signed, dopuszcza liczby ujemne
-		i dodatnie) i wiele platform używa 32 bitowego integera, <function>filesize</function>
-		może zwrócić nieoczekiwane wyniki dla plików większych od 2 GB.
-		Dla plików o rozmiarze pomiędzy 2 GB, a 4 GB można zwykle przezwyciężyć to
-		używając <literal>sprintf("%u", filesize($plik))</literal>.
-	   </simpara> 
-     </note> 
-      &note.clearstatcache; 
+<!-- EN-Revision: 1.8 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.5 $ -->
+<refentry id="function.filesize">
+ <refnamediv>
+  <refname>filesize</refname>
+  <refpurpose>Pobiera rozmiar pliku</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Opis</title>
+  <methodsynopsis>
+   <type>int</type><methodname>filesize</methodname>
+   <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+  Zwraca rozmiar pliku w bajtach, lub &false; (oraz zostanie wygenerowany błąd na poziomie
+  <constant>E_WARNING</constant>) w przypadku błędu.
+  </para>
+  <note>
+   <simpara>
+    Ponieważ PHPowy typ integer jest oznaczony (ang. signed, dopuszcza liczby ujemne
+    i dodatnie) i wiele platform używa 32 bitowego integera, <function>filesize</function>
+    może zwrócić nieoczekiwane wyniki dla plików większych od 2 GB.
+    Dla plików o rozmiarze pomiędzy 2 GB, a 4 GB można zwykle przezwyciężyć to
+    używając <literal>sprintf("%u", filesize($plik))</literal>.
+   </simpara>
+   </note>
+    &note.clearstatcache;
 
-      &tip.fopen-wrapper.stat; 
-   <para>
-    <example> 
-     <title><function>filesize</function> przykład</title>  
-        <programlisting role="php">  
-  <![CDATA[  
-  <?php  
-    
-  // wyświetli np. jakisplik.txt: 1024 bajtów  
-    
-  $filename = 'jakisplik.txt';  
-  echo $filename . ': ' . filesize($filename) . ' bajtów';  
-    
-  ?>  
-  ]]>  
-        </programlisting>  
-       </example>  
-      </para>
-	  <simpara>
-      Patrz także: <function>file_exists</function> 
-	  </simpara>
-   </refsect1>
-  </refentry>
+    &tip.fopen-wrapper.stat;
+  <para>
+   <example>
+    <title><function>filesize</function> przykład</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+// wyświetli np. jakisplik.txt: 1024 bajtów
+
+$filename = 'jakisplik.txt';
+echo $filename . ': ' . filesize($filename) . ' bajtów';
+
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+  <simpara>
+    Patrz także: <function>file_exists</function>
+  </simpara>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

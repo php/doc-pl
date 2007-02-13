@@ -1,81 +1,82 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.7 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.7 $ -->
-  <refentry id="function.is-uploaded-file">
-   <refnamediv>
-    <refname>is_uploaded_file</refname>
-    <refpurpose>Mówi czy plik został przysłany przez HTTP POST.</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-    <methodsynopsis>
-     <type>bool</type><methodname>is_uploaded_file</methodname>
-     <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
-    </methodsynopsis>
+<!-- EN-Revision: 1.8 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.8 $ -->
+<refentry id="function.is-uploaded-file">
+ <refnamediv>
+  <refname>is_uploaded_file</refname>
+  <refpurpose>Mówi czy plik został przysłany przez HTTP POST.</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Opis</title>
+  <methodsynopsis>
+   <type>bool</type><methodname>is_uploaded_file</methodname>
+   <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Zwraca &true; jeśli plik o nazwie <parameter>nazwa_pliku</parameter>
+   został przysłany (upload) przez HTTP POST. To pomaga upewnić się,
+   czy złośliwy użytkownik nie próbuje oszukać skryptu pracującego
+   na plikach, tak aby działał on na plikach na których nie powinien
+   -- na przykład
+   <filename>/etc/passwd</filename>.
+  </para>
+  <para>
+   Ten rodzaj testów jest szczególnie ważny jeśli istnieje szansa, że
+   cokolwiek robimy z przysłanymi plikami może zdradzić ich
+   treść użytkownikowi lub nawet innym użytkownikom tego samego
+   systemu.
+  </para>
+  <para>
+   Do prawidłowego działania, funkcja <function>is_uploaded_file</function>
+   wymaga argumentu jak $_FILES['userfile']['tmp_name'], - nazwa przysyłanego
+   pliku na maszynie klienta $_FILES['userfile']['name'] nie zadziała.
+  </para>
+   <example>
+    <title><function>is_uploaded_file</function> przykład</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+if (is_uploaded_file($_FILES['userfile']['tmp_name'])) {
+  echo "File ". $_FILES['userfile']['name'] ." upload prawidłowy.\n";
+  echo "Wyświetlam treść\n";
+  readfile($_FILES['userfile']['tmp_name']);
+ } else {
+  echo "Możliwy atak przez uploadowanie pliku: ";
+  echo "Plik '". $_FILES['userfile']['tmp_name'] . "'.";
+ }
+
+?>
+]]>
+    </programlisting>
+   </example>
+  <para>
+   <function>is_uploaded_file</function> jest dostępna tylko w wersjach
+   PHP 3 późniejszych od PHP 3.0.16, i wersjach PHP 4 późniejszych od 4.0.2.
+   Jeśli utknołeś przy używaniu wcześniejszej wersji, możesz użyć poniższej
+   funkcji w celu pomocy w zabezpieczeniu siebie:
+   <note>
     <para>
-     Zwraca &true; jeśli plik o nazwie <parameter>nazwa_pliku</parameter>
-     został przysłany (upload) przez HTTP POST. To pomaga upewnić się,
-     czy złośliwy użytkownik nie próbuje oszukać skryptu pracującego
-     na plikach, tak aby działał on na plikach na których nie powinien
-     -- na przykład
-     <filename>/etc/passwd</filename>.
+     Poniższy przykład <emphasis>nie</emphasis> zadziała w wersjach
+     PHP 4 późniejszych od 4.0.2. To jest spowodowane zmianą wewnętrznej
+     funkcjonalności PHP po tej wersji.
     </para>
-    <para>
-     Ten rodzaj testów jest szczególnie ważny jeśli istnieje szansa, że
-     cokolwiek robimy z przysłanymi plikami może zdradzić ich
-     treść użytkownikowi lub nawet innym użytkownikom tego samego
-     systemu.
-    </para>
-	<para>
-	 Do prawidłowego działania, funkcja <function>is_uploaded_file</function>
-	 wymaga argumentu jak $_FILES['userfile']['tmp_name'], - nazwa przysyłanego
-	 pliku na maszynie klienta $_FILES['userfile']['name'] nie zadziała.
-	</para> 
-	 <example> 
-       <title><function>is_uploaded_file</function> przykład</title> 
-       <programlisting role="php"> 
-  <![CDATA[ 
-  <?php 
-    
-  if (is_uploaded_file($_FILES['userfile']['tmp_name'])) { 
-     echo "File ". $_FILES['userfile']['name'] ." upload prawidłowy.\n"; 
-     echo "Wyświetlam treść\n"; 
-     readfile($_FILES['userfile']['tmp_name']); 
-  } else { 
-     echo "Możliwy atak przez uploadowanie pliku: "; 
-     echo "Plik '". $_FILES['userfile']['tmp_name'] . "'."; 
-  } 
-    
-  ?>]]> 
-       </programlisting> 
-      </example> 
-      <para> 
-    <function>is_uploaded_file</function> jest dostępna tylko w wersjach
-     PHP 3 późniejszych od PHP 3.0.16, i wersjach PHP 4 późniejszych od 4.0.2.
-     Jeśli utknołeś przy używaniu wcześniejszej wersji, możesz użyć poniższej
-     funkcji w celu pomocy w zabezpieczeniu siebie:
-     <note>
-      <para>
-       Poniższy przykład <emphasis>nie</emphasis> zadziała w wersjach
-       PHP 4 późniejszych od 4.0.2. To jest spowodowane zmianą wewnętrznej
-       funkcjonalności PHP po tej wersji.
-      </para>
-     </note>
-	  </para> 
-       <example> 
-        <title><function>is_uploaded_file</function> przykład dla PHP 4 &lt; 4.0.3</title> 
-     <programlisting role="php">
+   </note>
+  </para>
+  <example>
+   <title><function>is_uploaded_file</function> przykład dla PHP 4 &lt; 4.0.3</title>
+   <programlisting role="php">
 <![CDATA[
 <?php
 /* Test po stronie użytkownika na uploadowany plik */
- function is_uploaded_file_4_0_2($filename)  
-  {  
-    if (!$tmp_file = get_cfg_var('upload_tmp_dir')) {
-        $tmp_file = dirname(tempnam('', ''));
-    }
-    $tmp_file .= '/' . basename($filename);
-    /* Użytkownik może mieć zamykający ukośnik w php.ini... */
-    return (ereg_replace('/+', '/', $tmp_file) == $filename);
+function is_uploaded_file_4_0_2($filename)
+{
+if (!$tmp_file = get_cfg_var('upload_tmp_dir')) {
+    $tmp_file = dirname(tempnam('', ''));
+}
+$tmp_file .= '/' . basename($filename);
+  /* Użytkownik może mieć zamykający ukośnik w php.ini... */
+return (ereg_replace('/+', '/', $tmp_file) == $filename);
 }
 
 /* Jak użyć tej funkcji, w starych wersjach nie masz także
@@ -87,15 +88,15 @@ if (is_uploaded_file_4_0_2($HTTP_POST_FILES['userfile'])) {
 }
 ?>
 ]]>
-     </programlisting>
-    </example>
-    <para>
-     Patrz także: <function>move_uploaded_file</function> i rozdział
-     <link linkend="features.file-upload">Obsługa uploadowanych plików</link>
-     w celu uzyskania prostych przykładów użycia tej funkcji.
-    </para>
-   </refsect1>
-  </refentry>
+   </programlisting>
+  </example>
+  <para>
+   Patrz także: <function>move_uploaded_file</function> i rozdział
+   <link linkend="features.file-upload">Obsługa uploadowanych plików</link>
+   w celu uzyskania prostych przykładów użycia tej funkcji.
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
