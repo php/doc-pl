@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.43 Maintainer: yagood Status: ready -->
-<!-- $Revision: 1.13 $ -->
+<!-- EN-Revision: 1.47 Maintainer: yagood Status: ready -->
+<!-- $Revision: 1.14 $ -->
  <chapter id="language.constants">
   <title>Stałe</title>
 
@@ -18,36 +18,34 @@
    ("_"), następnie mogą występować litery, cyfry lub znaki podkreślenia.
    Dobrze reprezentuje to takie wyrażenie regularne:
    <literal>[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*</literal>
-
-  
   </para>
- <para> 
-  <example> 
-	<title>Prawidłowe i nieprawidłowe nazwy stałych</title> 
-      <programlisting role="php"> 
-	<![CDATA[ 
-   <?php 
+  &tip.userlandnaming;
+  <para> 
+   <example> 
+    <title>Prawidłowe i nieprawidłowe nazwy stałych</title> 
+    <programlisting role="php"> 
+<![CDATA[ 
+<?php 
      
-    // Poprawne nazwy stałych 
-    define("FOO",     "cokolwiek"); 
-    define("FOO2",    "cokolwiek innego"); 
-    define("FOO_BAR", "cokolwiek wiecej"); 
+// Poprawne nazwy stałych 
+define("FOO",     "cokolwiek"); 
+define("FOO2",    "cokolwiek innego"); 
+define("FOO_BAR", "cokolwiek wiecej"); 
      
-    // Nieprawidłowa nazwa stałej 
-    define("2FOO",    "cokolwiek"); 
+// Nieprawidłowa nazwa stałej 
+define("2FOO",    "cokolwiek"); 
      
-	// To jest prawidłowe, ale powinno być unikane:
-	// PHP może pewnego dnia wprowdzić magiczą stałą
-    // która spowoduje załamanie Twojego skryptu	
+// To jest prawidłowe, ale powinno być unikane:
+// PHP może pewnego dnia wprowdzić magiczą stałą
+// która spowoduje załamanie Twojego skryptu	
 	 
-    define("__FOO__", "cokolwiek"); 
+define("__FOO__", "cokolwiek"); 
      
-    ?> 
-    ]]> 
-        </programlisting> 
-       </example> 
-      </para> 
-
+?> 
+]]> 
+     </programlisting> 
+    </example> 
+   </para> 
   <note>
    <simpara>
     Na nasze potrzeby, litery to a-z, A-Z, oraz znaki ASCII
@@ -90,45 +88,45 @@
     </simpara>
    </note>
    <simpara>
-   Jeśli użyjesz niezdefiniowanej stałej, PHP przyjmuje, że chcesz użyć
-   nazwy stałej samej w sobie, poprostu tak jakbyś wywołał ją jako
-   <type>string</type> (STALA kontra "STALA"). Jeśli to nastąpi zostanie
-   wygenerowany błąd z poziomu <link linkend="ref.errorfunc">E_NOTICE</link>.
-   Zobacz także w podręczniku artykuł o tym dlaczego
+    Jeśli użyjesz niezdefiniowanej stałej, PHP przyjmuje, że chcesz użyć
+    nazwy stałej samej w sobie, poprostu tak jakbyś wywołał ją jako
+    <type>string</type> (STALA kontra "STALA"). Jeśli to nastąpi zostanie
+    wygenerowany błąd z poziomu <link linkend="ref.errorfunc">E_NOTICE</link>.
+    Zobacz także w podręczniku artykuł o tym dlaczego
     <link linkend="language.types.array.foo-bar">$foo[bar]</link> jest błędne
     (chyba, że wcześniej zdefiniujesz <function>define</function>
     <literal>bar</literal> jako stałą).  Jeśli, chcesz sprawdzić czy stała jest
-	ustawiona, użyj funkcji <function>defined</function>.   
+    ustawiona, użyj funkcji <function>defined</function>.   
    </simpara>
    <para>
-     Różnice pomiędzy stałymi, a zmiennymi:
-     <itemizedlist>
+    Różnice pomiędzy stałymi, a zmiennymi:
+    <itemizedlist>
+     <listitem>
+      <simpara>
+       Stałe nie mają znaku dolara (<literal>$</literal>) przed nazwą;
+      </simpara> 
+     </listitem> 
+     <listitem> 
+      <simpara> 
+       Stałe mogą być zdefiniowane wyłącznie używając funkcji 
+       <function>define</function>, nie przez proste przypisanie; 
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       Stałe mogą być definiowane oraz używane wszędzie bez zważania na
+       zasady dotyczące zakresu ich dostępności;
+      </simpara>
+      </listitem>
       <listitem>
        <simpara>
-    Stałe nie mają znaku dolara (<literal>$</literal>) przed nazwą;
-	 </simpara> 
-         </listitem> 
-         <listitem> 
-          <simpara> 
-           Stałe mogą być zdefiniowane wyłącznie używając funkcji 
-           <function>define</function>, nie przez proste przypisanie; 
+        Stałe nie mogą być redefiniowane lub undefined po tym jak raz zostały
+        zdefiniowane; i
        </simpara>
       </listitem>
       <listitem>
        <simpara>
-    Stałe mogą być definiowane oraz używane wszędzie bez zważania na
-    zasady dotyczące zakresu ich dostępności;
-       </simpara>
-      </listitem>
-      <listitem>
-       <simpara>
-    Stałe nie mogą być redefiniowane lub undefined po tym jak raz zostały
-    zdefiniowane; i
-       </simpara>
-      </listitem>
-      <listitem>
-       <simpara>
-    Stałe mogą zawierać tylko wartości skalarne.
+        Stałe mogą zawierać tylko wartości skalarne.
        </simpara>
       </listitem>
      </itemizedlist>
@@ -157,24 +155,23 @@ echo Stala; // wyświetli "Stala" i zgłosi ostrzeżenie
    <sect1 id="language.constants.predefined">
     <title>Magiczne stałe</title>
 
-	<simpara>
-	PHP zapewnia dużą liczbę <link
-    linkend="reserved.constants">predefiniowanych stałych</link> każdemu 
-	uruchamianemu skryptowi. Wiele z tych stałych, jednakże jest tworzona
-	przez rozmaite rozszeżenia, i mogą być jedynie obecne gdy te rozszeżenia
-	są dostępne, przez dynamiczne ładowanie (bibliotek) lub dlatego, że zostały one
-    wkompilowane.
+    <simpara>
+     PHP zapewnia dużą liczbę <link
+     linkend="reserved.constants">predefiniowanych stałych</link> każdemu 
+     uruchamianemu skryptowi. Wiele z tych stałych, jednakże jest tworzona
+     przez rozmaite rozszeżenia, i mogą być jedynie obecne gdy te rozszeżenia
+     są dostępne, przez dynamiczne ładowanie (bibliotek) lub dlatego, że zostały one
+     wkompilowane.
     </simpara>
     
   <para>
     Istnieje pięć magicznych stałych, których zmiana zależy od tego gdzie
-	zostaną użyte. Np. wartość <constant>__LINE__</constant> zależy
-	od numeru lini Twojego skryptu gdzie zostanie wstawiona. 
+    zostaną użyte. Np. wartość <constant>__LINE__</constant> zależy
+   od numeru lini Twojego skryptu gdzie zostanie wstawiona. 
     Specjalne stałe nie rozróżniają wielkich i małych liter i są to następujące:  
-    </para>
+  </para>
 
-
-<para>
+  <para>
     <table>
      <title>Kilka "magicznych" stałych PHP</title>
      <tgroup cols="2">
@@ -194,35 +191,35 @@ echo Stala; // wyświetli "Stala" i zgłosi ostrzeżenie
        <row>
         <entry><constant>__FILE__</constant></entry>
         <entry>
-		Pełna ścieżka i nazwa pliku. Jeśli zostanie użyte w includowanym
-		pliku, zwracana jest nazwa includowanego pliku.
-		
-		Od PHP 4.0.2, <constant>__FILE__</constant> zawsze zawiera bezwzględną
-		ściężkę, we wcześniejszych wersjach zawierała w pewnych okolicznościach
-		ścieżkę względną.
-		</entry>
+ 	 Pełna ścieżka i nazwa pliku. Jeśli zostanie użyte w includowanym
+	 pliku, zwracana jest nazwa includowanego pliku.
+	
+	 Od PHP 4.0.2, <constant>__FILE__</constant> zawsze zawiera bezwzględną
+	 ściężkę, we wcześniejszych wersjach zawierała w pewnych okolicznościach
+	 ścieżkę względną.
+	</entry>
        </row>
        <row>
         <entry><constant>__FUNCTION__</constant></entry>
         <entry>
-		 Nazwa funkcji, (Dodano w PHP 4.3.0) Od PHP 5 ta stała zwracana
-		 nazwę funkcji tak jak została ona zadeklarowana (z rozróżnianiem wielkości znaków).
-		 W PHP 4 wartość zawsze była zamieniana na małe litery.
+	 Nazwa funkcji, (Dodano w PHP 4.3.0) Od PHP 5 ta stała zwracana
+	 nazwę funkcji tak jak została ona zadeklarowana (z rozróżnianiem wielkości znaków).
+	 W PHP 4 wartość zawsze była zamieniana na małe litery.
         </entry>
        </row>
        <row>
         <entry><constant>__CLASS__</constant></entry>
         <entry>
-		 Nazwa klasy, (Dodano w PHP 4.3.0) Od PHP 5 ta stała zwracana
-		 nazwę klasy tak jak została ona zadeklarowana (z rozróżnianiem wielkości znaków).
-		 W PHP 4 wartość zawsze była zamieniana na małe litery.
+         Nazwa klasy, (Dodano w PHP 4.3.0) Od PHP 5 ta stała zwracana
+         nazwę klasy tak jak została ona zadeklarowana (z rozróżnianiem wielkości znaków).
+         W PHP 4 wartość zawsze była zamieniana na małe litery.
         </entry>
        </row>
        <row>
         <entry><constant>__METHOD__</constant></entry>
         <entry>
-		 Nazwa metody klasy, (Dodano w PHP 5.0.0) Nazwa metody jest zwracana
-		 tak jak została ona zadeklarowana (z rozróżnianiem wielkości znaków).
+         Nazwa metody klasy, (Dodano w PHP 5.0.0) Nazwa metody jest zwracana
+         tak jak została ona zadeklarowana (z rozróżnianiem wielkości znaków).
         </entry>
        </row>
       </tbody>
