@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.47 Maintainer: slawek Status: ready -->
-<!-- $Revision: 1.15 $ -->
+<!-- EN-Revision: 1.49 Maintainer: slawek Status: ready -->
+<!-- $Revision: 1.16 $ -->
  <chapter id="features.http-auth">
   <title>Uwierzytelnianie HTTP w PHP</title>
 
@@ -21,7 +21,7 @@
    <function>header</function>.
   </simpara>
   <note>
-   <title>PHP Version Note</title>
+   <title>Notatka dotycząca wersji PHP</title>
    <para>
     <link linkend="language.variables.superglobals">Zmienne superglobalne</link>, 
     takie jak <link linkend="reserved.variables.server">$_SERVER</link>, udostępniono
@@ -105,10 +105,10 @@ function http_digest_parse($txt)
     $needed_parts = array('nonce'=>1, 'nc'=>1, 'cnonce'=>1, 'qop'=>1, 'username'=>1, 'uri'=>1, 'response'=>1);
     $data = array();
 
-    preg_match_all('@(\w+)=([\'"]?)([a-zA-Z0-9=./\_-]+)\2@', $txt, $matches, PREG_SET_ORDER);
+    preg_match_all('@(\w+)=(?:([\'"])([^\2]+)\2|([^\s,]+))@', $txt, $matches, PREG_SET_ORDER);
 
     foreach ($matches as $m) {
-        $data[$m[1]] = $m[3];
+        $data[$m[1]] = $m[3] ? $m[3] : $m[4];
         unset($needed_parts[$m[1]]);
     }
 
