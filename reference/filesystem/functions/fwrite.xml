@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.14 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.6 $ -->
+<!-- EN-Revision: 1.15 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.7 $ -->
 <refentry id="function.fwrite">
  <refnamediv>
   <refname>fwrite</refname>
@@ -38,6 +38,17 @@
     W systemach, które rozróżniają pliki na binarne i tekstowe
     (np. Windows) plik musi zostać otworzony z 'b' włączonym do
     parametru tryb funkcji <function>fopen</function>.
+   </para>
+  </note>
+  <note>
+   <para>
+    Jeśli <parameter>uchwyt</parameter> został utworzony za pomocą <function>fopen</function> w
+    trybie dopisywania, zapis do pliku jest niepodzielny (chyba, że rozmiar
+    <parameter>łańcuch</parameter>a przekracza blok systemu plików, na niektórych
+    platformach, przy założeniu, że plik jest na lokalnym systemie plików). Jeśli tak,
+    to nie ma potrzeby <function>flock</function>owanie zasobu przed wywołaniem
+    <function>fwrite</function>; wszystkie dane zostaną zapisane bez
+    przerywania.
    </para>
   </note>
   <para>
