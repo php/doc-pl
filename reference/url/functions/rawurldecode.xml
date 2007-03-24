@@ -1,50 +1,88 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.5 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.6 $ -->
-  <refentry id="function.rawurldecode">
-   <refnamediv>
-    <refname>rawurldecode</refname>
-    <refpurpose>Dekoduje łańcuchy zakodowane metodą kodowania URL'i</refpurpose>
-   </refnamediv>
+<!-- EN-Revision: 1.7 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.7 $ -->
+<refentry id="function.rawurldecode">
+ <refnamediv>
+  <refname>rawurldecode</refname>
+  <refpurpose>Dekoduje łańcuchy zakodowane metodą kodowania URL'i</refpurpose>
+ </refnamediv>
    
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>string</type><methodname>rawurldecode</methodname>
-      <methodparam><type>string</type><parameter>str</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     Zwraca łańcuch w którym sekwencje dwóch cyfr szesnastkowych
-     poprzedzone znakiem procenta (<literal>%</literal>), zastąpione
-     są przez ich odpowiednik znakowy.
-    </para>
-	<para>  
-       <example>  
-        <title><function>rawurldecode</function> przykład</title>  
-        <programlisting role="php">  
-  <![CDATA[  
-  <?php  
-    
-  echo rawurldecode('foo%20bar%40baz'); // foo bar@baz  
-    
-  ?>  
-  ]]>  
-        </programlisting>  
-       </example>  
-	</para>
-    <note>
-     <para>
-      <function>rawurldecode</function> nie zamienia znaków plusa ('+')
-      na spacje. Robi to <function>urldecode</function>.
-     </para>
-    </note>
-    <simpara>
-     Patrz także: <function>rawurlencode</function>,
-     <function>urldecode</function> i
-     <function>urlencode</function>.
-    </simpara>
-   </refsect1>
-  </refentry>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>string</type><methodname>rawurldecode</methodname>
+   <methodparam><type>string</type><parameter>str</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Zwraca łańcuch w którym sekwencje dwóch cyfr szesnastkowych
+   poprzedzone znakiem procenta (<literal>%</literal>), zastąpione
+   są przez ich odpowiednik znakowy.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>str</parameter></term>
+     <listitem>
+      <para>
+       URL do zdekodowania.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca zdekodowany URL jako łańcuch znaków.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>  
+   <example>  
+    <title><function>rawurldecode</function> przykład</title>  
+    <programlisting role="php">
+<![CDATA[  
+<?php  
+
+echo rawurldecode('foo%20bar%40baz'); // foo bar@baz  
+
+?>  
+]]>  
+    </programlisting>  
+   </example>  
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    <function>rawurldecode</function> nie zmienia symbolu plus ('+')
+    na spację. Robi to <function>urldecode</function>.
+   </para>
+  </note>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>rawurlencode</function></member>
+    <member><function>urldecode</function></member>
+    <member><function>urlencode</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
