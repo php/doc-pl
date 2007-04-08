@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.20 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.8 $ -->
+<!-- EN-Revision: 1.21 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.9 $ -->
 <refentry id="function.file">
  <refnamediv>
   <refname>file</refname>
@@ -11,27 +11,65 @@
   <methodsynopsis>
    <type>array</type><methodname>file</methodname>
    <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>użyj_include_path</parameter></methodparam>
-  <methodparam choice="opt"><type>resource</type><parameter>kontekst</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>flagi</parameter></methodparam>
+   <methodparam choice="opt"><type>resource</type><parameter>kontekst</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Działa identycznie jak <function>file_get_contents</function>, tylko że
+   Działa podobnie do <function>file_get_contents</function>, tylko że
    <function>file</function> zwraca plik w tablicy. Każdy
    element tablicy odpowiada linii w pliku. Elementy tablicy zawierają
    znak nowej linii. W przypadku błędu, <function>file</function>
    zwraca &false;.
   </para>
   <para>
-   Możesz użyć opcjonalnego  parametru <parameter>use_include_path</parameter> i
-   ustawić go na "1", jeśli chcesz szukać pliku także w
-   <link linkend="ini.include-path">include_path</link>.
+   Opcjonalny parametr <parameter>flagi</parameter> może być jedną lub więcej, z
+   następujących stałych:
+   <variablelist>
+    <varlistentry>
+     <term>
+      <constant>FILE_USE_INCLUDE_PATH</constant>
+     </term>
+     <listitem>
+      <simpara>
+       Poszukuj pliku w <link linkend="ini.include-path">include_path</link>.
+      </simpara>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term>
+      <constant>FILE_IGNORE_NEW_LINES</constant>
+     </term>
+     <listitem>
+      <simpara>
+       Nie dodawaj nowej lini na na końcu każdego elementu tablicy.
+      </simpara>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term>
+      <constant>FILE_SKIP_EMPTY_LINES</constant>
+     </term>
+     <listitem>
+      <simpara>
+       Pomiń puste linie.
+      </simpara>
+     </listitem>
+    </varlistentry>
+   </variablelist>
   </para>
+  <note>
+   <para>
+    Przed PHP 5.0.0 parametr <parameter>flagi</parameter> jedynie
+    ukrywał <link linkend="ini.include-path">include_path</link> i był
+    włączany przez 1.
+   </para>
+  </note>
   <para>
    <informalexample>
     <programlisting role="php">
 <![CDATA[
 <?php
-// Pobierz plik do tablicy.  W tym przykładzie poprzez HTTP pobierzemy
+// Pobierz plik do tablicy. W tym przykładzie poprzez HTTP pobierzemy
 // źródło HTML z URL
 $lines = file('http://www.example.com/');
 // Za pomocą pętli przeglądamy naszą tablicę i pokazujemy źródło strony w postaci
@@ -50,7 +88,7 @@ $html = implode ('', file ('http://www.example.com/'));
     &tip.fopen-wrapper;
     <note>
      <para>
-      Każda linia w wynikowej tabeli będzie zawierać znak(i) końca linii,
+      Każda linia w wynikowej tabeli będzie zawierać znak(i) końca linii chyba, że jest użyte FILE_IGNORE_NEW_LINES,
       jeśli nie chcesz ich musisz uzyć <function>rtrim</function>.
      </para>
     </note>
