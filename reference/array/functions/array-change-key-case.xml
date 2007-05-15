@@ -1,43 +1,40 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.11 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.6 $ -->
-  <refentry id="function.array-change-key-case">
-   <refnamediv>
-    <refname>array_change_key_case</refname>
-    <refpurpose>
-     Zwraca tablicę ze wszystkimi kluczami tekstowymi zamienionymi na
-     wyłącznie małe lub wyłącznie duże litery
-    </refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>array</type><methodname>array_change_key_case</methodname>
-      <methodparam><type>array</type><parameter>wejście</parameter></methodparam>
-      <methodparam choice="opt"><type>int</type><parameter>wielkość</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     <function>array_change_key_case</function> zmienia klucze w tablicy
-     <parameter>wejście</parameter> aby były pisane tylko dużymi lub tylko
-     małymi literami. Zmiana zależy od ostatniego opcjonalnego parametru
-     <parameter>case</parameter>. Można do niego przekazać jedną z dwóch
-     stałych: <constant>CASE_UPPER</constant> lub
-     <constant>CASE_LOWER</constant>. Domyślną wartością jest
-     <constant>CASE_LOWER</constant>. Indeksy liczbowe będą pozostawione takie
-     jakie są.
-    </para>
-    <example>
-     <title>Przykład użycia <function>array_change_key_case</function></title>
-     <programlisting role="php">
+<!-- EN-Revision: 1.12 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.7 $ -->
+<refentry id="function.array-change-key-case">
+ <refnamediv>
+  <refname>array_change_key_case</refname>
+  <refpurpose>Zwraca tablicę ze wszystkimi kluczami tekstowymi zamienionymi na wyłącznie małe lub wyłącznie duże litery</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Opis</title>
+  <methodsynopsis>
+   <type>array</type><methodname>array_change_key_case</methodname>
+   <methodparam><type>array</type><parameter>wejście</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>wielkość</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>array_change_key_case</function> zmienia klucze w tablicy
+   <parameter>wejście</parameter> aby były pisane tylko dużymi lub tylko
+   małymi literami. Zmiana zależy od ostatniego opcjonalnego parametru
+   <parameter>case</parameter>. Można do niego przekazać jedną z dwóch
+   stałych: <constant>CASE_UPPER</constant> lub
+   <constant>CASE_LOWER</constant>. Domyślną wartością jest
+   <constant>CASE_LOWER</constant>. Indeksy liczbowe będą pozostawione takie
+   jakie są.
+  </para>
+  <example>
+   <title>Przykład użycia <function>array_change_key_case</function></title>
+   <programlisting role="php">
 <![CDATA[
 <?php
 $wejscie = array("PierWszy" => 1, "DruGi" => 4);
 print_r(array_change_key_case($wejscie, CASE_UPPER));
 ?>
 ]]>
-     </programlisting>
-     &example.outputs;
-     <screen>
+   </programlisting>
+   &example.outputs;
+   <screen>
 <![CDATA[
 Array
 (
@@ -45,15 +42,15 @@ Array
     [DRUGI] => 2
 )
 ]]>
-     </screen>
-    </example>
-    <para>
-     Jeśli tablica ma indeksy które będą się powtarzały po wykonaniu tej
-     funkcji (np. "klucZ" i "kLUCZ"), wartość tego elementu który jest dalej w
-     tablicy nadpisze pozostałe indeksy.
-    </para> 
-   </refsect1>
-  </refentry>
+   </screen>
+  </example>
+  <para>
+   Jeśli tablica ma indeksy które będą się powtarzały po wykonaniu tej
+   funkcji (np. "klucZ" i "kLUCZ"), wartość tego elementu który jest dalej w
+   tablicy nadpisze pozostałe indeksy.
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

@@ -1,74 +1,74 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.17 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.5 $ -->
-  <refentry id="function.count">
-   <refnamediv>
-    <refname>count</refname>
-    <refpurpose>Zlicza ilość elementów w tablicy lub pól obiektu</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>int</type><methodname>count</methodname>
-      <methodparam><type>mixed</type><parameter>zmienna</parameter></methodparam>
-      <methodparam choice="opt"><type>int</type><parameter>tryb</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     Zwraca ilość elementów w parametrze <parameter>zmienna</parameter>,
-     która zazwyczaj będzie tablicą, jako że wszystko inne będzie miało
-     jeden element.
-    </para>
-    <para>
-     Dla obiektów, jeśli zainstalowane zostało rozszerzenie <link
-      linkend="ref.spl">SPL</link>, możliwe jest podłączenie do
-     <function>count</function> poprzez zaimplementowanie interfejsu
-     <literal>Countable</literal>. Interfejs ten posiada dokładnie jedną
-     metodę, <function>count</function>, która zwraca wartość, którą ma
-     zwrócić funkcja <function>count</function>.
-    </para>
-    <para>
-     Jeśli <parameter>zmienna</parameter> nie jest tablicą ani obiektem z
-     zaimplementowanym interfejsem <literal>Countable</literal>, to zwracana
-     będzie wartość <literal>1</literal>. Istnieje jeden wyjątek - jeśli
-     <parameter>zmienna</parameter> będzie miała wartość &null;, zwrócona
-     zostanie wartość <literal>0</literal>.
-    </para>
-    <note>
-     <simpara>
-      Opcjonalny argument <parameter>tryb</parameter> dostępny jest od wersji
-      PHP 4.2.0.
-     </simpara>
-    </note>
-    <para>
-     Jeśli opcjonalny argument <parameter>tryb</parameter> ustawiony jest na
-     <constant>COUNT_RECURSIVE</constant> (lub 1), <function>count</function>
-     będzie zliczał elementy rekurencyjnie. Jest to przydatne przy zliczaniu
-     ilości wszystkich elementów tablicy wielowymiarowej. Domyślna wartość
-     argumentu <parameter>tryb</parameter> to <literal>0</literal>.
-     <function>count</function> nie wykrywa nieskończonej rekurencji.
-    </para>
-    <caution>
-     <para>
-      <function>count</function> może zwrócić 0 dla zmiennej, która nie
-      została zainicjalizowana, ale możę zwrócić także 0 dla zmiennej która
-      została zainicjalizowana pustą tablicą. Użyj
-      <function>isset</function> aby sprawdzić czy zmienna została
-      ustawiona.
-     </para>
-    </caution>
-    <para>
-     Więcej informacji na temat sposobu implementacji tablic w PHP można
-     znaleźć w rozdziale <link linkend="language.types.array">Tablice</link>.
-    </para>
-    <para>
-     <example>
-      <title>Przykład użycia <function>count</function></title>
-      <programlisting role="php">
+<!-- EN-Revision: 1.18 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.6 $ -->
+<refentry id="function.count">
+ <refnamediv>
+  <refname>count</refname>
+  <refpurpose>Zlicza ilość elementów w tablicy lub pól obiektu</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Opis</title>
+  <methodsynopsis>
+   <type>int</type><methodname>count</methodname>
+   <methodparam><type>mixed</type><parameter>zmienna</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>tryb</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Zwraca ilość elementów w parametrze <parameter>zmienna</parameter>,
+   która zazwyczaj będzie tablicą, jako że wszystko inne będzie miało
+   jeden element.
+  </para>
+  <para>
+   Dla obiektów, jeśli zainstalowane zostało rozszerzenie <link
+    linkend="ref.spl">SPL</link>, możliwe jest podłączenie do
+   <function>count</function> poprzez zaimplementowanie interfejsu
+   <literal>Countable</literal>. Interfejs ten posiada dokładnie jedną
+   metodę, <function>count</function>, która zwraca wartość, którą ma
+   zwrócić funkcja <function>count</function>.
+  </para>
+  <para>
+   Jeśli <parameter>zmienna</parameter> nie jest tablicą ani obiektem z
+   zaimplementowanym interfejsem <literal>Countable</literal>, to zwracana
+   będzie wartość <literal>1</literal>. Istnieje jeden wyjątek - jeśli
+   <parameter>zmienna</parameter> będzie miała wartość &null;, zwrócona
+   zostanie wartość <literal>0</literal>.
+  </para>
+  <note>
+   <simpara>
+    Opcjonalny argument <parameter>tryb</parameter> dostępny jest od wersji
+    PHP 4.2.0.
+   </simpara>
+  </note>
+  <para>
+   Jeśli opcjonalny argument <parameter>tryb</parameter> ustawiony jest na
+   <constant>COUNT_RECURSIVE</constant> (lub 1), <function>count</function>
+   będzie zliczał elementy rekurencyjnie. Jest to przydatne przy zliczaniu
+   ilości wszystkich elementów tablicy wielowymiarowej. Domyślna wartość
+   argumentu <parameter>tryb</parameter> to <literal>0</literal>.
+   <function>count</function> nie wykrywa nieskończonej rekurencji.
+  </para>
+  <caution>
+   <para>
+    <function>count</function> może zwrócić 0 dla zmiennej, która nie
+    została zainicjalizowana, ale możę zwrócić także 0 dla zmiennej która
+    została zainicjalizowana pustą tablicą. Użyj
+    <function>isset</function> aby sprawdzić czy zmienna została
+    ustawiona.
+   </para>
+  </caution>
+  <para>
+   Więcej informacji na temat sposobu implementacji tablic w PHP można
+   znaleźć w rozdziale <link linkend="language.types.array">Tablice</link>.
+  </para>
+  <para>
+   <example>
+    <title>Przykład użycia <function>count</function></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
-$a[0] = 1; 
-$a[1] = 3; 
-$a[2] = 5; 
+$a[0] = 1;
+$a[1] = 3;
+$a[2] = 5;
 $wynik = count ($a);
 // $wynik == 3
 
@@ -86,15 +86,15 @@ $wynik = count(false);
 
 ?>
 ]]>
-      </programlisting>
-     </example>
-    </para>
-    <para>
-     <example>
-      <title>
-       Przykład rekurencyjnego przetwarzania przez <function>count</function> (PHP &gt;= 4.2.0)
-      </title>
-      <programlisting role="php">
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>
+     Przykład rekurencyjnego przetwarzania przez <function>count</function> (PHP &gt;= 4.2.0)
+    </title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 $jedzenie = array('owoce' => array('pomarańcza', 'banan', 'jabłko'),
@@ -108,16 +108,16 @@ echo count($jedzenie); // wyświetli 2
 
 ?>
 ]]>
-      </programlisting>
-     </example>
-    </para>
-    <para>
-     Patrz także: <function>is_array</function>,
-     <function>isset</function> i
-     <function>strlen</function>.
-    </para>
-   </refsect1>
-  </refentry>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   Patrz także: <function>is_array</function>,
+   <function>isset</function> i
+   <function>strlen</function>.
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

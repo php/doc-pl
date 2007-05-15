@@ -1,47 +1,46 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.8 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.6 $ -->
-  <refentry id="function.array-merge-recursive">
-   <refnamediv>
-    <refname>array_merge_recursive</refname>
-    <refpurpose>Łączy dwie lub więcej tablic rekurencyjnie</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>array</type><methodname>array_merge_recursive</methodname>
-      <methodparam><type>array</type><parameter>tablica1</parameter></methodparam>
-      <methodparam choice="opt"><type>array</type><parameter>...</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     <function>array_merge_recursive</function> łączy elementy jednej lub
-     więcej tablic tak, że wartości jednej tablicy są dopisywane na koniec
-     poprzedniej. Zwracana jest tablica wynikowa.
-    </para>
-    <para>
-     Jeśli wejściowe tablice mają jakieś klucze tekstowe, to wartości dla tych
-     kluczy są łączone w tablicę, co jest robione rekurencyjnie, a więc jeśli
-     jedną z wartości jest tablica, funkcja połączy ją z odpowiadającą jej
-     wartością z innej tablicy. Jednakże jeśli tablice mają takie same klucze
-     liczbowe, późniejsza wartość nie nadpisze początkowej wartości, lecz
-     zostanie dopisana na koniec.
-    </para>
-    <para>
-     <example>
-      <title>Przykład użycia <function>array_merge_recursive</function></title>
-      <programlisting role="php">
+<!-- EN-Revision: 1.10 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.7 $ -->
+<refentry id="function.array-merge-recursive">
+ <refnamediv>
+  <refname>array_merge_recursive</refname>
+  <refpurpose>Łączy dwie lub więcej tablic rekurencyjnie</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Opis</title>
+  <methodsynopsis>
+   <type>array</type><methodname>array_merge_recursive</methodname>
+   <methodparam><type>array</type><parameter>tablica1</parameter></methodparam>
+   <methodparam choice="opt"><type>array</type><parameter>...</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>array_merge_recursive</function> łączy elementy jednej lub
+   więcej tablic tak, że wartości jednej tablicy są dopisywane na koniec
+   poprzedniej. Zwracana jest tablica wynikowa.
+  </para>
+  <para>
+   Jeśli wejściowe tablice mają jakieś klucze tekstowe, to wartości dla tych
+   kluczy są łączone w tablicę, co jest robione rekurencyjnie, a więc jeśli
+   jedną z wartości jest tablica, funkcja połączy ją z odpowiadającą jej
+   wartością z innej tablicy. Jednakże jeśli tablice mają takie same klucze
+   liczbowe, późniejsza wartość nie nadpisze początkowej wartości, lecz
+   zostanie dopisana na koniec.
+  </para>
+  <para>
+   <example>
+    <title>Przykład użycia <function>array_merge_recursive</function></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 $tbl1 = array ("kolor" => array ("ulubiony" => "czerwony"), 5);
 $tbl2 = array (10, "kolor" => array ("ulubiony" => "zielony", "niebieski"));
-print_r(array_merge_recursive ($tbl1, $tbl2));
+$wynik = array_merge_recursive($tbl1, $tbl2);
+print_r($wynik);
 ?>
 ]]>
-      </programlisting>
-      <para>
-       Zmienna <literal>$result</literal> będze zawierała:
-      </para>
-      <screen>
+    </programlisting>
+    &example.outputs;
+    <screen>
 <![CDATA[
 Array
 (
@@ -60,14 +59,14 @@ Array
     [1] => 10
 )
 ]]>
-      </screen>
-     </example>
-    </para>
-    <para>
-     Patrz także: <function>array_merge</function>.
-    </para>
-   </refsect1>
-  </refentry>
+    </screen>
+   </example>
+  </para>
+  <para>
+   Patrz także: <function>array_merge</function>.
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

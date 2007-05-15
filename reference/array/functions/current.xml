@@ -1,46 +1,43 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.10 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.5 $ -->
-  <refentry id="function.current">
-   <refnamediv>
-    <refname>current</refname>
-    <refpurpose>Zwraca bieżący element tablicy</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>mixed</type><methodname>current</methodname>
-      <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     Każda tablica ma wewnętrzny wskaźnik bo swojego "bieżącego" elementu,
-     który jest inicjalizowany do pierwszego elementu wstawionego do
-     tablicy.
-    </para>
-    <para>
-     Funkcja <function>current</function> po prostu zwraca wartość elementu
-     tablicy, na który aktualnie wskazuje wewnętrzny wskaźnik. Nie przesuwa
-     ona wskaźnika. Jeśli wewnętrzny wskaźnik jest poza końcem listy
-     elementów, 
-     <function>current</function> zwraca &false;.
-     <warning>
-      <para> 
-       Jeśli tablica zawiera puste elementy (0 lub "", czyli pusty string),
-       to funkcja zwróci wartość, która będzie rozpoznawana jako &false; także
-       dla tych elementów (więcej informacji można znaleźć w rozdziałach <link
-        linkend="language.types.boolean.casting">konwertowanie do typu
-        boolean</link> i <link linkend="types.comparisons">tablice porównania
-        typów</link>).  Przez to nie jest możliwe stwierdzenie przy pomocy
-       funkcji <function>current</function>, czy wskaźnik jest już poza
-       tablicą. Aby prawidłowo przejść przez tablicę która zwiera puste
-       elementy, należy skorzystać z funkcji <function>each</function>.
-      </para>
-     </warning>
-    </para>
-    <para>
-     <example>
-      <title>Przykład użycia funkcji <function>current</function> i innych podobnych</title>
-      <programlisting role="php">
+<!-- EN-Revision: 1.12 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.6 $ -->
+<refentry id="function.current">
+ <refnamediv>
+  <refname>current</refname>
+  <refpurpose>Zwraca bieżący element tablicy</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Opis</title>
+  <methodsynopsis>
+   <type>mixed</type><methodname>current</methodname>
+   <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Każda tablica ma wewnętrzny wskaźnik bo swojego "bieżącego" elementu,
+   który jest inicjalizowany do pierwszego elementu wstawionego do
+   tablicy.
+  </para>
+  <para>
+   Funkcja <function>current</function> po prostu zwraca wartość elementu
+   tablicy, na który aktualnie wskazuje wewnętrzny wskaźnik. Nie przesuwa
+   ona wskaźnika. Jeśli wewnętrzny wskaźnik jest poza końcem listy
+   elementów,
+   <function>current</function> zwraca &false;.
+  </para>
+  
+  &return.falseproblem;
+
+  <note>
+   <simpara>
+    Nie będziesz mógł odróznić końca tablicy od elementu &false; typu
+    <type>bool'owskiego</type>. Aby poprawnie przejść przez tablicę,
+    która może zawierać elementy &false;, zobacz funkcję <function>each</function>.
+   </simpara>
+  </note>
+  <para>
+   <example>
+    <title>Przykład użycia funkcji <function>current</function> i innych podobnych</title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 $transport = array('stopy', 'rower', 'samochód', 'samolot');
@@ -52,16 +49,16 @@ $tryb = end($transport);     // $tryb = 'samolot';
 $tryb = current($transport); // $tryb = 'samolot';
 ?>
 ]]>
-      </programlisting>
-     </example>
-    </para>
-    <para>
-     Patrz także: <function>end</function>, <function>key</function>,
-     <function>next</function>, <function>prev</function> i
-     <function>reset</function>.
-    </para>
-   </refsect1>
-  </refentry>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   Patrz także: <function>end</function>, <function>key</function>,
+   <function>next</function>, <function>prev</function> i
+   <function>reset</function> i <function>each</function>.
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

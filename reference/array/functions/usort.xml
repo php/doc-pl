@@ -1,51 +1,48 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.23 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.9 $ -->
-  <refentry id="function.usort">
-   <refnamediv>
-    <refname>usort</refname>
-    <refpurpose>
-     Sortuje tablicę według wartości korzystając ze zdefiniowanej przez
-     użytkownika funkcji porównującej
-    </refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>void</type><methodname>usort</methodname>
-      <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
-      <methodparam><type>callback</type><parameter>funkcja_porównująca</parameter></methodparam>
-     </methodsynopsis>
+<!-- EN-Revision: 1.24 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.10 $ -->
+<refentry id="function.usort">
+ <refnamediv>
+  <refname>usort</refname>
+  <refpurpose>Sortuje tablicę według wartości korzystając ze zdefiniowanej przez użytkownika funkcji porównującej</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Opis</title>
+  <methodsynopsis>
+   <type>void</type><methodname>usort</methodname>
+   <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
+   <methodparam><type>callback</type><parameter>funkcja_porównująca</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Funkcja ta posortuje tablicę według jej wartości korzystając z podanej
+   przez użytkownika funkcji porównującej. Jeśli chcesz posortować tablicę
+   według skomplikowanych kryteriów, to powinieneś użyć tej funkcji.
+  </para>
+  <para>
+   Funkcja porównująca musi zwracać liczbę całkowitą mniejszą, równą lub
+   większą od zera jeśli pierwszy argument jest odpowiednio mniejszy, równy
+   lub większy niż drugi.
+  </para>
+  <para>
+   <note>
     <para>
-     Funkcja ta posortuje tablicę według jej wartości korzystając z podanej
-     przez użytkownika funkcji porównującej. Jeśli chcesz posortować tablicę
-     według skomplikowanych kryteriów, to powinieneś użyć tej funkcji.
+     Jeśli wynikiem porównania dwóch elementów tablicy jest równość, ich
+     kolejność w posortowanej tablicy pozostaje niezdefiniowana. Od PHP
+     4.0.6 funkcje zdefiniowane przez użytkownika mogły utrzymywać
+     początkową kolejność tych elementów, lecz nowy algorytm sortowania
+     wprowadzony w PHP 4.1.0 czyni to uniemożliwym i nie ma wydajnego
+     sposobu na rozwiązanie tego problemu.
     </para>
-    <para>
-     Funkcja porównująca musi zwracać liczbę całkowitą mniejszą, równą lub
-     większą od zera jeśli pierwszy argument jest odpowiednio mniejszy, równy
-     lub większy niż drugi.
-    </para>
-    <para>
-     <note>
-      <para>
-       Jeśli wynikiem porównania dwóch elementów tablicy jest równość, ich
-       kolejność w posortowanej tablicy pozostaje niezdefiniowana. Od PHP
-       4.0.6 funkcje zdefiniowane przez użytkownika mogły utrzymywać
-       początkową kolejność tych elementów, lecz nowy algorytm sortowania
-       wprowadzony w PHP 4.1.0 czyni to uniemożliwym i nie ma wydajnego
-       sposobu na rozwiązanie tego problemu.
-      </para>
-     </note>
-    </para>
-    &note.no-key-association;
-    <para>
-     &return.success;
-    </para>
-    <para>
-     <example>
-      <title>Przykład użycia <function>usort</function></title>
-      <programlisting role="php">
+   </note>
+  </para>
+  &note.no-key-association;
+  <para>
+   &return.success;
+  </para>
+  <para>
+   <example>
+    <title>Przykład użycia <function>usort</function></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 function cmp($a, $b)
@@ -65,9 +62,9 @@ foreach ($a as $key => $val) {
 }
 ?>
 ]]>
-      </programlisting>
-      &example.outputs;
-      <screen>
+    </programlisting>
+    &example.outputs;
+    <screen>
 <![CDATA[
 0: 6
 1: 5
@@ -75,22 +72,22 @@ foreach ($a as $key => $val) {
 3: 2
 4: 1
 ]]>
-      </screen>
-     </example>
-    </para>
-    <note>
-     <para>
-      Oczywiście w tym prostym przykładzie lepiej jest skorzystać z funkcji
-      <function>sort</function>.
-     </para>
-    </note>
-    <para>
-     <example>
-      <title>
-       Przykład użycia <function>usort</function> do sortowania
-       wielowymiarowych tablic
-      </title>
-      <programlisting role="php">
+    </screen>
+   </example>
+  </para>
+  <note>
+   <para>
+    Oczywiście w tym prostym przykładzie lepiej jest skorzystać z funkcji
+    <function>sort</function>.
+   </para>
+  </note>
+  <para>
+   <example>
+    <title>
+     Przykład użycia <function>usort</function> do sortowania
+     wielowymiarowych tablic
+    </title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 function cmp($a, $b)
@@ -108,40 +105,40 @@ while (list($key, $value) = each($owoce)) {
     echo "\$owoce[$key]: " . $value["owoc"] . "\n";
 }
 ]]>
-      </programlisting>
-      <para>
-       Sortując tablicę wielowymiarową, $a i $b zawierają referencję do
-       pierwszego indeksu tablicy.
-      </para>
-      &example.outputs;
-      <screen>
+    </programlisting>
+    <para>
+     Sortując tablicę wielowymiarową, $a i $b zawierają referencję do
+     pierwszego indeksu tablicy.
+    </para>
+    &example.outputs;
+    <screen>
 <![CDATA[
 $owoce[0]: cytryny
 $owoce[1]: jabłka
 $owoce[2]: winogrona
 ]]>
-      </screen>
-     </example>
-    </para>
-    <para>
-     <example>
-      <title>
-       Przykład użycia <function>usort</function> używając funkcji składowej
-       obiektu
-      </title>
-      <programlisting role="php">
+    </screen>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>
+     Przykład użycia <function>usort</function> używając funkcji składowej
+     obiektu
+    </title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 class TestObj {
     var $name;
-     
+
     function TestObj($name)
     {
         $this->name = $name;
     }
-    
+
     /* Statyczna funkcja porównująca */
-    function cmp_obj($a, $b) 
+    function cmp_obj($a, $b)
     {
         $al = strtolower($a->name);
         $bl = strtolower($b->name);
@@ -162,26 +159,26 @@ foreach ($a as $item) {
     print $item->name . "\n";
 }
 ]]>
-      </programlisting>
-      &example.outputs;
-      <screen>
+    </programlisting>
+    &example.outputs;
+    <screen>
 <![CDATA[
 b
 c
 d
 ]]>
-      </screen>
-     </example>
-    </para>
-    <para>
-     Patrz także: <function>uasort</function>,
-     <function>uksort</function>, <function>sort</function>,
-     <function>asort</function>,
-     <function>arsort</function>,<function>ksort</function>,
-     <function>natsort</function> i <function>rsort</function>.
-    </para>
-   </refsect1>
-  </refentry>
+    </screen>
+   </example>
+  </para>
+  <para>
+   Patrz także: <function>uasort</function>,
+   <function>uksort</function>, <function>sort</function>,
+   <function>asort</function>,
+   <function>arsort</function>,<function>ksort</function>,
+   <function>natsort</function> i <function>rsort</function>.
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

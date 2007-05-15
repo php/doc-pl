@@ -1,31 +1,29 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.16 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.8 $ -->
-  <refentry id="function.array-map">
-   <refnamediv>
-    <refname>array_map</refname>
-    <refpurpose>
-     Wykonuje funkcję zwrotną na elementach podanej tablicy
-    </refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-    <methodsynopsis>
-     <type>array</type><methodname>array_map</methodname>
-     <methodparam><type>callback</type><parameter>funkcja_zwrotna</parameter></methodparam>
-     <methodparam><type>array</type><parameter>tbl1</parameter></methodparam>
-     <methodparam choice="opt"><type>array</type><parameter>tbl2...</parameter></methodparam>
-    </methodsynopsis>
-    <para>
-     <function>array_map</function> zwraca tablicę zawierającą wszystkie
-     elementy tablicy <parameter>tbl1</parameter> po użyciu na każdej z nich
-     funkcji zwrotnej. Liczba parametrów funkcji zwrotnej powinna być równa
-     liczbie tablic przekazanych do funkcji <function>array_map</function>.
-    </para>
-    <para>
-     <example>
-      <title>Przykład użycia <function>array_map</function></title>
-      <programlisting role="php">
+<!-- EN-Revision: 1.17 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.9 $ -->
+<refentry id="function.array-map">
+ <refnamediv>
+  <refname>array_map</refname>
+  <refpurpose>Wykonuje funkcję zwrotną na elementach podanej tablicy</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Opis</title>
+  <methodsynopsis>
+   <type>array</type><methodname>array_map</methodname>
+   <methodparam><type>callback</type><parameter>funkcja_zwrotna</parameter></methodparam>
+   <methodparam><type>array</type><parameter>tbl1</parameter></methodparam>
+   <methodparam choice="opt"><type>array</type><parameter>tbl2...</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>array_map</function> zwraca tablicę zawierającą wszystkie
+   elementy tablicy <parameter>tbl1</parameter> po użyciu na każdej z nich
+   funkcji zwrotnej. Liczba parametrów funkcji zwrotnej powinna być równa
+   liczbie tablic przekazanych do funkcji <function>array_map</function>.
+  </para>
+  <para>
+   <example>
+    <title>Przykład użycia <function>array_map</function></title>
+    <programlisting role="php">
 <![CDATA[
 function szescian($n)
 {
@@ -37,11 +35,11 @@ $b = array_map("szescian", $a);
 print_r($b);
 ?>
 ]]>
-      </programlisting>
-      <para>
-       Zmienna <varname>$b</varname> będzie zawierała:
-      </para>
-      <screen>
+    </programlisting>
+    <para>
+     Zmienna <varname>$b</varname> będzie zawierała:
+    </para>
+    <screen>
 <![CDATA[
 Array
 (
@@ -51,16 +49,16 @@ Array
     [3] => 64
     [4] => 125
 )
-]]>        
-      </screen>
-     </example>
-    </para>
-    <para>
-     <example>
-      <title>
-       <function>array_map</function> - używanie większej ilości tablic
-      </title>
-      <programlisting role="php">
+]]>
+    </screen>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>
+     <function>array_map</function> - używanie większej ilości tablic
+    </title>
+    <programlisting role="php">
 <![CDATA[
 function pokaz_po_Hiszpansku($n, $m)
 {
@@ -82,9 +80,9 @@ $d = array_map("mapuj_po_Hiszpansku", $a , $b);
 print_r($d);
 ?>
 ]]>
-      </programlisting>
-      &example.outputs;
-      <screen>
+    </programlisting>
+    &example.outputs;
+    <screen>
 <![CDATA[
 // Zmienna $c
 Array
@@ -126,25 +124,25 @@ Array
 
 )
 ]]>
-      </screen>
-     </example>
-    </para>
-    <para>
-     Zazwyczaj używając dwóch lub więcej tablic, powinny one być równej
-     długości, ponieważ funkcja zwrotna jest wykonywana na odpowiadających
-     sobie elementach tablic.
-     Jeśli tablice są różnych długości, krótsze będą rozszerzane używając
-     pustych elementów.
-    </para>
-    <para>
-     Interesującym sposobem użycia tej funkcji jest kontruowanie tablicy
-     tablic, co może być łatwo przeprowadzone przez podanie &null; jako nazwy
-     funkcji zwrotnej.
-    </para>
-    <para>
-     <example>
-      <title>Tworzenie tablicy tablic</title>
-      <programlisting role="php">
+    </screen>
+   </example>
+  </para>
+  <para>
+   Zazwyczaj używając dwóch lub więcej tablic, powinny one być równej
+   długości, ponieważ funkcja zwrotna jest wykonywana na odpowiadających
+   sobie elementach tablic.
+   Jeśli tablice są różnych długości, krótsze będą rozszerzane używając
+   pustych elementów.
+  </para>
+  <para>
+   Interesującym sposobem użycia tej funkcji jest kontruowanie tablicy
+   tablic, co może być łatwo przeprowadzone przez podanie &null; jako nazwy
+   funkcji zwrotnej.
+  </para>
+  <para>
+   <example>
+    <title>Tworzenie tablicy tablic</title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 $a = array(1, 2, 3, 4, 5);
@@ -156,9 +154,9 @@ $e = array_map(null, $a, $b, $c, $d);
 print_r($e);
 ?>
 ]]>
-      </programlisting>
-      &example.outputs;
-      <screen>
+    </programlisting>
+    &example.outputs;
+    <screen>
 <![CDATA[
 Array
 (
@@ -204,16 +202,16 @@ Array
 
 )
 ]]>
-      </screen>
-     </example>
-    </para>
-    <para>
-     Patrz także: <function>array_filter</function>,
-     <function>array_reduce</function>, <function>array_walk</function>,
-     <function>create_function</function> i &seealso.callback;.
-    </para>
-   </refsect1>
-  </refentry>
+    </screen>
+   </example>
+  </para>
+  <para>
+   Patrz także: <function>array_filter</function>,
+   <function>array_reduce</function>, <function>array_walk</function>,
+   <function>create_function</function> i &seealso.callback;.
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

@@ -1,48 +1,45 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.11 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.6 $ -->
-  <refentry id="function.array-unshift">
-   <refnamediv>
-    <refname>array_unshift</refname>
-    <refpurpose>
-     Wstaw jeden lub więcej elementów na początek tablicy
-    </refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>int</type><methodname>array_unshift</methodname>
-      <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
-      <methodparam><type>mixed</type><parameter>wartość</parameter></methodparam>
-      <methodparam choice="opt"><type>mixed</type><parameter>...</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     <function>array_unshift</function> wstawia jeden lub więcej przekazanych
-     jako parametry elementów na początek tablicy
-     <parameter>tablica</parameter>. Zauważ, że lista elementów wstawiana jako
-     całość, więc elementy zostają w takim samym porządku. Wszystkie klucze
-     liczbowe zostaną zmodyfikowane tak, aby ich wartości zaczynały się od
-     zera, podczas gdy klucze znakowe nie zostaną zmienione.
-    </para>
-    <para>
-     Funkcja zwraca nową liczbę elementów w tablicy
-     <parameter>tablica</parameter>.
-    </para>
-    <para>
-     <example>
-      <title>Przykład użycia <function>array_unshift</function></title>
-      <programlisting role="php">
+<!-- EN-Revision: 1.14 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.7 $ -->
+<refentry id="function.array-unshift">
+ <refnamediv>
+  <refname>array_unshift</refname>
+  <refpurpose>Wstaw jeden lub więcej elementów na początek tablicy</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Opis</title>
+  <methodsynopsis>
+   <type>int</type><methodname>array_unshift</methodname>
+   <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
+   <methodparam><type>mixed</type><parameter>wartość</parameter></methodparam>
+   <methodparam choice="opt"><type>mixed</type><parameter>...</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>array_unshift</function> wstawia jeden lub więcej przekazanych
+   jako parametry elementów na początek tablicy
+   <parameter>tablica</parameter>. Zauważ, że lista elementów wstawiana jako
+   całość, więc elementy zostają w takim samym porządku. Wszystkie klucze
+   liczbowe zostaną zmodyfikowane tak, aby ich wartości zaczynały się od
+   zera, podczas gdy klucze znakowe nie zostaną zmienione.
+  </para>
+  <para>
+   Funkcja zwraca nową liczbę elementów w tablicy
+   <parameter>tablica</parameter>.
+  </para>
+  <para>
+   <example>
+    <title>Przykład użycia <function>array_unshift</function></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 $kolejka = array ("pomarańcza", "banan");
 array_unshift ($kolejka, "jabłko", "malina");
+print_r($kolejka);
 ?>
 ]]>
-      </programlisting>
-      <para>
-       Zmienna <varname>$kolejka</varname> będzie miała następujące elementy:
-      </para>
-      <screen role="php">
+    </programlisting>
+    &example.outputs;
+    <screen role="php">
 <![CDATA[
 Array
 (
@@ -52,16 +49,16 @@ Array
     [3] => banan
 )
 ]]>
-      </screen>
-     </example>
-    </para>
-    <para>
-     Patrz także: <function>array_shift</function>,
-     <function>array_push</function> i
-     <function>array_pop</function>.
-    </para>
-   </refsect1>
-  </refentry>
+    </screen>
+   </example>
+  </para>
+  <para>
+   Patrz także: <function>array_shift</function>,
+   <function>array_push</function> i
+   <function>array_pop</function>.
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

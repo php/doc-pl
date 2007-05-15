@@ -1,42 +1,40 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.12 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.6 $ -->
-  <refentry id="function.array-push">
-   <refnamediv>
-    <refname>array_push</refname>
-    <refpurpose>
-     Wstaw jeden lub więcej elementów na koniec tablicy
-    </refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>int</type><methodname>array_push</methodname>
-      <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
-      <methodparam><type>mixed</type><parameter>wartosc</parameter></methodparam>
-      <methodparam choice="opt"><type>mixed</type><parameter>...</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     <function>array_push</function> traktuje zmienną <parameter>tablica
-     </parameter> jako stos i wstawia przekazane parametry na koniec podanej
-     tablicy. Długość parametru <parameter>tablica</parameter> zwiększa się o
-     liczbę przekazanych wartości. Ma to taki sam efekt jak kod:
-     <programlisting role="php">
+<!-- EN-Revision: 1.14 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.7 $ -->
+<refentry id="function.array-push">
+ <refnamediv>
+  <refname>array_push</refname>
+  <refpurpose>Wstaw jeden lub więcej elementów na koniec tablicy</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Opis</title>
+  <methodsynopsis>
+   <type>int</type><methodname>array_push</methodname>
+   <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
+   <methodparam><type>mixed</type><parameter>wartosc</parameter></methodparam>
+   <methodparam choice="opt"><type>mixed</type><parameter>...</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>array_push</function> traktuje zmienną <parameter>tablica
+   </parameter> jako stos i wstawia przekazane parametry na koniec podanej
+   tablicy. Długość parametru <parameter>tablica</parameter> zwiększa się o
+   liczbę przekazanych wartości. Ma to taki sam efekt jak kod:
+   <programlisting role="php">
 <![CDATA[
 <?php
 $tablica[] = $wartosc;
 ?>
 ]]>
-     </programlisting>
-     powtórzony dla każdego parametru <parameter>wartosc</parameter>.
-    </para>
-    <para>
-     Funkcja zwraca nową liczbę elementów tablicy.
-    </para>
-    <para>
-     <example>
-      <title>Przykład użycia <function>array_push</function></title>
-      <programlisting role="php">
+   </programlisting>
+   powtórzony dla każdego parametru <parameter>wartosc</parameter>.
+  </para>
+  <para>
+   Funkcja zwraca nową liczbę elementów tablicy.
+  </para>
+  <para>
+   <example>
+    <title>Przykład użycia <function>array_push</function></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 $stos = array("pomarańcza", "banan");
@@ -44,12 +42,10 @@ array_push($stos, "jabłko", "malina");
 print_r($stos);
 ?>
 ]]>
-      </programlisting>
-      <para>
-       Po wykonaniu powyższego przykładu zmienna <varname>$stos</varname>
-       będzie miała następujące elementy:
-      </para>
-      <screen>
+    </programlisting>
+    &example.outputs;
+
+    <screen>
 <![CDATA[
 Array
 (
@@ -59,31 +55,31 @@ Array
     [3] => malina
 )
 ]]>
-      </screen>
-     </example>
-    </para>
-    <note>
-     <simpara>
-      Jeśli funkcja <function>array_push</function> ma być użyta do dodania
-      tylko jednego elementu do tablicy, lepiej jest użyć składni
-      <literal>$tablica[] = </literal>, ponieważ nie powoduje to narzutu przez
-      konieczność wywołanie funkcji.
-     </simpara>
-    </note>
-    <note>
-     <simpara>
-      <function>array_push</function> wygeneruje ostrzeżenie, jeśli pierwszy
-      argument nie jest tablicą. Różni się to od zachowania dla
-      <literal>$var[]</literal>, kiedy to tworzona jest nowa tablica.
-     </simpara>
-    </note>
-    <para>
-     Patrz także: <function>array_pop</function>,
-     <function>array_shift</function> i
-     <function>array_unshift</function>.
-    </para>
-   </refsect1>
-  </refentry>
+    </screen>
+   </example>
+  </para>
+  <note>
+   <simpara>
+    Jeśli funkcja <function>array_push</function> ma być użyta do dodania
+    tylko jednego elementu do tablicy, lepiej jest użyć składni
+    <literal>$tablica[] = </literal>, ponieważ nie powoduje to narzutu przez
+    konieczność wywołanie funkcji.
+   </simpara>
+  </note>
+  <note>
+   <simpara>
+    <function>array_push</function> wygeneruje ostrzeżenie, jeśli pierwszy
+    argument nie jest tablicą. Różni się to od zachowania dla
+    <literal>$var[]</literal>, kiedy to tworzona jest nowa tablica.
+   </simpara>
+  </note>
+  <para>
+   Patrz także: <function>array_pop</function>,
+   <function>array_shift</function> i
+   <function>array_unshift</function>.
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

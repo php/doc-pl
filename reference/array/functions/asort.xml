@@ -1,65 +1,65 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.12 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.6 $ -->
-  <refentry id="function.asort">
-   <refnamediv>
-    <refname>asort</refname>
-    <refpurpose>Posortuj tablicę zachowując skojarzenia kluczy</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>bool</type><methodname>asort</methodname>
-      <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
-      <methodparam choice="opt"><type>int</type><parameter>flagi</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     Funkcja ta sortuje tablicę w taki sposób, że klucze zachowują przypisanie
-     do odpowiednich wartości. Ten sposób sortowania jest używany głównie przy
-     sortowaniu tablic asocjacyjnych, gdzie znacząca jest kolejność
-     występowania elementów w tablicy.
-    </para>
-    <para>
-     &return.success;
-    </para>
-    <example>
-     <title>Przykład użycia <function>asort</function></title>
-     <programlisting role="php">
+<!-- EN-Revision: 1.13 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.7 $ -->
+<refentry id="function.asort">
+ <refnamediv>
+  <refname>asort</refname>
+  <refpurpose>Posortuj tablicę zachowując skojarzenia kluczy</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Opis</title>
+  <methodsynopsis>
+   <type>bool</type><methodname>asort</methodname>
+   <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>flagi</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Funkcja ta sortuje tablicę w taki sposób, że klucze zachowują przypisanie
+   do odpowiednich wartości. Ten sposób sortowania jest używany głównie przy
+   sortowaniu tablic asocjacyjnych, gdzie znacząca jest kolejność
+   występowania elementów w tablicy.
+  </para>
+  <para>
+   &return.success;
+  </para>
+  <example>
+   <title>Przykład użycia <function>asort</function></title>
+   <programlisting role="php">
 <![CDATA[
 <?php
-$owoce = array ("d"=>"cytryna, "a"=>"pomarańcza", "b"=>"banan", "c"=>"jabłko");
+$owoce = array ("d"=>"cytryna", "a"=>"pomarańcza", "b"=>"banan", "c"=>"jabłko");
 arsort ($owoce);
 foreach ($owoce as $key => $val) {
     echo "$key = $val\n";
 }
 ?>
 ]]>
-     </programlisting>
-     &example.outputs;
-     <screen>
+   </programlisting>
+   &example.outputs;
+   <screen>
 <![CDATA[
 b = banan
 d = cytryna
 c = jabłko
 a = pomarańcza
 ]]>
-     </screen>
-    </example>
-    <para>
-     Owoce zostały posortowane w porządku alfabetycznym a
-     skojarzenia kluczy dla każdego elementu zostały zachowane.
-    </para>
-    <para>
-     Możesz zmodyfikować zachowanie sortowania przez użycie opcjonalnego
-     parametru <parameter>flagi</parameter>. Aby uzyskać szczegóły zobacz
-     <function>sort</function>.
-    </para>
-    <para>
-     Patrz także: <function>arsort</function>, <function>rsort</function>,
-     <function>ksort</function> i <function>sort</function>.
-    </para>
-   </refsect1>
-  </refentry>
+   </screen>
+  </example>
+  <para>
+   Owoce zostały posortowane w porządku alfabetycznym a
+   skojarzenia kluczy dla każdego elementu zostały zachowane.
+  </para>
+  <para>
+   Możesz zmodyfikować zachowanie sortowania przez użycie opcjonalnego
+   parametru <parameter>flagi</parameter>. Aby uzyskać szczegóły zobacz
+   <function>sort</function>.
+  </para>
+  <para>
+   Patrz także: <function>arsort</function>, <function>rsort</function>,
+   <function>ksort</function> i <function>sort</function>.
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

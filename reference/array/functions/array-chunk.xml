@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.10 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.5 $ -->
-  <refentry id="function.array-chunk">
-   <refnamediv>
-    <refname>array_chunk</refname>
-    <refpurpose>Podziel tablicę na kawałki</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Description</title>
-     <methodsynopsis>
-      <type>array</type><methodname>array_chunk</methodname>
-      <methodparam><type>array</type><parameter>wejście</parameter></methodparam>
-      <methodparam><type>int</type><parameter>rozmiar</parameter></methodparam>
-      <methodparam choice="opt"><type>bool</type><parameter>zachowaj_klucze</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     <function>array_chunk</function> dzieli tablicę na kilka mniejszych,
-     każda po <parameter>rozmiar</parameter> elementów. Istnieje możliwość, że
-     ostatnia tablica będzie mniejsza. Otrzymujesz tablice jako elementy
-     wielowymiarowej tablicy indeksowanej przez liczby zaczynając od zera.
-    </para>
-    <para>
-     Ustawiając opcjonalny parametr <parameter>zachowaj_klucze</parameter> na
-     &true; możesz zmusić PHP do zachowywania orginalnych kluczy z tablicy
-     wejściowej. Jełi podasz w tym miejscu &false;, to w każdej nowej tablicy
-     użyte będą nowe indeksy liczbowe zaczynające się od zera. Domyślną
-     wartością jest &false;.
-    </para>
-    <example>
-     <title>Przykład użycia <function>array_chunk</function></title>
-     <programlisting role="php">
+<!-- EN-Revision: 1.11 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.6 $ -->
+<refentry id="function.array-chunk">
+ <refnamediv>
+  <refname>array_chunk</refname>
+  <refpurpose>Podziel tablicę na kawałki</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Description</title>
+  <methodsynopsis>
+   <type>array</type><methodname>array_chunk</methodname>
+   <methodparam><type>array</type><parameter>wejście</parameter></methodparam>
+   <methodparam><type>int</type><parameter>rozmiar</parameter></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>zachowaj_klucze</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>array_chunk</function> dzieli tablicę na kilka mniejszych,
+   każda po <parameter>rozmiar</parameter> elementów. Istnieje możliwość, że
+   ostatnia tablica będzie mniejsza. Otrzymujesz tablice jako elementy
+   wielowymiarowej tablicy indeksowanej przez liczby zaczynając od zera.
+  </para>
+  <para>
+   Ustawiając opcjonalny parametr <parameter>zachowaj_klucze</parameter> na
+   &true; możesz zmusić PHP do zachowywania orginalnych kluczy z tablicy
+   wejściowej. Jełi podasz w tym miejscu &false;, to w każdej nowej tablicy
+   użyte będą nowe indeksy liczbowe zaczynające się od zera. Domyślną
+   wartością jest &false;.
+  </para>
+  <example>
+   <title>Przykład użycia <function>array_chunk</function></title>
+   <programlisting role="php">
 <![CDATA[
 <?php
 $tablica_wejsciowa = array('a', 'b', 'c', 'd', 'e');
@@ -37,9 +37,9 @@ print_r(array_chunk($tablica_wejsciowa, 2));
 print_r(array_chunk($tablica_wejsciowa, 2, true));
 ?>
 ]]>
-     </programlisting>
-     &example.outputs;
-     <screen>
+   </programlisting>
+   &example.outputs;
+   <screen>
 <![CDATA[
 Array
 (
@@ -82,10 +82,10 @@ Array
 
 )
 ]]>
-     </screen>
-    </example>
-   </refsect1>
-  </refentry>
+   </screen>
+  </example>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

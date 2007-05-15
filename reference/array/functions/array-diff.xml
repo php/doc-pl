@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.11 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.8 $ -->
-  <refentry id="function.array-diff">
-   <refnamediv>
-    <refname>array_diff</refname>
-    <refpurpose>Zwraca różnice pomiędzy tablicami</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>array</type><methodname>array_diff</methodname>
-      <methodparam><type>array</type><parameter>tablica1</parameter></methodparam>
-      <methodparam><type>array</type><parameter>tablica2</parameter></methodparam>
-      <methodparam choice="opt"><type>array</type><parameter> ...</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     <function>array_diff</function> zwraca tablicę zawierającą wszystkie
-     wartości tablicy <parameter>tablica1</parameter> które nie są obecne w
-     innych tablicach-argumentach. Zauważ, że zachowywane są klucze.
-    </para>
-    <para>
-     <example>
-      <title>Przykład użycia <function>array_diff</function></title>
-      <programlisting role="php">
+<!-- EN-Revision: 1.12 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.9 $ -->
+<refentry id="function.array-diff">
+ <refnamediv>
+  <refname>array_diff</refname>
+  <refpurpose>Zwraca różnice pomiędzy tablicami</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Opis</title>
+  <methodsynopsis>
+   <type>array</type><methodname>array_diff</methodname>
+   <methodparam><type>array</type><parameter>tablica1</parameter></methodparam>
+   <methodparam><type>array</type><parameter>tablica2</parameter></methodparam>
+   <methodparam choice="opt"><type>array</type><parameter> ...</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>array_diff</function> zwraca tablicę zawierającą wszystkie
+   wartości tablicy <parameter>tablica1</parameter> które nie są obecne w
+   innych tablicach-argumentach. Zauważ, że zachowywane są klucze.
+  </para>
+  <para>
+   <example>
+    <title>Przykład użycia <function>array_diff</function></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 $tablica1 = array ("a" => "zielony", "czerwony", "niebieski", "czerwony");
@@ -32,50 +32,50 @@ $wynik = array_diff ($tablica1, $tablica2);
 print_r($wynik);
 ?>
 ]]>
-      </programlisting>
-      <para>
-       Wielokrotne wystąpienia w $tablica1 są traktowane w ten sam sposób.
-       Powyższy przykład wyświetli:
-      </para>
-      <screen>
-<![CDATA[	
-Array	
-(	
+    </programlisting>
+    <para>
+     Wielokrotne wystąpienia w $tablica1 są traktowane w ten sam sposób.
+     Powyższy przykład wyświetli:
+    </para>
+    <screen>
+<![CDATA[
+Array
+(
     [1] => niebieski
-)	
+)
  	]]>
 
-      </screen>
-     </example>
-    </para>
-    <note>
-     <simpara>
-      Dwa elementy tablicy uważane są za identyczne wtedy i tylko wtedy jeśli
-      <literal>(string) $element1 === (string) $element2</literal>. Słownie:
-      kiedy reprezentacje elementów w postaci stringów są identyczne.
-      <!-- TODO: przykład... -->
-     </simpara>
-    </note>
-    <note>
-     <simpara>
-      Zauważ, że funkcja ta sprawdza tylko jest wymiar n-wymiarowej tablicy.
-      Oczywiście można sprawdzić głębsze wymiary wywołując
-      <literal>array_diff($array1[0], $array2[0]);</literal>.
-     </simpara>
-    </note>
-    <warning>
-     <simpara>
-      Ta funkcja była zepsuta w PHP 4.0.4!
-      <!-- TODO: kiedy dokładnie było to zepsute?... -->
-     </simpara>
-    </warning>
-    <para>
-     Patrz także: <function>array_diff_assoc</function>,  
-     <function>array_intersect</function> i
-     <function>array_intersect_assoc</function>.  
-    </para>
-   </refsect1>
-  </refentry>
+    </screen>
+   </example>
+  </para>
+  <note>
+   <simpara>
+    Dwa elementy tablicy uważane są za identyczne wtedy i tylko wtedy jeśli
+    <literal>(string) $element1 === (string) $element2</literal>. Słownie:
+    kiedy reprezentacje elementów w postaci stringów są identyczne.
+    <!-- TODO: przykład... -->
+   </simpara>
+  </note>
+  <note>
+   <simpara>
+    Zauważ, że funkcja ta sprawdza tylko jest wymiar n-wymiarowej tablicy.
+    Oczywiście można sprawdzić głębsze wymiary wywołując
+    <literal>array_diff($array1[0], $array2[0]);</literal>.
+   </simpara>
+  </note>
+  <warning>
+   <simpara>
+    Ta funkcja była zepsuta w PHP 4.0.4!
+    <!-- TODO: kiedy dokładnie było to zepsute?... -->
+   </simpara>
+  </warning>
+  <para>
+   Patrz także: <function>array_diff_assoc</function>,
+   <function>array_intersect</function> i
+   <function>array_intersect_assoc</function>.
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

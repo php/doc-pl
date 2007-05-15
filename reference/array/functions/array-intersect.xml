@@ -1,40 +1,39 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.10 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.6 $ -->
-  <refentry id="function.array-intersect">
-   <refnamediv>
-    <refname>array_intersect</refname>
-    <refpurpose>Zwraca przecięcie tablic</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>array</type><methodname>array_intersect</methodname>
-      <methodparam><type>array</type><parameter>tablica1</parameter></methodparam>
-      <methodparam><type>array</type><parameter>tablica2</parameter></methodparam>
-      <methodparam choice="opt"><type>array</type><parameter> ...</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     <function>array_intersect</function> zwraca tablicę zawierającą wszystkie
-     wartości tablicy <parameter>tablica1</parameter> które istnieją we
-     wszystkich argumentach. Zauważ, ża zachowywane są przypisania kluczy.
-    </para>
-    <para>
-     <example>
-      <title>Przykład użycia <function>array_intersect</function></title>
-      <programlisting role="php">
+<!-- EN-Revision: 1.12 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.7 $ -->
+<refentry id="function.array-intersect">
+ <refnamediv>
+  <refname>array_intersect</refname>
+  <refpurpose>Zwraca przecięcie tablic</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Opis</title>
+  <methodsynopsis>
+   <type>array</type><methodname>array_intersect</methodname>
+   <methodparam><type>array</type><parameter>tablica1</parameter></methodparam>
+   <methodparam><type>array</type><parameter>tablica2</parameter></methodparam>
+   <methodparam choice="opt"><type>array</type><parameter> ...</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>array_intersect</function> zwraca tablicę zawierającą wszystkie
+   wartości tablicy <parameter>tablica1</parameter> które istnieją we
+   wszystkich argumentach. Zauważ, ża zachowywane są przypisania kluczy.
+  </para>
+  <para>
+   <example>
+    <title>Przykład użycia <function>array_intersect</function></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 $tablica1 = array ("a" => "zielony", "czerwony", "niebieski");
 $tablica2 = array ("b" => "zielony", "żółty", "czerwony");
-print_r(array_intersect ($tablica1, $tablica2));
+$wynik = array_intersect ($tablica1, $tablica2);
+print_r($wynik);
 ?>
 ]]>
-      </programlisting>
-      <para>
-       Powyższy przykład wyświetli:
-      </para>
-      <screen>
+    </programlisting>
+    &example.outputs;
+    <screen>
 <![CDATA[
 Array
 (
@@ -42,23 +41,23 @@ Array
     [0] => czerwony
 )
 ]]>
-      </screen>
-     </example>
-    </para>     
-    <note>
-     <simpara>
-      Dwa elementy tablicy uważane są za identyczne wtedy i tylko wtedy jeśli
-      <literal>(string) $element1 === (string) $element2</literal>. Słownie:
-      kiedy reprezentacje elementów w postaci stringów są identyczne.
-      <!-- TODO: przykład... -->
-     </simpara>
-    </note>
-    <para>
-     Patrz także: <function>array_intersect_assoc</function>,
-     <function>array_diff</function> i <function>array_diff_assoc</function>.  
-    </para>
-   </refsect1>
-  </refentry>
+    </screen>
+   </example>
+  </para>
+  <note>
+   <simpara>
+    Dwa elementy tablicy uważane są za identyczne wtedy i tylko wtedy jeśli
+    <literal>(string) $element1 === (string) $element2</literal>. Słownie:
+    kiedy reprezentacje elementów w postaci stringów są identyczne.
+    <!-- TODO: przykład... -->
+   </simpara>
+  </note>
+  <para>
+   Patrz także: <function>array_intersect_assoc</function>,
+   <function>array_diff</function> i <function>array_diff_assoc</function>.
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

@@ -1,36 +1,33 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.9 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.7 $ -->
-  <refentry id="function.array-reduce">
-   <refnamediv>
-    <refname>array_reduce</refname>
-    <refpurpose>
-     Iteracyjnie zredukuj tablicę do pojedyńczej wartości używając funkcji
-     zwrotnej
-    </refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>mixed</type><methodname>array_reduce</methodname>
-      <methodparam><type>array</type><parameter>wejście</parameter></methodparam>
-      <methodparam><type>callback</type><parameter>funkcja_zwrotna</parameter></methodparam>
-      <methodparam choice="opt"><type>int</type><parameter>początek</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     <function>array_reduce</function> iteracyjnie stosuje funkcję
-     <parameter>funkcja_zwrotna</parameter> na każdym elemencie tablicy
-     <parameter>wejście</parameter> aby zredukować tablicę to pojedyńczej
-     wartości. Jeśli podany został opcjonalny parametr <parameter>początek
-     </parameter>, będzie on użyty na początku procesu, lub jako zwracana
-     wartość jeśli tablica jest pusta.
-     Jeśli tablica jest pusta, a parametr <parameter>początek</parameter> nie
-     zostanie przekazany, <function>array_reduce</function> zwraca &null;.
-    </para>
-    <para>
-     <example>
-      <title>Przykład użycia <function>array_reduce</function></title>
-      <programlisting role="php">
+<!-- EN-Revision: 1.10 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.8 $ -->
+<refentry id="function.array-reduce">
+ <refnamediv>
+  <refname>array_reduce</refname>
+  <refpurpose>Iteracyjnie zredukuj tablicę do pojedyńczej wartości używając funkcji zwrotnej</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Opis</title>
+  <methodsynopsis>
+   <type>mixed</type><methodname>array_reduce</methodname>
+   <methodparam><type>array</type><parameter>wejście</parameter></methodparam>
+   <methodparam><type>callback</type><parameter>funkcja_zwrotna</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>początek</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>array_reduce</function> iteracyjnie stosuje funkcję
+   <parameter>funkcja_zwrotna</parameter> na każdym elemencie tablicy
+   <parameter>wejście</parameter> aby zredukować tablicę to pojedyńczej
+   wartości. Jeśli podany został opcjonalny parametr <parameter>początek
+   </parameter>, będzie on użyty na początku procesu, lub jako zwracana
+   wartość jeśli tablica jest pusta.
+   Jeśli tablica jest pusta, a parametr <parameter>początek</parameter> nie
+   zostanie przekazany, <function>array_reduce</function> zwraca &null;.
+  </para>
+  <para>
+   <example>
+    <title>Przykład użycia <function>array_reduce</function></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 function rsum($v, $w)
@@ -52,22 +49,22 @@ $c = array_reduce($a, "rmul", 10);
 $d = array_reduce($x, "rsum", 1);
 ?>
 ]]>
-      </programlisting>
-     </example>
-    </para>
-    <para>
-     Po wykonaniu powyższego kodu zmienna <varname>$b</varname> będzie
-     zawierała <literal>15</literal>, <varname>$c</varname>
-     <literal>1200</literal> (= 10*1*2*3*4*5) a
-     <varname>$d</varname> containing <literal>1</literal>.
-    </para>
-    <para>
-     Patrz także: <function>array_filter</function>, 
-     <function>array_map</function>, <function>array_unique</function> i
-     <function>array_count_values</function>.
-    </para>
-   </refsect1>
-  </refentry>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   Po wykonaniu powyższego kodu zmienna <varname>$b</varname> będzie
+   zawierała <literal>15</literal>, <varname>$c</varname>
+   <literal>1200</literal> (= 10*1*2*3*4*5) a
+   <varname>$d</varname> containing <literal>1</literal>.
+  </para>
+  <para>
+   Patrz także: <function>array_filter</function>,
+   <function>array_map</function>, <function>array_unique</function> i
+   <function>array_count_values</function>.
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

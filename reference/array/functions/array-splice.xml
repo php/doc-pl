@@ -1,138 +1,134 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.16 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.6 $ -->
-  <refentry id="function.array-splice">
-   <refnamediv>
-    <refname>array_splice</refname>
-    <refpurpose>
-     Usuń część tablicy i zamień ją na coś innego
-    </refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>array</type><methodname>array_splice</methodname>
-      <methodparam><type>array</type><parameter role="reference">wejście</parameter></methodparam>
-      <methodparam><type>int</type><parameter>przesunięcie</parameter></methodparam>
-      <methodparam choice="opt"><type>int</type><parameter>długość</parameter></methodparam>
-      <methodparam choice="opt"><type>array</type><parameter>
-        zamiennik
-       </parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     <function>array_splice</function> usuwa z tablicy <parameter>wejście
-     </parameter> elementy określone przez parametry
-     <parameter>przesunięcie</parameter> i
-     <parameter>długość</parameter>, i zamienia je przez elementy tablicy
-     <parameter>zamiennik</parameter>, jeśli została ona podana. Funkcja
-     zwraca tablice zawierającą usunięte elementy.
-     Liczbowe klucze tablicy <parameter>wejście</parameter> nie są
-     zachowywane.
-    </para>
-    <para>
-     Jeśli <parameter>przesunięcie</parameter> jest dodatnie, to początek
-     usuwanej części tablicy <parameter>wejście</parameter> znajduje się
-     w miejscu określonym przez ten parametr. Jeśli
-     <parameter>przesunięcie</parameter> jest ujemne, to wycinanie zaczyna się
-     o tyle elementów od końca tablicy <parameter>wejście</parameter>.
-    </para>
-    <para>
-     Jeśli <parameter>długość</parameter> została pominięta, to usunięte jest
-     wszystko od <parameter>przesunięcie</parameter> do końca tablicy. Jeśli
-     <parameter>długość</parameter> jest podana i dodatnia, to tyle elementów
-     zostanie usuniętych. Jeśli <parameter>długość</parameter> jest podana i
-     jest ujemna, to koniec usuwanego kawałka tablicy będzie się znajdował o
-     tyle elementów od końca tablicy. Wskazówka: aby usunąć wszystko od
-     <parameter>przesunięcie</parameter> do końca tablicy podając także
-     parametr <parameter>zamiennik</parameter>, użyj
-     <literal>count($wejście)</literal> jako <parameter>długość</parameter>.
-    </para>
-    <para>
-     Jeśli podana została tablica <parameter>zamiennik</parameter>, to
-     wszystkie usunięte elementy są zamieniane na elementy z tej tablicy.
-     Jeśli <parameter>przesunięcie</parameter> i <parameter>długość</parameter>
-     zostały podane tak, że żadne elementy nie zostaną usunięte, to elementy z
-     tablicy <parameter>zamiennik</parameter> są wstawiane w miejsce określone
-     przez <parameter>przesunięcie</parameter>.  Klucze w zamienniku nie są
-     zachowywane.  Jeśli zamiennik to tylko jeden element, to nie trzeba go
-     wstawiać do <literal>array()</literal>, chyba że element jest właśnie
-     tablicą.
-    </para>
-    <para>
-     Poniższe wyrażenia zmieniają wartość tablicy <varname>$wejscie</varname>
-     w ten sam sposób:
-   <table>
-    <title>Równoważności <function>array_splice</function></title>
-    <tgroup cols="2">
-     <tbody>
-      <row>
-       <entry>
-        array_push($wejscie, $x, $y) 
-       </entry>
-       <entry>
-        array_splice($wejscie, count($wejscie), 0, array($x, $y))
-       </entry>
-      </row>
-      <row>
-       <entry>
-        array_pop($wejscie) 
-       </entry>
-       <entry>
-        array_splice($wejscie, -1)
-       </entry>
-      </row>
-      <row>
-       <entry>
-        array_shift($wejscie)
-       </entry>
-       <entry>
-        array_splice($wejscie, 0, 1)
-       </entry>
-      </row>
-      <row>
-       <entry>
-        array_unshift($wejscie, $x, $y)
-       </entry>
-       <entry>
-        array_splice($wejscie, 0, 0, array($x, $y))
-       </entry>
-      </row>
-      <row>
-       <entry>
-        $wejscie[$x] = $y // dla tablic gdzie klucz jest równy przesunięciu
-       </entry>
-       <entry>
-        array_splice($wejscie, $x, 1, $y)
-       </entry>
-      </row>
-     </tbody>      
-    </tgroup>
-   </table>
-    </para>
-    <para>
-     Funkcja zwraca tablicę zawierającą usunięte elementy.
-    </para>
-    <para>
-     <example>
-      <title>Przykład użycia <function>array_splice</function></title>
-      <programlisting role="php">
+<!-- EN-Revision: 1.17 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.7 $ -->
+<refentry id="function.array-splice">
+ <refnamediv>
+  <refname>array_splice</refname>
+  <refpurpose>Usuń część tablicy i zamień ją na coś innego</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Opis</title>
+  <methodsynopsis>
+   <type>array</type><methodname>array_splice</methodname>
+   <methodparam><type>array</type><parameter role="reference">wejście</parameter></methodparam>
+   <methodparam><type>int</type><parameter>przesunięcie</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>długość</parameter></methodparam>
+   <methodparam choice="opt"><type>array</type><parameter>zamiennik</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>array_splice</function> usuwa z tablicy <parameter>wejście
+   </parameter> elementy określone przez parametry
+   <parameter>przesunięcie</parameter> i
+   <parameter>długość</parameter>, i zamienia je przez elementy tablicy
+   <parameter>zamiennik</parameter>, jeśli została ona podana. Funkcja
+   zwraca tablice zawierającą usunięte elementy.
+   Liczbowe klucze tablicy <parameter>wejście</parameter> nie są
+   zachowywane.
+  </para>
+  <para>
+   Jeśli <parameter>przesunięcie</parameter> jest dodatnie, to początek
+   usuwanej części tablicy <parameter>wejście</parameter> znajduje się
+   w miejscu określonym przez ten parametr. Jeśli
+   <parameter>przesunięcie</parameter> jest ujemne, to wycinanie zaczyna się
+   o tyle elementów od końca tablicy <parameter>wejście</parameter>.
+  </para>
+  <para>
+   Jeśli <parameter>długość</parameter> została pominięta, to usunięte jest
+   wszystko od <parameter>przesunięcie</parameter> do końca tablicy. Jeśli
+   <parameter>długość</parameter> jest podana i dodatnia, to tyle elementów
+   zostanie usuniętych. Jeśli <parameter>długość</parameter> jest podana i
+   jest ujemna, to koniec usuwanego kawałka tablicy będzie się znajdował o
+   tyle elementów od końca tablicy. Wskazówka: aby usunąć wszystko od
+   <parameter>przesunięcie</parameter> do końca tablicy podając także
+   parametr <parameter>zamiennik</parameter>, użyj
+   <literal>count($wejście)</literal> jako <parameter>długość</parameter>.
+  </para>
+  <para>
+   Jeśli podana została tablica <parameter>zamiennik</parameter>, to
+   wszystkie usunięte elementy są zamieniane na elementy z tej tablicy.
+   Jeśli <parameter>przesunięcie</parameter> i <parameter>długość</parameter>
+   zostały podane tak, że żadne elementy nie zostaną usunięte, to elementy z
+   tablicy <parameter>zamiennik</parameter> są wstawiane w miejsce określone
+   przez <parameter>przesunięcie</parameter>.  Klucze w zamienniku nie są
+   zachowywane.  Jeśli zamiennik to tylko jeden element, to nie trzeba go
+   wstawiać do <literal>array()</literal>, chyba że element jest właśnie
+   tablicą.
+  </para>
+  <para>
+   Poniższe wyrażenia zmieniają wartość tablicy <varname>$wejscie</varname>
+   w ten sam sposób:
+ <table>
+  <title>Równoważności <function>array_splice</function></title>
+  <tgroup cols="2">
+   <tbody>
+    <row>
+     <entry>
+      array_push($wejscie, $x, $y)
+     </entry>
+     <entry>
+      array_splice($wejscie, count($wejscie), 0, array($x, $y))
+     </entry>
+    </row>
+    <row>
+     <entry>
+      array_pop($wejscie)
+     </entry>
+     <entry>
+      array_splice($wejscie, -1)
+     </entry>
+    </row>
+    <row>
+     <entry>
+      array_shift($wejscie)
+     </entry>
+     <entry>
+      array_splice($wejscie, 0, 1)
+     </entry>
+    </row>
+    <row>
+     <entry>
+      array_unshift($wejscie, $x, $y)
+     </entry>
+     <entry>
+      array_splice($wejscie, 0, 0, array($x, $y))
+     </entry>
+    </row>
+    <row>
+     <entry>
+      $wejscie[$x] = $y // dla tablic gdzie klucz jest równy przesunięciu
+     </entry>
+     <entry>
+      array_splice($wejscie, $x, 1, $y)
+     </entry>
+    </row>
+   </tbody>
+  </tgroup>
+ </table>
+  </para>
+  <para>
+   Funkcja zwraca tablicę zawierającą usunięte elementy.
+  </para>
+  <para>
+   <example>
+    <title>Przykład użycia <function>array_splice</function></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 $wejscie = array ("czerwony", "zielony", "niebieski", "żółty");
-array_splice ($wejscie, 2);      
+array_splice ($wejscie, 2);
 // $wejscie to teraz array ("czerwony", "zielony")
 
 $wejscie = array ("czerwony", "zielony", "niebieski", "żółty");
-array_splice ($wejscie, 1, -1);  
+array_splice ($wejscie, 1, -1);
 // $wejscie to teraz array ("czerwony", "żółty")
 
 $wejscie = array ("czerwony", "zielony", "niebieski", "żółty");
-array_splice ($wejscie, 1, count($wejscie), "pomarańczowy");  
+array_splice ($wejscie, 1, count($wejscie), "pomarańczowy");
 // $wejscie to teraz array ("czerwony", "pomarańczowy")
 
 $wejscie = array ("czerwony", "zielony", "niebieski", "żółty");
-array_splice ($wejscie, -1, 1, array("czarny", "kasztanowy")); 
-// $wejscie to teraz array ("czerwony", "zielony", 
+array_splice ($wejscie, -1, 1, array("czarny", "kasztanowy"));
+// $wejscie to teraz array ("czerwony", "zielony",
 //          "niebieski", "czarny", "kasztanowy")
 
 $wejscie = array("czerwony", "zielony", "niebieski", "żółty");
@@ -141,15 +137,15 @@ array_splice($wejscie, 3, 0, "fioletowy");
 //          "niebieski", "fioletowy", "żółty");
 ?>
 ]]>
-      </programlisting>
-     </example>
-    </para>
-    <para>
-     Patrz także: <function>array_slice</function>,
-     <function>unset</function> i <function>array_merge</function>.
-    </para>
-   </refsect1>
-  </refentry>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   Patrz także: <function>array_slice</function>,
+   <function>unset</function> i <function>array_merge</function>.
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

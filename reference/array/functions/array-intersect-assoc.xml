@@ -1,76 +1,75 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.8 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.1 $ -->
-  <refentry id="function.array-intersect-assoc">
-   <refnamediv>
-    <refname>array_intersect_assoc</refname>
-    <refpurpose>Wylicza przecięcie tablic z dodatkowym sprawdzaniem indeksów</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>array</type><methodname>array_intersect_assoc</methodname>
-      <methodparam><type>array</type><parameter>tablica1</parameter></methodparam>
-      <methodparam><type>array</type><parameter>tablica2</parameter></methodparam>
-      <methodparam choice="opt"><type>array</type><parameter> ...</parameter></methodparam>
-     </methodsynopsis>
-    <simpara>
-     <function>array_intersect_assoc</function> zwraca tablicę zawierającą
-     wszystkie wartości z <parameter>tablica1</parameter>, które są obecne
-     także we wszystkich pozostałych argumentach. Należy pamiętać, że w
-     przeciwieństwie do funkcji <function>array_intersect</function>, tutaj w
-     brane są pod uwagę także klucze.
-    </simpara>
-    <para>
-     <example>
-      <title>Przykład użycia <function>array_intersect_assoc</function></title>
-      <programlisting role="php">
+<!-- EN-Revision: 1.10 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.2 $ -->
+<refentry id="function.array-intersect-assoc">
+ <refnamediv>
+  <refname>array_intersect_assoc</refname>
+  <refpurpose>Wylicza przecięcie tablic z dodatkowym sprawdzaniem indeksów</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Opis</title>
+  <methodsynopsis>
+   <type>array</type><methodname>array_intersect_assoc</methodname>
+   <methodparam><type>array</type><parameter>tablica1</parameter></methodparam>
+   <methodparam><type>array</type><parameter>tablica2</parameter></methodparam>
+   <methodparam choice="opt"><type>array</type><parameter> ...</parameter></methodparam>
+  </methodsynopsis>
+  <simpara>
+   <function>array_intersect_assoc</function> zwraca tablicę zawierającą
+   wszystkie wartości z <parameter>tablica1</parameter>, które są obecne
+   także we wszystkich pozostałych argumentach. Należy pamiętać, że w
+   przeciwieństwie do funkcji <function>array_intersect</function>, tutaj w
+   brane są pod uwagę także klucze.
+  </simpara>
+  <para>
+   <example>
+    <title>Przykład użycia <function>array_intersect_assoc</function></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 $tablica1 = array("a" => "zielony", "b" => "brązowy", "c" => "niebieski", "czerwony");
 $tablica2 = array("a" => "zielony", "żółty", "czerwony");
 $tablica_wynikowa = array_intersect_assoc($tablica1, $tablica2);
+print_r($tablica_wynikowa);
 ?>
 ]]>
-      </programlisting>
-      <para>
-       $tablica_wynikowa będzie miała postać:
-      </para>
-      <screen>
+    </programlisting>
+    &example.outputs;
+    <screen>
 <![CDATA[
 Array
 (
     [a] => zielony
 )
 ]]>
-      </screen>
-     </example>
-    </para>
-    <simpara>
-     W powyższym przykładzie, tylko jedna para, <literal>"a" =&gt;
-      "zielony</literal>, jest obecna w obu tablicach wejściowych, a więc
-     tylko ta zostanie zwrócona. Wartość <literal>"red"</literal> nie jest
-     zwracana, ponieważ w tablicy <varname>$tablica1</varname> jej klucz to
-     <literal>0</literal>, a w <varname>$tablica2</varname> -
-     <literal>1</literal>.
-    </simpara>
-    <simpara>
-     Dwie wartości z pary <literal>klucz =&gt; wartość</literal> są uważane za
-     równe tylko jeśli <literal>(string) $element1 === (string)
-      $element2</literal>. Innymi słowy, dokonywane jest ścisłe porównywanie
-     typów, tak więc reprezentacje znakowe muszą być takie same.
-     <!-- TODO: example of it... -->
-    </simpara>
-    <simpara>
-     Patrz także: <function>array_intersect</function>,
-     <function>array_uintersect_assoc</function>,
-     <function>array_intersect_uassoc</function>,
-     <function>array_uintersect_uassoc</function>,
-     <function>array_diff</function> i
-     <function>array_diff_assoc</function>.
-    </simpara>
-   </refsect1>
-  </refentry>
+    </screen>
+   </example>
+  </para>
+  <simpara>
+   W powyższym przykładzie, tylko jedna para, <literal>"a" =&gt;
+    "zielony</literal>, jest obecna w obu tablicach wejściowych, a więc
+   tylko ta zostanie zwrócona. Wartość <literal>"red"</literal> nie jest
+   zwracana, ponieważ w tablicy <varname>$tablica1</varname> jej klucz to
+   <literal>0</literal>, a w <varname>$tablica2</varname> -
+   <literal>1</literal>.
+  </simpara>
+  <simpara>
+   Dwie wartości z pary <literal>klucz =&gt; wartość</literal> są uważane za
+   równe tylko jeśli <literal>(string) $element1 === (string)
+    $element2</literal>. Innymi słowy, dokonywane jest ścisłe porównywanie
+   typów, tak więc reprezentacje znakowe muszą być takie same.
+   <!-- TODO: example of it... -->
+  </simpara>
+  <simpara>
+   Patrz także: <function>array_intersect</function>,
+   <function>array_uintersect_assoc</function>,
+   <function>array_intersect_uassoc</function>,
+   <function>array_uintersect_uassoc</function>,
+   <function>array_diff</function> i
+   <function>array_diff_assoc</function>.
+  </simpara>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

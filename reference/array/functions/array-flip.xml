@@ -1,55 +1,55 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.11 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.5 $ -->
-  <refentry id="function.array-flip">
-   <refnamediv>
-    <refname>array_flip</refname>
-    <refpurpose>Wymienia wszystkie klucze z przypisanymi do nich wartościami w
-     tablicy</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>array</type><methodname>array_flip</methodname>
-      <methodparam><type>array</type><parameter>trans</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     <function>array_flip</function> zwraca tablicę w odwróconym porządku,
-     tzn. klucze z tablicy <parameter>trans</parameter> stają się wartościami a
-     wartości <parameter>trans</parameter> stają się kluczami.
-    </para>
-    <para>
-     Zauważ, że wszystkie wartości tablicy <parameter>trans</parameter> muszą
-     mieć poprawne klucze, tzn. muszą być albo typu <type>integer</type> lub
-     <type>string</type>. Jeśli wartość nie ma prawidłego typu, wyświetlone
-     zostanie ostrzeżenie, a para klucz/wartość <emphasis>nie będzie
-     odwrócona</emphasis>.
-    </para>
-    <para>
-     Jeśli wartość występuje wielokrotnie, ostatni klucz będzie użyty jako jej
-     wartość po odwróceniu, a wszystkie inne zostaną stracone.
-    </para>
-    <para>
-     <function>array_flip</function> zwraca &false; jeśli nie powiedzie się
-     odwracanie tablicy.
-    </para>
-    <para>
-     <example>
-      <title>Przykład użycia <function>array_flip</function></title>
-      <programlisting role="php">
+<!-- EN-Revision: 1.12 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.6 $ -->
+<refentry id="function.array-flip">
+ <refnamediv>
+  <refname>array_flip</refname>
+  <refpurpose>Wymienia wszystkie klucze z przypisanymi do nich wartościami w
+   tablicy</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Opis</title>
+  <methodsynopsis>
+   <type>array</type><methodname>array_flip</methodname>
+   <methodparam><type>array</type><parameter>trans</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>array_flip</function> zwraca tablicę w odwróconym porządku,
+   tzn. klucze z tablicy <parameter>trans</parameter> stają się wartościami a
+   wartości <parameter>trans</parameter> stają się kluczami.
+  </para>
+  <para>
+   Zauważ, że wszystkie wartości tablicy <parameter>trans</parameter> muszą
+   mieć poprawne klucze, tzn. muszą być albo typu <type>integer</type> lub
+   <type>string</type>. Jeśli wartość nie ma prawidłego typu, wyświetlone
+   zostanie ostrzeżenie, a para klucz/wartość <emphasis>nie będzie
+   odwrócona</emphasis>.
+  </para>
+  <para>
+   Jeśli wartość występuje wielokrotnie, ostatni klucz będzie użyty jako jej
+   wartość po odwróceniu, a wszystkie inne zostaną stracone.
+  </para>
+  <para>
+   <function>array_flip</function> zwraca &false; jeśli nie powiedzie się
+   odwracanie tablicy.
+  </para>
+  <para>
+   <example>
+    <title>Przykład użycia <function>array_flip</function></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 $trans = array_flip ($trans);
 $original = strtr ($str, $trans);
 ?>
 ]]>
-      </programlisting>
-     </example>
-    </para>
-    <para>
-     <example>
-      <title>Przykład użycia <function>array_flip</function> : kolizja</title>
-      <programlisting role="php">
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Przykład użycia <function>array_flip</function> : kolizja</title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 $trans = array ("a" => 1, "b" => 1, "c" => 2);
@@ -57,26 +57,26 @@ $trans = array_flip ($trans);
 print_r($trans);
 ?>
 ]]>
-      </programlisting>
-      <para>
-       Powyższy przykład wyświetli:
-      </para>
-      <screen>
+    </programlisting>
+    <para>
+     Powyższy przykład wyświetli:
+    </para>
+    <screen>
 <![CDATA[
 Array
    [1] => b
    [2] => c
-]]>        
-      </screen>
-     </example>
-    </para>
-    <para> 
-     Patrz także: <function>array_values</function>, 
-     <function>array_keys</function> i
-     <function>array_reverse</function>. 
-    </para>
-   </refsect1>
-  </refentry>
+]]>
+    </screen>
+   </example>
+  </para>
+  <para>
+   Patrz także: <function>array_values</function>,
+   <function>array_keys</function> i
+   <function>array_reverse</function>.
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

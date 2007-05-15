@@ -1,53 +1,51 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.13 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.4 $ -->
-  <refentry id="function.array">
-   <refnamediv>
-    <refname>array</refname>
-    <refpurpose>
-     Stwórz tablicę
-    </refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>array</type><methodname>array</methodname>
-      <methodparam choice="opt"><type>mixed</type><parameter>...</parameter></methodparam>
-     </methodsynopsis>
+<!-- EN-Revision: 1.14 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.5 $ -->
+<refentry id="function.array">
+ <refnamediv>
+  <refname>array</refname>
+  <refpurpose>Stwórz tablicę</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Opis</title>
+  <methodsynopsis>
+   <type>array</type><methodname>array</methodname>
+   <methodparam choice="opt"><type>mixed</type><parameter>...</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Zwraca tablicę stworzoną z podanych parametrów. Parametry mogą być
+   indeksowane przy pomocy operatora <literal>=&gt;</literal> operator.
+   Więcej informacji o tym czym są tablice można znaleźć w rodziale o <link
+    linkend="language.types.array">typie tablicowym</link>.
+  </para>
+  <para>
+   <note>
     <para>
-     Zwraca tablicę stworzoną z podanych parametrów. Parametry mogą być
-     indeksowane przy pomocy operatora <literal>=&gt;</literal> operator.
-     Więcej informacji o tym czym są tablice można znaleźć w rodziale o <link
-      linkend="language.types.array">typie tablicowym</link>.
+     <function>array</function> jest składnią języka używaną do tekstowej
+     reprezentacji tablic, a nie zwykłą funkcją.
     </para>
-    <para>
-     <note>
-      <para>
-       <function>array</function> jest składnią języka używaną do tekstowej
-       reprezentacji tablic, a nie zwykłą funkcją.
-      </para>
-     </note>
-    </para>
-    <para>
-     Składnia "index =&gt; wartości", oddzielona przecinkami, definiuje pary
-     indeksów i wartości. Indeks może być stringiem lub liczbą. Jeśli indeks
-     zostanie pominięty, automatycznie wygenerowany zostanie indeks będący
-     liczbą całkowitą, poczynając od 0. Jeśli indeks jest liczbą całkowitą,
-     następny wygenerowany indeks będzie miał wartość "największy indeks + 1".
-     Zauważ, że jeśli pojawią się dwie wartości o tym samym indeksie, ostatnia
-     nadpisze wcześniejsze.
-    </para>
-    <para>
-     Przecinek po ostatniej podanej wartości, mimo że jest niespotykany, jest
-     poprawny składniowo.
-    </para>
-    <para>
-     Poniższy przykład demonstruje jak stworzyć wielowymiarową tablicę, jak
-     określić klucze w tablicy asocjacyjnej i jak pominąć-i-kontynuować
-     liczbowe indeksy w normalnych tablicach.
-     <example>
-      <title>Przykład użycia <function>array</function></title>
-      <programlisting role="php">
+   </note>
+  </para>
+  <para>
+   Składnia "index =&gt; wartości", oddzielona przecinkami, definiuje pary
+   indeksów i wartości. Indeks może być stringiem lub liczbą. Jeśli indeks
+   zostanie pominięty, automatycznie wygenerowany zostanie indeks będący
+   liczbą całkowitą, poczynając od 0. Jeśli indeks jest liczbą całkowitą,
+   następny wygenerowany indeks będzie miał wartość "największy indeks + 1".
+   Zauważ, że jeśli pojawią się dwie wartości o tym samym indeksie, ostatnia
+   nadpisze wcześniejsze.
+  </para>
+  <para>
+   Przecinek po ostatniej podanej wartości, mimo że jest niespotykany, jest
+   poprawny składniowo.
+  </para>
+  <para>
+   Poniższy przykład demonstruje jak stworzyć wielowymiarową tablicę, jak
+   określić klucze w tablicy asocjacyjnej i jak pominąć-i-kontynuować
+   liczbowe indeksy w normalnych tablicach.
+   <example>
+    <title>Przykład użycia <function>array</function></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 $owoce = array (
@@ -57,22 +55,22 @@ $owoce = array (
 );
 ?>
 ]]>
-      </programlisting>
-     </example>
-    </para>
-    <para>
-     <example>
-      <title>Automatyczne indeksowanie w funkcji <function>array</function></title>
-      <programlisting role="php">
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Automatyczne indeksowanie w funkcji <function>array</function></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 $array = array( 1, 1, 1, 1,  1, 8 => 1,  4 => 1, 19, 3 => 13);
 print_r($array);
 ?>
 ]]>
-      </programlisting>
-      &example.outputs;
-      <screen role="php">
+    </programlisting>
+    &example.outputs;
+    <screen role="php">
 <![CDATA[
 Array
 (
@@ -85,29 +83,29 @@ Array
     [9] => 19
 )
 ]]>
-      </screen>
-     </example>
-    </para>
-    <para>
-     Zauważ, że indeks '3' jest zdefiniowany dwa razy i przchowuje on końcową
-     wartość 13. Indeks 4 jest zdefiniowany po indeksie 8, a następnym
-     wygenerowanym indeksem (dla wartości 19) jest 9, ponieważ największym
-     poprzednim indeksem było 8.
-    </para>
-    <para>
-     Ten przykład tworzy tablicę o początku 1.
-     <example>
-      <title>Indeksowanie od 1 w <function>array</function></title>
-      <programlisting role="php">
+    </screen>
+   </example>
+  </para>
+  <para>
+   Zauważ, że indeks '3' jest zdefiniowany dwa razy i przchowuje on końcową
+   wartość 13. Indeks 4 jest zdefiniowany po indeksie 8, a następnym
+   wygenerowanym indeksem (dla wartości 19) jest 9, ponieważ największym
+   poprzednim indeksem było 8.
+  </para>
+  <para>
+   Ten przykład tworzy tablicę o początku 1.
+   <example>
+    <title>Indeksowanie od 1 w <function>array</function></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 $pierwszy_kwartal  = array(1 => 'Styczeń', 'Luty', 'Marzec');
 print_r($pierwszy_kwartal);
 ?>
 ]]>
-      </programlisting>
-      &example.outputs;
-      <screen role="php">
+    </programlisting>
+    &example.outputs;
+    <screen role="php">
 <![CDATA[
 Array
 (
@@ -116,35 +114,35 @@ Array
     [3] => Marzec
 )
 ]]>
-      </screen>
-     </example>
-    </para>
-    <para>
-     Podobnie jak w Perlu, wartość z tablicy można uzyskać wewnątrz
-     cudzysłowów. Jednakże w PHP niezbędne jest zawarcie zmiennej wewnątrz
-     nawiasów klamrowych.
-     <example>
-      <title>Odczytywanie elementu tablicy wewnątrz cudzysłowów</title>
-      <programlisting role="php">
-<![CDATA[ 	
-<?php 	
+    </screen>
+   </example>
+  </para>
+  <para>
+   Podobnie jak w Perlu, wartość z tablicy można uzyskać wewnątrz
+   cudzysłowów. Jednakże w PHP niezbędne jest zawarcie zmiennej wewnątrz
+   nawiasów klamrowych.
+   <example>
+    <title>Odczytywanie elementu tablicy wewnątrz cudzysłowów</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
 
-$foo = array('bar' => 'baz'); 	
-echo "Hello {$foo['bar']}!"; // Hello baz! 	
+$foo = array('bar' => 'baz');
+echo "Hello {$foo['bar']}!"; // Hello baz!
 
-?> 	
+?>
 ]]>
-      </programlisting>
-     </example>
-    </para>
-    <para>
-     Patrz także: <function>array_pad</function>, <function>list</function>,
-     <function>count</function>,
-     <link linkend="control-structures.foreach">foreach</link> i
-     <function>range</function>.
-    </para>
-   </refsect1>
-  </refentry>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   Patrz także: <function>array_pad</function>, <function>list</function>,
+   <function>count</function>,
+   <link linkend="control-structures.foreach">foreach</link> i
+   <function>range</function>.
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

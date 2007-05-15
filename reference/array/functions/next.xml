@@ -1,49 +1,46 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.8 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.6 $ -->
-  <refentry id="function.next">
-   <refnamediv>
-    <refname>next</refname>
-    <refpurpose>
-     Przesuń do przodu wewnętrzny wskaźnik tablicy
-    </refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>mixed</type><methodname>next</methodname>
-      <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     Przesuwa wewnętrzny wskaźnik tablicy i jedną pozycję do przodu i zwraca
-     element tablicy aktualnie wskazywany przez wskaźnik, lub &false; jeśli
-     nie ma już więcej elementów.
-    </para>
-    <para>
-     <function>next</function> zachowuje się jak
-     <function>current</function>, ale z jedną różnicą. Przesuwa wewnętrzny
-     wskaźnik tablicy o jeden element do przodu przed zwróceniem wartości
-     elementu. Oznacza to, że zwraca następny element tablicy i przesuwa
-     wewnętrzny wskaźnik tablicy o jeden element do przodu. Jeśli przesunięcie
-     wewnętrznego wskaźnika tablicy powoduje przesunięcie poza koniec listy
-     elementów, <function>next</function> zwraca &false;.
-     <warning>
-      <para>
-       Jeśli tablica zawiera puste elementy lub elementy które mają klucze o
-       wartości 0, to funkcja będzie zwracać wartość
-       rozpoznawaną jako &false; także dla tych elementów (więcej informacji
-       można znaleźć w rozdziałach <link
-        linkend="language.types.boolean.casting">konwertowanie do typu
-        boolean</link> i <link linkend="types.comparisons">tablice porównania
-        typów</link>).  Aby prawidłowo przejść przez tablicę, która może
-       zawierać puste elementy, należy użyć funkcji <function>each</function>.
-      </para>
-     </warning>
-    </para>
-    <para>
-     <example>
-      <title>Przykład użycia funkcji <function>next</function> i podobnych</title>
-      <programlisting role="php">
+<!-- EN-Revision: 1.10 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.7 $ -->
+<refentry id="function.next">
+ <refnamediv>
+  <refname>next</refname>
+  <refpurpose>Przesuń do przodu wewnętrzny wskaźnik tablicy</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Opis</title>
+  <methodsynopsis>
+   <type>mixed</type><methodname>next</methodname>
+   <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Przesuwa wewnętrzny wskaźnik tablicy i jedną pozycję do przodu i zwraca
+   element tablicy aktualnie wskazywany przez wskaźnik, lub &false; jeśli
+   nie ma już więcej elementów.
+  </para>
+  <para>
+   <function>next</function> zachowuje się jak
+   <function>current</function>, ale z jedną różnicą. Przesuwa wewnętrzny
+   wskaźnik tablicy o jeden element do przodu przed zwróceniem wartości
+   elementu. Oznacza to, że zwraca następny element tablicy i przesuwa
+   wewnętrzny wskaźnik tablicy o jeden element do przodu. Jeśli przesunięcie
+   wewnętrznego wskaźnika tablicy powoduje przesunięcie poza koniec listy
+   elementów, <function>next</function> zwraca &false;.
+  </para>
+  
+  &return.falseproblem;
+  
+  <note>
+   <simpara>
+    Nie będziesz mógł odróznić końca tablicy od elementu &false; typu
+    <type>bool'owskiego</type>. Aby poprawnie przejść przez tablicę,
+    która może zawierać elementy &false;, zobacz funkcję <function>each</function>.
+   </simpara>
+  </note>
+ 
+  <para>
+   <example>
+    <title>Przykład użycia funkcji <function>next</function> i podobnych</title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 $transport = array('stopa', 'rower', 'samochód', 'samolot');
@@ -54,15 +51,16 @@ $tryb = prev($transport);    // $tryb = 'rower';
 $tryb = end($transport);     // $tryb = 'samolot';
 ?>
 ]]>
-      </programlisting>
-     </example>
-    </para>
-    <para>
-     Patrz także: <function>current</function>, <function>end</function>,
-     <function>prev</function> i <function>reset</function>.
-    </para>
-   </refsect1>
-  </refentry>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   Patrz także: <function>current</function>, <function>end</function>,
+   <function>prev</function>, <function>reset</function>
+   i <function>each</function>.
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

@@ -1,50 +1,48 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.8 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.5 $ -->
-  <refentry id="function.compact">
-   <refnamediv>
-    <refname>compact</refname>
-    <refpurpose>
-     Stwórz tablicę zawierającą zmienne i ich wartości
-    </refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>array</type><methodname>compact</methodname>
-      <methodparam><type>mixed</type><parameter>nazwa_zmiennej</parameter></methodparam>
-      <methodparam choice="opt"><type>mixed</type><parameter>...</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     <function>compact</function> pobiera zmienną liczbę parametrów. Każdy
-     parametr może być albo stringiem zawierającym nazwę zmiennej lub
-     tablicę nazw zmiennych. Tablica może zaierać w sobie inne tablice nazw
-     zmiennych; <function>compact</function> obsłuży je rekurencyjnie.
-    </para>
-    <para>
-     Dla każdej z nich <function>compact</function> sprawdza zmienną o
-     nazwie określnej przez bieżący symbol w tablicy i dodaje ją do tablicy
-     wyjściowej tak, że nazwa zmiennej staje się kluczem z zawartość
-     zmiennej wartością dla tego klucza. W skrócie, funkcja ta jest
-     przeciwnością <function>extract</function>. Zwraca ona tablicę
-     zawierającą zmienne do niej dodane.
-    </para>
-    <para>
-     Dowolne ciągi tekstowe, które nie są ustawione, poprostu będą pominięte.
-    </para>
-    <note>
-     <para> 
-      Ponieważ <link linkend="language.variables.variable">zmienne
-       zmienne</link> nie mogą być używane w połączeniu z <link
-       linkend="language.variables.superglobals">tablicami
-       superglobalnymi</link> wewnątrz funkcji, tablice superglobalne nie mogą
-      być przekazywane do funkcji <function>compact</function>.
-     </para>
-    </note>
-    <para>
-     <example>
-      <title>Przykład użycia <function>compact</function></title>
-      <programlisting role="php">
+<!-- EN-Revision: 1.11 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.6 $ -->
+<refentry id="function.compact">
+ <refnamediv>
+  <refname>compact</refname>
+  <refpurpose>Stwórz tablicę zawierającą zmienne i ich wartości</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Opis</title>
+  <methodsynopsis>
+   <type>array</type><methodname>compact</methodname>
+   <methodparam><type>mixed</type><parameter>nazwa_zmiennej</parameter></methodparam>
+   <methodparam choice="opt"><type>mixed</type><parameter>...</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>compact</function> pobiera zmienną liczbę parametrów. Każdy
+   parametr może być albo stringiem zawierającym nazwę zmiennej lub
+   tablicę nazw zmiennych. Tablica może zaierać w sobie inne tablice nazw
+   zmiennych; <function>compact</function> obsłuży je rekurencyjnie.
+  </para>
+  <para>
+   Dla każdej z nich <function>compact</function> sprawdza zmienną o
+   nazwie określnej przez bieżący symbol w tablicy i dodaje ją do tablicy
+   wyjściowej tak, że nazwa zmiennej staje się kluczem z zawartość
+   zmiennej wartością dla tego klucza. W skrócie, funkcja ta jest
+   przeciwnością <function>extract</function>. Zwraca ona tablicę
+   zawierającą zmienne do niej dodane.
+  </para>
+  <para>
+   Dowolne ciągi tekstowe, które nie są ustawione, poprostu będą pominięte.
+  </para>
+  <note>
+   <para>
+    Ponieważ <link linkend="language.variables.variable">zmienne
+     zmienne</link> nie mogą być używane w połączeniu z <link
+     linkend="language.variables.superglobals">tablicami
+     superglobalnymi</link> wewnątrz funkcji, tablice superglobalne nie mogą
+    być przekazywane do funkcji <function>compact</function>.
+   </para>
+  </note>
+  <para>
+   <example>
+    <title>Przykład użycia <function>compact</function></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 $miasto = "San Francisco";
@@ -54,12 +52,11 @@ $wydarzenie = "SIGGRAPH";
 $zmienne_lokalizacyjne = array("miasto", "stan");
 
 $wynik = compact("wydarzenie", "nic", $zmienne_lokalizacyjne);
+print_r($wynik);
 ]]>
-      </programlisting>
-      <para>
-       Zmienna <varname>$wynik</varname> będzie zawierała:
-      </para>
-      <screen role="php">
+    </programlisting>
+    &example.outputs;
+    <screen role="php">
 <![CDATA[
 +Array
 (
@@ -68,14 +65,14 @@ $wynik = compact("wydarzenie", "nic", $zmienne_lokalizacyjne);
     [stan] => CA
 )
 ]]>
-      </screen>
-     </example>
-    </para>
-    <para>
-     Patrz także: <function>extract</function>.
-    </para>
-   </refsect1>
-  </refentry>
+    </screen>
+   </example>
+  </para>
+  <para>
+   Patrz także: <function>extract</function>.
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

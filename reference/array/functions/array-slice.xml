@@ -1,50 +1,50 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.11 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.6 $ -->
-  <refentry id="function.array-slice">
-   <refnamediv>
-    <refname>array_slice</refname>
-    <refpurpose>Wytnij kawałek tablicy</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>array</type><methodname>array_slice</methodname>
-      <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
-      <methodparam><type>int</type><parameter>przesunięcie</parameter></methodparam>
-      <methodparam choice="opt"><type>int</type><parameter>długość</parameter></methodparam>
-      <methodparam choice="opt"><type>bool</type><parameter>zachowaj_klucze</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     <function>array_slice</function> zwraca sekwencję elementów z tablicy
-     <parameter>tablica</parameter> określony przez parametry
-     <parameter>przesunięcie</parameter> i <parameter>długość</parameter>.
-    </para>
-    <para>
-     Jeśli <parameter>przesunięcie</parameter> jest nieujemne, sekwencja
-     zacznie się od miejsca wskazanego w tym parametrze. Jeśli
-     <parameter>przesunięcie</parameter> jest ujemne, sekwencja zacznie się o
-     tyle elementów od końca tablicy <parameter>tablica</parameter>.
-    </para>
-    <para>
-     Jeśli podany jest parametr <parameter>długość</parameter> i jest on
-     dodatni, to sekwencja będzie miała tyle elementów ile podano w tym
-     parameterz. Jeśli <parameter>długość</parameter> jest ujemna, to
-     sekwencja skończy się o tyle elementów od końca tablicy. Jeśli został
-     pominięty, to sekwencja będzie zawierać wszystko od
-     <parameter>przesunięcie</parameter> do końca parametru
-     <parameter>tablica</parameter>.
-    </para>
-    <para>
-     Należy zauważyć, że <function>array_slice</function> domyślnie zresetuje
-     klucze tablicy. Od wersji PHP 5.0.2 możliwa jest zmiana tego zachowania
-     poprzez ustawienie wartości argumentu
-     <parameter>zachowaj_klucze</parameter> na &true;.
-    </para>
-    <para>
-     <example>
-      <title>Przykład użycia <function>array_slice</function></title>
-      <programlisting role="php">
+<!-- EN-Revision: 1.13 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.7 $ -->
+<refentry id="function.array-slice">
+ <refnamediv>
+  <refname>array_slice</refname>
+  <refpurpose>Wytnij kawałek tablicy</refpurpose>
+ </refnamediv>
+ <refsect1>
+  <title>Opis</title>
+  <methodsynopsis>
+   <type>array</type><methodname>array_slice</methodname>
+   <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+   <methodparam><type>int</type><parameter>przesunięcie</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>długość</parameter></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>zachowaj_klucze</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>array_slice</function> zwraca sekwencję elementów z tablicy
+   <parameter>tablica</parameter> określony przez parametry
+   <parameter>przesunięcie</parameter> i <parameter>długość</parameter>.
+  </para>
+  <para>
+   Jeśli <parameter>przesunięcie</parameter> jest nieujemne, sekwencja
+   zacznie się od miejsca wskazanego w tym parametrze. Jeśli
+   <parameter>przesunięcie</parameter> jest ujemne, sekwencja zacznie się o
+   tyle elementów od końca tablicy <parameter>tablica</parameter>.
+  </para>
+  <para>
+   Jeśli podany jest parametr <parameter>długość</parameter> i jest on
+   dodatni, to sekwencja będzie miała tyle elementów ile podano w tym
+   parameterz. Jeśli <parameter>długość</parameter> jest ujemna, to
+   sekwencja skończy się o tyle elementów od końca tablicy. Jeśli został
+   pominięty, to sekwencja będzie zawierać wszystko od
+   <parameter>przesunięcie</parameter> do końca parametru
+   <parameter>tablica</parameter>.
+  </para>
+  <para>
+   Należy zauważyć, że <function>array_slice</function> domyślnie zresetuje
+   numeryczne klucze tablicy. Od wersji PHP 5.0.2 możliwa jest zmiana tego zachowania
+   poprzez ustawienie wartości argumentu
+   <parameter>zachowaj_klucze</parameter> na &true;.
+  </para>
+  <para>
+   <example>
+    <title>Przykład użycia <function>array_slice</function></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 $wejscie = array ("a", "b", "c", "d", "e");
@@ -59,9 +59,9 @@ print_r(array_slice($wejscie, 2, -1, true));
 
 ?>
 ]]>
-      </programlisting>
-      &example.outputs;
-      <screen>
+    </programlisting>
+    &example.outputs;
+    <screen>
 <![CDATA[
 Array
 (
@@ -75,15 +75,15 @@ Array
     [3] => d
 )
 ]]>
-       </screen>
-     </example>
-    </para>
-    <para>
-     Patrz także: <function>array_splice</function> i
-     <function>unset</function>.
-    </para>
-   </refsect1>
-  </refentry>
+     </screen>
+   </example>
+  </para>
+  <para>
+   Patrz także: <function>array_splice</function> i
+   <function>unset</function>.
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
