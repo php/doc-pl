@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.1 Maintainer: joeaccord Status: ready -->
-<!-- $Revision: 1.1 $ -->
+<!-- EN-Revision: 1.2 Maintainer: joeaccord Status: ready -->
+<!-- $Revision: 1.2 $ -->
 <refentry id="function.json-decode">
  <refnamediv>
   <refname>json_decode</refname>
@@ -47,8 +47,8 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca <type>obiekt</type>, lub w przypadku kiedy opcjonalny parametr
-   <parameter>asocjacyjnie</parameter> jest ustawiony na &true; zwraca
+   Zwraca <type>obiekt</type> lub w przypadku kiedy opcjonalny parametr
+   <parameter>asocjacyjnie</parameter> jest ustawiony na &true;, zwraca
    <type>tablicę</type> asocjacyjną.
   </para>
  </refsect1>
@@ -57,7 +57,7 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład <function>json_decode</function></title>
+    <title>Przykłady <function>json_decode</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -90,6 +90,38 @@ array(5) {
 ]]>
     </screen>
    </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <caution>
+   <para>
+    Ta funkcja zwraca false jeśli poziom danych zakodowanych w formacie JSON jest
+    głębszy niż 127 elementów.
+   </para>
+  </caution>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>5.2.3</entry>
+       <entry>Limit zagnieżdżania został zwiększony z 20 do 128</entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
   </para>
  </refsect1>
 
