@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
 <!-- EN-Revision: 1.76 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.8 $ -->
- <chapter id="language.types">
+<!-- $Revision: 1.9 $ -->
+ <chapter xml:id="language.types" xmlns="http://docbook.org/ns/docbook">
   <title>Typy danych</title>
 
-  <sect1 id="language.types.intro">
+  <sect1 xml:id="language.types.intro">
   <title>Wstęp</title>
   
   <simpara>
@@ -134,7 +134,7 @@
    
    </sect1>
    
-   <sect1 id="language.types.boolean">
+   <sect1 xml:id="language.types.boolean">
     <title>Zmienne Logiczne (Boolowskie - boolean)</title>
     
     <simpara>
@@ -148,7 +148,7 @@
      </simpara>
     </note>
 
-    <sect2 id="language.types.boolean.syntax">
+    <sect2 xml:id="language.types.boolean.syntax">
      <title>Składnia</title>
      <para>
       Aby utworzyć wartość boolowską, należy użyć słów kluczowych &true; lub
@@ -190,7 +190,7 @@ if ($pokaż_separatory) {
      </para>
     </sect2>
 
-    <sect2 id="language.types.boolean.casting">
+    <sect2 xml:id="language.types.boolean.casting">
      <title>Konwersja do typu boolowskiego</title>
       <simpara>
        Aby jawnie skonwertować wartość na typ <type>boolean</type>, należy
@@ -260,7 +260,7 @@ if ($pokaż_separatory) {
 
    </sect1>
 
-   <sect1 id="language.types.integer">
+   <sect1 xml:id="language.types.integer">
     <title>Liczby całkowite (integer)</title>
     
     <simpara>
@@ -274,7 +274,7 @@ if ($pokaż_separatory) {
      <link linkend="language.types.float">Liczby zmiennoprzecinkowe</link>
     </para>
 
-    <sect2 id="language.types.integer.syntax">
+    <sect2 xml:id="language.types.integer.syntax">
      <title>Składnia</title>
      <simpara>
       Liczby całkowite mogą być zapisane w notacji dziesiętnej (opartej na 10),
@@ -316,7 +316,7 @@ $a = 0x1A; # liczba szesnastkowa (odpowiednik dziesiętnej 26)
      </para>
     </sect2>
    
-    <sect2 id="language.types.integer.overflow">
+    <sect2 xml:id="language.types.integer.overflow">
      <title>Wyjście poza zakres liczb całkowitych</title>
      <para>
       W przypadku zapisania liczby całkowitej wykraczającej poza zakres typu
@@ -377,7 +377,7 @@ var_dump( 25/7 );
     </sect2>
    
 
-    <sect2 id="language.types.integer.casting">
+    <sect2 xml:id="language.types.integer.casting">
      <title>Konwersja na liczby całkowite</title>
       <simpara>
        Do jawnej konwersji wartości na typ <type>integer</type> używa się
@@ -393,7 +393,7 @@ var_dump( 25/7 );
        typów danych</link>.
       </simpara>
       
-      <sect3 id="language.types.integer.casting.from-boolean">
+      <sect3 xml:id="language.types.integer.casting.from-boolean">
        <title>Z <link linkend="language.types.boolean"
            >boolowskiej</link></title>
        <simpara>
@@ -403,7 +403,7 @@ var_dump( 25/7 );
        </simpara>
       </sect3>
 
-      <sect3 id="language.types.integer.casting.from-float">
+      <sect3 xml:id="language.types.integer.casting.from-float">
        <title>Z <link linkend="language.types.float">liczb
        zmiennoprzecinkowych</link></title> 
        <simpara>
@@ -438,7 +438,7 @@ echo (int) ( (0.1+0.7) * 10 ); // wyświetla 7!
        </para></warning>
       </sect3>
       
-      <sect3 id="language.types.integer.casting.from-string">
+      <sect3 xml:id="language.types.integer.casting.from-string">
        <title>Z łańcuchów znaków</title>
        <simpara>
         Zobacz <link linkend="language.types.string.conversion">konwersja
@@ -446,7 +446,7 @@ echo (int) ( (0.1+0.7) * 10 ); // wyświetla 7!
        </simpara>
       </sect3>
       
-      <sect3 id="language.types.integer.casting.from-other">
+      <sect3 xml:id="language.types.integer.casting.from-other">
        <title>Z innych typów</title>
        <para>
         <caution>
@@ -473,7 +473,7 @@ echo (int) ( (0.1+0.7) * 10 ); // wyświetla 7!
     </sect2>
   </sect1>
 
-  <sect1 id="language.types.float">
+  <sect1 xml:id="language.types.float">
    <title>Liczby zmiennoprzecinkowe (float)</title>
    <para>
     Liczby zmiennoprzecinkowe (typ float, double lub liczby rzeczywiste)
@@ -492,7 +492,7 @@ EXPONENT_DNUM	(({LNUM}|{DNUM})[eE][+-]?{LNUM})
     operacyjnej, zwykle jest to ~1.8e308, przy precyzji 14 liczb dziesiętnych
     po przecinku (jest to 64 bitowy format IEEE).
    </para>
-   <warning id="warn.float-precision">
+   <warning xml:id="warn.float-precision">
     <title>Precyzja liczb zmiennoprzecinkowych</title>
     <para>
      Jest oczywiste, że nawet proste ułamki dziesiętne, takie jak
@@ -520,7 +520,7 @@ EXPONENT_DNUM	(({LNUM}|{DNUM})[eE][+-]?{LNUM})
    </warning>
   </sect1>
 
-  <sect1 id="language.types.string">
+  <sect1 xml:id="language.types.string">
    <title>Łańcuchy znaków (string)</title>
    <para>
     Typ <type>string</type> oznacza łańcuch znaków. W PHP znak jest tym sam co
@@ -538,7 +538,7 @@ EXPONENT_DNUM	(({LNUM}|{DNUM})[eE][+-]?{LNUM})
      długi.
     </simpara>
    </note>
-   <sect2 id="language.types.string.syntax">
+   <sect2 xml:id="language.types.string.syntax">
     <title>Składnia</title>
     <para>
      Łańcuch znaków można utworzyć na trzy sposoby.
@@ -565,7 +565,7 @@ EXPONENT_DNUM	(({LNUM}|{DNUM})[eE][+-]?{LNUM})
 
      </itemizedlist>
     </para>
-    <sect3 id="language.types.string.syntax.single">
+    <sect3 xml:id="language.types.string.syntax.single">
      <title>Pojedyncze cudzysłowy</title>
      <para>
       Najprostszym sposóbem na zdefiniowanie prostego łańcucha znaków, jest
@@ -611,7 +611,7 @@ echo 'Próbuję w tym miejscu wprowadzić: \n znak nowej linii';
       </informalexample>
      </para>
     </sect3>
-    <sect3 id="language.types.string.syntax.double">
+    <sect3 xml:id="language.types.string.syntax.double">
      <title>Podwójne cudzysłowy</title>
      <para>
       Kiedy łańcuch znaków jest umieszczony pomiędzy podwójnymi cudzysłowami,
@@ -681,7 +681,7 @@ echo 'Próbuję w tym miejscu wprowadzić: \n znak nowej linii';
      </para>
     </sect3>
     
-    <sect3 id="language.types.string.syntax.heredoc">
+    <sect3 xml:id="language.types.string.syntax.heredoc">
      <title>Składnia Heredoc</title>
      <simpara>
       Jeszcze jednym sposobem na zapisanie łańcucha znaków jest użycie skladni
@@ -781,7 +781,7 @@ EOT;
      </note>
   
     </sect3>
-    <sect3 id="language.types.string.parsing">
+    <sect3 xml:id="language.types.string.parsing">
      <title>Parsowanie zmiennych</title>
      <simpara>
       Kiedy łańcuch znaków jest zapisany w cudzysłowach podwójnych lub w składni
@@ -800,7 +800,7 @@ EOT;
       Składnia złożona pojawiła się w PHP 4, i można ją rozpoznać po nawiasach
       klamrowych, otaczających wyrażenie.
      </simpara>
-     <sect4 id="language.types.string.parsing.simple">
+     <sect4 xml:id="language.types.string.parsing.simple">
       <title>Składnia prosta</title>
       <simpara>
        Jeśli wewnątrz zmiennej pojawi się znak dolara (<literal>$</literal>),
@@ -861,7 +861,7 @@ echo "This square is $square->{width}00 centimeters broad.";
        Do wyrażeń bardziej skomplikowanych należy używać składni złożonej.
       </simpara>
      </sect4>
-     <sect4 id="language.types.string.parsing.complex">
+     <sect4 xml:id="language.types.string.parsing.complex">
       <title>Składnia złożona</title>
       <simpara>
        Nazwa tej składni nie pochodzi od skomplikowanego zapisu, tylko od
@@ -904,7 +904,7 @@ echo "I'd like to have another {${ strrev('reeb') }}, hips";
      </sect4>
     </sect3>
     
-    <sect3 id="language.types.string.substr">
+    <sect3 xml:id="language.types.string.substr">
      <title>Indeksowanie łańcucha (ofsety)</title>
      <para>
       Dostęp do pojedynczego znaku łańcucha jest możliwy po podaniu jego
@@ -959,7 +959,7 @@ $ostatni = $str{strlen($str)-1};
 
    </sect2><!-- end syntax -->
 
-   <sect2 id="language.types.string.useful-funcs">
+   <sect2 xml:id="language.types.string.useful-funcs">
     <title>Przydatne funkcje i operatory</title><!-- and operators -->
     <para>
      Łańcuchy znaków łączy się za pomocą operatora '.' (kropka). Proszę
@@ -988,7 +988,7 @@ $ostatni = $str{strlen($str)-1};
      ci <link linkend="ref.ctype">funkcje kontroli typu znaków</link>.
     </simpara>
    </sect2>
-   <sect2 id="language.types.string.conversion">
+   <sect2 xml:id="language.types.string.conversion">
     <title>Konwersja łańcuchów znaków</title>
 
     <simpara>
@@ -1048,7 +1048,7 @@ echo "\$foo==$foo; jest typu " . gettype ($foo) . "<br>\n";
    </sect2>
   </sect1><!-- end string -->
 
-  <sect1 id="language.types.array">
+  <sect1 xml:id="language.types.array">
    <title>Tablice (array)</title>
 
    <para>
@@ -1070,10 +1070,10 @@ echo "\$foo==$foo; jest typu " . gettype ($foo) . "<br>\n";
     Only, the subtitle is: in Java, and it's quite academic too -->
    </para>
    
-   <sect2 id="language.types.array.syntax">
+   <sect2 xml:id="language.types.array.syntax">
     <title>Składnia</title>
     
-    <sect3 id="language.types.array.syntax.array-func">
+    <sect3 xml:id="language.types.array.syntax.array-func">
      <title>Tworzenie za pomocą <function>array</function></title>
      <para>
       Tablicę można utworzyć za pomocą konstrukcji językowej
@@ -1132,7 +1132,7 @@ array( <optional> <replaceable>klucz</replaceable> =&gt; </optional>
      </para>
     </sect3>
     
-    <sect3 id="language.types.array.syntax.modifying">
+    <sect3 xml:id="language.types.array.syntax.modifying">
      <title>Tworzenie i edytowanie składnią nawiasów kwadratowych</title>
      <para>
       Można zmieniać istniejącą tablicę jawnie ustawiając wartości.
@@ -1160,7 +1160,7 @@ $arr[] = <replaceable>wartość</replaceable>;
 
    </sect2><!-- end syntax -->
    
-   <sect2 id="language.types.array.useful-funcs">
+   <sect2 xml:id="language.types.array.useful-funcs">
     <title>Przydatne funkcje</title>
     <para>
      Jest wiele przydatnych funkcji obsługi tablic, o czym więcej w rozdziale
@@ -1195,10 +1195,10 @@ unset( $a[2] );
     
    </sect2>
    
-   <sect2 id="language.types.array.donts">
+   <sect2 xml:id="language.types.array.donts">
     <title>Co wolno, a czego nie w tablicach?</title>
 
-    <sect3 id="language.types.array.foo-bar">
+    <sect3 xml:id="language.types.array.foo-bar">
      <title>Dlaczego zapis
      <literal>$foo[bar]</literal> jest niepoprawny?</title>
      <para>
@@ -1300,7 +1300,7 @@ $opis_błędu[8] = "To jest tylko nieformalna uwaga";
     </sect3>
    </sect2>
 
-   <sect2 id="language.types.array.examples">
+   <sect2 xml:id="language.types.array.examples">
     <title>Przykłady</title>
     <para>
      Typ tablicowy w PHP jest bardzo różnorodny, co prezentują poniższe
@@ -1378,7 +1378,7 @@ $pusta = array();
      </programlisting>
     </example>
 
-    <example id="language.types.array.examples.loop">
+    <example xml:id="language.types.array.examples.loop">
      <title>Kolekcja</title>
      <programlisting role="php">
 <![CDATA[
@@ -1407,7 +1407,7 @@ Czy lubisz żółty?
        See bug#3074
       -->
      Można to jednak rozwiązać tak: 
-     <example id="language.types.array.examples.changeloop">
+     <example xml:id="language.types.array.examples.changeloop">
       <title>Collection</title>
       <programlisting role="php">
 <![CDATA[
@@ -1546,7 +1546,7 @@ $a = array(
    -->  
 
 <!-- there is no such thing as multi/singel dim arrays (at least in PHP4) 
-   <sect2 id="language.types.array.single-dim">
+   <sect2 xml:id="language.types.array.single-dim">
     <title>Single Dimension Arrays</title>
 
     <para>
@@ -1602,7 +1602,7 @@ $a[] = "world"; // $a[3] == "world"
     </para>
    </sect2>
 
-   <sect2 id="language.types.array.multi-dim">
+   <sect2 xml:id="language.types.array.multi-dim">
     <title>Multi-Dimensional Arrays</title>
 
     <para>
@@ -1714,10 +1714,10 @@ echo $a["apple"]["taste"];    # will output "sweet"
    -->
   </sect1>
 
-  <sect1 id="language.types.object">
+  <sect1 xml:id="language.types.object">
    <title>Obiekty (object)</title>
 
-   <sect2 id="language.types.object.init">
+   <sect2 xml:id="language.types.object.init">
     <title>Inicjowanie obiektów</title>
 
     <para>
@@ -1751,7 +1751,7 @@ $bar->do_foo();
    </sect2>
   </sect1>
 
-  <sect1 id="language.types.resource">
+  <sect1 xml:id="language.types.resource">
    <title>Identyfikator zasobów (resource)</title>
     
     <para>
@@ -1768,7 +1768,7 @@ $bar->do_foo();
      </simpara>
     </note>
 
-    <sect2 id="language.types.resource.self-destruct">
+    <sect2 xml:id="language.types.resource.self-destruct">
      <title>Zwalnianie zasobów</title>
     
     <para>
@@ -1791,7 +1791,7 @@ $bar->do_foo();
    </sect2>
   </sect1>
     
-  <sect1 id="language.types.null">
+  <sect1 xml:id="language.types.null">
    <title>Typ NULL (null)</title>
     
    <para>
@@ -1804,7 +1804,7 @@ $bar->do_foo();
      </simpara>
     </note>
     
-   <sect2 id="language.types.null.syntax">
+   <sect2 xml:id="language.types.null.syntax">
     <title>Składnia</title>
     <para>
      Jest tylko jedna wartość, jaką może mieć typ &null; i jest nią słowo
@@ -1819,7 +1819,7 @@ $var = NULL;
   
   </sect1>
 
-  <sect1 id="language.types.type-juggling">
+  <sect1 xml:id="language.types.type-juggling">
    <title>Wykorzystywanie typów danych</title>
 
    <simpara>
@@ -1915,7 +1915,7 @@ $a[0] = "f";  // Co z ofsetami łańcuchów? Co się dzieje?
     </para>
    </note>
 
-   <sect2 id="language.types.typecasting">
+   <sect2 xml:id="language.types.typecasting">
     <title>Rzutowanie typów</title>
 
     <para>
