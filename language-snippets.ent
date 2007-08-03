@@ -1,4 +1,4 @@
-<!-- EN-Revision: 1.186 Maintainer: leszek Status: ready -->
+<!-- EN-Revision: 1.207 Maintainer: leszek Status: ready -->
 <!-- Keep 'em sorted -->
 
 
@@ -110,13 +110,13 @@ funkcji <function>escapeshellarg</function> lub <function>escapeshellcmd</functi
 aby upewnić się, że użytkownicy nie mogą uruchomić dowolnych poleceń.
 </para></warning>'>
  
-<!ENTITY warn.experimental '<warning><simpara>Ten moduł jest w stadium
+<!ENTITY warn.experimental '<warning xmlns="http://docbook.org/ns/docbook"><simpara>Ten moduł jest w stadium
 <emphasis>EKSPERYMENTALNYM</emphasis>. Oznacza to, że zachowanie tych funkcji,
 ich nazwy, w zasadzie wszystko udokumentowane tutaj może zostać zmienione w
 przyszłych wersjach PHP bez wcześniejszego uprzedzenia. Używaj tego modułu na
 własne ryzyko.</simpara></warning>'>
 
-<!ENTITY warn.experimental.func '<warning><simpara>Ta funkcja jest w stadium
+<!ENTITY warn.experimental.func '<warning xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja jest w stadium
 <emphasis>EKSPERYMENTALNYM</emphasis>. Oznacza to, że zachowanie funkcji, jej
 nazwa, w zasadzie wszystko udokumentowane tutaj może zostać zmienione w
 przyszłych wersjach PHP bez wcześniejszego uprzedzenia. Używaj tej funkcji na
@@ -194,6 +194,17 @@ możliwe jest użycie poniższych aliasów: '>
 <!ENTITY info.function.alias.deprecated '<simpara>Ten alias jest nie zalecany i
 istnieje tylko dla zachowania kompatybilności wstecznej. Zaleca się nie
 używanie tego aliasu, jako że może on zostać usunięty z PHP.</simpara>'>
+
+<!ENTITY ext.windows.path.dll 'Aby poprawnie działało rozszerzenie, pliki
+<acronym>DLL</acronym> muszą znajdować się w miejscu wskazanym przez <literal>PATH</literal> systemu 
+Windows. Patrz <acronym>FAQ</acronym> zatytułowane "<link
+linkend="faq.installation.addtopath">Jak mam dodać mój katalog PHP do PATH
+w Windows</link>" po informacje jak tego dokonać. Jednakże skopiowanie plików DLL
+z folderu PHP do systemowego katalogu Windows także zadziała
+(ponieważ katalog systemowy jest domyślnie w <literal>PATH</literal> systemu),
+to nie jest zalecane. 
+<emphasis>To rozszerzenie wymaga następujących plików znajdujących się w
+<literal>PATH</literal>:</emphasis> '>
 
 <!-- Returns -->
 
@@ -315,6 +326,15 @@ NLS_LANG.</para>">
 dokonywanego przez sterownik oci8 można uzyskać w rozdziale
 dotyczącym <link linkend="oci8.datatypes">typów danych obsługiwanych przez ten
 sterownik</link></para>'>
+
+<!ENTITY oracle.deprecated '<para>Rozszerzenie <link linkend="ref.oracle">oracle</link> 
+jest przestarzałe na korzyść <link linkend="ref.oci8">oci8</link>.
+</para>'>
+
+<!ENTITY oracle.replacement.desc 'Kiedy używasz <link linkend="ref.oci8">oci8</link> 
+w zastępstwie przestarzałego rozszerzenia <link linkend="ref.oracle">oracle</link>,
+rozważ użycie: '>
+
 
 <!-- PCNTL Notes -->
 <!ENTITY pcntl.parameter.status '<para>Parametr <parameter>status</parameter>
@@ -452,20 +472,18 @@ się wyżej odnośnikiem <acronym>PECL</acronym>.'>
 podkatalogu <filename>extensions/</filename> binarnej dystrybucji PHP dla
 Windows.'>
 
-<!ENTITY pecl.windows.download '<acronym>DLL</acronym> z tym rozszerzeniem
-<acronym>PECL</acronym> można pobrać ze strony <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="&url.php.downloads;">
-PHP Downloads</link> lub <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="&url.php.snapshots;">
-&url.php.snapshots;</link>.'>
+<!ENTITY pecl.windows.download '
+<acronym>DLL</acronym> z tym rozszerzeniem <acronym>PECL</acronym>
+można pobrać zarówno ze strony 
+<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="&url.php.downloads;">PHP Downloads</link> lub z
+<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="&url.pecl.win;">&url.pecl.win;</link>'>
 
-<!ENTITY pecl.windows.download.unbundled 'To rozszerzenie
-<acronym>PECL</acronym> można pobrać osobno z wielu stron z migawkami
-<acronym>PECL</acronym> (nalezy wybrać repozytorium odpowiednie dla posiadanej
-wersji PHP): <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="&url.pecl.get.win.php4.3;">PECL dla PHP
-4.3.x</link>, <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="&url.pecl.get.win.php5.0;">PECL dla PHP 5.0.x
-</link> lub <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="&url.pecl.get.win.unstable;">PECL Unstable</link>.'>
+<!ENTITY pecl.windows.download.unbundled 'Nie dołączone rozszerzenia <acronym>PECL</acronym> 
+można pobrać z:
+<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="&url.pecl.win;">&url.pecl.win;</link>'>
 
 <!ENTITY pecl.moved-ver 'To rozszerzenie zostało przeniesione do repozytorium
-<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="&url.pecl;">PECL</link> i nie jest rozprowadzane z PHP od wersji '>	
+<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="&url.pecl;">PECL</link> i nie jest rozprowadzane z PHP od wersji '>
 
 <!-- kept for BC -->
 
@@ -493,6 +511,11 @@ Stała <constant>ASSIGNMENT_TRACE</constant> nie jest jeszcze zaimplementowana.<
 funkcjonalne śledzenia (TIMING, FUNCTIONS, ARGS SUMMARY (takie jak strace -c)) użyj wartości 99</para>
 </listitem></varlistentry>'>
 
+<!-- BCMath Notes -->
+<!ENTITY bc.scale.description '<varlistentry><term><parameter>
+skala</parameter></term><listitem><para>Ten opcjonalny parametr służy do ustawienia liczby
+cyfr po kropce w wyniku. Możesz także ustawić globalnie domyślną skalę 
+dla wszystkich funkcji używając <function>bcscale</function>.</para></listitem></varlistentry>'>
 
 <!-- FBSQL Notes -->
 <!ENTITY fbsql.link-identifier.description '<varlistentry><term><parameter>
@@ -509,6 +532,23 @@ result</parameter></term><listitem><para>Identyfikator wyniku
 zwrócony przez <function>fbsql_query</function> lub 
 <function>fbsql_db_query</function>.</para></listitem></varlistentry>'>
 
+<!-- GMP Notes -->
+<!ENTITY gmp.return 'Numer GMP <type>zasób</type>.'>
+<!ENTITY gmp.parameter '<para>Może być zarówno numerem GMP <type>zasób</type>, lub  
+numerycznym łańcuchem znaków, który jest mozliwy do konwersji z liter do liczb.</para>'>
+
+<!-- MySQLi Notes -->
+<!ENTITY mysqli.result.description '<varlistentry><term><parameter>
+wynik</parameter></term><listitem><para>Tylko styl proceduralny: Identyfikator zbioru wyników 
+zwróconych przez <function>mysqli_query</function>, <function>mysqli_store_result</function>
+lub <function>mysqli_use_result</function>.</para></listitem></varlistentry>'>
+<!ENTITY mysqli.link.description '<varlistentry><term><parameter>
+połączenie</parameter></term><listitem><para>Tylko styl proceduralny: Identyfikator połączenia
+zwrócony przez <function>mysqli_connect</function> lub <function>mysqli_init</function>
+</para></listitem></varlistentry>'>
+<!ENTITY mysqli.stmt.description '<varlistentry><term><parameter>
+stmt</parameter></term><listitem><para>Tylko styl proceduralny: Identyfikator stanu
+zwrócony przez <function>mysqli_stmt_init</function>.</para></listitem></varlistentry>'>
 
 <!-- Notes for SAPI/Apache -->
 <!ENTITY note.apache.nsapi-module '<note><para>Od PHP w wersji 4.3.3 możliwe
@@ -751,17 +791,53 @@ systemu używając autoryzacji publickey, należy skorzystać z funkcji
 <function>ssh2_auth_pubkey_file</function>.</simpara></note>'>
 
 <!-- HTTP -->
-<!ENTITY see.http.request.options '<para>
-   Patrz <link linkend="function.http-get"><function>http_get</function></link> po pełną listę
-   dostępnych parametrów i <link linkend="http.request.options">opcji</link>.
-  </para>'>
+<!ENTITY see.http.request.options '<para>Patrz po pełną listę &link.http.request.options;.</para>'>
+<!ENTITY see.http.configuration.force_exit 'Patrz &link.http.configuration;
+   <link linkend="http.configuration.force_exit">http.force_exit</link> co znaczą "exist".'>
 
 <!ENTITY link.http.configuration '<link linkend="http.configuration">ustawienia INI</link>'>
+<!ENTITY link.http.request.option '<link linkend="http.request.options">Opcja żądania</link>'>
 <!ENTITY link.http.request.options '<link linkend="http.request.options">Opcje żądania</link>'>
 <!ENTITY link.http.request.info '<link linkend="http.request.info">Informacje żądania/odpowiedzi</link>'>
 <!ENTITY returns.http.response 'Zwraca łańcuch znaków z odpowiedziami HTTP w przypadku powodzenia, lub FALSE w przypadku porażki'>
+
+<!ENTITY returns.http.false.orexits 'Zwraca &false; lub <emphasis>exist</emphasis> w przypadku sukcesu'>
+<!ENTITY http.request.affects 'Podlega jedynie niżej wymienionym metodom żądania:'>
+<!ENTITY http.request.affects.any 'Podlega dowolnej metodzie żądania.'>
+<!ENTITY http.response.class.php51 'Klasa <link linkend="http.HttpResponse"><classname
+   >HttpResponse</classname></link> jeśli używasz PHP-5.1 lub wyższego'>
+<!ENTITY http.maynotwork.SAPI 'To może nie działać jak się spodziewasz z następującymi SAPI:'>
+<!ENTITY http.content.disposition 'Nagłowek <literal>Content-Disposition</literal> jest bardzo użyteczny
+   jeśli dane aktualnie wysyłane pochodzą z pliku lub czegoś podobnego, które powinny być &quot;zapisane&quot;
+   przrz klienta/użytkownika (np. przez okienko popup przeglądarki  &quot;Zapisz jako...&quot;).'>
+<!ENTITY http.use.ob_start 'Do użycia z <function>ob_start</function>.'>
+
+<!ENTITY note.http.response.recalculate.etag.lm '<note><simpara>Wcześniej obliczony lub zdefiniowany <literal>ETag</literal>
+   i <literal>Last-Modified</literal> zostanie obliczony ponownie i zdefiniowany.</simpara></note>'>
+<!ENTITY note.http.throttling.yields.process '<note><simpara>Zapewnia podstawowy mechanizm dławiący (ang. throttling), który
+   będzie dostarczać bieżący proces po kolei przez pasmo dopóki całość nie zostanie całkowicie wysłana.</simpara></note>'>
+<!ENTITY note.http.send.API '<note><simpara>Ta funkcja będzie przypuszczalnie użyta w powiązaniu z 
+   <function>http_send_data</function>, <function>http_send_file</function> &listendand; <function>http_send_stream</function>.</simpara></note>'>
+<!ENTITY note.http.send.API.mayuse '<note><simpara>Ta funkcja może być użyta w powiązaniu z
+   <function>http_send_data</function>, <function>http_send_file</function> &listendand; <function>http_send_stream</function>.</simpara></note>'>
+<!ENTITY note.http.request.encodecookies '<note><simpara>&link.http.request.option; <literal>encodecookies</literal> sprawdza czy
+   wartości ciastka powinny być zakodowane <function>urlencode</function>.</simpara></note>'>
+<!ENTITY note.http.request.affects.any '<note><simpara>&http.request.affects.any;</simpara></note>'>
+<!ENTITY note.http.ob.once '<note><simpara>Uchwyt wyjściowy może być użyty tylko raz.</simpara></note>'>
 
 <!-- XMLWriter Notes -->
 <!ENTITY xmlwriter.xmlwriter.description '<varlistentry><term><parameter>
 xmlwriter</parameter></term><listitem><para>Jedynie dla wywołań proceduralnych.
 <type>Zasób</type> XMLWriter, który jest modfikowany. Ten zasób pochodzi, z wywołania funkcji <function>xmlwriter_open_uri</function> lub <function>xmlwriter_open_memory</function>.</para></listitem></varlistentry>'>
+
+<!-- SVN notes -->
+<!ENTITY svn.relativepath "<note><simpara>Względne ścieżki zostaną rozwiązane jeśli bieżący katalog roboczy jest jednym z zawierających binaria PHP. Aby odwołać się do skryptu roboczego katalogu, użyj <function>realpath</function> lub dirname(__FILE__).</simpara></note>">
+<!ENTITY svn.referto.status 'Odwołaj się do <link linkend="svn.constants.status">stałych statusu</link> po możliwe wartości.'>
+<!ENTITY svn.referto.type 'Odwołaj się do <link linkend="svn.constants.type">stałych typów</link> po możliwe wartości.'>
+
+<!-- Imagick generic return types -->
+<!ENTITY imagick.return.success 'Zwraca &true; w przypadku sukcesu.'>
+<!ENTITY imagick.imagick.throws 'Wyrzuca ImagickException w przypadku błędu.'>
+<!ENTITY imagick.imagickdraw.throws 'Wyrzuca ImagickDrawException w przypadku błędu.'>
+<!ENTITY imagick.imagickpixel.throws 'Wyrzuca ImagickPixelException w przypadku błędu.'>
+<!ENTITY imagick.imagickpixeliterator.throws 'Wyrzuca ImagickPixelIteratorException w przypadku błędu.'>
