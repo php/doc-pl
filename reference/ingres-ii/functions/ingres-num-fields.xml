@@ -1,34 +1,62 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.3 Maintainer: joeaccord Status: ready -->
-<!-- $Revision: 1.2 $ -->
-<!-- splitted from ./en/functions/ingres_ii.xml, last change in rev 1.1 -->
-  <refentry xml:id="function.ingres-num-fields" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>ingres_num_fields</refname>
-    <refpurpose>
-     Pobiera liczbę pól zwracanych przez ostatnie zapytanie
-    </refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>int</type><methodname>ingres_num_fields</methodname>
-      <methodparam choice="opt"><type>resource</type><parameter>połączenie</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     <function>ingres_num_fields</function> pobiera liczbę pól
-     dla wyniku zapytania, zwróconego przez serwer po wywołaniu
-     <function>ingres_query</function>
-    </para>
-    <para>
-     Patrz także:
-     <function>ingres_query</function>,
-     <function>ingres_fetch_array</function>,
-     <function>ingres_fetch_object</function>,
-     i <function>ingres_fetch_row</function>.
-    </para>
-   </refsect1>
-  </refentry>
+<!-- EN-Revision: 1.6 Maintainer: joeaccord Status: ready -->
+<!-- $Revision: 1.3 $ -->
+<refentry xml:id="function.ingres-num-fields" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>ingres_num_fields</refname>
+  <refpurpose>Pobiera liczbę pól zwracanych przez ostatnie zapytanie</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>int</type><methodname>ingres_num_fields</methodname>
+   <methodparam choice="opt"><type>resource</type><parameter>połączenie</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>ingres_num_fields</function> zwraca liczbę pól
+   dla wyniku zapytania, przekazanego przez serwer Ingres po wywołaniu
+   <function>ingres_query</function>
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>link</parameter></term>
+     <listitem>
+      <para>
+       Identyfikator połączenia. Jeśli nie zostanie podany, używane jest
+       ostatnio otwarte połączenie.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca liczbę pól.
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>ingres_query</function></member>
+    <member><function>ingres_fetch_array</function></member>
+    <member><function>ingres_fetch_object</function></member>
+    <member><function>ingres_fetch_row</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
