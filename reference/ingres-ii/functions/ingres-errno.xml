@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.6 Maintainer: joeaccord Status: ready -->
-<!-- $Revision: 1.1 $ -->
+<!-- EN-Revision: 1.7 Maintainer: joeaccord Status: ready -->
+<!-- $Revision: 1.2 $ -->
 <refentry xml:id="function.ingres-errno" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>ingres_errno</refname>
-  <refpurpose>Zwraca numer błędu z ostatniej operacji Ingres</refpurpose>
+  <refpurpose>Zwraca ostatnio wygenerowany numer błędu Ingres</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
@@ -14,8 +14,8 @@
    <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Zwraca liczbę typu integer zawierającą ostatni numer błędu. Jeśli błąd nie
-   wystąpił, zwracane jest 0.
+   Zwraca liczbę typu integer zawierającą ostatni numer błędu. Jeśli nie
+   wystąpił żaden błąd, zwracane jest 0.
   </para>
   <para>
    Jeśli podano <parameter>identyfikator_połączenia</parameter>
@@ -39,6 +39,8 @@
      <term><parameter>identyfikator_połączenia</parameter></term>
      <listitem>
       <para>
+       Identyfikator połączenia. Jeśli nie zostanie podany, używane jest
+       ostatnio otwarte połączenie.
       </para>
      </listitem>
     </varlistentry>
@@ -49,7 +51,8 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-
+   Zwraca liczbę typu integer zawierającą ostatni numer błędu. Jeśli nie
+   wystąpił żaden błąd, zwracane jest 0.
   </para>
  </refsect1>
 
@@ -62,13 +65,13 @@
     <programlisting role="php">
 <![CDATA[
 <?php
-$ingres_link = ingres_connect($database, $user, $password);
+$identyfikator_polaczenia = ingres_connect($baza_danych, $uzytkownik, $haslo);
 
-ingres_query("select * from tabela", $ingres_link);
+ingres_query("select * from nazwa_tabeli", $identyfikator_polaczenia);
 
-$kod_bledu = ingres_errno($ingres_link);
+$kod_bledu = ingres_errno($identyfikator_polaczenia);
 
-if ( $error_code != 0 ) {
+if ( $kod_bledu != 0 ) {
    echo "Wystąpił błąd - " . $kod_bledu;
 }
 ?>
@@ -76,12 +79,18 @@ if ( $error_code != 0 ) {
     </programlisting>
    </example>
   </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
   <para>
-   Patrz także:
-   <function>ingres_error</function> i
-   <function>ingres_errsqlstate</function>.
+   <simplelist>
+    <member><function>ingres_error</function></member>
+    <member><function>ingres_errsqlstate</function></member>
+   </simplelist>
   </para>
  </refsect1>
+
 </refentry>
 
 <!-- Keep this comment at the end of the file
