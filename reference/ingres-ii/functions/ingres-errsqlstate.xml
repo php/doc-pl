@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="iso-8859-2"?>
+<!-- EN-Revision: 1.6 Maintainer: joeaccord Status: ready -->
+<!-- $Revision: 1.1 $ -->
+<refentry xml:id="function.ingres-errsqlstate" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>ingres_errsqlstate</refname>
+  <refpurpose>Zwraca ostatnio wygenerowany kod błędu SQLSTATE</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>string</type><methodname>ingres_errsqlstate</methodname>
+   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Zwraca łańcuch zawierający ostatni kod SQLSTATE, lub NULL jeśli nie wystąpił
+   żaden błąd.
+  </para>
+  <para>
+   Jeśli podano <parameter>identyfikator_połączenia</parameter>
+   <function>ingres_errsqlstate</function> zwraca ostatni numer błędu dla
+   tego połączenia.  Jeśli nie podano identyfikatora połączenia
+   <function>ingres_errsqlstate</function> zwraca numer ostatniego błędu
+   dla domyślnego połączenia.
+  </para>
+  <para>
+   Ta funkcja, <function>ingres_errsqlstate</function>, powinna być zawsze
+   wywołana po wykonaniu zapytania.  Wywołanie innej funkcji przed
+   <function>ingres_errsqlstate</function>, wyzeruje lub zmieni dla niej
+   kod ostatniego błędu Ingres.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>link</parameter></term>
+     <listitem>
+      <para>
+       Identyfikator połączenia. Jeśli nie zostanie podany, używane jest
+       ostatnio otwarte połączenie.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca łańcuch zawierający ostatni kod SQLSTATE, lub NULL jeśli nie wystąpił
+   żaden błąd.
+  </para>
+ </refsect1>
+
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład <function>ingres_errsqlstate</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+ingres_connect($baza_danych, $uzytkownik, $haslo);
+
+ingres_query("select * from nazwa_tabeli");
+
+$error_sqlstate = ingres_errsqlstate();
+
+if ( !is_null($error_sqlstate) ) {
+   echo "Wystąpił błąd - " . $error_sqlstate;
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>ingres_errno</function></member>
+    <member><function>ingres_error</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"../../../../manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
