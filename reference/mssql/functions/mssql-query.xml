@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.10 Maintainer: joeaccord Status: ready -->
-<!-- $Revision: 1.1 $ -->
+<!-- EN-Revision: 1.11 Maintainer: joeaccord Status: ready -->
+<!-- $Revision: 1.2 $ -->
 <refentry xml:id="function.mssql-query" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>mssql_query</refname>
@@ -66,6 +66,17 @@
    Zwraca identyfikator zbioru wynikowego, &true; jeśli nie zostały
    zwrócone wiersze lub &false; kiedy wystąpił błąd.
   </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    Jeśli zapytanie zwraca wiele wyników, wówczas konieczne jest pobranie
+    ich wszystkich za pomocą <function>mssql_next_result</function> lub też zwolnienie
+    za pomocą <function>mssql_free_result</function> przed wykonaniem następnego zapytania.
+   </para>
+  </note>
  </refsect1>
 
  <refsect1 role="seealso">
