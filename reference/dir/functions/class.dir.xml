@@ -1,102 +1,96 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.11 Maintainer: leniwiec Status: ready -->
-<!-- $Revision: 1.5 $ -->
+<!-- EN-Revision: 1.13 Maintainer: leniwiec Status: ready -->
+<!-- $Revision: 1.6 $ -->
 <!-- splitted from ./en/functions/dir.xml, last change in rev 1.2 -->
-  <refentry xml:id="class.dir" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>dir</refname>
-    <refpurpose>Klasa obsługi katalogów</refpurpose>
-   </refnamediv>
-   
-   <refsect1 role="description">
-    &reftitle.description;
-    <classsynopsis>
-     <ooclass><classname>dir</classname></ooclass>
-     <constructorsynopsis>
-      <methodname>dir</methodname>
-      <methodparam><type>string</type><parameter>katalog</parameter></methodparam>
-     </constructorsynopsis>
-     <fieldsynopsis>
-      <type>string</type><varname>path</varname>
-     </fieldsynopsis>
-     <fieldsynopsis>
-      <type>resource</type><varname>handle</varname> 
-     </fieldsynopsis>
-     <methodsynopsis><type>string</type><methodname>read</methodname><void/></methodsynopsis>
-     <methodsynopsis><type>void</type><methodname>rewind</methodname><void/></methodsynopsis>
-     <methodsynopsis><type>void</type><methodname>close</methodname><void/></methodsynopsis>
-    </classsynopsis>
+<refentry xml:id="class.dir" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>dir</refname>
+  <refpurpose>Zwraca egzemplarz klasy Directory</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <classsynopsis>
+   <ooclass><classname>Directory</classname></ooclass>
+   <constructorsynopsis>
+    <methodname>Directory</methodname>
+    <methodparam><type>string</type><parameter>katalog</parameter></methodparam>
+   </constructorsynopsis>
+   <fieldsynopsis>
+    <type>string</type><varname>path</varname>
+   </fieldsynopsis>
+   <fieldsynopsis>
+    <type>resource</type><varname>handle</varname>
+   </fieldsynopsis>
+   <methodsynopsis><type>string</type><methodname>read</methodname><void/></methodsynopsis>
+   <methodsynopsis><type>void</type><methodname>rewind</methodname><void/></methodsynopsis>
+   <methodsynopsis><type>void</type><methodname>close</methodname><void/></methodsynopsis>
+  </classsynopsis>
+  <para>
+   Pseudo obiektowo zorientowany mechanizm czytania katalogu.
+   Podany <parameter>katalog</parameter> zostaje otwarty.
+   Gdy katalog zostaje otwarty dostępne są dwie właściwości. Właściwość
+   handle może zostać użyta z innymi funkcjami takimi jak:
+   <function>readdir</function>, <function>rewinddir</function> oraz
+   <function>closedir</function>. Właściwość path określa ścieżke do
+   aktualnie otwartego katalogu. Dostępne są również trzy metody: read,
+   rewind oraz close.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład <function>dir</function></title>
     <para>
-     Pseudo obiektowo zorientowany mechanizm czytania katalogu. 
-     Podany <parameter>katalog</parameter> zostaje otwarty.  
-     Gdy katalog zostaje otwarty dostępne są dwie właściwości. Właściwość
-     handle może zostać użyta z innymi funkcjami takimi jak:
-     <function>readdir</function>, <function>rewinddir</function> oraz
-     <function>closedir</function>. Właściwość path określa ścieżke do
-     aktualnie otwartego katalogu. Dostępne są również trzy metody: read,
-     rewind oraz close.
+     Sposób w jaki zwrócona przez <function>dir::read</function> wartość
+     powinna być sprawdzona, obrazuje poniższy przykład. Należy sprawdzić
+     czy zwrócona wartość jest równa (jest tego samego typu - zobacz
+     również <link linkend="language.operators.comparison">
+     Operatory Porównania</link>) &false;.  W przeciwnym razie plik
+     o nazwie &false; znajdujący się w czytanym katalogu
+     zatrzymałby pętle.
     </para>
-	</refsect1> 
-    <refsect1 role="examples"> 
-     &reftitle.examples; 
-     <para> 
-      <example> 
-      <title><function>dir</function> przykład</title> 
-    <para>
-     Sposób w jaki zwrócona przez <function>dir</function> wartość powinna
-     być sprawdzona, obrazuje poniższy przykład. Należy sprawdzić czy
-     zwrócona wartość jest równa (jest tego samego typu -- zobacz również
-     <link linkend="language.operators.comparison">Comparison Operators</link>) &false;. 
-     W przeciwnym razie plik o nazwie &false; (jak również "0") znajdujący się w czytanym katalogu
-     zatrzymał by pętle.
-     </para>
-      <programlisting role="php">
+    <programlisting role="php">
 <![CDATA[
 <?php
 $d = dir("/etc/php5");
-echo "Handle: " . $d->handle . "\n";
-echo "Path: " . $d->path . "\n";
+echo "Uchwyt: " . $d->handle . "\n";
+echo "Ścieżka: " . $d->path . "\n";
 while (false !== ($entry = $d->read())) {
    echo $entry."\n";
 }
 $d->close();
 ?>
 ]]>
-      </programlisting>
-      &example.outputs.similar;
-      <screen>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
 <![CDATA[
-Handle: Resource id #2
-Path: /etc/php5
+Uchwyt: Resource id #2
+Ścieżka: /etc/php5
 .
 ..
 apache
 cgi
 cli
 ]]>
-      </screen>
-     </example>
-    </para>
- </refsect1> 
+    </screen>
+   </example>
+  </para>
+ </refsect1>
 
-  <refsect1 role="notes"> 
-    &reftitle.notes; 
-    <note>
-     <para>
-      Kolejność w jakiej zostają zwrócone kolejne pliki czytanego katalogu,
-      podczas korzystania z metody read jest zależna od systemu plików.
-     </para>
-    </note>
-    <note>
-     <para>
-      dir definiuje wewnętrzną klase <classname>Directory</classname>, co
-      oznacza że nie można samemu zdefiniować klasy o tej nazwie. Zobacz
-      również lista wszystkich predefiniowanych klas w PHP <link
-       linkend="reserved.classes">Predefined Classes</link>.
-     </para>
-    </note>
-   </refsect1>
-  </refentry>
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    Kolejność w jakiej zostają zwrócone kolejne pliki czytanego katalogu,
+    podczas korzystania z metody read jest zależna od systemu plików.
+   </para>
+  </note>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
