@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.8 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.6 $ -->
+<!-- EN-Revision: 1.10 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.7 $ -->
 <refentry xml:id="function.chown" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>chown</refname>
   <refpurpose>Zmienia właściciela pliku</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>chown</methodname>
    <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
@@ -15,18 +16,57 @@
   </methodsynopsis>
   <para>
    Dokonuje zmiany właściciela pliku <parameter>nazwa_pliku</parameter> na użytkownika
-   podanego w parametrze <parameter>użytkownik</parameter> (określonego przez nazwę lub numer).
+   podanego w parametrze <parameter>użytkownik</parameter>.
    Tylko superużytkownik może zmienić właściciela pliku.
   </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>nazwa_pliku</parameter></term>
+     <listitem>
+      <para>
+       Ścieżka do pliku.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>użytkownik</parameter></term>
+     <listitem>
+      <para>
+       Numer lub nazwa użytkownika.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
   <para>
    &return.success;
   </para>
-   &note.no-remote;
-   &note.sm.uidcheck;
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  &note.no-remote;
+  &note.sm.uidcheck;
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
   <para>
-   Patrz także: <function>chmod</function>.
+   <simplelist>
+    <member><function>chmod</function></member>
+   </simplelist>
   </para>
  </refsect1>
+  
 </refentry>
 
 <!-- Keep this comment at the end of the file

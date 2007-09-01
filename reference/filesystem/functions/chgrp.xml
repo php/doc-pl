@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.7 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.6 $ -->
+<!-- EN-Revision: 1.9 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.7 $ -->
 <refentry xml:id="function.chgrp" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>chgrp</refname>
   <refpurpose>Zmienia grupę pliku</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>chgrp</methodname>
    <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
@@ -15,20 +15,61 @@
   </methodsynopsis>
   <para>
    Dokonuje zmiany grupy pliku podanego w parametrze <parameter>nazwa_pliku</parameter>
-   na wybraną parametrem <parameter>grupa</parameter> (określoną przez nazwę lub numer).
+   na wybraną parametrem <parameter>grupa</parameter>
+  </para>
+  <para> 
    Tylko super użytkownik może zmienić dowolnie grupę pliku; inni użytkownicy mogą
    zmienić grupę pliku na dowolną grupę, której członkiem jest ten użytkownik.
   </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>nazwa_pliku</parameter></term>
+     <listitem>
+      <para>
+       Ścieżka do pliku.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>grupa</parameter></term>
+     <listitem>
+      <para>
+       Numer lub nazwa grupy.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
   <para>
    &return.success;
   </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
   &note.no-remote;
   &note.sm.uidcheck;
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
   <para>
-   Patrz także: <function>chown</function> i
-   <function>chmod</function>.
+   <simplelist>
+    <member><function>chown</function></member>
+    <member><function>chmod</function></member>
+   </simplelist>
   </para>
  </refsect1>
+
 </refentry>
 
 <!-- Keep this comment at the end of the file
