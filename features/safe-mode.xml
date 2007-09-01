@@ -1,44 +1,333 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.21 Maintainer: slawek Status: ready -->
-<!-- $Revision: 1.13 $ -->
+<!-- EN-Revision: 1.70 Maintainer: joeaccord Status: ready -->
+<!-- $Revision: 1.14 $ -->
  <chapter xml:id="features.safe-mode" xmlns="http://docbook.org/ns/docbook">
   <title>Tryb bezpieczny</title>
 
   <para>
-   Tryb bezpieczny (safe mode) jest próbą rozwiązania problemów
-   bezpieczeństwa na  współdzielnym serwerze. Co prawda rozwiązywanie ich na
-   poziomie PHP nie jest najlepszym rozwiązaniem, ale jeśli nie ma możliwości
-   zrobienia tego na poziomie serwera www lub systemu operacyjnego, na wielu
-   serwerach, zwłaszcza u usługodawców internetowych, używa się trybu
-   bezpiecznego.
+   Tryb bezpieczny (ang. safe mode) jest próbą rozwiązania problemów bezpieczeństwa
+   na współdzielonym serwerze. Co prawda rozwiązywanie ich na poziomie PHP
+   nie jest najlepszym rozwiązaniem, ale jeśli nie ma możliwości zrobienia
+   tego na poziomie serwera www lub systemu operacyjnego, na wielu serwerach,
+   zwłaszcza u usługodawców internetowych, używa się trybu bezpiecznego.
   </para>
+  <warning>
+   <para>
+    Tryb bezpieczny został usunięty w PHP 6.0.0.
+   </para>
+  </warning>
+
+  <sect1 xml:id="ini.sect.safe-mode">
+   <title>Zabezpieczenia i tryb bezpieczny</title>
+   <para>
+    <table>
+     <title>Dyrektywy konfiguracyjne zabezpieczeń i trybu bezpiecznego</title>
+     <tgroup cols="4">
+      <thead>
+       <row>
+        <entry>Nazwa</entry>
+        <entry>Wartość domyślna</entry>
+        <entry>Możliwość zmian</entry>
+        <entry>Rejestr zmian</entry>
+       </row>
+      </thead>
+      <tbody>
+      <row>
+       <entry>safe_mode</entry>
+       <entry>"0"</entry>
+       <entry>PHP_INI_SYSTEM</entry>
+       <entry></entry>
+      </row>
+      <row>
+       <entry>safe_mode_gid</entry>
+       <entry>"0"</entry>
+       <entry>PHP_INI_SYSTEM</entry>
+       <entry>Dostępna od PHP 4.1.0.</entry>
+      </row>
+      <row>
+       <entry>safe_mode_include_dir</entry>
+       <entry>NULL</entry>
+       <entry>PHP_INI_SYSTEM</entry>
+       <entry>Dostępna od PHP 4.1.0.</entry>
+      </row>
+      <row>
+       <entry>safe_mode_exec_dir</entry>
+       <entry>""</entry>
+       <entry>PHP_INI_SYSTEM</entry>
+       <entry></entry>
+      </row>
+      <row>
+       <entry>safe_mode_allowed_env_vars</entry>
+       <entry>"PHP_"</entry>
+       <entry>PHP_INI_SYSTEM</entry>
+       <entry></entry>
+      </row>
+      <row>
+       <entry>safe_mode_protected_env_vars</entry>
+       <entry>"LD_LIBRARY_PATH"</entry>
+       <entry>PHP_INI_SYSTEM</entry>
+       <entry></entry>
+      </row>
+      <row>
+       <entry>open_basedir</entry>
+       <entry>NULL</entry>
+       <entry>PHP_INI_SYSTEM</entry>
+       <entry></entry>
+      </row>
+      <row>
+       <entry>disable_functions</entry>
+       <entry>""</entry>
+       <entry>tylko &php.ini;</entry>
+       <entry>Dostępna od PHP 4.0.1.</entry>
+      </row>
+      <row>
+       <entry>disable_classes</entry>
+       <entry>""</entry>
+       <entry>tylko &php.ini;</entry>
+       <entry>Dostępna od PHP 4.3.2.</entry>
+      </row>
+      </tbody>
+     </tgroup>
+    </table>
+    Aby zapoznać się ze szczegółami i znaczeniem stałych PHP_INI_* zobacz
+    <function>ini_set</function>.
+   </para>
+
+   &ini.descriptions.title;
+
+   <para>
+    <variablelist>
+     <varlistentry xml:id="ini.safe-mode">
+      <term>
+       <parameter>safe_mode</parameter>
+       <type>boolean</type>
+      </term>
+      <listitem>
+       <para>
+        Określa czy należy włączyć w PHP tryb bezpieczny.
+       </para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="ini.safe-mode-gid">
+      <term>
+       <parameter>safe_mode_gid</parameter>
+       <type>boolean</type>
+      </term>
+      <listitem>
+       <para>
+        Domyślnie tryb bezpieczny sprawdza, czy właścicielem uruchamianego skryptu
+        lub pliku, do którego funkcja chce uzyskać dostęp, jest ten sam użytkownik (UID).
+        Jeśli chcemy aby porównywana dotyczyły całej grupy (GID), należy włączyć safe_mode_gid.
+        Określa czy używać <literal>UID</literal> (&false;) lub
+        <literal>GID</literal> (&true;) podczas sprawdzania dostępu do pliku.
+       </para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="ini.safe-mode-include-dir">
+      <term>
+       <parameter>safe_mode_include_dir</parameter>
+       <type>string</type>
+      </term>
+      <listitem>
+       <para>
+        Sprawdza czy nie nastąpiło obejście <literal>UID</literal>/<literal>GID</literal>
+        podczas dołączania plików z tego katalogu i jego podkatalogów (ścieżka do katalogu
+        powinna być podana w <link linkend="ini.include-path">include_path</link>
+        lub też powinna być dołączona pełna nazwa ścieżki).
+       </para>
+       <simpara>
+        Od PHP 4.2.0 ta dyrektywa może zawierać dwukropek (w Windows
+        średnik) oddzielający ścieżki, podobnie jak w przypadku dyrektywy
+        <link linkend="ini.include-path">include_path</link>,
+        a nie tylko pojedyńczy katalog.
+       </simpara>
+       <simpara>
+        Rejestrowanie ścieżki określane jest obecnie przez przedrostek, a nie
+        nazwę katalogu. To oznacza, że "safe_mode_include_dir = /dir/incl" pozwala
+        uzyskać dostęp do "/dir/include" i "/dir/incls" (jeżeli istnieją).
+        Gdy chcemy ograniczyć dostęp tylko do określonego katalogu, dodajemy
+        na końcu ukośnik. Na przykład: "safe_mode_include_dir = /dir/incl/"
+       </simpara>
+       <simpara>
+        Jeśli wartość dyrektywy jest pusta, to żadne pliki - inne niż należące do
+        <literal>UID</literal>/<literal>GID</literal> nie mogą być dołączone
+        (w PHP 4.2.3 i od PHP 4.3.3). We wcześniejszych wersjach mogły być
+        dołączane wszystkie pliki.
+       </simpara>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="ini.safe-mode-exec-dir">
+      <term>
+       <parameter>safe_mode_exec_dir</parameter>
+       <type>string</type>
+      </term>
+      <listitem>
+       <para>
+        Jeśli PHP działa w trybie bezpiecznym, <function>system</function> i inne
+        <link linkend="ref.exec">funkcje wykonujące programy systemowe</link>
+        otrzymają odmowę uruchomienia programów, tych które nie znajdują się w tym katalogu.
+        Używamy <literal>/</literal> jako separatora katalogu dla wszystkich środowisk,
+        włącznie z Windows.
+       </para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="ini.safe-mode-allowed-env-vars">
+      <term>
+       <parameter>safe_mode_allowed_env_vars</parameter>
+       <type>string</type>
+      </term>
+      <listitem>
+       <para>
+        Ustawienie pewnych zmiennych środowiskowych może być potencjalnym naruszeniem bezpieczeństwa.
+        Ta dyrektywa zawiera listę przedrostków oddzielonych przecinkami.  W trybie bezpiecznym
+        użytkownik może wyłącznie zmieniać zmienne środowiskowe, których nazwy zaczynają się
+        od przedrostków tutaj wymienionych.  Domyślnie użytkownicy mają tylko możliwość ustawiania
+        zmiennych środowiskowych zaczynających się od PHP_ (np. PHP_FOO=BAR).
+       </para>
+       <note>
+        <para>
+         Jeśli ta dyrektywa jest pusta, PHP pozwoli użytkownikowi zmieniać WSZYSTKIE
+         zmienne środowiskowe!
+        </para>
+       </note>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="ini.safe-mode-protected-env-vars">
+      <term>
+       <parameter>safe_mode_protected_env_vars</parameter>
+       <type>string</type>
+      </term>
+      <listitem>
+       <para>
+        Ta dyretywa zawiera listę zmiennych środowiskowych oddzielonych
+        przecinkami, których użytkownik końcowy nie może zmienić za pomocą
+        <function>putenv</function>. Te zmienne są zawsze chronione
+        nawet jeśli safe_mode_allowed_env_vars pozwala na ich zmianę.
+       </para>
+      </listitem>
+     </varlistentry>
+      <varlistentry xml:id="ini.open-basedir">
+      <term>
+       <parameter>open_basedir</parameter>
+       <type>string</type>
+      </term>
+      <listitem>
+       <para>
+        Ograniczenie dla plików polegające na tym, że mogą one być otwierane przez PHP
+        wyłącznie w określonem drzewie katalogów.  Działanie tej dyrektywy
+        <emphasis>NIE</emphasis> zależy od tego czy tryb bezpieczny jest
+        włączony czy wyłączony.
+       </para>
+       <para>
+        Gdy skrypt próbuje otworzyć plik za pomocą np.
+        <function>fopen</function> lub <function>gzopen</function>,
+        sprawdzana jest lokalizacja tego pliku.  Jeśli plik znajduje się poza
+        określonym drzewem katalogów, wtedy PHP odmówi dostępu do otwarcia go.
+        Wszystkie dowiązania symboliczne są sprawdzane, tak więc nie jest możliwe
+        obejście tej restrykcji za pomocą dowiązań symbolicznych. Jeśli
+        plik nie istnieje wówczas dowiązanie symboliczne nie może być
+        sprawdzone, a pełna ścieżka nazwy pliku jest porównywana
+        z <parameter>open_basedir</parameter>.
+       </para>
+       <para>
+        Specjalna wartość <systemitem class="filesystem">.</systemitem>
+        wskazuje, że roboczy katalog skryptu ma być traktowany jako katalog
+        podstawowy. To jest jednakże nieco niebezpieczne, jako że katalog roboczy
+        skryptu można łatwo zmienić za pomocą <function>chdir</function>.
+       </para>
+       <para>
+        W <filename>httpd.conf</filename>, open_basedir może być wyłączony
+        (np. dla niektórych hostów wirtualnych)
+        <link linkend="configuration.changes.apache">ten sam efekt</link> uzyskamy
+        za pomocą innej dyrektywy konfiguracyjnej: "php_admin_value open_basedir
+        none".
+       </para>
+       <para>
+        W Windows oddzielamy katalogi za pomocą średnika, natomiast we wszystkich
+        innych systemach operacyjnych za pomocą dwukropka. Gdy PHP działa jako moduł
+        serwera Apache, ścieżki open_basedir z katalogów nadrzędnych są
+        automatycznie dziedziczone.
+       </para>
+       <para>
+         Restrykcja określona za pomocą open_basedir jest obecnie przedrostkiem
+         a nie nazwą katalogu.  To oznacza, że "open_basedir =
+         /dir/incl" pozwala uzyskać dostęp do "/dir/include" i "/dir/incls"
+         (jeżeli istnieją).  Gdy chcemy ograniczyć dostęp tylko do określonego
+         katalogu, dodajemy na końcu ukośnik. Na przykład:
+         "open_basedir = /dir/incl/"
+       </para>
+       <note>
+        <para>
+         Obsługa wielu katalogów została dodana w PHP 3.0.7.
+        </para>
+       </note>
+       <para>
+        Domyślnie PHP ma dostęp do plików we wszystkich lokalizacjach.
+       </para>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="ini.disable-functions">
+      <term>
+       <parameter>disable_functions</parameter>
+       <type>string</type>
+      </term>
+      <listitem>
+       <simpara>
+        Ta dyrektywa pozwala nam wyłączyć pewne funkcje dla zwiększenia
+        <link linkend="security">bezpieczeństwa</link>. Zawiera ona
+        listę nazw funkcji oddzielonych przecinkami. disable_functions
+        nie zależy od <link linkend="ini.safe-mode">trybu bezpiecznego</link>.
+       </simpara>
+       <simpara>
+        Ta dyrektywa musi być ustawiona w &php.ini; Nie można jej
+        ustawić np. w &httpd.conf;.
+       </simpara>
+      </listitem>
+     </varlistentry>
+     <varlistentry xml:id="ini.disable-classes">
+      <term>
+       <parameter>disable_classes</parameter>
+       <type>string</type>
+      </term>
+      <listitem>
+       <simpara>
+        Ta dyrektywa pozwala nam wyłączyć pewne klasy dla zwiększenia
+        <link linkend="security">bezpieczeństwa</link>.  Zawiera ona
+        listę nazw klas oddzielonych przecinkami.  disable_classes
+        nie zależy od <link linkend="ini.safe-mode">trybu bezpiecznego</link>.
+       </simpara>
+       <simpara>
+        Ta dyrektywa musi być ustawiona w &php.ini; Nie można jej
+        ustawić np. w &httpd.conf;.
+       </simpara>
+       <note>
+        <title>Availability note</title>
+        <simpara>
+         Ta dyrektywa została dodana w PHP 4.3.2
+        </simpara>
+       </note>
+      </listitem>
+     </varlistentry>
+    </variablelist>
+   </para>
+   <para>
+    Patrz także: <link linkend="ini.register-globals">register_globals</link>,
+    <link linkend="ini.display-errors">display_errors</link>, i
+    <link linkend="ini.log-errors">log_errors</link>.
+   </para>
+
   <para>
-   Dyrektywy konfiguracyjne odpowiadające za tryb bezpieczny:
-   <programlisting role="ini">
-<![CDATA[
-safe_mode = Off
-safe_mode_gid = 0
-safe_mode_include_dir =
-safe_mode_exec_dir =
-open_basedir =
-safe_mode_allowed_env_vars = PHP_
-safe_mode_protected_env_vars = LD_LIBRARY_PATH
-disable_functions =
-]]>
-   </programlisting>
-  </para>
-  <para>
-   Gdy opcja <link linkend="ini.safe-mode">safe_mode</link> jest włączona,
-   PHP sprawdza czy właścicielem pliku na którym na którym funkcja chce
-   operować i właścicielem uruchamianego skryptu jest ten sam użytkownik.
-   Na przykład:
+   Gdy opcja <link linkend="ini.safe-mode">safe_mode</link> jest włączona, PHP sprawdza
+   czy właścicielem wykonywanego skryptu jest właściciel pliku, na którym chce
+   operować funkcja, lub czy jest to katalog tego samego użytkownika.
+   Na Przykład:
    <programlisting role="ls">
 <![CDATA[
 -rw-rw-r--    1 rasmus   rasmus       33 Jul  1 19:20 script.php
 -rw-r--r--    1 root     root       1116 May 26 18:01 /etc/passwd
 ]]>
    </programlisting>
-   Uruchomienie script.php
+   Uruchomienie script.php:
    <programlisting role="php">
 <![CDATA[
 <?php
@@ -46,28 +335,38 @@ disable_functions =
 ?>
 ]]>
    </programlisting>
-   z uruchomionym trybem bezpiecznym spowoduje wyświetlenie błędu:
+   zwraca błąd jeśli tryb bezpieczny jest włączony:
    <screen>
 <![CDATA[
-Warning: SAFE MODE Restriction in effect. The script whose uid is 500 is not 
+Warning: SAFE MODE Restriction in effect. The script whose uid is 500 is not
 allowed to access /etc/passwd owned by uid 0 in /docroot/script.php on line 2
 ]]>
    </screen>
   </para>
   <para>
-   Jeśli zamiast włączać opcję <link linkend="ini.safe-mode">safe_mode</link>
-   ustawisz katalog <link linkend="ini.open-basedir">open_basedir</link>,
-   wtedy wszystkie operacje plikowe bedą ograniczone do tego katalogu. Na
-   przykład (dla httpd.conf Apache'a):
+   Jednakże mogą być środowiska, gdzie zbyt restrykcyjna weryfikacja <literal>UID</literal>
+   nie jest stosownym rozwiązaniem, a łagodniejsze sprawdzanie <literal>GID</literal> jest
+   w pełni wystarczające.  Można to zmienić za pomocą <link
+   linkend="ini.safe-mode-gid">safe_mode_gid</link>. Ustawienie tej opcji na
+   <literal>On</literal> włącza łagodniejsze sprawdzanie <literal>GID</literal>,
+   a ustawienie na <literal>Off</literal> (domyślnie) przełącza na
+   sprawdzanie <literal>UID</literal>.
+  </para>
+  <para>
+   Jeśli zamiast <link linkend="ini.safe-mode">safe_mode</link> ustawiamy
+   katalog <link linkend="ini.open-basedir">open_basedir</link> wtedy wszystkie
+   operacje na plikach będą ograniczone do plików znajdujących się w nim.
+   Na przykład (Apache &httpd.conf;):
    <programlisting role="ini">
 <![CDATA[
 <Directory /docroot>
-php_admin_value open_basedir /docroot
+  php_admin_value open_basedir /docroot
 </Directory>
 ]]>
    </programlisting>
-   Uruchomienie tego samego skryptu script.php z ustawionym katalogiem
-   <link linkend="ini.open-basedir">open_basedir</link> spowoduje wyświetlenie:
+   Jeśli uruchominy plik script.php z ustawieniem
+   <link linkend="ini.open-basedir">open_basedir</link>
+   wówczas otrzymamy wynik:
    <screen>
 <![CDATA[
 Warning: open_basedir restriction in effect. File is in wrong directory in
@@ -76,16 +375,18 @@ Warning: open_basedir restriction in effect. File is in wrong directory in
    </screen>
   </para>
   <para>
-   Możesz także wyłączyć pojedyncze funkcje. Pamiętaj jednak, że dyrektywa
-	 disable_functions może być użyta tylko w pliku &php.ini;, co oznacza, że nie
-	 da się wyłączać funkcji w sekcjach VirtualHost i Directory w pliku
-	 httpd.conf. Jeśli do pliku &php.ini; dodasz:
+   Możemy wyłączyć obsługę wybranych funkcji. Zauważmy, że dyrektywa
+   <link linkend="ini.disable-functions">disable_functions</link>
+   nie może być ustawiana poza plikiem &php.ini; co oznacza, że
+   nie możemy wyłączyć funkcji dla wybranego wirtualnego hosta lub katalogu
+   zdefiniowanego w pliku &httpd.conf;.
+   Jeśli dodamy następującą dyrektywę do naszego pliku &php.ini;:
    <programlisting role="ini">
 <![CDATA[
-disable_functions readfile,system
+disable_functions = readfile,system
 ]]>
    </programlisting>
-   po uruchomieniu skryptu otrzymasz:
+   Otrzymamy następujący wynik:
    <screen>
 <![CDATA[
 Warning: readfile() has been disabled for security reasons in
@@ -93,12 +394,19 @@ Warning: readfile() has been disabled for security reasons in
 ]]>
    </screen>
   </para>
+  <warning>
+   <para>
+    Naturalnie restrykcje PHP nie obowiązują w plikach wykonywalnych.
+   </para>
+  </warning>
+ </sect1>
 
   <sect1 xml:id="features.safe-mode.functions">
-   <title>Funkcje ograniczone/wyłączone w trybie bezpiecznym</title>
+   <title>Funkcje ograniczane/wyłączone w trybie bezpiecznym</title>
    <para>
-    Jest to najprawdopodobniej wciąż niekompletna lista funkcji ograniczonych
-    przez <link linkend="features.safe-mode">tryb bezpieczny</link>.
+    Jest to najprawdopodobniej wciąż niekompletna lista funkcji
+    ograniczonych przez
+    <link linkend="features.safe-mode">tryb bezpieczny</link>.
     <!-- TODO: add &note.sm.*; to the functions mentioned here.
     That entity should link to this section -->
     <table>
@@ -107,7 +415,7 @@ Warning: readfile() has been disabled for security reasons in
       <thead>
        <row>
         <entry>Funkcja</entry>
-        <entry>Ograniczenia</entry>
+        <entry>Ogranicznenia</entry>
        </row>
       </thead>
       <tbody>
@@ -132,25 +440,22 @@ Warning: readfile() has been disabled for security reasons in
         <entry>&sm.uidcheck;</entry>
        </row>
        <row>
-        <entry><function>ifx_*</function></entry>
-        <entry>Podlega ograniczeniom narzuconym przez sql_safe_mode,
-        (!= tryb bezpieczny)</entry>
+        <entry>ifx_*</entry>
+        <entry>Podlega ograniczeniom narzuconym przez sql_safe_mode, (!= tryb bezpieczny)</entry>
         <!-- TODO: more info on sql-safe-mode -->
        </row>
        <row>
-        <entry><function>ingres_*</function></entry>
-        <entry>Podlega ograniczeniom narzuconym przez sql_safe_mode,
-        (!= tryb bezpieczny)</entry>
+        <entry>ingres_*</entry>
+        <entry>Podlega ograniczeniom narzuconym przez sql_safe_mode, (!= tryb bezpieczny)</entry>
         <!-- TODO: more info on sql-safe-mode -->
        </row>
        <row>
-        <entry><function>mysql_*</function></entry>
-        <entry>Podlega ograniczeniom narzuconym przez sql_safe_mode,
-        (!= tryb bezpieczny)</entry>
+        <entry>mysql_*</entry>
+        <entry>Podlega ograniczeniom narzuconym przez sql_safe_mode, (!= tryb bezpieczny)</entry>
         <!-- TODO: more info on sql-safe-mode -->
        </row>
        <row>
-        <entry><function>pg_loimport</function></entry>
+        <entry><function>pg_lo_import</function></entry>
         <entry>&sm.uidcheck;</entry>
         <!-- source TODO: there is no PHP-warning for that safe-mode-restriction -->
        </row>
@@ -161,7 +466,7 @@ Warning: readfile() has been disabled for security reasons in
        <row>
         <entry><function>putenv</function></entry>
         <entry>Podlega dyrektywom safe_mode_protected_env_vars i
-        safe_mode_allowed_env_vars w &php.ini;. Zobacz również dokumantację
+        safe_mode_allowed_env_vars;. Zobacz również dokumantację
         do <function>putenv</function></entry>
         <!-- TODO: document those directives in chapters/config.xml -->
        </row>
@@ -191,37 +496,45 @@ Warning: readfile() has been disabled for security reasons in
        </row>
        <row>
         <entry><function>exec</function></entry>
-        <entry>Możesz uruchamiać programy jedynie z katalogu zdefiniowanego
-        dyrektywą
-        <link linkend="ini.safe-mode-exec-dir">safe_mode_exec_dir</link>.
+        <entry>Możemy uruchamiać programy jedynie z katalogu zdefiniowanego za pomocą dyrektywy <link
+        linkend="ini.safe-mode-exec-dir">safe_mode_exec_dir</link>.
         Ze względów praktycznych obecnie nie ma możliwości stosowania
-        <literal>..</literal> w ścieżce do programu.</entry>
+        <literal>..</literal> w ścieżce do programu.
+        Wykonywana jest <function>escapeshellcmd</function> na argumencie tej
+        funkcji.</entry>
        </row>
        <row>
         <entry><function>system</function></entry>
-        <entry>Można uruchamiać programy jedynie z katalogu zdefiniowanego
-        dyrektywą
-        <link linkend="ini.safe-mode-exec-dir">safe_mode_exec_dir</link>.
+        <entry>Możemy uruchamiać programy jedynie z katalogu zdefiniowanego za pomocą dyrektywy <link
+        linkend="ini.safe-mode-exec-dir">safe_mode_exec_dir</link>.
         Ze względów praktycznych obecnie nie ma możliwości stosowania
-        <literal>..</literal> w ścieżce do programu.</entry>
+        <literal>..</literal> w ścieżce do programu.
+        Wykonywana jest <function>escapeshellcmd</function> na argumencie tej
+        funkcji.</entry>
        </row>
        <row>
         <entry><function>passthru</function></entry>
-        <entry>Można uruchamiać programy jedynie z katalogu zdefiniowanego
-        dyrektywą
-        <link linkend="ini.safe-mode-exec-dir">safe_mode_exec_dir</link>.
+        <entry>Możemy uruchamiać programy jedynie z katalogu zdefiniowanego za pomocą dyrektywy <link
+        linkend="ini.safe-mode-exec-dir">safe_mode_exec_dir</link>.
         Ze względów praktycznych obecnie nie ma możliwości stosowania
-        <literal>..</literal> w ścieżce do programu.</entry>
+        <literal>..</literal> w ścieżce do programu.
+        Wykonywana jest <function>escapeshellcmd</function> na argumencie tej
+        funkcji.</entry>
        </row>
        <row>
         <entry><function>popen</function></entry>
-        <entry>Można uruchamiać programy jedynie z katalogu zdefiniowanego
-        dyrektywą
-        <link linkend="ini.safe-mode-exec-dir">safe_mode_exec_dir</link>.
+        <entry>Możemy uruchamiać programy jedynie z katalogu zdefiniowanego za pomocą dyrektywy <link
+        linkend="ini.safe-mode-exec-dir">safe_mode_exec_dir</link>.
         Ze względów praktycznych obecnie nie ma możliwości stosowania
-        <literal>..</literal> w ścieżce do programu.</entry>
+        <literal>..</literal> w ścieżce do programu.
+        Wykonywana jest <function>escapeshellcmd</function> na argumencie tej
+        funkcji.</entry>
         <!-- TODO: not sure. popen uses a completely different implementation
         Don't know why, don't know whether it's behaving the same -->
+       </row>
+       <row>
+        <entry><function>fopen</function></entry>
+        <entry>&sm.uidcheck.dir;</entry>
        </row>
        <row>
         <entry><function>mkdir</function></entry>
@@ -229,7 +542,7 @@ Warning: readfile() has been disabled for security reasons in
        </row>
        <row>
         <entry><function>rmdir</function></entry>
-        <entry>&sm.uidcheck;</entry>
+        <entry>&sm.uidcheck.dir;</entry>
        </row>
        <row>
         <entry><function>rename</function></entry>
@@ -241,9 +554,9 @@ Warning: readfile() has been disabled for security reasons in
        </row>
        <row>
         <entry><function>copy</function></entry>
-        <entry>&sm.uidcheck; &sm.uidcheck.dir; (dla 
+        <entry>&sm.uidcheck; &sm.uidcheck.dir; (dla
         <parameter>źródła</parameter> i
-        <parameter>przeznaczenia</parameter>) </entry>
+        <parameter>przeznaczenia</parameter>)</entry>
        </row>
        <row>
         <entry><function>chgrp</function></entry>
@@ -255,8 +568,8 @@ Warning: readfile() has been disabled for security reasons in
        </row>
        <row>
         <entry><function>chmod</function></entry>
-        <entry>&sm.uidcheck; Dodatkowo, nie można ustawić bitów SUID, SGID
-        i sticky bit.</entry>
+        <entry>&sm.uidcheck; Dodatkowo, nie można ustawić bitów
+        SUID, SGID i sticky bit</entry>
        </row>
        <row>
         <entry><function>touch</function></entry>
@@ -264,24 +577,79 @@ Warning: readfile() has been disabled for security reasons in
        </row>
        <row>
         <entry><function>symlink</function></entry>
-        <entry>&sm.uidcheck; &sm.uidcheck.dir; (sprawdzany jest jedynie element
-        do którego tworzony jest link)</entry>
+        <entry>&sm.uidcheck; &sm.uidcheck.dir; (notatka: sprawdzany jest jedynie element,
+        do którego utworzone jest dowiązanie symboliczne)</entry>
        </row>
        <row>
         <entry><function>link</function></entry>
-        <entry>&sm.uidcheck; &sm.uidcheck.dir; (sprawdzany jest jedynie element
-        do którego tworzony jest link)</entry>
+        <entry>&sm.uidcheck; &sm.uidcheck.dir; (notatka: sprawdzany jest jedynie element,
+        do którego utworzone jest dowiązanie)</entry>
        </row>
        <row>
-        <entry><function>getallheaders</function></entry>
+        <entry><function>apache_request_headers</function></entry>
+        <entry>W trybie bezpiecznym, nie są zwracane nagłówki zaczynające
+        się od 'authorization' (wielkość liter nie ma znaczenia).</entry>
+       </row>
+       <row>
+        <entry><function>header</function></entry>
+        <entry>W trybie bezpiecznym UID skryptu jest dodawana do
+        <literal>nazwy</literal> - części nagłówka
+        <literal>Uwierzytelnienia-WWW</literal>, jeśli ustawimy ten nagłówek
+        (używane w Uwierzytelnieniu HTTP).</entry>
+       </row>
+       <row>
+        <entry><link linkend="features.http-auth">PHP_AUTH variables</link></entry>
         <entry>
-         W tybie bezpiecznym, nagłowki zaczynające się od 'authorization'
-         (wielkość liter bez znaczenia) nie będą zwracane. Uwaga: w
-         implementacji dla serwera AOL ta funkcjonalność jest uszkodzona
+         W trybie bezpiecznym zmienne <varname>PHP_AUTH_USER</varname>,
+         <varname>PHP_AUTH_PW</varname>, i <varname>AUTH_TYPE</varname>
+         nie są dostępne w <varname>$_SERVER</varname>. Niezależnie od tego, możemy
+         nadal używać <varname>REMOTE_USER</varname> dla użytkownika.
+         (notatka: dostępna tylko od PHP 4.3.0)
         </entry>
        </row>
        <row>
-        <entry>Każda funkcja korzystająca z
+        <entry>
+         <function>highlight_file</function>,
+         <function>show_source</function>
+        </entry>
+        <entry>
+         &sm.uidcheck; &sm.uidcheck.dir; (notatka: dostępna tylko od PHP 4.2.1)
+        </entry>
+       </row>
+       <row>
+        <entry>
+         <function>parse_ini_file</function>
+        </entry>
+        <entry>
+         &sm.uidcheck; &sm.uidcheck.dir; (notatka: dostępna tylko od PHP 4.2.1)
+        </entry>
+       </row>
+       <row>
+        <entry>
+         <function>set_time_limit</function>
+        </entry>
+        <entry>
+         Nie ma żadnego skutku, gdy PHP działa w trybie &safemode;.
+        </entry>
+       </row>
+       <row>
+        <entry>
+         <link linkend="ini.max-execution-time">max_execution_time</link>
+        </entry>
+        <entry>
+         Nie ma żadnego skutku, gdy PHP działa w trybie &safemode;.
+        </entry>
+       </row>
+       <row>
+        <entry>
+         <function>mail</function>
+        </entry>
+        <entry>
+         W trybie bezpiecznym, piąty parametr jest nieaktywny. (notatka: dostępna tylko od PHP 4.2.3)
+        </entry>
+       </row>
+       <row>
+        <entry>Wszystkie funkcje, które używają
          <filename>php4/main/fopen_wrappers.c</filename>
         </entry>
         <entry>??</entry>
