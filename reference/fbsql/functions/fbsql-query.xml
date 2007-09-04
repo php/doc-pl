@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="iso-8859-2"?>
+<!-- EN-Revision: 1.8 Maintainer: joeaccord Status: ready -->
+<!-- $Revision: 1.1 $ -->
+<refentry xml:id="function.fbsql-query" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>fbsql_query</refname>
+  <refpurpose>Wysyła zapytanie do serwera FrontBase</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>resource</type><methodname>fbsql_query</methodname>
+   <methodparam><type>string</type><parameter>zapytanie</parameter></methodparam>
+   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>rozmiar_partii_danych</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Wysyła <parameter>zapytanie</parameter> do bieżącej bazy danych na
+   serwerze.
+  </para>
+  <para>
+   Jeśli wykonanie zapytania się powiedzie, możemy wywołać <function>fbsql_num_rows</function>
+   aby się dowiedzieć jak dużo wierszy zostało zwróconych przez instrukcję SELECT, lub
+   <function>fbsql_affected_rows</function> żeby wykryć ile wierszy zostało
+   przetworzonych przez instrukcję DELETE, INSERT, REPLACE, lub UPDATE.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>zapytanie</parameter></term>
+     <listitem>
+      <para>
+       Zapytanie SQL do wykonania.
+      </para>
+      <note>
+       <para>
+        Zapytanie powinno zawsze kończyć się średnikiem.
+       </para>
+      </note>
+     </listitem>
+    </varlistentry>
+    &fbsql.link-identifier.description;
+    <varlistentry>
+     <term><parameter>rozmiar_partii_danych</parameter></term>
+     <listitem>
+      <para>
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   <function>fbsql_query</function> zwraca &true; (nie zero) lub &false;
+   aby wskazać, czy zapytanie zostało wykonane prawidłowo.  Zwrócenie
+   &true; oznacza, że zapytanie było prawidłowe i mogło zostać wykonane
+   przez serwer.  Funkcja nie informuje o liczbie przetworzonych
+   lub zwróconych wieszy.  Jest całkiem możliwe, że zapytanie było
+   prawidłowe, jednak nie przetworzyło ani nie zwróciło żadnych wierszy.
+  </para>
+  <para>
+   Dla instrukcji SELECT <function>fbsql_query</function> zwraca nowy
+   identyfikator wyniku, który możemy przekazać do <function>fbsql_result</function>.
+  </para>
+  <para>
+   <function>fbsql_query</function> może się nie powieść i zwrócić &false; jeśli
+   nie mamy uprawnień dostępu do tabel określonych w zapytaniu.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+   <para>
+   Poniższe zapytanie ma nieprawidłową składnię, a zatem wywołanie
+   <function>fbsql_query</function> się nie powiedzie i zwróci &false;:
+   <example>
+    <title>Przykład <function>fbsql_query</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$result = fbsql_query("SELECT * WHERE 1=1")
+    or die ("Nieprawidłowe zapytanie");
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   Poniższe zapytanie ma nieprawidłową składnię, jeżeli
+   <literal>kolumna</literal> nie jest kolumną w tabeli
+   <literal>tabela</literal>, tak więc wywołanie <function>fbsql_query</function>
+   się nie powiedzie i zwróci &false;:
+   <example>
+    <title>Przykład <function>fbsql_query</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$result = fbsql_query ("SELECT kolumna FROM tabela;")
+    or die ("Nieprawidłowe zapytanie");
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>fbsql_affected_rows</function></member>
+    <member><function>fbsql_db_query</function></member>
+    <member><function>fbsql_free_result</function></member>
+    <member><function>fbsql_result</function></member>
+    <member><function>fbsql_select_db</function></member>
+    <member><function>fbsql_connect</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"../../../../manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
