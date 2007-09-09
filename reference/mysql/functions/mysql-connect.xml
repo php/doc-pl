@@ -1,104 +1,268 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: slawek Status: ready -->
-<!-- $Revision: 1.6 $ -->
-  <refentry xml:id="function.mysql-connect" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>mysql_connect</refname>
-    <refpurpose>Otwiera połączenie z serwerem MySQL</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>resource</type><methodname>mysql_connect</methodname>
-      <methodparam choice="opt"><type>string</type><parameter>
-        serwer
-       </parameter></methodparam>
-      <methodparam choice="opt"><type>string</type><parameter>
-        użytkownik
-       </parameter></methodparam>
-      <methodparam choice="opt"><type>string</type><parameter>
-        hasło
-       </parameter></methodparam>
-      <methodparam choice="opt"><type>bool</type><parameter> 
-        nowy_identyfikator 
-       </parameter></methodparam> 
-      <methodparam choice="opt"><type>int</type><parameter> 
-        opcje_klienta
-       </parameter></methodparam> 
-     </methodsynopsis>
-    <para> 
-     Zwraca identyfikator połączenia w przypadku powodzenia, lub
-     &false; jeśli wystąpi błąd.
-    </para>
-    <para>
-     <function>mysql_connect</function> nawiązuje połączenie z serwerem
-     MySQL. Jeśli nie podano argumentów, przyjmowane są następujące
-     wartości domyślne: <parameter>serwer</parameter> =
-     'localhost:3306', <parameter>użytkownik</parameter> = nazwa użytkownika
-     będącego właścicielem procesu serwera, <parameter>hasło</parameter> =
-     puste hasło.
-    </para>
-    <para>
-     Argument <parameter>serwer</parameter> może również zawierać
-     numer portu, np. &quot;host:port&quot; lub ścieżkę do gniaza np.
-     &quot;:/sciezka/do/gniazda&quot; dla localhosta.
-     <note>
+<!-- EN-Revision: 1.22 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.7 $ -->
+<refentry xml:id="function.mysql-connect" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>mysql_connect</refname>
+  <refpurpose>Otwiera połączenie do serwera MySQL</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>resource</type><methodname>mysql_connect</methodname>
+   <methodparam choice="opt"><type>string</type><parameter>serwer</parameter></methodparam>
+   <methodparam choice="opt"><type>string</type><parameter>nazwa_użytkownika</parameter></methodparam>
+   <methodparam choice="opt"><type>string</type><parameter>hasło</parameter></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>nowe_połączenie</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>flagi_klienta</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Otwiera lub ponownie używa połączenie do serwera MySQL.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>serwer</parameter></term>
+     <listitem>
       <para>
-       Obsługę &quot;:port&quot; dodano w PHP 3.0B4.
+       Serwer MySQL. Może także zawierać numer portu np.
+       "nazwa_serwera:port" lub ścieżkę do lokalnego gniazda np. ":/ścieżka/do/gniazda" dla
+       lokalnego hosta.
       </para>
       <para>
-       Obsługę &quot;:/sciezka/do/gniazda&quot; dodano w PHP 3.0.10.
+       Jeśli, dyrektywa PHP <link linkend="ini.mysql.default-host">mysql.default_host</link>
+       jest nie zdefiniowana (domyślnie), wtedy domyślną 
+       wartością jest 'localhost:3306'. W &sqlsafemode;, ten parametr jest ignorowany
+       i zawsze jest używana wartość 'localhost:3306'.
       </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>nazwa_użytkownika</parameter></term>
+     <listitem>
       <para>
-       Możesz pominąć wyświetlenie komunikatu błędu przy niepowodzeniu
-       poprzedzając nazwę funkcji znakiem
-       <link linkend="language.operators.errorcontrol">@</link>.
+       Nazwa użytkownika. Domyślna watość jest definiowana przez <link
+       linkend="ini.mysql.default-user">mysql.default_user</link>. W
+       &sqlsafemode;, parametr ten jest ignorowany i używana jest nazwa użytkownika, który
+       jest właścicielem procesu serwera.
       </para>
-     </note>
-    </para>
-    <para>
-     Przy drugim wywołaniu <function>mysql_connect</function> z tymi
-     samymi argumentami, nie będzie nawiązywane nowe połączenie, lecz
-     zwrócony zostanie identyfikator już otwartego połączenia. Argument
-     <parameter>nowy_identyfikator</parameter> zmienia to zachowanie,
-     powodując, że <function>mysql_connect</function> za każdym razem otwiera
-     nowe połączenie, nawet jeśli funkcja była wcześniej wywołana z identycznymi
-     parametrami. Argument <parameter>opcje_klienta</parameter> może być
-     kombinacją stałych MYSQL_CLIENT_SSL, MYSQL_CLIENT_COMPRESS,
-     MYSQL_CLIENT_IGNORE_SPACE lub MYSQL_CLIENT_INTERACTIVE.
-    </para>
-    <note> 
-     <para> 
-      Argument <parameter>nowy_identyfikator</parameter> pojawił się w PHP 4.2.0
-     </para> 
-     <para> 
-      Argument <parameter>opcje_klienta</parameter> pojawił się w PHP 4.3.0
-     </para> 
-    </note> 
-    <para>
-     Połączenie z serwerem zostanie zamknięte zaraz po zakończeniu
-     wykonywania skryptu, chyba że zostanie zamknięte wcześniej przez
-     odpowiednie wywołanie <function>mysql_close</function>.
-    </para>  
-    <example>
-     <title>MySQL connect</title>
-     <programlisting role="php">
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>hasło</parameter></term>
+     <listitem>
+      <para>
+       Hasło. Domyślna wartość jest zdefiniowana przez <link
+       linkend="ini.mysql.default-password">mysql.default_password</link>. W
+       &sqlsafemode;, ten parametr jest ignorowany i użyte jest puste hasło.
+      </para>
+     </listitem>
+    </varlistentry>   
+    <varlistentry>
+     <term><parameter>nowe_połączenie</parameter></term>
+     <listitem>
+      <para>
+       Jeśli, ponownie wywołamy <function>mysql_connect</function>
+       z tymi samymi argumentami, nie zostanie nawiązane nowe połączenie, lecz
+       zamiast tego, zostanie zwrócony identyfikator obecnie otwartego połączenia.
+       Parametr <parameter>nowe_połączenie</parameter> modyfikuje to
+       zachowanie i sprawia, że <function>mysql_connect</function> zawsze otwiera
+       nowe połączenie, nawet jeśli <function>mysql_connect</function> zostało wywołane
+       wcześniej z tymi samymi parametrami.
+       W &sqlsafemode;, ten parametr jest ignorowany.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>flagi_klienta</parameter></term>
+     <listitem>
+      <para>
+       Parametr <parameter>flagi_klienta</parameter> może być kombinacją
+       następujących stałych:
+       128 (włącza obsługę <literal>LOAD DATA LOCAL</literal>),
+       <constant>MYSQL_CLIENT_SSL</constant>,
+       <constant>MYSQL_CLIENT_COMPRESS</constant>, 
+       <constant>MYSQL_CLIENT_IGNORE_SPACE</constant> lub
+       <constant>MYSQL_CLIENT_INTERACTIVE</constant>.
+       Przeczytaj sekcję o <xref linkend="mysql.client-flags" /> w celu dalszych informacji.
+       W &sqlsafemode;, ten parametr jest ignorowany.
+      </para>
+     </listitem>
+    </varlistentry> 
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca identyfikator połączenia MySQL w przypadku sukcesu, lub &false; w przypadku porażki.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>4.3.0</entry>
+       <entry>
+        Dodano parametr <parameter>flagi_klienta</parameter>.
+       </entry>
+      </row>
+      <row>
+       <entry>4.2.0</entry>
+       <entry>
+        Dodano parametr <parameter>nowe_połączenie</parameter>.
+       </entry>
+      </row>
+      <row>
+       <entry>3.0.10</entry>
+       <entry>
+        Dodano wsparcie dla ":/ściezka/do/gniazda" w 
+        <parameter>serwer</parameter>.
+       </entry>
+      </row>
+      <row>
+       <entry>3.0.0</entry>
+       <entry>
+        Dodano wsparcie dla ":port" w <parameter>serwer</parameter>.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład <function>mysql_connect</function></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
-    $link = mysql_connect('localhost', 'uzytkownik', 'haslo')
-        or die('Nie można się połączyć: ' . mysql_error());
-    print ('Połączenie nawiązane');
-    mysql_close($link);
+$link = mysql_connect('localhost', 'użytkownik_mysql', 'hasło_mysql');
+if (!$link) {
+    die('Nie można się połaczyć: ' . mysql_error());
+}
+echo 'Połączenie nawiązane';
+mysql_close($link);
 ?>
 ]]>
-     </programlisting>
-    </example>
-    <para> Patrz także:
-     <function>mysql_pconnect</function> i
-     <function>mysql_close</function>.
-    </para>
-   </refsect1>
-  </refentry>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Przykład <function>mysql_connect</function> z użyciem składni <literal>nazwa_hosta:port</literal></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// połączymy się do example.com i portu 3307
+$link = mysql_connect('example.com:3307', 'użytkownik_mysql', 'hasło_mysql');
+if (!$link) {
+    die('Nie można się połączyć: ' . mysql_error());
+}
+echo 'Połączenie nawiązane';
+mysql_close($link);
+
+// połączymy się do localhost na port 3307
+$link = mysql_connect('127.0.0.1:3307', 'użytkownik_mysql', 'hasło_mysql');
+if (!$link) {
+    die('Nie można się połączyć: ' . mysql_error());
+}
+echo 'Połączenie nawiązane';
+mysql_close($link);
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title><function>mysql_connect</function> przykład użycia składni ":/ścieżka/do/gniazda"</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// połączymy się do lokalhost i gniazda np. /tmp/mysql.sock
+
+//wariant 1: z pominięciem localhost
+$link = mysql_connect('/tmp/mysql', 'użytkownik_mysql', 'hasło_mysql');
+if (!$link) {
+    die('Nie można się połączyć: ' . mysql_error());
+}
+echo 'Połączenie nawiązane';
+mysql_close($link);
+
+
+// wariant 2: z localhost
+$link = mysql_connect('localhost:/tmp/mysql.sock', 'użytkownik_mysql', 'hasło_mysql');
+if (!$link) {
+    die('Nie można się połączyć: ' . mysql_error());
+}
+echo 'Połączenie nawiązane';
+mysql_close($link);
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    Ilekroć określasz serwer jako &quot;localhost&quot; lub
+    &quot;localhost:port&quot;, biblioteka kliencka MySQL nadpisze
+    to i spróbuje połączyć się do lokalnego gniazda (nazwanego potokiem w
+    Windows). Jeśli chcesz użyć TCP/IP, użyj &quot;127.0.0.1&quot;
+    zamiast &quot;localhost&quot;. Jeśli biblioteka kliencka MySQL próbuje
+    połączyć się do niewłaściwego lokalnego gniazda, powinieneś ustawić prawidłową ścieżkę jako
+    <xref linkend="ini.mysql.default-host" /> w Twojej konfiguracji PHP i zostawić puste pole
+    serwer.
+   </para>
+  </note>
+  <note>
+   <para>
+    Połączenie do serwera zostanie zamknięte jak tylko wykonywanie
+    skryptu zakończy się, chyba, że zostanie wcześniej zamknięte poprzez
+    wyraźne wywołanie <function>mysql_close</function>.
+   </para>
+  </note>
+  <note>
+   <para>
+    Możesz zapobiec informacją o błędach w przypadku niepowodzenia za pomocą poprzedzenia
+    nazwy funkcji <link linkend="language.operators.errorcontrol">@</link>.
+   </para>
+  </note>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>mysql_pconnect</function></member>
+    <member><function>mysql_close</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
