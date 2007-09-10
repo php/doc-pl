@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.9 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.6 $ -->
+<!-- EN-Revision: 1.12 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.7 $ -->
 <refentry xml:id="function.ftruncate" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>ftruncate</refname>
   <refpurpose>Przycina plik do podanej długości</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>ftruncate</methodname>
    <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam>
@@ -15,27 +16,96 @@
   </methodsynopsis>
   <para>
    Pobiera wskaźnik pliku, <parameter>uchwyt</parameter> i przycina plik do długości,
-   <parameter>rozmiar</parameter>. &return.success;
-  </para>
-  <note>
-   <para>
-    Wskaźnik pliku jest zmieniany tylko w trybie <emphasis>dopisywania</emphasis>.
-    W trybie <emphasis>zapisywania</emphasis> należy wywołać dodatkowo
-    <function>fseek</function>.
-   </para>
-  </note>
-  <note>
-   <para>
-    Przed PHP 4.3.3, <function>ftruncate</function> zwracała
-    <type>integer</type> o wartości 1 w przypadku sukcesu, zamiast
-    <type>boolean</type> &true;.
-   </para>
-  </note>
-  <para>
-   Patrz także: <function>fopen</function> i
-   <function>fseek</function>.
+   <parameter>rozmiar</parameter>.
   </para>
  </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>uchwyt</parameter></term>
+     <listitem>
+      <para>
+       Wskaźnik pliku
+      </para>
+      <note>
+       <para>
+        <parameter>uchwyt</parameter> musi by otworzony do zapisu.
+       </para>
+      </note>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>rozmiar</parameter></term>
+     <listitem>
+      <para>
+       Rozmiar do którego przycinamy.
+      </para>
+      <note>
+       <para>
+        Jeśli <parameter>rozmiar</parameter> jest większy niż rozmiar pliku to jest on rozszerzany
+	bajtami null.
+       </para>
+       <para>
+        Jeśli <parameter>rozmiar</parameter> jest mniejszy niż rozmiar pliku to dalsze dane
+	zostaną stracone.
+       </para>
+      </note>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;
+  </para>
+ </refsect1>
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>PHP 4.3.3</entry>
+       <entry>
+        Przed tym wydaniem <function>ftruncate</function> zwracała
+        <type>integer</type> o wartości 1 w przypadku sukcesu, zamiast
+        <type>boolean</type> &true;.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    Wskaźnik pliku jest <emphasis>nie</emphasis> modyfikowany.
+   </para>
+  </note>
+ </refsect1> 
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>fopen</function></member>
+    <member><function>fseek</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
 </refentry>
 
 <!-- Keep this comment at the end of the file
