@@ -1,46 +1,91 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.11 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.8 $ -->
-<refentry xml:id="function.array-keys" xmlns="http://docbook.org/ns/docbook">
+<!-- EN-Revision: 1.14 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.9 $ -->
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.array-keys">
  <refnamediv>
   <refname>array_keys</refname>
   <refpurpose>Zwraca wszystkie klucze z tablicy</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
    <type>array</type><methodname>array_keys</methodname>
    <methodparam><type>array</type><parameter>wejście</parameter></methodparam>
    <methodparam choice="opt"><type>mixed</type><parameter>szukana_wartość</parameter></methodparam>
-   <methodparam choice="opt"><type>bool</type><parameter>strict</parameter></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>ścisłe_porównanie</parameter></methodparam>
   </methodsynopsis>
   <para>
    <function>array_keys</function> zwraca klucze, liczbowe i tekstowe, z
    tablicy <parameter>wejście</parameter>.
   </para>
   <para>
-   Jeśli podany został opcjonalny parameter <parameter>szukana_wartość
-   </parameter>, zwracane są tylko klucze dla danej do których przypisana
-   jest podana wartość. W przeciwnym przypadku zwracane są wszystkie klucze
-   z tablicy <parameter>wejście</parameter>. Od PHP 5 można użyć
-   opcjonalnego parametru <parameter>strict</parameter> dla porównania z
-   uwzględnieniem typu (===).
+   Jeśli podany został opcjonalny parameter <parameter>szukana_wartość</parameter>,
+   zwracane są tylko klucze dla danej, do których przypisana jest podana wartość.
+   W przeciwnym przypadku zwracane są wszystkie klucze z tablicy
+   <parameter>wejście</parameter>. Od PHP 5 można użyć opcjonalnego parametru
+   <parameter>ścisłe_porównanie</parameter> dla porównania z uwzględnieniem typu (===).
   </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>wejście</parameter></term>
+     <listitem>
+      <para>
+       Tablica, której klucze zostaną zwrócone.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>szukana_wartość</parameter></term>
+     <listitem>
+      <para>
+       Jeśli jest podana, wówczas zwracane są tylko te klucze,
+       które wskazują w tablicy na szukaną wartość.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>ścisłe_porównanie</parameter></term>
+     <listitem>
+      <para>
+       Od PHP 5 ten parametr określa, czy porównywanie wartości powinno
+       być ścisłe (===).
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca tablicę zawierającą wszystkie klucze tablicy <parameter>wejście</parameter>.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
    <example>
-    <title>Przykład użycia <function>array_keys</function></title>
+    <title>Przykład <function>array_keys</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
-$tablica = array (0 => 100, "kolor" => "czerwony");
-print_r(array_keys ($tablica));
+$tablica = array(0 => 100, "kolor" => "czerwony");
+print_r(array_keys($tablica));
 
-$tablica = array ("niebieski", "czerwony", "zielony", "niebieski", "niebieski");
-print_r(array_keys ($tablica, "niebieski"));
+$tablica = array("niebieski", "czerwony", "zielony", "niebieski", "niebieski");
+print_r(array_keys($tablica, "niebieski"));
 
-$tablica = array ("kolor" => array("niebieski", "czerwony", "zielony"),
+$tablica = array("kolor" => array("niebieski", "czerwony", "zielony"),
                   "rozmiar" => array("mały", "średni", "duży"));
-print_r(array_keys ($tablica));
+print_r(array_keys($tablica));
 ?>
 ]]>
     </programlisting>
@@ -67,9 +112,15 @@ Array
     </screen>
    </example>
   </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
   <para>
-   Patrz także: <function>array_values</function> i
-   <function>array_key_exists</function>.
+   <simplelist>
+    <member><function>array_values</function></member>
+    <member><function>array_key_exists</function></member>
+   </simplelist>
   </para>
  </refsect1>
 </refentry>
