@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.66 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.17 $ -->
+<!-- EN-Revision: 1.69 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.18 $ -->
  <chapter xml:id="language.oop" xmlns="http://docbook.org/ns/docbook">
   <title>Klasy i obiekty (PHP 4)</title>
 
@@ -8,7 +8,9 @@
    <title><literal>klasa</literal></title>
    <para>
     Klasa jest to zbiór zmiennych i funkcji operujących na tych zmiennych.
-    Do definicji klasy używana jest następująca składnia:
+    Zmienne są definiowane słowem kluczowym <literal>var</literal>, a funkcje
+    - <literal>function</literal>.  Do definicji klasy używana jest
+    następująca składnia:
    </para>
    <para>
     <informalexample>
@@ -730,12 +732,12 @@ $b->przyklad();
    magicznej nazwie <literal>__sleep</literal>. Jeśli tak, ta funkcja jest
    wywoływana przed każdą serializacją. Może ona czyścić obiekt i powinna
    zwracać tablicę z nazwami wszystkich zmiennych obiektu, które powinny być
-   serializowane.
+   serializowane. Jeśli metoda nie zwraca żadnej wartości, serializowana jest
+   wartość &null; i wystosowywane jest ostrzeżenie klasy E_NOTICE.
   </para>
   
   <para>
-   Założonym użyciem <literal>__sleep</literal> jest zamknięcie wszystkich
-   połączeń do baz danych, które obiekt może utrzymywać, zatwierdzenie
+   Założonym użyciem <literal>__sleep</literal> jest zatwierdzenie
    wszystkich oczekujących danych lub wykonanie innych podobnych czynności
    czyszczących. Funkcja ta jest także przydatna jeśli masz bardzo duże
    obiekty, które nie muszą być zachowane w całości.
