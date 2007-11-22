@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.19 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.7 $ -->
+<!-- EN-Revision: 1.20 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.8 $ -->
 <refentry xml:id="function.array-multisort" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>array_multisort</refname>
@@ -81,8 +81,8 @@
     <programlisting role="php">
 <![CDATA[
 <?php
-$tbl1 = array ("10", 100, 100, "a");
-$tbl2 = array (1, 3, "2", 1);
+$tbl1 = array (10, 100, 100, 0);
+$tbl2 = array (1, 3, 2, 4);
 array_multisort ($tbl1, $tbl2);
 
 var_dump($tbl1);
@@ -91,23 +91,23 @@ var_dump($tbl2);
 ]]>
     </programlisting>
     <para>
-     W tym przypadku, po sortowaniu, pierwsza tablica będzie zawierać 10,
-     "a", 100, 100, a druga 1, 1, "2", 3. Elementy drugiej tablicy
+     W tym przypadku, po sortowaniu, pierwsza tablica będzie zawierać 0, 10,
+     100, 100, a druga 4, 1, 2, 3. Elementy drugiej tablicy
      odpowiadające identycznym elementom pierwszej tablicy (100 i 100) także
      zostały posortowane.
     </para>
     <screen>
 <![CDATA[
 array(4) {
-  [0]=> string(2) "10"
-  [1]=> string(1) "a"
+  [0]=> int(0)
+  [1]=> int(10)
   [2]=> int(100)
   [3]=> int(100)
 }
 array(4) {
-  [0]=> int(1)
+  [0]=> int(4)
   [1]=> int(1)
-  [2]=> string(1) "2"
+  [2]=> int(2)
   [3]=> int(3)
 }
 ]]>
