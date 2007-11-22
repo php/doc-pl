@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.60 Maintainer: leszek Status: ready -->
-<!-- $Revision: 1.14 $ -->
+<!-- EN-Revision: 1.65 Maintainer: leszek Status: ready -->
+<!-- $Revision: 1.15 $ -->
  <chapter xml:id="functions" xmlns="http://docbook.org/ns/docbook">
   <title>Funkcje</title>
 
@@ -39,6 +39,7 @@ function foo ($arg_1, $arg_2, /* ..., */ $arg_n)
     się następująco:
     <literal>[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*</literal>.
    </para>
+   &tip.userlandnaming;
    <simpara>
     W PHP 3, funkcje muszą być zdefiniowane przed odwołaniem do nich. W PHP 4
     nie ma takiego wymagania. <emphasis>Wyjątkiem</emphasis> jest warunkowe
@@ -253,6 +254,7 @@ function rob_kawe ($typ = "cappucino")
     return "Robię kubek $typ.\n";
 }
 echo rob_kawe ();
+echo rob_kawe (null);
 echo rob_kawe ("espresso");
 ?>
 ]]>
@@ -265,6 +267,7 @@ echo rob_kawe ("espresso");
     <para>
      <screen>
 Robię kubek cappucino.
+Robię kubek .
 Robię kubek espresso.
      </screen>
     </para>
@@ -595,6 +598,15 @@ $foo->$funkcja();  // Wywoła $foo->Zmienna()
     ważnych, choć czasem subtelnych różnic, jest kluczowa dla pisania
     poprawnego kodu PHP.
    </para>
+   <note>
+    <simpara>
+     Jeśli parametry przekazane do funkcji nie są oczekiwanego typu, jak na
+     przykład podanie zmiennej typu <type>array</type>, kiedy oczekiwana jest
+     zmienna <type>string</type>, zwracana wartość funkcji jest nieokreślona.
+     W tym przypadku najprawdopodobniej zwrócona będzie wartość &null;, ale
+     jest to tylko konwencja na której nie można polegać.
+    </simpara>
+   </note>
    <para>
     Patrz także <function>function_exists</function>, 
     <link linkend="funcref">indeks funkcji</link>,
