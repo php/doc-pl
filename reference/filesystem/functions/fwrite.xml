@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.16 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.8 $ -->
+<!-- EN-Revision: 1.17 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.9 $ -->
 <refentry xml:id="function.fwrite" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>fwrite</refname>
   <refpurpose>Zapis pliku binarnie bezpieczny</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
    <type>int</type><methodname>fwrite</methodname>
    <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam>
@@ -17,22 +18,60 @@
   <simpara>
    <function>fwrite</function> zapisuje treść
    <parameter>łańcuch</parameter> do strumienia pliku wskazanego przez
-   <parameter>uchwyt</parameter>. Jeśli argument <parameter>długość</parameter>
-   został podany, zapis zatrzymywany jest po zapisaniu
-   <parameter>długość</parameter> bajtów lub <parameter>łańcuch</parameter>
-   skończy się, cokolwiek nastąpi szybciej.
+   <parameter>uchwyt</parameter>.
   </simpara>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>uchwyt</parameter></term>
+     <listitem>
+      &fs.file.pointer;
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>łańcuch</parameter></term>
+     <listitem>
+      <para>
+       Łańcuch znaków, który ma być zapisany.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>długość</parameter></term>
+     <listitem>
+      <para>
+       Jeśli podany jest argument <parameter>długość</parameter>, zapisywanie
+       zakończy się po zapisaniu <parameter>długości</parameter> bajtów lub
+       gdy osiagnięty zostanie koniec <parameter>łańcucha</parameter>, cokolwiek zdarzy
+       się pierwsze.
+      </para>
+      <para>
+        Zauważ, że jeśli argument <parameter>długość</parameter> zosta podany,
+        to konfiguracja <link
+        linkend="ini.magic-quotes-runtime">magic_quotes_runtime</link>
+        zostaje zignorowana i żadne slashe nie zostaną usunięte z
+        <parameter>łańcucha</parameter>.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
   <simpara>
-   <function>fwrite</function> zwraca liczbę zapisanych bajtów,
+   <function>fwrite</function> zwraca liczbę zapisanych bajtów
    lub &false; w przypadku błędu.
   </simpara>
-  <simpara>
-   Zauważ, że jeśli argument <parameter>długość</parameter> zosta podany,
-   to konfiguracja <link
-   linkend="ini.magic-quotes-runtime">magic_quotes_runtime</link>
-   zostaje zignorowana i żadne slashe nie zostaną usunięte z
-   <parameter>łańcucha</parameter>.
-  </simpara>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
   <note>
    <para>
     W systemach, które rozróżniają pliki na binarne i tekstowe
@@ -51,6 +90,10 @@
     przerywania.
    </para>
   </note>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
    <example>
     <title>Prosty przykład <function>fwrite</function></title>
@@ -89,14 +132,19 @@ fclose($uchwyt);
     </programlisting>
    </example>
   </para>
+ </refsect1>
 
-  <simpara>
-   Patrz także: <function>fread</function>,
-	 <function>fopen</function>,
-   <function>fsockopen</function>,
-   <function>popen</function> i
-   <function>file_put_contents</function>.
-  </simpara>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>fread</function></member>
+    <member><function>fopen</function></member>
+    <member><function>fsockopen</function></member>
+    <member><function>popen</function></member>
+    <member><function>file_get_contents</function></member>
+   </simplelist>
+  </para>
  </refsect1>
 </refentry>
 
