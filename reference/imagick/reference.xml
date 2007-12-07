@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="iso-8859-2"?>
+<!-- EN-Revision: 1.12 Maintainer: joeaccord Status: ready -->
+<!-- $Revision: 1.1 $ -->
+<!-- Purpose: utilspec.image -->
+<!-- Membership: pecl, external -->
+<!-- State: experimental -->
+<reference xmlns="http://docbook.org/ns/docbook" xml:id="ref.imagick">
+ <title>Biblioteka Graficzna Imagick</title>
+ <titleabbrev>Biblioteka Graficzna Imagick</titleabbrev>
+
+ <partintro>
+  <section xml:id="imagick.intro">
+   &reftitle.intro;
+   <para>
+    &warn.experimental;
+    Imagick jest wewnętrznym rozszerzeniem PHP używającym ImageMagick API
+    do tworzenia i modyfikowania grafiki.
+   </para>
+  </section>
+
+  <section xml:id="imagick.aboutimagemagick">
+   <para>
+    ImageMagickŽ jest zestawem programów do tworzenia, edycji i składania grafiki
+    rastrowej. Umożliwia odczytywanie, przekształcanie i zapisywanie obrazów
+    w rozmaitych formatach (ponad 100) włącznie z DPX, EXR, GIF, JPEG, JPEG-2000,
+    PDF, PhotoCD, PNG, Postscript, SVG, i TIFF.
+   </para>
+   <para>
+    Copyright 1999-2007 ImageMagick Studio LLC, niekomercyjna organizacja wyspecjalizowana w wytwarzaniu swobodnie dostępnych rozwiązań oprogramowania graficznego.
+    </para>
+  </section>
+
+  <section xml:id="imagick.examples">
+   &reftitle.examples;
+   <para>
+    Imagick w PHP w prosty sposób przetwarza obrazy, bezpośrednio poprzez
+    interfejs zorientowany obiektowo. Oto krótki przykład przedstawiający
+    jak zrobić miniaturkę:
+    <example>
+     <title>Tworzenie miniaturki w Imagick</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+
+header('Content-type: image/jpeg');
+
+$obraz = new Imagick('image.jpg');
+
+// Jeśli zostanie przekazane 0 w parametrze szerokości
+// lub wysokości, to zostanie utrzymana proporcja obrazu
+$obraz->thumbnailImage(100, 0);
+
+echo $obraz;
+
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+
+   <para>
+    Używając standardowej biblioteki PHP (SPL) i innych cech programowania
+    obiektowego w Imagick, można w prosty sposób zmienić rozmiary wszystkich
+    plików w katalogu (jest to użyteczne podczas seryjnej zmiany rozmiarów
+    wielkich obrazów, zrobionych za pomocą cyfrowego aparatu fotograficznego,
+    a przeznaczonych na stronę www). Oto przykład jak zmienić rozmiar obrazu,
+    zachowując określone informacje o danych:
+    <example>
+     <title>Tworzenie miniaturek wszystkich plików JPG w katalogu</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+
+$obrazy = new Imagick(glob('obrazy/*.jpg'));
+
+foreach($obrazy as $obraz) {
+
+    // Przekazanie 0 wymusza na thumbnailImage utrzymanie stosunku wymiarów obrazu
+    $obraz->thumbnailImage(1024,0);
+
+}
+
+$obrazy->writeImages();
+
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+  </section>
+ </partintro>
+ &reference.imagick.constants;
+ &reference.imagick.install;
+ &reference.imagick.imagick;
+ &reference.imagick.imagickdraw;
+ &reference.imagick.imagickpixel;
+ &reference.imagick.imagickpixeliterator;
+</reference>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"../../../manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
