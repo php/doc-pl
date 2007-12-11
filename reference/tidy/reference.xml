@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='iso-8859-2'?>
-<!-- EN-Revision: 1.12 Maintainer: joeaccord Status: ready -->
-<!-- $Revision: 1.5 $ -->
+<!-- EN-Revision: 1.13 Maintainer: joeaccord Status: ready -->
+<!-- $Revision: 1.6 $ -->
 <!-- Purpose: basic.other -->
 <!-- Membership: pecl, bundled, external -->
 
@@ -12,17 +12,19 @@
    <section xml:id="tidy.intro">
    &reftitle.intro;
     <para>
-     Tidy jest dowiązaniem do narzędzia Tidy HTML Czyść i Napraw,
-     które pozwala nie tylko porządkować i manipulować dokumentami HTML
-     ale również poruszać się po drzewie węzłów dokumentu.
+     Tidy jest dowiązaniem do narzędzia Tidy Czyść i Napraw HTML
+     (ang. Tidy HTML clean and repair), które pozwala nie tylko
+     porządkować i manipulować dokumentami HTML ale również
+     poruszać się po drzewie węzłów dokumentu.
     </para>
    </section>
 
    <section xml:id="tidy.requirements">
     &reftitle.required;
     <para>
-     Aby używać Tidy musisz mieć zainstalowaną bibliotekę libtidy
-     dostępną na stronie <link xlink:href="&url.tidy;">&url.tidy;</link>.
+     Aby używać Tidy musimy mieć zainstalowaną bibliotekę libtidy,
+     która jest dostępna na stronie
+     <link xlink:href="&url.tidy;">&url.tidy;</link>.
     </para>
    </section>
 
@@ -58,7 +60,7 @@
         <para><xref linkend='function.tidyNode-isComment' /> - Zwraca &true; jeżeli bieżący węzeł jest komentarzem</para>
        </listitem>
        <listitem>
-        <para><xref linkend='function.tidyNode-isHtml' /> - Zwraca &true; jeżeli bieżący węzeł to HTML</para>
+        <para><xref linkend='function.tidyNode-isHtml' /> - Zwraca &true; jeżeli bieżący węzeł jest kodem HTML</para>
        </listitem>
        <listitem>
         <para><xref linkend='function.tidyNode-isJste' /> - Zwraca &true; jeżeli bieżący węzeł jest kodem JSTE</para>
@@ -135,12 +137,12 @@ $config = array(
            'output-xhtml'   => true,
            'wrap'           => 200);
 
-// Tidy
+// przetwarzanie Tidy
 $tidy = new tidy;
 $tidy->parseString($html, $config, 'utf8');
 $tidy->cleanRepair();
 
-// Output
+// wynik
 echo $tidy;
 ?>
 ]]>
