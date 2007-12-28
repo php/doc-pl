@@ -1,83 +1,9 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.16 Maintainer: joeaccord Status: ready -->
-<!-- $Revision: 1.4 $ -->
-<!-- Purpose: database.vendors -->
-<!-- Membership: bundled, external -->
+<!-- EN-Revision: 1.17 Maintainer: joeaccord Status: ready -->
+<!-- $Revision: 1.5 $ -->
 
  <reference xml:id="ref.msql" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <title>Mini SQL</title>
-  <titleabbrev>mSQL</titleabbrev>
-  <partintro>
-
-   <section xml:id="msql.intro">
-   &reftitle.intro;
-   <para>
-    Te funkcje pozwalają nam uzyskać dostęp do serwerów baz danych mSQL.
-    Więcej informacji na temat mSQL można znaleźć na stronie
-    <link xlink:href="&url.msql;">&url.msql;</link>.
-   </para>
-   </section>
-
-   &reference.msql.configure;
-
-   &reference.msql.ini;
-
-   <section xml:id="msql.resources">
-    &reftitle.resources;
-    <para>
-     Istnieją dwa typy zasobów używane w module mSQL. Pierwszy z nich to
-     identyfikator połączenia z bazą danych, natomiast drugi to zasób
-     przechowujący wyniki zapytania.
-    </para>
-   </section>
-
-   &reference.msql.constants;
-
-   <section xml:id="msql.examples">
-   &reftitle.examples;
-    <para>
-     Ten prosty przykład pokazuje jak można połączyć się do bazy mSQL,
-     wykonać zapytanie, wyświetlić wiersze z wynikami i zamknąć połączenie.
-     <example>
-      <title>Przykład użycia mSQL</title>
-      <programlisting role="php">
-<![CDATA[
-<?php
-/* Nawiązanie połączenia, wybór bazy danych */
-$link = msql_connect('localhost')
-    or die('Nie można nawiązać połączenia : ' . msql_error());
-
-msql_select_db('database', $link)
-    or die('Nie można wybrać bazy danych');
-
-/* Wykonanie zapytania SQL */
-$query = 'SELECT * FROM my_table';
-$result = msql_query($query, $link) or die('Wykonanie zapytania nie powiodło się : ' . msql_error());
-
-/* Wyświetlenie wyników w postaci tabeli HTML */
-echo "<table>\n";
-while ($row = msql_fetch_array($result, MSQL_ASSOC)) {
-    echo "\t<tr>\n";
-    foreach ($row as $col_value) {
-        echo "\t\t<td>$col_value</td>\n";
-    }
-    echo "\t</tr>\n";
-}
-echo "</table>\n";
-
-/* Zwolnienie pamięci zajmowanej przez wynik */
-msql_free_result($result);
-
-/* Zamknięcie połączenia */
-msql_close($link);
-?>
-]]>
-      </programlisting>
-     </example>
-    </para>
-   </section>
-
-  </partintro>
+  <title>Funkcje mSQL</title>
 
 &reference.msql.entities.functions;
 
