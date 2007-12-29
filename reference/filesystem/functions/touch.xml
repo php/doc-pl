@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.13 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.6 $ -->
-<!-- splitted from ./pl/functions/filesystem.xml, last change in rev 1.1 -->
-<!-- last change to 'touch' in en/ tree in rev 1.2 -->
-<!-- OLD-Revision: 1.115/EN.1.2 -->
+<!-- EN-Revision: 1.14 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.7 $ -->
+
 <refentry xml:id="function.touch" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>touch</refname>
   <refpurpose>Ustawia czas modyfikacji pliku</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>touch</methodname>
    <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
@@ -20,20 +19,58 @@
   <para>
    Próbuje ustawić czas dostępu i modyfikacji pliku o nazwie
    <parameter>nazwa_pliku</parameter> na wartość podaną przez <parameter>czas</parameter>.
-   Jeśli parametr <parameter>czas</parameter> nie został podany, używa bieżącego czasu systemowego.
-   Jeśli trzeci parametr <parameter>dczas</parameter> jest dostępny, czas dostępu do podanego
-   pliku jest ustawiany na wartość <parameter>dczas</parameter>.
    Zauważ, że czas dostępu jest zawsze modyfikowany, niezależnie od ilości parametrów.
   </para>
   <para>
-   Jeśli plik nie istnieje, to zostanie utworzony. &return.success;
+   Jeśli plik nie istnieje, to zostanie utworzony.
   </para>
-  <warning>
-   <para>
-    Obecnie nie jest możliwa zmiana czasu modyfikacji katalogu za pomocą tej funkcji pod
-    Windows.
-   </para>
-  </warning>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>nazwa_pliku</parameter></term>
+     <listitem>
+      <para>
+       Nazwa pliku, który ma być zmodyfikowany.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>czas</parameter></term>
+     <listitem>
+      <para>
+       Czas modyfikacji. Jeśli <parameter>czas</parameter> nie został podany,
+       zostanie użyty bieżący czas systemowy.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>dczas</parameter></term>
+     <listitem>
+      <para>
+       Jeśli podano, to czas dostępu do podanego pliku zostanie ustawiony
+       na wartość <parameter>dczas</parameter>
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+
+
 
   <para>
    <example>
@@ -52,6 +89,17 @@ if (touch($FileName)) {
    </example>
   </para>
  </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <warning>
+   <para>
+    Obecnie niemożliwa jest zmiana czasu modyfikacji katalogu za
+    pomocą tej funkcji pod systemem Windows.
+   </para>
+  </warning>
+ </refsect1>
+
 </refentry>
 
 <!-- Keep this comment at the end of the file
