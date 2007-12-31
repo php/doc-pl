@@ -1,21 +1,111 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.14 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.7 $ -->
+<!-- EN-Revision: 1.20 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.8 $ -->
 <refentry xml:id="function.copy" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>copy</refname>
   <refpurpose>Kopiuje plik</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>copy</methodname>
    <methodparam><type>string</type><parameter>źródło</parameter></methodparam>
    <methodparam><type>string</type><parameter>przeznaczenie</parameter></methodparam>
+   <methodparam choice="opt"><type>resource</type><parameter>kontekst</parameter></methodparam>
   </methodsynopsis>
   <para>
    Kopiuje plik z <parameter>źródło</parameter> do
-   <parameter>przeznaczenie</parameter>. &return.success;
+   <parameter>przeznaczenie</parameter>.
+  </para>
+  <para>
+   Jeśli chcesz przenieść plik, użyj funkcji <function>rename</function>.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>źródło</parameter></term>
+     <listitem>
+      <para>
+       Ścieżka do pliku źródłowego.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>przeznaczenie</parameter></term>
+     <listitem>
+      <para>
+       Ścieżka docelowa. Jeśli <parameter>przeznaczenie</parameter> jest URLem, 
+       operacja kopiowania może się niepowieść, jeśli wrapper nie obsługuje nadpisywania
+       istniejących plików.
+      </para>
+      <warning>
+       <para>
+        Jeśli, docelowy plik istnieje to zostanie nadpisany.
+       </para>
+      </warning>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>kontekst</parameter></term>
+     <listitem>
+      <para>
+       Prawidłowo utworzony zasób kontekstowy za pomocą
+       <function>stream_context_create</function>.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>5.3.0</entry>
+       <entry>
+        Dodano obsługę kontekstu.
+       </entry>
+      </row>
+      <row>
+       <entry>4.3.0</entry>
+       <entry>
+        Zarówno <parameter>źródło</parameter> i <parameter>przeznaczenie</parameter>
+        mogą być URLami jeśli "wrappery fopen" zostały włączone.
+        Zobacz <function>fopen</function> w celu poznania więcej szczegółów.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>   
    <example>
     <title><function>copy</function> przykład</title>
     <programlisting role="php">
@@ -32,38 +122,21 @@ if (!copy($file, $newfile)) {
     </programlisting>
    </example>
   </para>
-  <para>
-   Jeśli chcesz przenieść plik, użyj funkcji <function>rename</function>.
-  </para>
-  <note>
-   <para>
-    W wersji 4.3.0, oba parametry <parameter>źródło</parameter> i
-    <parameter>przeznaczenie</parameter> mogą być URLami, jeśli został
-    włączony "fopen wrappers".
-    Zobacz <function>fopen</function> aby uzyskać więcej szczegółów.
-    Jeśli <parameter>przeznaczenie</parameter> jest URLem, kopiowanie może
-    się nie powieść w przypadku gdy wrapper nie obsługuje nadpisywania
-    istniejących plików.
-   </para>
-  </note>
-  <warning>
-   <para>
-    Jeśli docelowy plik istnieje to zostanie nadpisany.
-   </para>
-  </warning>
-  <note>
-   <para>
-    Kompatybilność w Windows: Jeśli kopiujesz plik pusty (o rozmiarze
-    0 B) <function>copy</function> zwróci &false;, lecz plik zostanie poprawnie
-    skopiowany.
-   </para>
-  </note>
-  <para>
-   Patrz także: <function>move_uploaded_file</function>,
-   <function>rename</function> i rozdział dotyczący
-   <link linkend="features.file-upload">obsługi przesyłanych (uploadowanych) plików</link>.
-   </para>
  </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>move_uploaded_file</function></member>
+    <member><function>rename</function></member>
+    <member>Rozdział podręcznika dotyczący<link 
+     linkend="features.file-upload">obsługi wgrywania plików</link></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+
 </refentry>
 
 <!-- Keep this comment at the end of the file
