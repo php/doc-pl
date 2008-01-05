@@ -1,40 +1,13 @@
 <?xml version='1.0' encoding='iso-8859-2'?>
-<!-- EN-Revision: 1.13 Maintainer: joeaccord Status: ready -->
-<!-- $Revision: 1.6 $ -->
+<!-- EN-Revision: 1.15 Maintainer: joeaccord Status: ready -->
+<!-- $Revision: 1.7 $ -->
 <!-- Purpose: basic.other -->
 <!-- Membership: pecl, bundled, external -->
 
  <reference xml:id="ref.tidy" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <title>Tidy</title>
+  <title>&Functions; Tidy</title>
   <titleabbrev>tidy</titleabbrev>
-
   <partintro>
-   <section xml:id="tidy.intro">
-   &reftitle.intro;
-    <para>
-     Tidy jest dowiązaniem do narzędzia Tidy Czyść i Napraw HTML
-     (ang. Tidy HTML clean and repair), które pozwala nie tylko
-     porządkować i manipulować dokumentami HTML ale również
-     poruszać się po drzewie węzłów dokumentu.
-    </para>
-   </section>
-
-   <section xml:id="tidy.requirements">
-    &reftitle.required;
-    <para>
-     Aby używać Tidy musimy mieć zainstalowaną bibliotekę libtidy,
-     która jest dostępna na stronie
-     <link xlink:href="&url.tidy;">&url.tidy;</link>.
-    </para>
-   </section>
-
-   &reference.tidy.configure;
-   &reference.tidy.ini;
-
-   <section xml:id="tidy.resources">
-    &reftitle.resources;
-    &no.resource;
-   </section>
 
    <section xml:id='tidy.classes'>
     &reftitle.classes;
@@ -78,7 +51,7 @@
       &reftitle.properties;
       <itemizedlist>
        <listitem>
-        <para>value - wartość węzła (np.: tekst)</para>
+        <para>value - wartość węzła (np. tekst)</para>
        </listitem>
        <listitem>
         <para>name - nazwa znacznika (np. html, a, itd.)</para>
@@ -99,7 +72,7 @@
         <para>id - identyfikator ID znacznika (jeden z poniższych, np. <constant>TIDY_TAG_FRAME</constant>)</para>
        </listitem>
        <listitem>
-        <para>attribute - tablica zawierająca argumenty bieżącego węzła, lub &null; jeżeli nie występują</para>
+        <para>attribute - tablica zawierająca argumenty bieżącego węzła, lub &null; jeśli nie występują</para>
        </listitem>
        <listitem>
         <para>child - tablica zawierająca potomków węzłów uporządkowanych przez Tidy, lub &null; jeżeli nie występują</para>
@@ -112,43 +85,6 @@
       </note>
      </section>
     </section>
-   </section>
-
-   &reference.tidy.constants;
-
-   <section xml:id="tidy.examples">
-   &reftitle.examples;
-    <para>
-     Ten nieskomplikowany przykład pokazuje podstawowe użycie Tidy.
-     <example>
-      <title>Podstawowe użycie Tidy</title>
-      <programlisting role="php">
-<![CDATA[
-<?php
-ob_start();
-?>
-<html>przykładowy dokument html</html>
-<?php
-$html = ob_get_clean();
-
-// konfiguracja Tidy
-$config = array(
-           'indent'         => true,
-           'output-xhtml'   => true,
-           'wrap'           => 200);
-
-// przetwarzanie Tidy
-$tidy = new tidy;
-$tidy->parseString($html, $config, 'utf8');
-$tidy->cleanRepair();
-
-// wynik
-echo $tidy;
-?>
-]]>
-      </programlisting>
-     </example>
-    </para>
    </section>
   </partintro>
 
