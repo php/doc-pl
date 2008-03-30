@@ -1,10 +1,11 @@
-<!-- EN-Revision: 1.211 Maintainer: leszek Status: ready -->
+<!-- EN-Revision: 1.219 Maintainer: leszek Status: ready -->
+<!-- $Revision$ -->
+<!-- CREDITS: joeaccord -->
 <!-- Keep 'em sorted -->
 
 
 <!-- Notes -->
 
-<!-- $Revision$ -->
 
 <!ENTITY note.bin-safe '<note><simpara>Ta funkcja jest bezpieczna dla danych
 binarnych.</simpara></note>'>
@@ -17,31 +18,32 @@ więcej informacji.</simpara></note>'>
 dodana w <literal>PHP 5.0.0</literal>. Opis <literal>kontekstów</literal>
 znajduje się w rozdziale <xref linkend="ref.stream"/>.</simpara></note>'>
 
-<!ENTITY note.exec-bg '<note><para>Jeśli ta funkcja zostanie użyta do
-uruchomienia programu który ma działać w tle, należy upewnić się, że wyjście
-tego programu jest przekierowane do pliku lub innego strumienia wyjściowego. W
-przeciwnym wypadku PHP zawiesi działanie aż do zakończenia działania
+<!ENTITY note.exec-bg '<note><para>Jeśli program uruchamiany w tle
+zawiera tę funkcję, należy upewnić się, że wyjście tego programu jest
+przekierowane do pliku lub innego strumienia wyjściowego. W przeciwnym
+przypadku PHP zawiesi działanie aż do zakończenia działania
 wykonywanego programu.</para></note>'>
 
 <!ENTITY note.func-callback '<note><simpara>Zamiast nazwy funkcji może zostać
 przekazana tablica zawierająca referencję do obiektu i nazwę metody
 </simpara></note>'>
 
-<!ENTITY note.funcnoparam '<note><para>Jako że działanie tej funcji zależy od
+<!ENTITY note.funcnoparam '<note><para>Jako że działanie tej funkcji zależy od
 aktualnego zasięgu, nie może ona być użyta jako parametr funkcji. Jeśli
 konieczne jest przekazanie tej wartości, należy przypisać wynik działania tej
-funkcji do zmiennej, a następnie, jako parametr, przekazać tą
-zmienną.</para></note>'>
+funkcji do zmiennej, a następnie przekazać tę zmienną
+jako parametr.</para></note>'>
 
-<!ENTITY note.line-endings '<note><simpara>W przypadku problemów z
-rozpoznawaniem znaków końca linii przez <literal>PHP</literal> przy czytaniu
-plików stworzonych lub znajdujących się na komputerach Macintosh, może pomóc
-włączenie dyrektywy konfiguracji <link linkend="ini.auto-detect-line-endings"
->auto_detect_line_endings</link>.</simpara></note>'> 
+<!ENTITY note.line-endings '<note><simpara>Jeśli PHP niewłaściwie
+rozpoznaje znaki końca linii podczas odczytu plików stworzonych
+lub znajdujących się na komputerach Macintosh, problem może
+rozwiązać włączenie dyrektywy konfiguracyjnej
+ <link linkend="ini.auto-detect-line-endings">auto_detect_line_endings</link>
+.</simpara></note>'>
 
-<!ENTITY note.no-remote '<note><simpara>Ta funkcja nie będzie działać dla
-<link linkend="features.remote-files">zdalnych plików</link>, ponieważ
-przetwarzany plik musi być dostępny poprzez system plików serwera.
+<!ENTITY note.no-remote '<note><simpara>Ta funkcja nie będzie działać na
+<link linkend="features.remote-files">zdalnych plikach</link>, ponieważ
+przetwarzany plik musi być dostępny w systemie plików serwera.
 </simpara></note>'>     
 
 <!ENTITY note.not-bin-safe '<warning><simpara>Ta funkcja nie jest (jeszcze)
@@ -57,23 +59,24 @@ platformie Windows.</simpara></note>'>
 <!ENTITY note.no-windows.extension '<note><simpara>To rozszerzenie nie jest
 dostępne na platformie Windows.</simpara></note>'>
 
-<!ENTITY note.randomseed '<note><simpara>Od PHP w wersji 4.2.0 nie ma potrzeby
+<!ENTITY note.randomseed '<note><simpara>Od PHP 4.2.0 nie ma potrzeby
 inicjalizować generatora liczb losowych funkcją <function>srand</function> lub
 <function>mt_srand</function>, ponieważ dzieje się to automatycznie.
 </simpara></note>'> 
 
 <!ENTITY note.registerglobals '<note><title>register_globals: ważna uwaga
-</title><para>Od PHP w wersji 4.2.0 domyślną wartością dyrektywy
+</title><para>Od PHP 4.2.0 domyślną wartością dyrektywy
 <link linkend="ini.register-globals">register_globals</link> jest <emphasis>
-off</emphasis>, i zostanie całkowicie usunięta w PHP 6.0.0. Społeczność PHP zaleca, aby nie polegać na tej dyrektywie, ale
-zamiast tego używać innych środków, takich jak &link.superglobals;. 
+off</emphasis>, i zostanie całkowicie usunięta w PHP 6.0.0. Społeczność
+PHP zaleca programistom, aby nie stosowali tej dyrektywy, i zamiast niej używali
+innych sposobów, takich jak &link.superglobals;.
 </para></note>'> 
 
-<!ENTITY note.superglobals '<note><title>Tablice superglobalne: uwaga na temat
-dostępności</title><para>Od PHP w wersji 4.1.0, udostępnione zostały tablice 
-superglobalne takie jak <varname>$_GET</varname>, <varname>$_POST</varname>
-czy <varname>$_SERVER</varname>. Więcej informacji można znaleźć w rozdziale
-&link.superglobals;</para></note>'> 
+<!ENTITY note.superglobals '<note></title><para>Od PHP 4.1.0 są dostępne
+tablice superglobalne: <varname>$_GET</varname>,
+<varname>$_POST</varname>, <varname>$_SERVER</varname>, itd.
+Aby uzyskać więcej informacji na ten temat, należy zapoznać się z
+&link.superglobals;</para></note>'>
 
 <!ENTITY note.uses-ob '<note><para>Ta funkcja używa wewnętrznie buforowania
 wyjścia, więc nie może być użyta wewnątrz funkcji callback podanej w wywołaniu
@@ -89,9 +92,9 @@ możliwe jest podanie jako nazwy pliku adresu URL. Zobacz opis funkcji
 obsługiwanych protokołów.
 </simpara></tip>'>
 
-<!ENTITY tip.fopen-wrapper.stat '<tip><simpara>Od wersji 5.0.0 PHP ta funkcja
-może być użyta także z <emphasis>niektórymi</emphasis> wrapperami URL. Zobacz
-<xref linkend="wrappers"/> aby uzyskać listę wrapperów które obsługują
+<!ENTITY tip.fopen-wrapper.stat '<tip><simpara>Od PHP 5.0.0 ta funkcja
+może być użyta także z <emphasis>niektórymi</emphasis> nakładkami URL. Zobacz
+<xref linkend="wrappers"/> aby uzyskać listę nakładek, które obsługują
 funkcjonalność z rodziny <function>stat</function>.</simpara></tip>'>
 
 <!ENTITY tip.ob-capture '<tip><simpara>Ze wszystkim, co wysyła dane bezpośrednio
@@ -99,26 +102,31 @@ do przeglądarki, możesz używać <link linkend="ref.outcontrol">funkcji kontro
 wyjścia</link> aby przejąć wyjście tej funkcji i zapisać je w zmiennej
 tekstowej (na przykład).</simpara></tip>'>
 
-<!ENTITY tip.userlandnaming '<tip><simpara>Możesz także chcieć
-spojrzeć na <xref linkend="userlandnaming" />.</simpara></tip>'>
+<!ENTITY tip.userlandnaming '<tip><simpara>Zobacz
+także <xref linkend="userlandnaming" />.</simpara></tip>'>
 
 <!-- Warnings -->
 
 <!ENTITY warn.escapeshell '<warning><para>Jeśli planowane jest przekazanie
-danych pochodzących od użytkownia do tej finkcji, powinno sie skorzystać z
+danych pochodzących od użytkownia do tej funkcji, powinno sie skorzystać z
 funkcji <function>escapeshellarg</function> lub <function>escapeshellcmd</function>
-aby upewnić się, że użytkownicy nie mogą uruchomić dowolnych poleceń.
+aby mieć pewność, że użytkownicy nie mogą uruchomić dowolnych poleceń systemowych.
 </para></warning>'>
  
 <!ENTITY warn.experimental '<warning xmlns="http://docbook.org/ns/docbook"><simpara>Ten moduł jest w stadium
 <emphasis>EKSPERYMENTALNYM</emphasis>. Oznacza to, że zachowanie tych funkcji,
-ich nazwy, w zasadzie wszystko udokumentowane tutaj może zostać zmienione w
+ich nazw, w zasadzie wszystko udokumentowane tutaj może zostać zmienione w
 przyszłych wersjach PHP bez wcześniejszego uprzedzenia. Używaj tego modułu na
 własne ryzyko.</simpara></warning>'>
 
 <!ENTITY warn.deprecated.removed-6-0-0 '<warning xmlns="http://docbook.org/ns/docbook"><simpara>Ta opcja jest
 <emphasis>NIEWSPIERANA</emphasis> i <emphasis>USUNIĘTA</emphasis> w PHP 6.0.0 i
 nowszych. Wykorzystywanie tej opcji jest niezalecane.</simpara></warning>'>
+
+<!ENTITY warn.deprecated.function.removed-5-3-0 '<warning
+xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja jest
+<emphasis>PRZESTARZAŁA</emphasis> i zostanie <emphasis>USUNIĘTA</emphasis>
+od PHP 5.3.0.</simpara></warning>'>
 
 <!ENTITY warn.experimental.func '<warning xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja jest w stadium
 <emphasis>EKSPERYMENTALNYM</emphasis>. Oznacza to, że zachowanie funkcji, jej
@@ -129,8 +137,8 @@ własne ryzyko.</simpara></warning>'>
 <!ENTITY warn.imaprecodeyaz '<warning><simpara>Rozszerzenia <link 
 linkend="ref.imap">IMAP</link>, <link linkend="ref.recode">recode</link>, <link
 linkend="ref.yaz">YAZ</link> i <link linkend="ref.cyrus">Cyrus</link> nie mogą
-być używane razem. Dzieje się tak z powodu współdzielenia tego samego symbolu
-wewnętrznego.</simpara></warning>'> 
+być używane razem. Dzieje się tak z powodu współdzielenia tych samych oznaczeń
+wewnętrznych.</simpara></warning>'>
 
 <!ENTITY warn.install.cgi '<warning><para>
 Używając instalacji CGI, serwer jest podatny na wiele potencjalnych ataków.
@@ -152,16 +160,16 @@ linkend="ini.allow-url-fopen">allow_url_fopen</link> jest
 włączona.</para></warning>'>
 
 <!ENTITY warn.ssl-non-standard '<warning><para>Łącząc się przez SSL, serwer
-Microsoft IIS pogwałca reguły protokołu przez zamknięcie połączenia bez
-wysłania znacznika close_notify. PHP zgłosi to jako "SSL: Fatal Protocol Error"
-po przesłaniu całości danych. Aby obejść ten błąd, wystarczy obniżyć poziom
-raportowania błędów (<link
-      linkend="ini.error-reporting">error_reporting</link>) aby nie były
-wyświetlane ostrzeżenia.  PHP w wersji 4.3.7 i nowsze wykrywa obecność
-zepsutego serwera IIS przy otwieraniu strumienia przez wrapper https:// i
-wyłącza wyświetlanie tych ostrzeżeń. Używając funkcji
-<function>fsockopen</function> do otwarcia gniazda ssl:// należy samemu
-zatroszczyć się o wyłączenie ostrzeżeń.</para></warning>'>
+Microsoft IIS narusza reguły protokołu przez zamknięcie połączenia bez
+wysłania wskaźnika <literal>close_notify</literal>. Po przesłaniu całości danych
+PHP zgłosi to jako "SSL: Fatal Protocol Error". Aby obejść ten błąd, wystarczy obniżyć
+poziom raportowania błędów <link linkend="ini.error-reporting">error_reporting</link>,
+tak aby nie były wyświetlane ostrzeżenia.
+PHP 4.3.7 i nowsze wersje same wykrywają błąd serwera IIS przy otwieraniu
+strumienia <literal>https://</literal> i za pomocą nakładki i pomijają ostrzeżenia.
+Używając funkcji <function>fsockopen</function> do otwarcia gniazda
+<literal>ssl://</literal> programista sam musi zadbać o wyłączenie
+ostrzeżeń.</para></warning>'>
 
 <!ENTITY warn.undocumented.func '<warning><simpara>Ta funkcja jest obecnie
 nieudokumentowana, dostępna jest jedynie lista jej argumentów.
@@ -169,7 +177,7 @@ nieudokumentowana, dostępna jest jedynie lista jej argumentów.
 
 <!-- Misc -->
 
-<!ENTITY no.function.parameters '<para>Ta funkcja nie zawiera parametrów.</para>'>
+<!ENTITY no.function.parameters '<para>Ta funkcja nie posiada parametrów.</para>'>
 
 <!ENTITY example.outputs '<para>Powyższy przykład wyświetli:</para>'>
 
@@ -182,7 +190,7 @@ wykonaniu.</simpara></note>'>
 
 <!ENTITY seealso.callback 'informacje o typie <link linkend="language.types.callback">callback</link>'>
 
-<!ENTITY avail.register-long-arrays 'Od PHP w wersji 5.0.0, długie tablice
+<!ENTITY avail.register-long-arrays 'Od PHP 5.0.0, długie tablice
 <link linkend="language.variables.predefined">zmiennych predefiniowanych</link> 
 mogą być wyłączone dyrektywą konfiguracji
 <link linkend="ini.register-long-arrays">register_long_arrays</link>.'> 
@@ -199,23 +207,22 @@ możliwe jest użycie poniższych aliasów: '>
 
 <!ENTITY info.function.alias.deprecated '<simpara>Ten alias jest nie zalecany i
 istnieje tylko dla zachowania kompatybilności wstecznej. Zaleca się nie
-używanie tego aliasu, jako że może on zostać usunięty z PHP.</simpara>'>
+używanie tego aliasu, jako że może on zostać usunięty w przyszłości z PHP.</simpara>'>
 
 <!ENTITY ext.windows.path.dll 'Aby poprawnie działało rozszerzenie, pliki
 <acronym>DLL</acronym> muszą znajdować się w miejscu wskazanym przez <literal>PATH</literal> systemu 
-Windows. Patrz <acronym>FAQ</acronym> zatytułowane "<link
+Windows. Aby uzyskać więcej informacji zobacz <acronym>FAQ</acronym> zatytułowane "<link
 linkend="faq.installation.addtopath">Jak mam dodać mój katalog PHP do PATH
-w Windows</link>" po informacje jak tego dokonać. Jednakże skopiowanie plików DLL
-z folderu PHP do systemowego katalogu Windows także zadziała
-(ponieważ katalog systemowy jest domyślnie w <literal>PATH</literal> systemu),
-to nie jest zalecane.
+w Windows</link>". Chociaż skopiowanie plików DLL z folderu PHP do systemowego
+katalogu Windows także zadziała (ponieważ katalog systemowy jest domyślnie
+w <literal>PATH</literal> systemu), ale nie jest to wymagane.
 <emphasis>To rozszerzenie wymaga następujących plików znajdujących się w
 <literal>PATH</literal>:</emphasis> '>
 
 <!-- Returns -->
 
-<!ENTITY return.success 'Zwraca &true; w przypadku sukcesu, &false; w
-przypadku porażki.'>
+<!ENTITY return.success 'Zwraca &true; w przypadku powodzenia, &false; w
+przypadku błędu.'>
 
 <!ENTITY return.void 'żadna wartość nie jest zwracana.'>
 
@@ -323,7 +330,7 @@ zostanie wstawiony, np. funkcją <function>domnode_append_child</function>.'>
 <!-- Dom Notes -->
 <!ENTITY dom.node.inserted 'Ten węzeł nie pojawi się w dokumencie dopóki nie
 zostanie wstawiony, np. metodą <link
-linkend="function.dom-domnode-appendchild">DOMNode->appendChild()</link>.'>
+linkend="domnode.appendchild">DOMNode->appendChild()</link>.'>
 
 <!-- FileSystem entities -->
 <!ENTITY fs.validfp.all '<para>Wskaźnik na plik musi być poprawny i musi
@@ -335,7 +342,7 @@ lub <function>fsockopen</function> (a jednocześnie nie zamknięty jeszcze przez
 jest zazwyczaj tworzony poprzez funkcję <function>fopen</function>.</para>'>
 
 <!-- Oracle -->
-<!ENTITY oci.charset "<para>Używając serwera Oracle w wersji 9.2 lub nowszej
+<!ENTITY oci.charset "<para>Używając serwera Oracle 9.2 lub nowszej wersji
 można podać parametr <parameter>charset</parameter>, który zostanie użyty przy
 nowym połączeniu. Używając serwera Oracle &lt; 9.2 ten parametr zostanie
 zignorowany, a zamiast niego użyta zostanie zmienna środowiskowa
@@ -346,18 +353,10 @@ dokonywanego przez sterownik oci8 można uzyskać w rozdziale
 dotyczącym <link linkend="oci8.datatypes">typów danych obsługiwanych przez ten
 sterownik</link></para>'>
 
-<!ENTITY oracle.deprecated '<para>Rozszerzenie <link linkend="ref.oracle">oracle</link> 
-jest przestarzałe na korzyść <link linkend="ref.oci8">oci8</link>.
-</para>'>
-
-<!ENTITY oracle.replacement.desc 'Kiedy używasz <link linkend="ref.oci8">oci8</link> 
-w zastępstwie przestarzałego rozszerzenia <link linkend="ref.oracle">oracle</link>,
-rozważ użycie: '>
-
-
 <!-- PCNTL Notes -->
-<!ENTITY pcntl.parameter.status '<para>Parametr <parameter>status</parameter>
-jest parametrem podanym do pomyślnego wywołania <function>pcntl_waitpid</function>.</para>'>
+<!ENTITY pcntl.parameter.status '<para><parameter>status</parameter>
+jest parametrem podawanym do prawidłowego
+wywołania funkcji <function>pcntl_waitpid</function>.</para>'>
 
 <!-- XSLT Notes -->
 <!ENTITY note.xslt.windows '<note><para>Zauważ, że należy podać
@@ -369,27 +368,27 @@ Windows.</para></note>'>
 
 <!ENTITY note.sm.uidcheck '<note><simpara>Kiedy włączony jest <link 
 linkend="features.safe-mode">tryb bezpieczny</link>, PHP sprawdza, czy
-pliki lub katalogi na których chcesz operować mają takie same UID (owner)
+pliki lub katalogi, na których zostaną wykonane operacje mają takie same UID (owner)
 jak skrypt, który jest aktualnie wykonywany.</simpara></note>'>
 
 <!ENTITY note.sm.uidcheck.dir '<note><simpara>Kiedy włączony jest <link 
 linkend="features.safe-mode">tryb bezpieczny</link>, PHP sprawdza czy
-katalog, na którym chcesz operować, ma takie same UID (owner) jak skrypt,
-który jest aktualnie wykonywany.</simpara></note>'>
+katalog, na którym zostaną wykonane operacje, ma takie same UID (owner)
+jak skrypt, który jest aktualnie wykonywany.</simpara></note>'>
 
-<!ENTITY note.open-basedir.func '<note><para>Ta funkcja podlega restrykcjom <link 
+<!ENTITY note.open-basedir.func '<note><para>Ta funkcja podlega restrykcjom <link
 linkend="ini.open-basedir">open_basedir</link>.</para></note>'>
 
 <!ENTITY note.language-construct '<note><simpara>Ponieważ jest to element
 składni języka a nie funkcja, nie może być on wywoływany używając
-<link linkend="functions.variable-functions">zmiennych funkcji</link></simpara> 
+<link linkend="functions.variable-functions">zmiennych funkcji</link></simpara>
 </note>'>
 
-<!-- Common pieces in features/safe-mode.xml 
-     Jade doesn't allow in-line entities, so I put them here... Though they 
+<!-- Common pieces in features/safe-mode.xml
+     Jade doesn't allow in-line entities, so I put them here... Though they
      should have been inline in safe-mode.xml -->
 <!ENTITY sm.uidcheck 'Sprawdza czy pliki lub katalogi, na których będą
-przeprowadzane operacje, mają takie same UID (owner) jak skrypt, który jest
+wykonane operacje, mają takie same UID (owner) jak skrypt, który jest
 aktualnie wykonywany.'>
 
 <!ENTITY warn.sm.exec '<warning><simpara>Jeśli włączony jest <link
@@ -397,7 +396,7 @@ linkend="features.safe-mode">tryb bezpieczny</link>, ciągi zawierające
 polecenia są filtrowane przez funkcję <function>escapeshellcmd</function>. W
 związku z tym,  <literal>echo y | echo x</literal> staje się <literal>echo y \|
 echo x</literal>.</simpara></warning>'>
-   
+
 <!ENTITY note.exec-path '<note><simpara>Jeśli
 <link linkend="features.safe-mode">tryb bezpieczny</link> został włączony, możliwe
 jest wykonywanie programów tylko z katalogu określonego przez 
@@ -405,11 +404,11 @@ jest wykonywanie programów tylko z katalogu określonego przez
 Ze względów praktycznych, nie można podawać elementów <literal>..</literal> w
 ścieżce do pliku wykonywalnego.</simpara></note>'>
 
-<!ENTITY sm.uidcheck.dir 'Sprawdza, czy katalog, na którym ma być wykonywana
-operacja, ma takie same UID (owner) jak skrypt, który jest aktualnie
+<!ENTITY sm.uidcheck.dir 'Sprawdza, czy katalog, na którym mają zostać wykonane
+operacje, ma takie same UID (owner) jak skrypt, który jest aktualnie
 wykonywany.'>
 
-<!ENTITY sm.disabled 'Ta funkcja jest niedostępna w <link 
+<!ENTITY sm.disabled 'Ta funkcja jest niedostępna jeśli PHP działa w <link
 linkend="features.safe-mode">trybie bezpiecznym</link>'>
 
 <!-- Common pieces in partintro-sections -->
@@ -430,7 +429,7 @@ konfiguracji.</para>'>
 
 <!-- Used in reference/$extname/ini.xml -->  
 <!ENTITY extension.runtime '<simpara>  
-Na działanie tych funcji wpływają ustawienia zawarte w pliku
+Na działanie tych funkcji wpływają ustawienia zawarte w pliku
 &php.ini;.</simpara>'>
 
 <!ENTITY ini.php.constants 'Szczegóły i definicje dotyczące stałych
@@ -450,7 +449,7 @@ Poniższe stałe są częścią jądra PHP a więc są zawsze widoczne.
 <!-- Used in reference/$extname/classes.xml --> 
 <!ENTITY extension.classes '<simpara> 
 Poniższe stałe zdefiniowane są w tym rozszerzeniu, a więc będą widoczne tylko
-jeśli rozszerzenie to będzie wkompilowane w PHP lub dynamicznie dołączone w
+jeśli rozszerzenie to będzie skompilowane z PHP lub załadowane dynamicznie w
 trakcie pracy.
 </simpara>'> 
 
@@ -460,10 +459,10 @@ To rozszerzenie wymaga PHP 5.</simpara></note>'>
 <!-- PDO entities -->
 <!ENTITY pdo.driver-constants '<simpara>
 Poniższe stałe są definiowane przez ten sterownik, i będą dostępne tylko kiedy
-to rozszerzenie będzie wkompilowane w PHP lub dynamicznie dołączone przy
+to rozszerzenie będzie skompilowane z PHP lub załadowane dynamicznie przy
 starcie. Dodatkowo, te specyficzne dla sterownika stałe powinny być używane
-tylko przy użyciu tego konkretnego sterownika. Używanie atrybutów bazy mysql
-przy użyciu sterownika postgres może prowadzić do nieprzewidzianego zachowania.
+tylko przy użyciu tego konkretnego sterownika. Używanie atrybutów bazy MySQL
+przy użyciu sterownika PostgreSQL może prowadzić do nieprzewidzianego zachowania.
 Jeśli skrypt korzysta z wielu sterowników, do pobrania atrybutu
 <constant>PDO_ATTR_DRIVER_NAME</constant>, zawierającego
 nazwę sterownika, można zastosować funkcję
@@ -514,9 +513,9 @@ można pobrać z:
 
 <!ENTITY windows.builtin '<simpara><literal>PHP</literal> w wersji dla systemów
 Windows posiada wbudowaną obsługę dla tego rozszerzenia. Nie trzeba ładować
-żadnych dodatkowych rozszerzeń aby korzystać z tych funkcji.</simpara>'> 
+żadnych dodatkowych rozszerzeń, aby używać tych funkcji.</simpara>'>
 
-<!-- These are here as helpers for manual consistency and brievety--> 
+<!-- These are here as helpers for manual consistency and brievety-->
 <!ENTITY safemode '<link linkend="ini.safe-mode">tryb bezpieczny</link>'> 
 
 <!ENTITY sqlsafemode '<link linkend="ini.sql.safe-mode">tryb bezpieczny SQL</link>'>
@@ -533,7 +532,7 @@ funkcjonalne śledzenia (TIMING, FUNCTIONS, ARGS SUMMARY (takie jak strace -c)) 
 <!-- BCMath Notes -->
 <!ENTITY bc.scale.description '<varlistentry><term><parameter>
 skala</parameter></term><listitem><para>Ten opcjonalny parametr służy do ustawienia liczby
-cyfr po kropce w wyniku. Możesz także ustawić globalnie domyślną skalę 
+cyfr po kropce w wyniku. Możesz także ustawić globalnie domyślną skalę
 dla wszystkich funkcji używając <function>bcscale</function>.</para></listitem></varlistentry>'>
 
 <!-- FBSQL Notes -->
@@ -554,7 +553,7 @@ zwrócony przez <function>fbsql_query</function> lub
 <!-- GMP Notes -->
 <!ENTITY gmp.return 'Numer GMP <type>zasób</type>.'>
 <!ENTITY gmp.parameter '<para>Może być zarówno numerem GMP <type>zasób</type>, lub  
-numerycznym łańcuchem znaków, który jest mozliwy do konwersji z liter do liczb.</para>'>
+numerycznym łańcuchem znaków, który można skonwertować z liter do liczb.</para>'>
 
 <!-- MySQLi Notes -->
 <!ENTITY mysqli.result.description '<varlistentry><term><parameter>
@@ -570,7 +569,7 @@ stmt</parameter></term><listitem><para>Tylko styl proceduralny: Identyfikator st
 zwrócony przez <function>mysqli_stmt_init</function>.</para></listitem></varlistentry>'>
 
 <!-- Notes for SAPI/Apache -->
-<!ENTITY note.apache.nsapi-module '<note><para>Od PHP w wersji 4.3.3 możliwe
+<!ENTITY note.apache.nsapi-module '<note><para>Od PHP 4.3.3 możliwe
 jest użycie tej funkcji przy pracy w trybie
 <link linkend="ref.nsapi">modułu NSAPI serwera</link> także w serwerach
 Netscape/iPlanet/SunONE.</para></note>'>
@@ -628,7 +627,7 @@ identyfikator_połączenia</parameter></term><listitem><para>Połączenie mSQL.
 Jeśli nie zostanie podany, używane jest ostatnie połączenie otwarte przez
 <function>msql_connect</function>. Jeśli nie zostanie ono znalezione, funkcja
 spróbuje nawiązać połączenie tak, jakby wywołana została funkcja
-<function>msql_connect</function>, i użyje je.
+<function>msql_connect</function>, i je użyje.
 </para></listitem></varlistentry>'>
 
 <!ENTITY msql.result.description '<varlistentry><term><parameter>
@@ -649,8 +648,8 @@ Jeśli identyfikator połączenia nie zostanie podany, użyte zostanie ostatnie
 połączenie otwarte przez <function>mysql_connect</function>. Jeśli połączenie
 takie nie zostanie znalezione, funkcja spróbuje nawiązać połączenie tak, jakby
 wywołana została funkcja <function>mysql_connect</function> bez argumentów.
-Jeśli żadne połączenie nie zostanie znalezione lub nawiązane, wygenerowane
-zostanie ostrzeżenie poziomu <constant>E_WARNING</constant>.</para></listitem>
+Jeśli żadne połączenie nie zostanie znalezione lub nawiązane, wygenerowany
+zostanie błąd poziomu <constant>E_WARNING</constant>.</para></listitem>
 </varlistentry>'>
 
 <!ENTITY mysql.result.description '<varlistentry><term><parameter>
@@ -668,10 +667,10 @@ ostrzeżenie poziomu
       
 <!-- Sybase Notes --> 
 <!ENTITY sybase.ct.only '<note><simpara>Ta funkcja jest dostępna tylko jeśli za
-interfejs do Sybase służy biblioteka CT, nie DB.</simpara></note>'>
+interfejs do Sybase służy biblioteka CT, a nie DB.</simpara></note>'>
 
 <!ENTITY sybase.db.only '<note><simpara>Ta funkcja jest dostępna tylko jeśli za
-interfejs do Sybase służy biblioteka DB, nie CT.</simpara></note>'>
+interfejs do Sybase służy biblioteka DB, a nie CT.</simpara></note>'>
 
 <!ENTITY sybase.linkid.description '<varlistentry><term><parameter>
 identyfikator_połączenia</parameter></term><listitem><para>Połączenie Sybase.
@@ -679,22 +678,21 @@ Jeśli identyfikator połączenia nie zostanie podany, używane jest ostatnie
 połączenie otwarte przez <function>sybase_connect</function>. Jeśli nie ma
 takiego połączenia, funkcja spróbuje nawiązać je tak, jakby wywołana została
 funkcja <function>sybase_connect</function> bez argumentów. Jeśli żadne
-połączenie nie zostało znalezione lub nawiązane, wygenerowane zostanie
-ostrzeżenie poziomu <constant>E_WARNING</constant>.</para></listitem>
+połączenie nie zostało znalezione lub nawiązane, wygenerowany zostanie
+błąd poziomu <constant>E_WARNING</constant>.</para></listitem>
 </varlistentry>'>
 
-<!-- CPDF notes --> 
-<!ENTITY cpdf.ul '<para>Opcjonalny parametr <parameter>tryb</parameter> określa
-długość jednostki. Jeśli jest to 0 lub parametr został pominięty, używana jest
-taka jednostka jaka została podana dla strony. W przeciwnym przypadku
-koordynaty są mierzone w punktach postscriptowych ignorując bieżącą jednostkę.
-</para>'> 
+<!-- CPDF notes -->
+<!ENTITY cpdf.ul '<para>Opcjonalny parametr <parameter>tryb</parameter>
+określa długośc jednostki. Jeśli wynosi <literal>0</literal> lub jest pominięty,
+używana jest taka jednostka, jaka została podana dla strony. W przeciwnym przypadku
+koordynaty są mierzone w punktach postscriptowych, ignorując bieżącą jednostkę.</para>'>
 
 <!ENTITY cpdf.mode.description '<varlistentry><term><parameter>
 mode</parameter></term><listitem><para>Opcjonalny parametr <parameter>tryb</parameter>
-określa jednostkę długości. Jeśli jest 0 lub pominięto go, użyta jest domyślna jednostka
-określona dla strony. W przeciwnym wypadku współrzędne są mierzone w punktach
-postscriptowych ignorując obecne jednostki.</para></listitem></varlistentry>'>
+określa jednostkę długości. Jeśli wynosi <literal>0</literal> lub go pominięto, używana
+jest domyślna jednostka określona dla strony. W przeciwnym przypadku współrzędne są mierzone
+w punktach postscriptowych, ignorując obecne jednostki.</para></listitem></varlistentry>'>
 
 <!ENTITY cpdf.pdf-document.description '<varlistentry><term><parameter>
 pdf_document</parameter></term><listitem><para>Uchwyt dokumentu, zwrócony przez
@@ -702,23 +700,23 @@ pdf_document</parameter></term><listitem><para>Uchwyt dokumentu, zwrócony przez
 
 <!-- Xattr entities -->
 <!ENTITY xattr.namespace '<para>Rozszerzone atrybuty mają dwie różne
-przestrzenie nazw: przetrzeń użytkownika i przestrzeń roota. Przestrzeń
+przestrzenie nazw: przestrzeń użytkownika i roota. Przestrzeń
 użytkownika dostępna jest dla wszystkich użytkowników, podczas gdy przestrzeń
 roota dostępna jest tylko dla użytkownika z uprawnieniami superużytkownika.
 xattr domyślne działa w przestrzeni użytkownika, ale można to zmienić używając
 argumentu <parameter>flags</parameter>.</para>'>
 
 <!-- Notes for IPv6 --> 
-<!ENTITY ipv6.brackets '<note><simpara>Podając numeryczny adres IPv6
+<!ENTITY ipv6.brackets '<note><simpara>Podając numerycznie adres IPv6
 (np. fe80::1), adres musi być objęty nawiasami kwadratowymi. Na przykład
-<literal>tcp://[fe80::1]:80</literal>.</simpara></note>'> 
+<literal>tcp://[fe80::1]:80</literal>.</simpara></note>'>
 
-<!ENTITY ipv6.php5 '<note><simpara>Obsługa protokołu IPv6 została dodana w
-<literal>PHP 5.0.0 </literal>.</simpara></note>'>
+<!ENTITY ipv6.php5 '<note><simpara>Obsługa protokołu IPv6 została dodana
+w PHP 5.0.0.</simpara></note>'>
 
 <!-- Notes for tidy -->
 <!ENTITY note.tidy.ze2 '<note><simpara>Ta funkcja jest dostępna tylko z Zend
-Engine 2, co oznacza PHP &gt;= 5.0.0.</simpara></note>'>
+Engine 2 (PHP &gt;= 5.0.0.)</simpara></note>'>
 
 <!ENTITY note.tidy.1only '<note><simpara>Ta funkcja jest dostępna tylko w Tidy
 1.0. W wersji 2.0 stała się niepotrzebna i w związku z tym została usunięta.
@@ -729,14 +727,19 @@ Engine 2, co oznacza PHP &gt;= 5.0.0.</simpara></note>'>
 w Tidy 2.0.</simpara></note>'>
 
 <!ENTITY tidy.conf-enc '<para>Parametr <parameter>config</parameter> może być
-przekazany jako tablica lub ciąg znakowy. Jesli zostanie przekazany jako ciąg
-znakowy, będzie on interpretowany jako nazwa pliku konfiguracyjnego. W
+przekazany jako tablica lub ciąg znaków. Jeśli zostanie przekazany jako ciąg
+znaków, będzie on interpretowany jako nazwa pliku konfiguracyjnego. W
 przeciwnym przypadku będzie interpretowany jako zbiór opcji. Pod adresem
-<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="&url.tidy.conf;">&url.tidy.conf;</link> można znaleźć objaśnienia
-każdej z opcji.</para><para>Parametr <parameter>encoding</parameter> określa
-kodowanie dokumentów wejściowych/wyjściowych. Dozwolone wartości parametru
-<parameter>encoding</parameter> to: ascii, latin1, raw, utf8, iso2022, mac,
-win1252, utf16le, utf16be, utf16, big5 i shiftjis.</para>'>
+<link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="&url.tidy.conf;">&url.tidy.conf;</link>
+można znaleźć objaśnienia każdej opcji.</para><para>Parametr
+<parameter>encoding</parameter> określa kodowanie dokumentów wejściowych/wyjściowych.
+Dozwolone wartości dla <parameter>encoding</parameter> to:
+<literal>ascii</literal>, <literal>latin0</literal>, <literal>latin1</literal>,
+<literal>raw</literal>, <literal>utf8</literal>, <literal>iso2022</literal>,
+<literal>mac</literal>, <literal>win1252</literal>, <literal>ibm858</literal>,
+<literal>utf16</literal>, <literal>utf16le</literal>,
+<literal>utf16be</literal>, <literal>big5</literal> i
+<literal>shiftjis</literal>.</para>'>
 
 <!-- Snippets for the installation section -->
 <!ENTITY warn.apache2.compat '<warning><para>Nie zalecamy korzystania z
@@ -758,16 +761,16 @@ mogą być także niezbędne dla katalogów.</simpara></note>'>
 
 <!ENTITY Credit.Introduction '<para>Wyróżniamy najbardziej aktywnych twórców na
 pierwszej stronie podręcznika, ale jest wielu innych współpracowników, którzy
-pomagają w pracach, lub włożyli wiele pracy w przeszłości. Jest wielu
-bezimiennych pomocników, którzy wnieśli swój udział komentarzami do
-podręcznika, które cały czas są uwzględniane w odnośnikach, i za które to uwagi
-także dziękujemy. Wszystkie poniższe listy uporządkowane są alfabetycznie.
-</para>'>
+pomagają w pracach, lub włożyli w przeszłości wiele pracy przy tym projekcie.
+Jest wiele niewymienionych tutaj ludzi, którzy wnieśli wkład w rozwój tego
+podręcznika licznymi komentarzami. Cały czas te uwagi są one uwzględniane
+w odnośnikach, i za nie serdecznie dziękujemy. Wszystkie poniższe listy
+uporządkowane są w kolejności alfabetycznej.</para>'>
 
 <!ENTITY Credit.Authors.and.Editors 'Autorzy i edytorzy'>
 
-<!ENTITY Credit.Past.Authors.Text 'Poniżsi współpracownicy powinni zostali
-wyróżnieni za wpływ jaki mieli (lub ciągle mają) w rozwijanie podręcznika:'> 
+<!ENTITY Credit.Past.Authors.Text 'Poniżsi współpracownicy powinni zostać
+wyróżnieni za wpływ jaki mieli (lub ciągle mają) w rozwój podręcznika:'>
 
 <!ENTITY Credit.Past.Editors.Text 'Poniżsi współpracownicy włożyli wiele pracy
 przy edycji podręcznika:'>
@@ -790,24 +793,24 @@ użyta do manipulacji aktualnie działającej (lub powiązanej) metody.
 This function cannot</simpara></note>'>
 
 <!ENTITY note.runkit.sandbox '<note><simpara>Obsługa rozszerzenia Sandbox
-(wymagane dla <function>runkit_lint</function>,
- <function>runkit_lint_file</function> i klasy Runkit_Sandbox) jest dostępne
-tylko w PHP 5.1 lub specjalnie załatanych wersjach PHP 5.0, i wymaga, aby
-włączone zostało bezpieczeństwo wątków. Więcej informacji można znaleźć w pliku
-README dołączonym do pakietu runkit.</simpara></note>'>
+(wymagane dla <function>runkit_lint</function>, <function>runkit_lint_file</function>,
+i klasy <classname>Runkit_Sandbox</classname>) jest dostępna tylko w
+PHP 5.1.0 lub specjalnie zmodyfikowanych wersjach PHP 5.0, i wymaga
+włączonego bezpieczeństwa wątków.  Więcej informacji można znaleźć w pliku
+<filename>README</filename> dołączonym do pakietu runkit.</simpara></note>'>
 
 <!ENTITY note.runkit.internal-override '<note><simpara>Domyślnie, tylko funkcje
 przestrzeni użytkownika mogą być usunięte, przemianowane lub zmodyfikowane. Aby
 uzyskać możliwość modyfikacji funkcji wewnętrznych, należy włączyć opcję
-<literal>runkit.internal_override</literal> ogólnosystemowego pliku
-php.ini.</simpara></note>'>
+<literal>runkit.internal_override</literal> w pliku &php.ini;.</simpara></note>'>
 
 <!-- SSH2 Extension -->
 <!ENTITY note.ssh2.subsystem.publickey '<note><simpara>
-Podsystem publickey używany jest do zarządzania kluczami publicznymi na serwerze do którego klient
-<emphasis>już jest</emphasis> autoryzowany. Aby autoryzować się do zdalnego
-systemu używając autoryzacji publickey, należy skorzystać z funkcji
-<function>ssh2_auth_pubkey_file</function>.</simpara></note>'>
+Podsystem klucza publicznego używany jest do zarządzania kluczami publicznymi
+na serwerze, do którego klient <emphasis>już jest</emphasis> autoryzowany.
+Aby autoryzować się do zdalnego systemu używając autoryzacji klucza publicznego,
+należy skorzystać z funkcji <function>ssh2_auth_pubkey_file</function>.
+</simpara></note>'>
 
 <!-- HTTP -->
 <!ENTITY see.http.request.options '<para>Patrz po pełną listę &link.http.request.options;.</para>'>
@@ -818,23 +821,24 @@ systemu używając autoryzacji publickey, należy skorzystać z funkcji
 <!ENTITY link.http.request.option '<link linkend="http.request.options">Opcja żądania</link>'>
 <!ENTITY link.http.request.options '<link linkend="http.request.options">Opcje żądania</link>'>
 <!ENTITY link.http.request.info '<link linkend="http.request.info">Informacje żądania/odpowiedzi</link>'>
-<!ENTITY returns.http.response 'Zwraca łańcuch znaków z odpowiedziami HTTP w przypadku powodzenia, lub FALSE w przypadku porażki'>
+<!ENTITY returns.http.response 'Zwraca łańcuch znaków z odpowiedziami HTTP
+w przypadku powodzenia, lub &false; w przypadku błędu'>
 
 <!ENTITY returns.http.false.orexits 'Zwraca &false; lub <emphasis>exist</emphasis> w przypadku sukcesu'>
 <!ENTITY http.request.affects 'Podlega jedynie niżej wymienionym metodom żądania:'>
 <!ENTITY http.request.affects.any 'Podlega dowolnej metodzie żądania.'>
-<!ENTITY http.response.class.php51 'Klasa <link linkend="http.HttpResponse"><classname
-   >HttpResponse</classname></link> jeśli używasz PHP-5.1 lub wyższego'>
+<!ENTITY http.response.class.php51 'Klasa <link linkend="class.httpresponse"><classname
+   >HttpResponse</classname></link> jeśli używasz PHP 5.1.0 lub późniejszego'>
 <!ENTITY http.maynotwork.SAPI 'To może nie działać jak się spodziewasz z następującymi SAPI:'>
 <!ENTITY http.content.disposition 'Nagłowek <literal>Content-Disposition</literal> jest bardzo użyteczny
    jeśli dane aktualnie wysyłane pochodzą z pliku lub czegoś podobnego, które powinny być &quot;zapisane&quot;
-   przrz klienta/użytkownika (np. przez okienko popup przeglądarki  &quot;Zapisz jako...&quot;).'>
+   przez klienta/użytkownika (np. przez okienko popup przeglądarki  &quot;Zapisz jako...&quot;).'>
 <!ENTITY http.use.ob_start 'Do użycia z <function>ob_start</function>.'>
 
 <!ENTITY note.http.response.recalculate.etag.lm '<note><simpara>Wcześniej obliczony lub zdefiniowany <literal>ETag</literal>
    i <literal>Last-Modified</literal> zostanie obliczony ponownie i zdefiniowany.</simpara></note>'>
-<!ENTITY note.http.throttling.yields.process '<note><simpara>Zapewnia podstawowy mechanizm dławiący (ang. throttling), który
-   będzie dostarczać bieżący proces po kolei przez pasmo dopóki całość nie zostanie całkowicie wysłana.</simpara></note>'>
+<!ENTITY note.http.throttling.yields.process '<note><simpara>Zapewnia podstawowy mechanizm dławiący, który
+   będzie podtrzymywać bieżący proces lub wątek, dopóki nie zostanie wysłana całość.</simpara></note>'>
 <!ENTITY note.http.send.API '<note><simpara>Ta funkcja będzie przypuszczalnie użyta w powiązaniu z
    <function>http_send_data</function>, <function>http_send_file</function> &listendand; <function>http_send_stream</function>.</simpara></note>'>
 <!ENTITY note.http.send.API.mayuse '<note><simpara>Ta funkcja może być użyta w powiązaniu z
@@ -860,3 +864,52 @@ xmlwriter</parameter></term><listitem><para>Jedynie dla wywołań proceduralnych
 <!ENTITY imagick.imagickdraw.throws 'Zgłasza wyjątek ImagickDrawException w przypadku błędu.'>
 <!ENTITY imagick.imagickpixel.throws 'Zgłasza wyjątek ImagickPixelException w przypadku błędu.'>
 <!ENTITY imagick.imagickpixeliterator.throws 'Zgłasza wyjątek ImagickPixelIteratorException w przypadku błędu.'>
+
+<!ENTITY note.openssl.cnf '<note xmlns="http://docbook.org/ns/docbook">
+ <simpara>
+  Aby ta funkcja prawidłowo działała wymaga poprawnie zainstalowanego
+  <filename>openssl.cnf</filename>.  Aby uzyskać więcej informacji przeczytaj
+  rozdział <link linkend="openssl.installation">instalacja openssl</link>.
+ </simpara>
+</note>'>
+<!ENTITY note.openssl.param-notext '<para xmlns="http://docbook.org/ns/docbook">
+ Opcjonalny parametr <parameter>notext</parameter> wpływa na szczegółowość
+ komunikatów wyjścia. Jeśli wynosi &false;, wówczas do wyjścia dołączane są
+ dodatkowe informacje zrozumiałe dla ludzi. Wartość domyślna parametru
+ <parameter>notext</parameter> wynosi: &true;.
+</para>'>
+
+<!-- COM/Dotnet -->
+<!ENTITY com.variant-arith '<note xmlns="http://docbook.org/ns/docbook">
+<para>
+ Wszystkie arytmetyczne funkcje wariantowe przyjmują jako parametry albo rdzenne
+ typy PHP (integer, string, floating point, boolean lub &null;), albo instancje
+ klas COM, VARINAT lub DOTNET.  Rdzenne typy PHP są konwertowane do wariantowych
+ przy użyciu tych samych reguł, które znajdują się w klasie konstruktora
+ <xref linkend="class.variant"/>.  Obiekty COM i DOTNET powinny mieć wartości
+ swoich domyślnych właściwości pobierane i używane jako wartości wariantowe.
+</para>
+<para>
+ Arytmetyczne funkcje wariantowe są nakładkami na podobnie nazwane funkcje
+ w bibliotece COM; aby uzyskac więcej informacji o tych funkcjach odwiedź
+ witrynę biblioteki MSDN.  Funkcje PHP są nazwane nieco inaczej. Na przykład
+ funkcji <function>variant_add</function> w PHP odpowiada <literal>VarAdd()
+ </literal> w dokumentacji MSDN.
+</para>
+</note>
+'>
+<!ENTITY com.use-oo-instead '<note xmlns="http://docbook.org/ns/docbook">
+ <simpara>
+  Ta funkcja nie istnieje w PHP 5; zamiast niej użyj składni obiektowej
+  aby uzyskać dostęp do właściwości, lub aby wywołać metody.
+ </simpara>
+</note>
+'>
+
+<!-- phar -->
+<!ENTITY phar.write '<note xmlns="http://docbook.org/ns/docbook"><para>Ta
+metoda wymaga ustawienia w &php.ini; wartości <literal>phar.readonly</literal>
+na <literal>0</literal> aby działała z obiektami <classname>Phar</classname>.
+W przeciwnym przypadku, klasa <classname>PharException</classname> zwróci wyjątek
+.</para></note>'>
+
