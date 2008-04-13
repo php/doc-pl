@@ -1,59 +1,154 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: slawek Status: ready -->
-<!-- $Revision: 1.6 $ -->
-  <refentry xml:id="function.mysql-db-query" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>mysql_db_query</refname>
-    <refpurpose>Wysyła zapytanie do bazy MySQL</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>resource</type><methodname>mysql_db_query</methodname>
-      <methodparam><type>string</type><parameter>baza</parameter></methodparam>
-      <methodparam><type>string</type><parameter>zapytanie</parameter></methodparam>
-      <methodparam choice="opt"><type>resource</type><parameter>
-        identyfikator_połączenia
-       </parameter></methodparam>
-     </methodsynopsis>
-    <para> 
-     Zwraca dodatni identyfikator wyniku MySQL wskazujący na wynik
-     zapytania, lub &false; w przypadku błędu. Wartość &true;/&false; jest
-     także zwracana dla zapytań
-     <literal>INSERT</literal>/<literal>UPDATE</literal>/<literal>DELETE</literal>
-     informując o sukcesie/porażce.
-    </para>
-    <para> 
-     <function>mysql_db_query</function> wybiera bazę i wykonuje
-     na niej zapytanie. Jeżeli opcjonalny identyfikator połączenia
-     nie został podany, funkcja będzie próbować znaleźć otwarte
-     połączenie z serwerem MySQL. Jeżeli to się nie powiedzie,
-     będzie próbować je stworzyć tak, jakby wywołane zostało
-     <function>mysql_connect</function> bez argumentów.
-    </para> 
-    <para>
-     Zwróć uwagę, że ta funkcja <emphasis role="strong">NIE</emphasis> wybierze
-     ponownie bazy danych, z którą byłeś połączony wcześniej. Innymi słowy,
-     nie możesz jej użyć by <emphasis>na boku</emphasis> wysłać zapytanie do
-     innej bazy, bo będziesz musiał ręcznie przełączać się z powrotem. Zamiast
-     tego stosuj składnię SQLa <literal>baza.tabela</literal>.
-    </para>
-    <para> 
-     Patrz także: <function>mysql_connect</function> i
-     <function>mysql_query</function>.
-    </para>
-    <para>
-     <note>
-      <simpara>
-       Od PHP 4.0.6 odradza sie stosowania tej funkcji.
-       Nie używaj jej. W zamian korzystaj z
-       <function>mysql_select_db</function> i
-       <function>mysql_query</function>.
-      </simpara>
-     </note>
-    </para>
-   </refsect1>
-  </refentry>
+<!-- EN-Revision: 1.14 Maintainer: mroq Status: ready -->
+<!-- $Revision: 1.7 $ -->
+<!-- CREDITS: slawek -->
+<refentry xml:id="function.mysql-db-query" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>mysql_db_query</refname>
+  <refpurpose>Wysyła zapytanie do bazy MySQL</refpurpose>
+ </refnamediv>
+   
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>resource</type><methodname>mysql_db_query</methodname>
+   <methodparam><type>string</type><parameter>baza</parameter></methodparam>
+   <methodparam><type>string</type><parameter>zapytanie</parameter></methodparam>
+   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+  </methodsynopsis>
+  <para> 
+   <function>mysql_db_query</function> wybiera bazę i wykonuje
+     na niej zapytanie.
+  </para>
+ </refsect1>     
+   
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>baza</parameter></term>
+     <listitem>
+      <para>
+       Nazwa bazy danych, która zostanie wybrana.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>zapytanie</parameter></term>
+     <listitem>
+      <para>
+       Zapytanie do bazy MySQL.
+      </para>
+     </listitem>
+    </varlistentry>
+    &mysql.linkid.description;
+   </variablelist>
+  </para>
+ </refsect1>   
+ 
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca dodatni identyfikator wyniku MySQL wskazujący na wynik zapytania,
+   lub &false; w przypadku błędu. Wartość &true;/&false; jest także zwracana dla zapytań  
+   <literal>INSERT</literal>/<literal>UPDATE</literal>/<literal>DELETE</literal>
+   informując o sukcesie/porażce.
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>4.0.6</entry>
+       <entry>
+        Nie zaleca się używania tej funkcji. W zamian korzystaj z 
+        <function>mysql_select_db</function> lub 
+        <function>mysql_query</function>.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>mysql_db_query</function> przykład alternatywny</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+if (!$link = mysql_connect('host', 'uzytkownik', 'haslo')) {
+    echo 'Nie można się połączyć z bazą danych';
+    exit;
+}
+
+if (!mysql_select_db('nazwa_bazy', $link)) {
+    echo 'Nie można wybrać bazy danych';
+    exit;
+}
+
+$sql    = 'SELECT foo FROM bar WHERE id = 42';
+$result = mysql_query($sql, $link);
+
+if (!$result) {
+    echo "Błąd bazy danych, nie można wykonać zapytania do bazy\n";
+    echo 'Błąd MySQL: ' . mysql_error();
+    exit;
+}
+
+while ($row = mysql_fetch_assoc($result)) {
+    echo $row['foo'];
+}
+
+mysql_free_result($result);
+
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    Zwróć uwagę, że ta funkcja <emphasis role="strong">NIE</emphasis> wybierze
+    ponownie bazy danych, z którą byłeś połączony wcześniej. Innymi słowy,
+    funkcji tej nie można użyć do wysłania zapytania <emphasis>w tle</emphasis>
+    do innej bazy, w takim przypadku należy ręcznie przełączyć się z powrotem do 
+    pierwotnie wybranej bazy. Zamiast tego zaleca się stosowanie składni
+    <literal>database.table</literal> lub
+    <function>mysql_select_db</function> w zapytaniach SQL.
+   </para>
+  </note>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>mysql_query</function></member>
+    <member><function>mysql_select_db</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
