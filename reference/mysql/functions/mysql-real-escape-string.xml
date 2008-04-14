@@ -1,61 +1,223 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.3 Maintainer: slawek Status: ready -->
-<!-- $Revision: 1.5 $ -->
-  <refentry xml:id="function.mysql-real-escape-string" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>mysql_real_escape_string</refname>
-    <refpurpose>
-     Dodaje znaki unikowe dla potrzeb poleceń SQL, biorąc po uwagę zestaw
-     znaków używany w połączeniu.
-    </refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>string</type><methodname>mysql_real_escape_string</methodname>
-      <methodparam><type>string</type><parameter>łańcuch_bez_znaków_unikowych</parameter></methodparam>
-      <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączeniar</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     Ta funkcja dodaje znaki unikowe do
-     <parameter>łańcucha_bez_znaków_unikowych</parameter>, mając na uwadze
-     aktualnie używany w połączeniu zestaw znaków. Tak przygotowanego łańcucha
-     można bezpiecznie użyc w funkcji <function>mysql_query</function>.
-    </para>
-    <note>
-     <simpara>
-      <function>mysql_real_escape_string</function> nie dodaje znaków unikowych
-      przed <literal>%</literal> i <literal>_</literal>.
-     </simpara>
-    </note>
-     <example>
-      <title>przykład użycia <function>mysql_real_escape_string</function></title>
-      <programlisting role="php">
+<!-- EN-Revision: 1.30 Maintainer: mroq Status: ready -->
+<!-- $Revision: 1.6 $ -->
+<!-- CREDITS: slawek -->
+<refentry xml:id="function.mysql-real-escape-string" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>mysql_real_escape_string</refname>
+  <refpurpose>Dodaje znaki unikowe dla potrzeb poleceń SQL, biorąc po uwagę zestaw znaków używany w połączeniu.</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>string</type><methodname>mysql_real_escape_string</methodname>
+   <methodparam><type>string</type><parameter>łańcuch_bez_znaków_unikowych</parameter></methodparam>
+   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączeniar</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Dodaje znaki unikowe do <parameter>łańcucha_bez_znaków_unikowych</parameter>, 
+   mając na uwadze aktualnie używany w połączeniu zestaw znaków by tak przygotowanego łańcucha
+   można bezpiecznie użyc w funkcji <function>mysql_query</function>. Jeśli dopisywane 
+   dane mają postać binarną wymagane jest użycie tej funkcji.
+  </para>
+  <para>
+   <function>mysql_real_escape_string</function> wywołuje funkcję biblioteki MySQL
+   mysql_real_escape_string, która dodaje lewe ukośniki (backslash) do następujących znaków:
+   <literal>\x00</literal>, <literal>\n</literal>,
+   <literal>\r</literal>, <literal>\</literal>, <literal>'</literal>,
+   <literal>"</literal> and <literal>\x1a</literal>.
+  </para>
+  <para>
+   Użycie tej funkcji jest wymagane zawsze (poza kilkoma wyjątkami) przed wysłaniem
+   zapytania do bazy danych aby zabezpieczyć dane. 
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>łańcuch_bez_znaków_unikowych</parameter></term>
+     <listitem>
+      <para>
+       Łańcuch, do którego zostaną dodane znaki unikowe.
+      </para>
+     </listitem>
+    </varlistentry>
+    &mysql.linkid.description;
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca łańcuch ze znakami unikowymi lub &false; w przypadku błędu.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Prosty przykład użycia <function>mysql_real_escape_string</function></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
-$link = mysql_connect('localhost', 'uzytkownik', 'haslo');
-$item = "Zak's and Derick's Laptop";
-$escaped_item = mysql_real_escape_string($item);
-printf ("Ze znakami unikowymi: %s\n", $escaped_item);
+// Connect
+$link = mysql_connect('host', 'uzytkownik', 'haslo')
+    OR die(mysql_error());
+
+// Zapytanie
+$query = sprintf("SELECT * FROM uzytkownicy WHERE uzytkownik='%s' AND haslo='%s'",
+            mysql_real_escape_string($uzytkownik),
+            mysql_real_escape_string($haslo));
 ?>
 ]]>
-      </programlisting>
-      <para>
-       Powyższy przykład da następujący wynik:
-       <screen>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Przykład ataku SQL Injection</title>
+    <programlisting role="php">
 <![CDATA[
-Ze znakami unikowymi: Zak\'s and Derick\'s Laptop
+<?php
+// Zapytanie pobierające pasujących użytkowników
+$query = "SELECT * FROM uzytkownicy WHERE uzytkownik='{$_POST['nazwa_uzytkownika']}' AND haslo='{$_POST['haslo']}'";
+mysql_query($query);
+
+// Nie sprawdziliśmy zmiennej $_POST['haslo'], która może zawierać wszystko czego chciał użytkownik! Na przykład:
+$_POST['nazwa_uzytkownika'] = 'aidan';
+$_POST['haslo'] = "' OR ''='";
+
+// Oznacza to, że zapytanie ma postać:
+echo $query;
+?>
 ]]>
-       </screen>
-      </para>
-     </example>
+    </programlisting>
+     <para>
+      Zapytanie wysłane do bazy danych: 
+     </para>
+    <screen>
+<![CDATA[
+SELECT * FROM users WHERE user='aidan' AND password='' OR ''=''
+]]>
+    </screen>
     <para>
-     Patrz także:
-     <function>mysql_escape_string</function>,
-     <function>mysql_character_set_name</function>.
+     Zapytanie to pozwala zalogować się każdemu bez znajomości poprawnego hasła.
     </para>
-   </refsect1>
-  </refentry>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Dobra praktyka tworzenia zapytań</title>
+    <para>
+     Użycie <function>mysql_real_escape_string</function> na każdej zmiennej
+     zapobiegnie atakom SQL Injection. Przykład ten demonstruje dobrą praktykę
+     tworzenia zapytań, niezależną od ustawień 
+     <link linkend="security.magicquotes">Magic Quotes</link>.
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+if (isset($_POST['nazwa_produktu']) && isset($_POST['opis_produktu']) && isset($_POST['id_uzytkownika'])) {
+    // Połącz
+
+    $link = mysql_connect('host', 'uzytkownik', 'haslo');
+
+    if(!is_resource($link)) {
+
+        echo "Nie udało się połączyć z serwerem\n";
+        // ... logowanie błędów
+
+    } else {
+        
+        // Odwróć efekty działania magic_quotes_gpc/magic_quotes_sybase na zmiennych jeśli opcje te są WŁĄCZONE.
+
+        if(get_magic_quotes_gpc()) {
+            $nazwa_produktu = stripslashes($_POST['nazwa_produktu']);
+            $opis_produktu  = stripslashes($_POST['opis_produktu']);
+        } else {
+            $nazwa_produktu = $_POST['nazwa_produktu'];
+            $opis_produktu  = $_POST['opis_produktu'];
+        }
+
+        // Stwórz bezpieczne zapytanie
+        $query = sprintf("INSERT INTO products (`nazwa`, `opis`, `id_uzytkownika`) VALUES ('%s', '%s', %d)",
+                    mysql_real_escape_string($nazwa_produktu, $link),
+                    mysql_real_escape_string($opis_produktu, $link),
+                    $_POST['id_uzytkownika']);
+
+        mysql_query($query, $link);
+
+        if (mysql_affected_rows($link) > 0) {
+            echo "Produkt został dopisany\n";
+        }
+    }
+} else {
+    echo "Wypełnij poprawnie formularz\n";
+}
+?>
+]]>
+    </programlisting>
+    <para>
+     Od teraz zapytanie będzie poprawne wykonywane, podczas gdy ataki SQL Injection nie będą działać.
+    </para>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    Przed użyciem <function>mysql_real_escape_string</function> należy otworzyć
+    połączenie z bazą danych, w innym przypadku błąd poziomu <literal>E_WARNING</literal>
+    zostanie wygenerowany i zwrócona zostanie wartość false.
+    Jeśli <parameter>identyfikator_połączenia</parameter> nie został zdefiniowany zostanie
+    użyte ostatnie połączenie z bazą danych.
+   </para>
+  </note>
+  <note>
+   <para>
+    Jeśli opcja <link linkend="ini.magic-quotes-gpc">magic_quotes_gpc</link> została włączona,
+    najpierw na danych należy użyć <function>stripslashes</function>. Użycie tej funkcji samej
+    spowoduje, że do danych zostaną dodane podwójne znaki unikowe.
+   </para>
+  </note>
+  <note>
+   <para>
+    Jeśli funkcja ta nie zostanie użyta na danych, zapytanie będzie podatne
+    na ataki <link linkend="security.database.sql-injection">SQL Injection Attacks</link>.
+   </para>
+  </note>
+  <note>
+   <simpara>
+    <function>mysql_real_escape_string</function> nie dodaje znaków unikowych
+    do <literal>%</literal> i <literal>_</literal>. Maski te (wildcard) są stosowane
+    w zapytaniach MySQL w połączeniu z <literal>LIKE</literal>, <literal>GRANT</literal>
+    lub <literal>REVOKE</literal>.
+   </simpara>
+  </note>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>mysql_client_encoding</function></member>
+    <member><function>addslashes</function></member>
+    <member><function>stripslashes</function></member>
+    <member>The <link linkend="ini.magic-quotes-gpc">magic_quotes_gpc</link> directive</member>
+    <member>The <link linkend="ini.magic-quotes-runtime">magic_quotes_runtime</link> directive</member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
