@@ -1,91 +1,171 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.4 $ -->
+<!-- EN-Revision: 1.14 Maintainer: garbus Status: ready -->
+<!-- $Revision: 1.5 $ -->
 <!-- splitted from ./en/functions/datetime.xml, last change in rev 1.2 -->
-  <refentry xml:id="function.getdate" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>getdate</refname>
-    <refpurpose>Pobiera informację o dacie/czasie</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>array</type><methodname>getdate</methodname>
-      <methodparam choice="opt"><type>int</type><parameter>znacznik_czasu</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     Funkcja zwraca tablicę asocjacyjną zawierającą informacje o dacie podanej
-     jako <parameter>znacznik_czasu</parameter>, lub o aktualnej dacie, jeśli
-     nie podano żadnego znacznika czasu. Tablica zawiera następujące klucze:
-     <itemizedlist>
-      <listitem>
-       <simpara>
-        "seconds" - sekundy
-       </simpara>
-      </listitem>
-      <listitem>
-       <simpara>
-        "minutes" - minuty
-       </simpara>
-      </listitem>
-      <listitem>
-       <simpara>
-        "hours" - godziny
-       </simpara>
-      </listitem>
-      <listitem>
-       <simpara>
-        "mday" - dzień miesiąca
-       </simpara>
-      </listitem>
-      <listitem>
-       <simpara>
-        "wday" - dzień tygodnia, liczbowo: od 0 - niedziela do 6 - sobota
-       </simpara>
-      </listitem>
-      <listitem>
-       <simpara>
-        "mon" - miesiąc, liczbowo
-       </simpara>
-      </listitem>
-      <listitem>
-       <simpara>
-        "year" - rok, liczbowo
-       </simpara>
-      </listitem>
-      <listitem>
-       <simpara>
-        "yday" - dzień roku, liczbowo, np. "299"
-       </simpara>
-      </listitem>
-      <listitem>
-       <simpara>
-        "weekday" - dzień tygodnia, tekstowo, pełna nazwa, np. "Friday"
-       </simpara>
-      </listitem>
-      <listitem>
-       <simpara>
-        "month" - miesiąc, tekstowo, pełna nazwa; np. "January"
-       </simpara>
-      </listitem>
-     </itemizedlist>
-     <example>
-      <title>
-       przykłady <function>getdate</function>
-      </title>
-      <programlisting role="php">
+<!-- CREDITS: qrak -->
+<refentry xml:id="function.getdate" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>getdate</refname>
+  <refpurpose>Pobiera informację o dacie/czasie</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>array</type><methodname>getdate</methodname>
+   <methodparam choice="opt"><type>int</type><parameter>znacznik_czasu</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Funkcja zwraca tablicę (<type>array</type>) asocjacyjną zawierającą informacje o dacie podanej
+   jako <parameter>znacznik_czasu</parameter>, lub o aktualnej dacie, jeśli
+   nie podano parametru <parameter>znacznik_czasu</parameter>.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+
+    &date.timestamp.description;
+
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca asocjacyjną tablicę (<type>array</type>) z informacjami zależnymi
+   od podanego parametru <parameter>timestamp</parameter>. Zwrócona tablica 
+   zawiera następujące elementy:
+  </para>
+  <para>
+   <table>
+    <title>Klucze zwróconej tablicy asocjacyjnej</title>
+    <tgroup cols="3">
+     <thead>
+      <row>
+       <entry>Klucz</entry>
+       <entry>Opis</entry>
+       <entry>Przykłady zwracanych wartości</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry><literal>"seconds"</literal></entry>
+       <entry>Ilość sekund</entry>
+       <entry><literal>0</literal> do <literal>59</literal></entry>
+      </row>
+      <row>
+       <entry><literal>"minutes"</literal></entry>
+       <entry>Liczba minut</entry>
+       <entry><literal>0</literal> do <literal>59</literal></entry>
+      </row>
+      <row>
+       <entry><literal>"hours"</literal></entry>
+       <entry>Ilość godzin</entry>
+       <entry><literal>0</literal> do <literal>23</literal></entry>
+      </row>
+      <row>
+       <entry><literal>"mday"</literal></entry>
+       <entry>Liczba będąca dniem miesiąca</entry>
+       <entry><literal>1</literal> do <literal>31</literal></entry>
+      </row>
+      <row>
+       <entry><literal>"wday"</literal></entry>
+       <entry>Dzień tygodnia w postacy cyfry</entry>
+       <entry><literal>0</literal> (dla Niedzieli) aż do <literal>6</literal> (dla Soboty)</entry>
+      </row>
+      <row>
+       <entry><literal>"mon"</literal></entry>
+       <entry>Miesiąc w postaci liczby</entry>
+       <entry><literal>1</literal> aż do <literal>12</literal></entry>
+      </row>
+      <row>
+       <entry><literal>"year"</literal></entry>
+       <entry>Pełen rok w postaci liczby, 4 cyfry</entry>
+       <entry>Przykłady: <literal>1999</literal> lub <literal>2003</literal></entry>
+      </row>
+      <row>
+       <entry><literal>"yday"</literal></entry>
+       <entry>Dzień danego roku, w postaci liczby</entry>
+       <entry><literal>0</literal> aż do <literal>365</literal></entry>
+      </row>
+      <row>
+       <entry><literal>"weekday"</literal></entry>
+       <entry>Pełna nazwa dnia tygodnia, w języku angielskim</entry>
+       <entry><literal>Sunday</literal> aż do <literal>Saturday</literal></entry>
+      </row>
+      <row>
+       <entry><literal>"month"</literal></entry>
+       <entry>Pełna nazwa miesiąca, w języku angielskim, jak np. January lub March</entry>
+       <entry><literal>January</literal> aż do <literal>December</literal></entry>
+      </row>
+      <row>
+       <entry><literal>0</literal></entry>
+       <entry>
+        Sekundy, które upłynęły od Ery Uniksa, podobnie jak wartość zwracana przez
+        <function>time</function> i użyta przez funkcję <function>date</function>.
+       </entry>
+       <entry>
+        Zależnie od systemu, zazwyczaj <literal>-2147483648</literal> aż do
+        <literal>2147483647</literal>.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </table>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>getdate</function> - przykład</title>
+    <programlisting role="php">
 <![CDATA[
-$dzisiaj = getdate(); 
-$miesiąc = $dzisiaj['month']; 
-$dzień   = $dzisiaj['mday']; 
-$rok     = $dzisiaj['year']; 
-echo "$miesiąc $dzień, $rok";
+<?php
+$dzisiaj = getdate();
+print_r($dzisiaj);
+?>
 ]]>
-      </programlisting>
-     </example>
-    </para>
-   </refsect1>
-  </refentry>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
+<![CDATA[
+Array
+(
+    [seconds] => 40
+    [minutes] => 58
+    [hours]   => 21
+    [mday]    => 17
+    [wday]    => 2
+    [mon]     => 6
+    [year]    => 2003
+    [yday]    => 167
+    [weekday] => Tuesday
+    [month]   => June
+    [0]       => 1055901520
+)
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>date</function></member>
+    <member><function>time</function></member>
+    <member><function>setlocale</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
