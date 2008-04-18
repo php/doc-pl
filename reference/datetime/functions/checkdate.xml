@@ -1,68 +1,102 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.7 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.7 $ -->
-<!-- splitted from ./en/functions/datetime.xml, last change in rev 1.2 -->
-  <refentry xml:id="function.checkdate" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>checkdate</refname>
-    <refpurpose>Waliduje datę gregoriańską</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>bool</type><methodname>checkdate</methodname>
-      <methodparam><type>int</type><parameter>miesiąc</parameter></methodparam>
-      <methodparam><type>int</type><parameter>dzień</parameter></methodparam>
-      <methodparam><type>int</type><parameter>rok</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     Zwraca &true;, jeśli podana data jest prawdziwa lub &false; w przeciwnym
-     przypadku. Sprawdza prawdziwość daty podanej jako argument. Prawdziwość
-     daty badana jest za pomocą reguł:
-     <itemizedlist>
-      <listitem>
-       <simpara>
-        <parameter>rok</parameter> zawiera się pomiędzy 1 i 32767 włącznie
-       </simpara>
-      </listitem>
-      <listitem>
-       <simpara>
-        <parameter>miesiąc</parameter> zawiera się pomiędzy 1 i 12 włącznie
-       </simpara>
-      </listitem>
-      <listitem>
-       <simpara>
-        <parameter>dzień</parameter> zawiera się we właściwej dla danego
-        miesiąca liczbie dni. Lata przestępne są brane pod uwagę.
-       </simpara>
-      </listitem>
-     </itemizedlist>
- </para> 
-      <para> 
-       <example> 
-        <title><function>checkdate</function> przykład</title> 
-        <programlisting role="php"> 
-<![CDATA[ 
-<?php 
-var_dump(checkdate(12, 31, 2000)); 
-var_dump(checkdate(2, 29, 2001)); 
-?> 
-]]> 
-        </programlisting> 
-        &example.outputs; 
-        <screen> 
-<![CDATA[ 
-bool(true) 
-bool(false) 
-]]> 
-        </screen> 
-       </example> 
-    </para>
-    <para>
-     Patrz także <function>mktime</function> i <function>strtotime</function>.
-    </para>
-   </refsect1>
-  </refentry>
+<!-- EN-Revision: 1.9 Maintainer: garbus Status: ready -->
+<!-- $Revision: 1.8 $ -->
+<!-- CREDITS: qrak -->
+<refentry xml:id="function.checkdate" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>checkdate</refname>
+  <refpurpose>Waliduje datę gregoriańską</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>bool</type><methodname>checkdate</methodname>
+   <methodparam><type>int</type><parameter>miesiąc</parameter></methodparam>
+   <methodparam><type>int</type><parameter>dzień</parameter></methodparam>
+   <methodparam><type>int</type><parameter>rok</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Sprawdza prawdziwość daty podanej jako argument. Data jest uznana
+   za prawidłową, jeśli wszystkie dane parametry są prawidłowe.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>miesiąc</parameter></term>
+     <listitem>
+      <para>
+       Miesiąc zawiera się w przedziale od 1 do 12 włącznie.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>dzień</parameter></term>
+     <listitem>
+      <para>
+       Dzień wewnątrz przedziału dozwolonych numerów dni dla danego parametru
+       <parameter>miesiąc</parameter>.  Każdy <parameter>rok</parameter>
+       przestępny jest brany pod uwagę.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>rok</parameter></term>
+     <listitem>
+      <para>
+       Rok zawiera się w przedziale pomiędzy 1 i 32767 włącznie.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca &true; jeśli dana data jest poprawna; w przeciwnym razie zwraca &false;.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>checkdate</function> - przykład</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+var_dump(checkdate(12, 31, 2000));
+var_dump(checkdate(2, 29, 2001));
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+bool(true)
+bool(false)
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>mktime</function></member>
+    <member><function>strtotime</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
