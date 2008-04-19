@@ -1,45 +1,139 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: jarek Status: ready -->
-<!-- $Revision: 1.4 $-->
+<!-- EN-Revision: 1.9 Maintainer: garbus Status: ready -->
+<!-- $Revision: 1.5 $-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.82 -->
-  <refentry xml:id="function.pg-pconnect" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>pg_pconnect</refname>
-    <refpurpose>Otwiera stałe połączenie do serwera PostgreSQL</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-    <methodsynopsis>
-     <type>int</type><methodname>pg_pconnect</methodname>
-     <methodparam><type>string</type><parameter>connection_string</parameter></methodparam>
-    </methodsynopsis>
-    <para>
-     <function>pg_pconnect</function> otwiera stałe połączenie do serwera PostgreSQL.
-     Zwraca identyfikator połączenia używany przez inne funkcje PostgreSQL-a.
-    </para>
-    <para>
-     Opis <parameter>connection_string</parameter> znajduje sie przy opisie funkcji
-     <function>pg_connect</function>.
-    </para>
-    <para>
-     Aby zezwolić na używanie stałych połączeń, należy ustawić dyrektywę &php.ini; <link
-      linkend="ini.pgsql.allow-persistent">pgsql.allow_persistent</link>
-     na &quot;On&quot; (jest to ustawienie domyślne).
-     Maksymalna liczba jednoczesnych stałych połączeń może być zdefiniowana przez 
-     dyrektywę &php.ini; <link linkend="ini.pgsql.max-persistent">pgsql.max_persistent</link>
-     (domyślnia wartość to -1 oznacza brak ograniczeń). Maksymalna liczba wszystkich połączeń
-     może być ustawiona przez dyrektywę &php.ini; <link linkend="ini.pgsql.max-links">
-     pgsql.max_links</link>.
-    </para>
-    <para>
-     <function>pg_close</function> nie zamyka połączeń stałych otwartych przez 
-     <function>pg_pconnect</function>.
-    </para>
-    <para>
-     Zobacz także <function>pg_connect</function>.
-    </para>
-   </refsect1>
-  </refentry>
+<!-- CREDITS: jarek -->
+<refentry xml:id="function.pg-pconnect" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>pg_pconnect</refname>
+  <refpurpose>Otwiera trwałe połączenie z serwerem PostgreSQL</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>resource</type><methodname>pg_pconnect</methodname>
+   <methodparam><type>string</type><parameter>łańcuch_połączenia</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>typ_połączenia</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>pg_pconnect</function> otwiera trwałe połączenie
+   z serwerem PostgreSQL. Zwraca identyfikator połączenia
+   używany przez inne funkcje PostgreSQL-a.
+  </para>
+  <para>
+   Ponowne wywołanie funkcji <function>pg_pconnect</function>
+   z identycznym parametrem <parameter>łańcuch_połączenia</parameter>, jak w połączeniu już istniejącym,
+   zwróci identyfikator istniejącego połączenia, chyba, że podasz
+   <constant>PGSQL_CONNECT_FORCE_NEW</constant> jako parametr
+   <parameter>typ_połączenia</parameter>.
+  </para>
+  <para>
+   Aby zezwolić na używanie stałych połączeń, należy ustawić dyrektywę &php.ini; <link
+   linkend="ini.pgsql.allow-persistent">pgsql.allow_persistent</link>
+   na &quot;On&quot; (jest to ustawienie domyślne).
+   Maksymalna liczba jednoczesnych trwałych połączeń może być zdefiniowana przez 
+   dyrektywę &php.ini; <link linkend="ini.pgsql.max-persistent">pgsql.max_persistent</link>
+   (domyślnia wartość to -1 oznacza brak ograniczeń). Maksymalna liczba wszystkich połączeń
+   może być ustawiona przez dyrektywę &php.ini; <link
+   linkend="ini.pgsql.max-links">
+   pgsql.max_links</link>.
+  </para>
+  <para>
+   <function>pg_close</function> nie zamyka trwałych połączeń otwartych przez
+   <function>pg_pconnect</function>.
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>connection_string</parameter></term>
+     <listitem>
+      <para>
+       Parametr <parameter>łańcuch_połączenia</parameter> może zostać pusty w celu użycia domyślnych parametrów, lub
+       może zawierać jedno, lub więcej ustawień oddzielonych spacją.
+       Każde ustawienie ma format <literal>klucz = wartość</literal>. Spacje po obu stronach
+       znaku równości są opcjonalne. Aby stworzyć wartość pustą, lub
+       zawierającą spacje, otocz ją pojedynczymi znakami cudzysłowia, np. <literal>klucz =
+       'wartość'</literal>. Pojedyncze cudzysłowy, oraz backslashe wewnątrz wartości muszą być
+       poprzedzone znakiem ucieczki "\", np., \' oraz \\.
+      </para>
+      <para>
+       Aktualnie rozpoznawanymi parametrami są:
+       <parameter>host</parameter>, <parameter>hostaddr</parameter>, <parameter>port</parameter
+       <parameter>dbname</parameter>, <parameter>user</parameter>,
+       <parameter>password</parameter>, <parameter>connect_timeout</parameter>,
+       <parameter>options</parameter>, <parameter>tty</parameter> (ignorowany), <parameter>sslm
+       <parameter>requiressl</parameter> (zdeprecjonowany na korzyść <parameter>sslmode</parameter>), oraz
+       <parameter>service</parameter>.  Niektóre z tych argumentów są zależne
+       od używanej wersji PostgreSQL.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>connect_type</parameter></term>
+     <listitem>
+      <para>
+       Jeśli podano <constant>PGSQL_CONNECT_FORCE_NEW</constant>, zostanie stworzone
+       nowe połączenie, nawet gdy <parameter>łańcuch_połączenia</parameter> jest identyczny, jak
+       w jakimś istniejącym połączeniu.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Nawiązanie połączenie z serwerem PostgreSQL w przypadku sukcesu, &false; w razie niepowodzenia.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Używanie <function>pg_pconnect</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$polaczenie = pg_pconnect("dbname=mary");
+//Połączenie z bazą o nazwie "mary"
+
+$polaczenie2 = pg_pconnect("host=localhost port=5432 dbname=mary");
+//Połączenie z bazą o nazwie "mary" na "localhost" portem "5432"
+
+$polaczenie3 = pg_pconnect("host=owca port=5432 dbname=mary user=jagnie password=foo");
+//Połączenie z bazą o nazwie "mary" na hoście "owca" z nazwą użytkownika i hasłem
+
+$lancuch_polaczenia = "host=owca port=5432 dbname=test user=jagnie password=bar";
+$polaczenie4 = pg_pconnect($lancuch_polaczenia);
+//Połączenie z bazą o nazwie "test" na hoście "owca" z nazwą użytkownika i hasłem
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>pg_connect</function></member>
+    <member>
+     <link linkend="features.persistent-connections">
+     Trwałe połączenia z serwerem baz danych</link>
+    </member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
