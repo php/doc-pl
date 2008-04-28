@@ -1,58 +1,119 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: jarek Status: ready -->
-<!-- $Revision: 1.4 $-->
+<!-- EN-Revision: 1.16 Maintainer: garbus Status: ready -->
+<!-- $Revision: 1.5 $-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.80 -->
-  <refentry xml:id='function.pg-delete' xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>pg_delete</refname>
-    <refpurpose>
-     Usuwa wiersze
-    </refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>long</type><methodname>pg_delete</methodname>
-      <methodparam><type>resource</type><parameter>connection</parameter></methodparam>
-      <methodparam><type>string</type><parameter>table_name</parameter></methodparam>
-      <methodparam><type>array</type><parameter>assoc_array</parameter></methodparam>
-      <methodparam choice="opt"><type>int</type><parameter>options</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     <function>pg_delete</function> usuwa wiersze określone przez warunki z tablicy
-     <literal>assoc_array</literal> które zawierają <literal>kolumna=>wartość</literal>. 
-     Jeśli jest użyty parametr <literal>option</literal>, jest on
-     przekazywany do wywołania <function>pg_convert</function> z
-     <literal>assoc_array</literal> 
-    </para>
-    <example>
-     <title>pg_delete</title>
-     <programlisting role="php">
+<!-- CREDITS: jarek -->
+<refentry xml:id='function.pg-delete' xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>pg_delete</refname>
+  <refpurpose>
+   Usuwa rekordy
+  </refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>mixed</type><methodname>pg_delete</methodname>
+   <methodparam><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+   <methodparam><type>string</type><parameter>nazwa_tabeli</parameter></methodparam>
+   <methodparam><type>array</type><parameter>tablica_asocjacyjna</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>opcje</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>pg_delete</function> usuwa wiersze z tabeli określonej przez
+   klucze i wartości w parametrze <parameter>tablica_asocjacyjna</parameter>. Jeśli <parameter>opcje</paramete> zostały
+   określone, to funkcja <function>pg_convert</function> stosuje
+   do parametru <parameter>tablica_asocjacyjna</parameter> podane opcje. 
+  </para>
+ </refsect1>
+
+<refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>identyfikator_połączenia</parameter></term>
+     <listitem>
+      <para>
+       Identyfikator połączenia do bazy PostgreSQL.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>nazwa_tabeli</parameter><term>
+     <listitem>
+      <para>
+       Nazwa tabeli, z której będą usuwane wiersze.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>tablica_asocjacyjna</parameter></term>
+     <listitem>
+      <para>
+       Tablica (ang. <type>array</type>), której klucze są nazwami pól w określonej parametrem <parameter>nazwa_tabeli</parameter> tabeli,
+       oraz której wartościami, są wartości tych pól, które mają zostać usunięte.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>opcje</parameter></term>
+     <listitem>
+      <para>
+       Dowolna kombinacja, dowolnej ilości parametrów: <constant>PGSQL_CONV_FORCE_NULL</constant>,
+       <constant>PGSQL_DML_NO_CONV</constant>,
+       <constant>PGSQL_DML_EXEC</constant> oraz
+       <constant>PGSQL_DML_STRING</constant>. Jeśli <constant>PGSQL_DML_STRING</constant> jest jedną z podanych w parametrze
+       <parameter>opcje</parameter> opcji, zostanie zwrócony łańcuch zapytania z URL (ang. query string).
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;  Zwraca łańcuch (ang. <type>string</type>) gdy podano <constant>PGSQL_DML_STRING</constant> 
+   poprzez <parameter>opcje</parameter>.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>pg_delete</function> - przykład</title>
+    <programlisting role="php">
 <![CDATA[
 <?php 
-    $db = pg_connect ('dbname=foo');
-    // To jest bezpieczne, gdyż $_POST jest konwertowane automatycznie
-    $res = pg_delete($db, 'post_log', $_POST);
-    if ($res) {
-        echo "Dane określone przez POST zostały usunięte: $res\n";
-    }
-    else {
-        echo "Użytkownik wprowadził błędne dane\n";
-    }
+  $polaczenie_do_bazy = pg_connect ('dbname=foo');
+  // To jest bezpieczne, odkąd $_POST jest konwertowane automatycznie
+  $res = pg_delete($polaczenie_do_bazy, 'kopia_post', $_POST);
+  if ($res) {
+      echo "Dane określone przez POST zostały usunięte: $res\n";
+  } else {
+      echo "Użytkownik wprowadził błędne dane\n";
+  }
 ?>
 ]]>
-     </programlisting>
-    </example>
-    <note>
-     <para>
-      Funkcja eksperymentalna.
-     </para>
-    </note>
-    <para>
-     Zobacz także <function>pg_convert</function>
-    </para>    
-   </refsect1>
-  </refentry>
+    </programlisting>
+   </example>
+  </para>
+  &warn.experimental.func;
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>pg_convert</function></member>
+   </simplelist>
+  </para>    
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
