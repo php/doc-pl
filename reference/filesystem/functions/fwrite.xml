@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.17 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.9 $ -->
+<!-- EN-Revision: 1.18 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.10 $ -->
 <refentry xml:id="function.fwrite" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>fwrite</refname>
@@ -88,6 +88,26 @@
     to nie ma potrzeby <function>flock</function>owanie zasobu przed wywołaniem
     <function>fwrite</function>; wszystkie dane zostaną zapisane bez
     przerywania.
+   </para>
+  </note>
+  <note>
+   <para>
+    Jeśli, zapiszemy dwukrotnie do wskaźnika pliku, dane zostaną dołączone na
+    koncu treści pliku, oznacza to, że poniższy przykład nie zadziała jak się
+    tego spodziewamy.
+    
+        <programlisting role="php">
+<![CDATA[
+<?php
+$fp = fopen('data.txt', 'w');
+fwrite($fp, '1');
+fwrite($fp, '23');
+fclose($fp);
+
+// plik 'data.txt' ma treść 123, a nie 23!
+?>
+]]>
+        </programlisting>
    </para>
   </note>
  </refsect1>
