@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.6 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.8 $ -->
+<!-- EN-Revision: 1.7 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.9 $ -->
 <refentry xml:id="function.move-uploaded-file" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>move_uploaded_file</refname>
   <refpurpose>Przenieś uploadowany plik do innej lokalizacji</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>move_uploaded_file</methodname>
    <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
@@ -21,6 +21,40 @@
    wskazanej przez <parameter>przeznaczenie</parameter>.
   </para>
   <para>
+   Ten rodzaj testów jest szczególnie ważny jeśli istnieje szansa, że
+   cokolwiek robimy z przysłanymi plikami może zdradzić ich
+   treść użytkownikowi lub nawet innym użytkownikom tego samego
+   systemu.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>nazwa_pliku</parameter></term>
+     <listitem>
+      <para>
+       Nazwa wgrywanego pliku.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>przeznaczenie</parameter></term>
+     <listitem>
+      <para>
+       Miejsce docelowe przenoszonego pliku.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
    Jeśli <parameter>nazwa_pliku</parameter> nie jest prawidło uploadowanym plikiem,
    to żadna akcja nie zostanie wykonana i <function>move_uploaded_file</function>
    zwróci &false;.
@@ -31,12 +65,10 @@
    i <function>move_uploaded_file</function> zwróci &false;.
    Dodatkowo, zostanie pokazane ostrzeżenie.
   </para>
-  <para>
-   Ten rodzaj testów jest szczególnie ważny jeśli istnieje szansa, że
-   cokolwiek robimy z przysłanymi plikami może zdradzić ich
-   treść użytkownikowi lub nawet innym użytkownikom tego samego
-   systemu.
-  </para>
+ </refsect1>
+ <refsect1 role="notes">
+  &reftitle.notes;
+ 
   <note>
    <para>
     Funkcja <function>move_uploaded_file</function> jest świadoma &safemode;
@@ -54,10 +86,15 @@
     Jeśli już istnieje plik docelowy, to zostanie on nadpisany.
    </para>
   </warning>
+ </refsect1>
+   
+ <refsect1 role="seealso">
+  &reftitle.seealso;
   <para>
-   Patrz także: <function>is_uploaded_file</function> i rozdział
-   <link linkend="features.file-upload">Obsługa uploadowanych plików</link>
-   w celu uzyskania prostych przykładów użycia tej funkcji.
+   <simplelist>
+    <member><function>is_uploaded_file</function></member>
+    <member>Zobacz <link linkend="features.file-upload">Obsługa uploadowanych plików</link> w celu uzyskania prostych przykładów użycia tej funkcji.</member>
+   </simplelist>
   </para>
  </refsect1>
 </refentry>
