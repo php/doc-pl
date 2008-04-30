@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.7 Maintainer: qrak Status: ready -->
-<!-- $Revision: 1.8 $ -->
-  <refentry xml:id="function.apache-lookup-uri" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>apache_lookup_uri</refname>
-    <refpurpose>Wywołuje wewnętrzne żądanie dla określonego URI i zwraca całą informację
-     o nim</refpurpose>
-   </refnamediv>
-   <refsect1 role="description">
-    &reftitle.description;
-     <methodsynopsis>
-      <type>object</type><methodname>apache_lookup_uri</methodname>
-      <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     Ta funkcja wywołuje wewnętrzne żądanie dla określonego URI. Funkcja zbiera
-     wszystkie istotne informacje odnośnie podanego zasobu.
-	 </para>
+<!-- EN-Revision: 1.9 Maintainer: qrak Status: ready -->
+<!-- $Revision: 1.9 $ -->
+<refentry xml:id="function.apache-lookup-uri" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>apache_lookup_uri</refname>
+  <refpurpose>Wywołuje wewnętrzne żądanie dla określonego URI i zwraca całą informację o nim</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>object</type><methodname>apache_lookup_uri</methodname>
+   <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Ta funkcja wywołuje wewnętrzne żądanie dla określonego URI. Funkcja zbiera
+   wszystkie istotne informacje odnośnie podanego zasobu.
+  </para>
   &apache.req.module;
  </refsect1>
 
@@ -28,7 +27,7 @@
      <term><parameter>nazwa_pliku</parameter></term>
      <listitem>
       <para>
-	   Nazwa rządanego pliku (URI), lub &false; w przypadku niepowodzenia.
+       Nazwa rządanego pliku (URI).
       </para>
      </listitem>
     </varlistentry>
@@ -44,54 +43,54 @@
   </para>
   <para>
 
-     <simplelist>
-      <member>status</member>
-      <member>the_request</member>
-      <member>status_line</member>
-      <member>method</member>
-      <member>content_type</member>
-      <member>handler</member>
-      <member>uri</member>
-      <member>filename</member>
-      <member>path_info</member>
-      <member>args</member>
-      <member>boundary</member>
-      <member>no_cache</member>
-      <member>no_local_copy</member>
-      <member>allowed</member>
-      <member>send_bodyct</member>
-      <member>bytes_sent</member>
-      <member>byterange</member>
-      <member>clength</member>
-      <member>unparsed_uri</member>
-      <member>mtime</member>
-      <member>request_time</member>
-     </simplelist>
-	 </para>
-     </refsect1> 
+   <simplelist>
+    <member>status</member>
+    <member>the_request</member>
+    <member>status_line</member>
+    <member>method</member>
+    <member>content_type</member>
+    <member>handler</member>
+    <member>uri</member>
+    <member>filename</member>
+    <member>path_info</member>
+    <member>args</member>
+    <member>boundary</member>
+    <member>no_cache</member>
+    <member>no_local_copy</member>
+    <member>allowed</member>
+    <member>send_bodyct</member>
+    <member>bytes_sent</member>
+    <member>byterange</member>
+    <member>clength</member>
+    <member>unparsed_uri</member>
+    <member>mtime</member>
+    <member>request_time</member>
+   </simplelist>
+  </para>
+ </refsect1> 
   
-     <refsect1 role="examples"> 
-     &reftitle.examples; 
-      <para> 
-       <example> 
-        <title><function>apache_lookup_uri</function> przykład</title> 
-        <programlisting role="php"> 
-  <![CDATA[ 
-  <?php 
-  $info = apache_lookup_uri('index.php?var=value'); 
-  print_r($info); 
+ <refsect1 role="examples"> 
+  &reftitle.examples; 
+  <para> 
+   <example> 
+    <title><function>apache_lookup_uri</function> przykład</title> 
+    <programlisting role="php"> 
+<![CDATA[ 
+<?php 
+$info = apache_lookup_uri('index.php?var=value'); 
+print_r($info); 
     
-  if (file_exists($info->filename)) { 
-      echo 'plik istnieje!'; 
-  } 
-  ?> 
-  ]]> 
-        </programlisting> 
-        &example.outputs.similar; 
-        <screen> 
-  <![CDATA[ 
-  stdClass Object 
-  ( 
+if (file_exists($info->filename)) { 
+  echo 'plik istnieje!'; 
+} 
+?> 
+]]> 
+    </programlisting> 
+    &example.outputs.similar; 
+    <screen> 
+<![CDATA[ 
+stdClass Object 
+( 
       [status] => 200 
       [the_request] => GET /katalog/plik.php HTTP/1.1 
       [method] => GET 
@@ -109,14 +108,14 @@
       [sent_bodyct] => 0 
       [bytes_sent] => 0 
       [request_time] => 1074282764 
-  ) 
-  file exists! 
-  ]]> 
-        </screen> 
-       </example> 
-    </para>
-   </refsect1>
-  </refentry>
+) 
+file exists! 
+]]> 
+    </screen> 
+   </example> 
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
