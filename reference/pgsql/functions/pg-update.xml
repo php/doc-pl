@@ -1,64 +1,132 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: jarek Status: ready -->
-<!-- $Revision: 1.4 $-->
+<!-- EN-Revision: 1.16 Maintainer: garbus Status: ready -->
+<!-- $Revision: 1.5 $-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.80 -->
-  <refentry xml:id='function.pg-update' xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>pg_update</refname>
-    <refpurpose>
-     Aktualizuje tabelę.
-    </refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>long</type><methodname>pg_update</methodname>
-      <methodparam><type>resource</type><parameter>connection</parameter></methodparam>
-      <methodparam><type>string</type><parameter>table_name</parameter></methodparam>
-      <methodparam><type>array</type><parameter>condition</parameter></methodparam>
-      <methodparam><type>array</type><parameter>data</parameter></methodparam>
-      <methodparam choice="opt"><type>int</type><parameter>options</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     <function>pg_update</function> aktualizuje wiersze spełniające warunki zawarte w
-     <literal>condition</literal> używająca danych z <literal>data</literal>. 
-     Jeśli jest użyty parametr <literal>option</literal>, jest on
-     przekazywany do wywołania <function>pg_convert</function> z
-     <literal>assoc_array</literal>.
-     <!-- Od tłumacza: oryginał nie wskazuje dokładnie czy jako assoc_array należy uznawać
-           condition, data czy obie. Z logiki wynika że powinno dotyczyć to obu tablic.
-	   Z braku pełnej dokumentacji do pg_convert nie można tego na razie przetestować.
-	   2002-05-19, Jarosław Tabor, jarek@srv.pl -->
-    </para>
-    <example>
-     <title>pg_update</title>
-     <programlisting role="php">
+<!-- CREDITS: jarek -->
+<refentry xml:id='function.pg-update' xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>pg_update</refname>
+  <refpurpose>
+   Aktualizuje tabelę
+  </refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>mixed</type><methodname>pg_update</methodname>
+   <methodparam><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+   <methodparam><type>string</type><parameter>nazwa_tabeli</parameter></methodparam>
+   <methodparam><type>array</type><parameter>dane</parameter></methodparam>
+   <methodparam><type>array</type><parameter>warunek</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>opcje</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>pg_update</function> aktualizuje wiersze spełniające warunki zawarte w parametrze
+   <literal>warunek</literal> używając danych z parametru <literal>dane</literal>. 
+   Jeśli jest użyty parametr <literal>opcje</literal>, jest on
+   przekazywany do wywołania <function>pg_convert</function> z opcjami w parametrze
+   <literal>dane</literal>.
+  </para>
+  &warn.experimental.func;
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>identyfikator_połączenia</parameter></term>
+     <listitem>
+      <para>
+       Identyfikator połączenia do bazy PostgreSQL.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>nazwa_tabeli</parameter></term>
+     <listitem>
+      <para>
+       Nazwa tabeli, w której będą aktualizowane wiersze.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>dane</parameter></term>
+     <listitem>
+      <para>
+       Tablica (ang. <type>array</type>), której klucze są nazwami kolumn w tabeli <parameter>nazwa_tabeli</parameter>,
+       oraz której wartości są nową zawartością pasujących do warunków wierszy.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>warunek</parameter></term>
+     <listitem>
+      <para>
+       Tablica (ang. <type>array</type>), której klucze są nazwami kolumn w tabeli <parameter>nazwa_tabeli</parameter>,
+       oraz której wartości są warunkami, jakie muszą spełnić uaktualniane wiersze.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>opcje</parameter></term>
+     <listitem>
+      <para>
+       Dowolna kombinacja dowolnej ilości parametrów: <constant>PGSQL_CONV_OPTS</constant>,
+       <constant>PGSQL_DML_NO_CONV</constant>,
+       <constant>PGSQL_DML_EXEC</constant> oraz
+       <constant>PGSQL_DML_STRING</constant>. Jeśli <constant>PGSQL_DML_STRING</constant> został podany w parametrze
+       <parameter>opcje</parameter>, zostanie zwrócony łańcuch zapytania.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;  Zwraca łańcuch (ang. <type>string</type>) gdy <constant>PGSQL_DML_STRING</constant> został podany
+   poprzez <parameter>opcje</parameter>.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>pg_update</function> - przykład</title>
+    <programlisting role="php">
 <![CDATA[
 <?php 
-    $db = pg_connect ('dbname=foo');
-    $data = array('field1'=>'AA', 'field2'=>'BB');
-    // To jest bezpieczne, gdyź $_POST jest konwertowane automatycznie
-    $res = pg_update($db, 'post_log', $_POST, $data);
-    if ($res) {
-        echo "Dane zostały zaktualizowane: $res\n";
-    }
-    else {
-        echo "Użytkownik wprowadził błędne dane\n";
-    }
+  $polaczenie = pg_connect ('dbname=foo');
+  $dane = array('kolumna1'=>'AA', 'kolumna2'=>'BB');
+
+  // To jest bezpieczne, gdyż $_POST jest konwertowane automatycznie
+  $res = pg_update($polaczenie, 'kopia_post', $_POST, $dane);
+  if ($res) {
+      echo "Dane zostały zaktualizowane: $res\n";
+  } else {
+      echo "Użytkownik wprowadził błędne dane\n";
+  }
 ?>
 ]]>
-     </programlisting>
-    </example>
-    <note>
-     <para>
-      Funkcja eksperymentalna.
-     </para>
-    </note>
-    <para>
-     Zobacz także <function>pg_convert</function>
-    </para>    
-   </refsect1>
-  </refentry>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>pg_convert</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

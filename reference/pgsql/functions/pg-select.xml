@@ -1,62 +1,126 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.4 Maintainer: jarek Status: ready -->
-<!-- $Revision: 1.4 $-->
+<!-- EN-Revision: 1.15 Maintainer: garbus Status: ready -->
+<!-- $Revision: 1.5 $-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.80 -->
-  <refentry xml:id='function.pg-select' xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>pg_select</refname>
-    <refpurpose>
-     Wybiera wiersze
-    </refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>array</type><methodname>pg_select</methodname>
-      <methodparam><type>resource</type><parameter>connection</parameter></methodparam>
-      <methodparam><type>string</type><parameter>table_name</parameter></methodparam>
-      <methodparam><type>array</type><parameter>assoc_array</parameter></methodparam>
-      <methodparam choice="opt"><type>int</type><parameter>options</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     <function>pg_select</function> wybiera wiersze określone przez tablicę
-     <literal>assoc_array</literal> która zawiera dane w postaci: 
-     <literal>kolumna=>wartość</literal>. Jeśli zapytanie się powiedzie, zwraca tablicę
-     zawierającą wszystkie wiersze i kolumny spełniające warunki określone przez 
-     <literal>assoc_array</literal>.
-     Jeśli jest użyty parametr <literal>options</literal>, jest on
-     przekazywany do wywołania <function>pg_convert</function> z
-     <literal>assoc_array</literal>.
-    </para>
-    <example>
-     <title>pg_select</title>
-     <programlisting role="php">
+<!-- CREDITS: jarek -->
+<refentry xml:id='function.pg-select' xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>pg_select</refname>
+  <refpurpose>
+   Wybiera wiersze
+  </refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>mixed</type><methodname>pg_select</methodname>
+   <methodparam><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+   <methodparam><type>string</type><parameter>nazwa_tabeli</parameter></methodparam>
+   <methodparam><type>array</type><parameter>tablica_asocjacyjna</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>opcje</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>pg_select</function> wybiera wiersze określone przez tablicę
+   <literal>tablica_asocjacyjna</literal> która zawiera dane w postaci: 
+   <literal>kolumna=>wartość</literal>. Jeśli zapytanie się powiedzie, zwraca tablicę
+   zawierającą wszystkie wiersze i kolumny spełniające warunek określony przez 
+   <literal>tablica_asocjacyjna</literal>
+  </para>
+  <para>Jeśli określono parametr <literal>opcje</literal> to funkcja,
+   <function>pg_convert</function> stosuje do tablicy
+   <literal>tablica_asocjacyjna</literal> określone flagi.
+  </para>
+  &warn.experimental.func;
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>identyfikator_połączenia</parameter></term>
+     <listitem>
+      <para>
+       Identyfikator połączenia do bazy PostgreSQL.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>nazwa_tabeli</parameter></term>
+     <listitem>
+      <para>
+       Nazwa tabeli, z której będą wybrane wiersze.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>tablica_asocjacyjna</parameter></term>
+     <listitem>
+      <para>
+       Tablica (ang. <type>array</type>), której kluczami są nazwy pól w tabeli <parameter>nazwa_tabeli</parameter>,
+       oraz której wartości są warunkami, które muszą spełniać wyszukiwane wiersze.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>opcje</parameter></term>
+     <listitem>
+      <para>
+       Dowolna kombinacja dowolnej ilości parametrów: <constant>PGSQL_CONV_FORCE_NULL</constant>,
+       <constant>PGSQL_DML_NO_CONV</constant>,
+       <constant>PGSQL_DML_EXEC</constant>,
+       <constant>PGSQL_DML_ASYNC</constant> oraz
+       <constant>PGSQL_DML_STRING</constant>. Jeśli <constant>PGSQL_DML_STRING</constant> jest częścią podanego parametru
+       <parameter>opcje</parameter>, zostanie zwrócony łańcuch zapytania.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;  Returns <type>string</type> if <constant>PGSQL_DML_STRING</constant> is passed
+   via <parameter>options</parameter>.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>pg_select</function> example</title>
+    <programlisting role="php">
 <![CDATA[
 <?php 
-    $db = pg_connect ('dbname=foo');
-    // To jest bezpieczne, gdyż $_POST jest konwertowane automatycznie
-    $rec = pg_select($db, 'post_log', $_POST);
-    if ($rec) {
-        echo "Wybrane wiersze:\n";
-        var_dump($rec);
-    }
-    else {
-        echo "Użytkownik wprowadził złe dane\n";
-    }
+  $db = pg_connect('dbname=foo');
+  // This is safe, since $_POST is converted automatically
+  $rec = pg_select($db, 'post_log', $_POST);
+  if ($rec) {
+      echo "Records selected\n";
+      var_dump($rec);
+  } else {
+      echo "User must have sent wrong inputs\n";
+  }
 ?>
 ]]>
-     </programlisting>
-    </example>
-    <note>
-     <para>
-      Funkcja eksperymentalna.
-     </para>
-    </note>
-    <para>
-     Zobacz także <function>pg_convert</function>
-    </para>    
-   </refsect1>
-  </refentry>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>pg_convert</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
