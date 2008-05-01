@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.74 Maintainer: joeaccord Status: ready -->
-<!-- $Revision: 1.17 $ -->
+<!-- EN-Revision: 1.76 Maintainer: joeaccord Status: ready -->
+<!-- $Revision: 1.18 $ -->
  <chapter xml:id="features.safe-mode" xmlns="http://docbook.org/ns/docbook">
   <title>Tryb bezpieczny</title>
 
@@ -256,11 +256,6 @@
          katalogu, dodajemy na końcu ukośnik. Na przykład:
          "open_basedir = /dir/incl/"
        </para>
-       <note>
-        <para>
-         Obsługa wielu katalogów została dodana w PHP 3.0.7.
-        </para>
-       </note>
        <para>
         Domyślnie PHP ma dostęp do plików we wszystkich lokalizacjach.
        </para>
@@ -649,10 +644,14 @@ Warning: readfile() has been disabled for security reasons in
         </entry>
        </row>
        <row>
-        <entry>Wszystkie funkcje, które używają
-         <filename>php4/main/fopen_wrappers.c</filename>
-        </entry>
-        <entry>??</entry>
+        <entry>
+         Wszystkie funkcje systemu plików oraz strumieni.
+	</entry>
+	<entry>
+	 &sm.uidcheck; &sm.uidcheck.dir; (zobacz opcję <link
+	 linkend="ini.safe-mode-include-dir">safe_mode_include_dir</link>
+	 &php.ini;.
+	</entry>
        </row>
       </tbody>
      </tgroup>
