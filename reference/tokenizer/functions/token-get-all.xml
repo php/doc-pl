@@ -1,29 +1,30 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.9 Maintainer: dombal Status: ready -->
-<!-- $Revision: 1.4 $ -->
-  <refentry xml:id="function.token-get-all" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>token_get_all</refname>
-    <refpurpose>Dzieli zadane źródło na tokeny PHP</refpurpose>
-   </refnamediv>
-   <refsect1 role="description">
-    &reftitle.description;
-    <methodsynopsis>
-     <type>array</type><methodname>token_get_all</methodname>
-     <methodparam><type>string</type><parameter>źródło</parameter></methodparam>
-    </methodsynopsis>
-    <para>
-     <function>token_get_all</function> parsuje zadane
-     <parameter>źródło</parameter>, czyli ciąg znaków zawierający kod PHP,
-     zamieniając je na tokeny języka PHP przy użyciu analizy leksykalnej
-     silnika Zend.
-    </para>
-    <para>	
-    Listę tokenów identyfikowanych przez parser znajdziesz w <xref
-      linkend="tokens"/>, możesz także użyć funkcji
-     <function>token_name</function> by przetłumaczyć wartość tokena na jego
-     nazwę.
-    </para>
+<!-- EN-Revision: 1.11 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.5 $ -->
+<!-- CREDITS: dombal -->
+<refentry xml:id="function.token-get-all" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>token_get_all</refname>
+  <refpurpose>Dzieli zadane źródło na tokeny PHP</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>array</type><methodname>token_get_all</methodname>
+   <methodparam><type>string</type><parameter>źródło</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>token_get_all</function> parsuje zadane
+   <parameter>źródło</parameter>, czyli ciąg znaków zawierający kod PHP,
+   zamieniając je na tokeny języka PHP przy użyciu analizy leksykalnej
+   silnika Zend.
+  </para>
+  <para>	
+   Listę tokenów identyfikowanych przez parser znajdziesz w <xref
+   linkend="tokens"/>, możesz także użyć funkcji
+   <function>token_name</function> by przetłumaczyć wartość tokena na jego
+   nazwę.
+  </para>
  </refsect1>
  <refsect1 role="parameters">
   &reftitle.parameters;
@@ -46,8 +47,8 @@
    Tablica zindentyfikowanych tokenów. Każdy pojedynczy token identyfikowany
    jest poprzez pojedynczy znak (np.: <literal>;</literal>, <literal>.</literal>, 
    <literal>&gt;</literal>, <literal>!</literal>, etc...),
-   lub dwuelementową tablicę zawierającą indeks tokenu w elemencie 0 i
-   łąncuch znaków zawierający oryginalny token w elemencie 1.
+   lub trójelementową tablicę zawierającą indeks tokenu w elemencie 0 i
+   łańcuch znaków zawierający oryginalny token w elemencie 1 i numer linii w elemencie 2.
   </para>
  </refsect1>
  <refsect1 role="examples">
@@ -55,7 +56,7 @@
   <para>
     <example>
      <title>Przykłady użycia <function>token_get_all</function></title>
-     <programlisting role="php">
+      <programlisting role="php">
 <![CDATA[
 <?php
   $tokeny = token_get_all('<?php echo; ?>'); /* => array(
@@ -72,11 +73,33 @@
   $tokeny = token_get_all('/* koment. */'); // => array(array(T_INLINE_HTML, '/* koment. */'));
 ?>
 ]]>
-     </programlisting>
-    </example>
-	</para>
-   </refsect1>
-  </refentry>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>5.2.2</entry>
+       <entry>Numer linii jest zwracany w elemencie 2
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
