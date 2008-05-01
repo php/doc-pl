@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.22 Maintainer: adi Status: ready -->
-<!-- $Revision: 1.7 $ -->
+<!-- EN-Revision: 1.23 Maintainer: adi Status: ready -->
+<!-- $Revision: 1.8 $ -->
 <refentry xml:id="function.mysql-connect" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>mysql_connect</refname>
@@ -251,6 +251,16 @@ mysql_close($link);
     nazwy funkcji <link linkend="language.operators.errorcontrol">@</link>.
    </para>
   </note>
+  <note>
+   <para>
+    Błąd "Can't create TCP/IP socket (10106)" zwykle oznacza, że dyrektywa
+    konfiguracyjna <link linkend="ini.variables-order">variables_order</link>
+    nie zawiera znaku <literal>E</literal>. Pod Windows, jeśli środowisko nie jest
+    skopiowane zmienna środowiskowa <literal>SYSTEMROOT</literal> nie będzie
+    dostępna i PHP będzie mieć problemy aby załadować Winsock.
+   </para>
+  </note>
+
  </refsect1>
 
  <refsect1 role="seealso">
