@@ -1,113 +1,199 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.6 Maintainer: jarek Status: ready -->
-<!-- $Revision: 1.4 $-->
+<!-- EN-Revision: 1.21 Maintainer: garbus Status: ready -->
+<!-- $Revision: 1.5 $-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.2 -->
-  <refentry xml:id="function.pg-fetch-object" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>pg_fetch_object</refname>
-    <refpurpose>Pobiera wiersz jako obiekt</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>object</type><methodname>pg_fetch_object</methodname>
-      <methodparam><type>resource</type><parameter>result</parameter></methodparam>
-      <methodparam><type>int</type><parameter>row</parameter></methodparam>
-      <methodparam choice="opt"><type>int</type><parameter>result_type</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     <function>pg_fetch_object</function> zwraca obiekt którego
-     atrybutami są dane pobranego wiersza. Zwraca &false;
-     jeśli nie ma więcej wierszy lub wystąpił błąd.
-    </para>
-    <para> 
-     <function>pg_fetch_object</function> jest podobna do
-     <function>pg_fetch_array</function>, z jedną różnicą - zwracany jest obiekt
-     zamiast tablicy. Oznacza to że dane są dostępne tylko przez nazwy kolumn,
-     a nie przez indeksy, gdyż liczby nie mogą być atrybutami obiektu.
-    </para>
-    <para>
-     <parameter>row</parameter> numer wiersza do pobrania. Pierwszy wiersz
-     ma numer 0.
-    </para>
-    <para>
-     Pod względem szybkości funkcja ta jest identyczna jak
-     <function>pg_fetch_array</function>, i prawie tak szybka jak
-     <function>pg_fetch_row</function> (różnica jest nieznacząca).
-    </para>
-    <note>
-     <para>
-      Od wersji 4.3.0, <parameter>result_type</parameter> jest domyślnie 
-      ustawiany na PGSQL_ASSOC, podczas gdy w starszych wersjach domyślnie
-      było PGSQL_BOTH. W przypadku tej funkcji indeksy kolumn nie maja
-      nie maja zastosowania, gdyż liczby nie mogą być atrybutami obiektu.
-     </para>
-     <para>
-      <parameter>result_type</parameter> może być usunięty w nowych wersjach.
-     </para>
-    </note>
-    <para> 
-     Zobacz także <function>pg_query</function>, <function>pg_fetch_array</function>,
-     <function>pg_fetch_row</function> i <function>pg_fetch_result</function>.
-    </para>
-    <para>
-     <example>
-      <title>Postgres fetch object</title>
-      <programlisting role="php">
+<!-- CREDITS: jarek -->
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.pg-fetch-object">
+ <refnamediv>
+  <refname>pg_fetch_object</refname>
+  <refpurpose>Pobiera wiersz jako obiekt</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>object</type><methodname>pg_fetch_object</methodname>
+   <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>wiersz</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>typ_wyniku</parameter></methodparam>
+  </methodsynopsis>
+  <methodsynopsis>
+   <type>object</type><methodname>pg_fetch_object</methodname>
+   <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>wiersz</parameter></methodparam>
+   <methodparam choice="opt"><type>string</type><parameter>nazwa_klasy</parameter></methodparam>
+   <methodparam choice="opt"><type>array</type><parameter>parametry</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>pg_fetch_object</function> zwraca obiekt którego
+   atrybutami są nazwy pól pobranego wiersza. Może dodatkowo
+   tworzyć pewien obiekt określonej klasy, oraz wstawić parametry do
+   konstruktora tej klasy.
+  </para>
+  &database.fetch-null;
+  <para>
+   Pod względem szybkości funkcja ta jest identyczna jak
+   <function>pg_fetch_array</function>, i prawie tak szybka jak
+   <function>pg_fetch_row</function> (różnica jest zaniedbywanie
+   mała).
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>wynik</parameter></term>
+     <listitem>
+      <para>
+       Identyfikator wyniku zapytania PostgreSQL, zwrózony przez <function>pg_query</function>,
+       <function>pg_query_params</function> lub <function>pg_execute</function> 
+       (między innymi).
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>wiersz</parameter></term>
+     <listitem>
+      <para>
+       Numer wiersza w wyniku do pobrania.  Wiersze są numerowane od zera w górę.  Jeśli pominięto,
+       pobrany zostanie kolejny wiersz.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>typ_wyniku</parameter></term>
+      <listitem>
+       <para>
+        Pomijany i zdeprecjonowany.  Domyślnie <constant>PGSQL_ASSOC</constant>.
+       </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>nazwa_klasy</parameter></term>
+      <listitem>
+       <para>
+        Nazwa klasy do wytworzenia, określenie zwracanych parametrów.
+        Jeśli nie podano, zwrócony zostanie obiekt <classname>stdClass</classnam>.
+       </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>parametry</parameter></term>
+      <listitem>
+       <para>
+        Opcjonalna tablica (ang. <type>array</type>) parametrów podawanych do konstruktora
+        obiektów klasy <parameter>nazwa_klasy</parameter>.
+       </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Obiekt (ang. <type>object</type>) z atrybutem dla każdej nazwy 
+   kolumny w wyniku. Wartości <literal>NULL</literal> z bazy danych
+   są zwracane jako &null;.
+  </para>
+  <para>
+   &false; jest zwracne, gdy parametr <parameter>wiersz</parameter> przekracza całkowitą
+   liczbę wierszy, gdy kolejny wiersz nie istnieje, lub w przypadku każdego innego błędu.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para> 
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>5.0.0</entry>
+       <entry>
+        Parametry <parameter>nazwa_klasy</parameter> oraz <parameter>parametry</parameter>
+        zostały dodane. Stara wersja z <parameter>typ_wyniku</parameter>
+        wciąż istnieje, w celu zachowania wstecznej kompatybilności.
+       </entry>
+      </row>
+      <row>
+       <entry>4.3.0</entry>
+       <entry>
+        Domyślną wartość parametru <parameter>typ_wyniku</parameter> zmieniono z
+        <constant>PGSQL_BOTH</constant> na <constant>PGSQL_ASSOC</constant>,
+        gdyż indeks numeryczny był niepoprawny.
+       </entry>
+      </row>
+      <row>
+       <entry>4.1.0</entry>
+       <entry>
+        Parametr <parameter>wiersz</parameter> stał się opcjonalnym.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>pg_fetch_object</function> - przykład</title>
+    <programlisting role="php">
 <![CDATA[
 <?php 
-$database = "verlag";
-$db_conn = pg_connect ("host=localhost port=5432 dbname=$database");
-if (!$db_conn): ?>
-    <H1>Błąd przy połączeniu z bazą postgres <?php echo $database ?></H1> <?php
-    exit;
-endif;
 
-$qu = pg_query ($db_conn, "SELECT * FROM verlag ORDER BY autor");
-$row = 0; // postgres wymaga licznika wierszy, dla innych baz może być to zbędne
+$baza = "magazyn";
 
-while ($data = pg_fetch_object ($qu, $row)) {
-    echo $data->autor." (";
-    echo $data->jahr ."): ";
-    echo $data->titel."<BR>";
-    $row++;
+$polaczenie = pg_connect("host=localhost port=5432 dbname=$baza");
+if (!$polaczenie) { 
+  echo "Błąd połączenia do bazy PostgreSQL $baza\n";
+  exit;
 }
-?>
-<PRE>
-<?php
-$fields[] = Array ("autor", "Author");
-$fields[] = Array ("jahr",  "  Year");
-$fields[] = Array ("titel", " Title");
 
-$row= 0; // postgres wymaga licznika wierszy, dla innych baz może być to zbędne
-while ($data = pg_fetch_object ($qu, $row)) {
-    echo "----------\n";
-    reset ($fields);
-    while (list (,$item) = each ($fields)):
-        echo $item[1].": ".$data->$item[0]."\n";
-    endwhile;
-    $row++;
+$zap = pg_query($polaczenie, "SELECT * FROM ksiazki ORDER BY autor");
+
+
+while ($dane = pg_fetch_object($zap)) {
+  echo $data->autor . " (";
+  echo $data->rok . "): ";
+  echo $data->tytul . "<br />";
 }
-echo "----------\n"; 
-?>
-</PRE> 
-<?php
-pg_free_result ($qu);
-pg_close ($db_conn);
+
+pg_free_result($zap);
+pg_close($polaczenie);
+
 ?>
 ]]>
-      </programlisting>
-     </example>
-    </para>
-    <note>
-     <para>
-      Od wersji 4.1.0, <parameter>row</parameter> jest opcjonalny.
-      Wywołanie <function>pg_fetch_object</function> zwiększa wewnętrzny
-      licznik wierszy o 1.
-     </para>
-    </note>
-   </refsect1>
-  </refentry>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>pg_query</function></member>
+    <member><function>pg_fetch_array</function></member>
+    <member><function>pg_fetch_assoc</function></member>
+    <member><function>pg_fetch_row</function></member>
+    <member><function>pg_fetch_result</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
