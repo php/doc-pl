@@ -1,53 +1,128 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.3 Maintainer: jarek Status: ready -->
-<!-- $Revision: 1.4 $-->
+<!-- EN-Revision: 1.13 Maintainer: garbus Status: ready -->
+<!-- $Revision: 1.5 $-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.82 -->
-  <refentry xml:id="function.pg-fetch-result" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>pg_fetch_result</refname>
-    <refpurpose>Pobiera dane z wyniku</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>mixed</type><methodname>pg_fetch_result</methodname>
-      <methodparam><type>resource</type><parameter>result</parameter></methodparam>
-      <methodparam><type>int</type><parameter>row</parameter></methodparam>
-      <methodparam><type>mixed</type><parameter>field</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     <function>pg_fetch_result</function> zwraca dane z wyniku
-     <parameter>result</parameter> zwróconego przez 
-     <function>pg_query</function>. <parameter>row</parameter>
-     jest numerem wiersza.  <parameter>field</parameter> jest nazwą kolumny (łańcuch)
-     lub jej indeksem(liczba). Parametry <parameter>row</parameter>
-     i <parameter>field</parameter> wskazują którą komórkę tabeli wyniku
-     należy zwrócić. Wiersze są numerowane od 0. Zamiast nazwy kolumny można
-     użyć numerycznego indeksu kolumny. Kolumny są numerowane od 0.
-    </para>
-    <para>
-     PostgreSQL ma wiele wbudowanych typów danych, ale tylko niektóre
-     są tu wspomagane bezpośrednio. Dane typów takich jak 
-     <type>integer</type>, <type>boolean</type> i void
-     <!-- FIXME: is that still true? PHP supports boolean&null now... --> 
-     <!-- Yes, supporting boolean&null breaks scripts. pg_fetch_array() 
-          can be used instead. I might take of this issue with additional 
-          ini directive. yohgaki@php.net --> 
-     są zwracane jako <type>integer</type>. Dane typów takich jak
-     <type>float</type>, i typy rzeczywiste są zwracane jako <type>float</type>.
-     Wszystkie pozostałe typy, włączając tablice, są zwracane jako 
-     łańcuchy znaków, sformatowane tak jak możesz to zobaczyć przy użyciu
-     programu <command>psql</command>.
-    </para>
-    <!-- Dodane przez tłumacza dla ujednolicenia. 2002-05-19 Jarosław Tabor jarek@srv.pl -->
-    <note>
-     <para>
-      Ta funkcja była nazwana <literal>pg_result()</literal>.
-     </para>
-    </note>
-    <!-- Koniec -->
-   </refsect1>
-  </refentry>
+<!-- CREDITS: jarek -->
+<refentry xml:id="function.pg-fetch-result" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>pg_fetch_result</refname>
+  <refpurpose>Pobiera dane z wyniku</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>mixed</type><methodname>pg_fetch_result</methodname>
+   <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
+   <methodparam><type>int</type><parameter>wiersz</parameter></methodparam>
+   <methodparam><type>mixed</type><parameter>kolumna</parameter></methodparam>
+  </methodsynopsis>
+  <methodsynopsis>
+   <type>string</type><methodname>pg_fetch_result</methodname>
+   <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
+   <methodparam><type>mixed</type><parameter>kolumna</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>pg_fetch_result</function> zwraca wartość określonego
+   wiersza i pola (kolumny) w identyfikatorze wyniku PostgreSQL.
+  </para>
+  <note>
+   <para>
+    Funkcja ta nazywana była wcześniej <function>pg_result</function>.
+   </para>
+  </note>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>wynik</parameter></term>
+     <listitem>
+      <para>
+       Identyfikator wyniku zapytania, zwrócony przez <function>pg_query</function>,
+       <function>pg_query_params</function>  lub <function>pg_execute</function>
+       (między innymi).
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>wiersz</parameter></term>
+     <listitem>
+      <para>
+       Numer wiersza wyniku do zwrócenia.  Wiersze są numerowane od zera w górę.  Jeśli nie podano,
+       zwracany jest kolejny wiersz.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>kolumna</parameter></term>
+     <listitem>
+      <para>
+       Łańcuch (ang. <type>string</type>) reprezentujący nazwę pola (kolumny) do pobrania, w innym
+       wypadku, kolumnę do pobrania reprezentuje jej numer (<type>int</type>). Pola są
+       numerowane od zera w górę.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Typ boolean jest zwracany jako &quot;t&quot; lub &quot;f&quot; (true lub false z j. ang.). Wszystkie
+   inne typy, włączając tablice są zwracane jako łańcuchy sformatowane
+   domyślnie, do takiego samego typu PostgreSQL, jaki powinieneś zobaczyć w programie
+   <command>psql</command>.  Wartości <literal>NULL</literal> z bazy danych
+   są zwracane jako &null;.
+  </para>
+  <para>
+   &false; jest zwracane jeśli <parameter>wiersz</parameter> przekracza liczbę
+   wszystkich dostępnych wierszy, lub w przypadku każdego innego błędu.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>pg_fetch_result</function> - przykład</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$baza_danych = pg_connect("dbname=uzytkownicy uzytkownik=ja") || die();
+
+$id = pg_query($baza_danych, "SELECT 1 UNION ALL SELECT 2");
+
+$war = pg_fetch_result($id, 1, 0);
+
+echo "Pierwsze pole w drugim wierszu to: ", $war, "\n";
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+Pierwsze pole w drugim wierszu to: 2
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>pg_query</function></member>
+    <member><function>pg_fetch_array</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
