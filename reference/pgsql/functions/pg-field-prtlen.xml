@@ -1,37 +1,141 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: jarek Status: ready -->
-<!-- $Revision: 1.4 $-->
+<!-- EN-Revision: 1.12 Maintainer: garbus Status: ready -->
+<!-- $Revision: 1.5 $-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.2 -->
-  <refentry xml:id="function.pg-field-prtlen" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>pg_field_prtlen</refname>
-    <refpurpose>Zwraca drukowalną długość</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>int</type><methodname>pg_field_prtlen</methodname>
-      <methodparam><type>resource</type><parameter>result</parameter></methodparam>
-      <methodparam><type>int</type><parameter>row_number</parameter></methodparam>
-      <methodparam><type>string</type><parameter>field_name</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     <function>pg_field_prtlen</function> zwraca aktualną drukowalną
-     długość (liczbę znaków) wskazanej danej wyniku <parameter>result</parameter>
-     PostgreSQL-a. Wiersze są numerowane od 0. Funkcja zwraca -1 w razie błędu.
-    </para>
-    <note>
-     <para>
-      Ta funkcja była poprzednio nazwana <literal>pg_fieldprtlen()</literal>.
-      <!-- Od tłumacza: w oryginale podana jest poprzednia nazwa funkcji: pg_field_prtlen
-             co jest oczywistym błędem. 2002-05-19, Jarosław Tabor, jarek@srv.pl -->
-     </para>
-    </note>
-    <para>
-     Zobacz także <function>pg_field_size</function>.
-    </para>
-   </refsect1>
-  </refentry>
+<!-- CREDITS: jarek -->
+<refentry xml:id="function.pg-field-prtlen" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>pg_field_prtlen</refname>
+  <refpurpose>Zwraca drukowalną długość</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>int</type><methodname>pg_field_prtlen</methodname>
+   <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
+   <methodparam><type>int</type><parameter>numer_wiersza</parameter></methodparam>
+   <methodparam><type>string</type><parameter>nazwa_pola_lub_numer</parameter></methodparam>
+  </methodsynopsis>
+  <methodsynopsis>
+   <type>int</type><methodname>pg_field_prtlen</methodname>
+   <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
+   <methodparam><type>mixed</type><parameter>nazwa_pola_lub_numer</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>pg_field_prtlen</function> zwraca aktualną drukowalną
+   długość (liczbę znaków) wskazanej danej wyniku parametru
+   <parameter>wynik</parameter> PostgreSQL-a. Wiersze są numerowane od zera. Funkcja
+   zwraca -1 w razie błędu.
+  </para>
+  <para>
+   Parametr <parameter>nazwa_pola_lub_numer</parameter> przyjmie wartości zarówno liczbowe
+   (<type>integer</type>), jak również łańcuchowe (ang. <type>string</type>). Jeśli podano liczbę całkowitą
+   (<type>integer</type>), PHP rozpozna to jako numer pola, w przeciwnym wypadku jako 
+   nazwę pola. 
+  </para>
+  <para>
+   Proszę spojrzeć na przykład zawarty na stronie opisującej funkcję <function>pg_field_name</function>.
+  </para>
+  <note>
+   <para>
+     Ta funkcja była poprzednio nazwana <function>pg_fieldprtlen</function>.
+   </para>
+  </note>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>wynik</parameter></term>
+     <listitem>
+      <para>
+       Identyfikator wyniku zapytania do PostgreSQL, zwrócony przez <function>pg_guery</function>,
+       <function>pg_query_params</function> lub <function>pg_execute</function>
+       (między innymi).
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>wiersz</parameter></term>
+     <listitem>
+      <para>
+       Numer wiersza w wyniku.  Wiersze są numerowane od zera w górę.  Jeśli pominięto,
+       pobierany jest aktualny wiersz.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Długość drukowailna pola, lub &false; w przypadku błędu.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Pobieranie informacji na temat pól</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+  $polaczenie_z_baza = pg_connect("dbname=wydawca") or die("Nie można się połączyć.");
+
+  $wyn = pg_query($polaczenie_z_baza, "select * from autorzy where autor = 'Orwell'");
+  $i = pg_num_fields($wyn);
+  for ($j = 0; $j < $i; $j++) {
+      echo "kolumna $j\n";
+      $nazwa_pola = pg_field_name($wyn, $j);
+      echo "nazwa pola: $nazwa_pola\n";
+      echo "długość drukowalna: " . pg_field_prtlen($wyn, $nazwa_pola) . " znaki(ów)\n";
+      echo "realna długość: " . pg_field_size($wyn, $j) . " bajty(ów)\n";
+      echo "typ pola: " . pg_field_type($wyn, $j) . " \n\n";
+  }
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+kolumna 0
+nazwa pola: autor
+długość drukowalna: 6 znaki(ów)
+realna długość: -1 bajt(ów)
+typ pola: varchar
+
+kolumna 1
+nazwa pola: rok
+długość drukowalna: 4 znaki(ów)
+realna długość: 2 bajt(ów)
+typ pola: int2
+
+kolumna 2
+nazwa pola: tytuł
+długość drukowalna: 24 znaki(ów)
+realna długość: -1 bajt(ów)
+typ pola: varchar
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>pg_field_size</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
