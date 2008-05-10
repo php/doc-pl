@@ -1,32 +1,113 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: jarek Status: ready -->
-<!-- $Revision: 1.4 $-->
+<!-- EN-Revision: 1.10 Maintainer: garbus Status: ready -->
+<!-- $Revision: 1.5 $-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.2 -->
-  <refentry xml:id='function.pg-copy-to' xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>pg_copy_to</refname>
-    <refpurpose>
-     Kopiuje tabele do tablicy
-    </refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>int</type><methodname>pg_copy_to</methodname>
-      <methodparam><type>int</type><parameter>connection</parameter></methodparam>
-      <methodparam><type>string</type><parameter>table_name</parameter></methodparam>
-      <methodparam choice="opt"><type>string</type><parameter>delimiter</parameter></methodparam>
-      <methodparam choice="opt"><type>string</type><parameter>null_as</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     <function>pg_copy_to</function> kopiuje tabele to tablicy. Zwracana jest tablica wynikowa
-     lub &false; w razie niepowodzenia.
-    </para>
-    <para>
-     Zobacz także <function>pg_copy_from</function>
-    </para>
-   </refsect1>
-  </refentry>
+<!-- CREDITS: jarek -->
+<refentry xml:id='function.pg-copy-to' xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>pg_copy_to</refname>
+  <refpurpose>
+   Kopiuje tabelę do tablicy
+  </refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>array</type><methodname>pg_copy_to</methodname>
+   <methodparam><type>resource</type><parameter>polaczenie</parameter></methodparam>
+   <methodparam><type>string</type><parameter>nazwa_tabeli</parameter></methodparam>
+   <methodparam choice="opt"><type>string</type><parameter>separator</parameter></methodparam>
+   <methodparam choice="opt"><type>string</type><parameter>null_jako</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>pg_copy_to</function> kopiuje tabelę do tablicy. Wywołuje
+   to wewnętrzne polecenie SQL <literal>COPY TO</literal> na
+   wydobywane rekordy.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>polaczenie</parameter></term>
+     <listitem>
+      <para>
+       Identyfikator połączenia do serwera PostgreSQL.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>nazwa_tabeli</parameter></term>
+     <listitem>
+      <para>
+       Nazwa tabeli, z której zostaną skopiowane dane do zmiennej <parameter>wiersze</parameter>.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>separator</parameter></term>
+     <listitem>
+      <para>
+       Znak oddzielający wartości dla każdego pola każdego elementu zmiennej
+       <parameter>wiersze</parameter>.  Domyślnie jest to <literal>TAB</literal>.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>null_jako</parameter></term>
+     <listitem>
+      <para>
+       Jak wartości <literal>NULL</literal> z SQL są przedstawiane w zmiennej
+       <parameter>wiersze</parameter>.  Domyślnie jest to \N ("\\N").
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+   <para>
+    Tablica (ang. <type>array</type>) z jednym elementem dla każdej linii kopiowanych (<literal>COPY</literal>) danych.
+    Zwraca &false; w przypadku błędu.
+   </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>pg_copy_to</function> - przykład</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+   $baza = pg_connect("dbname=wydawca") or die("Nie można się połączyć");
+   
+   $wiersze = pg_copy_to($baza, $nazwa_tabeli);
+   
+   pg_query($baza, "DELETE FROM $nazwa_tabeli");
+   
+   pg_copy_from($baza, $nazwa_tabeli, $wiersze);
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>pg_copy_from</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

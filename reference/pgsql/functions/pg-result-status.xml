@@ -1,31 +1,139 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: jarek Status: ready -->
-<!-- $Revision: 1.4 $-->
+<!-- EN-Revision: 1.11 Maintainer: garbus Status: ready -->
+<!-- $Revision: 1.5 $-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.58 -->
-  <refentry xml:id='function.pg-result-status' xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>pg_result_status</refname>
-    <refpurpose>
-     Zwraca stan wyniku
-    </refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>int</type><methodname>pg_result_status</methodname>
-      <methodparam><type>resource</type><parameter>result</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     <function>pg_result_status</function> zwraca stan wyniku. Możliwe wartości
-     to PGSQL_EMPTY_QUERY, PGSQL_COMMAND_OK, PGSQL_TUPLES_OK, PGSQL_COPY_TO,
-     PGSQL_COPY_FROM, PGSQL_BAD_RESPONSE, PGSQL_NONFATAL_ERROR i
-     PGSQL_FATAL_ERROR.
-    </para>
-    <para>
-     Zobacz także <function>pg_connection_status</function>.
-    </para>
-   </refsect1>
-  </refentry>
+<!-- CREDITS: jarek -->
+<refentry xml:id='function.pg-result-status' xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>pg_result_status</refname>
+  <refpurpose>
+   Zwraca stan wyniku zapytania
+  </refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>mixed</type><methodname>pg_result_status</methodname>
+   <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>typ</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>pg_result_status</function> zwraca stan identyfikatora wyniku,
+   lub oznaczenie dopełnienia komendy, związane z wynikiem
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>wynik</parameter></term>
+     <listitem>
+      <para>
+       Identyfikator wyniku zapytania PostgreSQL-a, zwrócony przez <function>pg_query</function>,
+       <function>pg_query_params</function> lub <function>pg_execute</function>
+       (między innymi).
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>typ</parameter></term>
+     <listitem>
+      <para>
+       Zarówno <constant>PGSQL_STATUS_LONG</constant> aby zwrócić liczbowy stan
+       parametru <parameter>wynik</parameter>, jak i <constant>PGSQL_STATUS_STRING</constant>
+       aby zwrócić oznaczenie parametru <parameter>wynik</parameter>.
+       Jeśli nie podano, <constant>PGSQL_STATUS_LONG</constant> zostanie domyślnie użyte.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Możliwe zwracane wartości to: <constant>PGSQL_EMPTY_QUERY</constant>,
+   <constant>PGSQL_COMMAND_OK</constant>, <constant>PGSQL_TUPLES_OK</constant>, <constant>PGSQL_COPY_OUT</constant>,
+   <constant>PGSQL_COPY_IN</constant>, <constant>PGSQL_BAD_RESPONSE</constant>, <constant>PGSQL_NONFATAL_ERROR</constant> oraz
+   <constant>PGSQL_FATAL_ERROR</constant> gdy określono <constant>PGSQL_STATUS_LONG</constant>.
+   W przeciwnym wypadku łańcuch (ang. <type>string</type>) zawierający oznaczenie komendy PostgreSQL-a jest zwracany.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>4.3.0</entry>
+       <entry>
+        Parametr <parameter>typ</parameter> został dodany.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>pg_result_status</function> - przykład</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+// Połącz się z bazą
+$polaczenie = pg_pconnect("dbname=wydawca");
+
+// Wykonaj COPY
+$wynik = pg_query($polaczenie, "COPY autorzy FROM STDIN;");
+
+// Pobierz stan wyniku
+$stan = pg_result_status($wynik);
+
+// Ustal stan
+if ($stan == PGSQL_COPY_IN)
+   echo "Kopiowanie rozpoczęło się.";
+else
+   echo "Kopiowanie nie powiodło się.";
+ 
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+Kopiowanie rozpoczęło się.
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>pg_connection_status</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
