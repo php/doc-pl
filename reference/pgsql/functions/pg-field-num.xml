@@ -1,34 +1,102 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: jarek Status: ready -->
-<!-- $Revision: 1.4 $-->
+<!-- EN-Revision: 1.8 Maintainer: garbus Status: ready -->
+<!-- $Revision: 1.5 $-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.2 -->
-  <refentry xml:id="function.pg-field-num" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>pg_field_num</refname>
-    <refpurpose>Zwraza numer kolumny o podanej nazwie</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>int</type><methodname>pg_field_num</methodname>
-      <methodparam><type>resource</type><parameter>result</parameter></methodparam>
-      <methodparam><type>string</type><parameter>field_name</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     <function>pg_field_num</function> zwraca indeks (numer) kolumny
-     o podanje nazwie w wyniku <parameter>result</parameter> PostgreSQL-a.
-     Kolumny sa numerowane od 0. Funkcja zwraca -1 w razie błędu.
-    </para>
-    <note>
-     <para>
-      Ta funkcja była poprzednio nazwana <literal>pg_fieldnum()</literal>.
-     </para>
-    </note>
-    <para>
-     Zobacz także <function>pg_field_name</function>.
-    </para>
-   </refsect1>
-  </refentry>
+<!-- CREDITS: jarek -->
+<refentry xml:id="function.pg-field-num" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>pg_field_num</refname>
+  <refpurpose>Zwraza numer kolumny o podanej nazwie</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>int</type><methodname>pg_field_num</methodname>
+   <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
+   <methodparam><type>string</type><parameter>nazwa_pola</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>pg_field_num</function> zwraca indeks
+   numeru pola o podanej nazwie
+   <parameter>nazwa_pola</parameter> w podanym identyfikatorze wyniku
+   <parameter>wynik</parameter>.
+  </para>
+  <note>
+   <para>
+    Ta funkcja była poprzednio nazwana <function>pg_fieldnum</function>.
+   </para>
+  </note>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>wynik</parameter></term>
+     <listitem>
+      <para>
+       Identyfikator wyniku zapytania PostgreSQL-a, zwrócony przez <function>pg_query</function>,
+       <function>pg_query_params</function> lub <function>pg_execute</function>
+       (między innymi).
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>nazwa_pola</parameter></term>
+      <listitem>
+       <para>
+        Nazwa kolumny.
+       </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Numer pola (numerowanie od zera), lub -1 w razie błędu.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Pobieranie informacji o polach</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+  $polaczenie = pg_connect("dbname=wydawca") or die("Nie można się połączyć");
+
+  $wyn = pg_query($polaczenie, "select autor, rok, tytul from autorzy where autor = 'Orwell'");
+  
+  echo "Kolumna 'tytul' to pole numer: ", pg_field_num($wyn, 'tytul');
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+Kolumna 'tytul' to pole numer: 2
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>pg_field_name</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
