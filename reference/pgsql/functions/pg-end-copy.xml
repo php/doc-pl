@@ -1,31 +1,87 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: jarek Status: ready -->
-<!-- $Revision: 1.4 $-->
+<!-- EN-Revision: 1.6 Maintainer: garbus Status: ready -->
+<!-- $Revision: 1.5 $-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.82 -->
-  <refentry xml:id="function.pg-end-copy" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>pg_end_copy</refname>
-    <refpurpose>Synchronizuje klienta z serwerem PostgreSQL.</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>bool</type><methodname>pg_end_copy</methodname>
-      <methodparam choice="opt"><type>resource</type><parameter>connection</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     <function>pg_end_copy</function> synchronizuje klienta z serwerem
-     PostgreSQL po wykonaniu operacji kopiowania przez <function>pg_put_line</function>.
-     Ta funkcja musi być wywołana, inaczej klient może być niezsychronizowany z serwerem
-     i może wystąpić błąd.
-     Zwraca &true; jeśli operacja się udała lub &false; w przeciwnym wypadku.
-     &return.success;
-    </para>
-    <para>
-     Zobacz także <function>pg_put_line</function>.
-    </para>
-   </refsect1>
-  </refentry>
+<!-- CREDITS: jarek -->
+<refentry xml:id="function.pg-end-copy" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>pg_end_copy</refname>
+  <refpurpose>Synchronizuje klienta z serwerem PostgreSQL.</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>bool</type><methodname>pg_end_copy</methodname>
+   <methodparam choice="opt"><type>resource</type><parameter>polaczenie</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>pg_end_copy</function> synchronizuje
+   klienta PostgreSQL z serwerem po wykonaniu
+   operacji kopiowania przez funkcję
+   <function>pg_put_line</function>. Funkcja <function>pg_end_copy</function>
+   musi być wywołana, inaczej serwer PostgreSQL-a może być niezsychronizowany
+   z klientem i może wystąpić błąd.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>polaczenie</parameter></term>
+     <listitem>
+      <para>
+       Identyfikator połączenia do bazy danych PostgreSQL. Gdy
+       <parameter>polaczenie</parameter> nie zostało podane, domyślne połączenie
+       jest użyte. Domyślnym połączeniem jest ostatnie połączenie stworzone przez
+       <function>pg_connect</function> lub <function>pg_pconnect</function>.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>pg_end_copy</function> - przykład</title>
+    <programlisting role="php">
+<![CDATA[
+<?php 
+  $polaczenie = pg_pconnect("dbname=foo");
+  pg_query($polaczenie, "create table bar (a int4, b char(16), d float8)");
+  pg_query($polaczenie, "copy bar from stdin");
+  pg_put_line($polaczenie, "3\twitaj świecie\t4.5\n");
+  pg_put_line($polaczenie, "4\tżegnaj świecie\t7.11\n");
+  pg_put_line($polaczenie, "\\.\n");
+  pg_end_copy($polaczenie);
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>pg_put_line</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
