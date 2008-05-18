@@ -1,36 +1,129 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: jarek Status: ready -->
-<!-- $Revision: 1.4 $-->
+<!-- EN-Revision: 1.9 Maintainer: garbus Status: ready -->
+<!-- $Revision: 1.5 $-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.61 -->
-  <refentry xml:id='function.pg-escape-string' xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>pg_escape_string</refname>
-    <refpurpose>
-     Konwertuje łańcuch wstawiając sekwencje Escape dla typu text/char
-    </refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>string</type><methodname>pg_escape_string</methodname>
-      <methodparam><type>string</type><parameter>data</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     <function>pg_escape_string</function> konwertuje łańcuch wstawiając 
-     sekwencje Escape dla typu text/char. Zwraca łańcuch z sekwencjami 
-     Escape dla PostgreSQL-a. Zalecane jest używanie tej funkcji 
-     w miejsce <function>addslashes</function>.
+<!-- CREDITS: jarek -->
+<refentry xml:id='function.pg-escape-string' xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>pg_escape_string</refname>
+  <refpurpose>
+   Konwertuje łańcuch wpisywany do pola tekstowego, wstawiając sekwencje Escape
+  </refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>string</type><methodname>pg_escape_string</methodname>
+   <methodparam choice="opt"><type>resource</type><parameter>polaczenie</parameter></methodparam>
+   <methodparam><type>string</type><parameter>dane</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>pg_escape_string</function> konwertuje łańcuch wstawiając 
+   sekwencje Escape przy wpisywaniu do bazy danych. Zwraca łańcuch z sekwencjami Escape
+   w formacie PostgreSQL-a. Zalecane jest używanie tej funkcji w miejsce
+   <function>addslashes</function>. Jeśli typem kolumny jest
+   bytea, trzeba użyć funkcji <function>pg_escape_bytea</function>
+   zamiast tej.
+  </para>
+  <note>
+   <para>
+    Funkcja wymaga PostgreSQL 7.2 lub nowszego.
     </para>
-    <note>
-     <para>
-      Funkcja wymaga PostgreSQL 7.2 lub nowszego.
+  </note>
+ </refsect1>
+
+<refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>polaczenie</parameter></term>
+     <listitem>
+      <para>
+       Identyfikator połączenia do bazy danych.  Gdy
+       <parameter>polaczenie</parameter> nie zostało podane, domyślne połączenie
+       jest użyte. Domyślnym połączeniem jest ostatnie połączenie stworzone przez
+       <function>pg_connect</function> lub <function>pg_pconnect</function>.
       </para>
-    </note>
-    <para>
-     Zobacz także <function>pg_escape_bytea</function>
-    </para>
-   </refsect1>
-  </refentry>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>dane</parameter></term>
+     <listitem>
+      <para>
+       Łańcuch (ang. <type>string</type>) zawierający tekst bez sekwencji Escape.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Łańcuch (ang. <type>string</type>) zawierający dane z sekwencjami Escape.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>5.2.0</entry>
+       <entry>Parametr <parameter>polaczenie</parameter> został dodany</entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>pg_escape_string</function> - przykład</title>
+    <programlisting role="php">
+<![CDATA[
+<?php 
+  // Połączenie do bazy danych
+  $polaczenie = pg_connect('dbname=foo');
+  
+  // Przeczytaj plik tekstowy (zawierający apostrofy i ukośniki wsteczne)
+  $dane = file_get_contents('list.txt');
+  
+  // Dodaj sekwencje Escape do danych
+  $z_escape = pg_escape_string($dane);
+  
+  // Wpisz to do bazy danych
+  pg_query("INSERT INTO korespondencja (nazwa, dane) VALUES ('Moj list', '{$z_escape}')");
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>pg_escape_bytea</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
