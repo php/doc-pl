@@ -1,39 +1,118 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: jarek Status: ready -->
-<!-- $Revision: 1.4 $-->
+<!-- EN-Revision: 1.9 Maintainer: garbus Status: ready -->
+<!-- $Revision: 1.5 $-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.6 -->
-  <refentry xml:id="function.pg-lo-export" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>pg_lo_export</refname>
-    <refpurpose>Eksportuje wielki obiekt (Large Object - LO) do pliku</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>bool</type><methodname>pg_lo_export</methodname>
-      <methodparam><type>int</type><parameter>oid</parameter></methodparam>
-      <methodparam><type>string</type><parameter>pathname</parameter></methodparam>
-      <methodparam choice="opt"><type>resource</type><parameter>connection</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     Parametr <parameter>oid</parameter> wskazuje obiektu (LO) który ma być eksportowany, 
-     <parameter>pathname</parameter> wskazuje ścieżkę do pliku do którego obiekt ma być zapisany.
-     Funkcja zwraca &false; jeśli wystąpi błąd, &true; w przeciwnym razie.
-    </para>
-    <para>
-     Użycie interfejsu wielkich obiektów (LO) wymaga zamknięcia wszystkich operacji
-     z nim związanych wewnątrz transakcji.
-    </para>
-    <note>
-     <para>
-      Ta funkcja była poprzednio nazwana <literal>pg_loexport()</literal>.
-     </para>
-    </note>
-    <para>
-     Zobacz także <function>pg_lo_import</function>.
-    </para>
-   </refsect1>
-  </refentry>
+<!-- CREDITS: jarek -->
+<refentry xml:id="function.pg-lo-export" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>pg_lo_export</refname>
+  <refpurpose>Eksportuje wielki obiekt (Large Object - LO) do pliku</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>bool</type><methodname>pg_lo_export</methodname>
+   <methodparam><type>resource</type><parameter>polaczenie</parameter></methodparam>
+   <methodparam><type>int</type><parameter>oid</parameter></methodparam>
+   <methodparam><type>string</type><parameter>sciezka</parameter></methodparam>
+  </methodsynopsis>
+  <methodsynopsis>
+   <type>bool</type><methodname>pg_lo_export</methodname>
+   <methodparam><type>int</type><parameter>oid</parameter></methodparam>
+   <methodparam><type>string</type><parameter>sciezka</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>pg_lo_export</function> pobiera wielki obiekt w
+   bazie PostgreSQL i zapisuje jego zawartość do lokalnego systemu
+   plików.
+  </para>
+  <para>
+   Użycie interfejsu wielkich obiektów (LO) wymaga zamknięcia wszystkich operacji
+   z nim związanych wewnątrz transakcji.
+  </para>
+  <note>
+   <para>
+    Ta funkcja była poprzednio nazwana <function>pg_loexport</function>.
+   </para>
+  </note>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>polaczenie</parameter></term>
+     <listitem>
+      <para>
+       Identyfikator połączenia do bazy PostgreSQL.  Gdy 
+       <parameter>polaczenie</parameter> nie zostało podane, domyślne połączenie
+       zostaje użyte. Domyślnym połączeniem jest ostatnie stworzone przez
+       <function>pg_connect</function> lub <function>pg_pconnect</function>.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>oid</parameter></term>
+     <listitem>
+      <para>
+       <varname>OID</varname> wielkiego obiektu w bazie danych.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>sciezka</parameter></term>
+     <listitem>
+      <para>
+       Pełna ścieżka i nazwa pliku, do którego zostanie zapisana
+       zawartość wielkiego obiektu w systemie plików klienta.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>pg_lo_export</function> - przykład</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+   $baza_danych = pg_connect("dbname=jacarta");
+   pg_query($baza_danych, "begin");
+   $oid = pg_lo_create($baza_danych);
+   $uchwyt = pg_lo_open($baza_danych, $oid, "w");
+   pg_lo_write($uchwyt, "large object data");
+   pg_lo_close($uchwyt);
+   pg_lo_export($baza_danych, $oid, '/tmp/lob.dat');
+   pg_query($baza_danych, "commit");
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>pg_lo_import</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
@@ -55,3 +134,4 @@ vim600: syn=xml fen fdm=syntax fdl=2 si
 vim: et tw=78 syn=sgml
 vi: ts=1 sw=1
 -->
+

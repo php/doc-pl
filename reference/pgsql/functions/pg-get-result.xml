@@ -1,30 +1,108 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.2 Maintainer: jarek Status: ready -->
-<!-- $Revision: 1.4 $-->
+<!-- EN-Revision: 1.7 Maintainer: garbus Status: ready -->
+<!-- $Revision: 1.5 $-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.58 -->
-  <refentry xml:id='function.pg-get-result' xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>pg_get_result</refname>
-    <refpurpose>
-     Zwraca wynik zapytania asynchroniczego
-    </refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>resource</type><methodname>pg_get_result</methodname>
-      <methodparam choice="opt"><type>resource</type><parameter>connection</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     <function>pg_get_result</function> zwraca wynik zapytania asynchronicznego
-     uruchomionego przez <function>pg_send_query</function>.
-     <function>pg_send_query</function> może wysłać wiele zapytań do serwera,
-     i <function>pg_get_result</function> jest używana do pobierania ich wyników.
-     Zwraca identyfikator wyniku. Jeśli nie ma więcej dostępnych wyników, zwraca
-     &false;.
-    </para>
-   </refsect1>
-  </refentry>
+<!-- CREDITS: jarek -->
+<refentry xml:id='function.pg-get-result' xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>pg_get_result</refname>
+  <refpurpose>
+   Pobiera wynik zapytania asynchroniczego
+  </refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>resource</type><methodname>pg_get_result</methodname>
+   <methodparam choice="opt"><type>resource</type><parameter>polaczenie</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>pg_get_result</function> zwraca wynik
+   zapytania asynchronicznego uruchomionego przez
+   <function>pg_send_query</function>, <function>pg_send_query_params</function> lub
+   <function>pg_send_execute</function>.
+  </para>
+  <para><function>pg_send_query</function> oraz
+   inne funkcje zapytań asynchronicznych
+   może wysyłać wiele zapytań do serwera PostgreSQL, natomiast
+   <function>pg_get_result</function> jest używana do pobierania wyników każdego zapytania
+   po kolei.
+  </para> 
+ </refsect1>
+     
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para> 
+   <variablelist>
+    <varlistentry>
+     <term><parameter>polaczenie</parameter></term>
+     <listitem>
+      <para>
+       Identyfikator połączenia z bazą PostgreSQL.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Identyfikator wyniku (ang. <type>resource</type>), lub &false; gdy brak więcej dostępnych wyników.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title><function>pg_get_result</function> - przykład</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+  $polaczenie = pg_connect("dbname=wydawca") or die("Nie można się połączyć");
+
+  if (!pg_connection_busy($polaczenie)) {
+      pg_send_query($polaczenie, "select * from autorzy; select count(*) from autorzy;");
+  }
+  
+  $wyn1 = pg_get_result($polaczenie);
+  echo "Pierwsze wywołanie pg_get_result(): $wyn1\n";
+  $wiersze1 = pg_num_rows($wyn1);
+  echo "$wyn1 ma $wiersze1 rekordy(ów)\n\n";
+  
+  $wyn2 = pg_get_result($polaczenie);
+  echo "Drugie wywołanie pg_get_result(): $wyn2\n";
+  $wiersze2 = pg_num_rows($wyn2);
+  echo "$wyn2 ma $wiersze2 rekordy(ów)\n";
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+Pierwsze wywołanie pg_get_result(): Resource id #3
+Resource id #3 ma 3 rekordy(ów)
+
+Drugie wywołanie pg_get_result(): Resource id #4
+Resource id #4 ma 1 rekordy(ów)
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>pg_send_query</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
@@ -46,3 +124,4 @@ vim600: syn=xml fen fdm=syntax fdl=2 si
 vim: et tw=78 syn=sgml
 vi: ts=1 sw=1
 -->
+
