@@ -1,53 +1,92 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.6 Maintainer: joeaccord Status: ready -->
-<!-- $Revision: 1.4 $ -->
-<!-- splitted from ./en/functions/ibase.xml, last change in rev 1.2 -->
-  <refentry xml:id="function.ibase-timefmt" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>ibase_timefmt</refname>
-    <refpurpose>
-     Ustawia format znacznika czasu, daty i czasu w typach kolum zwracanych przez zapytania
-    </refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>int</type><methodname>ibase_timefmt</methodname>
-      <methodparam><type>string</type><parameter>format</parameter></methodparam>
-      <methodparam choice="opt"><type>int</type><parameter>typ_kolumny</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     Ustawia format znacznika czasu, daty i czasu w typach kolum zwracanych
-     przez zapytania. Wewnętrznie kolumny są formatowane przez funkcję
-     języka C strftime(), więc odsyłamy do jej dokumentacji - odnośnie
-     formatu łańcucha. <parameter>typ_kolumny</parameter> jest jedną
-     ze stałych IBASE_TIMESTAMP, IBASE_DATE i IBASE_TIME. Jeśli jest
-     pominięty, domyślnie przyjmowana jest wartość IBASE_TIMESTAMP.
-    </para>
-    <para>
-     <informalexample>
-      <programlisting role="php">
+<!-- EN-Revision: 1.9 Maintainer: joeaccord Status: ready -->
+<!-- $Revision: 1.5 $ -->
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.ibase-timefmt">
+ <refnamediv>
+  <refname>ibase_timefmt</refname>
+  <refpurpose>Ustawia format znacznika czasu, daty i czasu w typach kolum zwracanych przez zapytania</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>bool</type><methodname>ibase_timefmt</methodname>
+   <methodparam><type>string</type><parameter>format</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>typ_kolumny</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Ustawia format znacznika czasu, daty i czasu w typach kolum zwracanych
+   przez zapytania.
+  </para>
+  <para>
+   Można ustawić domyślne wartości dla tych formatów za pomocą dyrektyw
+   konfiguracyjnych PHP <literal>ibase.timestampformat</literal>,
+   <literal>ibase.dateformat</literal> i
+   <literal>ibase.timeformat</literal>.
+  </para>
+  <note>
+   <para>
+    Ta funkcja została usunięta w PHP 5. Zamiast niej należy używać
+    <function>ini_set</function>.
+   </para>
+  </note>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>format</parameter></term>
+     <listitem>
+      <para>
+       Wewnętrznie (w PHP) kolumny są formatowane za pomocą funkcji
+       języka C strftime(), więc odsyłamy do jej dokumentacji, w celu
+       zapoznania się z możliwościami formatowania tego łańcucha.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>typ_kolumny</parameter></term>
+     <listitem>
+      <para>
+       <parameter>typ_kolumny</parameter> jest jedną ze stałych
+       <constant>IBASE_TIMESTAMP</constant>, <constant>IBASE_DATE</constant>
+       i <constant>IBASE_TIME</constant>. Jeśli zostanie pominięty, to
+       domyślnie przyjmowana jest wartość <constant>IBASE_TIMESTAMP</constant>.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład <function>ibase_timefmt</function></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
-    /* InterBase 6 zwróci typ czasu
-     * w formacie '05 godzin 37 minut'. */
-    ibase_timefmt("%H godzin %M minut", IBASE_TIME);
+/* InterBase 6 zwróci typ czasu
+ * w formacie '05 godzin 37 minut'. */
+ibase_timefmt("%H godzin %M minut", IBASE_TIME);
 ?>
 ]]>
-      </programlisting>
-     </informalexample>
-    </para>
-    <para>
-     Możesz ustawić domyślne wartości dla tych formatów za pomocą dyrektyw konfiguracyjnych
-     PHP ibase.timestampformat, ibase.dateformat i ibase.timeformat.
-    </para>
-    <note>
-     <para>
-      Ta funkcja została usunięta w PHP 5, zamiast niej używaj <function>ini_set</function>.
-     </para>
-    </note>
-   </refsect1>
-  </refentry>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
