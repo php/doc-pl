@@ -1,6 +1,6 @@
-<!-- EN-Revision: 1.221 Maintainer: leszek Status: ready -->
+<!-- EN-Revision: 1.235 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS: adi, joeaccord -->
+<!-- CREDITS: leszek, adi -->
 <!-- Keep 'em sorted -->
 
 
@@ -70,13 +70,16 @@ inicjalizować generatora liczb losowych funkcją <function>srand</function> lub
 off</emphasis>, i zostanie całkowicie usunięta w PHP 6.0.0. Społeczność
 PHP zaleca programistom, aby nie stosowali tej dyrektywy, i zamiast niej używali
 innych sposobów, takich jak &link.superglobals;.
-</para></note>'> 
+</para></note>'>
 
 <!ENTITY note.is-superglobal "<note><para>To jest zmienna 'superglobalna' lub
 automatycznie ustawiona na globalną. To po prostu oznacza, że jest dostępna
-w każdym miejscu skryptu. Nie jest konieczne użycie  
-<command>global $zmienna;</command> aby mieć do niej dostęp w funkcjach i metodach. 
-</para></note>"> 
+w każdym miejscu skryptu. Nie jest konieczne użycie
+<command>global $zmienna;</command> aby mieć do niej dostęp w funkcjach i metodach.
+</para></note>">
+
+<!ENTITY note.filesystem-time-res '<note><para>Proszę zauważyć, że informacja
+o czasie dostępu może się różnić w zależności od systemu plików.</para></note>'>
 
 <!ENTITY note.superglobals '<note><title>Tablice superglobalne: informacja
 o dostępności</title><para>Tablice superglobalne, takie jak <varname>$_GET</varname>,
@@ -126,22 +129,29 @@ ich nazw, w zasadzie wszystko udokumentowane tutaj może zostać zmienione w
 przyszłych wersjach PHP bez wcześniejszego uprzedzenia. Używaj tego modułu na
 własne ryzyko.</simpara></warning>'>
 
-<!ENTITY warn.deprecated.removed-6-0-0 '<warning xmlns="http://docbook.org/ns/docbook"><simpara>Ta opcja jest
-<emphasis>NIEWSPIERANA</emphasis> i <emphasis>USUNIĘTA</emphasis> w PHP 6.0.0 i
-nowszych. Wykorzystywanie tej opcji jest niezalecane.</simpara></warning>'>
+<!ENTITY warn.deprecated.feature-5-3-0.removed-6-0-0 '<warning 
+xmlns="http://docbook.org/ns/docbook"><simpara>Ta opcja jest
+<emphasis>PRZESTARZAŁA</emphasis> od PHP 5.3.0 i <emphasis>USUNIĘTA</emphasis>
+w PHP 6.0.0 Używanie tej opcji nie jest zalecane.</simpara></warning>'>
+
+<!ENTITY warn.deprecated.function-5-3-0.removed-6-0-0 '<warning
+xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja jest
+<emphasis>PRZESTARZAŁA</emphasis> od PHP 5.3.0 i <emphasis>USUNIĘTA</emphasis>
+w PHP 6.0.0. Używanie tej funkcji nie jest zalecane.</simpara></warning>'>
 
 <!ENTITY warn.deprecated.function.removed-5-3-0 '<warning
 xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja jest
 <emphasis>PRZESTARZAŁA</emphasis> i zostanie <emphasis>USUNIĘTA</emphasis>
 od PHP 5.3.0.</simpara></warning>'>
 
-<!ENTITY warn.experimental.func '<warning xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja jest w stadium
+<!ENTITY warn.experimental.func '<warning 
+xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja jest w stadium
 <emphasis>EKSPERYMENTALNYM</emphasis>. Oznacza to, że zachowanie funkcji, jej
 nazwa, w zasadzie wszystko udokumentowane tutaj może zostać zmienione w
 przyszłych wersjach PHP bez wcześniejszego uprzedzenia. Używaj tej funkcji na
 własne ryzyko.</simpara></warning>'>
 
-<!ENTITY warn.imaprecodeyaz '<warning><simpara>Rozszerzenia <link 
+<!ENTITY warn.imaprecodeyaz '<warning><simpara>Rozszerzenia <link
 linkend="ref.imap">IMAP</link>, <link linkend="ref.recode">recode</link>, <link
 linkend="ref.yaz">YAZ</link> i <link linkend="ref.cyrus">Cyrus</link> nie mogą
 być używane razem. Dzieje się tak z powodu współdzielenia tych samych oznaczeń
@@ -217,7 +227,7 @@ istnieje tylko dla zachowania kompatybilności wstecznej. Zaleca się nie
 używanie tego aliasu, jako że może on zostać usunięty w przyszłości z PHP.</simpara>'>
 
 <!ENTITY ext.windows.path.dll 'Aby poprawnie działało rozszerzenie, pliki
-<acronym>DLL</acronym> muszą znajdować się w miejscu wskazanym przez <literal>PATH</literal> systemu 
+<acronym>DLL</acronym> muszą znajdować się w miejscu wskazanym przez <literal>PATH</literal> systemu
 Windows. Aby uzyskać więcej informacji zobacz <acronym>FAQ</acronym> zatytułowane "<link
 linkend="faq.installation.addtopath">Jak mam dodać mój katalog PHP do PATH
 w Windows</link>". Chociaż skopiowanie plików DLL z folderu PHP do systemowego
@@ -226,12 +236,22 @@ w <literal>PATH</literal> systemu), ale nie jest to wymagane.
 <emphasis>To rozszerzenie wymaga następujących plików znajdujących się w
 <literal>PATH</literal>:</emphasis> '>
 
+<!ENTITY manual.migration.seealso 'Zobacz także instrukcję migracji na nowsze wersje PHP'>
+
 <!-- Returns -->
 
 <!ENTITY return.success 'Zwraca &true; w przypadku powodzenia, &false; w
 przypadku błędu.'>
 
-<!ENTITY return.void 'żadna wartość nie jest zwracana.'>
+<!ENTITY date.datetime.description '<varlistentry><term><parameter>
+object</parameter></term><listitem><para>Tylko styl proceduralny: Obiekt <classname>DateTime</classname>
+zwracany przez <function>date_create</function></para></listitem></varlistentry>'>
+
+<!ENTITY date.datetimezone.description '<varlistentry><term><parameter>
+object</parameter></term><listitem><para>Tylko styl proceduralny: Obiekt <classname>DateTimeZone</classname>
+zwracany przez <function>timezone_open</function></para></listitem></varlistentry>'>
+
+<!ENTITY return.void 'nie jest zwracana żadna wartość.'>
 
 <!ENTITY return.falseproblem '<warning><simpara>Ta funkcja może zwrócić
 logiczne &false;, ale także zwykłą wartość rozpoznawaną
@@ -239,7 +259,7 @@ jako &false;, na przykład <literal>0</literal> lub &quot;&quot;. Więcej
 informacji w rozdziale dotyczącym
 <link linkend="language.types.boolean">typów logicznych</link>. Użyj
 <link linkend="language.operators.comparison">operatora ===</link> aby
-sprawdzić wartość zwracaną przez tę funkcję.</simpara></warning>'>
+sprawdzić wartość i typ zwracany przez tę funkcję.</simpara></warning>'>
 
 <!-- Image (GD) Notes -->
 
@@ -363,6 +383,20 @@ lub <function>fsockopen</function> (a jednocześnie nie zamknięty jeszcze przez
 <!ENTITY fs.file.pointer '<para>Wskaźnik do systemu plików typu <type>resource</type>
 jest zazwyczaj tworzony poprzez funkcję <function>fopen</function>.</para>'>
 
+<!-- GNUPG -->
+<!ENTITY gnupg.identifier '<para>Identyfikator gnupg, do wywołania funkcji
+<function>gnupg_init</function> lub <classname>gnupg</classname>.</para>'>
+
+<!ENTITY gnupg.fingerprint '<para>Odcisk klucza.</para>'>
+
+<!-- ODBC -->
+<!ENTITY odbc.connection.id '<para>Identyfikator połączenia ODBC.
+Zobacz opis funkcji <function>odbc_connect</function> aby poznać szczegóły.</para>'>
+
+<!ENTITY odbc.parameter.search 'Ten parametr przyjmuje również następujące wzorce wyszukiwania:
+"&#x25;" - dopasowanie oznacza brak znaków lub dowolną ilość znaków,
+oraz "_" - dopasowanie oznacza jeden znak.'>
+
 <!-- Oracle -->
 <!ENTITY oci.charset "<para>Używając serwera Oracle 9.2 lub nowszej wersji
 można podać parametr <parameter>charset</parameter>, który zostanie użyty przy
@@ -454,8 +488,9 @@ konfiguracji.</para>'>
 Na działanie tych funkcji wpływają ustawienia zawarte w pliku
 &php.ini;.</simpara>'>
 
-<!ENTITY ini.php.constants 'Szczegóły i definicje dotyczące stałych
-PHP_INI_* znajdują się w rozdziale <xref linkend="ini"/>.'>
+<!ENTITY ini.php.constants 'Szczegóły i definicje dotyczące działania
+PHP_INI_* znajdują się w rozdziale <xref linkend="configuration.changes.modes"/>.'>
+
 
 <!-- Used in reference/$extname/constants.xml -->
 <!ENTITY extension.constants '<simpara>
@@ -935,3 +970,22 @@ na <literal>0</literal> aby działała z obiektami <classname>Phar</classname>.
 W przeciwnym przypadku, klasa <classname>PharException</classname> zwróci wyjątek
 .</para></note>'>
 
+<!ENTITY phar.removed.pharcompress '<note xmlns="http://docbook.org/ns/docbook"><para>Ta
+metoda została usunięta z rozszerzenia phar w wersji 2.0.0.  Dostępne są zastępcze
+implementacje: <function>Phar::compress</function>,
+<function>Phar::decompress</function>, <function>Phar::compressFiles</function>
+i <function>Phar::decompressFiles</function>.</para></note>'>
+
+<!ENTITY phar.removed.pharfileinfocompress '<note xmlns="http://docbook.org/ns/docbook"><para>Ta
+metoda została usunięta z rozszerzenia phar w wersji 2.0.0.  Dostępne są zastępcze
+implementacje: <function>PharFileInfo::isCompressed</function>,
+<function>PharFileInfo::decompress</function>, i <function>PharFileInfo::compress</function>.</para></note>'>
+
+
+<!-- XMLReader -->
+<!ENTITY xmlreader.libxml20620.note '<caution><para>Ta funkcja jest dostępna tylko wtedy,
+kiedy PHP zostało skompilowane z biblioteką libxml 20620 lub nowszą.</para></caution>'>
+
+<!-- inotify -->
+<!ENTITY inotify.instance.description 'Zasób zwracany przez
+<function>inotify_init</function>'>
