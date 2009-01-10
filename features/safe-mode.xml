@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.77 Maintainer: joeaccord Status: ready -->
-<!-- $Revision: 1.19 $ -->
+<!-- EN-Revision: 1.79 Maintainer: joeaccord Status: ready -->
+<!-- $Revision: 1.20 $ -->
  <chapter xml:id="features.safe-mode" xmlns="http://docbook.org/ns/docbook">
   <title>Tryb bezpieczny</title>
 
@@ -72,7 +72,7 @@
        <entry>open_basedir</entry>
        <entry>NULL</entry>
        <entry>PHP_INI_ALL</entry>
-       <entry>PHP_INI_SYSTEM w PHP &lt; 6.</entry>
+       <entry>PHP_INI_SYSTEM w PHP &lt; 5.3.0</entry>
       </row>
       <row>
        <entry>disable_functions</entry>
@@ -104,6 +104,8 @@
       <listitem>
        <para>
         Określa czy należy włączyć w PHP tryb bezpieczny.
+        Jeśli PHP zostało skompilowane z parametrem <literal>--enable-safe-mode</literal>
+        to domyślną wartością jest On. W przeciwnym przypadku domyślną wartością jest Off.
        </para>
       </listitem>
      </varlistentry>
@@ -258,6 +260,14 @@
        <para>
         Domyślnie PHP ma dostęp do plików we wszystkich lokalizacjach.
        </para>
+       <note>
+        <para>
+         Od PHP 5.3.0 open_basedir może być zmieniany (zacieśniany) w czasie wykonywania skryptu.
+         To znaczy, że jeśli open_basedir jest ustawiony na <literal>/www/</literal>
+         w &php.ini; to skrypt może ograniczyć dostęp np. do <literal>/www/tmp/</literal>
+         poprzez zmianę konfiguracji w czasie rzeczywistym, za pomocą <function>ini_set</function>.
+        </para>
+       </note>
       </listitem>
      </varlistentry>
      <varlistentry xml:id="ini.disable-functions">
@@ -640,6 +650,17 @@ Warning: readfile() has been disabled for security reasons in
         </entry>
         <entry>
          W trybie bezpiecznym, piąty parametr jest nieaktywny. (notatka: dostępna tylko od PHP 4.2.3)
+        </entry>
+       </row>
+       <row>
+        <entry>
+         <function>session_start</function>
+        </entry>
+        <entry>
+         Właściciel skryptu musi być również właścicielem katalogu<link
+         linkend="ini.session.save-path">session.save_path</link>, gdy wartość <link
+         linkend="ini.session.save-handler">session.save_handler</link> jest
+         ustawiona na <literal>files</literal>.
         </entry>
        </row>
        <row>

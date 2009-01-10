@@ -1,4 +1,4 @@
-<!-- EN-Revision: 1.235 Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: 1.238 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: leszek, adi -->
 <!-- Keep 'em sorted -->
@@ -243,8 +243,8 @@ w <literal>PATH</literal> systemu), ale nie jest to wymagane.
 <!ENTITY return.success 'Zwraca &true; w przypadku powodzenia, &false; w
 przypadku błędu.'>
 
-<!ENTITY date.datetime.description '<varlistentry><term><parameter>
-object</parameter></term><listitem><para>Tylko styl proceduralny: Obiekt <classname>DateTime</classname>
+<!ENTITY date.datetime.description '<varlistentry><term><parameter>object</parameter></term>
+<listitem><para>Tylko styl proceduralny: Obiekt <classname>DateTime</classname>
 zwracany przez <function>date_create</function></para></listitem></varlistentry>'>
 
 <!ENTITY date.datetimezone.description '<varlistentry><term><parameter>
@@ -422,12 +422,12 @@ Windows.</para></note>'>
 <!-- Notes for safe-mode limited functions: -->
 <!ENTITY note.sm.disabled '<note><simpara>&sm.disabled;</simpara></note>'>
 
-<!ENTITY note.sm.uidcheck '<note><simpara>Kiedy włączony jest <link 
+<!ENTITY note.sm.uidcheck '<note><simpara>Gdy włączony jest <link
 linkend="features.safe-mode">tryb bezpieczny</link>, PHP sprawdza, czy
 pliki lub katalogi, na których zostaną wykonane operacje mają takie same UID (owner)
 jak skrypt, który jest aktualnie wykonywany.</simpara></note>'>
 
-<!ENTITY note.sm.uidcheck.dir '<note><simpara>Kiedy włączony jest <link 
+<!ENTITY note.sm.uidcheck.dir '<note><simpara>Gdy włączony jest <link 
 linkend="features.safe-mode">tryb bezpieczny</link>, PHP sprawdza czy
 katalog, na którym zostaną wykonane operacje, ma takie same UID (owner)
 jak skrypt, który jest aktualnie wykonywany.</simpara></note>'>
@@ -495,7 +495,7 @@ PHP_INI_* znajdują się w rozdziale <xref linkend="configuration.changes.modes"
 <!-- Used in reference/$extname/constants.xml -->
 <!ENTITY extension.constants '<simpara>
 Poniższe stałe są zdefiniowane w tym rozszerzeniu i stają się dostępne, gdy
-rozszerzenie jest dokompilowane do PHP, lub załadowane dynamicznie przy starcie.
+rozszerzenie jest dokompilowane z PHP, lub załadowane dynamicznie przy starcie.
 </simpara>'>
 
 <!-- For STANDARD Constants used in reference/$extname/constants.xml --> 
@@ -515,7 +515,7 @@ To rozszerzenie wymaga PHP 5.</simpara></note>'>
 
 <!-- PDO entities -->
 <!ENTITY pdo.driver-constants '<simpara>
-Poniższe stałe są definiowane przez ten sterownik, i będą dostępne tylko kiedy
+Poniższe stałe są definiowane przez ten sterownik, i będą dostępne tylko, gdy
 to rozszerzenie będzie skompilowane z PHP lub załadowane dynamicznie przy
 starcie. Dodatkowo, te specyficzne dla sterownika stałe powinny być używane
 tylko przy użyciu tego konkretnego sterownika. Używanie atrybutów bazy MySQL
@@ -595,11 +595,11 @@ dla wszystkich funkcji używając <function>bcscale</function>.</para></listitem
 <!-- FBSQL Notes -->
 <!ENTITY fbsql.link-identifier.description '<varlistentry><term><parameter>
 link_identifier</parameter></term><listitem><para>Identyfikator połączenia FrontBase
-zwrócony przez <function>fbsql_connect</function> lub 
-<function>fbsql_pconnect</function>.</para><para>Jeśli link jest opcjonalny i nie zostanie podany,
-funkcja spróbuje znaleźć otwarte połączenie do serwera FrontBase i jeśli
-takiego połączenia nie znajdzie, spróbuje utworzyć je tak jak
-<function>fbsql_connect</function> byłaby wywołana bez argumentów</para>
+zwrócony przez <function>fbsql_connect</function> lub
+<function>fbsql_pconnect</function>.</para><para>Link jest opcjonalny i jeśli nie zostanie podany,
+to funkcja spróbuje znaleźć otwarte połączenie do serwera FrontBase. Jeśli
+funkcja nie znajdzie otwartego połączenia, to spróbuje utworzyć je tak jakby
+<function>fbsql_connect</function> była wywołana bez argumentów.</para>
 </listitem></varlistentry>'>
 
 <!ENTITY fbsql.result.description '<varlistentry><term><parameter>
@@ -624,6 +624,8 @@ zwrócony przez <function>mysqli_connect</function> lub <function>mysqli_init</f
 <!ENTITY mysqli.stmt.description '<varlistentry><term><parameter>
 stmt</parameter></term><listitem><para>Tylko styl proceduralny: Identyfikator stanu
 zwrócony przez <function>mysqli_stmt_init</function>.</para></listitem></varlistentry>'>
+<!ENTITY mysqli.available.mysqlnd 'Dostępna tylko z <link
+linkend="mysqli.overview.mysqlnd">mysqlnd</link>.'>
 
 <!-- Notes for SAPI/Apache -->
 <!ENTITY note.apache.nsapi-module '<note><para>Od PHP 4.3.3 możliwe
@@ -646,7 +648,7 @@ przez <function>var_dump</function> ani przez nic innego co bada obiekty.
 przetworzone zależnie od ustawienia opcji konfiguracji
 <link linkend="ini.sqlite.assoc-case">sqlite.assoc_case</link>.</para>'>
 
-<!ENTITY sqlite.decode-bin '<para>Kiedy parametr <parameter>decode_binary</parameter>
+<!ENTITY sqlite.decode-bin '<para>Gdy parametr <parameter>decode_binary</parameter>
 zostanie ustawiony na &true; (domyślnie), PHP zdekoduje kodowanie binarne,
 któremu zostały poddane dane, jeśli były kodowane przy użyciu funkcji
 <function>sqlite_escape_string</function>. Zazwyczaj należy pozostawić domyślną
@@ -984,7 +986,7 @@ implementacje: <function>PharFileInfo::isCompressed</function>,
 
 <!-- XMLReader -->
 <!ENTITY xmlreader.libxml20620.note '<caution><para>Ta funkcja jest dostępna tylko wtedy,
-kiedy PHP zostało skompilowane z biblioteką libxml 20620 lub nowszą.</para></caution>'>
+gdy PHP zostało skompilowane z biblioteką libxml 20620 lub nowszą.</para></caution>'>
 
 <!-- inotify -->
 <!ENTITY inotify.instance.description 'Zasób zwracany przez
