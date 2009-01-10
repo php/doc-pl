@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.29 Maintainer: slawek Status: ready -->
-<!-- $Revision: 1.14 $ -->
+<!-- EN-Revision: 1.30 Maintainer: joeaccord Status: ready -->
+<!-- $Revision: 1.15 $ -->
+<!-- CREDITS: slawek -->
  <chapter xml:id="features.remote-files" xmlns="http://docbook.org/ns/docbook">
   <title>Korzystanie ze zdalnych plików</title>
 
@@ -46,7 +47,7 @@ if (!$file) {
 while (!feof ($file)) {
     $line = fgets ($file, 1024);
     /* Zadziała tylko wtedy, gdy tytuł i jego znaczniki są w tej samej linii */
-    if (eregi ("<title>(.*)</title>", $line, $out)) {
+    if (preg_match ("@\<title\>(.*)\</title\>@i", $line, $out)) {
         $title = $out[1];
         break;
     }
