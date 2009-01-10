@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.5 Maintainer: joeaccord Status: ready -->
-<!-- $Revision: 1.5 $ -->
+<!-- EN-Revision: 1.7 Maintainer: joeaccord Status: ready -->
+<!-- $Revision: 1.6 $ -->
 <refentry xml:id="function.json-encode" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>json_encode</refname>
@@ -12,6 +12,7 @@
   <methodsynopsis>
    <type>string</type><methodname>json_encode</methodname>
    <methodparam><type>mixed</type><parameter>wartość</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>opcje</parameter></methodparam>
   </methodsynopsis>
   <para>
    Zwraca łańcuch JSON reprezentujący
@@ -32,6 +33,17 @@
       </para>
       <para>
        Ta funkcja działa tylko na danych zakodowanych w formacie UTF-8 (UNICODE).
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>opcje</parameter></term>
+     <listitem>
+      <para>
+       Struktura bitów składająca się z <constant>PHP_JSON_HEX_QUOT</constant>,
+       <constant>PHP_JSON_HEX_TAG</constant>,
+       <constant>PHP_JSON_HEX_AMP</constant>,
+       <constant>PHP_JSON_HEX_APOS</constant>. Domyślnie 0.
       </para>
      </listitem>
     </varlistentry>

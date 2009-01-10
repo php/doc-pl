@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.7 Maintainer: joeaccord Status: ready -->
-<!-- $Revision: 1.5 $ -->
+<!-- EN-Revision: 1.8 Maintainer: joeaccord Status: ready -->
+<!-- $Revision: 1.6 $ -->
 <refentry xml:id="function.json-decode" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>json_decode</refname>
@@ -35,7 +35,7 @@
      <term><parameter>asocjacyjnie</parameter></term>
      <listitem>
       <para>
-       Kiedy jest ustawiony na &true;, zwracane <type>obiekty</type> zostaną
+       Gdy jest ustawiony na &true;, zwracane <type>obiekty</type> zostaną
        przekonwertowane do <type>tablic</type> asocjacyjnych.
       </para>
      </listitem>
@@ -47,7 +47,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca <type>obiekt</type> lub w przypadku kiedy opcjonalny parametr
+   Zwraca <type>obiekt</type>, lub w przypadku gdy opcjonalny parametr
    <parameter>asocjacyjnie</parameter> jest ustawiony na &true;, zwraca
    <type>tablicę</type> asocjacyjną.
   </para>
@@ -105,14 +105,44 @@ print $obj->{'foo-bar'}; // 12345
 ]]>
     </programlisting>
    </example>
+   <example>
+    <title>common mistakes using <function>json_decode</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+// poniższe łańcucy są prawidłowe w JavaScript, ale nieprawidłowe w JSON
+
+// nazwa i wartość musi być zawarta w podwójny cudzysłów
+// pojedyńcze cudzysłowy nie są prawidłowe
+$bad_json = "{ 'bar': 'baz' }";
+json_decode($bad_json); // null
+
+// nazwa musi być zawarta w podwójny cudzysłów
+$bad_json = '{ bar: "baz" }';
+json_decode($bad_json); // null
+
+// przecinki na końcu nie są dozwolone
+$bad_json = '{ bar: "baz", }';
+json_decode($bad_json); // null
+
+?>
+]]>
+    </programlisting>
+   </example>
   </para>
  </refsect1>
 
  <refsect1 role="notes">
   &reftitle.notes;
+  <note>
+   <para>
+    Specyfikacja JSON nie jest taka sama jak w JavaScript, tylko jest podzbiorem JavaScript.
+   </para>
+  </note>
   <caution>
    <para>
-    Ta funkcja zwraca false jeśli poziom danych zakodowanych w formacie JSON jest
+    Ta funkcja zwraca false, jeśli poziom danych zakodowanych w formacie JSON jest
     głębszy niż 127 elementów.
    </para>
   </caution>
