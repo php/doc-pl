@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.14 Maintainer: mroq Status: ready -->
-<!-- $Revision: 1.7 $ -->
-<!-- CREDITS: slawek -->
+<!-- EN-Revision: 1.15 Maintainer: joeaccord Status: ready -->
+<!-- $Revision: 1.8 $ -->
+<!-- CREDITS: slawek,mroq -->
 <refentry xml:id="function.mysql-db-query" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>mysql_db_query</refname>
@@ -53,7 +53,7 @@
    Zwraca dodatni identyfikator wyniku MySQL wskazujący na wynik zapytania,
    lub &false; w przypadku błędu. Wartość &true;/&false; jest także zwracana dla zapytań  
    <literal>INSERT</literal>/<literal>UPDATE</literal>/<literal>DELETE</literal>
-   informując o sukcesie/porażce.
+   informując o sukcesie lub błędzie.
   </para>
  </refsect1>
  
@@ -69,6 +69,12 @@
       </row>
      </thead>
      <tbody>
+      <row>
+       <entry>5.3.0</entry>
+       <entry>
+        Ta funkcja zwraca wyjątek E_DEPRECATED.
+       </entry>
+      </row>
       <row>
        <entry>4.0.6</entry>
        <entry>
@@ -87,13 +93,13 @@
   &reftitle.examples;
   <para>
    <example>
-    <title><function>mysql_db_query</function> przykład alternatywny</title>
+    <title>Przykład <function>mysql_db_query</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
 
 if (!$link = mysql_connect('host', 'uzytkownik', 'haslo')) {
-    echo 'Nie można się połączyć z bazą danych';
+    echo 'Nie można nawiązać połączenia z bazą danych';
     exit;
 }
 
