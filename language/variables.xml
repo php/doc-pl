@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.103 Maintainer: garbus Status: ready -->
-<!-- $Revision: 1.20 $ -->
+<!-- EN-Revision: 1.107 Maintainer: garbus Status: ready -->
+<!-- $Revision: 1.21 $ -->
 <!-- CREDITS: qrak -->
  <chapter xml:id="language.variables" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
   <title>Zmienne</title>
@@ -23,7 +23,7 @@
    
    <note>
     <simpara>
-     W naszym rozumieniu, litery to znaki a-z, A-Z i symbole ASCII od 127 do
+     W naszym rozumieniu, litery to znaki a-z, A-Z i bajty od 127 do
      255 (0x7f-0xff).
     </simpara>
    </note>
@@ -123,8 +123,9 @@ $bar = &test();    // Niepoprawne.
    
    <para>
     W PHP nie jest konieczne inicjowanie zmiennych, jednak jest to bardzo
-    dobry nawyk. Niezainicjowane zmienne mają domyślne wartości w zależności od ich typu
-    - &false;, zero, pusty łańcuch lub niewypełnioną tablicę.
+    dobry nawyk. Niezainicjowane zmienne mają domyślne wartości dla ich typu, zależnie od kontekstu, w jaki zmienne te zostały użyte
+    - zmienne logiczne typu boolean domyślnie przyjmują wartość &false;, zmiennym całkowitym typu integer domyślnie nadawane jest zero, łańcuchom tekstowym
+    (np. użytym wewnątrz <function>echo</function>) nadany jest łańcuch pusty, natomiast tablice zostają pustymi tablicami.
    </para>
    <para>
     <example>
@@ -132,10 +133,32 @@ $bar = &test();    // Niepoprawne.
      <programlisting role="php">
 <![CDATA[
 <?php
-echo ($nieinicjowana_zmiena_bool ? "true" : "false"); // false
+// Zmienna bez nadanej wartości ORAZ bez odwołań do niej (brak kontekstu, w jakim została użyta); zwróci NULL
+var_dump($zmienna_bez_kontekstu_uzycia);
+
+// Używanie zmiennej logicznej typu boolean; zwróci 'false' (Zobacz informacje o operatorach trójparametrowych, by poznać tę składnię)
+echo($nieinicjowana_zmiena_bool ? "true\n" : "false\n");
+
+// Używanie łańcuchów; zwróci 'string(3) "abc"'
+$nieinicjowany_lancuch .= 'abc';
+var_dump($nieinicjowany_lancuch);
+
+// Używanie zmiennych całkowitych; zwróci 'int(25)'
 $nieinicjowana_zmienna_int += 25; // 0 + 25 => 25
-echo $nieinicjowany_lancuch . "abc"; // "" . "abc" => "abc"
+var_dump($nieinicjowana_zmienna_int);
+
+// Używanie zmiennych typu float/double; zwróci 'float(1.25)'
+$nieinicjowana_zmienna_float += 1.25;
+var_dump($nieinicjowana_zmienna_float);
+
+// Używanie tablicy; zwróci array(1) {  [3]=> string(3) "def" }
 $nieinicjowana_tablica[3] = "def"; // array() + array(3 => "def") => array(3 => "def")
+var_dump($nieinicjowana_tablica);
+
+// Używanie obiektu; stworzy nowy obiekt stdClass (zobacz http://www.php.net/manual/pl/reserved.classes.php)
+// Zwróci: object(stdClass)#1 (1) {  ["foo"]=>  string(3) "bar" }
+$nieinicjowany_obiekt->foo = 'bar';
+var_dump($nieinicjowany_obiekt);
 ?>
 ]]>
      </programlisting>
@@ -271,12 +294,12 @@ include 'b.inc';
 <?php
 $a = 1; /* zasięg globalny */ 
 
-function Test()
+function test()
 { 
     echo $a; /* odwołanie do zmiennej o zasięgu lokalnym */ 
 } 
 
-Test();
+test();
 ?>
 ]]>
     </programlisting>
@@ -410,7 +433,7 @@ function test_global()
      <programlisting role="php">
 <![CDATA[
 <?php
-function Test()
+function test()
 {
     $a = 0;
     echo $a;
@@ -448,7 +471,8 @@ function Test()
     </example>
    </para>
    <simpara>
-    Teraz, za każdym wywołaniem funkcji test, zostanie wyświetlona wartość
+    Teraz, <varname>$a</varname> jest inicjowana tylko pry pierwszym wywołaniu funkcji
+    a, przy każdym wywołaniu funkcji test(), zostanie wyświetlona wartość
     zmiennej <varname>$a</varname>, po czym ta zmienna zostanie inkrementowana.
    </simpara>
 
@@ -467,14 +491,14 @@ function Test()
      <programlisting role="php">
 <![CDATA[
 <?php
-function Test()
+function test()
 {
     static $licznik = 0;
 
     $licznik++;
     echo $licznik;
     if ($licznik < 10) {
-        Test();
+        test();
     }
     $licznik--;
 }
