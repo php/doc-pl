@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.8 Maintainer: joeaccord Status: ready -->
-<!-- $Revision: 1.6 $ -->
+<!-- EN-Revision: 1.10 Maintainer: joeaccord Status: ready -->
+<!-- $Revision: 1.7 $ -->
 <refentry xml:id="function.json-decode" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>json_decode</refname>
@@ -12,7 +12,8 @@
   <methodsynopsis>
    <type>mixed</type><methodname>json_decode</methodname>
    <methodparam><type>string</type><parameter>json</parameter></methodparam>
-   <methodparam choice="opt"><type>bool</type><parameter>asocjacyjnie</parameter></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>asocjacyjnie</parameter><initializer>false</initializer></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>poziom_zagłębienia</parameter><initializer>512</initializer></methodparam>
   </methodsynopsis>
   <para>
    Konwertuje łańcuch JSON do zmiennej PHP.
@@ -37,6 +38,14 @@
       <para>
        Gdy jest ustawiony na &true;, zwracane <type>obiekty</type> zostaną
        przekonwertowane do <type>tablic</type> asocjacyjnych.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>poziom_zagłębienia</parameter></term>
+     <listitem>
+      <para>
+
       </para>
      </listitem>
     </varlistentry>
@@ -142,7 +151,7 @@ json_decode($bad_json); // null
   </note>
   <caution>
    <para>
-    Ta funkcja zwraca false, jeśli poziom danych zakodowanych w formacie JSON jest
+    Ta funkcja zwraca &false;, jeśli poziom zagłębienia danych zakodowanych w formacie JSON jest
     głębszy niż 127 elementów.
    </para>
   </caution>
