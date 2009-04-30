@@ -1,4 +1,4 @@
-<!-- EN-Revision: 1.245 Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: 1.252 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: leszek, adi -->
 <!-- Keep 'em sorted -->
@@ -198,12 +198,18 @@ nieudokumentowana, dostępna jest jedynie lista jej argumentów.
 
 <!ENTITY example.outputs '<para>Powyższy przykład wyświetli:</para>'>
 
+<!ENTITY example.outputs.32bit '<para>Wyświetla następujący przykład na systemach 32 bitowych:</para>'>
+
+<!ENTITY example.outputs.64bit '<para>Wyświetla następujący przykład na systemach 64 bitowych:</para>'>
+
 <!ENTITY example.outputs.similar '<para>Powyższy przykład wyświetli coś
 podobnego do:</para>'>
 
 <!ENTITY array.resetspointer '<note><simpara>Ta funkcja
 <function>zresetuje</function> wskaźnik <type>tablicy</type> po swoim
-wykonaniu.</simpara></note>'>  
+wykonaniu.</simpara></note>'>
+
+<!ENTITY seealso.array.sorting '<link linkend="array.sorting">porównanie funkcji sortujących tablice</link>'>
 
 <!ENTITY seealso.callback 'informacje o typie <link linkend="language.types.callback">callback</link>'>
 
@@ -245,6 +251,12 @@ w <literal>PATH</literal> systemu), ale nie jest to wymagane.
 
 <!ENTITY foreach '<link linkend="control-structures.foreach">foreach</link>'>
 
+<!ENTITY parameter.context 'Opis <link linkend="context">kontekstów</link>
+podano w części podręcznika poświęconej <literal>kontekstom</literal>.'>
+
+<!ENTITY parameter.use_include_path 'Gdy jest ustawiony na &true; to nazwa pliku jest szukana
+wewnątrz katalogów określonych za pomocą <link linkend="ini.include-path">include_path</link>'>
+
 <!-- Returns -->
 
 <!ENTITY return.success 'Zwraca &true; w przypadku powodzenia, &false; w
@@ -257,6 +269,9 @@ zwracany przez <function>date_create</function></para></listitem></varlistentry>
 <!ENTITY date.datetimezone.description '<varlistentry><term><parameter>
 object</parameter></term><listitem><para>Tylko styl proceduralny: Obiekt <classname>DateTimeZone</classname>
 zwracany przez <function>timezone_open</function></para></listitem></varlistentry>'>
+
+<!ENTITY date.datetime.retval.changelog '<row><entry>5.3.0</entry><entry>Zmieniono zwracaną
+wartość z &null; na <classname>DateTime</classname>.</entry></row>'>
 
 <!ENTITY return.void 'nie jest zwracana żadna wartość.'>
 
@@ -381,7 +396,7 @@ Teraz generuje błędy strefy czasowej o poziomie <constant>E_STRICT</constant> 
 
 <!ENTITY date.timestamp.description '
 <varlistentry><term><parameter>timestamp</parameter></term><listitem><para>
-Opcjonalny parametr uniksowy znacznik czasu <parameter>timestamp</parameter> jest typu 
+Opcjonalny parametr uniksowy znacznik czasu <parameter>timestamp</parameter> jest typu
 <type>integer</type> i domyślnie jest ustawiony na bieżący czas lokalny jeśli
 <parameter>timestamp</parameter> nie został podany. Innymi słowy,
 domyślnie to wartość funkcji <function>time</function>.
@@ -934,6 +949,9 @@ w przypadku powodzenia, lub &false; w przypadku błędu'>
 xmlwriter</parameter></term><listitem><para>Jedynie dla wywołań proceduralnych.
 <type>Zasób</type> XMLWriter, który jest modfikowany. Ten zasób pochodzi, z wywołania funkcji <function>xmlwriter_open_uri</function> lub <function>xmlwriter_open_memory</function>.</para></listitem></varlistentry>'>
 
+<!-- SOAP notes -->
+<!ENTITY soap.wsdl.mode.only "<note><para>Ta funkcja działa tylko w trybie WSDL.</para></note>">
+
 <!-- SVN notes -->
 <!ENTITY svn.relativepath "<note><simpara>Względne ścieżki zostaną rozwiązane, jeśli bieżący katalog roboczy jest jednym z zawierających binaria PHP. Aby odwołać się do skryptu roboczego katalogu, użyj <function>realpath</function> lub dirname(__FILE__).</simpara></note>">
 <!ENTITY svn.referto.status 'Odwołaj się do <link linkend="svn.constants.status">stałych statusu</link> po możliwe wartości.'>
@@ -1016,3 +1034,13 @@ gdy PHP zostało skompilowane z biblioteką libxml 20620 lub nowszą.</para></ca
 <!-- inotify -->
 <!ENTITY inotify.instance.description 'Zasób zwracany przez
 <function>inotify_init</function>'>
+
+<!-- User streams -->
+<!ENTITY userstream.not.implemented.warning '<para>Wysyła
+<constant>E_WARNING</constant> jeśli wywołanie tej metody się nie powiedzie
+(np. nie zaimplementowane).</para>'>
+
+<!ENTITY userstream.updates.context '<note><para>Właściwość
+<varname linkend="streamwrapper.props.context">streamWrapper->context</varname>
+jest aktualizowana, jeśli do wywołującej funkcji jest przekazywany prawidłowy kontekst.</para></note>'>
+
