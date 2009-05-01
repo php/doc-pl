@@ -1,11 +1,11 @@
-<!-- EN-Revision: 1.252 Maintainer: joeaccord Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 1.259 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: leszek, adi -->
 <!-- Keep 'em sorted -->
 
 
 <!-- Notes -->
-
 
 <!ENTITY note.bin-safe '<note><simpara>Ta funkcja jest bezpieczna dla danych
 binarnych.</simpara></note>'>
@@ -131,17 +131,17 @@ własne ryzyko.</simpara></warning>'>
 
 <!ENTITY warn.deprecated.feature-5-3-0.removed-6-0-0 '<warning 
 xmlns="http://docbook.org/ns/docbook"><simpara>Ta opcja jest
-<emphasis>PRZESTARZAŁA</emphasis> od PHP 5.3.0 i <emphasis>USUNIĘTA</emphasis>
+<emphasis>PRZESTARZA�?A</emphasis> od PHP 5.3.0 i <emphasis>USUNI�?TA</emphasis>
 w PHP 6.0.0 Używanie tej opcji nie jest zalecane.</simpara></warning>'>
 
 <!ENTITY warn.deprecated.function-5-3-0.removed-6-0-0 '<warning
 xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja jest
-<emphasis>PRZESTARZAŁA</emphasis> od PHP 5.3.0 i <emphasis>USUNIĘTA</emphasis>
+<emphasis>PRZESTARZA�?A</emphasis> od PHP 5.3.0 i <emphasis>USUNI�?TA</emphasis>
 w PHP 6.0.0. Używanie tej funkcji nie jest zalecane.</simpara></warning>'>
 
 <!ENTITY warn.deprecated.function.removed-5-3-0 '<warning
 xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja jest
-<emphasis>PRZESTARZAŁA</emphasis> i zostanie <emphasis>USUNIĘTA</emphasis>
+<emphasis>PRZESTARZA�?A</emphasis> i zostanie <emphasis>USUNI�?TA</emphasis>
 od PHP 5.3.0.</simpara></warning>'>
 
 <!ENTITY warn.experimental.func '<warning 
@@ -176,7 +176,7 @@ obsługują dostępu do zdalnych plików w tej funkcji, nawet jeśli opcja <link
 linkend="ini.allow-url-fopen">allow_url_fopen</link> jest
 włączona.</para></warning>'>
 
-<!ENTITY warn.ssl-non-standard '<warning><para>Łącząc się przez SSL, serwer
+<!ENTITY warn.ssl-non-standard '<warning><para>�?ącząc się przez SSL, serwer
 Microsoft IIS narusza reguły protokołu przez zamknięcie połączenia bez
 wysłania wskaźnika <literal>close_notify</literal>. Po przesłaniu całości danych
 PHP zgłosi to jako "SSL: Fatal Protocol Error". Aby obejść ten błąd, wystarczy obniżyć
@@ -304,6 +304,8 @@ PHP zostało skompilowane z obsługą FreeType (<option role="configure">--with-
 
 <!ENTITY note.gd.2 '<note><simpara>Ta funkcja wymaga GD 2.0.1 lub nowszej (2.0.28 lub nowsza jest zalecana).</simpara></note>'>
 
+<!ENTITY note.gd.notrequired '<note><para>Ta funkcja nie wymaga dostępu do biblioteki GD.</para></note>'>
+
 <!ENTITY gd.image.description '<varlistentry><term><parameter>
 obraz</parameter></term><listitem><para>Zasób obrazu, zwrócony przez jedną z funkcji tworzących obrazy, 
 taką jak <function>imagecreatetruecolor</function>.</para></listitem></varlistentry>'>
@@ -426,6 +428,9 @@ jest zazwyczaj tworzony poprzez funkcję <function>fopen</function>.</para>'>
 
 <!ENTITY gnupg.fingerprint '<para>Odcisk klucza.</para>'>
 
+<!-- HaruDoc -->
+<!ENTITY haru.error '<para>Zgłasza wyjątek <classname>HaruException</classname> gdy wystąpi błąd.</para>'>
+
 <!-- ODBC -->
 <!ENTITY odbc.connection.id '<para>Identyfikator połączenia ODBC.
 Zobacz opis funkcji <function>odbc_connect</function> aby poznać szczegóły.</para>'>
@@ -450,6 +455,11 @@ sterownik</link></para>'>
 <!ENTITY pcntl.parameter.status '<para><parameter>status</parameter>
 jest parametrem podawanym do prawidłowego
 wywołania funkcji <function>pcntl_waitpid</function>.</para>'>
+
+<!-- PS Notes -->
+<!ENTITY ps.note.visible '<para>Notatki nie będą widoczne ani podczas przeglądania
+dokumentu, ani na wydruku. Notatki będą widoczne jeśli dokument zostanie
+przekonwertowany do formatu PDF za pomocą Acrobat Distiller™ lub Ghostview.</para>'>
 
 <!-- XSLT Notes -->
 <!ENTITY note.xslt.windows '<note><para>Zauważ, że należy podać
@@ -814,6 +824,8 @@ w PHP 5.0.0.</simpara></note>'>
 <!ENTITY note.tidy.ze2 '<note><simpara>Ta funkcja jest dostępna tylko z Zend
 Engine 2 (PHP &gt;= 5.0.0.)</simpara></note>'>
 
+<!ENTITY tidy.object 'Obiekt <classname>Tidy</classname>.'>
+
 <!ENTITY note.tidy.1only '<note><simpara>Ta funkcja jest dostępna tylko w Tidy
 1.0. W wersji 2.0 stała się niepotrzebna i w związku z tym została usunięta.
 </simpara></note>'>
@@ -967,6 +979,9 @@ xmlwriter</parameter></term><listitem><para>Jedynie dla wywołań proceduralnych
 <!-- Imagick version infos -->
 <!ENTITY imagick.method.available.0x629 'Ta metoda jest dostępna, jeśli rozszerzenie Imagick zostało skompilowane z ImageMagick w wersji 6.2.9 lub nowszej.'>
 
+<!ENTITY imagick.imagickexception.throw 'Zgłasza wyjątek
+<classname>ImagickException</classname> gdy wystąpi błąd.'>
+
 <!ENTITY note.openssl.cnf '<note xmlns="http://docbook.org/ns/docbook">
  <simpara>
   Aby ta funkcja prawidłowo działała wymaga poprawnie zainstalowanego
@@ -1036,9 +1051,9 @@ gdy PHP zostało skompilowane z biblioteką libxml 20620 lub nowszą.</para></ca
 <function>inotify_init</function>'>
 
 <!-- User streams -->
-<!ENTITY userstream.not.implemented.warning '<para>Wysyła
-<constant>E_WARNING</constant> jeśli wywołanie tej metody się nie powiedzie
-(np. nie zaimplementowane).</para>'>
+<!ENTITY userstream.not.implemented.warning '<para>Zgłasza
+<constant>E_WARNING</constant> jeśli wywołanie tej metody nie powiedzie się
+(np. nie jest zaimplementowana).</para>'>
 
 <!ENTITY userstream.updates.context '<note><para>Właściwość
 <varname linkend="streamwrapper.props.context">streamWrapper->context</varname>
