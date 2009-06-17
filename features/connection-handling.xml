@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 1.20 Maintainer: slawek Status: ready -->
-<!-- $Revision: 1.13 $ -->
+<!-- EN-Revision: 1.21 Maintainer: joeaccord Status: ready -->
+<!-- $Revision: 1.14 $ -->
+<!-- CREDITS: slawek -->
  <chapter xml:id="features.connection-handling" xmlns="http://docbook.org/ns/docbook">
   <title>Obsługa połączeń</title>
 
@@ -29,8 +30,8 @@
    gdy braknie przeglądarki do której można wysyłać dane. Domyślnie,
    po rozłączeniu się klienta, działanie skryptu jest przerywane. To
    zachowanie można zmienić dzięki opcji ignore_user_abort w &php.ini;, jak
-   również dyrektywie Apache <literal>php_value ignore_user_abort</literal> lub funkcji
-   <function>ignore_user_abort</function>. Jeśli nie każesz PHP ignorować
+   również dyrektywie Apache &httpd.conf; <literal>php_value ignore_user_abort</literal> 
+   lub funkcji <function>ignore_user_abort</function>. Jeśli nie każesz PHP ignorować
    rozłączeń klienta, a klient rozłączy się, skrypt zakończy działanie.
    Jedyny wyjątek wystąpi, jeśli zarejestrujesz funkcję zamykającą, używając
    <function>register_shutdown_function</function>. Wtedy, gdy użytkownik
@@ -46,7 +47,7 @@
    Skrypt może zostać również zakończony przez wbudowany licznik czasu.
    Domyślnie czas ten wynosi 30 sekund. Wartość tę można zmienić
    używając opcji <option>max_execution_time</option> w &php.ini;, jak również dyrektywy
-   Apache <literal>php_value max_execution_time</literal> lub funkcji
+   Apache &httpd.conf; <literal>php_value max_execution_time</literal> lub funkcji
    <function>set_time_limit</function>. Kiedy czas na wykonanie się
    skończy, skrypt zostanie przerwany podobnie jak w przypadku rozłączenia
    się klienta (patrz wyżej). Jeśli funkcja zamykająca była zarejestrowana,
@@ -67,7 +68,7 @@
    <function>connection_timeout</function> i
    <function>connection_aborted</function> będą zwracały &true;. Możesz
    także sprawdzić oba stany przy pomocy funkcji
-   <function>connection_status</function> w takim wypadku zwróci ona 3. 
+   <function>connection_status</function> w takim wypadku zwróci ona 3.
   </simpara>
  </chapter>
 
