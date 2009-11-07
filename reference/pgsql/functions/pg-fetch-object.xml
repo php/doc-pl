@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: af4410a7e15898c3dbe83d6ea38246745ed9c6fb Maintainer: garbus Status: ready -->
+<!-- EN-Revision: 290384 Maintainer: garbus Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.2 -->
 <!-- CREDITS: jarek -->
@@ -34,8 +34,8 @@
   <para>
    Pod względem szybkości funkcja ta jest identyczna jak
    <function>pg_fetch_array</function>, i prawie tak szybka jak
-   <function>pg_fetch_row</function> (różnica jest zaniedbywanie
-   mała).
+   <function>pg_fetch_row</function> (różnica jest 
+   znikoma).
   </para>
  </refsect1>
 
@@ -47,7 +47,7 @@
      <term><parameter>wynik</parameter></term>
      <listitem>
       <para>
-       Identyfikator wyniku zapytania PostgreSQL, zwrózony przez <function>pg_query</function>,
+       Identyfikator wyniku zapytania PostgreSQL, zwrócony przez <function>pg_query</function>,
        <function>pg_query_params</function> lub <function>pg_execute</function> 
        (między innymi).
       </para>
@@ -166,9 +166,9 @@ $zap = pg_query($polaczenie, "SELECT * FROM ksiazki ORDER BY autor");
 
 
 while ($dane = pg_fetch_object($zap)) {
-  echo $data->autor . " (";
-  echo $data->rok . "): ";
-  echo $data->tytul . "<br />";
+  echo $dane->autor . " (";
+  echo $dane->rok . "): ";
+  echo $dane->tytul . "<br />";
 }
 
 pg_free_result($zap);
