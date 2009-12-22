@@ -4,6 +4,8 @@
 <!-- CREDITS: leszek, adi -->
 <!-- Keep 'em sorted -->
 
+<!ENTITY changelog.randomseed '<row xmlns="http://docbook.org/ns/docbook"><entry>4.2.0</entry><entry>Losowa liczba
+generatora pseudolosowego jest inicjowana automatycznie.</entry></row>'>
 
 <!-- Notes -->
 
@@ -129,20 +131,29 @@ ich nazw, w zasadzie wszystko udokumentowane tutaj może zostać zmienione w
 przyszłych wersjach PHP bez wcześniejszego uprzedzenia. Używaj tego modułu na
 własne ryzyko.</simpara></warning>'>
 
+<!ENTITY warn.deprecated.feature-5-3-0 '<warning
+xmlns="http://docbook.org/ns/docbook"><simpara>Ta opcja jest
+<emphasis>PRZESTARZAŁA</emphasis> od PHP 5.3.0. Używanie tej opcji
+nie jest zalecane.</simpara></warning>'>
+
 <!ENTITY warn.deprecated.feature-5-3-0.removed-6-0-0 '<warning 
 xmlns="http://docbook.org/ns/docbook"><simpara>Ta opcja jest
-<emphasis>PRZESTARZA�?A</emphasis> od PHP 5.3.0 i <emphasis>USUNI�?TA</emphasis>
+<emphasis>PRZESTARZAŁA</emphasis> od PHP 5.3.0 i <emphasis>USUNIĘTA</emphasis>
 w PHP 6.0.0 Używanie tej opcji nie jest zalecane.</simpara></warning>'>
 
 <!ENTITY warn.deprecated.function-5-3-0.removed-6-0-0 '<warning
 xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja jest
-<emphasis>PRZESTARZA�?A</emphasis> od PHP 5.3.0 i <emphasis>USUNI�?TA</emphasis>
+<emphasis>PRZESTARZAŁA</emphasis> od PHP 5.3.0 i <emphasis>USUNIĘTA</emphasis>
 w PHP 6.0.0. Używanie tej funkcji nie jest zalecane.</simpara></warning>'>
 
 <!ENTITY warn.deprecated.function.removed-5-3-0 '<warning
 xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja jest
-<emphasis>PRZESTARZA�?A</emphasis> i zostanie <emphasis>USUNI�?TA</emphasis>
+<emphasis>PRZESTARZAŁA</emphasis> i zostanie <emphasis>USUNIĘTA</emphasis>
 od PHP 5.3.0.</simpara></warning>'>
+
+<!ENTITY warn.deprecated.alias-5-3-0 '<warning xmlns="http://docbook.org/ns/docbook">
+<simpara>Ten alias funkcji jest <emphasis>PRZESTARZAŁY</emphasis> od PHP 5.3.0.
+Używanie tego aliasu nie jest zalecane.</simpara></warning>'>
 
 <!ENTITY warn.experimental.func '<warning 
 xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja jest w stadium
@@ -176,7 +187,7 @@ obsługują dostępu do zdalnych plików w tej funkcji, nawet jeśli opcja <link
 linkend="ini.allow-url-fopen">allow_url_fopen</link> jest
 włączona.</para></warning>'>
 
-<!ENTITY warn.ssl-non-standard '<warning><para>�?ącząc się przez SSL, serwer
+<!ENTITY warn.ssl-non-standard '<warning><para>Nawiązując połączenie przez SSL, serwer
 Microsoft IIS narusza reguły protokołu przez zamknięcie połączenia bez
 wysłania wskaźnika <literal>close_notify</literal>. Po przesłaniu całości danych
 PHP zgłosi to jako "SSL: Fatal Protocol Error". Aby obejść ten błąd, wystarczy obniżyć
@@ -205,6 +216,15 @@ nieudokumentowana, dostępna jest jedynie lista jej argumentów.
 <!ENTITY example.outputs.similar '<para>Powyższy przykład wyświetli coś
 podobnego do:</para>'>
 
+<!ENTITY examples.outputs '<para xmlns="http://docbook.org/ns/docbook">Powyższe przykłady wyświetlą:</para>'>
+
+<!ENTITY examples.outputs.32bit '<para xmlns="http://docbook.org/ns/docbook">Wyświetla następujące przykłady na systemach 32 bitowych:</para>'>
+
+<!ENTITY examples.outputs.64bit '<para xmlns="http://docbook.org/ns/docbook">Wyświetla następujące przykłady na systemach 64 bitowych:</para>'>
+
+<!ENTITY examples.outputs.similar '<para xmlns="http://docbook.org/ns/docbook">Powyższe przykłady wyświetlą coś
+podobnego do:</para>'>
+
 <!ENTITY array.resetspointer '<note><simpara>Ta funkcja
 <function>zresetuje</function> wskaźnik <type>tablicy</type> po swoim
 wykonaniu.</simpara></note>'>
@@ -223,8 +243,8 @@ mogą być wyłączone dyrektywą konfiguracji
 notacji skrótowej opisanej w <link
 linkend="faq.using.shorthandbytes">FAQ</link>.</simpara>'>
 
-<!ENTITY info.deprecated.alias 'Dla zachowania kompatybilności wstecznej,
-możliwe jest użycie poniższych aliasów: '>
+<!ENTITY info.deprecated.alias 'Dla zachowania zgodności z poprzednimi wersjami PHP
+możliwe jest używanie aliasów: '>
 
 <!ENTITY info.function.alias 'Ta funkcja jest aliasem dla: '>
 
@@ -259,29 +279,23 @@ wewnątrz katalogów określonych za pomocą <link linkend="ini.include-path">in
 
 <!-- Returns -->
 
+<!ENTITY return.falseforfailure ' lub &false; w przypadku błędu'>
+
 <!ENTITY return.success 'Zwraca &true; w przypadku powodzenia, &false; w
 przypadku błędu.'>
 
-<!ENTITY date.datetime.description '<varlistentry><term><parameter>object</parameter></term>
-<listitem><para>Tylko styl proceduralny: Obiekt <classname>DateTime</classname>
-zwracany przez <function>date_create</function></para></listitem></varlistentry>'>
+<!ENTITY return.void 'Nie jest zwracana żadna wartość.'>
 
-<!ENTITY date.datetimezone.description '<varlistentry><term><parameter>
-object</parameter></term><listitem><para>Tylko styl proceduralny: Obiekt <classname>DateTimeZone</classname>
-zwracany przez <function>timezone_open</function></para></listitem></varlistentry>'>
+<!ENTITY return.falseproblem '<warning xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja może
+zwrócić Boolean &false;, ale może też zwrócić wartość innego typu niż Boolean, która oznacza
+wartość &false;, takie jak <literal>0</literal> lub
+&quot;&quot;. Aby uzyskać więcej informacji proszę zapoznać się z rozdziałem <link
+linkend="language.types.boolean">Typy logiczne</link>.
+Można używać operatora <link linkend="language.operators.comparison">===
+</link> do testowania zwracanych wartości przez tę
+funkcję.</simpara></warning>'>
 
-<!ENTITY date.datetime.retval.changelog '<row><entry>5.3.0</entry><entry>Zmieniono zwracaną
-wartość z &null; na <classname>DateTime</classname>.</entry></row>'>
 
-<!ENTITY return.void 'nie jest zwracana żadna wartość.'>
-
-<!ENTITY return.falseproblem '<warning><simpara>Ta funkcja może zwrócić
-logiczne &false;, ale także zwykłą wartość rozpoznawaną
-jako &false;, na przykład <literal>0</literal> lub &quot;&quot;. Więcej
-informacji w rozdziale dotyczącym
-<link linkend="language.types.boolean">typów logicznych</link>. Użyj
-<link linkend="language.operators.comparison">operatora ===</link> aby
-sprawdzić wartość i typ zwracany przez tę funkcję.</simpara></warning>'>
 
 <!-- Image (GD) Notes -->
 
@@ -338,6 +352,20 @@ zwrócony przez <function>dbmopen</function>.</para></listitem></varlistentry>'>
 imap_stream</parameter></term><listitem><para>Strumień IMAP zwrócony przez 
 <function>imap_open</function>.</para></listitem></varlistentry>'>
 
+<!-- //// TODO DOKOŃCZYĆ //// -->
+<!ENTITY imap.pattern '<para xmlns="http://docbook.org/ns/docbook">Specifies where in the mailbox hierarchy
+to start searching.</para><para xmlns="http://docbook.org/ns/docbook">There are two special characters you can
+pass as part of the <parameter>pattern</parameter>:
+&apos;<literal>*</literal>&apos; and &apos;<literal>&#37;</literal>&apos;.
+&apos;<literal>*</literal>&apos; means to return all mailboxes. If you pass
+<parameter>pattern</parameter> as &apos;<literal>*</literal>&apos;, you will
+get a list of the entire mailbox hierarchy.
+&apos;<literal>&#37;</literal>&apos;
+means to return the current level only.
+&apos;<literal>&#37;</literal>&apos; as the <parameter>pattern</parameter>
+parameter will return only the top level
+mailboxes; &apos;<literal>~/mail/&#37;</literal>&apos; on <literal>UW_IMAPD</literal> will return every mailbox in the <filename>~/mail</filename> directory, but none in subfolders of that directory.</para>'>
+
 <!-- mbstring notes -->
 
 <!ENTITY note.mbstring.encoding.internal '<note><para>Wewnętrzne kodowanie lub
@@ -347,6 +375,9 @@ zostanie użyte jako kodowanie znaków dla tej funkcji.</para></note>'>
 <!ENTITY mbstring.encoding.parameter '<para>Parametr <parameter>encoding</parameter>
 określa kodowanie znaków. Jeśli nie jest podany, to zostanie użyta wewnętrzna wartość
 kodowania zanków.</para>'>
+
+<!-- //// TODO DOKOŃCZYĆ //// -->
+<!ENTITY mbstring.warning.e-modifier '<warning xmlns="http://docbook.org/ns/docbook"><para>Never use the <literal>e</literal> modifier when working on untrusted input. No automatic escaping will happen (as known from <function>preg_replace</function>). Not taking care of this will most likely create remote code execution vulnerabilities in your application.</para></warning>'>
 
 <!-- MCVE notes -->
 
@@ -368,6 +399,31 @@ conn</parameter></term><listitem><para>Zasób MCVE_CONN zwrócony przez
 <!ENTITY memcached.parameter.value 'Wartość do przechowania.'>
 
 <!ENTITY memcached.result.getresultcode 'Użyj <methodname>Memcached::getResultCode</methodname>, jeśli to konieczne.'>
+
+<!-- geaman notes -->
+
+<!ENTITY gearman.parameter.host 'Nazwa hosta serwera roboczego.'>
+
+<!ENTITY gearman.parameter.port 'Port serwera roboczego.'>
+
+<!-- //// TODO DOKOŃCZYĆ //// -->
+<!ENTITY gearman.parameter.functionname 'A registered function the worker is to execute'>
+
+<!-- //// TODO DOKOŃCZYĆ //// -->
+<!ENTITY gearman.parameter.workload 'Serialized data to be processed'>
+
+<!-- //// TODO DOKOŃCZYĆ //// -->
+<!ENTITY gearman.parameter.data 'Additional data that may be needed to complete the work'>
+
+<!-- //// TODO DOKOŃCZYĆ //// -->
+<!ENTITY gearman.parameter.context 'Application context to associate with a task'>
+
+<!-- //// TODO DOKOŃCZYĆ //// -->
+<!ENTITY gearman.parameter.unique 'A unique ID used to identify a particular task'>
+
+<!-- //// TODO DOKOŃCZYĆ //// -->
+<!ENTITY gearman.parameter.jobhandle 'The job handle assigned by the Gearman server'>
+
 
 <!-- Date and time entities -->
 <!ENTITY date.timezone.intro.title '<title>Lista obsługiwanych stref czasowych</title>'>
@@ -403,6 +459,31 @@ Opcjonalny parametr uniksowy znacznik czasu <parameter>timestamp</parameter> jes
 <parameter>timestamp</parameter> nie został podany. Innymi słowy,
 domyślnie to wartość funkcji <function>time</function>.
 </para></listitem></varlistentry>'>
+
+<!ENTITY date.datetime.description '<varlistentry><term><parameter>object</parameter></term>
+<listitem><para>Tylko styl proceduralny: Obiekt <classname>DateTime</classname>
+zwracany przez <function>date_create</function></para></listitem></varlistentry>'>
+
+<!ENTITY date.datetimezone.description '<varlistentry><term><parameter>
+object</parameter></term><listitem><para>Tylko styl proceduralny: Obiekt <classname>DateTimeZone</classname>
+zwracany przez <function>timezone_open</function></para></listitem></varlistentry>'>
+
+<!ENTITY date.datetime.retval.changelog '<row><entry>5.3.0</entry><entry>Zmieniono zwracaną
+wartość z &null; na <classname>DateTime</classname>.</entry></row>'>
+
+<!ENTITY date.timezone.dbversion 'Ta lista jest oparta o wersję bazy danych stref czasowych'>
+
+<!ENTITY date.timezone.africa 'Afryka'>
+<!ENTITY date.timezone.america 'Ameryka'>
+<!ENTITY date.timezone.antarctica 'Antarktyda'>
+<!ENTITY date.timezone.arctic 'Arktyka'>
+<!ENTITY date.timezone.asia 'Azja'>
+<!ENTITY date.timezone.atlantic 'Ocean Atlantycki'>
+<!ENTITY date.timezone.australia 'Australia'>
+<!ENTITY date.timezone.europe 'Europa'>
+<!ENTITY date.timezone.indian 'Ocean Indyjski'>
+<!ENTITY date.timezone.pacific 'Ocean Spokojny'>
+<!ENTITY date.timezone.others 'Inne'>
 
 <!-- DomXml Notes -->
 <!ENTITY node.inserted 'Ten węzeł nie pojawi się w dokumencie dopóki nie
@@ -440,16 +521,133 @@ Zobacz opis funkcji <function>odbc_connect</function> aby poznać szczegóły.</
 oraz "_" - dopasowanie oznacza jeden znak.'>
 
 <!-- Oracle -->
-<!ENTITY oci.charset "<para>Używając serwera Oracle 9.2 lub nowszej wersji
-można podać parametr <parameter>charset</parameter>, który zostanie użyty przy
-nowym połączeniu. Używając serwera Oracle &lt; 9.2 ten parametr zostanie
-zignorowany, a zamiast niego użyta zostanie zmienna środowiskowa
-NLS_LANG.</para>">
+<!-- //// TODO DOKOŃCZYĆ //// -->
+<!ENTITY oci.db "<para xmlns='http://docbook.org/ns/docbook' xmlns:xlink='http://www.w3.org/1999/xlink'>Contains
+the <literal>Oracle instance</literal> to connect to. It can be
+an <link xlink:href='&url.oracle.oic.connect;'>Easy Connect
+string</link>, or a Connect Name from
+the <filename>tnsnames.ora</filename> file, or the name of a local
+Oracle instance.
+</para>
+<para xmlns='http://docbook.org/ns/docbook'>If not specified, PHP uses
+environment variables such as <constant>TWO_TASK</constant> (on Linux)
+or <constant>LOCAL</constant> (on Windows)
+and <constant>ORACLE_SID</constant> to determine the
+<literal>Oracle instance</literal> to connect to.
+</para>
+<para xmlns='http://docbook.org/ns/docbook'>
+To use the Easy Connect naming method, PHP must be linked with Oracle
+10g or greater Client libraries. The Easy Connect string for Oracle
+10g is of the form:
+<emphasis>[//]host_name[:port][/service_name]</emphasis>. With Oracle
+11g, the syntax is:
+<emphasis>[//]host_name[:port][/service_name][:server_type][/instance_name]</emphasis>.
+Service names can be found by running the Oracle
+utility <literal>lsnrctl status</literal> on the database server
+machine.
+</para>
+<para xmlns='http://docbook.org/ns/docbook'>
+The <filename>tnsnames.ora</filename> file can be in the Oracle Net
+search path, which
+includes <filename>$ORACLE_HOME/network/admin</filename>
+and <filename>/etc</filename>.  Alternatively
+set <literal>TNS_ADMIN</literal> so
+that <filename>$TNS_ADMIN/tnsnames.ora</filename> is read.  Make sure
+the web daemon has read access to the file.
+</para>">
 
-<!ENTITY oci.datatypes '<para>Więcej szczegółów na temat mapowania typów danych
-dokonywanego przez sterownik oci8 można uzyskać w rozdziale
-dotyczącym <link linkend="oci8.datatypes">typów danych obsługiwanych przez ten
-sterownik</link></para>'>
+<!-- //// TODO DOKOŃCZYĆ //// -->
+<!ENTITY oci.charset "<para xmlns='http://docbook.org/ns/docbook'>Determines
+the character set used by the Oracle Client libraries.  The character
+set does not need to match the character set used by the database.  If
+it doesn't match, Oracle will do its best to convert data to and from
+the database character set.  Depending on the character sets this may
+not give usable results.  Conversion also adds some time overhead.
+</para>
+<para xmlns='http://docbook.org/ns/docbook'>If not specified, the
+Oracle Client libraries determine a character set from
+the <constant>NLS_LANG</constant> environment variable.
+</para>
+<para xmlns='http://docbook.org/ns/docbook'>Passing this parameter can
+reduce connection time.
+</para>">
+
+<!-- //// TODO DOKOŃCZYĆ //// -->
+<!ENTITY oci.sessionmode '<para xmlns="http://docbook.org/ns/docbook">This
+parameter is available since version PHP 5 (PECL OCI8 1.1) and accepts the
+following values: <constant>OCI_DEFAULT</constant>,
+<constant>OCI_SYSOPER</constant> and <constant>OCI_SYSDBA</constant>.
+If either <constant>OCI_SYSOPER</constant> or
+<constant>OCI_SYSDBA</constant> were specified, this function will try
+to establish privileged connection using external credentials.
+Privileged connections are disabled by default. To enable them you
+need to set <link linkend="ini.oci8.privileged-connect">oci8.privileged_connect</link>
+to <literal>On</literal>.
+</para>
+<para xmlns="http://docbook.org/ns/docbook">
+PHP 5.3 (PECL OCI8 1.3.4) introduced the
+<constant>OCI_CRED_EXT</constant> mode value. This tells Oracle to use
+External or OS authentication, which must be configured in the
+database.  The <constant>OCI_CRED_EXT</constant> flag can only be used
+with username of &quot;/&quot; and a empty password.
+<link linkend="ini.oci8.privileged-connect">oci8.privileged_connect</link>
+may be <literal>On</literal> or <literal>Off</literal>.
+</para>
+<para xmlns="http://docbook.org/ns/docbook">
+<constant>OCI_CRED_EXT</constant> may be combined with the
+<constant>OCI_SYSOPER</constant> or
+<constant>OCI_SYSDBA</constant> modes.
+</para>
+<para xmlns="http://docbook.org/ns/docbook">
+<constant>OCI_CRED_EXT</constant> is not supported on Windows for
+security reasons.
+</para>'>
+
+<!-- //// TODO DOKOŃCZYĆ //// -->
+<!ENTITY oci.datatypes '<para xmlns="http://docbook.org/ns/docbook">For details on the data type mapping performed by
+the OCI8 extension, see the <link linkend="oci8.datatypes">datatypes
+supported by the driver</link></para>'>
+
+<!-- //// TODO DOKOŃCZYĆ //// -->
+<!ENTITY oci.parameter.connection '<para xmlns="http://docbook.org/ns/docbook">An Oracle connection identifier,
+returned by <function>oci_connect</function>, <function>oci_pconnect</function>,
+or <function>oci_new_connect</function>.</para>'>
+
+<!-- //// TODO DOKOŃCZYĆ //// -->
+<!ENTITY oci.name.compat.note 'The old function name can still be used
+in current versions, however it is deprecated and not recommended.'>
+
+<!-- //// TODO DOKOŃCZYĆ //// -->
+<!ENTITY oci.availability.note.10g '<note xmlns="http://docbook.org/ns/docbook"><title>Oracle version requirement</title>
+<para>This function is available when PHP is linked with Oracle Database
+libraries from version 10g onwards.</para></note>'>
+
+<!-- //// TODO DOKOŃCZYĆ //// -->
+<!ENTITY oci.clientinfo.tip '<tip xmlns="http://docbook.org/ns/docbook"><title>Performance</title><para>With older versions of
+OCI8 or the Oracle Database, the client information can be set using the Oracle
+<literal>DBMS_APPLICATION_INFO</literal> package. This is less efficient than
+using <function>oci_set_client_info</function>.</para></tip>'>
+
+<!-- //// TODO DOKOŃCZYĆ //// -->
+<!ENTITY oci.roundtrip.caution '<caution xmlns="http://docbook.org/ns/docbook"><title>Roundtrip Gotcha</title>
+<para>Some but not all OCI8 functions cause roundtrips.  Roundtrips to the
+database may not occur with queries when result caching is enabled.
+</para></caution>'>
+
+<!-- //// TODO DOKOŃCZYĆ //// -->
+<!ENTITY oci.use.setprefetch '<para xmlns="http://docbook.org/ns/docbook">For
+queries returning a large number of rows, performance can be
+significantly improved by
+increasing <link linkend="ini.oci8.default-prefetch">oci8.default_prefetch</link>
+or using <function>oci_set_prefetch</function>.
+</para>'>
+
+<!-- //// TODO DOKOŃCZYĆ //// -->
+<!ENTITY oci.arg.statement.id
+"<para xmlns='http://docbook.org/ns/docbook'>A valid OCI8 statement
+identifier created by <function>oci_parse</function> and executed
+by <function>oci_execute</function>, or a <literal>REF
+CURSOR</literal> statement identifier.</para>">
 
 <!-- PCNTL Notes -->
 <!ENTITY pcntl.parameter.status '<para><parameter>status</parameter>
@@ -580,7 +778,7 @@ jest dołączane do PHP.'>
 jest rozprowadzane z PHP.'>
 
 <!ENTITY pecl.info 'Informacje na temat instalacji tego rozszerzenia PECL można
-znaleźć w podręczniku w rozdziale zatytułowanym 
+znaleźć w podręczniku w rozdziale zatytułowanym
 <link linkend="install.pecl">Instalacja rozszerzeń PECL</link>.
 Dodatkowe informacje, takie jak nowe wersje, pliki do
 pobrania, pliki źródłowe, informacje o opiekunach czy rejestr zmian, można
@@ -608,12 +806,12 @@ można pobrać z:
 <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="&url.pecl;">PECL</link> i nie jest rozprowadzane z PHP od wersji '>
 
 <!-- kept for BC -->
-
 <!ENTITY note.pecl-php5 '<note><simpara>To rozszerzenie zostało usunięte w PHP
 5 i przeniesione do repozytorium <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="&url.pecl;">PECL</link>.
 </simpara></note>'>
 
 <!-- Common pieces for reference part END -->
+
 
 <!ENTITY windows.builtin '<simpara><literal>PHP</literal> w wersji dla systemów
 Windows posiada wbudowaną obsługę dla tego rozszerzenia. Nie trzeba ładować
@@ -931,7 +1129,6 @@ należy skorzystać z funkcji <function>ssh2_auth_pubkey_file</function>.
 <!ENTITY link.http.request.info '<link linkend="http.request.info">Informacje żądania/odpowiedzi</link>'>
 <!ENTITY returns.http.response 'Zwraca łańcuch znaków z odpowiedziami HTTP
 w przypadku powodzenia, lub &false; w przypadku błędu'>
-
 <!ENTITY returns.http.false.orexits 'Zwraca &false; lub <emphasis>exist</emphasis> w przypadku sukcesu'>
 <!ENTITY http.request.affects 'Podlega jedynie niżej wymienionym metodom żądania:'>
 <!ENTITY http.request.affects.any 'Podlega dowolnej metodzie żądania.'>
@@ -964,6 +1161,16 @@ xmlwriter</parameter></term><listitem><para>Jedynie dla wywołań proceduralnych
 <!-- SOAP notes -->
 <!ENTITY soap.wsdl.mode.only "<note><para>Ta funkcja działa tylko w trybie WSDL.</para></note>">
 
+<!-- Stomp notes -->
+<!-- //// TODO DOKOŃCZYĆ //// -->
+<!ENTITY stomp.param.link "<varlistentry xmlns='http://docbook.org/ns/docbook'><term><parameter>link</parameter></term><listitem><para>Procedural style only: The stomp link identifier returned by <function>stomp_connect</function>.</para></listitem></varlistentry>">
+<!-- //// TODO DOKOŃCZYĆ //// -->
+<!ENTITY stomp.param.headers "<varlistentry xmlns='http://docbook.org/ns/docbook'><term><parameter>headers</parameter></term><listitem><para>Associative array containing the additional headers (example: receipt).</para></listitem></varlistentry>">
+<!-- //// TODO DOKOŃCZYĆ //// -->
+<!ENTITY stomp.note.transaction "<note xmlns='http://docbook.org/ns/docbook'><para>A transaction header may be specified, indicating that the message acknowledgment should be part of the named transaction.</para></note>">
+<!-- //// TODO DOKOŃCZYĆ //// -->
+<!ENTITY stomp.note.sync "<tip xmlns='http://docbook.org/ns/docbook'><simpara>Stomp is inherently asynchronous. Synchronous communication can be implemented adding a receipt header. This will cause methods to not return anything until the server has acknowledged receipt of the message or until read timeout was reached.</simpara></tip>">
+
 <!-- SVN notes -->
 <!ENTITY svn.relativepath "<note><simpara>Względne ścieżki zostaną rozwiązane, jeśli bieżący katalog roboczy jest jednym z zawierających binaria PHP. Aby odwołać się do skryptu roboczego katalogu, użyj <function>realpath</function> lub dirname(__FILE__).</simpara></note>">
 <!ENTITY svn.referto.status 'Odwołaj się do <link linkend="svn.constants.status">stałych statusu</link> po możliwe wartości.'>
@@ -978,9 +1185,54 @@ xmlwriter</parameter></term><listitem><para>Jedynie dla wywołań proceduralnych
 
 <!-- Imagick version infos -->
 <!ENTITY imagick.method.available.0x629 'Ta metoda jest dostępna, jeśli rozszerzenie Imagick zostało skompilowane z ImageMagick w wersji 6.2.9 lub nowszej.'>
+<!ENTITY imagick.method.available.0x631 'Ta metoda jest dostępna, jeśli rozszerzenie Imagick zostało skompilowane z ImageMagick w wersji 6.3.1 lub nowszej.'>
+<!ENTITY imagick.method.available.0x632 'Ta metoda jest dostępna, jeśli rozszerzenie Imagick zostało skompilowane z ImageMagick w wersji 6.3.2 lub nowszej.'>
+<!ENTITY imagick.method.available.0x636 'Ta metoda jest dostępna, jeśli rozszerzenie Imagick zostało skompilowane z ImageMagick w wersji 6.3.6 lub nowszej.'>
+<!ENTITY imagick.method.available.0x637 'Ta metoda jest dostępna, jeśli rozszerzenie Imagick zostało skompilowane z ImageMagick w wersji 6.3.7 lub nowszej.'>
+<!ENTITY imagick.method.available.0x638 'Ta metoda jest dostępna, jeśli rozszerzenie Imagick zostało skompilowane z ImageMagick w wersji 6.3.8 lub nowszej.'>
+<!ENTITY imagick.method.available.0x639 'Ta metoda jest dostępna, jeśli rozszerzenie Imagick zostało skompilowane z ImageMagick w wersji 6.3.9 lub nowszej.'>
+<!ENTITY imagick.method.available.0x640 'Ta metoda jest dostępna, jeśli rozszerzenie Imagick zostało skompilowane z ImageMagick w wersji 6.4.0 lub nowszej.'>
+<!ENTITY imagick.method.available.0x641 'Ta metoda jest dostępna, jeśli rozszerzenie Imagick zostało skompilowane z ImageMagick w wersji 6.4.1 lub nowszej.'>
+<!ENTITY imagick.method.available.0x642 'Ta metoda jest dostępna, jeśli rozszerzenie Imagick zostało skompilowane z ImageMagick w wersji 6.4.2 lub nowszej.'>
+<!ENTITY imagick.method.available.0x643 'Ta metoda jest dostępna, jeśli rozszerzenie Imagick zostało skompilowane z ImageMagick w wersji 6.4.3 lub nowszej.'>
+<!ENTITY imagick.method.available.0x644 'Ta metoda jest dostępna, jeśli rozszerzenie Imagick zostało skompilowane z ImageMagick w wersji 6.4.4 lub nowszej.'>
+<!ENTITY imagick.method.available.0x645 'Ta metoda jest dostępna, jeśli rozszerzenie Imagick zostało skompilowane z ImageMagick w wersji 6.4.5 lub nowszej.'>
+<!ENTITY imagick.method.available.0x647 'Ta metoda jest dostępna, jeśli rozszerzenie Imagick zostało skompilowane z ImageMagick w wersji 6.4.7 lub nowszej.'>
+<!ENTITY imagick.method.available.0x649 'Ta metoda jest dostępna, jeśli rozszerzenie Imagick zostało skompilowane z ImageMagick w wersji 6.4.9 lub nowszej.'>
+<!ENTITY imagick.method.available.0x653 'Ta metoda jest dostępna, jeśli rozszerzenie Imagick zostało skompilowane z ImageMagick w wersji 6.5.3 lub nowszej.'>
+
+<!-- //// TODO DOKOŃCZYĆ //// -->
+<!ENTITY imagick.constant.available 'This constant is available if Imagick has been compiled against ImageMagick version'>
+
+<!-- Imagick default channel information -->
+<!-- //// TODO DOKOŃCZYĆ //// -->
+<!ENTITY imagick.default.channel.info 'Defaults to <constant xmlns="http://docbook.org/ns/docbook">Imagick::CHANNEL_DEFAULT</constant>. Refer to this list of <link xmlns="http://docbook.org/ns/docbook" linkend="imagick.constants.channel">channel constants</link>'>
+
+<!-- Fuzz parameter -->
+<!-- //// TODO DOKOŃCZYĆ //// -->
+<!ENTITY imagick.parameter.fuzz 'The amount of fuzz. For example, set fuzz to 10 and the color red at intensities of 100 and 102 respectively are now interpreted as the same color.'>
+
+<!-- Channel parameter -->
+<!-- //// TODO DOKOŃCZYĆ //// -->
+<!ENTITY imagick.parameter.channel 'Provide any channel constant that is valid for your channel mode. To apply to more than one channel, combine <link xmlns="http://docbook.org/ns/docbook" linkend="imagick.constants.channel">channel constants</link> using bitwise operators. &imagick.default.channel.info;'>
+
+<!-- Alpha parameter -->
+<!-- //// TODO DOKOŃCZYĆ //// -->
+<!ENTITY imagick.parameter.alpha 'The level of transparency: 1.0 is fully opaque and 0.0 is fully transparent.'>
 
 <!ENTITY imagick.imagickexception.throw 'Zgłasza wyjątek
 <classname>ImagickException</classname> gdy wystąpi błąd.'>
+
+<!-- //// TODO DOKOŃCZYĆ //// -->
+<!ENTITY imagick.bestfit.note '<note xmlns="http://docbook.org/ns/docbook">
+ <simpara>
+  The behavior of the parameter <parameter>bestfit</parameter> changed in Imagick 3.0.0.
+  Before this version given dimensions 400x400 an image of dimensions 200x150 would be
+  left untouched. In Imagick 3.0.0 and later the image would be scaled up to size 400x300 as
+  this is the "best fit" for the given dimensions. If <parameter>bestfit</parameter>
+  parameter is used both width and height must be given.
+ </simpara>
+</note>'>
 
 <!ENTITY note.openssl.cnf '<note xmlns="http://docbook.org/ns/docbook">
  <simpara>
@@ -1054,8 +1306,46 @@ gdy PHP zostało skompilowane z biblioteką libxml 20620 lub nowszą.</para></ca
 <!ENTITY userstream.not.implemented.warning '<para>Zgłasza
 <constant>E_WARNING</constant> jeśli wywołanie tej metody nie powiedzie się
 (np. nie jest zaimplementowana).</para>'>
-
 <!ENTITY userstream.updates.context '<note><para>Właściwość
 <varname linkend="streamwrapper.props.context">streamWrapper->context</varname>
 jest aktualizowana, jeśli do wywołującej funkcji jest przekazywany prawidłowy kontekst.</para></note>'>
+
+<!-- Gmagick -->
+<!ENTITY gmagick.return.success 'Zwraca &true; w przypadku powodzenia.'>
+<!ENTITY gmagick.gmagickexception.throw 'Wywołuje wyjątek
+<classname xmlns="http://docbook.org/ns/docbook">GmagickException</classname> w przypadku błędu.'>
+
+<!-- Reflection -->
+<!-- //// TODO DOKOŃCZYĆ //// -->
+<!ENTITY reflection.export.return 'If the <parameter xmlns="http://docbook.org/ns/docbook">return</parameter> parameter
+is set to &true;, then the export is returned as a <type xmlns="http://docbook.org/ns/docbook">string</type>,
+otherwise &null; is returned.'>
+
+<!-- //// TODO DOKOŃCZYĆ //// -->
+<!ENTITY reflection.export.param.return 'Setting to &true; will return the export,
+as opposed to emitting it. Setting to &false; (the default) will do the opposite.'>
+
+<!-- //// TODO DOKOŃCZYĆ //// -->
+<!ENTITY reflection.export.param.name 'The reflection to export.'>
+
+<!-- SPL -->
+<!ENTITY spl.datastructures.intro.title '<title xmlns="http://docbook.org/ns/docbook">Struktury danych</title>'>
+
+<!ENTITY spl.exceptions.intro.title '<title xmlns="http://docbook.org/ns/docbook">Wyjątki</title>'>
+<!ENTITY spl.exceptions.intro '<partintro xmlns="http://docbook.org/ns/docbook"><para>SPL dostarcza kilka standardowych wyjątków.</para><para>patrz także: <xref linkend="reserved.exceptions" /></para></partintro>'>
+
+<!ENTITY spl.files.intro.title '<title xmlns="http://docbook.org/ns/docbook">Obsługa plików</title>'>
+<!ENTITY spl.files.intro '<partintro xmlns="http://docbook.org/ns/docbook"><para>SPL dostarcza kilka klas do pracy na plikach.</para></partintro>'>
+
+<!ENTITY spl.interfaces.intro.title '<title xmlns="http://docbook.org/ns/docbook">Interfejsy</title>'>
+<!ENTITY spl.interfaces.intro '<para xmlns="http://docbook.org/ns/docbook">SPL dostarcza kilka interfejsów.</para><para xmlns="http://docbook.org/ns/docbook">Patrz także: <xref linkend="reserved.interfaces" /></para>'>
+<!ENTITY spl.interfaces.list '<title xmlns="http://docbook.org/ns/docbook">Lista interfejsów</title>'>
+
+<!ENTITY spl.iterators.intro.title '<title xmlns="http://docbook.org/ns/docbook">Iteratory</title>'>
+<!-- //// TODO DOKOŃCZYĆ //// -->
+<!ENTITY spl.iterators.intro '<para xmlns="http://docbook.org/ns/docbook">SPL provides a set of iterators to traverse over objects.</para>'>
+
+<!ENTITY spl.misc.intro.title '<title xmlns="http://docbook.org/ns/docbook">Różne klasy</title>'>
+<!-- //// TODO DOKOŃCZYĆ //// -->
+<!ENTITY spl.misc.intro '<partintro xmlns="http://docbook.org/ns/docbook"><para>Classes which do not fit into the other SPL categories.</para></partintro>'>
 
