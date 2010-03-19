@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: n/a Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: c43ed67994fc5110646a9836194d0dd7f45114bc Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.json-decode" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
@@ -45,7 +45,7 @@
      <term><parameter>poziom_zagłębienia</parameter></term>
      <listitem>
       <para>
-
+       Limit zagnieżdżania danych określony przez użytkownika.
       </para>
      </listitem>
     </varlistentry>
@@ -56,9 +56,12 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca <type>obiekt</type>, lub w przypadku gdy opcjonalny parametr
-   <parameter>asocjacyjnie</parameter> jest ustawiony na &true;, zwraca
-   <type>tablicę</type> asocjacyjną.
+   Zwraca wartość zakodowaną w <parameter>json</parameter> w odpowiednim
+   typie PHP. Wartości <literal>true</literal>, <literal>false</literal>
+   i <literal>null</literal> (niezależnie od wielkości liter) są zwracane odpowiednio
+   jako &true;, &false; i &null;. &null; jest zwracany jeśli parametr
+   <parameter>json</parameter> nie może zostać odkodowany, lub jeżeli zakodowane
+   dane znajdują się głębiej niż ustalony limit zagnieżdżania.
   </para>
  </refsect1>
 
@@ -139,6 +142,72 @@ json_decode($bad_json); // null
 ]]>
     </programlisting>
    </example>
+   <example>
+    <title><parameter>depth</parameter> errors</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// Encode the data.
+$json = json_encode(
+    array(
+        1 => array(
+            'English' => array(
+                'One',
+                'January'
+            ),
+            'French' => array(
+                'Une',
+                'Janvier'
+            )
+        )
+    )
+);
+
+// Define the errors.
+$json_errors = array(
+    JSON_ERROR_NONE => 'No error has occurred',
+    JSON_ERROR_DEPTH => 'The maximum stack depth has been exceeded',
+    JSON_ERROR_CTRL_CHAR => 'Control character error, possibly incorrectly encoded',
+    JSON_ERROR_SYNTAX => 'Syntax error',
+);
+
+// Show the errors for different depths.
+foreach(range(4, 3, -1) as $depth) {
+    var_dump(json_decode($json, True, $depth));
+    echo 'Last error : ', $json_errors[json_last_error()], PHP_EOL, PHP_EOL;
+    }
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+array(1) {
+  [1]=>
+  array(2) {
+    ["English"]=>
+    array(2) {
+      [0]=>
+      string(3) "One"
+      [1]=>
+      string(7) "January"
+    }
+    ["French"]=>
+    array(2) {
+      [0]=>
+      string(3) "Une"
+      [1]=>
+      string(7) "Janvier"
+    }
+  }
+}
+Last error : No error has occurred
+
+NULL
+Last error : The maximum stack depth has been exceeded
+]]>
+    </screen>
+   </example>
   </para>
  </refsect1>
 
@@ -149,12 +218,12 @@ json_decode($bad_json); // null
     Specyfikacja JSON nie jest taka sama jak w JavaScript, tylko jest podzbiorem JavaScript.
    </para>
   </note>
-  <caution>
+  <note>
    <para>
-    Ta funkcja zwraca &false;, jeśli poziom zagłębienia danych zakodowanych w formacie JSON jest
-    głębszy niż 127 elementów.
+    W przypadku niepowodzenia dekodowania danych funkcja <function>json_last_error</function>
+    może zostać użyta do ścisłego ustalenia rodzaju błędu.
    </para>
-  </caution>
+  </note>
  </refsect1>
 
  <refsect1 role="changelog">
@@ -170,8 +239,12 @@ json_decode($bad_json); // null
      </thead>
      <tbody>
       <row>
+       <entry>5.3.0</entry>
+       <entry>Dodano opcjonalny parametr <parameter>poziom_zagłębienia</parameter>. Domyślny limit zagnieżdżania danych został zwiększony z 128 do 512</entry>
+      </row>
+      <row>
        <entry>5.2.3</entry>
-       <entry>Limit zagnieżdżania został zwiększony z 20 do 128</entry>
+       <entry>Limit zagnieżdżania danych został zwiększony z 20 do 128</entry>
       </row>
      </tbody>
     </tgroup>
@@ -184,6 +257,7 @@ json_decode($bad_json); // null
   <para>
    <simplelist>
     <member><function>json_encode</function></member>
+    <member><function>json_last_error</function></member>
    </simplelist>
   </para>
  </refsect1>
@@ -200,7 +274,7 @@ sgml-indent-step:1
 sgml-indent-data:t
 indent-tabs-mode:nil
 sgml-parent-document:nil
-sgml-default-dtd-file:"../../../../manual.ced"
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
 sgml-exposed-tags:nil
 sgml-local-catalogs:nil
 sgml-local-ecat-files:nil
