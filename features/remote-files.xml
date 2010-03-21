@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: n/a Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: af4410a7e15898c3dbe83d6ea38246745ed9c6fb Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: slawek -->
  <chapter xml:id="features.remote-files" xmlns="http://docbook.org/ns/docbook">
@@ -7,15 +7,23 @@
 
   <para>
    Jeśli parametr <option>allow_url_fopen</option> w pliku &php.ini;
-   zostanie włączony, będzie można używać adresów <acronym>HTTP</acronym> i 
+   zostanie włączony, będzie można używać adresów <acronym>HTTP</acronym> i
    <acronym>FTP</acronym> w większości
    funkcji, które jako parametr przyjmują nazwę pliku, włączając w to instrukcje
-   <function>include</function>, <function>include_once</function>,
-   <function>require</function> oraz <function>require_once</function> (od PHP 5.2.0, 
+   <function>include</function>,
+   <function>include_once</function>, <function>require</function> oraz
+   <function>require_once</function> (od PHP 5.2.0,
    musi być włączona opcja <option>allow_url_include</option>). 
-   Więcej informacji o protokołach obsługiwanych przez PHP.
+   Więcej informacji o protokołach obsługiwanych przez PHP
    znajduje się w <xref linkend="wrappers"/>.
   </para>
+  <note>
+   <para>
+   W PHP 4.0.3 i starszych, aby używać opakowań URL, należy
+   skonfigurowć PHP z opcją
+   <option>--enable-url-fopen-wrapper</option>.
+   </para>
+  </note>
   <para>
    <note>
     <para>
@@ -31,7 +39,8 @@
   <para>
    Możesz wykorzystać tę własność aby otworzyć plik na zdalnym serwrze,
    przetworzyć jego zawartość i użyć wyników w zapytaniu do bazy danych,
-   lub po prostu wyświetlić plik dostosowując jego wygląd do swojej strony.
+   lub po prostu wyświetlić plik dostosowując jego wygląd
+   do swojej strony.
   </para>
   <para>
    <example>
@@ -62,7 +71,15 @@ fclose($file);
    Możesz również zapisywać pliki na serwerach FTP (zakładając, że połączyłeś
    się jako użytkownik z odpowiednimi prawami dostepu). Przy użyciu tej metody
    możesz jedynie tworzyć nowe pliki. Jeśli spróbujesz nadpisać istniejący
-   plik, wywołanie funkcji <function>fopen</function> zwróci błąd.
+   plik, wywołanie funkcji <function>fopen</function>
+   zwróci błąd.
+  </para>
+  <para>
+   Aby połączyć się jako użytkowni inny niż 'anonymous', należy określić
+   nazwę uzytkownika (możliwe, że i hasło) w URL, w następujący sposób
+   '<literal>ftp://użytkownik:hasło@ftp.example.com/ścieżka/do/pliku</literal>'.
+   (Można używać takiej samej składni aby uzyskać dostęp do plików za pomocą
+   <acronym>HTTP</acronym> w czasie wykorzystywania uwierzytelnienia typu Basic.)
   </para>
   <para>
    <example>
