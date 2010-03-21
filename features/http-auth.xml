@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: n/a Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: af4410a7e15898c3dbe83d6ea38246745ed9c6fb Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: slawek -->
  <chapter xml:id="features.http-auth" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -9,7 +9,7 @@
    Uwierzytelnianie <acronym>HTTP</acronym> jest obsługiwana przez PHP tylko wtedy, gdy PHP pracuje
    jako moduł Apache'a, nie jest dostępna w trybie CGI. W skrypcie można użyć
    funkcji <function>header</function> by wysłać do przeglądarki komunikat
-   "Wymagana autoryzacja", co spowoduje wyświetlenie okienka z polami
+   <literal>"Wymagana autoryzacja"</literal>, co spowoduje wyświetlenie okienka z polami
    Użytkownik i Hasło. Po wypełnieniu przez użytkownika tych pól, URL
    zawierający skrypt PHP zostanie ponownie wywołany z ustawionymi
    <link linkend="reserved.variables">predefiniowanymi zmiennymi</link>
@@ -18,19 +18,19 @@
    nazwę użytkownika, hasło i typ autoryzacji. Zmienne te będą dostępne w
    tablicach <varname>$_SERVER</varname> oraz
    <varname>$HTTP_SERVER_VARS</varname>. Obecnie obsługiwane są autoryzacje
-   typu "Basic" i "Digest" (od PHP 5.1.0). Więcej informacji znajdziesz w opisie funkcji
+   typu "Basic" i "Digest" (od PHP 5.1.0). Więcej informacji można znaleć w opisie funkcji
    <function>header</function>.
   </simpara>
+
   <note>
    <title>Notatka dotycząca wersji PHP</title>
    <para>
-    <link linkend="language.variables.superglobals">Zmienne superglobalne</link>, 
+    <link linkend="language.variables.superglobals">Zmienne superglobalne</link>,
     takie jak <varname>$_SERVER</varname>, udostępniono
-    w PHP <link xlink:href="&url.php.release4.1.0;">4.1.0</link>. 
+    w PHP <link xlink:href="&url.php.release4.1.0;">4.1.0</link>.
    </para>
   </note>
-  
-  
+
   <para>
    Przykładowy skrypt wymuszający autoryzację klienta:
   </para>
@@ -40,27 +40,28 @@
     <programlisting role="php">
 <![CDATA[
 <?php
-  if (!isset($_SERVER['PHP_AUTH_USER'])) { 
+if (!isset($_SERVER['PHP_AUTH_USER'])) {
     header('WWW-Authenticate: Basic realm="My Realm"');
     header('HTTP/1.0 401 Unauthorized');
     echo 'Tekst do wysłania, jeśli użytkownik wciśnie przycisk Anuluj';
     exit;
-  } else {
-    echo "<p>Hej {$_SERVER['PHP_AUTH_USER']}.</p>"; 
-    echo "<p>Twoje hasło to {$_SERVER['PHP_AUTH_PW']}.</p>"; 
-  }
+} else {
+    echo "<p>Hej {$_SERVER['PHP_AUTH_USER']}.</p>";
+    echo "<p>Twoje hasło to {$_SERVER['PHP_AUTH_PW']}.</p>";
+}
 ?>
 ]]>
     </programlisting>
    </example>
   </para>
-   
- <para>
+
+  <para>
    <example>
     <title>Przykład uwierzytelnianie Digest HTTP</title>
     <para>
      Ten przykład pokazuje jak zaimplementować proste umierzytelnianie
-	 Digest HTTP. Po więcej informacji przeczytaj <link xlink:href="&url.rfc;2617">RFC 2617</link>.
+     Digest HTTP. Więcej informacji znajduje się w dokumencie <link
+      xlink:href="&url.rfc;2617">RFC 2617</link>.
     </para>
     <programlisting role="php">
 <![CDATA[
@@ -104,6 +105,7 @@ function http_digest_parse($txt)
     // zabezpieczenie przeciwko brakującym informacjom
     $needed_parts = array('nonce'=>1, 'nc'=>1, 'cnonce'=>1, 'qop'=>1, 'username'=>1, 'uri'=>1, 'response'=>1);
     $data = array();
+    $keys = implode('|', array_keys($needed_parts));
 
     preg_match_all('@(\w+)=(?:([\'"])([^\2]+)\2|([^\s,]+))@', $txt, $matches, PREG_SET_ORDER);
 
@@ -123,13 +125,12 @@ function http_digest_parse($txt)
   <note>
    <title>Kompatybilność</title>
    <para>
-    Należy uważać z linijkami dodawanymi do nagłówka HTTP. W celu zachowania
-    maksymalnej zgodności ze wszystkimi klientami, słowo Basic powinno
-    zaczynać się dużą literą "B", wartość realm powinna być otoczona
-    cudzysłowami (nie apostrofami), i dokładnie jeden znak odstępu powinien
-    poprzedzać kod <emphasis>401</emphasis> w linii
+    Należy uważać z linijkami dodawanymi do nagłówka HTTP. W celu zachowania maksymalnej
+    zgodności ze wszystkimi klientami, słowo Basic powinno zaczynać się dużą
+    literą "B", wartość realm powinna być otoczona  cudzysłowami (nie apostrofami),
+    i dokładnie jeden znak odstępu powinien poprzedzać kod <emphasis>401</emphasis> w linii
     <emphasis>HTTP/1.0 401</emphasis>. Parametry autoryzacyjne muszą być
-	oddzielone przecinkami jak pokazano to w przykładzie digest powyżej.
+    oddzielone przecinkami jak pokazano to w przykładzie digest powyżej.
    </para>
   </note>
 
@@ -148,9 +149,10 @@ function http_digest_parse($txt)
   </para>
 
   <simpara>
-   Aby zapobiec sytuacji w której ktoś napisze skrypt wykradający hasło
-   wysłane tradycyjnym zewnętrznym mechanizmem, zmienne PHP_AUTH nie będą
-   ustawiane, jeśli dla danej strony aktywna jest autoryzacja zewnętrzna
+   Od PHP 4.3.0, aby zapobiec sytuacji w której ktoś napisze skrypt
+   wykradający hasło wysłane tradycyjnym zewnętrznym mechanizmem,
+   zmienne PHP_AUTH nie będą ustawiane, jeśli dla danej strony
+   aktywna jest autoryzacja zewnętrzna
    i &safemode; jest włączony.  Bez względu na to,
    <varname>REMOTE_USER</varname> może zostać użyte do zidentyfikowania
    użytkownika autoryzowanego zewnętrznie  Zatem, możesz użyć
@@ -183,17 +185,17 @@ function http_digest_parse($txt)
     <programlisting role="php">
 <![CDATA[
 <?php
-  function authenticate() {
+function authenticate() {
     header('WWW-Authenticate: Basic realm="Testowy system autoryzacji"');
     header('HTTP/1.0 401 Unauthorized');
     echo "Musisz podać poprawny login i hasło by wejść na tę stronę\n";
     exit;
-  }
- 
-  if (!isset($_SERVER['PHP_AUTH_USER']) ||
+}
+
+if (!isset($_SERVER['PHP_AUTH_USER']) ||
     ($_POST['SeenBefore'] == 1 && $_POST['OldAuth'] == $_SERVER['PHP_AUTH_USER'])) {
     authenticate();
-  } else {
+} else {
     echo "<p>Witaj: {$_SERVER['PHP_AUTH_USER']}<br />";
     echo "Poprzednio: {$_REQUEST['OldAuth']}";
     echo "<form action='{$_SERVER['PHP_SELF']}' METHOD='post'>\n";
@@ -208,19 +210,21 @@ function http_digest_parse($txt)
    </example>
   </para>
   <simpara>
-   Powyższa metoda nie jest wymagana przez autoryzację HTTP typu "Basic",
-   więc nie można na niej polegać. Testy z przeglądarką Lynx pokazały, że
-   Lynx nie usuwa danych o autoryzacji po odebraniu od serwera kodu 401,
-   zatem przejście wstecz a następnie do przodu otworzy stronę, chyba, że
+   Powyższa metoda nie jest wymagana przez autoryzację <literal>HTTP Basic</literal>,
+   więc nie można na niej polegać. Testy z przeglądarką
+   <literal>Lynx</literal> pokazały, że <literal>Lynx</literal> nie usuwa danych
+   o autoryzacji po odebraniu od serwera kodu 401, zatem przejście wstecz a następnie
+   do przodu otworzy stronę, chyba, że
    wymagania co do danych autoryzacji zmieniły się. Użytkownik może jednak
-   użyć klawisza '_' by usunąc dane o autoryzacji.
+   użyć klawisza <literal>'_'</literal> by usunąc dane o autoryzacji.
   </simpara>
   <simpara>
    Zwóć uwagę, że do wersji PHP 4.3.3, Autoryzacja HTTP nie działała
    na serwerze Microsoft IIS z PHP w wersji CGI z powodu
    ograniczeń IIS. Aby zmusić go do działania w PHP 4.3.3+
-   musisz wyedytować "Bezpieczeństwo katalogów" w konfiguracji IIS. Kliknij
-   na "Edytuj" i zaznacz wyłącznie "Anonimowy Dostęp", wszystkie inne pola
+   musisz wyedytować "<literal>Bezpieczeństwo katalogów</literal>" w konfiguracji IIS. Kliknij
+   na "<literal>Edytuj</literal>" i zaznacz wyłącznie
+   "<literal>Anonimowy Dostęp</literal>", wszystkie inne pola
    powinny pozostać nie zaznaczone.
   </simpara>
   <simpara>
@@ -259,7 +263,7 @@ sgml-indent-step:1
 sgml-indent-data:t
 indent-tabs-mode:nil
 sgml-parent-document:nil
-sgml-default-dtd-file:"../../manual.ced"
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
 sgml-exposed-tags:nil
 sgml-local-catalogs:nil
 sgml-local-ecat-files:nil
