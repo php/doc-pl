@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: n/a Maintainer: adi Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
 <refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.feof">
  <refnamediv>
   <refname>feof</refname>
-  <refpurpose>Sprawdza czy wskaźnik pliku jest na końcu pliku (EOF)</refpurpose>
+  <refpurpose>Sprawdza czy wskaĹşnik pliku jest na koĹcu pliku (EOF)</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
@@ -14,7 +14,7 @@
    <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Sprawdza czy wskaźnik pliku jest na końcu pliku (EOF).
+   Sprawdza czy wskaĹşnik pliku jest na koĹcu pliku (EOF).
   </para>
  </refsect1>
 
@@ -35,45 +35,67 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca &true; jeśli wskaźnik pliku jest na EOF lub gdy zdarzy się błąd
-   (także timeout połączena socket'owego);w przeciwnym wypadku zwraca &false;.
+   Zwraca &true; jeĹli wskaĹşnik pliku jest na EOF lub gdy zdarzy siÄ bĹÄd
+   (takĹźe timeout poĹÄczena socket'owego);w przeciwnym wypadku zwraca &false;.
   </para>
  </refsect1>
 
  <refsect1 role="notes">
   &reftitle.notes;
   <warning>
-   <simpara>
-    Jeśli połączenie otworzone za pomocą <function>fsockopen</function> nie
-    zostanie zamknięte przez serwer, <function>feof</function> będzie
-    czekać aż timeout zostanie osiągniety, wtedy zwróci &true;.
-    Domyślny timeout to 60 sekund. Możesz użyć <function>stream_set_timeout</function>
-    aby zmienić tą wartość.
-   </simpara>
+   <para>
+    JeĹli poĹÄczenie otworzone za pomocÄ <function>fsockopen</function> nie
+    zostanie zamkniÄte przez serwer, <function>feof</function> zawiesi siÄ. Aby to obejĹÄ zobacz
+    poniĹźszy przykĹad:
+    <example>
+     <title>ObsĹuga limitu czasu w <function>feof</function></title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+function safe_feof($fp, &start = NULL) {
+ $start = microtime(true);
+
+ return feof($fp);
+}
+
+/* ZakĹadajÄc, Ĺźe $fp jest wczeĹniej otworzone przez fsockopen() */
+
+$start = NULL;
+$timeout = ini_get('default_socket_timeout');
+
+while(!safe_feof($fp, $start) && (microtime(true) - $start) < $timeout)
+{
+ /* Uchwyt */
+}
+?>
+]]>
+     </programlisting>
+    </example>    
+   </para>
   </warning>
   <warning>
-  <para>
-   Jeśli podano nieprawidłowy wskaźnik pliku to możesz uzyskać nieskończoną pętle,
-   ponieważ EOF w przypadku błędu zwraca TRUE.
-   <example>
-    <title><function>feof</function> przykład z nieprawidłowym wskaźnikiem pliku</title>
+   <para>
+    JeĹli podano nieprawidĹowy wskaĹşnik pliku to moĹźesz uzyskaÄ nieskoĹczonÄ pÄtle,
+    poniewaĹź <function>feof</function> w przypadku bĹÄdu zwraca &true;..
+    <example>
+     <title><function>feof</function> przykĹad z nieprawidĹowym wskaĹşnikiem pliku</title>
      <programlisting role="php">
- <![CDATA[
+<![CDATA[
 <?php
-// jeśli plik nie może zostać odczytany lub nie istnieje funkcja fopen zwróci FALSE
+// jeĹli plik nie moĹźe zostaÄ odczytany lub nie istnieje funkcja fopen zwrĂłci FALSE
 $file = @fopen("nie_isniejacy_plik", "r");
 
-// FALSE z fopen spowoduje ostrzeżenie oraz wystąpi tu nieskończona pętla
+// FALSE z fopen spowoduje ostrzeĹźenie oraz wystÄpi tu nieskoĹczona pÄtla
 while (!feof($file)) {
 }
 
 fclose($file);
 ?>
 ]]>
-      </programlisting>
-     </example>
-    </para>
-   </warning>
+     </programlisting>
+    </example>
+   </para>
+  </warning>
  </refsect1>
 
 </refentry>
@@ -89,7 +111,7 @@ sgml-indent-step:1
 sgml-indent-data:t
 indent-tabs-mode:nil
 sgml-parent-document:nil
-sgml-default-dtd-file:"../../../../manual.ced"
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
 sgml-exposed-tags:nil
 sgml-local-catalogs:nil
 sgml-local-ecat-files:nil
