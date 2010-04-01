@@ -1,37 +1,113 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: n/a Maintainer: adi Status: partial -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
-<!-- splitted from ./pl/functions/filesystem.xml, last change in rev 1.1 -->
-<!-- last change to 'unlink' in en/ tree in rev 1.2 -->
-<!-- OLD-Revision: 1.115/EN.1.2 -->
 <refentry xml:id="function.unlink" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>unlink</refname>
   <refpurpose>Kasowanie pliku</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ 
+<refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>unlink</methodname>
    <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
    <methodparam choice="opt"><type>resource</type><parameter>kontekst</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Kasuje <parameter>nazwa_pliku</parameter>. Podobnie do funkcji unlink()
-   z Unix'owego C. &return.success;
-  </para>
-  <note>
-   <simpara>
-    W PHP 5.0.0 <function>unlink</function> może być użyta z niektórymi
-    wrapperami URL. Skorzystaj z <xref linkend="wrappers"/>
-    aby uzyskać listę wrapperów, które obsługują <function>unlink</function>.
-   </simpara>
-  </note>
-   &note.context-support;
-  <para>
-   Patrz także: <function>rmdir</function> do kasowania katalogów.
+   Kasuje <parameter>nazwa_pliku</parameter>. Podobnie do uniksowej funkcji C 
+   unlink().
   </para>
  </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>nazwa_pliku</parameter></term>
+     <listitem>
+      <para>
+       ĹcieĹźka do pliku.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>context</parameter></term>
+     <listitem>
+      &note.context-support;
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>5.0.0</entry>
+       <entry>
+        Od PHP 5.0.0 <function>unlink</function> moĹźe byÄ rĂłwnieĹź uĹźyty z 
+        <emphasis>niektĂłrymi</emphasis> osĹonami (wrapperami) URL. Zajrzyj do <xref
+        linkend="wrappers"/> aby uzyskaÄ listÄ wrapperĂłw, ktĂłre obsĹuguje 
+        <function>unlink</function>.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Podstawowe uĹźycie <function>unlink</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$fh = fopen('test.html', 'a');
+fwrite($fh, '<h1>Witaj Ĺwiecie!</h1>');
+fclose($fh);
+
+mkdir('testowykatalog', 0777);
+
+unlink('test.html');
+unlink('testowykatalog');
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>rmdir</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
 </refentry>
 
 <!-- Keep this comment at the end of the file
@@ -45,7 +121,7 @@ sgml-indent-step:1
 sgml-indent-data:t
 indent-tabs-mode:nil
 sgml-parent-document:nil
-sgml-default-dtd-file:"../../../../manual.ced"
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
 sgml-exposed-tags:nil
 sgml-local-catalogs:nil
 sgml-local-ecat-files:nil
