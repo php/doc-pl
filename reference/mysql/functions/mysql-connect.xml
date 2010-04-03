@@ -1,24 +1,24 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: n/a Maintainer: adi Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.mysql-connect" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>mysql_connect</refname>
-  <refpurpose>Otwiera połączenie do serwera MySQL</refpurpose>
+  <refpurpose>Otwiera poĹÄczenie do serwera MySQL</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>resource</type><methodname>mysql_connect</methodname>
-   <methodparam choice="opt"><type>string</type><parameter>serwer</parameter></methodparam>
-   <methodparam choice="opt"><type>string</type><parameter>nazwa_użytkownika</parameter></methodparam>
-   <methodparam choice="opt"><type>string</type><parameter>hasło</parameter></methodparam>
-   <methodparam choice="opt"><type>bool</type><parameter>nowe_połączenie</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>flagi_klienta</parameter></methodparam>
+   <methodparam choice="opt"><type>string</type><parameter>serwer</parameter><initializer>ini_get("mysql.default_host")</initializer></methodparam>
+   <methodparam choice="opt"><type>string</type><parameter>nazwa_uĹźytkownika</parameter><initializer>ini_get("mysql.default_user")</initializer></methodparam>
+   <methodparam choice="opt"><type>string</type><parameter>hasĹo</parameter><initializer>ini_get("mysql.default_password")</initializer></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>nowe_poĹÄczenie</parameter><initializer>false</initializer></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>flagi_klienta</parameter><initializer>0</initializer></methodparam>
   </methodsynopsis>
   <para>
-   Otwiera lub ponownie używa połączenie do serwera MySQL.
+   Otwiera lub ponownie uĹźywa poĹÄczenie do serwera MySQL.
   </para>
  </refsect1>
 
@@ -30,50 +30,50 @@
      <term><parameter>serwer</parameter></term>
      <listitem>
       <para>
-       Serwer MySQL. Może także zawierać numer portu np.
-       "nazwa_serwera:port" lub ścieżkę do lokalnego gniazda np. ":/ścieżka/do/gniazda" dla
+       Serwer MySQL. MoĹźe takĹźe zawieraÄ numer portu np.
+       "nazwa_serwera:port" lub ĹcieĹźkÄ do lokalnego gniazda np. ":/ĹcieĹźka/do/gniazda" dla
        lokalnego hosta.
       </para>
       <para>
-       Jeśli, dyrektywa PHP <link linkend="ini.mysql.default-host">mysql.default_host</link>
-       jest nie zdefiniowana (domyślnie), wtedy domyślną 
-       wartością jest 'localhost:3306'. W &sqlsafemode;, ten parametr jest ignorowany
-       i zawsze jest używana wartość 'localhost:3306'.
+       JeĹli, dyrektywa PHP <link linkend="ini.mysql.default-host">mysql.default_host</link>
+       jest nie zdefiniowana (domyĹlnie), wtedy domyĹlnÄ 
+       wartoĹciÄ jest 'localhost:3306'. W &sqlsafemode;, ten parametr jest ignorowany
+       i zawsze jest uĹźywana wartoĹÄ 'localhost:3306'.
       </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>nazwa_użytkownika</parameter></term>
+     <term><parameter>nazwa_uĹźytkownika</parameter></term>
      <listitem>
       <para>
-       Nazwa użytkownika. Domyślna watość jest definiowana przez <link
+       Nazwa uĹźytkownika. DomyĹlna watoĹÄ jest definiowana przez <link
        linkend="ini.mysql.default-user">mysql.default_user</link>. W
-       &sqlsafemode;, parametr ten jest ignorowany i używana jest nazwa użytkownika, który
-       jest właścicielem procesu serwera.
+       &sqlsafemode;, parametr ten jest ignorowany i uĹźywana jest nazwa uĹźytkownika, ktĂłry
+       jest wĹaĹcicielem procesu serwera.
       </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>hasło</parameter></term>
+     <term><parameter>hasĹo</parameter></term>
      <listitem>
       <para>
-       Hasło. Domyślna wartość jest zdefiniowana przez <link
+       HasĹo. DomyĹlna wartoĹÄ jest zdefiniowana przez <link
        linkend="ini.mysql.default-password">mysql.default_password</link>. W
-       &sqlsafemode;, ten parametr jest ignorowany i użyte jest puste hasło.
+       &sqlsafemode;, ten parametr jest ignorowany i uĹźyte jest puste hasĹo.
       </para>
      </listitem>
     </varlistentry>   
     <varlistentry>
-     <term><parameter>nowe_połączenie</parameter></term>
+     <term><parameter>nowe_poĹÄczenie</parameter></term>
      <listitem>
       <para>
-       Jeśli, ponownie wywołamy <function>mysql_connect</function>
-       z tymi samymi argumentami, nie zostanie nawiązane nowe połączenie, lecz
-       zamiast tego, zostanie zwrócony identyfikator obecnie otwartego połączenia.
-       Parametr <parameter>nowe_połączenie</parameter> modyfikuje to
-       zachowanie i sprawia, że <function>mysql_connect</function> zawsze otwiera
-       nowe połączenie, nawet jeśli <function>mysql_connect</function> zostało wywołane
-       wcześniej z tymi samymi parametrami.
+       JeĹli, ponownie wywoĹamy <function>mysql_connect</function>
+       z tymi samymi argumentami, nie zostanie nawiÄzane nowe poĹÄczenie, lecz
+       zamiast tego, zostanie zwrĂłcony identyfikator obecnie otwartego poĹÄczenia.
+       Parametr <parameter>nowe_poĹÄczenie</parameter> modyfikuje to
+       zachowanie i sprawia, Ĺźe <function>mysql_connect</function> zawsze otwiera
+       nowe poĹÄczenie, nawet jeĹli <function>mysql_connect</function> zostaĹo wywoĹane
+       wczeĹniej z tymi samymi parametrami.
        W &sqlsafemode;, ten parametr jest ignorowany.
       </para>
      </listitem>
@@ -82,14 +82,14 @@
      <term><parameter>flagi_klienta</parameter></term>
      <listitem>
       <para>
-       Parametr <parameter>flagi_klienta</parameter> może być kombinacją
-       następujących stałych:
-       128 (włącza obsługę <literal>LOAD DATA LOCAL</literal>),
+       Parametr <parameter>flagi_klienta</parameter> moĹźe byÄ kombinacjÄ
+       nastÄpujÄcych staĹych:
+       128 (wĹÄcza obsĹugÄ <literal>LOAD DATA LOCAL</literal>),
        <constant>MYSQL_CLIENT_SSL</constant>,
        <constant>MYSQL_CLIENT_COMPRESS</constant>, 
        <constant>MYSQL_CLIENT_IGNORE_SPACE</constant> lub
        <constant>MYSQL_CLIENT_INTERACTIVE</constant>.
-       Przeczytaj sekcję o <xref linkend="mysql.client-flags" /> w celu dalszych informacji.
+       Przeczytaj sekcjÄ o <xref linkend="mysql.client-flags" /> w celu dalszych informacji.
        W &sqlsafemode;, ten parametr jest ignorowany.
       </para>
      </listitem>
@@ -101,7 +101,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca identyfikator połączenia MySQL w przypadku sukcesu, lub &false; w przypadku porażki.
+   Zwraca identyfikator poĹÄczenia MySQL w przypadku sukcesu, &return.falseforfailure;
   </para>
  </refsect1>
 
@@ -126,20 +126,7 @@
       <row>
        <entry>4.2.0</entry>
        <entry>
-        Dodano parametr <parameter>nowe_połączenie</parameter>.
-       </entry>
-      </row>
-      <row>
-       <entry>3.0.10</entry>
-       <entry>
-        Dodano wsparcie dla ":/ściezka/do/gniazda" w 
-        <parameter>serwer</parameter>.
-       </entry>
-      </row>
-      <row>
-       <entry>3.0.0</entry>
-       <entry>
-        Dodano wsparcie dla ":port" w <parameter>serwer</parameter>.
+        Dodano parametr <parameter>nowe_poĹÄczenie</parameter>.
        </entry>
       </row>
      </tbody>
@@ -152,15 +139,15 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład <function>mysql_connect</function></title>
+    <title>PrzykĹad <function>mysql_connect</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
-$link = mysql_connect('localhost', 'użytkownik_mysql', 'hasło_mysql');
+$link = mysql_connect('localhost', 'uĹźytkownik_mysql', 'hasĹo_mysql');
 if (!$link) {
-    die('Nie można się połaczyć: ' . mysql_error());
+    die('Nie moĹźna siÄ poĹaczyÄ: ' . mysql_error());
 }
-echo 'Połączenie nawiązane';
+echo 'PoĹÄczenie nawiÄzane';
 mysql_close($link);
 ?>
 ]]>
@@ -169,24 +156,24 @@ mysql_close($link);
   </para>
   <para>
    <example>
-    <title>Przykład <function>mysql_connect</function> z użyciem składni <literal>nazwa_hosta:port</literal></title>
+    <title>PrzykĹad <function>mysql_connect</function> z uĹźyciem skĹadni <literal>nazwa_hosta:port</literal></title>
     <programlisting role="php">
 <![CDATA[
 <?php
-// połączymy się do example.com i portu 3307
-$link = mysql_connect('example.com:3307', 'użytkownik_mysql', 'hasło_mysql');
+// poĹÄczymy siÄ do example.com i portu 3307
+$link = mysql_connect('example.com:3307', 'uĹźytkownik_mysql', 'hasĹo_mysql');
 if (!$link) {
-    die('Nie można się połączyć: ' . mysql_error());
+    die('Nie moĹźna siÄ poĹÄczyÄ: ' . mysql_error());
 }
-echo 'Połączenie nawiązane';
+echo 'PoĹÄczenie nawiÄzane';
 mysql_close($link);
 
-// połączymy się do localhost na port 3307
-$link = mysql_connect('127.0.0.1:3307', 'użytkownik_mysql', 'hasło_mysql');
+// poĹÄczymy siÄ do localhost na port 3307
+$link = mysql_connect('127.0.0.1:3307', 'uĹźytkownik_mysql', 'hasĹo_mysql');
 if (!$link) {
-    die('Nie można się połączyć: ' . mysql_error());
+    die('Nie moĹźna siÄ poĹÄczyÄ: ' . mysql_error());
 }
-echo 'Połączenie nawiązane';
+echo 'PoĹÄczenie nawiÄzane';
 mysql_close($link);
 ?>
 ]]>
@@ -195,27 +182,27 @@ mysql_close($link);
   </para>
   <para>
    <example>
-    <title><function>mysql_connect</function> przykład użycia składni ":/ścieżka/do/gniazda"</title>
+    <title><function>mysql_connect</function> przykĹad uĹźycia skĹadni ":/ĹcieĹźka/do/gniazda"</title>
     <programlisting role="php">
 <![CDATA[
 <?php
-// połączymy się do lokalhost i gniazda np. /tmp/mysql.sock
+// poĹÄczymy siÄ do lokalhost i gniazda np. /tmp/mysql.sock
 
-//wariant 1: z pominięciem localhost
-$link = mysql_connect(':/tmp/mysql', 'użytkownik_mysql', 'hasło_mysql');
+//wariant 1: z pominiÄciem localhost
+$link = mysql_connect(':/tmp/mysql', 'uĹźytkownik_mysql', 'hasĹo_mysql');
 if (!$link) {
-    die('Nie można się połączyć: ' . mysql_error());
+    die('Nie moĹźna siÄ poĹÄczyÄ: ' . mysql_error());
 }
-echo 'Połączenie nawiązane';
+echo 'PoĹÄczenie nawiÄzane';
 mysql_close($link);
 
 
 // wariant 2: z localhost
-$link = mysql_connect('localhost:/tmp/mysql.sock', 'użytkownik_mysql', 'hasło_mysql');
+$link = mysql_connect('localhost:/tmp/mysql.sock', 'uĹźytkownik_mysql', 'hasĹo_mysql');
 if (!$link) {
-    die('Nie można się połączyć: ' . mysql_error());
+    die('Nie moĹźna siÄ poĹÄczyÄ: ' . mysql_error());
 }
-echo 'Połączenie nawiązane';
+echo 'PoĹÄczenie nawiÄzane';
 mysql_close($link);
 ?>
 ]]>
@@ -228,39 +215,38 @@ mysql_close($link);
   &reftitle.notes;
   <note>
    <para>
-    Ilekroć określasz serwer jako &quot;localhost&quot; lub
+    IlekroÄ okreĹlasz serwer jako &quot;localhost&quot; lub
     &quot;localhost:port&quot;, biblioteka kliencka MySQL nadpisze
-    to i spróbuje połączyć się do lokalnego gniazda (nazwanego potokiem w
-    Windows). Jeśli chcesz użyć TCP/IP, użyj &quot;127.0.0.1&quot;
-    zamiast &quot;localhost&quot;. Jeśli biblioteka kliencka MySQL próbuje
-    połączyć się do niewłaściwego lokalnego gniazda, powinieneś ustawić prawidłową ścieżkę jako
-    <xref linkend="ini.mysql.default-host" /> w Twojej konfiguracji PHP i zostawić puste pole
+    to i sprĂłbuje poĹÄczyÄ siÄ do lokalnego gniazda (nazwanego potokiem w
+    Windows). JeĹli chcesz uĹźyÄ TCP/IP, uĹźyj &quot;127.0.0.1&quot;
+    zamiast &quot;localhost&quot;. JeĹli biblioteka kliencka MySQL prĂłbuje
+    poĹÄczyÄ siÄ do niewĹaĹciwego lokalnego gniazda, powinieneĹ ustawiÄ prawidĹowÄ ĹcieĹźkÄ jako
+    <xref linkend="ini.mysql.default-host" /> w Twojej konfiguracji PHP i zostawiÄ puste pole
     serwer.
    </para>
   </note>
   <note>
    <para>
-    Połączenie do serwera zostanie zamknięte jak tylko wykonywanie
-    skryptu zakończy się, chyba, że zostanie wcześniej zamknięte poprzez
-    wyraźne wywołanie <function>mysql_close</function>.
+    PoĹÄczenie do serwera zostanie zamkniÄte jak tylko wykonywanie
+    skryptu zakoĹczy siÄ, chyba, Ĺźe zostanie wczeĹniej zamkniÄte poprzez
+    wyraĹşne wywoĹanie <function>mysql_close</function>.
    </para>
   </note>
   <note>
    <para>
-    Możesz zapobiec informacją o błędach w przypadku niepowodzenia za pomocą poprzedzenia
+    MoĹźesz zapobiec informacjÄ o bĹÄdach w przypadku niepowodzenia za pomocÄ poprzedzenia
     nazwy funkcji <link linkend="language.operators.errorcontrol">@</link>.
    </para>
   </note>
   <note>
    <para>
-    Błąd "Can't create TCP/IP socket (10106)" zwykle oznacza, że dyrektywa
+    BĹÄd "Can't create TCP/IP socket (10106)" zwykle oznacza, Ĺźe dyrektywa
     konfiguracyjna <link linkend="ini.variables-order">variables_order</link>
-    nie zawiera znaku <literal>E</literal>. Pod Windows, jeśli środowisko nie jest
-    skopiowane zmienna środowiskowa <literal>SYSTEMROOT</literal> nie będzie
-    dostępna i PHP będzie mieć problemy aby załadować Winsock.
+    nie zawiera znaku <literal>E</literal>. Pod Windows, jeĹli Ĺrodowisko nie jest
+    skopiowane zmienna Ĺrodowiskowa <literal>SYSTEMROOT</literal> nie bÄdzie
+    dostÄpna i PHP bÄdzie mieÄ problemy aby zaĹadowaÄ Winsock.
    </para>
   </note>
-
  </refsect1>
 
  <refsect1 role="seealso">
@@ -285,7 +271,7 @@ sgml-indent-step:1
 sgml-indent-data:t
 indent-tabs-mode:nil
 sgml-parent-document:nil
-sgml-default-dtd-file:"../../../../manual.ced"
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
 sgml-exposed-tags:nil
 sgml-local-catalogs:nil
 sgml-local-ecat-files:nil
