@@ -1,30 +1,30 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: adi Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 61bb68cc6d7229771fc96879075a0fa7598716d6 Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
  <chapter xml:id="language.basic-syntax" xmlns="http://docbook.org/ns/docbook">
-  <title>Podstawowa składnia</title>
+  <title>Podstawowa skĹadnia</title>
   <sect1 xml:id="language.basic-syntax.phpmode">
    <title>Wyskakiwanie z HTMLa</title>
    <para>
-    Kiedy PHP przetwarza plik, szuka otwierających i zamykających znaczników (tagów),
-    które mówią PHP o rozpoczęciu i zakończeniu interpretowania kodu pomiędzy
-    nimi. Przetwarzanie w taki sposób pozwala zagnieżdzać php w dowolnym
-    rodzaju dokumentów, ponieważ wszystko poza parą
-    znaczników, otwierającym i zamykającym jest ignorowane przez parser PHP.
-    Najczęściej zobaczysz php zagnieżdzone w dokumentach HTML,
-    tak jak w tym przykładzie.
+    Kiedy PHP przetwarza plik, szuka otwierajÄcych i zamykajÄcych znacznikĂłw (tagĂłw),
+    ktĂłre mĂłwiÄ PHP o rozpoczÄciu i zakoĹczeniu interpretowania kodu pomiÄdzy
+    nimi. Przetwarzanie w taki sposĂłb pozwala zagnieĹźdzaÄ php w dowolnym
+    rodzaju dokumentĂłw, poniewaĹź wszystko poza parÄ
+    znacznikĂłw, otwierajÄcym i zamykajÄcym jest ignorowane przez parser PHP.
+    NajczÄĹciej zobaczysz php zagnieĹźdzone w dokumentach HTML,
+    tak jak w tym przykĹadzie.
     <informalexample>
      <programlisting role="php">
 <![CDATA[
 <p>To zostanie zignorowane.</p>
 <?php echo 'Kiedy to zostanie przetworzone.'; ?>
-<p>To również zostanie zignorowane.</p>
+<p>To rĂłwnieĹź zostanie zignorowane.</p>
 ]]>
      </programlisting>
     </informalexample>
    </para>
    <para>
-    Możesz także użyć bardziej zaawansowanej struktury:
+    MoĹźesz takĹźe uĹźyÄ bardziej zaawansowanej struktury:
     <example>
      <title>Zaawansowane wyskakiwanie</title>
      <programlisting role="php">
@@ -36,86 +36,93 @@ if ($wyrazenie) {
     <?php 
 } else { 
     ?>
-    <strong>To jest fałsz.</strong>
+    <strong>To jest faĹsz.</strong>
     <?php 
 }
 ?>
 ]]>
      </programlisting>
     </example>
-    To działa jak się spodziewano, ponieważ kiedy PHP natrafi na zamykający 
-    znacznik ?&gt;, poprostu zaczyna wyświetlać cokolwiek znajdzie (z wyjątkiem
-    bezpośrednio następującej nowej linii - zobacz
+    To dziaĹa jak siÄ spodziewano, poniewaĹź kiedy PHP natrafi na zamykajÄcy 
+    znacznik ?&gt;, poprostu zaczyna wyĹwietlaÄ cokolwiek znajdzie (z wyjÄtkiem
+    bezpoĹrednio nastÄpujÄcej nowej linii - zobacz
     <link linkend="language.basic-syntax.instruction-separation">oddzielanie instrukcji</link>
-    ) dopóki nie natrafi
-    na kolejny otwierający znacznik. Podany przykład jest oczywiście przekombinowany,
-    ale do wyświetlania dużych bloków tekstu, wychodzenie z trybu przetwarzania PHP
-    jest zasadniczo bardziej efektywne niż wysyłanie całego tekstu przez
+    ) dopĂłki nie natrafi
+    na kolejny otwierajÄcy znacznik. Podany przykĹad jest oczywiĹcie przekombinowany,
+    ale do wyĹwietlania duĹźych blokĂłw tekstu, wychodzenie z trybu przetwarzania PHP
+    jest zasadniczo bardziej efektywne niĹź wysyĹanie caĹego tekstu przez
     funkcje <function>echo</function> lub
     <function>print</function>.  
    </para>
    <para>
-    Mamy cztery różne pary otwierających i zamykających znaczników,
-    które mogą być użyte w php. Dwie z nich, &lt;?php ?&gt; i
-    &lt;script language="php"&gt; &lt;/script&gt; są zawsze dostępne.
-    Dwie następne to krótkie znaczniki i znaczniki w stylu
-    <productname>ASP</productname>, mogą być włączane i wyłączane
-    w pliku konfiguracyjnym &php.ini;. Część osób postrzega krótkie znaczniki
-    i znaczniki w stylu <productname>ASP</productname> jako wygodne, jednakże
-    są one mniej przenośne, i zasadniczo nie polecane.
+    Mamy cztery rĂłĹźne pary otwierajÄcych i zamykajÄcych znacznikĂłw,
+    ktĂłre mogÄ byÄ uĹźyte w php. Dwie z nich, &lt;?php ?&gt; i
+    &lt;script language="php"&gt; &lt;/script&gt; sÄ zawsze dostÄpne.
+    Dwie nastÄpne to krĂłtkie znaczniki i znaczniki w stylu
+    <productname>ASP</productname>, mogÄ byÄ wĹÄczane i wyĹÄczane
+    w pliku konfiguracyjnym &php.ini;. CzÄĹÄ osĂłb postrzega krĂłtkie znaczniki
+    i znaczniki w stylu <productname>ASP</productname> jako wygodne, jednakĹźe
+    sÄ one mniej przenoĹne, i zasadniczo nie polecane.
     <note>
      <para>
-      Zauważ również, że jeśli zagnieżdzasz PHP w XML lub XHTML
-      musisz stosować znaczniki &lt;?php ?&gt; aby pozostać
+      ZauwaĹź rĂłwnieĹź, Ĺźe jeĹli zagnieĹźdzasz PHP w XML lub XHTML
+      musisz stosowaÄ znaczniki &lt;?php ?&gt; aby pozostaÄ
       w zgodzie ze standardami.
      </para>
     </note> 
    </para>
    <para>
     <example>
-     <title>Znaczniki otwierające i zamykające PHP</title>
+     <title>Znaczniki otwierajÄce i zamykajÄce PHP</title>
      <programlisting role="php">
 <![CDATA[
-1.  <?php echo 'jeśli chcesz obsługiwać dokumenty XHTML lub XML, zrób to tak'; ?>
+1.  <?php echo 'jeĹli chcesz obsĹugiwaÄ dokumenty XHTML lub XML, zrĂłb to tak'; ?>
 
 2.  <script language="php">
-        echo 'niektóre edytory (jak FrontPage) nie lubią
+        echo 'niektĂłre edytory (jak FrontPage) nie lubiÄ
               instrukcji przetwarzania';
     </script>
 
 3.  <? echo 'to jest najprostsza instrukcja przetwarzania SGML'; ?>
-    <?= wyrazenie ?> To jest skrót dla "<? echo wyrazenie ?>"
+    <?= wyrazenie ?> To jest skrĂłt dla "<? echo wyrazenie ?>"
 
-4.  <% echo 'Możesz opcjonalnie użyć znaczników w stylu ASP'; %>
-    <%= $zmienna; # To jest skrót dla "<% echo . . ." %>
+4.  <% echo 'MoĹźesz opcjonalnie uĹźyÄ znacznikĂłw w stylu ASP'; %>
+    <%= $zmienna; # To jest skrĂłt dla "<% echo . . ." %>
 ]]>
      </programlisting>
     </example>
    </para>
    <para>
-    Z pokazanych znaczników, pierwszy i drugi przykład są zawsze
-    dostępne, pierwszy przykład jest najbardziej powszechny i 
+    Z pokazanych znacznikĂłw, pierwszy i drugi przykĹad sÄ zawsze
+    dostÄpne, pierwszy przykĹad jest najbardziej powszechny i 
     rekomendowany. 
    </para>
    <para>
-    Krótkie znaczniki (trzeci przykład) są dostepne jedynie, kiedy są
-    włączone za pomocą dyrektywy konfiguracyjnej <link linkend="ini.short-open-tag">short_open_tag</link>
-    w &php.ini; lub jeśli php zostało skonfigurowane 
-    z opcją <option>--enable-short-tags</option>.
+    KrĂłtkie znaczniki (trzeci przykĹad) sÄ dostepne jedynie, kiedy sÄ
+    wĹÄczone za pomocÄ dyrektywy konfiguracyjnej <link linkend="ini.short-open-tag">short_open_tag</link>
+    w &php.ini; lub jeĹli php zostaĹo skonfigurowane 
+    z opcjÄ <option>--enable-short-tags</option>.
    </para>    
    <para>
-    Znaczniki w stylu <productname>ASP</productname> (czwarty przykład) są dostępne jedynie gdy 
-    zostaną włączone poprzez dyrektywę konfiguracyjną
+    Znaczniki w stylu <productname>ASP</productname> (czwarty przykĹad) sÄ dostÄpne jedynie gdy 
+    zostanÄ wĹÄczone poprzez dyrektywÄ konfiguracyjnÄ
     <link linkend="ini.asp-tags">asp_tags</link> w &php.ini;
    </para>
    <para>
     <note>
      <para>
-      Powinieneś unikać używania krótkich znaczników, kiedy rozwijasz aplikacje
-      lub biblioteki, które są nastawione na rozpowszechnianie lub pracujesz
-      na serwerach PHP, nad którymi nie masz kontroli, ponieważ krótkie znaczniki
-      mogą nie być obsługiwane na docelowym serwerze. Dla przenośnego,
-      rozpowszechnialnego kodu, miej pewność, aby nie użyć krotkich znaczników.
+      PowinieneĹ unikaÄ uĹźywania krĂłtkich znacznikĂłw, kiedy rozwijasz aplikacje
+      lub biblioteki, ktĂłre sÄ nastawione na rozpowszechnianie lub pracujesz
+      na serwerach PHP, nad ktĂłrymi nie masz kontroli, poniewaĹź krĂłtkie znaczniki
+      mogÄ nie byÄ obsĹugiwane na docelowym serwerze. Dla przenoĹnego,
+      rozpowszechnialnego kodu, miej pewnoĹÄ, aby nie uĹźyÄ krotkich znacznikĂłw.
+     </para>
+    </note>
+    <note>
+     <para>
+      W PHP 5.2 i wczeĹniejszych, parser nie pozwalaĹ, aby
+      znacznik otwierajÄcy <literal>&lt;?php</literal> byĹ jedynym znakiem w pliku.
+      Dozwolone jest to od PHP 5.3.
      </para>
     </note>
    </para>
@@ -123,11 +130,11 @@ if ($wyrazenie) {
   <sect1 xml:id="language.basic-syntax.instruction-separation">
    <title>Oddzielanie instrukcji</title>
    <para>
-    Podobnie jak C i Perl, PHP wymaga aby instrukcje były zakończone
-    średnikiem, na końcu każdego wyrażenia. Zamykający znacznik bloku
-    kodu PHP automatycznie implikuje średnik; nie musisz mieć
-    średnika zamykającego ostatnią linię z bloku PHP. Zamykający znacznik
-    dla bloku będzie zawierać bezpośrednio następującą nową linie jeśli
+    Podobnie jak C i Perl, PHP wymaga aby instrukcje byĹy zakoĹczone
+    Ĺrednikiem, na koĹcu kaĹźdego wyraĹźenia. ZamykajÄcy znacznik bloku
+    kodu PHP automatycznie implikuje Ĺrednik; nie musisz mieÄ
+    Ĺrednika zamykajÄcego ostatniÄ liniÄ z bloku PHP. ZamykajÄcy znacznik
+    dla bloku bÄdzie zawieraÄ bezpoĹrednio nastÄpujÄcÄ nowÄ linie jeĹli
     taka istnieje.
     <informalexample>
      <programlisting role="php">
@@ -138,19 +145,19 @@ if ($wyrazenie) {
 
 <?php echo 'To jest test' ?>
 
-<?php echo 'Pomineliśmy ostatni zamykający znacznik';
+<?php echo 'PomineliĹmy ostatni zamykajÄcy znacznik';
 ]]>
      </programlisting>
     </informalexample>
     <note>
      <para>
-      Zamykający znacznik bloku PHP na końcu pliku jest opcjonalny,
-      i w niektórych przypadkach pominięcie jego jest pomocne kiedy używamy
-      <function>include</function> lub <function>require</function>, tak więc
-      niechciane białe znaki nie będą znajdować się na końcu pliku, i ciągle
-      będzie możliwe dodanie nagłówków do odpowiedzi. To jest także poręczne jeśli używasz
-      buferowania wyjścia, i nie chciałbyś zobaczyć dodanych niechcianych białych znaków
-      na końcu cześci generowanej przez includowany plik.
+      ZamykajÄcy znacznik bloku PHP na koĹcu pliku jest opcjonalny,
+      i w niektĂłrych przypadkach pominiÄcie jego jest pomocne kiedy uĹźywamy
+      <function>include</function> lub <function>require</function>, tak wiÄc
+      niechciane biaĹe znaki nie bÄdÄ znajdowaÄ siÄ na koĹcu pliku, i ciÄgle
+      bÄdzie moĹźliwe dodanie nagĹĂłwkĂłw do odpowiedzi. To jest takĹźe porÄczne jeĹli uĹźywasz
+      buferowania wyjĹcia, i nie chciaĹbyĹ zobaczyÄ dodanych niechcianych biaĹych znakĂłw
+      na koĹcu czeĹci generowanej przez includowany plik.
      </para>
     </note>
    </para> 
@@ -158,7 +165,7 @@ if ($wyrazenie) {
   <sect1 xml:id="language.basic-syntax.comments">
    <title>Komentarze</title>   
    <para>
-    PHP obsługuje komentarze w stylu 'C', 'C++' i powłoki Unix (styl Perl\'a). Na przykład:
+    PHP obsĹuguje komentarze w stylu 'C', 'C++' i powĹoki Unix (styl Perl\'a). Na przykĹad:
 
     <informalexample>
      <programlisting role="php">
@@ -168,39 +175,39 @@ if ($wyrazenie) {
     /* To jest wieloliniowy komentarz
        jeszcze inna linia komentarza */
     echo 'To jest jeszcze jeden test';
-    echo 'Ostatni test'; # To jest jednoliniowy komentarz w stylu powłoki
+    echo 'Ostatni test'; # To jest jednoliniowy komentarz w stylu powĹoki
 ?>
 ]]>
      </programlisting>
     </informalexample>
    </para>
    <simpara>
-    "Jednolinijkowy" styl komentarzy obowiązuje jedynie do konca
-    linii lub bieżącego bloku kodu PHP, cokolwiek wystąpi pierwsze.
-    Co oznacza, że kod HTML za <literal>// ... ?&gt;</literal>
-    lub  <literal># ...  ?&gt;</literal> ZOSTANIE wyświetlony:
+    "Jednolinijkowy" styl komentarzy obowiÄzuje jedynie do konca
+    linii lub bieĹźÄcego bloku kodu PHP, cokolwiek wystÄpi pierwsze.
+    Co oznacza, Ĺźe kod HTML za <literal>// ... ?&gt;</literal>
+    lub  <literal># ...  ?&gt;</literal> ZOSTANIE wyĹwietlony:
     ?&gt; przerywa tryb PHP i wraca do trybu HTML, i  
-    <literal>//</literal> lub <literal>#</literal> nie może wpłynąć na to.
-    Jeśli, dyrektywa konfiguracyjna <link linkend="ini.asp-tags">asp_tags</link>
-    jest włączona, to działa tak samo z <literal>// %&gt;</literal> i
+    <literal>//</literal> lub <literal>#</literal> nie moĹźe wpĹynÄÄ na to.
+    JeĹli, dyrektywa konfiguracyjna <link linkend="ini.asp-tags">asp_tags</link>
+    jest wĹÄczona, to dziaĹa tak samo z <literal>// %&gt;</literal> i
     <literal># %&gt;</literal>.
-    Jednakże, znacznik <literal>&lt;/script&gt;</literal> nie przerywa trybu PHP w
+    JednakĹźe, znacznik <literal>&lt;/script&gt;</literal> nie przerywa trybu PHP w
     jednolinijkowym komentarzu.
    </simpara>
    <para>
     <informalexample>
      <programlisting role="php">
 <![CDATA[
-<h1>To jest <?php # echo 'prosty';?> przykład.</h1>
-<p>Nagłowek powyżej będzie mówił 'To jest  przykład'.</p>
+<h1>To jest <?php # echo 'prosty';?> przykĹad.</h1>
+<p>NagĹowek powyĹźej bÄdzie mĂłwiĹ 'To jest  przykĹad'.</p>
 ]]>
      </programlisting>
     </informalexample>
    </para>
    <simpara>
-    Komentarze w stylu 'C' kończą się na pierwszym napotkanym <literal>*/</literal>.
-    Upewnij się, że nie zagnieżdzasz komentarzy w stylu 'C'. Łatwo jest popełnić
-    pomyłkę jeśli próbujesz odkomentować duży blok kodu.
+    Komentarze w stylu 'C' koĹczÄ siÄ na pierwszym napotkanym <literal>*/</literal>.
+    Upewnij siÄ, Ĺźe nie zagnieĹźdzasz komentarzy w stylu 'C'. Ĺatwo jest popeĹniÄ
+    pomyĹkÄ jeĹli prĂłbujesz odkomentowaÄ duĹźy blok kodu.
    </simpara>
    <para>
     <informalexample>
@@ -208,7 +215,7 @@ if ($wyrazenie) {
 <![CDATA[
 <?php
  /* 
-    echo 'To jest test'; /* Ten komentarz będzie przyczyną problemów */
+    echo 'To jest test'; /* Ten komentarz bÄdzie przyczynÄ problemĂłw */
  */
 ?>
 ]]>
