@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: mroq Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 0640e024d4b8a9400d457143ccd0ea66e5f98ead Maintainer: mroq Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: slawek -->
 <refentry xml:id="function.mysql-create-db" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>mysql_create_db</refname>
-  <refpurpose>Tworzy bazę MySQL</refpurpose>
+  <refpurpose>Tworzy bazÄ MySQL</refpurpose>
  </refnamediv>
    
  <refsect1 role="description">
@@ -13,12 +13,12 @@
   <methodsynopsis>
    <type>bool</type><methodname>mysql_create_db</methodname>
    <methodparam><type>string</type><parameter>nazwa_bazy</parameter></methodparam>
-   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_poĹÄczenia</parameter></methodparam>
   </methodsynopsis>
   <para> 
-   <function>mysql_create_db</function>tworzy nową 
-   bazę na serwerze skojarzonym z podanym identyfikatorem 
-   połączenia.
+   <function>mysql_create_db</function>tworzy nowÄ 
+   bazÄ na serwerze skojarzonym z podanym identyfikatorem 
+   poĹÄczenia.
   </para>
  </refsect1>
     
@@ -50,10 +50,10 @@
   &reftitle.examples;
   <para>
    <example>
-    <title><function>mysql_create_db</function> przykład alternatywny</title>
+    <title><function>mysql_create_db</function> przykĹad alternatywny</title>
     <para>
      Stosowanie funkcji <function>mysql_create_db</function> jest nie zalecane. Sugerowane
-     jest wydawanie polecenia <literal>CREATE DATABASE</literal> przy użyciu funkcji 
+     jest wydawanie polecenia <literal>CREATE DATABASE</literal> przy uĹźyciu funkcji 
      <function>mysql_query</function>.
     </para>
     <programlisting role="php">
@@ -61,14 +61,14 @@
 <?php
 $link = mysql_connect('localhost', 'uzytkownik', 'haslo');
 if (!$link) {
-    die('Nie można się połączyć: ' . mysql_error());
+    die('Nie moĹźna siÄ poĹÄczyÄ: ' . mysql_error());
 }
 
 $sql = 'CREATE DATABASE my_db';
 if (mysql_query($sql, $link)) {
-    echo "Baza my_db została pomyślnie utworzona\n";
+    echo "Baza my_db zostaĹa pomyĹlnie utworzona\n";
 } else {
-    echo 'Błąd podczas tworzenia bazy: ' . mysql_error() . "\n";
+    echo 'BĹÄd podczas tworzenia bazy: ' . mysql_error() . "\n";
 }
 ?>
 ]]>
@@ -76,7 +76,7 @@ if (mysql_query($sql, $link)) {
     &example.outputs.similar;
     <screen>
 <![CDATA[
-Baza my_db została pomyślnie utworzona
+Baza my_db zostaĹa pomyĹlnie utworzona
 ]]>
     </screen>
    </example>
@@ -93,8 +93,8 @@ Baza my_db została pomyślnie utworzona
   </note>
   <note>
    <para>
-    Funkcja ta nie będzie dostępna jeśli rozszerzenie MySQL zostało skompilowane
-    z wersją 4.x biblioteki klienta MySQL.
+    Funkcja ta nie bÄdzie dostÄpna jeĹli rozszerzenie MySQL zostaĹo skompilowane
+    z wersjÄ 4.x biblioteki klienta MySQL.
    </para>
   </note>
  </refsect1>
