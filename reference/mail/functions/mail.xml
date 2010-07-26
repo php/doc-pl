@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: n/a Maintainer: qrak Status: ready -->
+<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS: joeaccord -->
+<!-- CREDITS: qrak -->
 <refentry xml:id="function.mail" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>mail</refname>
@@ -53,8 +53,7 @@
       </para>
       <caution>
        <para>
-        Nie może zawierać znaków przejścia do nowej linii, bo e-mail może
-        zostać wysłany nieprawidłowo.
+        Temat musi spełniać <link xlink:href="&url.rfc;2047">RFC 2047</link>.
        </para>
       </caution>
      </listitem>
@@ -95,7 +94,7 @@ $text = str_replace("\n.", "\n..", $text);
       <para>
        Parametr jest zazwyczaj wykorzystywany do wstawienia dodatkowych
        nagłówków (From, Cc, oraz Bcc). Dodatkowe nagłówki rozdziela się
-       przy pomocy znaku powrotu karetki i nowego wiersza - CRLF (\r\n).
+       za pomocą znaku powrotu karetki i nowego wiersza - CRLF (\r\n).
       </para>
       <note>
        <para>
@@ -136,7 +135,7 @@ $text = str_replace("\n.", "\n..", $text);
        sendmail z opcją <literal>-f</literal>.
       </para>
       <para>
-       Użytkownik z prawami którego jest uruchomiony serwer www powinien być dodany
+       Użytkownik z którego prawami jest uruchomiony serwer WWW powinien być dodany
        jako zaufany użytkownik w konfiguracji programu sendmail, aby zapobiec
        dodawania nagłówka 'X-Warning' do wiadomości, kiedy ustawiany jest adres
        nadawcy (-f). Dla użytkowników programu sendmail jest to plik
@@ -215,21 +214,21 @@ $text = str_replace("\n.", "\n..", $text);
 <![CDATA[
 <?php
 // Wiadomość
-$message = "Line 1\nLine 2\nLine 3";
+$message = "Linia 1\nLinia 2\nLinia 3";
 
 // W przypadku każdej linii dłuższej niż 70 znaków powinniśmy użyć funkcji wordwrap()
 $message = wordwrap($message, 70);
 
 // Wyślij
-mail('caffinated@example.com', 'My Subject', $message);
+mail('osoba@example.com', 'Temat wiadomości', $message);
 ?>
 ]]>
     </programlisting>
    </example>
    <example>
-    <title>ysłanie e-maila z dodatkowymi nagłówkami.</title>
+    <title>Wysłanie e-maila z dodatkowymi nagłówkami.</title>
     <para>
-     Dodatkowe, podstawowe nagłówki informują MUA
+     Dodatkowe, podstawowe nagłówki informują program klienta poczty (MUA)
      o adresach From i Reply-To:
     </para>
     <programlisting role="php">
@@ -266,7 +265,7 @@ mail('osoba@example.com', 'temat', 'wiadomość', null,
    <example>
     <title>Wysłanie e-maila w formacie HTML</title>
     <para>
-     Za pomocą <function>mail</function> możliwe jest wysłanie treści HTML.
+     Za pomocą <function>mail</function> możliwe jest wysłanie maila z treścią w formacie HTML.
     </para>
     <programlisting role="php">
 <![CDATA[
@@ -316,15 +315,15 @@ mail($to, $subject, $message, $headers);
 ?>
 ]]>
     </programlisting>
-    <para>
-     <note>
-      <para>
-       Jeśli mamy zamiar wysyłać HTML albo e-maile o złożonej zawartości, zaleca się
-       użyć pakietu PEAR <link xlink:href="&url.pear.package;Mail_Mime">PEAR::Mail_Mime</link>.
-      </para>
-     </note>
-    </para>
    </example>
+  </para>
+  <para>
+   <note>
+    <para>
+     Jeśli mamy zamiar wysyłać HTML albo e-maile o złożonej zawartości, zaleca się
+     użyć pakietu PEAR <link xlink:href="&url.pear.package;Mail_Mime">PEAR::Mail_Mime</link>.
+    </para>
+   </note>
   </para>
  </refsect1>
 
@@ -340,11 +339,11 @@ mail($to, $subject, $message, $headers);
     porcie (która może działać na localhost lub maszynie zdalnej).
    </para>
    <para>
-    Dodatkowe nagłówki, takie jak
+    Po drugie, dodatkowe nagłówki, takie jak
     <literal>From:</literal>,
     <literal>Cc:</literal>,
-    <literal>Bcc:</literal> i
-    <literal>Date:</literal>
+    <literal>Bcc:</literal>
+    i <literal>Date:</literal>
     <emphasis role="strong">nie są</emphasis> przetwarzane przez
     <literal>MTA</literal>, tylko parsowane za pomocą PHP.
    </para>
@@ -358,25 +357,14 @@ mail($to, $subject, $message, $headers);
 
   <note>
    <para>
-    Za pomocą tej funkcji można wysyłać e-maile z załącznikami i specjalnie
-    formatowanymi typami treści (np. HTML). Jest to realizowane poprzez
-    kodowanie MIME - więcej informacji na ten temat znajduje się na witrynie
-    <link xlink:href="&url.email.mime.zend;">
-    artykuł Zend</link> oraz <link xlink:href="&url.pear.package;Mail_Mime">
-    PEAR Mime Classes</link>.
-   </para>
-  </note>
-
-  <note>
-   <para>
     Nie warto używać funkcji <function>mail</function> do wysyłania dużej
     ilości e-maili stosując pętle. Ta funkcja otwiera i zamyka gniazdo SMTP
     dla każdego wysyłanego e-maila, a to jest mało wydajne.
    </para>
    <para>
     Do wysyłania dużej ilości e-maili można stosować pakiety
-    <link xlink:href="&url.pear.package;Mail">PEAR::Mail</link>, i
-    <link xlink:href="&url.pear.package;Mail_Queue">PEAR::Mail_Queue</link>.
+    <link xlink:href="&url.pear.package;Mail">PEAR::Mail</link>,
+    i <link xlink:href="&url.pear.package;Mail_Queue">PEAR::Mail_Queue</link>.
    </para>
   </note>
 
@@ -388,8 +376,8 @@ mail($to, $subject, $message, $headers);
     <link xlink:href="&url.rfc;2046">RFC 2046</link>,
     <link xlink:href="&url.rfc;2047">RFC 2047</link>,
     <link xlink:href="&url.rfc;2048">RFC 2048</link>,
-    <link xlink:href="&url.rfc;2049">RFC 2049</link>, i
-    <link xlink:href="&url.rfc;2822">RFC 2822</link>.
+    <link xlink:href="&url.rfc;2049">RFC 2049</link>,
+    i <link xlink:href="&url.rfc;2822">RFC 2822</link>.
    </para>
   </note>
  </refsect1>
@@ -418,7 +406,7 @@ sgml-indent-step:1
 sgml-indent-data:t
 indent-tabs-mode:nil
 sgml-parent-document:nil
-sgml-default-dtd-file:"../../../../manual.ced"
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
 sgml-exposed-tags:nil
 sgml-local-catalogs:nil
 sgml-local-ecat-files:nil
