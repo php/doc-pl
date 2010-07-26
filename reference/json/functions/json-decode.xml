@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: 99ae2b40a634ca13082d236fbda64f120d2bd665 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.json-decode" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
@@ -14,6 +14,7 @@
    <methodparam><type>string</type><parameter>json</parameter></methodparam>
    <methodparam choice="opt"><type>bool</type><parameter>asocjacyjnie</parameter><initializer>false</initializer></methodparam>
    <methodparam choice="opt"><type>int</type><parameter>poziom_zagłębienia</parameter><initializer>512</initializer></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>opcje</parameter><initializer>0</initializer></methodparam>
   </methodsynopsis>
   <para>
    Konwertuje łańcuch JSON do zmiennej PHP.
@@ -46,6 +47,19 @@
      <listitem>
       <para>
        Limit zagnieżdżania danych określony przez użytkownika.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>opcje</parameter></term>
+     <listitem>
+      <para>
+       Maska bitowa - opcje dekodowania JSON.  Obecnie obsługiwana
+       jest tylko <constant>JSON_BIGINT_AS_STRING</constant>
+       (domyślnie jest rzutowanie typów large integer na float)
+      </para>
+      <para>
+       &version.trunk.after.53;
       </para>
      </listitem>
     </varlistentry>
@@ -118,7 +132,7 @@ print $obj->{'foo-bar'}; // 12345
     </programlisting>
    </example>
    <example>
-    <title>common mistakes using <function>json_decode</function></title>
+    <title>Różne przykłady błędów <function>json_decode</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -143,11 +157,11 @@ json_decode($bad_json); // null
     </programlisting>
    </example>
    <example>
-    <title><parameter>depth</parameter> errors</title>
+    <title>Błędy - <parameter>poziom zagłębienia</parameter></title>
     <programlisting role="php">
 <![CDATA[
 <?php
-// Encode the data.
+// Kodowanie danych.
 $json = json_encode(
     array(
         1 => array(
@@ -155,26 +169,26 @@ $json = json_encode(
                 'One',
                 'January'
             ),
-            'French' => array(
-                'Une',
-                'Janvier'
+            'Polish' => array(
+                'Jeden',
+                'Styczeń'
             )
         )
     )
 );
 
-// Define the errors.
+// Określenie błędów.
 $json_errors = array(
-    JSON_ERROR_NONE => 'No error has occurred',
-    JSON_ERROR_DEPTH => 'The maximum stack depth has been exceeded',
-    JSON_ERROR_CTRL_CHAR => 'Control character error, possibly incorrectly encoded',
-    JSON_ERROR_SYNTAX => 'Syntax error',
+    JSON_ERROR_NONE => 'Nie wystąpił żaden błąd',
+    JSON_ERROR_DEPTH => 'Przekroczono maksymalny poziom zagłębienia',
+    JSON_ERROR_CTRL_CHAR => 'Błąd zanku sterującego, prawdopodobnie nieprawidłowo zakodowany',
+    JSON_ERROR_SYNTAX => 'Błąd składni',
 );
 
-// Show the errors for different depths.
+// Pokaż błędy na różych poziomach zagłębienia.
 foreach(range(4, 3, -1) as $depth) {
     var_dump(json_decode($json, True, $depth));
-    echo 'Last error : ', $json_errors[json_last_error()], PHP_EOL, PHP_EOL;
+    echo 'Ostatni błąd : ', $json_errors[json_last_error()], PHP_EOL, PHP_EOL;
     }
 ?>
 ]]>
@@ -192,19 +206,40 @@ array(1) {
       [1]=>
       string(7) "January"
     }
-    ["French"]=>
+    ["Polish"]=>
     array(2) {
       [0]=>
-      string(3) "Une"
+      string(3) "Jeden"
       [1]=>
-      string(7) "Janvier"
+      string(7) "Styczeń"
     }
   }
 }
-Last error : No error has occurred
+Ostatni błąd : Nie wystąpił żaden błąd
 
 NULL
-Last error : The maximum stack depth has been exceeded
+Ostatni błąd : Przekroczono maksymalny poziom zagłębienia
+]]>
+    </screen>
+   </example>
+   <example>
+    <title>Dekodowanie <function>json_decode</function> - large integers</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$json = '12345678901234567890';
+
+var_dump(json_decode($json));
+var_dump(json_decode($json, false, 512, JSON_BIGINT_AS_STRING));
+
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+float(1.2345678901235E+19)
+string(20) "12345678901234567890"
 ]]>
     </screen>
    </example>
@@ -238,6 +273,12 @@ Last error : The maximum stack depth has been exceeded
       </row>
      </thead>
      <tbody>
+      <row>
+       <entry>&version.trunk.changelog;</entry>
+       <entry>
+        Dodano parametr <parameter>opcje</parameter>.
+       </entry>
+      </row>
       <row>
        <entry>5.3.0</entry>
        <entry>Dodano opcjonalny parametr <parameter>poziom_zagłębienia</parameter>. Domyślny limit zagnieżdżania danych został zwiększony z 128 do 512</entry>
