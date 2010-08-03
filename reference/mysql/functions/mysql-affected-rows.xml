@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: af4410a7e15898c3dbe83d6ea38246745ed9c6fb Maintainer: slawek Status: ready -->
+<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: slawek -->
 <refentry xml:id="function.mysql-affected-rows" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
-  <refname>mysql_affected_rows</refname> 
+  <refname>mysql_affected_rows</refname>
   <refpurpose>Zwraca liczbę wierszy przetworzonych w poprzedniej operacji MySQL</refpurpose>
  </refnamediv>
+
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
@@ -110,7 +112,7 @@ mysql_query("COMMIT");
 Zaktualizowanych rekordów: 10
 ]]>
     </screen>
-   </example> 
+   </example>
   </para>
  </refsect1>
 
@@ -120,15 +122,23 @@ Zaktualizowanych rekordów: 10
    <title>Transakcje</title>
    <para>
     Jeśli używasz transakcji musisz wywołać
-    <function>mysql_affected_rows</function> po Twoim zapytaniu INSERT, UPDATE lub 
+    <function>mysql_affected_rows</function> po Twoim zapytaniu INSERT, UPDATE lub
     DELETE, a nie po COMMIT.
    </para>
   </note>
   <note>
-   <title>Wyrażenie SELECT</title>
+   <title>Instrukcja SELECT</title>
    <para>
     Aby uzyskać liczbę wierszy zwróconych przez SELECT, można użyć
     use <function>mysql_num_rows</function>.
+   </para>
+  </note>
+  <note>
+   <title>Kaskadowe klucze obce</title>
+   <para>
+     <function>mysql_affected_rows</function> nie zwraca liczby wierszy
+     przetworzonych pośrednio przez użycie klauzuli ON DELETE CASCADE i/lub
+     ON UPDATE CASCADE w ograniczeniach kluczy obcych.
    </para>
   </note>
  </refsect1>
