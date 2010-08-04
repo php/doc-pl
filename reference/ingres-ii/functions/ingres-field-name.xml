@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: n/a Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.ingres-field-name" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
@@ -11,13 +11,21 @@
   &reftitle.description;
   <methodsynopsis>
    <type>string</type><methodname>ingres_field_name</methodname>
+   <methodparam><type>resource</type><parameter>identyfikator_wyniku</parameter></methodparam>
    <methodparam><type>int</type><parameter>indeks</parameter></methodparam>
-   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
   </methodsynopsis>
   <para>
    <function>ingres_field_name</function> zwraca nazwę danego pola
    z wyniku zapytania.
   </para>
+  <note>
+   <title>Konfiguracja powiązana</title>
+   <para>
+    Zobacz <link
+    linkend="ini.ingres.array-index-start">ingres.array_index_start</link>
+    w dziale <link linkend="ingres.configuration">Konfiguracja wykonawcza</link>
+   </para>
+  </note>
  </refsect1>
 
  <refsect1 role="parameters">
@@ -25,21 +33,33 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>indeks</parameter></term>
+     <term><parameter>identyfikator_wyniku</parameter></term>
      <listitem>
       <para>
-       <parameter>indeks</parameter> jest numerem pola i musi być
-       pomiędzy 1 i wartością zwróconą przez
-       <function>ingres_num_fields</function>.
+       Identyfikator wyniku
       </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>identyfikator_połączenia</parameter></term>
+     <term><parameter>indeks</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia. Jeśli nie zostanie podany, używane jest
-       ostatnio otwarte połączenie.
+       <parameter>indeks</parameter> jest numerem pola, którego zostanie
+       zwrócona jego nazwa.
+      </para>
+      <para>
+       Możliwe wartości <parameter>indeksu</parameter> zależą od
+       wartości
+       <link linkend="ini.ingres.array-index-start">ingres.array_index_start</link>.
+       Jeśli <link linkend="ini.ingres.array-index-start">ingres.array_index_start</link>
+       wynosi <literal>1</literal> (domyślnie)
+       wówczas <parameter>indeks</parameter> musi być liczbą
+       pomiędzy <literal>1</literal> i wartością zwróconą przez
+       <function>ingres_num_fields</function>. Jeśli <link linkend="ini.ingres.array-index-start">ingres.array_index_start</link>
+       wynosi <literal>0</literal> wówczas <parameter>index</parameter> musi być liczbą
+       pomiędzy <literal>0</literal>
+       i <function>ingres_num_fields</function><literal> -
+       1</literal>.
       </para>
      </listitem>
     </varlistentry>
@@ -51,7 +71,7 @@
   &reftitle.returnvalues;
   <para>
    Zwraca nazwę danego pola
-   z wyniku zapytania, lub &false; w przypadku porażki.
+   z wyniku zapytania &return.falseforfailure;
   </para>
  </refsect1>
 
@@ -61,6 +81,7 @@
    <simplelist>
     <member><function>ingres_query</function></member>
     <member><function>ingres_fetch_array</function></member>
+    <member><function>ingres_fetch_assoc</function></member>
     <member><function>ingres_fetch_object</function></member>
     <member><function>ingres_fetch_row</function></member>
    </simplelist>
@@ -80,7 +101,7 @@ sgml-indent-step:1
 sgml-indent-data:t
 indent-tabs-mode:nil
 sgml-parent-document:nil
-sgml-default-dtd-file:"../../../../manual.ced"
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
 sgml-exposed-tags:nil
 sgml-local-catalogs:nil
 sgml-local-ecat-files:nil
