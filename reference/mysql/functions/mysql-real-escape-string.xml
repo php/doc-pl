@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: n/a Maintainer: mroq Status: ready -->
+<!-- EN-Revision: 0640e024d4b8a9400d457143ccd0ea66e5f98ead Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS: slawek -->
+<!-- CREDITS: slawek, mroq -->
 <refentry xml:id="function.mysql-real-escape-string" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>mysql_real_escape_string</refname>
-  <refpurpose>Dodaje znaki unikowe dla potrzeb poleceń SQL, biorąc po uwagę zestaw znaków używany w połączeniu.</refpurpose>
+  <refpurpose>Dodaje znaki unikowe w łańcuchu znaków do użycia w instrukcji SQL</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
@@ -62,7 +62,7 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Prosty przykład użycia <function>mysql_real_escape_string</function></title>
+    <title>Przykład użycia <function>mysql_real_escape_string</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -99,7 +99,7 @@ echo $query;
 ]]>
     </programlisting>
      <para>
-      Zapytanie wysłane do bazy danych: 
+      Zapytanie wysłane do bazy danych:
      </para>
     <screen>
 <![CDATA[
@@ -111,64 +111,6 @@ SELECT * FROM users WHERE user='aidan' AND password='' OR ''=''
     </para>
    </example>
   </para>
-  <para>
-   <example>
-    <title>Dobra praktyka tworzenia zapytań</title>
-    <para>
-     Użycie <function>mysql_real_escape_string</function> na każdej zmiennej
-     zapobiegnie atakom SQL Injection. Przykład ten demonstruje dobrą praktykę
-     tworzenia zapytań, niezależną od ustawień 
-     <link linkend="security.magicquotes">Magic Quotes</link>.
-    </para>
-    <programlisting role="php">
-<![CDATA[
-<?php
-
-if (isset($_POST['nazwa_produktu']) && isset($_POST['opis_produktu']) && isset($_POST['id_uzytkownika'])) {
-    // Połącz
-
-    $link = mysql_connect('host', 'uzytkownik', 'haslo');
-
-    if(!is_resource($link)) {
-
-        echo "Nie udało się połączyć z serwerem\n";
-        // ... logowanie błędów
-
-    } else {
-        
-        // Odwróć efekty działania magic_quotes_gpc/magic_quotes_sybase na zmiennych jeśli opcje te są WŁĄCZONE.
-
-        if(get_magic_quotes_gpc()) {
-            $nazwa_produktu = stripslashes($_POST['nazwa_produktu']);
-            $opis_produktu  = stripslashes($_POST['opis_produktu']);
-        } else {
-            $nazwa_produktu = $_POST['nazwa_produktu'];
-            $opis_produktu  = $_POST['opis_produktu'];
-        }
-
-        // Stwórz bezpieczne zapytanie
-        $query = sprintf("INSERT INTO products (`nazwa`, `opis`, `id_uzytkownika`) VALUES ('%s', '%s', %d)",
-                    mysql_real_escape_string($nazwa_produktu, $link),
-                    mysql_real_escape_string($opis_produktu, $link),
-                    $_POST['id_uzytkownika']);
-
-        mysql_query($query, $link);
-
-        if (mysql_affected_rows($link) > 0) {
-            echo "Produkt został dopisany\n";
-        }
-    }
-} else {
-    echo "Wypełnij poprawnie formularz\n";
-}
-?>
-]]>
-    </programlisting>
-    <para>
-     Od teraz zapytanie będzie poprawne wykonywane, podczas gdy ataki SQL Injection nie będą działać.
-    </para>
-   </example>
-  </para>
  </refsect1>
 
  <refsect1 role="notes">
@@ -176,10 +118,10 @@ if (isset($_POST['nazwa_produktu']) && isset($_POST['opis_produktu']) && isset($
   <note>
    <para>
     Przed użyciem <function>mysql_real_escape_string</function> należy otworzyć
-    połączenie z bazą danych, w innym przypadku błąd poziomu <literal>E_WARNING</literal>
-    zostanie wygenerowany i zwrócona zostanie wartość false.
-    Jeśli <parameter>identyfikator_połączenia</parameter> nie został zdefiniowany zostanie
-    użyte ostatnie połączenie z bazą danych.
+    połączenie z MySQL, w przeciwnym razie zostanie wygenerowany błąd poziomu
+    <literal>E_WARNING</literal> i zwrócona zostanie wartość &false;.
+    Jeśli <parameter>identyfikator_połączenia</parameter> nie został zdefiniowany, zostanie
+    użyte ostatnie połączenie do serwera MySQL.
    </para>
   </note>
   <note>
@@ -198,7 +140,7 @@ if (isset($_POST['nazwa_produktu']) && isset($_POST['opis_produktu']) && isset($
   <note>
    <simpara>
     <function>mysql_real_escape_string</function> nie dodaje znaków unikowych
-    do <literal>%</literal> i <literal>_</literal>. Maski te (wildcard) są stosowane
+    do <literal>%</literal> i <literal>_</literal>. Te maski są stosowane
     w zapytaniach MySQL w połączeniu z <literal>LIKE</literal>, <literal>GRANT</literal>
     lub <literal>REVOKE</literal>.
    </simpara>
@@ -230,7 +172,7 @@ sgml-indent-step:1
 sgml-indent-data:t
 indent-tabs-mode:nil
 sgml-parent-document:nil
-sgml-default-dtd-file:"../../../../manual.ced"
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
 sgml-exposed-tags:nil
 sgml-local-catalogs:nil
 sgml-local-ecat-files:nil
