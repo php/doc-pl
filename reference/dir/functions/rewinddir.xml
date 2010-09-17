@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: n/a Maintainer: leniwiec Status: ready -->
+<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: leniwiec -->
 <refentry xml:id="function.rewinddir" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>rewinddir</refname>
@@ -11,7 +12,7 @@
   &reftitle.description;
   <methodsynopsis>
    <type>void</type><methodname>rewinddir</methodname>
-   <methodparam><type>resource</type><parameter>uchwyt_katalogu</parameter></methodparam>
+   <methodparam choice="opt"><type>zasób</type><parameter>uchwyt_katalogu</parameter></methodparam>
   </methodsynopsis>
   <para>
    Ustawia wskaźnik strumienia katalogu
@@ -28,7 +29,9 @@
      <term><parameter>uchwyt_katalogu</parameter></term>
      <listitem>
       <para>
-       Uchwyt katalogu <type>resource</type> poprzednio otwartego
+       Uchwyt katalogu (<type>zasób</type>) otwarty wcześniej za pomocą
+       <function>opendir</function>. Jeśli uchwyt katalogu nie jest
+       podany, przyjmowany jest ostatni wskaźnik katalogu utworzony
        przez <function>opendir</function>.
       </para>
      </listitem>
@@ -49,7 +52,7 @@ sgml-indent-step:1
 sgml-indent-data:t
 indent-tabs-mode:nil
 sgml-parent-document:nil
-sgml-default-dtd-file:"../../../../manual.ced"
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
 sgml-exposed-tags:nil
 sgml-local-catalogs:nil
 sgml-local-ecat-files:nil
