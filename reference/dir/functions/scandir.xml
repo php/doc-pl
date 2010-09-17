@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: n/a Maintainer: leniwiec Status: ready -->
+<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: leniwiec -->
 <refentry xml:id="function.scandir" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>scandir</refname>
@@ -12,7 +13,7 @@
   <methodsynopsis>
    <type>array</type><methodname>scandir</methodname>
    <methodparam><type>string</type><parameter>katalog</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>sorting_order</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>sorting_order</parameter><initializer>0</initializer></methodparam>
    <methodparam choice="opt"><type>resource</type><parameter>context</parameter></methodparam>
   </methodsynopsis>
   <para>
@@ -39,7 +40,7 @@
      <listitem>
       <para>
        Domyślnie, kolejność w zwróconej tablicy jest alfabetyczna w porządku rosnącym.  Jeżeli
-       opcjonalny parametr <parameter>sorting_order</parameter> jest użyty (ustawiony na 1),
+       opcjonalny parametr <parameter>sorting_order</parameter> jest ustawiony (nie na wartość 0),
        wówczas kolejność jest alfabetyczna w porządku malejącym.
       </para>
      </listitem>
@@ -50,8 +51,8 @@
       <para>
        Po opis parametru <parameter>context</parameter> , 
        odsyłamy do <link linkend="ref.stream">sekcji strumienii</link> 
-       manuala.
-      </para> 
+       podręcznika PHP.
+      </para>
      </listitem>
     </varlistentry>
    </variablelist>
@@ -62,8 +63,8 @@
   &reftitle.returnvalues;
   <para>
    Zwraca <type>tablicę</type> z nazwami plików w przypadku powodzenia lub &false; w przypadku
-   niepowodzenia. Jeżeli <parameter>katalog</parameter> nie jest w rzeczywistości katalogiem, wtedy 
-   zwracany jest &false; , oraz generowany jest błąd poziomu 
+   błędu. Jeżeli <parameter>katalog</parameter> nie jest w rzeczywistości katalogiem, wtedy
+   zwracany jest &false;, oraz generowane jest ostrzeżenie 
    <constant>E_WARNING</constant>.
   </para> 
  </refsect1>
@@ -72,7 +73,7 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Prosty przykład użycia <function>scandir</function>e</title>
+    <title>Przykład użycia <function>scandir</function>e</title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -110,7 +111,7 @@ Array
   </para>
   <para>
    <example>
-    <title>Alternatywa dla<function>scandir</function>w PHP 4</title>
+    <title>Alternatywa dla <function>scandir</function> w PHP 4</title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -186,7 +187,7 @@ sgml-indent-step:1
 sgml-indent-data:t
 indent-tabs-mode:nil
 sgml-parent-document:nil
-sgml-default-dtd-file:"../../../../manual.ced"
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
 sgml-exposed-tags:nil
 sgml-local-catalogs:nil
 sgml-local-ecat-files:nil
