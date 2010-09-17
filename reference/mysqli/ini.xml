@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: n/a Maintainer: Chlebik Status: ready -->
+<!-- EN-Revision: 3c87f848f5812c21444434f95a00edf031211481 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: Chlebik -->
 
 <section xml:id="mysqli.configuration" xmlns="http://docbook.org/ns/docbook">
  &reftitle.runtime;
@@ -12,67 +13,116 @@
     <thead>
      <row>
       <entry>Nazwa</entry>
-      <entry>Domyślnie</entry>
-      <entry>Zmiana</entry>
-      <entry>Changelog</entry>
+      <entry>Wartość domyślna</entry>
+      <entry>Możliwość zmian</entry>
+      <entry>Rejestr zmian</entry>
      </row>
     </thead>
     <tbody>
      <row>
-      <entry>mysqli.max_links</entry>
+      <entry>mysqli.allow_persistent</entry>
+      <entry>"1"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry>Dostępna od PHP 5.3.0.</entry>
+     </row>
+     <row>
+      <entry>mysqli.max_persistent</entry>
       <entry>"-1"</entry>
       <entry>PHP_INI_SYSTEM</entry>
-      <entry>Dostępna od wersji 5.0.0.</entry>
+      <entry>Dostępna od PHP 5.3.0.</entry>
      </row>
      <row>
-      <entry>mysqli.default_port</entry>
+      <entry><link linkend="ini.mysqli.max-links">mysqli.max_links</link></entry>
+      <entry>"-1"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry>Dostępna od PHP 5.0.0.</entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.mysqli.default-port">mysqli.default_port</link></entry>
       <entry>"3306"</entry>
       <entry>PHP_INI_ALL</entry>
-      <entry>Dostępna od wersji 5.0.0.</entry>
+      <entry>Dostępna od PHP 5.0.0.</entry>
      </row>
      <row>
-      <entry>mysqli.default_socket</entry>
+      <entry><link linkend="ini.mysqli.default-socket">mysqli.default_socket</link></entry>
       <entry>NULL</entry>
       <entry>PHP_INI_ALL</entry>
-      <entry>Dostępna od wersji 5.0.0.</entry>
+      <entry>Dostępna od PHP 5.0.0.</entry>
      </row>
      <row>
-      <entry>mysqli.default_host</entry>
+      <entry><link linkend="ini.mysqli.default-host">mysqli.default_host</link></entry>
       <entry>NULL</entry>
       <entry>PHP_INI_ALL</entry>
-      <entry>Dostępna od wersji 5.0.0.</entry>
+      <entry>Dostępna od PHP 5.0.0.</entry>
      </row>
      <row>
-      <entry>mysqli.default_user</entry>
+      <entry><link linkend="ini.mysqli.default-user">mysqli.default_user</link></entry>
       <entry>NULL</entry>
       <entry>PHP_INI_ALL</entry>
-      <entry>Dostępna od wersji 5.0.0.</entry>
+      <entry>Dostępna od PHP 5.0.0.</entry>
      </row>
      <row>
-      <entry>mysqli.default_pw</entry>
+      <entry><link linkend="ini.mysqli.default-pw">mysqli.default_pw</link></entry>
       <entry>NULL</entry>
       <entry>PHP_INI_ALL</entry>
-      <entry>Dostępna od wersji 5.0.0.</entry>
+      <entry>Dostępna od PHP 5.0.0.</entry>
      </row>
      <row>
       <entry><link linkend="ini.mysqli.reconnect">mysqli.reconnect</link></entry>
       <entry>"0"</entry>
       <entry>PHP_INI_SYSTEM</entry>
-      <entry>Available since PHP 4.3.5.</entry>
+      <entry>Dostępna od PHP 4.3.5.</entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.mysqli.allow-local-infile">mysqli.allow_local_infile</link></entry>
+      <entry>"1"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry>Dostępna od PHP 5.2.4.</entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.mysqli.cache-size">mysqli.cache_size</link></entry>
+      <entry>"2000"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry>Dostępna od PHP 5.3.0.</entry>
      </row>
     </tbody>
    </tgroup>
   </table>
  </para>
  <para>
-  By dowiedzieć się więcej o powyższych stałych PHP_INI_* zobacz rozdział
-  poświęcony <link linkend="configuration.changes">zmianom konfiguracji</link>.
+  Aby dowiedzieć się więcej o powyższych definicjach i stałych PHP_INI_*, zobacz
+  rozdział poświęcony <link linkend="configuration.changes">zmianom
+  konfiguracji</link>.
  </para>
 
  &ini.descriptions.title;
 
  <para>
  <variablelist>
+  <varlistentry xml:id="ini.mysqli.allow-persistent">
+   <term>
+    <parameter>mysqli.allow_persistent</parameter>
+    <type>integer</type>
+   </term>
+   <listitem>
+    <para>
+     Włącza możliwość tworzenia połączeń stałych za pomocą
+     <function>mysqli_connect</function>.
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="ini.mysqli.max-persistent">
+   <term>
+    <parameter>mysqli.max_persistent</parameter>
+    <type>integer</type>
+   </term>
+   <listitem>
+    <para>
+     Maksymalna liczba połączeń stałych, które można utworzyć.
+     Wartość 0 ustawia nieograniczoną liczbę połączeń stałych.
+    </para>
+   </listitem>
+  </varlistentry>
   <varlistentry xml:id="ini.mysqli.max-links">
    <term>
     <parameter>mysqli.max_links</parameter>
@@ -91,12 +141,16 @@
    </term>
    <listitem>
     <para>
-     Domyślny port TCP używany podczas połączenia do serwera
-     bazy danych, jeśli nie podano innego portu. Jeżeli wartość ta nie
-     zostanie ustawiona, numer portu zostanie pobrany ze zmiennej
-     otoczenia  <literal>MYSQL_TCP_PORT</literal>,wpisu <literal>mysql-tcp</literal>
-     w pliku  <filename>/etc/services</filename> lub stałej <literal>MYSQL_PORT</literal> podanej podczas
-     kompilacji (w takim właśnie porządku). Systemy Windows używają tylko stałej <literal>MYSQL_PORT</literal>
+     Domyślny port TCP używany podczas połączenia do
+     serwera bazy danych, jeśli nie podano innego portu.
+     Jeżeli ta wartość nie zostanie ustawiona, numer
+     portu zostanie pobrany ze zmiennej środowiskowej
+     <literal>MYSQL_TCP_PORT</literal>, wpisu
+     <literal>mysql-tcp</literal> w pliku
+     <filename>/etc/services</filename> lub stałej
+     <literal>MYSQL_PORT</literal> podanej podczas
+     kompilacji (dokładnie w takim porządku). Systemy Windows
+     używają tylko stałej <literal>MYSQL_PORT</literal>
     </para>
    </listitem>
   </varlistentry>
@@ -108,7 +162,7 @@
    <listitem>
     <para>
      Domyślna nazwa gniazda używanego podczas połączenia do lokalnego
-     serwera bazy danych, jeśli inna wartość nie została podana.     
+     serwera bazy danych, jeśli nie została podana inna wartość.
     </para>
    </listitem>
   </varlistentry>
@@ -119,12 +173,13 @@
    </term>
    <listitem>
     <para>
-     Domyślny host używany podczas połączenia do serwera bazy danych, jeśli
-     inna wartość nie została podana. Nie działa w <link linkend="ini.safe-mode">trybie bezpiecznym</link>.
+     Domyślna nazwa hosta używana podczas połączenia do serwera bazy danych,
+     jeśli nie została podana inna wartość. Nie działa
+     w <link linkend="ini.safe-mode">trybie bezpiecznym</link>.
     </para>
    </listitem>
   </varlistentry>
-  
+
   <varlistentry xml:id="ini.mysqli.default-user">
    <term>
     <parameter>mysqli.default_user</parameter>
@@ -132,12 +187,13 @@
    </term>
    <listitem>
     <para>
-     Domyślna nazwa użytkownika używana podczas połączenia do serwera bazy danych, jeśli
-     inna nazwa nie została podana. Nie działa w <link linkend="ini.safe-mode">trybie bezpiecznym</link>.
+     Domyślna nazwa użytkownika używana podczas połączenia do serwera bazy
+     danych, jeśli nie została podana inna nazwa. Nie działa
+     w <link linkend="ini.safe-mode">trybie bezpiecznym</link>.
     </para>
    </listitem>
   </varlistentry>
-  
+
   <varlistentry xml:id="ini.mysqli.default-pw">
    <term>
     <parameter>mysqli.default_pw</parameter>
@@ -145,8 +201,9 @@
    </term>
    <listitem>
     <para>
-     Domyślne hasło używane podczas połączenia do serwera bazy danych, jeśli
-     inne hasło nie zostało podane. Nie działa w <link linkend="ini.safe-mode">trybie bezpiecznym</link>.
+     Domyślne hasło używane podczas połączenia do serwera bazy danych,
+     jeśli nie zostało podane inne hasło. Nie działa
+     w <link linkend="ini.safe-mode">trybie bezpiecznym</link>.
     </para>
    </listitem>
   </varlistentry>
@@ -158,12 +215,42 @@
    </term>
    <listitem>
     <para>
-     Automatically reconnect if the connection was lost.
+     Automatycznie ponownie nawiązuje połączenie, jeśli zostanie zerwane.
+    </para>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.mysqli.allow-local-infile">
+   <term>
+    <parameter>mysqli.allow_local_infile</parameter>
+    <type>integer</type>
+   </term>
+   <listitem>
+    <para>
+
+    </para>
+   </listitem>
+  </varlistentry>
+
+  <varlistentry xml:id="ini.mysqli.cache-size">
+   <term>
+    <parameter>mysqli.cache_size</parameter>
+    <type>integer</type>
+   </term>
+   <listitem>
+    <para>
+     &mysqli.available.mysqlnd;
     </para>
    </listitem>
   </varlistentry>
 
  </variablelist>
+ </para>
+ <para>
+   Użytkownicy nie mogą ustawić <literal>MYSQL_OPT_READ_TIMEOUT</literal>
+   przez wywołanie API, ani w konfiguracji wykonawczej. Proszę zwrócić uwagę na to, że
+   jeśli ustawienie było możliwe, to są różnice w interpretacji przez
+   <literal>libmysql</literal> i przez potoki wartości <literal>MYSQL_OPT_READ_TIMEOUT</literal>.
  </para>
 </section>
 
@@ -178,7 +265,7 @@ sgml-indent-step:1
 sgml-indent-data:t
 indent-tabs-mode:nil
 sgml-parent-document:nil
-sgml-default-dtd-file:"../../../manual.ced"
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
 sgml-exposed-tags:nil
 sgml-local-catalogs:nil
 sgml-local-ecat-files:nil
