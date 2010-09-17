@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
+<!-- CREDITS: leszek -->
 <section xml:id="odbc.installation" xmlns="http://docbook.org/ns/docbook">
  &reftitle.install;
  <para>
@@ -10,8 +11,8 @@
     </term>
     <listitem>
      <para>
-      PHP 3, PHP 4: Dołącz obsługę Adabas D. DIR jest katalogiem gdzie
-      została zainstalowana baza Adabas, domyślnie /usr/local.
+      Dołącz obsługę Adabas D. DIR jest katalogiem gdzie
+      została zainstalowana baza Adabas, domyślnie <filename>/usr/local</filename>.
      </para>
     </listitem>
    </varlistentry>
@@ -32,7 +33,7 @@
     </term>
     <listitem>
      <para>
-      PHP 3, PHP 4: Dołącz obsługę Solid. DIR to katalog instalacji
+      Dołącz obsługę Solid. DIR to katalog instalacji
       Solid, domyślnie <filename>/usr/local/solid</filename>
      </para>
     </listitem>
@@ -43,9 +44,8 @@
     </term>
     <listitem>
      <para>
-      PHP 3, PHP 4: Dołącz obsługę IBM DB2. DIR to katalog instalcji
-      DB2, domyślnie
-      <filename>/home/db2inst1/sqllib</filename>.
+      Dołącz obsługę IBM DB2. DIR to katalog instalcji
+      DB2, domyślnie <filename>/home/db2inst1/sqllib</filename>.
      </para>
     </listitem>
    </varlistentry>
@@ -55,9 +55,9 @@
     </term>
     <listitem>
      <para>
-      PHP 3, PHP 4: Dołącz obsługę Empress. DIR to katalog instalacji
-      Empress, domyślnie $EMPRESSPATH. W PHP 4 i nowszych, ta opcja dotyczy
-      tylko Empress w wersjach 8.60 i nowszych.
+      Dołącz obsługę Empress. DIR to katalog instalacji
+      Empress, domyślnie <varname>$EMPRESSPATH</varname>. Od PHP 4,
+      ta opcja dotyczy tylko  Empress w wersjach 8.60 i nowszych.
      </para>
     </listitem>
    </varlistentry>
@@ -67,8 +67,8 @@
     </term>
     <listitem>
      <para>
-      Dołącz obsługę Empress Local Access. DIR to katalog instalacji Empress,
-      domyślnie $EMPRESSPATH. W PHP 4 i nowszych, ta opcja dotyczy tylko
+      Dołącz obsługę <literal>"Empress Local Access"</literal>. DIR to katalog instalacji Empress,
+      domyślnie <varname>$EMPRESSPATH</varname>. Od PHP 4, ta opcja dotyczy tylko
       Empress w wersjach 8.60 i nowszych.
      </para>
     </listitem>
@@ -90,26 +90,17 @@
     </term>
     <listitem>
      <para>
-      PHP 3, PHP 4: Dołącza obsługę niestandardowej biblioteki ODBC.
-      Parametrem jest główny katalog biblioteki, domyślnie
-      <filename class="directory">/usr/local</filename>.
+      Dołącza obsługę niestandardowej biblioteki ODBC. DIR wskazuje na główny katalog instalacji,
+      domyślnie <filename class="directory">/usr/local</filename>. Upewnij się, że zdefiniowałeś
+      CUSTOM_ODBC_LIBS i masz plik <filename>odbc.h</filename> w katalogach include. Na przykład
+      powinieneś zdefiniować następujące opcje w QNX dla bazy danych Sybase SQL Anywhere 5.5.00,
+      zanim uruchomisz skrypt konfiguracyjny:
+<![CDATA[
+   CPPFLAGS="-DODBC_QNX -DSQLANY_BUG"
+   LDFLAGS=-lunix
+   CUSTOM_ODBC_LIBS="-ldblib -lodbc".
+]]>
      </para>
-     <simpara>
-      Te opcja jest używana tylko jeśli zdefiniowałeś CUSTOM_ODBC_LIBS przy
-      uruchomieniu skryptu configure. Niezbędne jest także wstawienie
-      prawidłowego pliku odbc.h na ścieżkę include. Jeśli nie posiadasz takiego
-      pliku, stwórz go i dołącz stamtąd swój własny nagłówek. Twój nagłówek
-      może także wymagać pewnych definicji, zwłaszcza jeśli jest to biblioteka
-      wieloplatformowa. Zdefiniuj je w CFLAGS.
-     </simpara>
-     <simpara>
-      Na przykład możesz używać Sybase SQL Anywhere na QNX w następujący
-      sposób:
-      <literal>
-       CFLAGS=-DODBC_QNX LDFLAGS=-lunix CUSTOM_ODBC_LIBS="-ldblib
-       -lodbc" ./configure --with-custom-odbc=/usr/lib/sqlany50
-      </literal>
-     </simpara>
     </listitem>
    </varlistentry>
    <varlistentry xml:id="install.configure.with-iodbc">
@@ -118,13 +109,8 @@
     </term>
     <listitem>
      <para>
-      PHP 3, PHP 4: Dołącz obsługę iODBC. DIR jest to katalog instalacji
+      Dołącz obsługę iODBC. DIR jest to katalog instalacji
       iODBC, domyślnie <filename>/usr/local</filename>.
-     </para>
-     <para>
-      Ta opcja została rozwinięta dla iODBC Driver Manager, darmowo
-      rozpowszechnianego menedżera sterowników ODBC który działa na różnych
-      odmianach Uniksa.
      </para>
     </listitem>
    </varlistentry>
@@ -134,11 +120,8 @@
     </term>
     <listitem>
      <para>
-      PHP 3: Opcja niedostępna w PHP 3
-     </para>
-     <para>
-      PHP 4: Dołącz obsługę Easysoft OOB. DIR to katalog instalacji
-      OOB, domyślnie /usr/local/easysoft/oob/client.
+      Dołącz obsługę Easysoft OOB. DIR to katalog instalacji
+      OOB, domyślnie <filename>/usr/local/easysoft/oob/client</filename>.
      </para>
     </listitem>
    </varlistentry>
@@ -148,10 +131,7 @@
     </term>
     <listitem>
      <para>
-      PHP 3: Opcja niedostępna w PHP 3
-     </para>
-     <para>
-      PHP 4: Dołącz obsługę unixODBC. DIR to katalog instalacji unixODBC,
+      Dołącz obsługę unixODBC. DIR to katalog instalacji unixODBC,
       domyślnie <filename>/usr/local</filename>.
      </para>
     </listitem>
@@ -162,11 +142,8 @@
     </term>
     <listitem>
      <para>
-      PHP 3, PHP 4: Dołącz obsługę OpenLink ODBC. DIR to katalog
-      instalacji OpenLink, domyślnie <filename>/usr/local/openlink</filename>.
-      Od wersji 4.0.6 PHP ta opcja konfiguracji nie jest ważna. Jeśli chcesz
-      używać systemu ODBC firmy OpenLink Software, użyj opcji
-      <option role="configure">--with-iodbc</option>.
+      Dołącz obsługę OpenLink ODBC. DIR to katalog instalacji OpenLink,
+      domyślnie <filename>/usr/local</filename>. Opcja jest taka sama jak iODBC.
      </para>
     </listitem>
    </varlistentry>
@@ -176,12 +153,9 @@
     </term>
     <listitem>
      <para>
-      PHP 3: Opcja niedostępna w PHP 3
-     </para>
-     <para>
-      PHP 4: Dołącz obsługę DBMaker. DIR to katalog instalacji DBMakera
+      Dołącz obsługę DBMaker. DIR to katalog instalacji DBMakera
       domyślnie tam, gdzie została zainstalowana najnowsza wersja DBMakera
-      (np /home/dbmaker/3.6).
+      (np. <filename>/home/dbmaker/3.6</filename>).
      </para>
     </listitem>
    </varlistentry>
@@ -201,7 +175,7 @@ sgml-indent-step:1
 sgml-indent-data:t
 indent-tabs-mode:nil
 sgml-parent-document:nil
-sgml-default-dtd-file:"../../../manual.ced"
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
 sgml-exposed-tags:nil
 sgml-local-catalogs:nil
 sgml-local-ecat-files:nil
