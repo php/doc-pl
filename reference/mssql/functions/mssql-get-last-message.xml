@@ -1,21 +1,77 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: n/a Maintainer: joeaccord Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.mssql-get-last-message" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>mssql_get_last_message</refname>
   <refpurpose>Zwraca ostatni komunikat z serwera</refpurpose>
  </refnamediv>
- 
+
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>string</type><methodname>mssql_get_last_message</methodname>
-   <void/>
+   <void />
   </methodsynopsis>
+  <para>
+   Pobiera ostatni komunikat z serwera MS-SQL
+  </para>
+ </refsect1>
 
-  &warn.undocumented.func;
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  &no.function.parameters;
+ </refsect1>
 
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca ostatnią informację o błędzie z serwera lub pusty łańcuch znaków,
+   jeśli MSSQL nie zwrócił żadnego błędu.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład <function>mssql_get_last_message</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// Połączenie do MSSQL i wybranie bazy danych
+mssql_connect('KALLESPC\SQLEXPRESS', 'sa', 'phpfi');
+mssql_select_db('php');
+
+// Make a query that will fail
+$query = @mssql_query('SELECT * FROM [php].[dbo].[not-found]');
+
+if (!$query) {
+    // The query has failed, print a nice error message
+    // using mssql_get_last_message()
+    die('MSSQL error: ' . mssql_get_last_message());
+}
+?>
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
+<![CDATA[
+MSSQL error: Invalid object name 'php.dbo.not-found'.
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>mssql_min_error_severity</function></member>
+    <member><function>mssql_min_message_severity</function></member>
+   </simplelist>
+  </para>
  </refsect1>
 
 </refentry>
@@ -31,7 +87,7 @@ sgml-indent-step:1
 sgml-indent-data:t
 indent-tabs-mode:nil
 sgml-parent-document:nil
-sgml-default-dtd-file:"../../../../manual.ced"
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
 sgml-exposed-tags:nil
 sgml-local-catalogs:nil
 sgml-local-ecat-files:nil
