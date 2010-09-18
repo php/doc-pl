@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: garbus Status: ready -->
+<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.82 -->
-<!-- CREDITS: jarek -->
+<!-- CREDITS: jarek, garbus -->
 <refentry xml:id="function.pg-pconnect" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>pg_pconnect</refname>
@@ -29,22 +29,22 @@
    <parameter>typ_połączenia</parameter>.
   </para>
   <para>
-   Aby zezwolić na używanie stałych połączeń, należy ustawić dyrektywę &php.ini; <link
-   linkend="ini.pgsql.allow-persistent">pgsql.allow_persistent</link>
+   Aby zezwolić na używanie stałych połączeń, należy ustawić dyrektywę <link
+   linkend="ini.pgsql.allow-persistent">pgsql.allow_persistent</link> w &php.ini;
    na &quot;On&quot; (jest to ustawienie domyślne).
-   Maksymalna liczba jednoczesnych trwałych połączeń może być zdefiniowana przez 
-   dyrektywę &php.ini; <link linkend="ini.pgsql.max-persistent">pgsql.max_persistent</link>
+   Maksymalna liczba jednoczesnych trwałych połączeń może być zdefiniowana przez
+   dyrektywę <link linkend="ini.pgsql.max-persistent">pgsql.max_persistent</link> w &php.ini;
    (domyślnia wartość to -1 oznacza brak ograniczeń). Maksymalna liczba wszystkich połączeń
-   może być ustawiona przez dyrektywę &php.ini; <link
-   linkend="ini.pgsql.max-links">
-   pgsql.max_links</link>.
+   może być ustawiona przez dyrektywę <link
+   linkend="ini.pgsql.max-links">pgsql.max_links</link>
+   w &php.ini;.
   </para>
   <para>
    <function>pg_close</function> nie zamyka trwałych połączeń otwartych przez
    <function>pg_pconnect</function>.
   </para>
  </refsect1>
- 
+
  <refsect1 role="parameters">
   &reftitle.parameters;
   <para>
@@ -66,7 +66,7 @@
        <parameter>host</parameter>, <parameter>hostaddr</parameter>, <parameter>port</parameter>
        <parameter>dbname</parameter>, <parameter>user</parameter>,
        <parameter>password</parameter>, <parameter>connect_timeout</parameter>,
-       <parameter>options</parameter>, <parameter>tty</parameter> (ignorowany), <parameter>sslm</parameter>
+       <parameter>options</parameter>, <parameter>tty</parameter> (ignorowany), <parameter>sslmode</parameter>
        <parameter>requiressl</parameter> (zdeprecjonowany na korzyść <parameter>sslmode</parameter>), oraz
        <parameter>service</parameter>.  Niektóre z tych argumentów są zależne
        od używanej wersji PostgreSQL.
@@ -90,7 +90,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Nawiązanie połączenie z serwerem PostgreSQL w przypadku sukcesu, &false; w razie niepowodzenia.
+   Nawiązanie połączenie z serwerem PostgreSQL w przypadku powodzenia, &false; w razie błędu.
   </para>
  </refsect1>
 
