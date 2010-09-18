@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: n/a Maintainer: joeaccord Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 0640e024d4b8a9400d457143ccd0ea66e5f98ead Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.mssql-query" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>mssql_query</refname>
-  <refpurpose>Wysyła zapytanie do serwera MS SQL</refpurpose>
+  <refpurpose>WysyĹa zapytanie do serwera MS SQL</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
@@ -12,12 +12,13 @@
   <methodsynopsis>
    <type>mixed</type><methodname>mssql_query</methodname>
    <methodparam><type>string</type><parameter>zapytanie</parameter></methodparam>
-   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>ograniczenie_liczby_wyników</parameter></methodparam>
+   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_poĹÄczenia</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>ograniczenie_liczby_wynikĂłw</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>mssql_query</function> wysyła zapytanie do aktywnej
-   bazy danych, na serwerze skojarzonym za pomocą identyfikatora połączenia.
+   <function>mssql_query</function> wysyĹa zapytanie do aktywnej
+   bazy danych, na serwerze skojarzonym za pomocÄ identyfikatora
+   poĹÄczenia.
   </para>
  </refsect1>
 
@@ -34,25 +35,25 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>identyfikator_połączenia</parameter></term>
+     <term><parameter>identyfikator_poĹÄczenia</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia z MS SQL, zwrócony przez
+       Identyfikator poĹÄczenia z MS SQL, zwrĂłcony przez
        <function>mssql_connect</function> lub
        <function>mssql_pconnect</function>.
       </para>
       <para>
-       Jeśli nie podano identyfikatora połączenia, przyjmowane jest ostatnio
-       otwarte połączenie.  Jeśli połączenie nie jest otwarte, funkcja próbuje nawiązać
-       nowe i go użyć, tak jakby została wywołana <function>mssql_connect</function>.
+       JeĹli nie podano identyfikatora poĹÄczenia, przyjmowane jest ostatnio
+       otwarte poĹÄczenie.  JeĹli poĹÄczenie nie jest otwarte, funkcja prĂłbuje nawiÄzaÄ
+       nowe i go uĹźyÄ, tak jakby zostaĹa wywoĹana <function>mssql_connect</function>.
       </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>batch_size</parameter></term>
+     <term><parameter>ograniczenie_liczby_wynikĂłw</parameter></term>
      <listitem>
       <para>
-       Maksymalna liczba rekordów, które mają zostać umieszczone w buforze wynikowym.
+       Maksymalna liczba rekordĂłw, ktĂłre majÄ zostaÄ umieszczone w buforze wynikowym.
       </para>
      </listitem>
     </varlistentry>
@@ -63,8 +64,39 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca identyfikator zbioru wynikowego, &true; jeśli nie zostały
-   zwrócone wiersze lub &false; kiedy wystąpił błąd.
+   Zwraca identyfikator zbioru wynikowego, &true; jeĹli nie zostaĹy
+   zwrĂłcone wiersze lub &false; kiedy wystÄpiĹ bĹÄd.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>PrzykĹad <function>mssql_query</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// PoĹÄczenie do MSSQL
+$link = mssql_connect('KALLESPC\SQLEXPRESS', 'sa', 'phpfi');
+
+if (!$link || !mssql_select_db('php', $link)) {
+    die('Nie moĹźna nawiÄzaÄ poĹÄczenia lub wybraÄ bazy danych!');
+}
+
+// Wykonaj proste zapytanie, pobierz wersjÄ
+// MSSQL i jÄ wyĹwietl.
+$version = mssql_query('SELECT @@VERSION');
+$row = mssql_fetch_array($version);
+
+echo $row[0];
+
+// Zwolnienie zasobĂłw serwera zajmowanych przez zbiĂłr wynikowy
+mssql_free_result($version);
+?>
+]]>
+    </programlisting>
+   </example>
   </para>
  </refsect1>
 
@@ -72,9 +104,9 @@
   &reftitle.notes;
   <note>
    <para>
-    Jeśli zapytanie zwraca wiele wyników, wówczas konieczne jest pobranie
-    ich wszystkich za pomocą <function>mssql_next_result</function> lub też zwolnienie
-    za pomocą <function>mssql_free_result</function> przed wykonaniem następnego zapytania.
+    JeĹli zapytanie zwraca wiele wynikĂłw, wĂłwczas konieczne jest pobranie
+    ich wszystkich za pomocÄ <function>mssql_next_result</function> lub teĹź zwolnienie
+    za pomocÄ <function>mssql_free_result</function> przed wykonaniem nastÄpnego zapytania.
    </para>
   </note>
  </refsect1>
@@ -102,7 +134,7 @@ sgml-indent-step:1
 sgml-indent-data:t
 indent-tabs-mode:nil
 sgml-parent-document:nil
-sgml-default-dtd-file:"../../../../manual.ced"
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
 sgml-exposed-tags:nil
 sgml-local-catalogs:nil
 sgml-local-ecat-files:nil
