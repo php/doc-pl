@@ -1,27 +1,89 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: n/a Maintainer: dombal Status: Ready -->
+<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: Ready -->
 <!-- $Revision$ -->
-  <refentry xml:id="function.class-exists" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>class_exists</refname>
-    <refpurpose>Sprawdza czy klasa została zdefiniowana</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>bool</type><methodname>class_exists</methodname>
-      <methodparam><type>string</type><parameter>nazwa_klasy</parameter></methodparam>
-      <methodparam choice="opt"><type>bool</type><parameter>autoload</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     Funkcja ta zwraca &true; jeżeli klasa zadana przez parametr
-     <parameter>nazwa_klasy</parameter> została zdefiniowana,
-     &false; w przeciwnym wypadku.
-    </para>
-<para>
-     <example>
-      <title><function>class_exists</function> przykład</title>
-      <programlisting role="php">
+<!-- CREDITS: dombal -->
+<refentry xml:id="function.class-exists" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>class_exists</refname>
+  <refpurpose>Sprawdza, czy klasa została zdefiniowana</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>bool</type><methodname>class_exists</methodname>
+   <methodparam><type>string</type><parameter>nazwa_klasy</parameter></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>autoload</parameter><initializer>true</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   Funkcja sprawdza, czy podana klasa została zdefiniowana.
+  </para>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>nazwa_klasy</parameter></term>
+     <listitem>
+      <para>
+       Nazwa klasy. Wielkość liter w nazwie klasy nie ma znaczenia.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>autoload</parameter></term>
+     <listitem>
+      <para>
+       Czy wywołać domyślnie &link.autoload;.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca &true; jeśli <parameter>nazwa_klasy</parameter> jest klasą,
+   w przeciwnym przypadku zwraca &false;.
+  </para>
+ </refsect1>
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>5.0.2</entry>
+       <entry>
+        Nie zwraca już &true; dla zdefiniowanych interfejsów.
+        W przypadku interfesów należy używać <function>interface_exists</function>.
+       </entry>
+      </row>
+      <row>
+       <entry>5.0.0</entry>
+       <entry>
+        Dodano parametr <parameter>autoload</parameter>.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład <function>class_exists</function></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 // Sprawdź czy klasa istnieje przed próbą jej użycia
@@ -31,51 +93,44 @@ if (class_exists('MyClass')) {
 
 ?>
 ]]>
-      </programlisting>
-     </example>
-    </para>
-    <para>
-     <function>class_exists</function> domyślnie spróbuje wywołać &link.autoload;,
-     jeśli nie chcesz aby <function>class_exists</function> 
-     wywoływała &link.autoload;, możesz ustawić parametr <parameter>autoload</parameter>
-     na &false;.
-    </para>
-    <para>
-     <example>
-      <title>Przykład z parametrem <parameter>autoload</parameter></title>
-      <programlisting role="php">
+    </programlisting>
+   </example>
+   <example>
+    <title>Przykład z parametrem <parameter>autoload</parameter></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 function __autoload($class)
 {
     include($class . '.php');
 
-    // Sprawdź czy w includowanym pliku była deklaracja klasy
+    // Sprawdź czy w dołączanym pliku była deklaracja klasy
     if (!class_exists($class, false)) {
-        trigger_error("Nie mogę załadować klasy: $class", E_USER_WARNING);
+        trigger_error("Nie można załadować klasy: $class", E_USER_WARNING);
     }
 }
-    
+
 if (class_exists('MyClass')) {
     $myclass = new MyClass();
 }
 
 ?>
 ]]>
-      </programlisting>
-     </example>
-    </para>
-    <note>
-     <para>
-      Parametr <parameter>autoload</parameter> został dodany w PHP 5
-     </para>
-    </note>
-    <simpara>
-     Patrz także <function>interface_exists</function> i
-     <function>get_declared_classes</function>.
-    </simpara>
-   </refsect1>
-  </refentry>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>function_exists</function></member>
+    <member><function>interface_exists</function></member>
+    <member><function>get_declared_classes</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
@@ -88,7 +143,7 @@ sgml-indent-step:1
 sgml-indent-data:t
 indent-tabs-mode:nil
 sgml-parent-document:nil
-sgml-default-dtd-file:"../../../../manual.ced"
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
 sgml-exposed-tags:nil
 sgml-local-catalogs:nil
 sgml-local-ecat-files:nil
