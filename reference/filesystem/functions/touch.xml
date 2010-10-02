@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: n/a Maintainer: adi Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
-
 <refentry xml:id="function.touch" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>touch</refname>
@@ -13,16 +12,18 @@
   <methodsynopsis>
    <type>bool</type><methodname>touch</methodname>
    <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>czas</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>czas</parameter><initializer>time()</initializer></methodparam>
    <methodparam choice="opt"><type>int</type><parameter>dczas</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Próbuje ustawić czas dostępu i modyfikacji pliku o nazwie
-   <parameter>nazwa_pliku</parameter> na wartość podaną przez <parameter>czas</parameter>.
-   Zauważ, że czas dostępu jest zawsze modyfikowany, niezależnie od ilości parametrów.
+   PrĂłbuje ustawiÄ czas dostÄpu i modyfikacji pliku o nazwie
+   <parameter>nazwa_pliku</parameter> na wartoĹÄ podanÄ przez 
+   <parameter>czas</parameter>.
+   ZauwaĹź, Ĺźe czas dostÄpu jest zawsze modyfikowany, niezaleĹźnie od 
+   iloĹci parametrĂłw.
   </para>
   <para>
-   Jeśli plik nie istnieje, to zostanie utworzony.
+   JeĹli plik nie istnieje, to zostanie utworzony.
   </para>
  </refsect1>
 
@@ -34,7 +35,7 @@
      <term><parameter>nazwa_pliku</parameter></term>
      <listitem>
       <para>
-       Nazwa pliku, który ma być zmodyfikowany.
+       Nazwa pliku, ktĂłry ma byÄ zmodyfikowany.
       </para>
      </listitem>
     </varlistentry>
@@ -42,8 +43,8 @@
      <term><parameter>czas</parameter></term>
      <listitem>
       <para>
-       Czas modyfikacji. Jeśli <parameter>czas</parameter> nie został podany,
-       zostanie użyty bieżący czas systemowy.
+       Czas modyfikacji. JeĹli <parameter>czas</parameter> nie zostaĹ podany,
+       zostanie uĹźyty bieĹźÄcy czas systemowy.
       </para>
      </listitem>
     </varlistentry>
@@ -51,8 +52,9 @@
      <term><parameter>dczas</parameter></term>
      <listitem>
       <para>
-       Jeśli podano, to czas dostępu do podanego pliku zostanie ustawiony
-       na wartość <parameter>dczas</parameter>
+       JeĹli podano, to czas dostÄpu do podanego pliku zostanie ustawiony
+       na wartoĹÄ <parameter>dczas</parameter> w przeciwnym wypadku na
+       <parameter>time</parameter>.
       </para>
      </listitem>
     </varlistentry>
@@ -67,21 +69,63 @@
   </para>
  </refsect1>
 
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>5.3.0</entry>
+       <entry>
+        MoĹźliwa jest zmiana czasu modyfikacji katalogu 
+        pod Windows.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
  <refsect1 role="examples">
   &reftitle.examples;
-
-
-
   <para>
    <example>
-    <title><function>touch</function> przykład</title>
+    <title><function>touch</function> przykĹad</title>
     <programlisting role="php">
 <![CDATA[
 <?php
-if (touch($FileName)) {
-   echo "$FileName czas modyfikacji został zmieniony na bieżący czas";
+if (touch($filename)) {
+    echo $filename . ' czas modyfikacji zostaĹ zmieniony na bieĹźÄcy czas';
 } else {
-    echo "Przykro mi ale Nie Mogę zmienić czasu modyfikacji pliku $FileName";
+    echo 'Przykro mi ale Nie MogÄ zmieniÄ czasu modyfikacji pliku ' . $filename;
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title><function>touch</function> uĹźycie parametru <parameter>czas</parameter></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// To jest czas modyfikacji, ustawimy go na jednÄ godzinÄ wstecz.
+$time = time() - 3600;
+
+// Modyfikujemy czas pliku
+if (!touch('jakis_plik.txt', $time)) {
+    echo 'CoĹ siÄ nie udaĹo...';
+} else {
+    echo 'Czas modyfikacji pliku ustawiony';
 }
 ?>
 ]]>
@@ -92,10 +136,11 @@ if (touch($FileName)) {
 
  <refsect1 role="notes">
   &reftitle.notes;
+  &note.filesystem-time-res;
   <warning>
    <para>
-    Obecnie niemożliwa jest zmiana czasu modyfikacji katalogu za
-    pomocą tej funkcji pod systemem Windows.
+    Przed wersjÄ PHP 5.3.0 nie istniaĹa mozliwoĹÄ zmiany czasu modyfikacji
+    katalogu za pomocÄ tej funkcji pod systemem Windows.
    </para>
   </warning>
  </refsect1>
@@ -113,7 +158,7 @@ sgml-indent-step:1
 sgml-indent-data:t
 indent-tabs-mode:nil
 sgml-parent-document:nil
-sgml-default-dtd-file:"../../../../manual.ced"
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
 sgml-exposed-tags:nil
 sgml-local-catalogs:nil
 sgml-local-ecat-files:nil
