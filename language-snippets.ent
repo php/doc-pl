@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 4eec35e5a4991e37549cce218a64c86725210b5d Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: 0bb0aaa140153586baa0542eb6c1ea3945dea624 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: leszek, adi -->
 <!-- Keep 'em sorted -->
@@ -504,7 +504,7 @@ zwracany przez <function xmlns="http://docbook.org/ns/docbook">timezone_open</fu
 <!ENTITY date.datetime.retval.changelog '<row xmlns="http://docbook.org/ns/docbook" ><entry xmlns="http://docbook.org/ns/docbook" >5.3.0</entry><entry xmlns="http://docbook.org/ns/docbook" >Zmieniono zwracaną
 wartość w przypadku powodzenia z &null; na <classname xmlns="http://docbook.org/ns/docbook">DateTime</classname>.</entry></row>'>
 
-<!ENTITY date.datetime.return.modifiedobjectorfalseforfailure 'Zwraca zmodyfikowany obiekt DateTime &return.falseforfailure;.'>
+<!ENTITY date.datetime.return.modifiedobjectorfalseforfailure 'Zwraca zmodyfikowany obiekt <classname xmlns="http://docbook.org/ns/docbook">DateTime</classname> &return.falseforfailure;.'>
 
 <!ENTITY date.timezone.dbversion 'Ta lista jest oparta o wersję bazy danych stref czasowych'>
 
@@ -918,7 +918,13 @@ zwrócony przez <function xmlns="http://docbook.org/ns/docbook">mysqli_connect</
 stmt</parameter></term><listitem xmlns="http://docbook.org/ns/docbook"><para xmlns="http://docbook.org/ns/docbook">Tylko styl proceduralny: Identyfikator stanu
 zwrócony przez <function xmlns="http://docbook.org/ns/docbook">mysqli_stmt_init</function>.</para></listitem></varlistentry>'>
 <!ENTITY mysqli.available.mysqlnd 'Dostępna tylko z <link xmlns="http://docbook.org/ns/docbook" 
-linkend="mysqli.overview.mysqlnd">mysqlnd</link>.'>
+linkend="book.mysqlnd">mysqlnd</link>.'>
+<!ENTITY mysqli.charset.note '<note xmlns="http://docbook.org/ns/docbook">
+<para>MySQLnd zawsze przyjmuje domyślne kodowanie znaków serwera. To kodowanie jest przesyłane podczas połączenia
+hand-shake/authentication, którego używa mysqlnd.</para><para>Libmysql używa domyślnego kodowania znaków ustawionego w pliku
+<filename>my.cnf</filename> lub przez jawne wywołanie funkcji <function>mysqli_options</function> przed
+wywołaniem <function>mysqli_real_connect</function>, ale po wywołaniu <function>mysqli_init</function>.</para></note>'>
+
 
 <!-- Notes for SAPI/Apache -->
 <!ENTITY note.apache.nsapi-module '<note xmlns="http://docbook.org/ns/docbook"><para xmlns="http://docbook.org/ns/docbook">Od PHP 4.3.3 możliwe
@@ -1398,4 +1404,9 @@ as opposed to emitting it. Setting to &false; (the default) will do the opposite
 
 <!ENTITY spl.misc.intro.title '<title xmlns="http://docbook.org/ns/docbook">Różne klasy i interfejsy</title>'>
 <!ENTITY spl.misc.intro '<partintro xmlns="http://docbook.org/ns/docbook"><para xmlns="http://docbook.org/ns/docbook">Pozostałe klasy i interfejsy SPL.</para></partintro>'>
+
+<!-- Win32Service -->
+<!ENTITY win32service.false.error ', &false; jeśli występuje problem z parametrami lub <link xmlns="http://docbook.org/ns/docbook" linkend="win32service.constants.errors">Kod Błędu Win32</link> w przypadku niepowodzenia.'>
+<!ENTITY win32service.success.false.error 'Zwraca &true; w przypadku powodzenia &win32service.false.error;'>
+<!ENTITY win32service.noerror.false.error 'Zwraca <constant xmlns="http://docbook.org/ns/docbook">WIN32_NO_ERROR</constant> w przypadku powodzenia &win32service.false.error;'>
 
