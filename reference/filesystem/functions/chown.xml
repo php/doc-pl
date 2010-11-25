@@ -1,11 +1,10 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 47da5a1cefc6abf4d0acadb3dd9909f209a8b190 Maintainer: joeaccord Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 47da5a1cefc6abf4d0acadb3dd9909f209a8b190 Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS: adi -->
 <refentry xml:id="function.chown" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>chown</refname>
-  <refpurpose>Zmienia właściciela pliku</refpurpose>
+  <refpurpose>Zmienia wĹaĹciciela pliku</refpurpose>
  </refnamediv>
  
  <refsect1 role="description">
@@ -13,12 +12,12 @@
   <methodsynopsis>
    <type>bool</type><methodname>chown</methodname>
    <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
-   <methodparam><type>mixed</type><parameter>użytkownik</parameter></methodparam>
+   <methodparam><type>mixed</type><parameter>uĹźytkownik</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Próbuje dokonać zmiany właściciela pliku <parameter>nazwa_pliku</parameter> na użytkownika
-   podanego w parametrze <parameter>użytkownik</parameter>.
-   Tylko superużytkownik może zmienić właściciela pliku.
+   PrĂłbuje dokonaÄ zmiany wĹaĹciciela pliku <parameter>nazwa_pliku</parameter> na uĹźytkownika
+   podanego w parametrze <parameter>uĹźytkownik</parameter>.
+   Tylko superuĹźytkownik moĹźe zmieniÄ wĹaĹciciela pliku.
   </para>
  </refsect1>
 
@@ -30,15 +29,15 @@
      <term><parameter>nazwa_pliku</parameter></term>
      <listitem>
       <para>
-       Ścieżka do pliku.
+       ĹcieĹźka do pliku.
       </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>użytkownik</parameter></term>
+     <term><parameter>uĹźytkownik</parameter></term>
      <listitem>
       <para>
-       Numer ID lub nazwa użytkownika.
+       Numer ID lub nazwa uĹźytkownika.
       </para>
      </listitem>
     </varlistentry>
@@ -57,17 +56,17 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Proste użycie <function>chown</function></title>
+    <title>Proste uĹźycie <function>chown</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
 
-// Nazwa pliku i użytkownika
+// Nazwa pliku i uĹźytkownika
 $file_name= "foo.php";
 $path = "/home/sites/php.net/public_html/sandbox/" . $file_name ;
 $user_name = "root";
 
-// Ustaw właściciela pliku
+// Ustaw wĹaĹciciela pliku
 chown($path, $user_name);
 
 // Check the result
