@@ -1,21 +1,21 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: adi Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 750841d531be2e8cef17535b58795540cc464c15 Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
-<refentry xml:id="function.dirname" xmlns="http://docbook.org/ns/docbook">
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.dirname">
  <refnamediv>
   <refname>dirname</refname>
-  <refpurpose>Zwraca nazwę katalogu, będącego składową ścieżki</refpurpose>
+  <refpurpose>Zwraca nazwÄ katalogu, bÄdÄcego skĹadowÄ ĹcieĹźki</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>string</type><methodname>dirname</methodname>
-   <methodparam><type>string</type><parameter>ścieżka</parameter></methodparam>
+   <methodparam><type>string</type><parameter>ĹcieĹźka</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Z podanego łańcucha zawierającego ścieżkę do pliku, funkcja ta
-   zwróci nazwę katalogu.
+   Z podanego ĹaĹcucha zawierajÄcego ĹcieĹźkÄ do pliku, funkcja ta
+   zwrĂłci nazwÄ nadrzÄdnego katalogu.
   </para>
  </refsect1>
 
@@ -30,9 +30,9 @@
        A path.
       </para>
       <para>
-       W Windows jako separator katalogu używany jest znak slash
+       W Windows jako separator katalogu uĹźywany jest znak slash
        (<literal>/</literal>) i backslash (<literal>\</literal>).  W
-       innych środowiskach jest to slash (<literal>/</literal>).
+       innych Ĺrodowiskach jest to slash (<literal>/</literal>).
       </para>
      </listitem>
     </varlistentry>
@@ -43,10 +43,10 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca nazwę katalogu. Jeśli, w <parameter>ścieżce</parameter> nie znajdują się
-   ukośniki to zwracana jest kropka ('<literal>.</literal>'), oznaczająca
-   bieżący katalog. W innym przypadku, zwracany jest łańcuch znaków 
-   <parameter>ścieżka</parameter> z usuniętymi wszystkimi koncowymi
+   Zwraca nazwÄ katalogu. JeĹli, w <parameter>ĹcieĹźce</parameter> nie znajdujÄ siÄ
+   ukoĹniki to zwracana jest kropka ('<literal>.</literal>'), oznaczajÄca
+   bieĹźÄcy katalog. W innym przypadku, zwracany jest ĹaĹcuch znakĂłw 
+   <parameter>ĹcieĹźka</parameter> z usuniÄtymi wszystkimi koncowymi
    <literal>/komponentami</literal>.  
   </para>
  </refsect1>
@@ -72,7 +72,7 @@
       <row>
        <entry>4.0.3</entry>
        <entry>
-        <function>dirname</function> poprawiono kompatybilność z POSIX.
+        <function>dirname</function> poprawiono kompatybilnoĹÄ z POSIX.
        </entry>
       </row>
      </tbody>
@@ -85,15 +85,24 @@
   &reftitle.examples;
   <para>
    <example>
-    <title><function>dirname</function> przykład</title>
+    <title>PrzykĹad <function>dirname</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
-$sciezka = "/etc/passwd";
-$plik = dirname($sciezka); // $plik jest ustawione na "/etc"
+echo "1) ".dirname("/etc/passwd").PHP_EOL;
+echo "2) ".dirname("/etc/").PHP_EOL;
+echo "3) ".dirname(".");
 ?>
 ]]>
     </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+1) /etc
+2) /
+3) .
+]]>
+    </screen>
    </example>
   </para>
  </refsect1>
@@ -102,13 +111,27 @@ $plik = dirname($sciezka); // $plik jest ustawione na "/etc"
   &reftitle.notes;
   <note>
    <para>
-    Od PHP 4.3.0, często otrzymasz ukośnik lub kropkę z
+    <function>dirname</function> dziaĹa naiwnie na wejĹciowym ĹaĹcuchu znakĂłw
+    i nie jest Ĺwiadoma bieĹźÄcego systemu plikĂłw lub skĹadnikĂłw ĹcieĹźki takich
+    jak "<literal>..</literal>".
+   </para>
+  </note>
+  <note>
+   <para>
+    <function>dirname</function> jest Ĺwiadoma locale, aby widzieÄ
+    prawidĹowÄ nazwÄ katalogu z ĹcieĹźek z wielobajtowymi znakami, musi zostaÄ
+    ustawione pasujÄce locale za pomocÄ funkcji <function>setlocale</function>.
+   </para>
+  </note>
+  <note>
+   <para>
+    Od PHP 4.3.0, czÄsto otrzymasz ukoĹnik lub kropkÄ z
     <function>dirname</function> w sytuacjach gdzie starsza
-    funkcjonalność mogła dać pusty łańcuch znaków.
+    funkcjonalnoĹÄ mogĹa daÄ pusty ĹaĹcuch znakĂłw.
    </para>
   </note>
   <para>
-   Sprawdź poniższy przykład zmian:
+   SprawdĹş poniĹźszy przykĹad zmian:
    <informalexample>
     <programlisting role="php">
 <![CDATA[
@@ -141,7 +164,7 @@ dirname('/x'); // zwraca '\'
  </refsect1>
 
 </refentry>
- 
+
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml
