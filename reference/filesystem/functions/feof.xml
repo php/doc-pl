@@ -4,7 +4,7 @@
 <refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.feof">
  <refnamediv>
   <refname>feof</refname>
-  <refpurpose>Sprawdza czy wskaĹşnik pliku jest na koĹcu pliku (EOF)</refpurpose>
+  <refpurpose>Sprawdza czy wskaźnik pliku jest na końcu pliku (EOF)</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
@@ -14,7 +14,7 @@
    <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Sprawdza czy wskaĹşnik pliku jest na koĹcu pliku (EOF).
+   Sprawdza czy wskaźnik pliku jest na końcu pliku (EOF).
   </para>
  </refsect1>
 
@@ -35,8 +35,8 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca &true; jeĹli wskaĹşnik pliku jest na EOF lub gdy zdarzy siÄ bĹÄd
-   (takĹźe timeout poĹÄczena socket'owego);w przeciwnym wypadku zwraca &false;.
+   Zwraca &true; jeśli wskaźnik pliku jest na EOF lub gdy zdarzy się błąd
+   (także timeout połączenia socket'owego); w przeciwnym wypadku zwraca &false;.
   </para>
  </refsect1>
 
@@ -44,11 +44,11 @@
   &reftitle.notes;
   <warning>
    <para>
-    JeĹli poĹÄczenie otworzone za pomocÄ <function>fsockopen</function> nie
-    zostanie zamkniÄte przez serwer, <function>feof</function> zawiesi siÄ. Aby to obejĹÄ zobacz
-    poniĹźszy przykĹad:
+    Jeśli połączenie otworzone za pomocą <function>fsockopen</function> nie
+    zostanie zamknięte przez serwer, <function>feof</function> zawiesi się. Aby to obejść zobacz
+    poniższy przykład:
     <example>
-     <title>ObsĹuga limitu czasu w <function>feof</function></title>
+     <title>Obsługa limitu czasu w <function>feof</function></title>
      <programlisting role="php">
 <![CDATA[
 <?php
@@ -58,7 +58,7 @@ function safe_feof($fp, &$start = NULL) {
  return feof($fp);
 }
 
-/* ZakĹadajÄc, Ĺźe $fp jest wczeĹniej otworzone przez fsockopen() */
+/* Zakładając, że $fp jest wcześniej otworzone przez fsockopen() */
 
 $start = NULL;
 $timeout = ini_get('default_socket_timeout');
@@ -75,17 +75,17 @@ while(!safe_feof($fp, $start) && (microtime(true) - $start) < $timeout)
   </warning>
   <warning>
    <para>
-    JeĹli podano nieprawidĹowy wskaĹşnik pliku to moĹźesz uzyskaÄ nieskoĹczonÄ pÄtle,
-    poniewaĹź <function>feof</function> w przypadku bĹÄdu zwraca &true;..
+    Jeśli podano nieprawidłowy wskaźnik pliku to możesz uzyskać nieskończoną pętle,
+    ponieważ <function>feof</function> w przypadku błędu zwraca &true;..
     <example>
-     <title><function>feof</function> przykĹad z nieprawidĹowym wskaĹşnikiem pliku</title>
+     <title><function>feof</function> przykład z nieprawidłowym wskaźnikiem pliku</title>
      <programlisting role="php">
 <![CDATA[
 <?php
-// jeĹli plik nie moĹźe zostaÄ odczytany lub nie istnieje funkcja fopen zwrĂłci FALSE
+// jeśli plik nie może zostać odczytany lub nie istnieje funkcja fopen zwróci FALSE
 $file = @fopen("nie_isniejacy_plik", "r");
 
-// FALSE z fopen spowoduje ostrzeĹźenie oraz wystÄpi tu nieskoĹczona pÄtla
+// FALSE z fopen spowoduje ostrzeżenie oraz wystąpi tu nieskończona pętla
 while (!feof($file)) {
 }
 
