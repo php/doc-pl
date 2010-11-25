@@ -1,20 +1,21 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: n/a Maintainer: adi Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
-<refentry xml:id="function.chmod" xmlns="http://docbook.org/ns/docbook">
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.chmod">
  <refnamediv>
   <refname>chmod</refname>
-  <refpurpose>Zmienia prawa dostępu do pliku</refpurpose>
+  <refpurpose>Zmienia prawa dostÄpu do pliku</refpurpose>
  </refnamediv>
+ 
  <refsect1 role="description">
   &reftitle.description;
-   <methodsynopsis>
+  <methodsynopsis>
    <type>bool</type><methodname>chmod</methodname>
    <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
-   <methodparam><type>bool</type><parameter>prawa</parameter></methodparam>
+   <methodparam><type>int</type><parameter>prawa</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Dokonuje zmiany praw pliku na podane w
+   PrĂłbuje dokonaÄ zmiany praw pliku na podane w
    <parameter>prawa</parameter>.
   </para>
  </refsect1>
@@ -27,7 +28,7 @@
      <term><parameter>nazwa_pliku</parameter></term>
      <listitem>
       <para>
-       Ścieżka do pliku.
+       ĹcieĹźka do pliku.
       </para>
      </listitem>
     </varlistentry>
@@ -35,50 +36,50 @@
      <term><parameter>prawa</parameter></term>
      <listitem>
       <para>
-       Pamiętaj, że parametr <parameter>prawa</parameter> nie jest
-       automatycznie zastępowany wartością oktalną (ósemkową), więc łańcuchy
-       (takie jak "g+w") nie będą poprawnie interpretowane.
-       Aby zapewnić poprawność operacji musisz parametr
-       <parameter>prawa</parameter> poprzedzić prefixem zero (0):
+       PamiÄtaj, Ĺźe parametr <parameter>prawa</parameter> nie jest
+       automatycznie zastÄpowany wartoĹciÄ oktalnÄ (ĂłsemkowÄ), wiÄc ĹaĹcuchy
+       (takie jak "g+w") nie bÄdÄ poprawnie interpretowane. Aby, zapewniÄ poprawnoĹÄ operacji 
+       musisz parametr <parameter>prawa</parameter> poprzedziÄ prefixem zero (0):
       </para>
       <para>
        <informalexample>
-       <programlisting role="php">
+        <programlisting role="php">
 <![CDATA[
 <?php
-chmod("/somedir/somefile", 755);   // dziesiętnie; prawdopodobnie nieprawidłowo
-chmod("/somedir/somefile", "u+rwx,go+rx"); // łańcuch; nieprawidłowo
-chmod("/somedir/somefile", 0755);  // ósemkowo; poprawna wartość dla praw
+chmod("/somedir/somefile", 755);   // dziesiÄtnie; prawdopodobnie nieprawidĹowo
+chmod("/somedir/somefile", "u+rwx,go+rx"); // ĹaĹcuch; nieprawidĹowo
+chmod("/somedir/somefile", 0755);  // Ăłsemkowo; poprawna wartoĹÄ dla praw
 ?>
 ]]>
-       </programlisting>
-      </informalexample>
-     </para>
-     <para>
-      Parametr <parameter>prawa</parameter> zawiera trzy cyfry w systemie ósemkowym
-      określające prawa dostępu dla właściciela, grupy do której on należy
-      oraz wszystkich innych. Jedna cyfra może zostać obliczona poprzez
-      dodanie do siebie potrzebnych uprawnień. Cyfra 1 oznacza nadanie
-      praw do wykonania, cyfra 2 oznacza, że plik będzie zapisywalny, cyfra
-      4 oznacza, że plik będzie można odczytać. Dodając te cyfry
-      określamy potrzebne uprawnienia. Więcej o prawach w systemie Unix
-      można przeczytać w 'man 1 chmod' i 'man 2 chmod'.
-     </para>
-     <para>
-      <informalexample>
-      <programlisting role="php">
+        </programlisting>
+       </informalexample>
+      </para>
+      <para>
+       Parametr <parameter>prawa</parameter> zawiera trzy cyfry w systemie Ăłsemkowym
+       okreĹlajÄce prawa dostÄpu dla wĹaĹciciela, grupy do ktĂłrej on naleĹźy
+       oraz wszystkich innych. Jedna cyfra moĹźe zostaÄ obliczona poprzez
+       dodanie do siebie potrzebnych uprawnieĹ. Cyfra 1 oznacza nadanie
+       praw do wykonania, cyfra 2 oznacza, Ĺźe plik bÄdzie zapisywalny, cyfra
+       4 oznacza, Ĺźe plik bÄdzie moĹźna odczytaÄ. DodajÄc te cyfry
+       okreĹlamy potrzebne uprawnienia. WiÄcej o prawach w systemie Unix
+       moĹźna przeczytaÄ w '<command>man 1 chmod</command>'
+       i '<command>man 2 chmod</command>'.
+      </para>
+      <para>
+       <informalexample>
+        <programlisting role="php">
 <![CDATA[
 <?php
-// Odczyt i zapis dla właściciela, żadnych praw dla innych
+// Odczyt i zapis dla wĹaĹciciela, Ĺźadnych praw dla innych
 chmod("/katalog/plik", 0600);
 
-// Odczyt i zapis dla właściciela, odczyt dla wszystkich
+// Odczyt i zapis dla wĹaĹciciela, odczyt dla wszystkich
 chmod("/katalog/plik", 0644);
 
-// Wszystkie prawa dla właściciela, odczyt i wykonanie dla innych
+// Wszystkie prawa dla wĹaĹciciela, odczyt i wykonanie dla innych
 chmod("/katalog/plik", 0755);
 
-// Wszystkie prawa dla właściciela, odczyt i wykonanie dla grupy właściciela
+// Wszystkie prawa dla wĹaĹciciela, odczyt i wykonanie dla grupy wĹaĹciciela
 chmod("/katalog/plik", 0750);
 ?>
 ]]>
@@ -101,20 +102,19 @@ chmod("/katalog/plik", 0750);
  <refsect1 role="notes">
   &reftitle.notes;
   <note>
-  <para>
-   Bieżący użytkownik to użytkownik pod którym działą PHP.
-   Prawdpodobnie nie jest to ten sam użytkownik, którego używasz
-   normalnie przy dostępie do shell'a lub FTP.
-   W większości systemów, prawa mogą być zmienione jedynie przez właściciela pliku.
-  </para>
- </note>
+   <para>
+    BieĹźÄcy uĹźytkownik to uĹźytkownik pod ktĂłrym dziaĹa PHP. Prawdpodobnie nie jest to 
+    ten sam uĹźytkownik, ktĂłrego uĹźywasz normalnie przy dostÄpie do shell'a lub FTP.
+    W wiÄkszoĹci systemĂłw, prawa mogÄ byÄ zmienione jedynie przez wĹaĹciciela pliku.
+   </para>
+  </note>
   &note.no-remote;
- <note>
-  <simpara>
-    Kiedy włączony jest &safemode;, PHP sprawdza czy pliki lub katalogi na których mają
-    zostać wykonane operacje posiadają taki sam UID (właściciela) jak skrypt, który jest
-    wykonywany. W dodatku, nie możesz ustawić SUI, SGID i bitów lepkości (sticky bits).
-   </simpara>
+  <note>
+   <para>
+    Kiedy wĹÄczony jest &safemode;, PHP sprawdza czy pliki lub katalogi na ktĂłrych majÄ
+    zostaÄ wykonane operacje posiadajÄ taki sam UID (wĹaĹciciela) jak skrypt, ktĂłry jest
+    wykonywany. W dodatku, nie moĹźesz ustawiÄ SUI, SGID i bitĂłw lepkoĹci (sticky bits).
+   </para>
   </note>
  </refsect1>
 
@@ -124,6 +124,8 @@ chmod("/katalog/plik", 0750);
    <simplelist>
     <member><function>chown</function></member>
     <member><function>chgrp</function></member>
+    <member><function>fileperms</function></member>
+    <member><function>stat</function></member>
    </simplelist>
   </para>
  </refsect1>
@@ -141,7 +143,7 @@ sgml-indent-step:1
 sgml-indent-data:t
 indent-tabs-mode:nil
 sgml-parent-document:nil
-sgml-default-dtd-file:"../../../../manual.ced"
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
 sgml-exposed-tags:nil
 sgml-local-catalogs:nil
 sgml-local-ecat-files:nil
