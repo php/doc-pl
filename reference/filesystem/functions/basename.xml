@@ -1,21 +1,22 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: adi Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: c5168db28aef6112239299a2c8ca8c80b12a986b Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
-<refentry xml:id="function.basename" xmlns="http://docbook.org/ns/docbook">
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.basename">
  <refnamediv>
   <refname>basename</refname>
-  <refpurpose>Zwraca nazwę pliku, będącego składową ścieżki</refpurpose>
+  <refpurpose>Zwraca nazwÄ pliku, bÄdÄcego skĹadowÄ ĹcieĹźki</refpurpose>
  </refnamediv>
+ 
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>string</type><methodname>basename</methodname>
-   <methodparam><type>string</type><parameter>ścieżka</parameter></methodparam>
+   <methodparam><type>string</type><parameter>ĹcieĹźka</parameter></methodparam>
    <methodparam choice="opt"><type>string</type><parameter>przyrostek</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Z podanego łańcucha zawierającego ścieżkę do pliku, funkcja
-   zwraca samą nazwę pliku.
+   Z podanego ĹaĹcucha zawierajÄcego ĹcieĹźkÄ do pliku, funkcja
+   zwraca samÄ nazwÄ pliku.
   </para>
  </refsect1>
 
@@ -24,15 +25,15 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>ścieżka</parameter></term>
+     <term><parameter>ĹcieĹźka</parameter></term>
      <listitem>
       <para>
-       Ścieżka
+       ĹcieĹźka
       </para>
       <para>
-       W Windows jako separator katalogów używany jest znak slash
+       W Windows jako separator katalogĂłw uĹźywany jest znak slash
        (<literal>/</literal>) i backslash (<literal>\</literal>).  W
-       innych środowiskach jest to slash (<literal>/</literal>).
+       innych Ĺrodowiskach jest to slash (<literal>/</literal>).
       </para>
      </listitem>
     </varlistentry>
@@ -40,8 +41,8 @@
      <term><parameter>przyrostek</parameter></term>
      <listitem>
       <para>
-       Jeśli plik kończy się <parameter>przyrostkiem</parameter> to także zostanie on
-       obcięty.
+       JeĹli plik koĹczy siÄ <parameter>przyrostkiem</parameter> to takĹźe zostanie on
+       obciÄty.
       </para>
      </listitem>
     </varlistentry>
@@ -52,7 +53,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca nazwę pliku z podanej <parameter>ścieżki</parameter>.
+   Zwraca nazwÄ pliku z podanej <parameter>ĹcieĹźki</parameter>.
   </para>
  </refsect1>
 
@@ -71,7 +72,7 @@
       <row>
        <entry>4.1.0</entry>
        <entry>
-        Został dodany Parametr <parameter>przyrostek</parameter>
+        ZostaĹ dodany Parametr <parameter>przyrostek</parameter>
        </entry>
       </row>
      </tbody>
@@ -84,18 +85,48 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład <function>basename</function></title>
+    <title>PrzykĹad <function>basename</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
-$sciezka = "/home/httpd/html/index.php";
-$plik = basename($sciezka);         // $plik jest ustawiony na "index.php"
-$plik = basename($sciezka, ".php"); // $plik jest ustawiony na "index"
+echo "1) ".basename("/etc/sudoers.d", ".d").PHP_EOL;
+echo "2) ".basename("/etc/passwd").PHP_EOL;
+echo "3) ".basename("/etc/").PHP_EOL;
+echo "4) ".basename(".").PHP_EOL;
+echo "5) ".basename("/");
 ?>
 ]]>
     </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+1) sudoers
+2) passwd
+3) etc
+4) .
+5) 
+]]>
+    </screen>
    </example>
   </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    <function>basename</function> dziaĹa naiwnie na wejĹciowym ĹaĹcuchu znakĂłw
+    i nie jest Ĺwiadoma bieĹźÄcego systemu plikĂłw lub skĹadnikĂłw ĹcieĹźki takich
+    jak "<literal>..</literal>".
+   </para>
+  </note>
+  <note>
+   <para>
+    <function>basename</function> jest Ĺwiadoma locale, aby widzieÄ
+     prawidĹowe basename ze ĹcieĹźek z wielobajtowymi znakami, musi zostaÄ
+     ustawione pasujÄce locale za pomocÄ funkcji <function>setlocale</function>.
+   </para>
+  </note>
  </refsect1>
 
  <refsect1 role="seealso">
@@ -109,7 +140,6 @@ $plik = basename($sciezka, ".php"); // $plik jest ustawiony na "index"
  </refsect1>
 
 </refentry>
-
 
 <!-- Keep this comment at the end of the file
 Local variables:
