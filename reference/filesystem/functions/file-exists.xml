@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: n/a Maintainer: adi Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 4c39c0fb734f594e1bd5fe16ceeb7e5008dec348 Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
 <refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.file-exists">
  <refnamediv>
@@ -26,12 +26,12 @@
      <term><parameter>nazwa_pliku</parameter></term>
      <listitem>
       <para>
-       Ścieżka do pliku lub katalogu.
+       ĹcieĹźka do pliku lub katalogu.
       </para>
       <para>
-       Pod Windows, użyj <filename>//nazwa_komputera/udział/nazwa_pliku</filename> lub
-       <filename>\\nazwa_komputera\udział\nazwa_pliku</filename> aby sprawdzić pliki
-       dla sieciowych udziałów.
+       Pod Windows, uĹźyj <filename>//nazwa_komputera/udziaĹ/nazwa_pliku</filename> lub
+       <filename>\\nazwa_komputera\udziaĹ\nazwa_pliku</filename> aby sprawdziÄ pliki
+       dla sieciowych udziaĹĂłw.
       </para>
      </listitem>
     </varlistentry>
@@ -42,15 +42,21 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca &true; jeśli plik lub katalog określony w
+   Zwraca &true; jeĹli plik lub katalog okreĹlony w
    <parameter>nazwa_pliku</parameter> istnieje; &false; w przeciwnym wypadku.
   </para>
+  <note>
+   <para>
+    Ta funkcja zwrĂłci &false; dla linkĂłw symbolicznych wskazujÄcych na nie istniejÄce
+    pliki.
+   </para>
+  </note>
   <warning>
    <para>
-    Funkcja zwraca &false; dla plików niedostępnych z powodu restrykcji <link
+    Funkcja zwraca &false; dla plikĂłw niedostÄpnych z powodu restrykcji <link
     linkend="features.safe-mode">trybu bezpiecznego</link>. Jednak te pliki
-    ciągle mogą być <link linkend="function.include">inkludowane</link> jeśli
-    znajdują się w <link
+    ciÄgle mogÄ byÄ <link linkend="function.include">inkludowane</link> jeĹli
+    znajdujÄ siÄ w <link
     linkend="ini.safe-mode-include-dir">safe_mode_include_dir</link>.
    </para>
   </warning>
@@ -80,6 +86,13 @@ if (file_exists($nazwa_pliku)) {
 ]]>
     </programlisting>
    </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="errors">
+  &reftitle.errors;
+  <para>
+   W przypadku bĹÄdu wydawane jest <constant>E_WARNING</constant>.
   </para>
  </refsect1>
 
@@ -114,7 +127,7 @@ sgml-indent-step:1
 sgml-indent-data:t
 indent-tabs-mode:nil
 sgml-parent-document:nil
-sgml-default-dtd-file:"../../../../manual.ced"
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
 sgml-exposed-tags:nil
 sgml-local-catalogs:nil
 sgml-local-ecat-files:nil
