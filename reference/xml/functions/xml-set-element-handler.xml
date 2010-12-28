@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: adi Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 10eeb063bbad9f6ef0d08fdcc71f1d80511b01c0 Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: cyb0org -->
 <refentry xml:id="function.xml-set-element-handler" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>xml_set_element_handler</refname>
-  <refpurpose>Ustawia początkową i końcową procedurę obsługi elementu</refpurpose>
+  <refpurpose>Ustawia poczÄtkowÄ i koĹcowÄ procedurÄ obsĹugi elementu</refpurpose>
  </refnamediv>
  
  <refsect1 role="description">
@@ -13,14 +13,14 @@
   <methodsynopsis>
    <type>bool</type><methodname>xml_set_element_handler</methodname>
    <methodparam><type>resource</type><parameter>parser</parameter></methodparam>
-   <methodparam><type>callback</type><parameter>początkowa_procedura_obsługi_elementu</parameter></methodparam>
-   <methodparam><type>callback</type><parameter>końcowa_procedura_obsługi_elementu</parameter></methodparam>
+   <methodparam><type>callback</type><parameter>poczÄtkowa_procedura_obsĹugi_elementu</parameter></methodparam>
+   <methodparam><type>callback</type><parameter>koĹcowa_procedura_obsĹugi_elementu</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Ustawia funkcje procedury obsługi elementu dla <parameter>parser</parameter> XML.
-   <parameter>początkowa_procedura_obsługi_elementu</parameter> i
-   <parameter>końcowa_procedura_obsługi_elementu</parameter> są ciągami znaków zawierającymi
-   nazwy funkcji, które muszą istnieć podczas wywołania <function>xml_parse</function>
+   Ustawia funkcje procedury obsĹugi elementu dla <parameter>parser</parameter> XML.
+   <parameter>poczÄtkowa_procedura_obsĹugi_elementu</parameter> i
+   <parameter>koĹcowa_procedura_obsĹugi_elementu</parameter> sÄ ciÄgami znakĂłw zawierajÄcymi
+   nazwy funkcji, ktĂłre muszÄ istnieÄ podczas wywoĹania <function>xml_parse</function>
    dla <parameter>parser</parameter>.
   </para>
 </refsect1>
@@ -33,17 +33,18 @@
      <term><parameter>parser</parameter></term>
      <listitem>
       <para>
+       Referencja do parsera XML do ustawiania obsĹugi funkcji poczÄtku i koĹca elementu.
       </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>początkowa_procedura_obsługi_elementu</parameter></term>
+     <term><parameter>poczÄtkowa_procedura_obsĹugi_elementu</parameter></term>
      <listitem>
       <para>
-       Funkcja nazwana przez <parameter>początkowa_procedura_obsługi_elementu</parameter>
-       musi przyjmować trzy parametry:
+       Funkcja nazwana przez <parameter>poczÄtkowa_procedura_obsĹugi_elementu</parameter>
+       musi przyjmowaÄ trzy parametry:
        <methodsynopsis>
-        <methodname><replaceable>początkowa_procedura_obsługi_elementu</replaceable></methodname>
+        <methodname><replaceable>poczÄtkowa_procedura_obsĹugi_elementu</replaceable></methodname>
         <methodparam><type>resource</type><parameter>parser</parameter></methodparam>
         <methodparam><type>string</type><parameter>nazwa</parameter></methodparam>
         <methodparam><type>array</type><parameter>atrybuty</parameter></methodparam>
@@ -54,7 +55,7 @@
         <listitem>
          <simpara>
            Pierwszy parametr, <replaceable>parser</replaceable>,
-           jest referencją do parsera XML wywołującego procedurę obsługi.
+           jest referencjÄ do parsera XML wywoĹujÄcego procedurÄ obsĹugi.
          </simpara>
         </listitem>
        </varlistentry>
@@ -62,10 +63,10 @@
         <term><parameter>nazwa</parameter></term>
         <listitem>
          <simpara>
-          Drugi parametr, <parameter>nazwa</parameter>, zawiera nazwę elementu
-          dla którego procedura obsługi została wywołana. Jeśli dla tego parsera
-          włączony jest <link linkend="xml.case-folding">case-folding</link>,
-          wówczas nazwa elementu będzie zamieniona na duże litery.
+          Drugi parametr, <parameter>nazwa</parameter>, zawiera nazwÄ elementu
+          dla ktĂłrego procedura obsĹugi zostaĹa wywoĹana. JeĹli dla tego parsera
+          wĹÄczony jest <link linkend="xml.case-folding">case-folding</link>,
+          wĂłwczas nazwa elementu bÄdzie zamieniona na duĹźe litery.
          </simpara>
         </listitem>
        </varlistentry>
@@ -73,18 +74,18 @@
         <term><parameter>atrybuty</parameter></term>
         <listitem>
          <simpara>
-          Trzeci parametr, <parameter>atrybuty</parameter>, zawiera tablicę
-          asocjacyjną z atrybutami elementów (jeśli jakiekolwiek są).
-          Kluczami tych tablic są nazwy atrybutów a wartościami wartości artybutów.
-          Nazwy atrybutów są zamieniane na duże litery za pomocą opcji <link
+          Trzeci parametr, <parameter>atrybuty</parameter>, zawiera tablicÄ
+          asocjacyjnÄ z atrybutami elementĂłw (jeĹli jakiekolwiek sÄ).
+          Kluczami tych tablic sÄ nazwy atrybutĂłw a wartoĹciami wartoĹci artybutĂłw.
+          Nazwy atrybutĂłw sÄ zamieniane na duĹźe litery za pomocÄ opcji <link
           linkend="xml.case-folding">case-folding</link> na tej samej zasadzie jak
-          nazwy elementów. Wartości atrybutów opcja case-folded <emphasis>nie
+          nazwy elementĂłw. WartoĹci atrybutĂłw opcja case-folded <emphasis>nie
           dotyczy</emphasis>.
          </simpara>
          <simpara>
-          Oryginalna kolejność atrybutów może być odzyskana za pomocą normalnego
-          przejścia przez <parameter>atrybuty</parameter> używając <function>each</function>.
-          Pierwszy klucz w tablicy był pierwszym atrybutem itd.
+          Oryginalna kolejnoĹÄ atrybutĂłw moĹźe byÄ odzyskana za pomocÄ normalnego
+          przejĹcia przez <parameter>atrybuty</parameter> uĹźywajÄc <function>each</function>.
+          Pierwszy klucz w tablicy byĹ pierwszym atrybutem itd.
          </simpara>
         </listitem>
        </varlistentry>
@@ -94,13 +95,13 @@
     </listitem>
    </varlistentry>
    <varlistentry>
-    <term><parameter>końcowa_procedura_obsługi_elementu</parameter></term>
+    <term><parameter>koĹcowa_procedura_obsĹugi_elementu</parameter></term>
      <listitem>
      <para>
-      Funkcja nazwana przez <parameter>końcowa_procedura_obsługi_elementu</parameter>
-      musi przyjmować dwa parametry:
+      Funkcja nazwana przez <parameter>koĹcowa_procedura_obsĹugi_elementu</parameter>
+      musi przyjmowaÄ dwa parametry:
       <methodsynopsis>
-       <methodname><replaceable>końcowa_procedura_obsługi_elementu</replaceable></methodname>
+       <methodname><replaceable>koĹcowa_procedura_obsĹugi_elementu</replaceable></methodname>
        <methodparam><type>resource</type><parameter>parser</parameter></methodparam>
        <methodparam><type>string</type><parameter>nazwa</parameter></methodparam>
       </methodsynopsis>
@@ -110,7 +111,7 @@
         <listitem>
          <simpara>
           Pierwszy parametr, <replaceable>parser</replaceable>,
-          jest referencją do parsera XML wywołującego procedurę obsługi.
+          jest referencjÄ do parsera XML wywoĹujÄcego procedurÄ obsĹugi.
          </simpara>
         </listitem>
        </varlistentry>
@@ -118,18 +119,18 @@
         <term><parameter>nazwa</parameter></term>
         <listitem>
          <simpara>
-          Drugi parametr, <parameter>nazwa</parameter>, zawiera nazwę elementu
-          dla którego procedura obsługi została wywołana. Jeśli dla tego parsera
-          włączony jest <link linkend="xml.case-folding">case-folding</link>,
-          wówczas nazwa elementu będzie zamieniona na duże litery.
+          Drugi parametr, <parameter>nazwa</parameter>, zawiera nazwÄ elementu
+          dla ktĂłrego procedura obsĹugi zostaĹa wywoĹana. JeĹli dla tego parsera
+          wĹÄczony jest <link linkend="xml.case-folding">case-folding</link>,
+          wĂłwczas nazwa elementu bÄdzie zamieniona na duĹźe litery.
          </simpara>
         </listitem>
        </varlistentry>
       </variablelist>
      </para>
       <para>
-       Jeśli funkcja procedury obsługi jest podana jako pusty ciąg znaków lub &false;,
-       wówczas procedura obsługi w zapytaniu jest wyłączona.
+       JeĹli funkcja procedury obsĹugi jest podana jako pusty ciÄg znakĂłw lub &false;,
+       wĂłwczas procedura obsĹugi w zapytaniu jest wyĹÄczona.
       </para>
      </listitem>
     </varlistentry>
