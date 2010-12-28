@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: adi Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 44aabb8f7e3cc8760d33b0ff60ffae362b9d1ed3 Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
 <refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.is-dir">
  <refnamediv>
   <refname>is_dir</refname>
-  <refpurpose>Mówi czy nazwa_pliku jest katalogiem</refpurpose>
+  <refpurpose>MĂłwi czy nazwa_pliku jest katalogiem</refpurpose>
  </refnamediv>
  
  <refsect1 role="description">
@@ -14,7 +14,7 @@
    <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Mówi czy nazwa_pliku jest katalogiem.
+   MĂłwi czy nazwa_pliku jest katalogiem.
   </para>
  </refsect1> 
   
@@ -26,12 +26,12 @@
      <term><parameter>nazwa_pliku</parameter></term>
      <listitem>
       <para>
-       Ścieżka do pliku. Jeśli <parameter>nazwa_pliku</parameter> jest względną
-       nazwą pliku, to zostanie sprawdzona względnie do bieżącego katalogu
-       roboczego. Jeśli <parameter>nazwa_pliku</parameter> jest symbolicznym lub twardym dowiązaniem 
-       wtedy link zostanie rozwiązany i sprawdzony. Jeśli masz włączone &safemode;
+       ĹcieĹźka do pliku. JeĹli <parameter>nazwa_pliku</parameter> jest wzglÄdnÄ
+       nazwÄ pliku, to zostanie sprawdzona wzglÄdnie do bieĹźÄcego katalogu
+       roboczego. JeĹli <parameter>nazwa_pliku</parameter> jest symbolicznym lub twardym dowiÄzaniem 
+       wtedy link zostanie rozwiÄzany i sprawdzony. JeĹli masz wĹÄczone &safemode;
        lub <link linkend="ini.open-basedir">open_basedir</link> dodatkowe 
-       ograniczenia mogą mieć zastosowanie.
+       ograniczenia mogÄ mieÄ zastosowanie.
       </para>
      </listitem>
     </varlistentry>
@@ -42,7 +42,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca &true; jeśli nazwa pliku istnieje i jest katalogiem, w przeciwnym 
+   Zwraca &true; jeĹli nazwa pliku istnieje i jest katalogiem, w przeciwnym 
    razie &false;
   </para>
  </refsect1>
@@ -51,14 +51,14 @@
   &reftitle.examples;
   <para>
    <example>
-    <title><function>is_dir</function> przykład</title>
+    <title><function>is_dir</function> przykĹad</title>
     <programlisting role="php">
 <![CDATA[
 <?php
 var_dump(is_dir('plik.txt'));
 var_dump(is_dir('nieistniejacy_katalog/abc'));
 
-var_dump(is_dir('..')); //jeden katalog wyżej
+var_dump(is_dir('..')); //jeden katalog wyĹźej
 ?>
 ]]>
     </programlisting>
@@ -73,7 +73,12 @@ bool(true)
    </example>
   </para>
  </refsect1>
-
+ 
+ <refsect1 role="errors">
+  &reftitle.errors;
+  &fs.emits.warning.on.failure;
+ </refsect1>
+ 
  <refsect1 role="notes">
   &reftitle.notes;
   &note.clearstatcache;
