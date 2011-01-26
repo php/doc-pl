@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: 18b6d437bc717532e758cb2edf522aad28bb4ada Maintainer: joeaccord Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.2 -->
 <!-- CREDITS: jarek, garbus -->
@@ -18,7 +18,7 @@
    <methodparam choice="opt"><type>int</type><parameter>typ_wyniku</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>pg_fetch_array</function> zwraca tablicę zawierającą dane z pobranego 
+   <function>pg_fetch_array</function> zwraca tablicę zawierającą dane z pobranego
    wiersza (rekordu).
   </para>
   <para>
@@ -54,8 +54,8 @@
      <term><parameter>wiersz</parameter></term>
      <listitem>
       <para>
-       Numer wiersza w wyniku do pobrania.  Wiersze są numerowane od zera w górę.  Jeśli pominięty,
-       pobierany jest kolejny wiersz.
+       Numer wiersza w wyniku do pobrania.  Wiersze są numerowane od zera w górę.  Jeśli jest pominięty
+       albo wynosi &null;, pobierany jest kolejny wiersz.
       </para>
      </listitem>
     </varlistentry>
@@ -63,7 +63,7 @@
      <term><parameter>typ_wyniku</parameter></term>
      <listitem>
       <para>
-       Opcjonalny parametr kontrolujący 
+       Opcjonalny parametr kontrolujący
        w jaki sposób zwrócona tablica (ang. <type>array</type>) jest indeksowana.
        <parameter>typ_wyniku</parameter> jest stałą i może przyjąć
        następujące wartości: <constant>PGSQL_ASSOC</constant>,
