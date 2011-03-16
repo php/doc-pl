@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 0640e024d4b8a9400d457143ccd0ea66e5f98ead Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: f97cf90f6426ca029ab138bcb9328aa053500be4 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: slawek, mroq -->
 <refentry xml:id="function.mysql-real-escape-string" xmlns="http://docbook.org/ns/docbook">
@@ -85,13 +85,13 @@ $query = sprintf("SELECT * FROM uzytkownicy WHERE uzytkownik='%s' AND haslo='%s'
     <programlisting role="php">
 <![CDATA[
 <?php
-// Zapytanie pobierające pasujących użytkowników
-$query = "SELECT * FROM uzytkownicy WHERE uzytkownik='{$_POST['nazwa_uzytkownika']}' AND haslo='{$_POST['haslo']}'";
-mysql_query($query);
+// Nie sprawdziliśmy zmiennej $_POST['password'], która może zawierać wszystko czego chciał użytkownik! Na przykład:
+$_POST['username'] = 'aidan';
+$_POST['password'] = "' OR ''='";
 
-// Nie sprawdziliśmy zmiennej $_POST['haslo'], która może zawierać wszystko czego chciał użytkownik! Na przykład:
-$_POST['nazwa_uzytkownika'] = 'aidan';
-$_POST['haslo'] = "' OR ''='";
+// Zapytanie pobierające pasujących użytkowników
+$query = "SELECT * FROM users WHERE user='{$_POST['username']}' AND password='{$_POST['password']}'";
+mysql_query($query);
 
 // Oznacza to, że zapytanie ma postać:
 echo $query;
