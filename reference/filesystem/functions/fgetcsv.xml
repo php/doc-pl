@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: adi Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 38fb898f9a9623e4c134394da2082d784df2c253 Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.fgetcsv" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>fgetcsv</refname>
-  <refpurpose>Pobiera linię ze wskanika pliku i przetwarza na pola CSV</refpurpose>
+  <refpurpose>Pobiera liniÄ ze wskanika pliku i przetwarza na pola CSV</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
@@ -12,15 +12,15 @@
   <methodsynopsis>
    <type>array</type><methodname>fgetcsv</methodname>
    <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>długość</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>dĹugoĹÄ</parameter><initializer>0</initializer></methodparam>
    <methodparam choice="opt"><type>string</type><parameter>delimiter</parameter><initializer>','</initializer></methodparam>
    <methodparam choice="opt"><type>string</type><parameter>ogranicznik</parameter><initializer>'"'</initializer></methodparam>
    <methodparam choice="opt"><type>string</type><parameter>ucieczka</parameter><initializer>'\\'</initializer></methodparam>
   </methodsynopsis>
   <para>
-   Działa podobnie do <function>fgets</function> tylko, że
-   <function>fgetcsv</function> przetwarza odczytaną linię na pola
-   w formacie <acronym>CSV</acronym> i zwraca tablicę zawierającą
+   DziaĹa podobnie do <function>fgets</function> tylko, Ĺźe
+   <function>fgetcsv</function> przetwarza odczytanÄ liniÄ na pola
+   w formacie <acronym>CSV</acronym> i zwraca tablicÄ zawierajÄcÄ
    odczytane pola.
   </para>
  </refsect1>
@@ -33,20 +33,20 @@
      <term><parameter>uchwyt</parameter></term>
       <listitem>
        <para>
-        Ważny uchwyt pliku, poprawnie otwartego za pomocą 
+        WaĹźny uchwyt pliku, poprawnie otwartego za pomocÄ 
 	<function>fopen</function>, <function>popen</function> lub 
 	<function>fsockopen</function>.
        </para>
       </listitem>
      </varlistentry>
      <varlistentry>
-      <term><parameter>długość</parameter></term>
+      <term><parameter>dĹugoĹÄ</parameter></term>
        <listitem>
         <para>
-         Musi być większy niż najdłuższa linia (w znakach), która znajduje się w
-	 pliku CSV (wliczając znaki końca lini). Stał się opcjonalny w PHP 5.
+         Musi byÄ wiÄkszy niĹź najdĹuĹźsza linia (w znakach), ktĂłra znajduje siÄ w
+	 pliku CSV (wliczajÄc znaki koĹca lini). StaĹ siÄ opcjonalny w PHP 5.
 	 Opuszczenie tego parametru (lub ustawienie go na 0 w PHP
-	 5.0.4 lub późniejszym) spowoduje, że maksymalna długość lini nie jest limitowana,
+	 5.0.4 lub pĂłĹşniejszym) spowoduje, Ĺźe maksymalna dĹugoĹÄ lini nie jest limitowana,
 	 co jest nieznacznie wolniejsze.
         </para>
        </listitem>
@@ -55,7 +55,7 @@
        <term><parameter>delimiter</parameter></term>
        <listitem>
         <para>
-	 Ustawia delimeter (tylko jeden znak) pól.
+	 Ustawia delimeter (tylko jeden znak) pĂłl.
         </para>
        </listitem>
       </varlistentry>
@@ -63,7 +63,7 @@
        <term><parameter>ogranicznik</parameter></term>
        <listitem>
         <para>
-	 Ustawia znak ograniczający pole.
+	 Ustawia znak ograniczajÄcy pole.
         </para>
      </listitem>
     </varlistentry>
@@ -71,7 +71,7 @@
      <term><parameter>ucieczka</parameter></term>
      <listitem>
       <para>
-       Ustawia znak ucieczki (tylko jeden znak). Domyślnie jest to odwrotny ukośnik.
+       Ustawia znak ucieczki (tylko jeden znak). DomyĹlnie jest to odwrotny ukoĹnik.
       </para> 
      </listitem>
     </varlistentry>
@@ -82,20 +82,20 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca indeksowaną tablicę zawierającą odczytane pola.
+   Zwraca indeksowanÄ tablicÄ zawierajÄcÄ odczytane pola.
   </para>
   <note>
    <para>
-    Pusta linia w pliku CSV zostanie zwrócona jako tablica
-    składająca się z pojedynczego pola <type>null</type> i nie zostanie potraktowana
-    jako błąd.
+    Pusta linia w pliku CSV zostanie zwrĂłcona jako tablica
+    skĹadajÄca siÄ z pojedynczego pola <type>null</type> i nie zostanie potraktowana
+    jako bĹÄd.
    </para>
   </note>
   &note.line-endings;
   <para>
-  <function>fgetcsv</function> zwraca &null; jeśli dostarczono 
-  niewłaściwy <parameter>uchwyt</parameter> lub &false; w przypadku innego błędu,
-  włączając w to koniec pliku.
+  <function>fgetcsv</function> zwraca &null; jeĹli dostarczono 
+  niewĹaĹciwy <parameter>uchwyt</parameter> lub &false; w przypadku innego bĹÄdu,
+  wĹÄczajÄc w to koniec pliku.
   </para>
  </refsect1>
 
@@ -120,7 +120,7 @@
       <row>
        <entry>4.3.5</entry>
        <entry>
-        <function>fgetcsv</function> stał się bezpiecznym dla danych binarnych
+        <function>fgetcsv</function> staĹ siÄ bezpiecznym dla danych binarnych
        </entry>
       </row>
       <row>
@@ -140,8 +140,8 @@
   <para>
    <example>
     <title>
-     <function>fgetcsv</function> przykład - Odczyt i wyświetlenie całej
-     zawartości pliku CSV
+     <function>fgetcsv</function> przykĹad - Odczyt i wyĹwietlenie caĹej
+     zawartoĹci pliku CSV
     </title>
     <programlisting role="php">
 <![CDATA[
@@ -150,7 +150,7 @@ $row = 1;
 if (($uchwyt = fopen ("test.csv","r")) !== FALSE) {
 while (($data = fgetcsv($uchwyt, 1000, ",")) !== FALSE)  {
     $num = count($data);
-    echo "<p> $num pól w lini $row: <br /></p>\n";
+    echo "<p> $num pĂłl w lini $row: <br /></p>\n";
     $row++;
     for ($c=0; $c < $num; $c++) {
     echo $data[$c] . "<br />\n";
@@ -169,10 +169,10 @@ fclose ($uchwyt);
   &reftitle.notes;
   <note>
    <para>
-    Ustawienia lokale są brane pod uwagę przez tę funkcję. Jeśli
+    Ustawienia lokale sÄ brane pod uwagÄ przez tÄ funkcjÄ. JeĹli
     <varname>LANG</varname> jest ustawione na np. <literal>en_US.UTF-8</literal>,
-    pliki z jedno bajtowym kodowaniem zostaną nieprawidłowo odczytane
-    przez funkcję.
+    pliki z jedno bajtowym kodowaniem zostanÄ nieprawidĹowo odczytane
+    przez funkcjÄ.
    </para>
   </note>
  </refsect1>
