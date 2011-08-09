@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.array-walk" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>array_walk</refname>
-  <refpurpose>Zastosuj funkcję użytkownika do każdego elementu tablicy</refpurpose>
+  <refpurpose>Zastosuj funkcjÄ uĹźytkownika do kaĹźdego elementu tablicy</refpurpose>
  </refnamediv>
  <refsect1>
   <title>Opis</title>
@@ -18,61 +18,61 @@
    &return.success;
   </simpara>
   <simpara>
-   Wykonuje zdefiniowaną przez użytkownika funkcję
-   <parameter>nazwa_funkcji</parameter> na każdym elemencie tablicy
+   Wykonuje zdefiniowanÄ przez uĹźytkownika funkcjÄ
+   <parameter>nazwa_funkcji</parameter> na kaĹźdym elemencie tablicy
    <parameter>tablica</parameter>. Zazwyczaj <parameter>nazwa_funkcji</parameter>
    przyjmuje dwa argumenty. Pierwszym jest element tablicy
    <parameter>tablica</parameter>, natomiast drugim klucz lub numer indeksu
-   tego elementu. Jeśli do funkcji <function>array_walk</function> podany
-   zostanie trzeci element, <parameter>dane</parameter>, będzie on
+   tego elementu. JeĹli do funkcji <function>array_walk</function> podany
+   zostanie trzeci element, <parameter>dane</parameter>, bÄdzie on
    przekazany do <parameter>nazwa_funkcji</parameter> jako jej trzeci
    argument.
   </simpara>
   <simpara>
-   Jeśli <parameter>nazwa_funkcji</parameter> wymaga więcej parametrów niż zostało
-   jej przekazanych, wygenerowany zostanie błąd poziomu <link
-    linkend="errorfunc.constants">E_WARNING</link> dla każdego wywołania
-   funkcji podanej jako parametr. Ostrzeżenia te mogą być wyciszone poprzez
-   skorzystanie z operatora kontroli błędów <link
-    linkend="language.operators.errorcontrol">@</link> przed wywołaniem
-   <function>array_walk</function>, lub też poprzez użycie funkcji
+   JeĹli <parameter>nazwa_funkcji</parameter> wymaga wiÄcej parametrĂłw niĹź zostaĹo
+   jej przekazanych, wygenerowany zostanie bĹÄd poziomu <link
+    linkend="errorfunc.constants">E_WARNING</link> dla kaĹźdego wywoĹania
+   funkcji podanej jako parametr. OstrzeĹźenia te mogÄ byÄ wyciszone poprzez
+   skorzystanie z operatora kontroli bĹÄdĂłw <link
+    linkend="language.operators.errorcontrol">@</link> przed wywoĹaniem
+   <function>array_walk</function>, lub teĹź poprzez uĹźycie funkcji
    <function>error_reporting</function>.
   </simpara>
   <note>
    <para>
-    Jeśli <parameter>nazwa_funkcji</parameter> ma zmieniać wartości tablicy,
-    należy określić pierwszy argument <parameter>nazwa_funkcji</parameter>
-    jako <link linkend="language.references">referencję</link>. W tym
-    przypadku wszystkie zmiany dokonane przez tą funkcję będą dokonywane
-    bezpośrednio na oryginalnej tablicy.
+    JeĹli <parameter>nazwa_funkcji</parameter> ma zmieniaÄ wartoĹci tablicy,
+    naleĹźy okreĹliÄ pierwszy argument <parameter>nazwa_funkcji</parameter>
+    jako <link linkend="language.references">referencjÄ</link>. W tym
+    przypadku wszystkie zmiany dokonane przez tÄ funkcjÄ bÄdÄ dokonywane
+    bezpoĹrednio na oryginalnej tablicy.
    </para>
   </note>
   <note>
    <para>
-    Przekazywanie klucza i danych użytkownika do <parameter>nazwa_funkcji</parameter>
-    zostało dodane w PHP 4.0.0.
+    Przekazywanie klucza i danych uĹźytkownika do <parameter>nazwa_funkcji</parameter>
+    zostaĹo dodane w PHP 4.0.0.
    </para>
   </note>
   <para>
-   Na działanie <function>array_walk</function> nie wpływa pozycja
-   wewnętrznego wskaźnika tablicy. <function>array_walk</function>
+   Na dziaĹanie <function>array_walk</function> nie wpĹywa pozycja
+   wewnÄtrznego wskaĹşnika tablicy. <function>array_walk</function>
    przetworzy wszystkie elementy argumentu <parameter>tablica</parameter>,
-   niezależnie odpozycji jej wewnętrznego wskaźnika.
+   niezaleĹźnie odpozycji jej wewnÄtrznego wskaĹşnika.
   </para>
   <para>
-   Użytkownicy nie mogą zmieniać samej tablicy z wnętrza funkcji zwrotnej,
-   to jest dodawać/usuwać elementy, usuwać elementy tablicy na której jest
-   wywoływana funkcja <function>array_walk</function>. Jeśli ta tablica
-   zostanie zmieniona, funkcja może się zachowywać w sposób nieokreślony i
+   UĹźytkownicy nie mogÄ zmieniaÄ samej tablicy z wnÄtrza funkcji zwrotnej,
+   to jest dodawaÄ/usuwaÄ elementy, usuwaÄ elementy tablicy na ktĂłrej jest
+   wywoĹywana funkcja <function>array_walk</function>. JeĹli ta tablica
+   zostanie zmieniona, funkcja moĹźe siÄ zachowywaÄ w sposĂłb nieokreĹlony i
    nieprzewidywalny..
   </para>
   <para>
    <example>
-    <title>Przykład użycia <function>array_walk</function></title>
+    <title>PrzykĹad uĹźycia <function>array_walk</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
-$owoce = array ("d"=>"cytryna", "a"=>"pomarańcza", "b"=>"banan", "c"=>"jabłko");
+$owoce = array ("d"=>"cytryna", "a"=>"pomaraĹcza", "b"=>"banan", "c"=>"jabĹko");
 
 function test_zmiana (&$element1, $klucz, $prefiks)
 {
@@ -99,20 +99,20 @@ array_walk ($owoce, 'test_wyswietlanie');
 <![CDATA[
 Przed ...:
 d. cytryna
-a. pomarańcza
+a. pomaraĹcza
 b. banan
-c. jabłko
+c. jabĹko
 ... i po:
 d. owoc: cytryna
-a. owoc: pomarańcza
+a. owoc: pomaraĹcza
 b. owoc: banan
-c. owoc: jabłko
+c. owoc: jabĹko
 ]]>
     </screen>
    </example>
   </para>
   <simpara>
-   Patrz także:
+   Patrz takĹźe:
    <function>array_walk_recursive</function>,
    <function>create_function</function>,
    <function>list</function>,

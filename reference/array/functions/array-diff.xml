@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.array-diff" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>array_diff</refname>
-  <refpurpose>Zwraca różnice pomiędzy tablicami</refpurpose>
+  <refpurpose>Zwraca rĂłĹźnice pomiÄdzy tablicami</refpurpose>
  </refnamediv>
  <refsect1>
   <title>Opis</title>
@@ -15,18 +15,18 @@
    <methodparam choice="opt"><type>array</type><parameter> ...</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>array_diff</function> zwraca tablicę zawierającą wszystkie
-   wartości tablicy <parameter>tablica1</parameter> które nie są obecne w
-   innych tablicach-argumentach. Zauważ, że zachowywane są klucze.
+   <function>array_diff</function> zwraca tablicÄ zawierajÄcÄ wszystkie
+   wartoĹci tablicy <parameter>tablica1</parameter> ktĂłre nie sÄ obecne w
+   innych tablicach-argumentach. ZauwaĹź, Ĺźe zachowywane sÄ klucze.
   </para>
   <para>
    <example>
-    <title>Przykład użycia <function>array_diff</function></title>
+    <title>PrzykĹad uĹźycia <function>array_diff</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
 $tablica1 = array ("a" => "zielony", "czerwony", "niebieski", "czerwony");
-$tablica2 = array ("b" => "zielony", "żółty", "czerwony");
+$tablica2 = array ("b" => "zielony", "ĹźĂłĹty", "czerwony");
 $wynik = array_diff ($tablica1, $tablica2);
 
 print_r($wynik);
@@ -34,8 +34,8 @@ print_r($wynik);
 ]]>
     </programlisting>
     <para>
-     Wielokrotne wystąpienia w $tablica1 są traktowane w ten sam sposób.
-     Powyższy przykład wyświetli:
+     Wielokrotne wystÄpienia w $tablica1 sÄ traktowane w ten sam sposĂłb.
+     PowyĹźszy przykĹad wyĹwietli:
     </para>
     <screen>
 <![CDATA[
@@ -50,27 +50,27 @@ Array
   </para>
   <note>
    <simpara>
-    Dwa elementy tablicy uważane są za identyczne wtedy i tylko wtedy jeśli
-    <literal>(string) $element1 === (string) $element2</literal>. Słownie:
-    kiedy reprezentacje elementów w postaci stringów są identyczne.
-    <!-- TODO: przykład... -->
+    Dwa elementy tablicy uwaĹźane sÄ za identyczne wtedy i tylko wtedy jeĹli
+    <literal>(string) $element1 === (string) $element2</literal>. SĹownie:
+    kiedy reprezentacje elementĂłw w postaci stringĂłw sÄ identyczne.
+    <!-- TODO: przykĹad... -->
    </simpara>
   </note>
   <note>
    <simpara>
-    Zauważ, że funkcja ta sprawdza tylko jest wymiar n-wymiarowej tablicy.
-    Oczywiście można sprawdzić głębsze wymiary wywołując
+    ZauwaĹź, Ĺźe funkcja ta sprawdza tylko jest wymiar n-wymiarowej tablicy.
+    OczywiĹcie moĹźna sprawdziÄ gĹÄbsze wymiary wywoĹujÄc
     <literal>array_diff($array1[0], $array2[0]);</literal>.
    </simpara>
   </note>
   <warning>
    <simpara>
-    Ta funkcja była zepsuta w PHP 4.0.4!
-    <!-- TODO: kiedy dokładnie było to zepsute?... -->
+    Ta funkcja byĹa zepsuta w PHP 4.0.4!
+    <!-- TODO: kiedy dokĹadnie byĹo to zepsute?... -->
    </simpara>
   </warning>
   <para>
-   Patrz także: <function>array_diff_assoc</function>,
+   Patrz takĹźe: <function>array_diff_assoc</function>,
    <function>array_intersect</function> i
    <function>array_intersect_assoc</function>.
   </para>

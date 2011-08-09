@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.list" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>list</refname>
-  <refpurpose>Przypisz zmienne tak jakby były tablicą</refpurpose>
+  <refpurpose>Przypisz zmienne tak jakby byĹy tablicÄ</refpurpose>
  </refnamediv>
  <refsect1>
   <title>Opis</title>
@@ -14,38 +14,38 @@
    <methodparam rep="repeat"><type>mixed</type><parameter>...</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Podobnie jak <function>array</function>, nie jest na prawdę funkcją,
-   ale elementem składni języka. Instrukcja <function>list</function>
-   jest używana do przypisywania listy zmiennych w jednej operacji.
+   Podobnie jak <function>array</function>, nie jest na prawdÄ funkcjÄ,
+   ale elementem skĹadni jÄzyka. Instrukcja <function>list</function>
+   jest uĹźywana do przypisywania listy zmiennych w jednej operacji.
   </para>
   <note>
    <para>
-    <function>list</function> działa tylko z tablicami o indeksach
-    liczbowych zakładając że indeksy zaczynają się od 0.
+    <function>list</function> dziaĹa tylko z tablicami o indeksach
+    liczbowych zakĹadajÄc Ĺźe indeksy zaczynajÄ siÄ od 0.
    </para>
   </note>
   <para>
    <example>
-    <title>Przykłady użycia <function>list</function></title>
+    <title>PrzykĹady uĹźycia <function>list</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
 
-$info = array('kawa', 'brązowa', 'kofeina');
+$info = array('kawa', 'brÄzowa', 'kofeina');
 
 // Listowanie wszystkich zmiennych
-list($napój, $kolor, $składnik) = $info;
-echo "$napój jest $kolor a $składnik czyni ją wyjątkową.\n";
+list($napĂłj, $kolor, $skĹadnik) = $info;
+echo "$napĂłj jest $kolor a $skĹadnik czyni jÄ wyjÄtkowÄ.\n";
 
-// Listowanie niektórych elementów
-list($napój, , $składnik) = $info;
-echo "$napój zawiera $składnik.\n";
+// Listowanie niektĂłrych elementĂłw
+list($napĂłj, , $skĹadnik) = $info;
+echo "$napĂłj zawiera $skĹadnik.\n";
 
 // Albo przeskoczmy od razu do trzeciego
-list( , , $składnik) = $info;
-echo "Potrzebna jest mi $składnik!\n";
+list( , , $skĹadnik) = $info;
+echo "Potrzebna jest mi $skĹadnik!\n";
 
-// list() nie działa z łańcuchami znaków 
+// list() nie dziaĹa z ĹaĹcuchami znakĂłw 
 list($bar) = "abcde"; 
 var_dump($bar); // NULL 
  
@@ -56,7 +56,7 @@ var_dump($bar); // NULL
   </para>
   <para>
    <example>
-    <title>Przykład użycia <function>list</function></title>
+    <title>PrzykĹad uĹźycia <function>list</function></title>
     <programlisting role="php">
 <![CDATA[
 <table>
@@ -83,22 +83,22 @@ while (list($id, $nazwisko, $pensja) = mysql_fetch_row($wynik)) {
   </para>
   <warning>
    <para>
-    <function>list</function> Przypisuje wartości zaczynając parametru
-    znajdującego się po prawej. Przy używaniu zwykłych zmiennych nie ma
-    się o co martwić. Ale używając tablic z indeksami, zazwyczaj
-    oczekuje się, że kolejność indeksów w tablicy będzie taka sama jak zapis
-    wywołania <function>list</function>, od lewej do prawej. Otóż tak nie
-    jest. Zmienne są przypisywane w odwrotnej kolejności.
+    <function>list</function> Przypisuje wartoĹci zaczynajÄc parametru
+    znajdujÄcego siÄ po prawej. Przy uĹźywaniu zwykĹych zmiennych nie ma
+    siÄ o co martwiÄ. Ale uĹźywajÄc tablic z indeksami, zazwyczaj
+    oczekuje siÄ, Ĺźe kolejnoĹÄ indeksĂłw w tablicy bÄdzie taka sama jak zapis
+    wywoĹania <function>list</function>, od lewej do prawej. OtĂłĹź tak nie
+    jest. Zmienne sÄ przypisywane w odwrotnej kolejnoĹci.
    </para>
   </warning>
   <example>
-   <title>Przykład użycia <function>list</function> z indeksowaną
-    tablicą</title>
+   <title>PrzykĹad uĹźycia <function>list</function> z indeksowanÄ
+    tablicÄ</title>
    <programlisting role="php">
 <![CDATA[
 <?php
 
-$info = array('kawa', 'brązowa', 'kofeina');
+$info = array('kawa', 'brÄzowa', 'kofeina');
 
 list($a[0], $a[1], $a[2]) = $info;
 
@@ -109,8 +109,8 @@ var_dump($a);
    </programlisting>
   </example>
   <para>
-    Przykład ten wyświetli co następuje (zauważ kolejność elementów
-    porównując ją do tej, w której były one zapisane w wywołaniu funkcji
+    PrzykĹad ten wyĹwietli co nastÄpuje (zauwaĹź kolejnoĹÄ elementĂłw
+    porĂłwnujÄc jÄ do tej, w ktĂłrej byĹy one zapisane w wywoĹaniu funkcji
     <function>list</function>):
   </para>
   <screen>
@@ -118,13 +118,13 @@ array(3) {
   [2]=>
   string(8) "kofeina"
   [1]=>
-  string(5) "brązowa"
+  string(5) "brÄzowa"
   [0]=>
   string(6) "kawa"
 }
   </screen>
   <para>
-   Patrz także: <function>each</function> <function>array</function> i
+   Patrz takĹźe: <function>each</function> <function>array</function> i
    <function>extract</function>.
   </para>
  </refsect1>

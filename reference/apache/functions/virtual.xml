@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: qrak Status: ready -->
 <!-- $Revision$ -->
   <refentry xml:id="function.virtual" xmlns="http://docbook.org/ns/docbook">
@@ -13,34 +13,34 @@
       <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
      </methodsynopsis>
     <para>
-     <function>virtual</function> jest funkcją właściwą jedynie Apache'owi,
-     która jest odpowiednikiem &lt;!--#include virtual...--&gt; w mod_include.
-     Funkcja wywołuje wewnętrzne żądanie Apache'a. Przydaje się do dołączania
-     (inkludowania) skryptów CGI lub plików .shtml, lub czegokolwiek innego,
-     co jest przetwarzane przez serwer Apache. Zwróć uwagę przy skrypcie CGI, że
-     musi on generować poprawne nagłówki CGI, przynajmniej nagłówek
+     <function>virtual</function> jest funkcjÄ wĹaĹciwÄ jedynie Apache'owi,
+     ktĂłra jest odpowiednikiem &lt;!--#include virtual...--&gt; w mod_include.
+     Funkcja wywoĹuje wewnÄtrzne ĹźÄdanie Apache'a. Przydaje siÄ do doĹÄczania
+     (inkludowania) skryptĂłw CGI lub plikĂłw .shtml, lub czegokolwiek innego,
+     co jest przetwarzane przez serwer Apache. ZwrĂłÄ uwagÄ przy skrypcie CGI, Ĺźe
+     musi on generowaÄ poprawne nagĹĂłwki CGI, przynajmniej nagĹĂłwek
      Content-type.
     </para>
     <para>
-     Zanim zostanie uruchomione wewnętrzne żądanie Apache'a, 
-     najpierw zostaną wysłane
-     oczekujące na wysłanie nagłówki HTTP a następnie wszystkie bufory
-     wyjścia zostaną opróżnione do przeglądarki.
+     Zanim zostanie uruchomione wewnÄtrzne ĹźÄdanie Apache'a, 
+     najpierw zostanÄ wysĹane
+     oczekujÄce na wysĹanie nagĹĂłwki HTTP a nastÄpnie wszystkie bufory
+     wyjĹcia zostanÄ oprĂłĹźnione do przeglÄdarki.
     </para>
 	<warning> 
       <para>
-	   Funkcja działa tylko jeśli PHP jest skompilowane w postaci modułu Apache,
-	   ponieważ używa API Apache do tworzenia pod żądań. Łańcuch zapytań (query string)
-	   może zostać przekazany do dołączanego pliku ale <varname>$_GET</varname>
+	   Funkcja dziaĹa tylko jeĹli PHP jest skompilowane w postaci moduĹu Apache,
+	   poniewaĹź uĹźywa API Apache do tworzenia pod ĹźÄdaĹ. ĹaĹcuch zapytaĹ (query string)
+	   moĹźe zostaÄ przekazany do doĹÄczanego pliku ale <varname>$_GET</varname>
 	   jest kopiowana ze skryptu rodzica i tylko <varname>$_SERVER['QUERY_STRING']</varname> 
-	   jest wypełniana przetwarzanym łańcuchem zapytań. Łańcuch zapytań może być przekazany
-	   tylko jeśli uzywasz Apache 2. Żądany plik nie zostanie wyszczególniony w
-	   dzienniku dostępu Apache.
+	   jest wypeĹniana przetwarzanym ĹaĹcuchem zapytaĹ. ĹaĹcuch zapytaĹ moĹźe byÄ przekazany
+	   tylko jeĹli uzywasz Apache 2. ĹťÄdany plik nie zostanie wyszczegĂłlniony w
+	   dzienniku dostÄpu Apache.
       </para> 
      </warning> 
     <para>
-     Począwszy od PHP 4.0.6, można używać <function>virtual</function> do
-     dołączania plików PHP, jednak w typowych sytuacjach bardziej sprawdzają się
+     PoczÄwszy od PHP 4.0.6, moĹźna uĹźywaÄ <function>virtual</function> do
+     doĹÄczania plikĂłw PHP, jednak w typowych sytuacjach bardziej sprawdzajÄ siÄ
      funkcje <function>include</function> lub <function>require</function>.
     </para>
 	&note.apache.nsapi-module;

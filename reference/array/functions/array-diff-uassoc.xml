@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.array-diff-uassoc" xmlns="http://docbook.org/ns/docbook">
@@ -16,23 +16,23 @@
    <methodparam><type>callback</type><parameter>key_compare_func</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>array_diff_uassoc</function> zwraca <type>tablicę</type>
-   zawierającą wszystkie wartości z <parameter>tablica1</parameter> które
-   nie są obecne w żadnym z pozostałych argumentów. Do porównania, w
-   przeciwieństwie do funkcji <function>array_diff</function>, używane sa
+   <function>array_diff_uassoc</function> zwraca <type>tablicÄ</type>
+   zawierajÄcÄ wszystkie wartoĹci z <parameter>tablica1</parameter> ktĂłre
+   nie sÄ obecne w Ĺźadnym z pozostaĹych argumentĂłw. Do porĂłwnania, w
+   przeciwieĹstwie do funkcji <function>array_diff</function>, uĹźywane sa
    klucze tablic.
   </para>
   <para>
-   Porównanie jest dokonywane przy pomocy podanej funkcji zwrotnej. Musi ona
-   zwracać liczbę całkowitą mniejszą, równą lub większą od zera jeśli
-   pierwszy klucz jest uznawany za mniejszy, równy lub większy drugiego.
-   Jest to zachowanie inne niż w funkcji
-   <function>array_diff_assoc</function>, gdzie do porównań kluczy używana
-   jest wewnętrzna funkcja.
+   PorĂłwnanie jest dokonywane przy pomocy podanej funkcji zwrotnej. Musi ona
+   zwracaÄ liczbÄ caĹkowitÄ mniejszÄ, rĂłwnÄ lub wiÄkszÄ od zera jeĹli
+   pierwszy klucz jest uznawany za mniejszy, rĂłwny lub wiÄkszy drugiego.
+   Jest to zachowanie inne niĹź w funkcji
+   <function>array_diff_assoc</function>, gdzie do porĂłwnaĹ kluczy uĹźywana
+   jest wewnÄtrzna funkcja.
   </para>
   <para>
    <example>
-    <title>Przykład użycia <function>array_diff_uassoc</function></title>
+    <title>PrzykĹad uĹźycia <function>array_diff_uassoc</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -44,8 +44,8 @@ function funk_porownujaca($a, $b)
     return ($a > $b)? 1:-1;
 }
 
-$tablica1 = array("a" => "zielony", "b" => "brązowy", "c" => "niebieski", "czerwony");
-$tablica2 = array("a" => "zielony", "żółty", "czerwony");
+$tablica1 = array("a" => "zielony", "b" => "brÄzowy", "c" => "niebieski", "czerwony");
+$tablica2 = array("a" => "zielony", "ĹźĂłĹty", "czerwony");
 $wynik = array_diff_uassoc($tablica1, $tablica2, "funk_porownujaca");
 print_r($wynik);
 ?>
@@ -56,7 +56,7 @@ print_r($wynik);
 <![CDATA[
 Array
 (
-    [b] => brązowy
+    [b] => brÄzowy
     [c] => niebieski
     [0] => czerwony
 )
@@ -65,25 +65,25 @@ Array
    </example>
   </para>
   <simpara>
-   W powyższym przykładzie para <literal>"a" =&gt; "zielony"</literal> jest
-   obecna w obu tablicach, w związku z tym nie jest zwracana przez funkcję.
+   W powyĹźszym przykĹadzie para <literal>"a" =&gt; "zielony"</literal> jest
+   obecna w obu tablicach, w zwiÄzku z tym nie jest zwracana przez funkcjÄ.
    Z kolei para <literal>0 =&gt; "czerwony"</literal> jest zawarta w wyniku
-   działania funkcji, ponieważ w drugim argumencie wartość
+   dziaĹania funkcji, poniewaĹź w drugim argumencie wartoĹÄ
    <literal>"czerwony"</literal> ma klucz <literal>1</literal>.
   </simpara>
   <simpara>
-   Równość dwóch indeksów jest sprawdzana przez podaną przez użytkownika
-   funkcję.
+   RĂłwnoĹÄ dwĂłch indeksĂłw jest sprawdzana przez podanÄ przez uĹźytkownika
+   funkcjÄ.
   </simpara>
   <note>
    <simpara>
-    Funkcja ta sprawdza tylko jeden wymiar n-wymiarowej tablicy. Można
-    sprawdzać głębsze wymiary przez użycie, na przykład
+    Funkcja ta sprawdza tylko jeden wymiar n-wymiarowej tablicy. MoĹźna
+    sprawdzaÄ gĹÄbsze wymiary przez uĹźycie, na przykĹad
     <literal>array_diff_uassoc($tablica1[0], $tablica2[0], 'funkcja_zwrotna');</literal>.
    </simpara>
   </note>
   <para>
-   Patrz także:
+   Patrz takĹźe:
    <function>array_diff</function>,
    <function>array_diff_assoc</function>,
    <function>array_udiff</function>,

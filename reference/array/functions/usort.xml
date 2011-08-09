@@ -1,37 +1,37 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.usort" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>usort</refname>
-  <refpurpose>Sortuje tablicę według wartości korzystając ze zdefiniowanej przez użytkownika funkcji porównującej</refpurpose>
+  <refpurpose>Sortuje tablicÄ wedĹug wartoĹci korzystajÄc ze zdefiniowanej przez uĹźytkownika funkcji porĂłwnujÄcej</refpurpose>
  </refnamediv>
  <refsect1>
   <title>Opis</title>
   <methodsynopsis>
    <type>void</type><methodname>usort</methodname>
    <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
-   <methodparam><type>callback</type><parameter>funkcja_porównująca</parameter></methodparam>
+   <methodparam><type>callback</type><parameter>funkcja_porĂłwnujÄca</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Funkcja ta posortuje tablicę według jej wartości korzystając z podanej
-   przez użytkownika funkcji porównującej. Jeśli chcesz posortować tablicę
-   według skomplikowanych kryteriów, to powinieneś użyć tej funkcji.
+   Funkcja ta posortuje tablicÄ wedĹug jej wartoĹci korzystajÄc z podanej
+   przez uĹźytkownika funkcji porĂłwnujÄcej. JeĹli chcesz posortowaÄ tablicÄ
+   wedĹug skomplikowanych kryteriĂłw, to powinieneĹ uĹźyÄ tej funkcji.
   </para>
   <para>
-   Funkcja porównująca musi zwracać liczbę całkowitą mniejszą, równą lub
-   większą od zera jeśli pierwszy argument jest odpowiednio mniejszy, równy
-   lub większy niż drugi.
+   Funkcja porĂłwnujÄca musi zwracaÄ liczbÄ caĹkowitÄ mniejszÄ, rĂłwnÄ lub
+   wiÄkszÄ od zera jeĹli pierwszy argument jest odpowiednio mniejszy, rĂłwny
+   lub wiÄkszy niĹź drugi.
   </para>
   <para>
    <note>
     <para>
-     Jeśli wynikiem porównania dwóch elementów tablicy jest równość, ich
-     kolejność w posortowanej tablicy pozostaje niezdefiniowana. Od PHP
-     4.0.6 funkcje zdefiniowane przez użytkownika mogły utrzymywać
-     początkową kolejność tych elementów, lecz nowy algorytm sortowania
-     wprowadzony w PHP 4.1.0 czyni to uniemożliwym i nie ma wydajnego
-     sposobu na rozwiązanie tego problemu.
+     JeĹli wynikiem porĂłwnania dwĂłch elementĂłw tablicy jest rĂłwnoĹÄ, ich
+     kolejnoĹÄ w posortowanej tablicy pozostaje niezdefiniowana. Od PHP
+     4.0.6 funkcje zdefiniowane przez uĹźytkownika mogĹy utrzymywaÄ
+     poczÄtkowÄ kolejnoĹÄ tych elementĂłw, lecz nowy algorytm sortowania
+     wprowadzony w PHP 4.1.0 czyni to uniemoĹźliwym i nie ma wydajnego
+     sposobu na rozwiÄzanie tego problemu.
     </para>
    </note>
   </para>
@@ -41,7 +41,7 @@
   </para>
   <para>
    <example>
-    <title>Przykład użycia <function>usort</function></title>
+    <title>PrzykĹad uĹźycia <function>usort</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -77,14 +77,14 @@ foreach ($a as $key => $val) {
   </para>
   <note>
    <para>
-    Oczywiście w tym prostym przykładzie lepiej jest skorzystać z funkcji
+    OczywiĹcie w tym prostym przykĹadzie lepiej jest skorzystaÄ z funkcji
     <function>sort</function>.
    </para>
   </note>
   <para>
    <example>
     <title>
-     Przykład użycia <function>usort</function> do sortowania
+     PrzykĹad uĹźycia <function>usort</function> do sortowania
      wielowymiarowych tablic
     </title>
     <programlisting role="php">
@@ -96,7 +96,7 @@ function cmp($a, $b)
 }
 
 $owoce[0]["owoc"] = "cytryny";
-$owoce[1]["owoc"] = "jabłka";
+$owoce[1]["owoc"] = "jabĹka";
 $owoce[2]["owoc"] = "winogrona";
 
 usort($owoce, "cmp");
@@ -107,14 +107,14 @@ while (list($key, $value) = each($owoce)) {
 ]]>
     </programlisting>
     <para>
-     Sortując tablicę wielowymiarową, $a i $b zawierają referencję do
+     SortujÄc tablicÄ wielowymiarowÄ, $a i $b zawierajÄ referencjÄ do
      pierwszego indeksu tablicy.
     </para>
     &example.outputs;
     <screen>
 <![CDATA[
 $owoce[0]: cytryny
-$owoce[1]: jabłka
+$owoce[1]: jabĹka
 $owoce[2]: winogrona
 ]]>
     </screen>
@@ -123,7 +123,7 @@ $owoce[2]: winogrona
   <para>
    <example>
     <title>
-     Przykład użycia <function>usort</function> używając funkcji składowej
+     PrzykĹad uĹźycia <function>usort</function> uĹźywajÄc funkcji skĹadowej
      obiektu
     </title>
     <programlisting role="php">
@@ -137,7 +137,7 @@ class TestObj {
         $this->name = $name;
     }
 
-    /* Statyczna funkcja porównująca */
+    /* Statyczna funkcja porĂłwnujÄca */
     function cmp_obj($a, $b)
     {
         $al = strtolower($a->name);
@@ -171,7 +171,7 @@ d
    </example>
   </para>
   <para>
-   Patrz także: <function>uasort</function>,
+   Patrz takĹźe: <function>uasort</function>,
    <function>uksort</function>, <function>sort</function>,
    <function>asort</function>,
    <function>arsort</function>,<function>ksort</function>,

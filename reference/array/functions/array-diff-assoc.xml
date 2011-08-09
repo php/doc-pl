@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.array-diff-assoc" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>array_diff_assoc</refname>
-  <refpurpose>Oblicza różnicę między tablicami z dodatkowym sprawdzaniem kluczy</refpurpose>
+  <refpurpose>Oblicza rĂłĹźnicÄ miÄdzy tablicami z dodatkowym sprawdzaniem kluczy</refpurpose>
  </refnamediv>
  <refsect1>
   <title>Opis</title>
@@ -15,19 +15,19 @@
    <methodparam choice="opt"><type>array</type><parameter> ...</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>array_diff_assoc</function> zwraca tablicę zawierającą
-   wszystkie wartości z <parameter>array1</parameter>, które nie są obecne w
-   żadnym z innych argumentów. Przy porównaniu, w przeciwieństwie do funkcji
-   <function>array_diff</function>, używane są także klucze.
+   <function>array_diff_assoc</function> zwraca tablicÄ zawierajÄcÄ
+   wszystkie wartoĹci z <parameter>array1</parameter>, ktĂłre nie sÄ obecne w
+   Ĺźadnym z innych argumentĂłw. Przy porĂłwnaniu, w przeciwieĹstwie do funkcji
+   <function>array_diff</function>, uĹźywane sÄ takĹźe klucze.
   </para>
   <para>
    <example>
-    <title>Przykład użycia <function>array_diff_assoc</function></title>
+    <title>PrzykĹad uĹźycia <function>array_diff_assoc</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
-$tablica1 = array("a" => "zielony", "b" => "brązowy", "c" => "niebieski", "czerwony");
-$tablica2 = array("a" => "zielony", "żółty", "czerwony");
+$tablica1 = array("a" => "zielony", "b" => "brÄzowy", "c" => "niebieski", "czerwony");
+$tablica2 = array("a" => "zielony", "ĹźĂłĹty", "czerwony");
 $wynik = array_diff_assoc($tablica1, $tablica2);
 print_r($wynik);
 ?>
@@ -38,7 +38,7 @@ print_r($wynik);
 <![CDATA[
 Array
 (
-    [b] => brązowy
+    [b] => brÄzowy
     [c] => niebieski
     [0] => czerwony
 )
@@ -47,27 +47,27 @@ Array
    </example>
   </para>
   <simpara>
-   W powyższym przykładzie para <literal>"a" =&gt; "zielony"</literal>
-   występuje w obu tablicach, i w związku z tym nie jest dodawana do wyniku
-   działania funkcji. Para <literal>0 =&gt; "czerwony"</literal> znajduje się w
-   tablicy wynikowej, ponieważ w drugim argumencie <literal>"czerwony"</literal>
+   W powyĹźszym przykĹadzie para <literal>"a" =&gt; "zielony"</literal>
+   wystÄpuje w obu tablicach, i w zwiÄzku z tym nie jest dodawana do wyniku
+   dziaĹania funkcji. Para <literal>0 =&gt; "czerwony"</literal> znajduje siÄ w
+   tablicy wynikowej, poniewaĹź w drugim argumencie <literal>"czerwony"</literal>
    ma klucz <literal>1</literal>.
   </simpara>
   <simpara>
-   Dwie wartości z par <emphasis>klucz =&gt; wartość</emphasis> są uznawane za
-   równe tylko jeśli <literal>(string) $element1 === (string) $element2
-   </literal>. Inaczej mówiąc, zachodzi ścisłe sprawdzanie, a więc
-   reprezentacje tekstowe muszą być takie same.
+   Dwie wartoĹci z par <emphasis>klucz =&gt; wartoĹÄ</emphasis> sÄ uznawane za
+   rĂłwne tylko jeĹli <literal>(string) $element1 === (string) $element2
+   </literal>. Inaczej mĂłwiÄc, zachodzi ĹcisĹe sprawdzanie, a wiÄc
+   reprezentacje tekstowe muszÄ byÄ takie same.
   </simpara>
   <note>
    <simpara>
-    Funkcja ta sprawdza tylko jeden wymiar n-wymiarowej tablicy. Można
-    sprawdzać głębsze wymiary przez użycie, na przykład
+    Funkcja ta sprawdza tylko jeden wymiar n-wymiarowej tablicy. MoĹźna
+    sprawdzaÄ gĹÄbsze wymiary przez uĹźycie, na przykĹad
     <literal>array_diff_assoc($tablica1[0], $tablica2[0]);</literal>.
    </simpara>
   </note>
   <para>
-   Patrz także: <function>array_diff</function>,
+   Patrz takĹźe: <function>array_diff</function>,
    <function>array_intersect</function> i
    <function>array_intersect_assoc</function>.
   </para>

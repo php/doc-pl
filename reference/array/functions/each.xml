@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.each" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>each</refname>
-  <refpurpose>Zwraca bieżącą parę klucza i wartości z tablicy i przesuwa kursor tablicy</refpurpose>
+  <refpurpose>Zwraca bieĹźÄcÄ parÄ klucza i wartoĹci z tablicy i przesuwa kursor tablicy</refpurpose>
  </refnamediv>
  <refsect1>
   <title>Opis</title>
@@ -13,24 +13,24 @@
    <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Zwraca bieżącą parę klucza i wartości z tablicy
-   <parameter>tablica</parameter> i przesuwa wewnętrzny wskaźnik tablicy do
+   Zwraca bieĹźÄcÄ parÄ klucza i wartoĹci z tablicy
+   <parameter>tablica</parameter> i przesuwa wewnÄtrzny wskaĹşnik tablicy do
    przodu o jeden element. Para ta jest zwracana jako czteroelementowa
    tablica, z kluczami
    <literal>0</literal>, <literal>1</literal>,
    <literal>key</literal> i
    <literal>value</literal>. Elementy <literal>0</literal> i
-   <literal>key</literal> zawierają nazwę klucza elementu tablicy, a
-   <literal>1</literal> i <literal>value</literal> zawierają wartość
+   <literal>key</literal> zawierajÄ nazwÄ klucza elementu tablicy, a
+   <literal>1</literal> i <literal>value</literal> zawierajÄ wartoĹÄ
    elementu tablicy.
   </para>
   <para>
-   Jeśli wewnętrzny wskaźnik tablicy wskazuje na miejsce poza końcem
-   zawartości tablicy, <function>each</function> zwraca &false;.
+   JeĹli wewnÄtrzny wskaĹşnik tablicy wskazuje na miejsce poza koĹcem
+   zawartoĹci tablicy, <function>each</function> zwraca &false;.
   </para>
   <para>
    <example>
-    <title>Przykłady użycia <function>each</function></title>
+    <title>PrzykĹady uĹźycia <function>each</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -41,7 +41,7 @@ print_r($bar);
 ]]>
     </programlisting>
     <para>
-     <varname>$bar</varname> zawiera teraz następujące pary klucz/wartość:
+     <varname>$bar</varname> zawiera teraz nastÄpujÄce pary klucz/wartoĹÄ:
     </para>
     <screen>
 <![CDATA[
@@ -68,7 +68,7 @@ print_r($bar);
 ]]>
     </programlisting>
     <para>
-     <varname>$bar</varname> zawiera teraz następujące pary klucz/wartość:
+     <varname>$bar</varname> zawiera teraz nastÄpujÄce pary klucz/wartoĹÄ:
     </para>
     <screen>
 <![CDATA[
@@ -84,16 +84,16 @@ Array
    </informalexample>
   </para>
   <para>
-   <function>each</function> jest zazwyczaj używana w połączeniu z
-   <function>list</function> aby przejść przez tablicę. Oto przykład takiego
+   <function>each</function> jest zazwyczaj uĹźywana w poĹÄczeniu z
+   <function>list</function> aby przejĹÄ przez tablicÄ. Oto przykĹad takiego
    zastosowania:
    <example>
-    <title>Przechodzenie przez zmienną korzystając z funkcji
+    <title>Przechodzenie przez zmiennÄ korzystajÄc z funkcji
      <function>each</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
-$owoce = array('a' => 'jabłko', 'b' => 'banan', 'c' => 'truskawka');
+$owoce = array('a' => 'jabĹko', 'b' => 'banan', 'c' => 'truskawka');
 reset ($owoce);
 while (list ($klucz, $wartosc) = each ($owoce)) {
    echo "$klucz => $wartosc\n";
@@ -104,7 +104,7 @@ while (list ($klucz, $wartosc) = each ($owoce)) {
     &example.outputs;
     <screen>
 <![CDATA[
-a => jabłko
+a => jabĹko
 b => banan
 c => truskawka
 ]]>
@@ -112,22 +112,22 @@ c => truskawka
    </example>
   </para>
   <para>
-   Po wykonaniu <function>each</function>, wewnętrzny wskaźnik tablicy
-   będzie pozostawiony na następnym elementcie tablicy, lub za ostatnim
-   elementem jeśli dojdzie ona do końca tablicy. Musisz użyć
-   <function>reset</function> jeśli chcesz przejść przez tablicę jeszcze raz
-   korzystając z funkcji each.
+   Po wykonaniu <function>each</function>, wewnÄtrzny wskaĹşnik tablicy
+   bÄdzie pozostawiony na nastÄpnym elementcie tablicy, lub za ostatnim
+   elementem jeĹli dojdzie ona do koĹca tablicy. Musisz uĹźyÄ
+   <function>reset</function> jeĹli chcesz przejĹÄ przez tablicÄ jeszcze raz
+   korzystajÄc z funkcji each.
   </para>
   <caution>
    <para>
-    Jako że przypisywanie tablicy do innej zmiennej zeruje wskaźnik tablicy,
-    powyższy przykład wszedłby w nieskończoną pętle, jeśli tablica
-    <varname>$owoce</varname> zostałaby przypisana do innej zmiennej
-    wewnątrz pętli.
+    Jako Ĺźe przypisywanie tablicy do innej zmiennej zeruje wskaĹşnik tablicy,
+    powyĹźszy przykĹad wszedĹby w nieskoĹczonÄ pÄtle, jeĹli tablica
+    <varname>$owoce</varname> zostaĹaby przypisana do innej zmiennej
+    wewnÄtrz pÄtli.
    </para>
   </caution>
   <para>
-   Patrz także: <function>key</function>, <function>list</function>,
+   Patrz takĹźe: <function>key</function>, <function>list</function>,
    <function>current</function>, <function>reset</function>,
    <function>next</function>, <function>prev</function> i
    <link linkend="control-structures.foreach">foreach</link>.

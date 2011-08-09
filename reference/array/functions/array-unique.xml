@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: a249d944355b14ea6d7426f91bda3b731c068880 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: leszek -->
 <refentry xml:id="function.array-unique" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>array_unique</refname>
-  <refpurpose>Usuwa duplikaty wartości z tablicy</refpurpose>
+  <refpurpose>Usuwa duplikaty wartoĹci z tablicy</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
@@ -16,24 +16,24 @@
    <methodparam choice="opt"><type>int</type><parameter>opcje_sortowania</parameter><initializer>SORT_STRING</initializer></methodparam>
   </methodsynopsis>
   <para>
-   Pobiera parametr <parameter>tablica</parameter> i zwraca nową tablicę
-   bez duplikatów wartości.
+   Pobiera parametr <parameter>tablica</parameter> i zwraca nowÄ tablicÄ
+   bez duplikatĂłw wartoĹci.
   </para>
   <para>
-   Zauważ, że klucze są zachowywane. <function>array_unique</function>
-   najpierw sortuje wartości skonwertowane na ciągi a później zachowuje
-   pierwszy napotkany klucz dla każdej wartości ignorując wszystkie
-   pozostałe klucze. Nie oznacza to, że klucz pierwszej związanej wartości z
-   nieposortowanej <parameter>tablicy</parameter> będzie zachowany.
+   ZauwaĹź, Ĺźe klucze sÄ zachowywane. <function>array_unique</function>
+   najpierw sortuje wartoĹci skonwertowane na ciÄgi a pĂłĹşniej zachowuje
+   pierwszy napotkany klucz dla kaĹźdej wartoĹci ignorujÄc wszystkie
+   pozostaĹe klucze. Nie oznacza to, Ĺźe klucz pierwszej zwiÄzanej wartoĹci z
+   nieposortowanej <parameter>tablicy</parameter> bÄdzie zachowany.
   </para>
   <note>
    <simpara>
-    Dwa elementy tablicy są uważane za równe wtedy i tylko wtedy jeśli
-    <literal>(string) $elem1 === (string) $elem2</literal>, czyli jeśli
-    reprezentacje wartości w postaci stringów są takie same.
+    Dwa elementy tablicy sÄ uwaĹźane za rĂłwne wtedy i tylko wtedy jeĹli
+    <literal>(string) $elem1 === (string) $elem2</literal>, czyli jeĹli
+    reprezentacje wartoĹci w postaci stringĂłw sÄ takie same.
    </simpara>
    <simpara>
-    Używany będzie pierwszy element.
+    UĹźywany bÄdzie pierwszy element.
    </simpara>
   </note>
  </refsect1>
@@ -46,7 +46,7 @@
      <term><parameter>tablica</parameter></term>
      <listitem>
       <para>
-       Tablica wejściowa.
+       Tablica wejĹciowa.
       </para>
      </listitem>
     </varlistentry>
@@ -55,24 +55,24 @@
      <listitem>
       <para>
        Drugi, opcjonalny parametr <parameter>opcje_sortowania</parameter>
-       może być użyty do zmiany zachowania podczas sortowania za pomocą następujących wartości:
+       moĹźe byÄ uĹźyty do zmiany zachowania podczas sortowania za pomocÄ nastÄpujÄcych wartoĹci:
       </para>
       <para>
        Opcje sortowania:
        <itemizedlist>
         <listitem>
-         <simpara><constant>SORT_REGULAR</constant> - porównuje pozycje normalnie
-         (nie zmienia typów)</simpara>
+         <simpara><constant>SORT_REGULAR</constant> - porĂłwnuje pozycje normalnie
+         (nie zmienia typĂłw)</simpara>
         </listitem>
         <listitem>
-         <simpara><constant>SORT_NUMERIC</constant> - porównuje pozycje numerycznie</simpara>
+         <simpara><constant>SORT_NUMERIC</constant> - porĂłwnuje pozycje numerycznie</simpara>
         </listitem>
         <listitem>
-         <simpara><constant>SORT_STRING</constant> - porównuje pozycje jako łańcuchy znaków</simpara>
+         <simpara><constant>SORT_STRING</constant> - porĂłwnuje pozycje jako ĹaĹcuchy znakĂłw</simpara>
         </listitem>
         <listitem>
-         <simpara><constant>SORT_LOCALE_STRING</constant> - porównuje pozycje jako łańcuchy znaków,
-          w uwzględniając bieżące kodowanie znaków.
+         <simpara><constant>SORT_LOCALE_STRING</constant> - porĂłwnuje pozycje jako ĹaĹcuchy znakĂłw,
+          w uwzglÄdniajÄc bieĹźÄce kodowanie znakĂłw.
           <!--
           FIXME: PHP_6
           Before PHP 6, it uses the system locale, which can be changed using
@@ -92,7 +92,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca posortowaną tablicę.
+   Zwraca posortowanÄ tablicÄ.
   </para>
  </refsect1>
 
@@ -111,16 +111,16 @@
       <row>
        <entry>5.2.10</entry>
        <entry>
-        Zmiana domyślnej wartości <parameter>opcje_sortowania</parameter> ponowanie na
+        Zmiana domyĹlnej wartoĹci <parameter>opcje_sortowania</parameter> ponowanie na
         SORT_STRING.
        </entry>
       </row>
       <row>
        <entry>5.2.9</entry>
        <entry>
-        Dodano nową domyślną <parameter>opcje_sortowania</parameter>
-        <constant>SORT_REGULAR</constant>. Przed PHP 5.2.9, ta funkcja była używana
-        wewnętrznie do sortowania tablic z opcją <constant>SORT_STRING</constant>.
+        Dodano nowÄ domyĹlnÄ <parameter>opcje_sortowania</parameter>
+        <constant>SORT_REGULAR</constant>. Przed PHP 5.2.9, ta funkcja byĹa uĹźywana
+        wewnÄtrznie do sortowania tablic z opcjÄ <constant>SORT_STRING</constant>.
        </entry>
       </row>
      </tbody>
@@ -133,7 +133,7 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład użycia <function>array_unique</function></title>
+    <title>PrzykĹad uĹźycia <function>array_unique</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -184,7 +184,7 @@ array(2) {
   &reftitle.notes;
   <note>
    <simpara>
-    Zauważ, że funkcja <function>array_unique</function> nie jest przeznaczona do
+    ZauwaĹź, Ĺźe funkcja <function>array_unique</function> nie jest przeznaczona do
     pracy na wielowymiarowych tablicach.
    </simpara>
   </note>

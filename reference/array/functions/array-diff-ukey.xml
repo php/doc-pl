@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.array-diff-ukey" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>array_diff_ukey</refname>
-  <refpurpose>Oblicza różnicę tablic używając funkcji zwrotnej do porównywania kluczy</refpurpose>
+  <refpurpose>Oblicza rĂłĹźnicÄ tablic uĹźywajÄc funkcji zwrotnej do porĂłwnywania kluczy</refpurpose>
  </refnamediv>
  <refsect1>
   <title>Opis</title>
@@ -13,23 +13,23 @@
    <methodparam><type>array</type><parameter>tablica1</parameter></methodparam>
    <methodparam><type>array</type><parameter>tablica2</parameter></methodparam>
    <methodparam choice="opt"><type>array</type><parameter> ...</parameter></methodparam>
-   <methodparam><type>callback</type><parameter>funk_porównania_kluczy</parameter></methodparam>
+   <methodparam><type>callback</type><parameter>funk_porĂłwnania_kluczy</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>array_diff_ukey</function> zwraca tablicę zawierającą wszystkie
-   wartości z <parameter>tablica1</parameter> których klucze nie są obecne w
-   żadnym z innych argumentów. Asocjacje są zachowywane. Funkcja ta jest
-   podobna do <function>array_diff</function>, z tym że porównywane są
-   klucze a nie wartości.
+   <function>array_diff_ukey</function> zwraca tablicÄ zawierajÄcÄ wszystkie
+   wartoĹci z <parameter>tablica1</parameter> ktĂłrych klucze nie sÄ obecne w
+   Ĺźadnym z innych argumentĂłw. Asocjacje sÄ zachowywane. Funkcja ta jest
+   podobna do <function>array_diff</function>, z tym Ĺźe porĂłwnywane sÄ
+   klucze a nie wartoĹci.
   </para>
   <para>
-   Porównanie jest dokonywane przy pomocy podanej funkcji zwrotnej. Musi ona
-   zwracać liczbę całkowitą mniejszą, równą lub większą od zera jeśli
-   pierwszy klucz jest uznawany za mniejszy, równy lub większy drugiego.
+   PorĂłwnanie jest dokonywane przy pomocy podanej funkcji zwrotnej. Musi ona
+   zwracaÄ liczbÄ caĹkowitÄ mniejszÄ, rĂłwnÄ lub wiÄkszÄ od zera jeĹli
+   pierwszy klucz jest uznawany za mniejszy, rĂłwny lub wiÄkszy drugiego.
   </para>
   <para>
    <example>
-    <title>Przykład użycia funkcji <function>array_diff_ukey</function></title>
+    <title>PrzykĹad uĹźycia funkcji <function>array_diff_ukey</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -44,7 +44,7 @@ function porownaj_klucze($klucz1, $klucz2)
 }
 
 $tablica1 = tablica('niebieski'  => 1, 'czerwony'  => 2, 'zielony'  => 3, 'purpurowy' => 4);
-$tablica2 = tablica('zielony' => 5, 'niebieski' => 6, 'żółty' => 7, 'cyan'   => 8);
+$tablica2 = tablica('zielony' => 5, 'niebieski' => 6, 'ĹźĂłĹty' => 7, 'cyan'   => 8);
 
 var_dump(array_diff_ukey($tablica1, $tablica2, 'porownaj_klucze'));
 ?>
@@ -65,13 +65,13 @@ array(2) {
   </para>
   <note>
    <simpara>
-    Funkcja ta sprawdza tylko jeden wymiar n-wymiarowej tablicy. Można
-    sprawdzać głębsze wymiary przez użycie, na przykład
+    Funkcja ta sprawdza tylko jeden wymiar n-wymiarowej tablicy. MoĹźna
+    sprawdzaÄ gĹÄbsze wymiary przez uĹźycie, na przykĹad
     <literal>array_diff_assoc($tablica1[0], $tablica2[0], 'funkcja_zwrotna');</literal>.
    </simpara>
   </note>
   <para>
-   Patrz także: <function>array_diff</function>,
+   Patrz takĹźe: <function>array_diff</function>,
    <function>array_udiff</function>
    <function>array_diff_assoc</function>,
    <function>array_diff_uassoc</function>,

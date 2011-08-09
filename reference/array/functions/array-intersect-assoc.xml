@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.array-intersect-assoc" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>array_intersect_assoc</refname>
-  <refpurpose>Wylicza przecięcie tablic z dodatkowym sprawdzaniem indeksów</refpurpose>
+  <refpurpose>Wylicza przeciÄcie tablic z dodatkowym sprawdzaniem indeksĂłw</refpurpose>
  </refnamediv>
  <refsect1>
   <title>Opis</title>
@@ -15,20 +15,20 @@
    <methodparam choice="opt"><type>array</type><parameter> ...</parameter></methodparam>
   </methodsynopsis>
   <simpara>
-   <function>array_intersect_assoc</function> zwraca tablicę zawierającą
-   wszystkie wartości z <parameter>tablica1</parameter>, które są obecne
-   także we wszystkich pozostałych argumentach. Należy pamiętać, że w
-   przeciwieństwie do funkcji <function>array_intersect</function>, tutaj w
-   brane są pod uwagę także klucze.
+   <function>array_intersect_assoc</function> zwraca tablicÄ zawierajÄcÄ
+   wszystkie wartoĹci z <parameter>tablica1</parameter>, ktĂłre sÄ obecne
+   takĹźe we wszystkich pozostaĹych argumentach. NaleĹźy pamiÄtaÄ, Ĺźe w
+   przeciwieĹstwie do funkcji <function>array_intersect</function>, tutaj w
+   brane sÄ pod uwagÄ takĹźe klucze.
   </simpara>
   <para>
    <example>
-    <title>Przykład użycia <function>array_intersect_assoc</function></title>
+    <title>PrzykĹad uĹźycia <function>array_intersect_assoc</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
-$tablica1 = array("a" => "zielony", "b" => "brązowy", "c" => "niebieski", "czerwony");
-$tablica2 = array("a" => "zielony", "żółty", "czerwony");
+$tablica1 = array("a" => "zielony", "b" => "brÄzowy", "c" => "niebieski", "czerwony");
+$tablica2 = array("a" => "zielony", "ĹźĂłĹty", "czerwony");
 $tablica_wynikowa = array_intersect_assoc($tablica1, $tablica2);
 print_r($tablica_wynikowa);
 ?>
@@ -46,22 +46,22 @@ Array
    </example>
   </para>
   <simpara>
-   W powyższym przykładzie, tylko jedna para, <literal>"a" =&gt;
-    "zielony</literal>, jest obecna w obu tablicach wejściowych, a więc
-   tylko ta zostanie zwrócona. Wartość <literal>"red"</literal> nie jest
-   zwracana, ponieważ w tablicy <varname>$tablica1</varname> jej klucz to
+   W powyĹźszym przykĹadzie, tylko jedna para, <literal>"a" =&gt;
+    "zielony</literal>, jest obecna w obu tablicach wejĹciowych, a wiÄc
+   tylko ta zostanie zwrĂłcona. WartoĹÄ <literal>"red"</literal> nie jest
+   zwracana, poniewaĹź w tablicy <varname>$tablica1</varname> jej klucz to
    <literal>0</literal>, a w <varname>$tablica2</varname> -
    <literal>1</literal>.
   </simpara>
   <simpara>
-   Dwie wartości z pary <literal>klucz =&gt; wartość</literal> są uważane za
-   równe tylko jeśli <literal>(string) $element1 === (string)
-    $element2</literal>. Innymi słowy, dokonywane jest ścisłe porównywanie
-   typów, tak więc reprezentacje znakowe muszą być takie same.
+   Dwie wartoĹci z pary <literal>klucz =&gt; wartoĹÄ</literal> sÄ uwaĹźane za
+   rĂłwne tylko jeĹli <literal>(string) $element1 === (string)
+    $element2</literal>. Innymi sĹowy, dokonywane jest ĹcisĹe porĂłwnywanie
+   typĂłw, tak wiÄc reprezentacje znakowe muszÄ byÄ takie same.
    <!-- TODO: example of it... -->
   </simpara>
   <simpara>
-   Patrz także: <function>array_intersect</function>,
+   Patrz takĹźe: <function>array_intersect</function>,
    <function>array_uintersect_assoc</function>,
    <function>array_intersect_uassoc</function>,
    <function>array_uintersect_uassoc</function>,

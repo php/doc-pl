@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.array-uintersect-assoc" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>array_uintersect_assoc</refname>
-  <refpurpose>Oblicza przecięcie tablic z dodatkowym sprawdzaniem indeksów, porównując dane przez funkcję zwrotną</refpurpose>
+  <refpurpose>Oblicza przeciÄcie tablic z dodatkowym sprawdzaniem indeksĂłw, porĂłwnujÄc dane przez funkcjÄ zwrotnÄ</refpurpose>
  </refnamediv>
  <refsect1>
   <title>Opis</title>
@@ -13,23 +13,23 @@
    <methodparam><type>array</type><parameter>tablica1</parameter></methodparam>
    <methodparam><type>array</type><parameter>tablica2</parameter></methodparam>
    <methodparam choice="opt"><type>array</type><parameter> ...</parameter></methodparam>
-   <methodparam><type>callback</type><parameter>funk_porównująca</parameter></methodparam>
+   <methodparam><type>callback</type><parameter>funk_porĂłwnujÄca</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>array_uintersect_assoc</function> zwraca tablicę zawierającą
-   wszystkie wartości z <parameter>tablica1</parameter> które występują we
-   wszystkich pozostałych argumentach. Do porównywania, w przeciwieństwie do
-   funkcji <function>array_uintersect</function>, używane są klucze tablic.
-   Do porównywania danych używana jest funkcja zwrotna.
+   <function>array_uintersect_assoc</function> zwraca tablicÄ zawierajÄcÄ
+   wszystkie wartoĹci z <parameter>tablica1</parameter> ktĂłre wystÄpujÄ we
+   wszystkich pozostaĹych argumentach. Do porĂłwnywania, w przeciwieĹstwie do
+   funkcji <function>array_uintersect</function>, uĹźywane sÄ klucze tablic.
+   Do porĂłwnywania danych uĹźywana jest funkcja zwrotna.
   </para>
   <para>
    <example>
-    <title>Przykład użycia <function>array_uintersect_assoc</function></title>
+    <title>PrzykĹad uĹźycia <function>array_uintersect_assoc</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
-$tablica1 = array("a" => "zielony", "b" => "brązowy", "c" => "niebieski", "czerwony");
-$tablica2 = array("a" => "ZIELONY", "B" => "brązowy", "żółty", "czerwony");
+$tablica1 = array("a" => "zielony", "b" => "brÄzowy", "c" => "niebieski", "czerwony");
+$tablica2 = array("a" => "ZIELONY", "B" => "brÄzowy", "ĹźĂłĹty", "czerwony");
 
 print_r(array_uintersect_assoc($tablica1, $tablica2, "strcasecmp"));
 ?>
@@ -47,12 +47,12 @@ Array
    </example>
   </para>
   <para>
-   Porównanie jest dokonywane przy pomocy podanej funkcji zwrotnej.  Musi
-   ona zwracać liczbę całkowitą mniejszą, równą lub większą od zera jeśli
-   pierwszy klucz jest uznawany za mniejszy, równy lub większy drugiego.
+   PorĂłwnanie jest dokonywane przy pomocy podanej funkcji zwrotnej.  Musi
+   ona zwracaÄ liczbÄ caĹkowitÄ mniejszÄ, rĂłwnÄ lub wiÄkszÄ od zera jeĹli
+   pierwszy klucz jest uznawany za mniejszy, rĂłwny lub wiÄkszy drugiego.
   </para>
   <para>
-   Patrz także: <function>array_uintersect</function>,
+   Patrz takĹźe: <function>array_uintersect</function>,
    <function>array_intersect_assoc</function>,
    <function>array_intersect_uassoc</function> i
    <function>array_uintersect_uassoc</function>.

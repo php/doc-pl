@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.array-map" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>array_map</refname>
-  <refpurpose>Wykonuje funkcję zwrotną na elementach podanej tablicy</refpurpose>
+  <refpurpose>Wykonuje funkcjÄ zwrotnÄ na elementach podanej tablicy</refpurpose>
  </refnamediv>
  <refsect1>
   <title>Opis</title>
@@ -15,14 +15,14 @@
    <methodparam choice="opt"><type>array</type><parameter>tbl2...</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>array_map</function> zwraca tablicę zawierającą wszystkie
-   elementy tablicy <parameter>tbl1</parameter> po użyciu na każdej z nich
-   funkcji zwrotnej. Liczba parametrów funkcji zwrotnej powinna być równa
+   <function>array_map</function> zwraca tablicÄ zawierajÄcÄ wszystkie
+   elementy tablicy <parameter>tbl1</parameter> po uĹźyciu na kaĹźdej z nich
+   funkcji zwrotnej. Liczba parametrĂłw funkcji zwrotnej powinna byÄ rĂłwna
    liczbie tablic przekazanych do funkcji <function>array_map</function>.
   </para>
   <para>
    <example>
-    <title>Przykład użycia <function>array_map</function></title>
+    <title>PrzykĹad uĹźycia <function>array_map</function></title>
     <programlisting role="php">
 <![CDATA[
 function szescian($n)
@@ -37,7 +37,7 @@ print_r($b);
 ]]>
     </programlisting>
     <para>
-     Zmienna <varname>$b</varname> będzie zawierała:
+     Zmienna <varname>$b</varname> bÄdzie zawieraĹa:
     </para>
     <screen>
 <![CDATA[
@@ -56,13 +56,13 @@ Array
   <para>
    <example>
     <title>
-     <function>array_map</function> - używanie większej ilości tablic
+     <function>array_map</function> - uĹźywanie wiÄkszej iloĹci tablic
     </title>
     <programlisting role="php">
 <![CDATA[
 function pokaz_po_Hiszpansku($n, $m)
 {
-    return "Po Hiszpańsku liczba $n to $m";
+    return "Po HiszpaĹsku liczba $n to $m";
 }
 
 function mapuj_na_Hiszpanski($n, $m)
@@ -87,11 +87,11 @@ print_r($d);
 // Zmienna $c
 Array
 (
-    [0] => Po Hiszpańsku liczba 1 to uno
-    [1] => Po Hiszpańsku liczba 2 to dos
-    [2] => Po Hiszpańsku liczba 3 to tres
-    [3] => Po Hiszpańsku liczba 4 to cuatro
-    [4] => Po Hiszpańsku liczba 5 to cinco
+    [0] => Po HiszpaĹsku liczba 1 to uno
+    [1] => Po HiszpaĹsku liczba 2 to dos
+    [2] => Po HiszpaĹsku liczba 3 to tres
+    [3] => Po HiszpaĹsku liczba 4 to cuatro
+    [4] => Po HiszpaĹsku liczba 5 to cinco
 )
 
 // Zmienna $d
@@ -128,15 +128,15 @@ Array
    </example>
   </para>
   <para>
-   Zazwyczaj używając dwóch lub więcej tablic, powinny one być równej
-   długości, ponieważ funkcja zwrotna jest wykonywana na odpowiadających
+   Zazwyczaj uĹźywajÄc dwĂłch lub wiÄcej tablic, powinny one byÄ rĂłwnej
+   dĹugoĹci, poniewaĹź funkcja zwrotna jest wykonywana na odpowiadajÄcych
    sobie elementach tablic.
-   Jeśli tablice są różnych długości, krótsze będą rozszerzane używając
-   pustych elementów.
+   JeĹli tablice sÄ rĂłĹźnych dĹugoĹci, krĂłtsze bÄdÄ rozszerzane uĹźywajÄc
+   pustych elementĂłw.
   </para>
   <para>
-   Interesującym sposobem użycia tej funkcji jest kontruowanie tablicy
-   tablic, co może być łatwo przeprowadzone przez podanie &null; jako nazwy
+   InteresujÄcym sposobem uĹźycia tej funkcji jest kontruowanie tablicy
+   tablic, co moĹźe byÄ Ĺatwo przeprowadzone przez podanie &null; jako nazwy
    funkcji zwrotnej.
   </para>
   <para>
@@ -148,7 +148,7 @@ Array
 $a = array(1, 2, 3, 4, 5);
 $b = array("one", "two", "three", "four", "five");
 $c = array("uno", "dos", "tres", "cuatro", "cinco");
-$d = array("jeden", "dwa", "trzy", "cztery", "pięć");
+$d = array("jeden", "dwa", "trzy", "cztery", "piÄÄ");
 
 $e = array_map(null, $a, $b, $c, $d);
 print_r($e);
@@ -197,7 +197,7 @@ Array
             [0] => 5
             [1] => five
             [2] => cinco
-            [3] => pięć
+            [3] => piÄÄ
         )
 
 )
@@ -206,7 +206,7 @@ Array
    </example>
   </para>
   <para>
-   Patrz także: <function>array_filter</function>,
+   Patrz takĹźe: <function>array_filter</function>,
    <function>array_reduce</function>, <function>array_walk</function>,
    <function>create_function</function> i &seealso.callback;.
   </para>
