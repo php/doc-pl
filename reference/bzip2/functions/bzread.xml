@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: a99a584108163a61817a5bafd6c886c5fff40e4c Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: coder -->
@@ -12,14 +12,14 @@
   <methodsynopsis>
    <type>string</type><methodname>bzread</methodname>
    <methodparam><type>resource</type><parameter>bz</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>długość</parameter><initializer>1024</initializer></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>dĹugoĹÄ</parameter><initializer>1024</initializer></methodparam>
   </methodsynopsis>
   <para>
-   <function>bzread</function> odczytuje z podanego wskaźnika pliku.
+   <function>bzread</function> odczytuje z podanego wskaĹşnika pliku.
   </para>
   <para>
-   Odczytywanie jest zatrzymywane, gdy przeczytano <parameter>długość</parameter> (nieskompresowanych) bajtów
-   lub osiągnięto EOF, cokolwiek wystąpi pierwsze.  
+   Odczytywanie jest zatrzymywane, gdy przeczytano <parameter>dĹugoĹÄ</parameter> (nieskompresowanych) bajtĂłw
+   lub osiÄgniÄto EOF, cokolwiek wystÄpi pierwsze.  
   </para>
  </refsect1>
  <refsect1 role="parameters">
@@ -30,17 +30,17 @@
      <term><parameter>bz</parameter></term>
      <listitem>
       <para>
-        Uchwyt do pliku musi być poprawny oraz musi wskazywać na plik otwarty
-        za pomocą funkcji <function>bzopen</function>.
+        Uchwyt do pliku musi byÄ poprawny oraz musi wskazywaÄ na plik otwarty
+        za pomocÄ funkcji <function>bzopen</function>.
       </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>długość</parameter></term>
+     <term><parameter>dĹugoĹÄ</parameter></term>
      <listitem>
       <para>
-       Jeśli nie została określona <function>bzread</function> zostaną odczytane 1024
-       (nieskompresowane) bajty.  Maksymalnie może zostać odczytanych 8192 bajtów.
+       JeĹli nie zostaĹa okreĹlona <function>bzread</function> zostanÄ odczytane 1024
+       (nieskompresowane) bajty.  Maksymalnie moĹźe zostaÄ odczytanych 8192 bajtĂłw.
       </para>
      </listitem>
     </varlistentry>
@@ -50,20 +50,20 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca nieskompresowane dane lub &false; w przypadku błędu.
+   Zwraca nieskompresowane dane lub &false; w przypadku bĹÄdu.
   </para>
  </refsect1>
  <refsect1 role="examples">
   &reftitle.examples;
   <para>
    <example>
-    <title><function>bzread</function> przykład</title>
+    <title><function>bzread</function> przykĹad</title>
     <programlisting role="php">
 <![CDATA[
 <?php
 
 $file = "/tmp/foo.bz2";
-$bz = bzopen($file, "r") or die("Nie mogę otworzyć $file");
+$bz = bzopen($file, "r") or die("Nie mogÄ otworzyÄ $file");
 
 $decompressed_file = '';
 while (!feof($bz)) {
@@ -71,7 +71,7 @@ while (!feof($bz)) {
 }
 bzclose($bz);
 
-echo "Zawartość pliku $file to: <br />\n";
+echo "ZawartoĹÄ pliku $file to: <br />\n";
 echo $decompressed_file;
 
 ?>
