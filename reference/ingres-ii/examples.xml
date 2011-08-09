@@ -1,33 +1,33 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 79dcbe011fb254dcd92c597064571fe313362a09 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 
 <chapter xml:id="ingres.examples" xmlns="http://docbook.org/ns/docbook">
  &reftitle.examples;
  <section xml:id="ingres.examples-basic">
-  <title>Podstawowe użycie</title>
+  <title>Podstawowe uĹźycie</title>
   <para>
-   Ten nieskomplikowany przykład pojazuje jak połączyć się z bazą Ingres,
-   wykonać zapytanie, wyświetlić
-   wyniki i zamknąć połączenie.
+   Ten nieskomplikowany przykĹad pojazuje jak poĹÄczyÄ siÄ z bazÄ Ingres,
+   wykonaÄ zapytanie, wyĹwietliÄ
+   wyniki i zamknÄÄ poĹÄczenie.
    <example>
-    <title>Przykład połączenia z Ingres</title>
+    <title>PrzykĹad poĹÄczenia z Ingres</title>
     <programlisting role="php">
 <![CDATA[
 <?php
-// Nawiązanie połączenia, wybór bazy danych
+// NawiÄzanie poĹÄczenia, wybĂłr bazy danych
 $link = ingres_connect('database', 'user', 'password')
-    or die('Nie można się połączyć: ' . ingres_error($link));
-echo 'Połączenie zostało nawiązane pomyślnie';
+    or die('Nie moĹźna siÄ poĹÄczyÄ: ' . ingres_error($link));
+echo 'PoĹÄczenie zostaĹo nawiÄzane pomyĹlnie';
 
-// Pobieranie wyników z tabeli, która istnieje we wszystkich bazach danych Ingres
+// Pobieranie wynikĂłw z tabeli, ktĂłra istnieje we wszystkich bazach danych Ingres
 $query = 'SELECT * FROM iirelation';
-$returncode = ingres_query($link,$query) or die('Zapytanie nie powiodło się: ' .
+$returncode = ingres_query($link,$query) or die('Zapytanie nie powiodĹo siÄ: ' .
 ingres_error($link));
 
-// Wyświetla wyniki w formacie HTML
+// WyĹwietla wyniki w formacie HTML
 // relid - nazwa tabeli
-// relowner - właściciel tabeli
+// relowner - wĹaĹciciel tabeli
 echo "<table>\n";
 while ($iirelation = ingres_fetch_object($link)) {
     echo "\t<tr>\n";
@@ -43,7 +43,7 @@ ingres_free_result($result);
 // Potwierdzenie transakcji
 ingres_commit($link);
 
-// Zamknięcie połączenia
+// ZamkniÄcie poĹÄczenia
 ingres_close($link);
 ?>
 ]]>

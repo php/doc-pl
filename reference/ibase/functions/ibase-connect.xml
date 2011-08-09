@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.ibase-connect">
  <refnamediv>
   <refname>ibase_connect</refname>
-  <refpurpose>Otwiera połączenie do serwera Firebird/InterBase</refpurpose>
+  <refpurpose>Otwiera poĹÄczenie do serwera Firebird/InterBase</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
@@ -12,24 +12,24 @@
   <methodsynopsis>
    <type>resource</type><methodname>ibase_connect</methodname>
    <methodparam choice="opt"><type>string</type><parameter>baza_danych</parameter></methodparam>
-   <methodparam choice="opt"><type>string</type><parameter>użytkownik</parameter></methodparam>
-   <methodparam choice="opt"><type>string</type><parameter>hasło</parameter></methodparam>
-   <methodparam choice="opt"><type>string</type><parameter>kodowanie_znaków</parameter></methodparam>
+   <methodparam choice="opt"><type>string</type><parameter>uĹźytkownik</parameter></methodparam>
+   <methodparam choice="opt"><type>string</type><parameter>hasĹo</parameter></methodparam>
+   <methodparam choice="opt"><type>string</type><parameter>kodowanie_znakĂłw</parameter></methodparam>
    <methodparam choice="opt"><type>int</type><parameter>bufory</parameter></methodparam>
    <methodparam choice="opt"><type>int</type><parameter>dialekt</parameter></methodparam>
    <methodparam choice="opt"><type>string</type><parameter>rola</parameter></methodparam>
    <methodparam choice="opt"><type>int</type><parameter>synchronizacja</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Nawiązuje połączenie z serwerem Firebird/InterBase.
+   NawiÄzuje poĹÄczenie z serwerem Firebird/InterBase.
   </para>
   <para>
-   W przypadku ponownego wywołania funkcji <function>ibase_connect</function>
-   z takimi samymi argumentami, nie jest otwierane nowe połączenie, jednak
-   w to miejsce powinien zostać zwrócony identyfikator już otwartego połączenia.
-   Połączenie do serwera powinno zostać zamknięte wkrótce po tym, gdy
-   wykonywanie skryptu PHP się zakończy, o ile nie zostanie zamknięte wcześniej
-   przez jawne wywołanie funkcji <function>ibase_close</function>.
+   W przypadku ponownego wywoĹania funkcji <function>ibase_connect</function>
+   z takimi samymi argumentami, nie jest otwierane nowe poĹÄczenie, jednak
+   w to miejsce powinien zostaÄ zwrĂłcony identyfikator juĹź otwartego poĹÄczenia.
+   PoĹÄczenie do serwera powinno zostaÄ zamkniÄte wkrĂłtce po tym, gdy
+   wykonywanie skryptu PHP siÄ zakoĹczy, o ile nie zostanie zamkniÄte wczeĹniej
+   przez jawne wywoĹanie funkcji <function>ibase_close</function>.
   </para>
  </refsect1>
 
@@ -41,40 +41,40 @@
      <term><parameter>baza_danych</parameter></term>
      <listitem>
       <para>
-       Parametr <parameter>baza_danych</parameter> jest ścieżką do pliku bazy
-       danych (lub aliasem zapisanym w pliku aliases.conf) na serwerze, na którym
-       się ona znajduje.  Jeżeli serwer nie jest uruchomiony lokalnie, to ścieżka
-       musi być poprzedzona łańcuchem 'nazwa_hosta:' (TCP/IP), '//nazwa_hosta/'
-       (NetBEUI) lub 'nazwa_hosta@' (IPX/SPX), w zależności od używanego protokołu.
+       Parametr <parameter>baza_danych</parameter> jest ĹcieĹźkÄ do pliku bazy
+       danych (lub aliasem zapisanym w pliku aliases.conf) na serwerze, na ktĂłrym
+       siÄ ona znajduje.  JeĹźeli serwer nie jest uruchomiony lokalnie, to ĹcieĹźka
+       musi byÄ poprzedzona ĹaĹcuchem 'nazwa_hosta:' (TCP/IP), '//nazwa_hosta/'
+       (NetBEUI) lub 'nazwa_hosta@' (IPX/SPX), w zaleĹźnoĹci od uĹźywanego protokoĹu.
       </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>użytkownik</parameter></term>
+     <term><parameter>uĹźytkownik</parameter></term>
      <listitem>
       <para>
-       Nazwa użytkownika.  Może być ona ustawiona za pomocą dyrektywy
+       Nazwa uĹźytkownika.  MoĹźe byÄ ona ustawiona za pomocÄ dyrektywy
        konfiguracyjnej PHP <literal>ibase.default_user</literal>
        w pliku &php.ini;.
       </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>hasło</parameter></term>
+     <term><parameter>hasĹo</parameter></term>
      <listitem>
       <para>
-       Hasło <parameter>użytkownika</parameter>.  Może być ono
-       ustawione za pomocą dyrektywy konfiguracyjnej PHP
+       HasĹo <parameter>uĹźytkownika</parameter>.  MoĹźe byÄ ono
+       ustawione za pomocÄ dyrektywy konfiguracyjnej PHP
        <literal>ibase.default_password</literal> w pliku &php.ini;.
       </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>kodowanie_znaków</parameter></term>
+     <term><parameter>kodowanie_znakĂłw</parameter></term>
      <listitem>
       <para>
-       Parametr <parameter>kodowanie_znaków</parameter> jest domyślnym
-       kodowaniem znaków narodowych w bazie danych.
+       Parametr <parameter>kodowanie_znakĂłw</parameter> jest domyĹlnym
+       kodowaniem znakĂłw narodowych w bazie danych.
       </para>
      </listitem>
     </varlistentry>
@@ -82,9 +82,9 @@
      <term><parameter>bufory</parameter></term>
      <listitem>
       <para>
-       Parametr <parameter>bufory</parameter> jest liczbą buforów bazy danych
-       jaką ma zaalokować serwer w swojej pamięci podręcznej.  Jeżeli jest
-       ustawiony na 0, lub jest pominięty, to serwer użyje wartości domyślnej.
+       Parametr <parameter>bufory</parameter> jest liczbÄ buforĂłw bazy danych
+       jakÄ ma zaalokowaÄ serwer w swojej pamiÄci podrÄcznej.  JeĹźeli jest
+       ustawiony na 0, lub jest pominiÄty, to serwer uĹźyje wartoĹci domyĹlnej.
       </para>
      </listitem>
     </varlistentry>
@@ -92,10 +92,10 @@
      <term><parameter>dialekt</parameter></term>
      <listitem>
       <para>
-       Parametr <parameter>dialekt</parameter> ustawia domyślny dialekt SQL dla
-       wszystkich instrukcji wykonywanych podczas połączenia.  Domyślnie jest
-       on ustawiony na najwyższy obsługiwany przez biblioteki klienta. Jest
-       obsługiwany przez InterBase 6 i nowsze wersje.
+       Parametr <parameter>dialekt</parameter> ustawia domyĹlny dialekt SQL dla
+       wszystkich instrukcji wykonywanych podczas poĹÄczenia.  DomyĹlnie jest
+       on ustawiony na najwyĹźszy obsĹugiwany przez biblioteki klienta. Jest
+       obsĹugiwany przez InterBase 6 i nowsze wersje.
       </para>
      </listitem>
     </varlistentry>
@@ -103,7 +103,7 @@
      <term><parameter>rola</parameter></term>
      <listitem>
       <para>
-       Są obsługiwane przez InterBase 5 i nowsze wersje.
+       SÄ obsĹugiwane przez InterBase 5 i nowsze wersje.
       </para>
      </listitem>
     </varlistentry>
@@ -121,19 +121,19 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca identyfikator połączenia do serwera Firebird/InterBase
-   w przypadku powodzenia, lub &false; w przypadku błędu.
+   Zwraca identyfikator poĹÄczenia do serwera Firebird/InterBase
+   w przypadku powodzenia, lub &false; w przypadku bĹÄdu.
   </para>
  </refsect1>
 
  <refsect1 role="errors">
   &reftitle.errors;
   <para>
-   Jeżeli są zwracane błędy takie jak "arithmetic exception, numeric overflow,
+   JeĹźeli sÄ zwracane bĹÄdy takie jak "arithmetic exception, numeric overflow,
    or string truncation. Cannot transliterate character between character
-   sets" (to może się zdarzyć w przypadku użycia niektórych znaków narodowych)
-   po użyciu funkcji <function>ibase_query</function>, to należy
-   ustawić kodowanie znaków (np. ISO8859_2, WIN1250, UTF8).
+   sets" (to moĹźe siÄ zdarzyÄ w przypadku uĹźycia niektĂłrych znakĂłw narodowych)
+   po uĹźyciu funkcji <function>ibase_query</function>, to naleĹźy
+   ustawiÄ kodowanie znakĂłw (np. ISO8859_2, WIN1250, UTF8).
   </para>
  </refsect1>
 
@@ -141,7 +141,7 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład <function>ibase_connect</function></title>
+    <title>PrzykĹad <function>ibase_connect</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php

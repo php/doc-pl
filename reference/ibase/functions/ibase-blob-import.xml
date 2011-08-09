@@ -1,17 +1,17 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <refentry xmlns="http://docbook.org/ns/docbook" xml:id='function.ibase-blob-import'>
  <refnamediv>
   <refname>ibase_blob_import</refname>
-  <refpurpose>Tworzy BLOBa, kopiuje do niego zawartość pliku i zamyka go.</refpurpose>
+  <refpurpose>Tworzy BLOBa, kopiuje do niego zawartoĹÄ pliku i zamyka go.</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>string</type><methodname>ibase_blob_import</methodname>
-   <methodparam><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+   <methodparam><type>resource</type><parameter>identyfikator_poĹÄczenia</parameter></methodparam>
    <methodparam><type>resource</type><parameter>uchwyt_do_pliku</parameter></methodparam>
   </methodsynopsis>
   <methodsynopsis>
@@ -19,7 +19,7 @@
    <methodparam><type>resource</type><parameter>uchwyt_do_pliku</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Ta funkcja tworzy BLOBa, wczytuje do niego zawartość wskazanego pliku, zamyka go
+   Ta funkcja tworzy BLOBa, wczytuje do niego zawartoĹÄ wskazanego pliku, zamyka go
    i zwraca przydzielony identyfikator BLOBa.
   </para>
  </refsect1>
@@ -29,11 +29,11 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>identyfikator_połączenia</parameter></term>
+     <term><parameter>identyfikator_poĹÄczenia</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia do Firebird/Interbase. Jeśli został pominięty
-       używane jest ostatnio otwarte połączenie.
+       Identyfikator poĹÄczenia do Firebird/Interbase. JeĹli zostaĹ pominiÄty
+       uĹźywane jest ostatnio otwarte poĹÄczenie.
       </para>
      </listitem>
     </varlistentry>
@@ -41,7 +41,7 @@
      <term><parameter>uchwyt_do_pliku</parameter></term>
      <listitem>
       <para>
-       Uchwyt do pliku to uchwyt zwrócony przez <function>fopen</function>.
+       Uchwyt do pliku to uchwyt zwrĂłcony przez <function>fopen</function>.
       </para>
      </listitem>
     </varlistentry>
@@ -52,7 +52,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   W przypadku powodzenia zwraca identyfikator BLABa, a gdy wystąpi błąd zwraca &false;.
+   W przypadku powodzenia zwraca identyfikator BLABa, a gdy wystÄpi bĹÄd zwraca &false;.
   </para>
  </refsect1>
 
@@ -60,7 +60,7 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład <function>ibase_blob_import</function></title>
+    <title>PrzykĹad <function>ibase_blob_import</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -74,16 +74,16 @@ if ($fd) {
     fclose($fd);
 
     if (!is_string($blob)) {
-        // nie udało się wczytać zawartości pliku do BLOBa
+        // nie udaĹo siÄ wczytaÄ zawartoĹci pliku do BLOBa
     } else {
         $query = "INSERT INTO foo (name, data) VALUES ('$nazwa_pliku', ?)";
         $prepared = ibase_prepare($dbh, $query);
         if (!ibase_execute($prepared, $blob)) {
-            // nie powiodło się wykonanie zapytania
+            // nie powiodĹo siÄ wykonanie zapytania
         }
     }
 } else {
-    // nie udało się otworzyć pliku
+    // nie udaĹo siÄ otworzyÄ pliku
 }
 ?>
 ]]>

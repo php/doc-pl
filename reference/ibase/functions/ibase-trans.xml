@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.ibase-trans">
  <refnamediv>
   <refname>ibase_trans</refname>
-  <refpurpose>Rozpoczyna transakcję</refpurpose>
+  <refpurpose>Rozpoczyna transakcjÄ</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
@@ -12,39 +12,39 @@
   <methodsynopsis>
    <type>resource</type><methodname>ibase_trans</methodname>
    <methodparam choice="opt"><type>int</type><parameter>opcje_transakcji</parameter></methodparam>
-   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_poĹÄczenia</parameter></methodparam>
   </methodsynopsis>
   <methodsynopsis>
    <type>resource</type><methodname>ibase_trans</methodname>
-   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_poĹÄczenia</parameter></methodparam>
    <methodparam choice="opt"><type>int</type><parameter>opcje_transakcji</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Rozpoczyna transakcję.
+   Rozpoczyna transakcjÄ.
   </para>
   <note>
    <para>
-    Zachowanie tej funkcji zostało zmienione w PHP 5.0.0. Pierwsze wywołanie
-    <function>ibase_trans</function> nie zwraca domyślnej transakcji w domyślnym
-    połączeniu. Wszystkie transakcje rozpoczęte w wyniku wywołania
-    <function>ibase_trans</function> będą wycofane w momencie zakończenia działania
-    skryptu, jeżeli nie zostaną jawnie potwierdzone lub wycofane, odpowiednio
-    za pomocą <function>ibase_commit</function> lub <function>ibase_rollback</function>.
+    Zachowanie tej funkcji zostaĹo zmienione w PHP 5.0.0. Pierwsze wywoĹanie
+    <function>ibase_trans</function> nie zwraca domyĹlnej transakcji w domyĹlnym
+    poĹÄczeniu. Wszystkie transakcje rozpoczÄte w wyniku wywoĹania
+    <function>ibase_trans</function> bÄdÄ wycofane w momencie zakoĹczenia dziaĹania
+    skryptu, jeĹźeli nie zostanÄ jawnie potwierdzone lub wycofane, odpowiednio
+    za pomocÄ <function>ibase_commit</function> lub <function>ibase_rollback</function>.
    </para>
   </note>
   <note>
    <para>
-    W PHP 5.0.0. i nowszych wersjach ta funkcja akceptuje złożone argumenty
-    <parameter>opcje_transakcji</parameter> i <parameter>identyfikator_połączenia</parameter>.
-    To pozwala transakcjom na wielokrotne połączenia do baz danych i stosowanie
-    algorytmu dwufazowego potwierdzania. Tym samym można mieć pewność, że we wszystkich
-    bazach danych operacje zakończą się prawidłowo lub błędnie. To NIE oznacza,
-    że można używać tabel z różnych baz danych w jednym zapytaniu!
+    W PHP 5.0.0. i nowszych wersjach ta funkcja akceptuje zĹoĹźone argumenty
+    <parameter>opcje_transakcji</parameter> i <parameter>identyfikator_poĹÄczenia</parameter>.
+    To pozwala transakcjom na wielokrotne poĹÄczenia do baz danych i stosowanie
+    algorytmu dwufazowego potwierdzania. Tym samym moĹźna mieÄ pewnoĹÄ, Ĺźe we wszystkich
+    bazach danych operacje zakoĹczÄ siÄ prawidĹowo lub bĹÄdnie. To NIE oznacza,
+    Ĺźe moĹźna uĹźywaÄ tabel z rĂłĹźnych baz danych w jednym zapytaniu!
    </para>
    <para>
-    Podczas korzystania w tym samym czasie z wielu baz danych, należy podawać obydwa parametry
-    <parameter>identyfikator_połączenia</parameter> i <parameter>identyfikator_transakcji</parameter>
-    przy wywoływaniu <function>ibase_query</function> i <function>ibase_prepare</function>.
+    Podczas korzystania w tym samym czasie z wielu baz danych, naleĹźy podawaÄ obydwa parametry
+    <parameter>identyfikator_poĹÄczenia</parameter> i <parameter>identyfikator_transakcji</parameter>
+    przy wywoĹywaniu <function>ibase_query</function> i <function>ibase_prepare</function>.
    </para>
   </note>
  </refsect1>
@@ -57,7 +57,7 @@
      <term><parameter>opcje_transakcji</parameter></term>
      <listitem>
       <para>
-       <parameter>opcje_transakcji</parameter> mogą być kombinacją stałych
+       <parameter>opcje_transakcji</parameter> mogÄ byÄ kombinacjÄ staĹych
        <constant>IBASE_READ</constant>,
        <constant>IBASE_WRITE</constant>,
        <constant>IBASE_COMMITTED</constant>,
@@ -71,11 +71,11 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>identyfikator_połączenia</parameter></term>
+     <term><parameter>identyfikator_poĹÄczenia</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia do Firebird/InterBase. Jeżeli zostanie
-       pominięty, to użyte będzie istniejące połączenie.
+       Identyfikator poĹÄczenia do Firebird/InterBase. JeĹźeli zostanie
+       pominiÄty, to uĹźyte bÄdzie istniejÄce poĹÄczenie.
       </para>
      </listitem>
     </varlistentry>
@@ -86,7 +86,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca identyfikator transakcji, lub &false; w przypadku błędu.
+   Zwraca identyfikator transakcji, lub &false; w przypadku bĹÄdu.
   </para>
  </refsect1>
 

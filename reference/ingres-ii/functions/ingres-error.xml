@@ -1,33 +1,33 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.ingres-error" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>ingres_error</refname>
-  <refpurpose>Zwraca znaczący komunikat o ostatnio wygenerowanym błędzie</refpurpose>
+  <refpurpose>Zwraca znaczÄcy komunikat o ostatnio wygenerowanym bĹÄdzie</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>string</type><methodname>ingres_error</methodname>
-   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_poĹÄczenia</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Zwraca łańcuch zawierający informację o ostatnim błędzie, lub NULL
-   jeśli nie wystąpił żaden błąd.
+   Zwraca ĹaĹcuch zawierajÄcy informacjÄ o ostatnim bĹÄdzie, lub NULL
+   jeĹli nie wystÄpiĹ Ĺźaden bĹÄd.
   </para>
   <para>
-   Jeśli podano <parameter>identyfikator_połączenia</parameter> jako argument
-   <function>ingres_error</function> zwraca informację o błędzie dla tego
-   połączenia. Jeśli pominięto identyfikator połączenia, <function>ingres_error</function>
-   zwraca informację o błędzie dla domyślnego połączenia.
+   JeĹli podano <parameter>identyfikator_poĹÄczenia</parameter> jako argument
+   <function>ingres_error</function> zwraca informacjÄ o bĹÄdzie dla tego
+   poĹÄczenia. JeĹli pominiÄto identyfikator poĹÄczenia, <function>ingres_error</function>
+   zwraca informacjÄ o bĹÄdzie dla domyĹlnego poĹÄczenia.
   </para>
   <para>
-   Ta funkcja, <function>ingres_error</function>, powinna być zawsze wywołana
-   po wykonaniu zapytania.  Wywołanie innej funkcji przed
+   Ta funkcja, <function>ingres_error</function>, powinna byÄ zawsze wywoĹana
+   po wykonaniu zapytania.  WywoĹanie innej funkcji przed
    <function>ingres_error</function>, zresetuje lub zmieni dla niej
-   informację o ostatnim błędzie Ingres.
+   informacjÄ o ostatnim bĹÄdzie Ingres.
   </para>
  </refsect1>
 
@@ -36,10 +36,10 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>identyfikator_połączenia</parameter></term>
+     <term><parameter>identyfikator_poĹÄczenia</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia
+       Identyfikator poĹÄczenia
       </para>
      </listitem>
     </varlistentry>
@@ -50,8 +50,8 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca łańcuch zawierający informację o ostatnim błędzie, lub NULL
-   jeśli nie wystąpił żaden błąd.
+   Zwraca ĹaĹcuch zawierajÄcy informacjÄ o ostatnim bĹÄdzie, lub NULL
+   jeĹli nie wystÄpiĹ Ĺźaden bĹÄd.
   </para>
  </refsect1>
 
@@ -60,7 +60,7 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład obsługi ostatnio wygenerowanego komunikatu o błędzie</title>
+    <title>PrzykĹad obsĹugi ostatnio wygenerowanego komunikatu o bĹÄdzie</title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -71,7 +71,7 @@ $wynik = ingres_query("select * from nazwa_tabeli");
 $tekst_bledu = ingres_error();
 
 if (!is_null($tekst_bledu)) {
-   echo "Wystąpił błąd - " . $tekst_bledu;
+   echo "WystÄpiĹ bĹÄd - " . $tekst_bledu;
 }
 ?>
 ]]>

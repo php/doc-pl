@@ -1,18 +1,18 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <appendix xml:id="ibase.constants" xmlns="http://docbook.org/ns/docbook">
  &reftitle.constants;
  &extension.constants;
  <para>
-  Następujące stałe mogą być przekazane do <function>ibase_trans</function>
-  w celu określenia zachowania transakcji.
+  NastÄpujÄce staĹe mogÄ byÄ przekazane do <function>ibase_trans</function>
+  w celu okreĹlenia zachowania transakcji.
   <table>
    <title>Flagi transakcji Firebird/InterBase</title>
     <tgroup cols="2">
      <thead>
       <row>
-       <entry>Stała</entry>
+       <entry>StaĹa</entry>
        <entry>Opis</entry>
       </row>
      </thead>
@@ -20,54 +20,54 @@
       <row>
        <entry>IBASE_DEFAULT</entry>
        <entry>
-       Standardowe ustawienia transakcji. Domyślnie są
-       one określone przez bibliotekę klienta, w większości przypadków
-       następująco: IBASE_WRITE|IBASE_CONCURRENCY|IBASE_WAIT .</entry>
+       Standardowe ustawienia transakcji. DomyĹlnie sÄ
+       one okreĹlone przez bibliotekÄ klienta, w wiÄkszoĹci przypadkĂłw
+       nastÄpujÄco: IBASE_WRITE|IBASE_CONCURRENCY|IBASE_WAIT .</entry>
       </row>
       <row>
        <entry>IBASE_READ</entry>
-       <entry>Rozpoczyna transakcję w trybie tylko do odczytu.</entry>
+       <entry>Rozpoczyna transakcjÄ w trybie tylko do odczytu.</entry>
       </row>
       <row>
        <entry>IBASE_WRITE</entry>
-       <entry>Rozpoczyna transakcję w trybie odczytu i zapisu.</entry>
+       <entry>Rozpoczyna transakcjÄ w trybie odczytu i zapisu.</entry>
       </row>
       <row>
        <entry>IBASE_CONSISTENCY</entry>
-       <entry>Rozpoczyna transakcję na poziomie izolacji ustawionym jako
-       'spójny', który oznacza że transakcja nie może czytać z tabel
-       będących w trakcie modyfikacji przez równoległe transakcje.</entry>
+       <entry>Rozpoczyna transakcjÄ na poziomie izolacji ustawionym jako
+       'spĂłjny', ktĂłry oznacza Ĺźe transakcja nie moĹźe czytaÄ z tabel
+       bÄdÄcych w trakcie modyfikacji przez rĂłwnolegĹe transakcje.</entry>
       </row>
       <row>
        <entry>IBASE_CONCURRENCY</entry>
-       <entry>Rozpoczyna transakcję na poziomie izolacji ustawionym jako
-       'współbieżny' (lub 'migawka'), który oznacza że transakcja
-       ma dostęp do wszystkich tabel, ale nie widzi żadnych zmian zatwierdzonych
-       w międzyczasie przez równoległe transakcje.</entry>
+       <entry>Rozpoczyna transakcjÄ na poziomie izolacji ustawionym jako
+       'wspĂłĹbieĹźny' (lub 'migawka'), ktĂłry oznacza Ĺźe transakcja
+       ma dostÄp do wszystkich tabel, ale nie widzi Ĺźadnych zmian zatwierdzonych
+       w miÄdzyczasie przez rĂłwnolegĹe transakcje.</entry>
       </row>
       <row>
        <entry>IBASE_COMMITTED</entry>
-       <entry>Rozpoczyna transakcję na poziomie izolacji ustawionym jako
-       'odczyt zatwierdzony'. Ta flaga powinna być połączona jedną z dwóch:
+       <entry>Rozpoczyna transakcjÄ na poziomie izolacji ustawionym jako
+       'odczyt zatwierdzony'. Ta flaga powinna byÄ poĹÄczona jednÄ z dwĂłch:
        <constant>IBASE_REC_VERSION</constant> lub
        <constant>IBASE_REC_NO_VERSION</constant>. Ten poziom izolacji
-       pozwala uzyskać dostęp do zmian zatwierdzonych w międzyczasie przez
-       inne transakcje. W połączeniu z <constant>IBASE_REC_NO_VERSION</constant>
-       może być odczytana tylko ostatnia wartość wiersza. W połączeniu
-       z <constant>IBASE_REC_VERSION</constant> może być zawsze
-       odczytana aktualna wartość wiersza po zmodyfikowaniu jej przez
-       równoległe transakcję.
+       pozwala uzyskaÄ dostÄp do zmian zatwierdzonych w miÄdzyczasie przez
+       inne transakcje. W poĹÄczeniu z <constant>IBASE_REC_NO_VERSION</constant>
+       moĹźe byÄ odczytana tylko ostatnia wartoĹÄ wiersza. W poĹÄczeniu
+       z <constant>IBASE_REC_VERSION</constant> moĹźe byÄ zawsze
+       odczytana aktualna wartoĹÄ wiersza po zmodyfikowaniu jej przez
+       rĂłwnolegĹe transakcjÄ.
       </entry>
       </row>
       <row>
        <entry>IBASE_WAIT</entry>
-       <entry>Oznacza, że transakcja powinna czekać i ponawiać próbę
-        w momencie wystąpienia konfliktu.</entry>
+       <entry>Oznacza, Ĺźe transakcja powinna czekaÄ i ponawiaÄ prĂłbÄ
+        w momencie wystÄpienia konfliktu.</entry>
       </row>
       <row>
        <entry>IBASE_NOWAIT</entry>
-       <entry>Oznacza, że transakcja powinna natychmiast zwrócić błąd
-        w momencie wystąpienia konfliktu.</entry>
+       <entry>Oznacza, Ĺźe transakcja powinna natychmiast zwrĂłciÄ bĹÄd
+        w momencie wystÄpienia konfliktu.</entry>
       </row>
      </tbody>
     </tgroup>
@@ -75,39 +75,39 @@
  </para>
 
  <para>
-  Następujące stałe mogą być przekazane do <function>ibase_fetch_row</function>,
+  NastÄpujÄce staĹe mogÄ byÄ przekazane do <function>ibase_fetch_row</function>,
   <function>ibase_fetch_assoc</function> lub <function>ibase_fetch_object</function>
-  w celu określenia zachowania tych funkcji podczas pobierania wierszy.
+  w celu okreĹlenia zachowania tych funkcji podczas pobierania wierszy.
   <table>
    <title>Flagi pobierania wierszy Firebird/InterBase</title>
     <tgroup cols="2">
      <thead>
       <row>
-       <entry>Stała</entry>
+       <entry>StaĹa</entry>
        <entry>Opis</entry>
       </row>
      </thead>
      <tbody>
       <row>
        <entry>IBASE_FETCH_BLOBS</entry>
-       <entry>Równoważna z <constant>IBASE_TEXT</constant> w celu zachowania zgodności
-       z poprzednimi wersjami. Powoduje pobranie zawartości BLOBa, zamiast
-       zwrócenia identyfikatora BLOBa.</entry>
+       <entry>RĂłwnowaĹźna z <constant>IBASE_TEXT</constant> w celu zachowania zgodnoĹci
+       z poprzednimi wersjami. Powoduje pobranie zawartoĹci BLOBa, zamiast
+       zwrĂłcenia identyfikatora BLOBa.</entry>
       </row>
       <row>
        <entry>IBASE_FETCH_ARRAYS</entry>
-       <entry>Powoduje pobieranie tablic. W przeciwnym wypadku są zwracane
-       identyfikatory tablic. Identyfikatory tablic mogą być używane tylko jako
-       argumenty dla operacji INSERT, gdyż obecnie nie ma odpowiednich funkcji do ich
-       obsługiwania.
+       <entry>Powoduje pobieranie tablic. W przeciwnym wypadku sÄ zwracane
+       identyfikatory tablic. Identyfikatory tablic mogÄ byÄ uĹźywane tylko jako
+       argumenty dla operacji INSERT, gdyĹź obecnie nie ma odpowiednich funkcji do ich
+       obsĹugiwania.
        </entry>
       </row>
       <row>
        <entry>IBASE_UNIXTIME</entry>
-       <entry>Powoduje że pola data i czas nie są zwracane w postaci sformatowanych łańcuchów,
-       lecz jako unixowy znacznik czasu (liczba sekund, która upłynęła od początku epoki Uniksa,
-       datowanej na 1 stycznia 1970 0:00 GTM). W niektórych systemach może to stanowić problem,
-       w momencie gdy zostaną użyte daty sprzed 1970 r.
+       <entry>Powoduje Ĺźe pola data i czas nie sÄ zwracane w postaci sformatowanych ĹaĹcuchĂłw,
+       lecz jako unixowy znacznik czasu (liczba sekund, ktĂłra upĹynÄĹa od poczÄtku epoki Uniksa,
+       datowanej na 1 stycznia 1970 0:00 GTM). W niektĂłrych systemach moĹźe to stanowiÄ problem,
+       w momencie gdy zostanÄ uĹźyte daty sprzed 1970 r.
        </entry>
       </row>
      </tbody>
@@ -115,11 +115,11 @@
   </table>
  </para>
  <para>
-  Następujące stałe przekazują żądania i opcje do funkcji usługi
+  NastÄpujÄce staĹe przekazujÄ ĹźÄdania i opcje do funkcji usĹugi
   API (<function>ibase_server_info</function>, <function>ibase_db_info</function>,
   <function>ibase_backup</function>, <function>ibase_restore</function>
-  i <function>ibase_maintain_db</function>). Prosimy odnieść się do dokumentacji
-  Firebird/InterBase żeby zapoznać się ze znaczeniem tych opcji.
+  i <function>ibase_maintain_db</function>). Prosimy odnieĹÄ siÄ do dokumentacji
+  Firebird/InterBase Ĺźeby zapoznaÄ siÄ ze znaczeniem tych opcji.
   <variablelist>
    <varlistentry>
     <term>

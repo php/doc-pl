@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.ibase-execute">
  <refnamediv>
   <refname>ibase_execute</refname>
-  <refpurpose>Wykonuje wcześniej przygotowane zapytanie</refpurpose>
+  <refpurpose>Wykonuje wczeĹniej przygotowane zapytanie</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
@@ -12,16 +12,16 @@
   <methodsynopsis>
    <type>resource</type><methodname>ibase_execute</methodname>
    <methodparam><type>resource</type><parameter>zapytanie</parameter></methodparam>
-   <methodparam choice="opt"><type>mixed</type><parameter>dowiązywany_argument_1</parameter></methodparam>
+   <methodparam choice="opt"><type>mixed</type><parameter>dowiÄzywany_argument_1</parameter></methodparam>
    <methodparam choice="opt"><type>mixed</type><parameter>...</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Wykonuje zapytanie przygotowane za pomocą <function>ibase_prepare</function>.
+   Wykonuje zapytanie przygotowane za pomocÄ <function>ibase_prepare</function>.
   </para>
   <para>
-   Funkcja jest o wiele bardziej efektywna niż <function>ibase_query</function>,
-   jeżeli wiele razy jest powtarzany taki sam rodzaj zapytania i zmieniane są
-   tylko wartości niektórych parametrów.
+   Funkcja jest o wiele bardziej efektywna niĹź <function>ibase_query</function>,
+   jeĹźeli wiele razy jest powtarzany taki sam rodzaj zapytania i zmieniane sÄ
+   tylko wartoĹci niektĂłrych parametrĂłw.
   </para>
  </refsect1>
 
@@ -33,12 +33,12 @@
      <term><parameter>zapytanie</parameter></term>
      <listitem>
       <para>
-       Zapytanie SQL przygotowane za pomocą <function>ibase_prepare</function>.
+       Zapytanie SQL przygotowane za pomocÄ <function>ibase_prepare</function>.
       </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>dowiązywany_argument_1</parameter></term>
+     <term><parameter>dowiÄzywany_argument_1</parameter></term>
      <listitem>
       <para>
       </para>
@@ -58,17 +58,17 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Jeśli zapytanie powoduje błąd, zwraca &false;. Jeśli zapytanie zostanie
-   pomyślnie wykonane a jego rezultatem będzie (być może pusty) zbiór wynikowy
-   (uzyskany za pomocą SELECT), zwraca identyfikator_wyniku. Jeśli zapytanie
-   zostanie pomyślnie wykonane a nie powstanie zbiór wynikowy, zwraca &true;.
+   JeĹli zapytanie powoduje bĹÄd, zwraca &false;. JeĹli zapytanie zostanie
+   pomyĹlnie wykonane a jego rezultatem bÄdzie (byÄ moĹźe pusty) zbiĂłr wynikowy
+   (uzyskany za pomocÄ SELECT), zwraca identyfikator_wyniku. JeĹli zapytanie
+   zostanie pomyĹlnie wykonane a nie powstanie zbiĂłr wynikowy, zwraca &true;.
   </para>
   <note>
    <para>
-    W PHP 5.0.0 i nowszych wersjach ta funkcja zwraca liczbę wierszy przetworzonych
-    przez ostatnie zapytanie (jeżeli jest > 0 i użyto odpowiedniej instrukcji SQL).
-    W przypadku zapytania wykonanego prawidłowo, ale nie przetwarzającego żadnego wiersza
-    (np. UPDATE z warunkiem nie pasującym do żadnego rekordu) funkcja zwraca &true;.
+    W PHP 5.0.0 i nowszych wersjach ta funkcja zwraca liczbÄ wierszy przetworzonych
+    przez ostatnie zapytanie (jeĹźeli jest > 0 i uĹźyto odpowiedniej instrukcji SQL).
+    W przypadku zapytania wykonanego prawidĹowo, ale nie przetwarzajÄcego Ĺźadnego wiersza
+    (np. UPDATE z warunkiem nie pasujÄcym do Ĺźadnego rekordu) funkcja zwraca &true;.
    </para>
   </note>
  </refsect1>
@@ -77,7 +77,7 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład <function>ibase_execute</function></title>
+    <title>PrzykĹad <function>ibase_execute</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -85,9 +85,9 @@
 $dbh = ibase_connect($host, $username, $password, 'ISO8859_2');
 
 $aktualizacje = array(
-    1 => 'Gościsława',
-    5 => 'Drogomysł',
-    7 => 'Sjęgniewa'
+    1 => 'GoĹcisĹawa',
+    5 => 'DrogomysĹ',
+    7 => 'SjÄgniewa'
 );
 
 $sql = ibase_prepare($dbh, "UPDATE NAZWA_TABELI SET IMIE = ? WHERE ID = ?");

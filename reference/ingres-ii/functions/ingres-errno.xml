@@ -1,33 +1,33 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.ingres-errno" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>ingres_errno</refname>
-  <refpurpose>Zwraca ostatnio wygenerowany numer błędu Ingres</refpurpose>
+  <refpurpose>Zwraca ostatnio wygenerowany numer bĹÄdu Ingres</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>int</type><methodname>ingres_errno</methodname>
-   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_poĹÄczenia</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Zwraca liczbę typu integer zawierającą ostatni numer błędu. Jeśli nie
-   wystąpił żaden błąd, zwracane jest 0.
+   Zwraca liczbÄ typu integer zawierajÄcÄ ostatni numer bĹÄdu. JeĹli nie
+   wystÄpiĹ Ĺźaden bĹÄd, zwracane jest 0.
   </para>
   <para>
-   Jeśli podano <parameter>identyfikator_połączenia</parameter>
-   <function>ingres_errno</function> zwraca ostatni numer błędu dla
-   tego połączenia. Jeśli nie podano identyfikatora połączenia <function>ingres_errno</function>
-   zwraca numer ostatniego błędu dla domyślnego połączenia.
+   JeĹli podano <parameter>identyfikator_poĹÄczenia</parameter>
+   <function>ingres_errno</function> zwraca ostatni numer bĹÄdu dla
+   tego poĹÄczenia. JeĹli nie podano identyfikatora poĹÄczenia <function>ingres_errno</function>
+   zwraca numer ostatniego bĹÄdu dla domyĹlnego poĹÄczenia.
   </para>
   <para>
-   Ta funkcja, <function>ingres_errno</function>, powinna być zawsze
-   wywołana po wykonaniu zapytania.  Wywołanie innej funkcji przed
+   Ta funkcja, <function>ingres_errno</function>, powinna byÄ zawsze
+   wywoĹana po wykonaniu zapytania.  WywoĹanie innej funkcji przed
    <function>ingres_errno</function>, wyzeruje lub zmieni dla niej
-   kod ostatniego błędu Ingres.
+   kod ostatniego bĹÄdu Ingres.
   </para>
  </refsect1>
 
@@ -36,10 +36,10 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>identyfikator_połączenia</parameter></term>
+     <term><parameter>identyfikator_poĹÄczenia</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia
+       Identyfikator poĹÄczenia
       </para>
      </listitem>
     </varlistentry>
@@ -50,8 +50,8 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca liczbę typu integer zawierającą ostatni numer błędu. Jeśli nie
-   wystąpił żaden błąd, zwracane jest 0.
+   Zwraca liczbÄ typu integer zawierajÄcÄ ostatni numer bĹÄdu. JeĹli nie
+   wystÄpiĹ Ĺźaden bĹÄd, zwracane jest 0.
   </para>
  </refsect1>
 
@@ -60,7 +60,7 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład obsługi ostatnio wygenerowanego kodu błędu Ingres</title>
+    <title>PrzykĹad obsĹugi ostatnio wygenerowanego kodu bĹÄdu Ingres</title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -71,7 +71,7 @@ $wynik = ingres_query($identyfikator_polaczenia, "select * from nazwa_tabeli");
 $kod_bledu = ingres_errno($identyfikator_polaczenia);
 
 if ( $kod_bledu != 0 ) {
-   echo "Wystąpił błąd - " . $kod_bledu;
+   echo "WystÄpiĹ bĹÄd - " . $kod_bledu;
 }
 ?>
 ]]>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 1.12 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- Purpose: utilspec.image -->
@@ -13,29 +13,29 @@
    &reftitle.intro;
    <para>
     &warn.experimental;
-    Imagick jest wewnętrznym rozszerzeniem PHP używającym ImageMagick API
+    Imagick jest wewnÄtrznym rozszerzeniem PHP uĹźywajÄcym ImageMagick API
     do tworzenia i modyfikowania grafiki.
    </para>
   </section>
 
   <section xml:id="imagick.aboutimagemagick">
    <para>
-    ImageMagickŽ jest zestawem programów do tworzenia, edycji i składania grafiki
-    rastrowej. Umożliwia odczytywanie, przekształcanie i zapisywanie obrazów
-    w rozmaitych formatach (ponad 100) włącznie z DPX, EXR, GIF, JPEG, JPEG-2000,
+    ImageMagickĹ˝ jest zestawem programĂłw do tworzenia, edycji i skĹadania grafiki
+    rastrowej. UmoĹźliwia odczytywanie, przeksztaĹcanie i zapisywanie obrazĂłw
+    w rozmaitych formatach (ponad 100) wĹÄcznie z DPX, EXR, GIF, JPEG, JPEG-2000,
     PDF, PhotoCD, PNG, Postscript, SVG, i TIFF.
    </para>
    <para>
-    Copyright 1999-2007 ImageMagick Studio LLC, niekomercyjna organizacja wyspecjalizowana w wytwarzaniu swobodnie dostępnych rozwiązań oprogramowania graficznego.
+    Copyright 1999-2007 ImageMagick Studio LLC, niekomercyjna organizacja wyspecjalizowana w wytwarzaniu swobodnie dostÄpnych rozwiÄzaĹ oprogramowania graficznego.
     </para>
   </section>
 
   <section xml:id="imagick.examples">
    &reftitle.examples;
    <para>
-    Imagick w PHP w prosty sposób przetwarza obrazy, bezpośrednio poprzez
-    interfejs obiektowy. Oto krótki przykład przedstawiający
-    jak zrobić miniaturkę:
+    Imagick w PHP w prosty sposĂłb przetwarza obrazy, bezpoĹrednio poprzez
+    interfejs obiektowy. Oto krĂłtki przykĹad przedstawiajÄcy
+    jak zrobiÄ miniaturkÄ:
     <example>
      <title>Tworzenie miniaturki w Imagick</title>
      <programlisting role="php">
@@ -46,8 +46,8 @@ header('Content-type: image/jpeg');
 
 $obraz = new Imagick('image.jpg');
 
-// Jeśli zostanie przekazane 0 w parametrze szerokości
-// lub wysokości, to zostanie utrzymana proporcja obrazu
+// JeĹli zostanie przekazane 0 w parametrze szerokoĹci
+// lub wysokoĹci, to zostanie utrzymana proporcja obrazu
 $obraz->thumbnailImage(100, 0);
 
 echo $obraz;
@@ -59,14 +59,14 @@ echo $obraz;
    </para>
 
    <para>
-    Używając standardowej biblioteki PHP (SPL) i innych cech programowania
-    obiektowego w Imagick, można w prosty sposób zmienić rozmiary wszystkich
-    plików w katalogu (jest to użyteczne podczas seryjnej zmiany rozmiarów
-    wielkich obrazów, zrobionych za pomocą cyfrowego aparatu fotograficznego,
-    a przeznaczonych na stronę www). Oto przykład jak zmienić rozmiar obrazu,
-    zachowując określone informacje o danych:
+    UĹźywajÄc standardowej biblioteki PHP (SPL) i innych cech programowania
+    obiektowego w Imagick, moĹźna w prosty sposĂłb zmieniÄ rozmiary wszystkich
+    plikĂłw w katalogu (jest to uĹźyteczne podczas seryjnej zmiany rozmiarĂłw
+    wielkich obrazĂłw, zrobionych za pomocÄ cyfrowego aparatu fotograficznego,
+    a przeznaczonych na stronÄ www). Oto przykĹad jak zmieniÄ rozmiar obrazu,
+    zachowujÄc okreĹlone informacje o danych:
     <example>
-     <title>Tworzenie miniaturek wszystkich plików JPG w katalogu</title>
+     <title>Tworzenie miniaturek wszystkich plikĂłw JPG w katalogu</title>
      <programlisting role="php">
 <![CDATA[
 <?php
@@ -75,7 +75,7 @@ $obrazy = new Imagick(glob('obrazy/*.jpg'));
 
 foreach($obrazy as $obraz) {
 
-    // Przekazanie 0 wymusza na thumbnailImage utrzymanie stosunku wymiarów obrazu
+    // Przekazanie 0 wymusza na thumbnailImage utrzymanie stosunku wymiarĂłw obrazu
     $obraz->thumbnailImage(1024,0);
 
 }
