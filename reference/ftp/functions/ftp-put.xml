@@ -1,23 +1,23 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.ftp-put" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>ftp_put</refname>
-  <refpurpose>Przesyła plik na serwer FTP</refpurpose>
+  <refpurpose>PrzesyĹa plik na serwer FTP</refpurpose>
  </refnamediv>
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>ftp_put</methodname>
-   <methodparam><type>resource</type><parameter>strumień_ftp</parameter></methodparam>
+   <methodparam><type>resource</type><parameter>strumieĹ_ftp</parameter></methodparam>
    <methodparam><type>string</type><parameter>plik_zdalny</parameter></methodparam>
    <methodparam><type>string</type><parameter>plik_lokalny</parameter></methodparam>
    <methodparam><type>int</type><parameter>tryb</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>pozycja_początkowa</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>pozycja_poczÄtkowa</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>ftp_put</function> przesyła plik lokalny na serwer FTP.
+   <function>ftp_put</function> przesyĹa plik lokalny na serwer FTP.
   </para>
  </refsect1>
  <refsect1 role="parameters">
@@ -25,10 +25,10 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>strumień_ftp</parameter></term>
+     <term><parameter>strumieĹ_ftp</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia z serwerem FTP.
+       Identyfikator poĹÄczenia z serwerem FTP.
       </para>
      </listitem>
     </varlistentry>
@@ -36,7 +36,7 @@
      <term><parameter>plik_zdalny</parameter></term>
      <listitem>
       <para>
-       Ścieżka pliku zdalnego.
+       ĹcieĹźka pliku zdalnego.
       </para>
      </listitem>
     </varlistentry>
@@ -44,7 +44,7 @@
      <term><parameter>plik_lokalny</parameter></term>
      <listitem>
       <para>
-       Ścieżka do pliku lokalnego.
+       ĹcieĹźka do pliku lokalnego.
       </para>
      </listitem>
     </varlistentry>
@@ -52,13 +52,13 @@
      <term><parameter>tryb</parameter></term>
      <listitem>
       <para>
-       Tryb transferu. Musi to być <constant>FTP_ASCII</constant> lub
+       Tryb transferu. Musi to byÄ <constant>FTP_ASCII</constant> lub
        <constant>FTP_BINARY</constant>.
       </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>pozycja_początkowa</parameter></term>
+     <term><parameter>pozycja_poczÄtkowa</parameter></term>
      <listitem>
       <para></para>
      </listitem>
@@ -76,27 +76,27 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład użycia <function>ftp_put</function></title>
+    <title>PrzykĹad uĹźycia <function>ftp_put</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
 $plik = 'plik.txt';
 $plik_zdalny = 'readme.txt';
 
-// nawiązanie połączenia
+// nawiÄzanie poĹÄczenia
 $conn_id = ftp_connect($ftp_server);
 
 // logowanie
 $login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass);
 
-// przesłanie pliku
+// przesĹanie pliku
 if (ftp_put($conn_id, $plik_zdalny, $plik, FTP_ASCII)) {
- echo "Plik $plik został pomyślnie przesłany\n";
+ echo "Plik $plik zostaĹ pomyĹlnie przesĹany\n";
 } else {
- echo "Napotkano problemy w czasie przesyłania pliku $plik\n";
+ echo "Napotkano problemy w czasie przesyĹania pliku $plik\n";
 }
 
-// zamknięcie połączenia
+// zamkniÄcie poĹÄczenia
 ftp_close($conn_id);
 ?>
 ]]>
@@ -119,7 +119,7 @@ ftp_close($conn_id);
       <row>
        <entry>4.3.0</entry>
        <entry>
-        Dodano argument <parameter>pozycja_początkowa</parameter>.
+        Dodano argument <parameter>pozycja_poczÄtkowa</parameter>.
        </entry>
       </row>
      </tbody>

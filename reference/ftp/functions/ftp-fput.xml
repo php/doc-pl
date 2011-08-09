@@ -1,23 +1,23 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.ftp-fput" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>ftp_fput</refname>
-  <refpurpose>Wysyła dane z otwartego pliku na serwer FTP</refpurpose>
+  <refpurpose>WysyĹa dane z otwartego pliku na serwer FTP</refpurpose>
  </refnamediv>
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>ftp_fput</methodname>
-   <methodparam><type>resource</type><parameter>strumień_ftp</parameter></methodparam>
+   <methodparam><type>resource</type><parameter>strumieĹ_ftp</parameter></methodparam>
    <methodparam><type>string</type><parameter>plik_zdalny</parameter></methodparam>
    <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam>
    <methodparam><type>int</type><parameter>tryb</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>pozycja_początkowa</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>pozycja_poczÄtkowa</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>ftp_fput</function> wysyła na serwer FTP dane z podanego uchwytu
+   <function>ftp_fput</function> wysyĹa na serwer FTP dane z podanego uchwytu
    do otwartego pliku.
   </para>
  </refsect1>
@@ -26,10 +26,10 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>strumień_ftp</parameter></term>
+     <term><parameter>strumieĹ_ftp</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia z serwerem FTP.
+       Identyfikator poĹÄczenia z serwerem FTP.
       </para>
      </listitem>
     </varlistentry>
@@ -37,7 +37,7 @@
      <term><parameter>plik_zdalny</parameter></term>
      <listitem>
       <para>
-       Ścieżka do pliku zdalnego.
+       ĹcieĹźka do pliku zdalnego.
       </para>
      </listitem>
     </varlistentry>
@@ -45,8 +45,8 @@
      <term><parameter>uchwyt</parameter></term>
      <listitem>
       <para>
-       Wskaźnik do otwartego pliku lokalnego. Czytanie kończy się w momencie
-       napotkania końca pliku.
+       WskaĹşnik do otwartego pliku lokalnego. Czytanie koĹczy siÄ w momencie
+       napotkania koĹca pliku.
       </para>
      </listitem>
     </varlistentry>
@@ -54,13 +54,13 @@
      <term><parameter>tryb</parameter></term>
      <listitem>
       <para>
-       Tryb transferu. Musi to być <constant>FTP_ASCII</constant> lub
+       Tryb transferu. Musi to byÄ <constant>FTP_ASCII</constant> lub
        <constant>FTP_BINARY</constant>.
       </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>pozycja_początkowa</parameter></term>
+     <term><parameter>pozycja_poczÄtkowa</parameter></term>
      <listitem>
       <para></para>
      </listitem>
@@ -78,29 +78,29 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład użycia <function>ftp_fput</function></title>
+    <title>PrzykĹad uĹźycia <function>ftp_fput</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
 
 // otwarcie pliku do odczytu
-$file = 'jakiśplik.txt';
+$file = 'jakiĹplik.txt';
 $fp = fopen($file, 'r');
 
-// nawiązanie połączenia
+// nawiÄzanie poĹÄczenia
 $conn_id = ftp_connect($ftp_server);
 
 // logowanie
 $login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass);
 
-// próba przesłania $file
+// prĂłba przesĹania $file
 if (ftp_fput($conn_id, $file, $fp, FTP_ASCII)) {
-    echo "Pomyślnie przesłano $file\n";
+    echo "PomyĹlnie przesĹano $file\n";
 } else {
-    echo "Wystąpiły problemy w czasie przesyłania $file\n";
+    echo "WystÄpiĹy problemy w czasie przesyĹania $file\n";
 }
 
-// zamknięcie połączenia i otwartego pliku
+// zamkniÄcie poĹÄczenia i otwartego pliku
 ftp_close($conn_id);
 fclose($fp);
 
@@ -125,7 +125,7 @@ fclose($fp);
       <row>
        <entry>4.3.0</entry>
        <entry>
-        Dodano parametr <parameter>pozycja_początkowa</parameter>.
+        Dodano parametr <parameter>pozycja_poczÄtkowa</parameter>.
        </entry>
       </row>
      </tbody>

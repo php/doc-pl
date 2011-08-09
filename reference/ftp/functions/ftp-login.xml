@@ -1,21 +1,21 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.ftp-login" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>ftp_login</refname>
-  <refpurpose>Loguje się w ramach połączenia FTP</refpurpose>
+  <refpurpose>Loguje siÄ w ramach poĹÄczenia FTP</refpurpose>
  </refnamediv>
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>ftp_login</methodname>
-   <methodparam><type>resource</type><parameter>strumień_ftp</parameter></methodparam>
-   <methodparam><type>string</type><parameter>nazwa_użytkownika</parameter></methodparam>
-   <methodparam><type>string</type><parameter>hasło</parameter></methodparam>
+   <methodparam><type>resource</type><parameter>strumieĹ_ftp</parameter></methodparam>
+   <methodparam><type>string</type><parameter>nazwa_uĹźytkownika</parameter></methodparam>
+   <methodparam><type>string</type><parameter>hasĹo</parameter></methodparam>
   </methodsynopsis>
   <para> 
-   Loguje się w ramach podanego strumienia FTP.
+   Loguje siÄ w ramach podanego strumienia FTP.
   </para>
  </refsect1>
  <refsect1 role="parameters">
@@ -23,26 +23,26 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>strumień_ftp</parameter></term>
+     <term><parameter>strumieĹ_ftp</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia z serwerem FTP.
+       Identyfikator poĹÄczenia z serwerem FTP.
       </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>nazwa_użytkownika</parameter></term>
+     <term><parameter>nazwa_uĹźytkownika</parameter></term>
      <listitem>
       <para>
-       Nazwa użytkownika (<literal>USER</literal>).
+       Nazwa uĹźytkownika (<literal>USER</literal>).
       </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>hasło</parameter></term>
+     <term><parameter>hasĹo</parameter></term>
      <listitem>
       <para>
-       Hasło (<literal>PASS</literal>).
+       HasĹo (<literal>PASS</literal>).
       </para>
      </listitem>
     </varlistentry>
@@ -53,14 +53,14 @@
   &reftitle.returnvalues;
   <para>
    &return.success;
-   Jeśli logowanie się nie powiedzie, PHP wygeneruje także ostrzeżenie.
+   JeĹli logowanie siÄ nie powiedzie, PHP wygeneruje takĹźe ostrzeĹźenie.
   </para>
  </refsect1>
  <refsect1 role="examples">
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład użycia <function>ftp_login</function></title>
+    <title>PrzykĹad uĹźycia <function>ftp_login</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -69,17 +69,17 @@ $ftp_serwer            = "ftp.example.com";
 $ftp_nazwa_uzytkownika = "foo";
 $ftp_haslo             = "bar";
 
-// nawiązanie połączenia lub zakończenie działania skryptu
-$conn_id = ftp_connect($ftp_serwer) or die("Nie można połączyć się z $ftp_serwer");
+// nawiÄzanie poĹÄczenia lub zakoĹczenie dziaĹania skryptu
+$conn_id = ftp_connect($ftp_serwer) or die("Nie moĹźna poĹÄczyÄ siÄ z $ftp_serwer");
 
-// próba logowania
+// prĂłba logowania
 if (@ftp_login($conn_id, $ftp_nazwa_uzytkownika, $ftp_haslo)) {
-    echo "Połączony jako $ftp_nazwa_uzytkownika@$ftp_serwer\n";
+    echo "PoĹÄczony jako $ftp_nazwa_uzytkownika@$ftp_serwer\n";
 } else {
-    echo "Nie można zalogować się jako $ftp_nazwa_uzytkownika\n";
+    echo "Nie moĹźna zalogowaÄ siÄ jako $ftp_nazwa_uzytkownika\n";
 }
 
-// zamknięcie połączenia
+// zamkniÄcie poĹÄczenia
 ftp_close($conn_id);
 
 ?>

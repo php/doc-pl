@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
 <refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.fopen">
@@ -13,11 +13,11 @@
    <type>resource</type><methodname>fopen</methodname>
    <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
    <methodparam><type>string</type><parameter>tryb</parameter></methodparam>
-   <methodparam choice="opt"><type>bool</type><parameter>użyj_include_path</parameter></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>uĹźyj_include_path</parameter></methodparam>
    <methodparam choice="opt"><type>resource</type><parameter>kontekst</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>fopen</function> wiąże nazwany zasób, określony przez
+   <function>fopen</function> wiÄĹźe nazwany zasĂłb, okreĹlony przez
    <parameter>nazwa_pliku</parameter>, do strumienia. 
   </para>
  </refsect1>
@@ -30,43 +30,43 @@
      <term><parameter>nazwa_pliku</parameter></term>
      <listitem>
       <para>
-       Jeśli <parameter>nazwa_pliku</parameter> jest w postaci "schemat://...", to
-       przypuszczalnie jest to URL i PHP szuka protokołu obsługi
-       (także zwanego wrapper'em) dla tego schematu. Jeśli nie zarejestrowano
-       żadnego wrapper'a dla tego protokołu, PHP wyemituje notatkę, aby pomóc Tobie
-       w wyśledzeniu potencajalnego problemu w Twoim skrypcie następnie będzie
-       kontynuować z podanym <parameter>nazwa_pliku</parameter> traktując go
-       jako zwykły plik.
+       JeĹli <parameter>nazwa_pliku</parameter> jest w postaci "schemat://...", to
+       przypuszczalnie jest to URL i PHP szuka protokoĹu obsĹugi
+       (takĹźe zwanego wrapper'em) dla tego schematu. JeĹli nie zarejestrowano
+       Ĺźadnego wrapper'a dla tego protokoĹu, PHP wyemituje notatkÄ, aby pomĂłc Tobie
+       w wyĹledzeniu potencajalnego problemu w Twoim skrypcie nastÄpnie bÄdzie
+       kontynuowaÄ z podanym <parameter>nazwa_pliku</parameter> traktujÄc go
+       jako zwykĹy plik.
       </para>
       <para>
-       Jeśli PHP zdecyduje, że <parameter>nazwa_pliku</parameter> określa
-       lokalny plik, wtedy spróbuje otworzyć strumień na tym pliku.
-       Plik musi być dostępny dla PHP, więc musisz zapewnić prawa
-       dostępu do pliku pozwalające na taką operację.
-       Jeśli masz włączone  &safemode; lub  <link linkend="ini.open-basedir">open_basedir</link>
-       mogą mieć zastosowanie dodatkowe restrykcje.
+       JeĹli PHP zdecyduje, Ĺźe <parameter>nazwa_pliku</parameter> okreĹla
+       lokalny plik, wtedy sprĂłbuje otworzyÄ strumieĹ na tym pliku.
+       Plik musi byÄ dostÄpny dla PHP, wiÄc musisz zapewniÄ prawa
+       dostÄpu do pliku pozwalajÄce na takÄ operacjÄ.
+       JeĹli masz wĹÄczone  &safemode; lub  <link linkend="ini.open-basedir">open_basedir</link>
+       mogÄ mieÄ zastosowanie dodatkowe restrykcje.
       </para>
       <para>
-       Jeśli PHP zdecyduje, że <parameter>nazwa_pliku</parameter> określa
-       zarejestrowany protokół i ten protokół jest zarejestowany jako
+       JeĹli PHP zdecyduje, Ĺźe <parameter>nazwa_pliku</parameter> okreĹla
+       zarejestrowany protokĂłĹ i ten protokĂłĹ jest zarejestowany jako
        sieciowy URL, PHP sprawdzi <link linkend="ini.allow-url-fopen">allow_url_fopen</link>
-       czy jest włączone. Jeśli jest wyłączone (off), PHP wyświetli ostrzeżenie
-       i wywołanie fopen zakończy się niepowodzeniem.
+       czy jest wĹÄczone. JeĹli jest wyĹÄczone (off), PHP wyĹwietli ostrzeĹźenie
+       i wywoĹanie fopen zakoĹczy siÄ niepowodzeniem.
       </para>
       <note>
        <para>
-        Listę obsługiwanych protokołów możesz znaleźć w <xref linkend="wrappers"/>.
-        Niektóre protokoły (również określane przez <literal>wrappery</literal> obsługują
+        ListÄ obsĹugiwanych protokoĹĂłw moĹźesz znaleĹşÄ w <xref linkend="wrappers"/>.
+        NiektĂłre protokoĹy (rĂłwnieĹź okreĹlane przez <literal>wrappery</literal> obsĹugujÄ
         <literal>kontekst</literal> lub/i opcje &php.ini;.
-        Odwołaj się do konkretnej strony protokołu aby uzyskać listę opcji jakie
-        mogą zostać ustawione (np. &php.ini; wartość
-        <literal>user_agent</literal> używana przez wrapper <literal>http</literal>).
+        OdwoĹaj siÄ do konkretnej strony protokoĹu aby uzyskaÄ listÄ opcji jakie
+        mogÄ zostaÄ ustawione (np. &php.ini; wartoĹÄ
+        <literal>user_agent</literal> uĹźywana przez wrapper <literal>http</literal>).
        </para>
       </note>
       <para>
-       Na platformie Windows, dbaj aby wstawiać znaki ucieczki (escape)
-       przed wszystkimi lewymi ukośnikami (backslash) użytymi w ścieżce do
-       pliku lub używać ukośników (slash).
+       Na platformie Windows, dbaj aby wstawiaÄ znaki ucieczki (escape)
+       przed wszystkimi lewymi ukoĹnikami (backslash) uĹźytymi w ĹcieĹźce do
+       pliku lub uĹźywaÄ ukoĹnikĂłw (slash).
        <informalexample>
         <programlisting role="php">
  	 <![CDATA[
@@ -83,12 +83,12 @@
      <term><parameter>tryb</parameter></term>
      <listitem>  
       <para>
-       Parametr <parameter>tryb</parameter> określa rodzaj dostępu jaki
-       wymagasz do strumienia. Może być dowolny z następujących:
+       Parametr <parameter>tryb</parameter> okreĹla rodzaj dostÄpu jaki
+       wymagasz do strumienia. MoĹźe byÄ dowolny z nastÄpujÄcych:
       <table>
        <title>
-        Lista możliwych trybów dla <function>fopen</function>
-        używając <parameter>tryb</parameter>
+        Lista moĹźliwych trybĂłw dla <function>fopen</function>
+        uĹźywajÄc <parameter>tryb</parameter>
        </title>
        <tgroup cols="2">
         <thead>
@@ -101,65 +101,65 @@
          <row>
           <entry><literal>'r'</literal></entry>
           <entry>
-           Otwiera tylko do odczytu; umieszcza wskaźnik pliku na jego początku.
+           Otwiera tylko do odczytu; umieszcza wskaĹşnik pliku na jego poczÄtku.
           </entry>
          </row>
          <row>
           <entry><literal>'r+'</literal></entry>
           <entry>
-           Otwiera do odczytu i zapisu; umieszcza wskaźnik pliku na jego początku.
+           Otwiera do odczytu i zapisu; umieszcza wskaĹşnik pliku na jego poczÄtku.
           </entry>
          </row>
          <row>
           <entry><literal>'w'</literal></entry>
           <entry>
-           Otwiera tylko do zapisu; umieszcza wskaźnik pliku na jego początku
-           i obcina plik do zerowej długości. Jeśli plik nie istnieje to
-	   próbuje go utworzyć.
+           Otwiera tylko do zapisu; umieszcza wskaĹşnik pliku na jego poczÄtku
+           i obcina plik do zerowej dĹugoĹci. JeĹli plik nie istnieje to
+	   prĂłbuje go utworzyÄ.
           </entry>
          </row>
          <row>
           <entry><literal>'w+'</literal></entry>
           <entry>
-           Otwiera do odczytu i zapisu; umieszcza wskaźnik pliku na jego początku
-	   i obcina plik do zerowej długości. Jeśli plik nie istnieje to
-	   próbuje go utworzyć.
+           Otwiera do odczytu i zapisu; umieszcza wskaĹşnik pliku na jego poczÄtku
+	   i obcina plik do zerowej dĹugoĹci. JeĹli plik nie istnieje to
+	   prĂłbuje go utworzyÄ.
           </entry>
          </row>
          <row>
           <entry><literal>'a'</literal></entry>
           <entry>
-	   Otwiera tylko do zapisu; umieszcza wskaźnik pliku na jego końcu.
-	   Jeśli plik nie istnieje to próbuje go utworzyć.
+	   Otwiera tylko do zapisu; umieszcza wskaĹşnik pliku na jego koĹcu.
+	   JeĹli plik nie istnieje to prĂłbuje go utworzyÄ.
           </entry>
          </row>
          <row>
           <entry><literal>'a+'</literal></entry>
           <entry>
-           Otwiera do odczytu i zapisu; umieszcza wskaźnik pliku na jego końcu.
-	   Jeśli plik nie istnieje to próbuje go utworzyć.
+           Otwiera do odczytu i zapisu; umieszcza wskaĹşnik pliku na jego koĹcu.
+	   JeĹli plik nie istnieje to prĂłbuje go utworzyÄ.
           </entry>
          </row>
          <row>
           <entry><literal>'x'</literal></entry>
           <entry>
-	   Tworzy i otwiera plik tylko do zapisu; umieszcza wskaźnik pliku na
-	   jego początku. Jeśli plik juz istnieje, wywołanie <function>fopen</function>
-	   nie powiedzie się, zwróci &false; i wygeneruje błąd na poziomie
-	   <constant>E_WARNING</constant>. Jeśli plik nie istnieje, spróbuje go
-	   utworzyć. To jest równoważne z określeniem flag <literal>O_EXCL|O_CREAT</literal>
-           stosowanym w wywołaniu systemowym <literal>open(2)</literal>.
+	   Tworzy i otwiera plik tylko do zapisu; umieszcza wskaĹşnik pliku na
+	   jego poczÄtku. JeĹli plik juz istnieje, wywoĹanie <function>fopen</function>
+	   nie powiedzie siÄ, zwrĂłci &false; i wygeneruje bĹÄd na poziomie
+	   <constant>E_WARNING</constant>. JeĹli plik nie istnieje, sprĂłbuje go
+	   utworzyÄ. To jest rĂłwnowaĹźne z okreĹleniem flag <literal>O_EXCL|O_CREAT</literal>
+           stosowanym w wywoĹaniu systemowym <literal>open(2)</literal>.
           </entry>
          </row>
          <row>
           <entry><literal>'x+'</literal></entry>
           <entry>
-           Tworzy i otwiera plik odczytu i zapisu; umieszcza wskaźnik pliku na
-           jego początku. Jeśli plik juz istnieje, wywołanie <function>fopen</function>
-           nie powiedzie się, zwróci &false; i wygeneruje błąd na poziomie
-           <constant>E_WARNING</constant>. Jeśli plik nie istnieje, spróbuje go
-           utworzyć. To jest równoważne z okresleniem flag <literal>O_EXCL|O_CREAT</literal>
-           stosowanym w wywołaniu systemowym <literal>open(2)</literal>.
+           Tworzy i otwiera plik odczytu i zapisu; umieszcza wskaĹşnik pliku na
+           jego poczÄtku. JeĹli plik juz istnieje, wywoĹanie <function>fopen</function>
+           nie powiedzie siÄ, zwrĂłci &false; i wygeneruje bĹÄd na poziomie
+           <constant>E_WARNING</constant>. JeĹli plik nie istnieje, sprĂłbuje go
+           utworzyÄ. To jest rĂłwnowaĹźne z okresleniem flag <literal>O_EXCL|O_CREAT</literal>
+           stosowanym w wywoĹaniu systemowym <literal>open(2)</literal>.
 	  </entry>
          </row>
         </tbody>
@@ -168,64 +168,64 @@
      </para>
      <note> 
       <para>
-       Różne rodziny systemów operacyjnych stosuja rózne konwencje końca lini.
-       Kiedy zapisujesz plik tekstowy i chcesz wstawić łamanie lini, musisz
-       użyć poprawnych dla twojego systemu operacyjnego znak(ów) końca lini.
-       Systemy bazujące na Uniksie używają <literal>\n</literal> jako
-       znaku końca lini, systemy bazujące na Windowsie używają <literal>\r\n</literal>
-       jako znaków końca lini, a systemy Macintosh używają <literal>\r</literal>
-       jako znak końca lini.
+       RĂłĹźne rodziny systemĂłw operacyjnych stosuja rĂłzne konwencje koĹca lini.
+       Kiedy zapisujesz plik tekstowy i chcesz wstawiÄ Ĺamanie lini, musisz
+       uĹźyÄ poprawnych dla twojego systemu operacyjnego znak(Ăłw) koĹca lini.
+       Systemy bazujÄce na Uniksie uĹźywajÄ <literal>\n</literal> jako
+       znaku koĹca lini, systemy bazujÄce na Windowsie uĹźywajÄ <literal>\r\n</literal>
+       jako znakĂłw koĹca lini, a systemy Macintosh uĹźywajÄ <literal>\r</literal>
+       jako znak koĹca lini.
       </para>
       <para>
-       Jeśli użyjesz nieprawidłowego końca lini do zapisu pliku, możesz
-       zaobserwować, w innych aplikacjach otwierając ten plik, że "wygląda on
+       JeĹli uĹźyjesz nieprawidĹowego koĹca lini do zapisu pliku, moĹźesz
+       zaobserwowaÄ, w innych aplikacjach otwierajÄc ten plik, Ĺźe "wyglÄda on
        zabawnie".
       </para>
       <para>
-       Windows oferuje flagę (<literal>'t'</literal>) konwertującą tryb tekstowy,
-       która przezroczyście przekłada <literal>\n</literal> na
-       <literal>\r\n</literal> kiedy pracujesz z plikiem. Dla kontrastu, możesz
-       także uzyć <literal>'b'</literal> aby wymusić tryb binarny, wtedy
-       nie będzie konwertować twoich danych. Aby użyć tych flag, wstaw
+       Windows oferuje flagÄ (<literal>'t'</literal>) konwertujÄcÄ tryb tekstowy,
+       ktĂłra przezroczyĹcie przekĹada <literal>\n</literal> na
+       <literal>\r\n</literal> kiedy pracujesz z plikiem. Dla kontrastu, moĹźesz
+       takĹźe uzyÄ <literal>'b'</literal> aby wymusiÄ tryb binarny, wtedy
+       nie bÄdzie konwertowaÄ twoich danych. Aby uĹźyÄ tych flag, wstaw
        <literal>'b'</literal> lub <literal>'t'</literal> jako ostatni
        znak w parametrze <parameter>tryb</parameter>.
       </para>
       <para>
-       Domyślnie tryb konwersji zależy od SAPI i wersji PHP jakiej używasz,
-       więc namawiamy aby zawsze podawać stosowną flage w celu przenośności.
-       Powinieneś użyć trybu <literal>'t'</literal> jeśli pracujesz ze
-       zwykłymi plikami tekstowymi (plain-text)i używasz  <literal>\n</literal>
-       do ograniczenia konców lini w twoim skrypcie, ale wymagasz aby twój
-       plik był czytelny w aplikacjach takich jak notatnik. Powinieneś uzyć
-       <literal>'b'</literal> w każdym innym przypadku.
+       DomyĹlnie tryb konwersji zaleĹźy od SAPI i wersji PHP jakiej uĹźywasz,
+       wiÄc namawiamy aby zawsze podawaÄ stosownÄ flage w celu przenoĹnoĹci.
+       PowinieneĹ uĹźyÄ trybu <literal>'t'</literal> jeĹli pracujesz ze
+       zwykĹymi plikami tekstowymi (plain-text)i uĹźywasz  <literal>\n</literal>
+       do ograniczenia koncĂłw lini w twoim skrypcie, ale wymagasz aby twĂłj
+       plik byĹ czytelny w aplikacjach takich jak notatnik. PowinieneĹ uzyÄ
+       <literal>'b'</literal> w kaĹźdym innym przypadku.
       </para>
       <para>
-       Jeśli nie podasz flagi 'b' kiedy pracujesz na binarnych plikach, możesz
-       doświadczyć dziwnych problemów z twoimi danymi, włączając uszkodzone pliki
+       JeĹli nie podasz flagi 'b' kiedy pracujesz na binarnych plikach, moĹźesz
+       doĹwiadczyÄ dziwnych problemĂłw z twoimi danymi, wĹÄczajÄc uszkodzone pliki
        graficzne i dziwne problemy ze znakami <literal>\r\n</literal>.
       </para>
      </note>
      <note>
       <para>
-       Dla przenośności, bardzo zalecane jest użycie zawsze flagi 'b'
-       kiedy otwierasz pliki za pomocą <function>fopen</function>.
+       Dla przenoĹnoĹci, bardzo zalecane jest uĹźycie zawsze flagi 'b'
+       kiedy otwierasz pliki za pomocÄ <function>fopen</function>.
       </para>
      </note>
      <note>
       <para>
-       Ponownie, dla przenośności, jest również bardzo zalecane abyś,
-       przepisał swój kod, który używa lub polega na trybie <literal>'t'</literal>
-       tak aby używał poprawnego końca lini oraz trybu <literal>'b'</literal>.
+       Ponownie, dla przenoĹnoĹci, jest rĂłwnieĹź bardzo zalecane abyĹ,
+       przepisaĹ swĂłj kod, ktĂłry uĹźywa lub polega na trybie <literal>'t'</literal>
+       tak aby uĹźywaĹ poprawnego koĹca lini oraz trybu <literal>'b'</literal>.
       </para>
      </note>
     </listitem>
    </varlistentry>
    <varlistentry>
-    <term><parameter>użyj_include_path</parameter></term>
+    <term><parameter>uĹźyj_include_path</parameter></term>
      <listitem>
       <para>
-       Opcjonalny trzeci parametr <parameter>użyj_include_path</parameter>
-       może być ustawiony na '1' lub &true; jeśli chcesz szukać pliku także w 
+       Opcjonalny trzeci parametr <parameter>uĹźyj_include_path</parameter>
+       moĹźe byÄ ustawiony na '1' lub &true; jeĹli chcesz szukaÄ pliku takĹźe w 
        <link linkend="ini.include-path">include_path</link>.
       </para>
      </listitem>
@@ -243,16 +243,16 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca wskaźnik pliku do zasobu w przypadku sukcesu lub &false; przy błędzie.
+   Zwraca wskaĹşnik pliku do zasobu w przypadku sukcesu lub &false; przy bĹÄdzie.
   </para>
  </refsect1>
 
  <refsect1 role="errors">
   &reftitle.errors;
   <para>
-   Jeśli otwieranie się nie powiedzie, funkcja wygeneruje błąd na poziomie 
-   <constant>E_WARNING</constant>. Możesz użyć <link linkend="language.operators.errorcontrol">@</link> aby
-   zatuszować to ostrzeżenie.
+   JeĹli otwieranie siÄ nie powiedzie, funkcja wygeneruje bĹÄd na poziomie 
+   <constant>E_WARNING</constant>. MoĹźesz uĹźyÄ <link linkend="language.operators.errorcontrol">@</link> aby
+   zatuszowaÄ to ostrzeĹźenie.
   </para>
  </refsect1>
 
@@ -271,11 +271,11 @@
       <row>
        <entry>4.3.2</entry>
        <entry>
-        Od PHP 4.3.2 domyślny tryb ustawiany jest na binarny, dla wszystkich
-        platform, które rozróżniają tryby binarne i tekstowe. Jeśli masz
-        problemy ze skryptem po aktualizacji, spróbuj użyć flagi <literal>'t'</literal>
-	jako obejście dopóki nie uczynisz Twojego skryptu bardziej przenośnym
-	jak opisano niżej.
+        Od PHP 4.3.2 domyĹlny tryb ustawiany jest na binarny, dla wszystkich
+        platform, ktĂłre rozrĂłĹźniajÄ tryby binarne i tekstowe. JeĹli masz
+        problemy ze skryptem po aktualizacji, sprĂłbuj uĹźyÄ flagi <literal>'t'</literal>
+	jako obejĹcie dopĂłki nie uczynisz Twojego skryptu bardziej przenoĹnym
+	jak opisano niĹźej.
        </entry>
       </row>
       <row>
@@ -294,7 +294,7 @@
   &reftitle.examples;
   <para>
    <example>
-    <title><function>fopen</function> przykłady</title>
+    <title><function>fopen</function> przykĹady</title>
      <programlisting role="php">
 <![CDATA[
 <?php
@@ -314,9 +314,9 @@ $handle = fopen("ftp://uzytkownik:haslo@przyklad.com/jakisplik.txt", "w");
   &warn.ssl-non-standard;
   &note.sm.uidcheck.dir;
   <para>
-   Jeśli doświadczasz problemów z odczytem lub zapisywaniem do plików i
-   używasz PHP w postaci modułu serwera, pamiętaj, żeby się upewnić, że
-   pliki i katalogi, których używasz są dostępne dla procesu serwera.
+   JeĹli doĹwiadczasz problemĂłw z odczytem lub zapisywaniem do plikĂłw i
+   uĹźywasz PHP w postaci moduĹu serwera, pamiÄtaj, Ĺźeby siÄ upewniÄ, Ĺźe
+   pliki i katalogi, ktĂłrych uĹźywasz sÄ dostÄpne dla procesu serwera.
   </para>
  </refsect1>
 

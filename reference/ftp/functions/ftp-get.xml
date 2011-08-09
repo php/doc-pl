@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.ftp-get" xmlns="http://docbook.org/ns/docbook">
@@ -10,7 +10,7 @@
   &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>ftp_get</methodname>
-   <methodparam><type>resource</type><parameter>strumień_ftp</parameter></methodparam>
+   <methodparam><type>resource</type><parameter>strumieĹ_ftp</parameter></methodparam>
    <methodparam><type>string</type><parameter>plik_lokalny</parameter></methodparam>
    <methodparam><type>string</type><parameter>plik_zdalny</parameter></methodparam>
    <methodparam><type>int</type><parameter>tryb</parameter></methodparam>
@@ -26,10 +26,10 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>strumień_ftp</parameter></term>
+     <term><parameter>strumieĹ_ftp</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia z serwerem FTP.
+       Identyfikator poĹÄczenia z serwerem FTP.
       </para>
      </listitem>
     </varlistentry>
@@ -37,7 +37,7 @@
      <term><parameter>plik_lokalny</parameter></term>
      <listitem>
       <para>
-       Ścieżka do pliku lokalnego (zostanie on nadpisany, jeśli plik taki już
+       ĹcieĹźka do pliku lokalnego (zostanie on nadpisany, jeĹli plik taki juĹź
        istnieje).
       </para>
      </listitem>
@@ -46,7 +46,7 @@
      <term><parameter>plik_zdalny</parameter></term>
      <listitem>
       <para>
-       Ścieżka do pliku zdalnego.
+       ĹcieĹźka do pliku zdalnego.
       </para>
      </listitem>
     </varlistentry>
@@ -54,7 +54,7 @@
      <term><parameter>tryb</parameter></term>
      <listitem>
       <para>
-       Tryb transferu. Musi to być <constant>FTP_ASCII</constant> lub
+       Tryb transferu. Musi to byÄ <constant>FTP_ASCII</constant> lub
        <constant>FTP_BINARY</constant>.
       </para>
      </listitem>
@@ -63,7 +63,7 @@
      <term><parameter>pozycja_wznowienia</parameter></term>
      <listitem>
       <para>
-       Pozycja w pliku zdalnym, od której rozpoczęte zostanie pobieranie.
+       Pozycja w pliku zdalnym, od ktĂłrej rozpoczÄte zostanie pobieranie.
       </para>
      </listitem>
     </varlistentry>
@@ -80,7 +80,7 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład użycia <function>ftp_get</function></title>
+    <title>PrzykĹad uĹźycia <function>ftp_get</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -89,20 +89,20 @@
 $plik_lokalny = 'local.zip';
 $plik_zdalny = 'server.zip';
 
-// ustanowienie połączenia
+// ustanowienie poĹÄczenia
 $conn_id = ftp_connect($ftp_server);
 
 // logowanie
 $login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass);
 
-// próba pobrania $plik_zdalny i zapisania go do $plik_lokalny
+// prĂłba pobrania $plik_zdalny i zapisania go do $plik_lokalny
 if (ftp_get($conn_id, $plik_lokalny, $plik_zdalny, FTP_BINARY)) {
-    echo "Pomyślnie zapisano $plik_lokalny\n";
+    echo "PomyĹlnie zapisano $plik_lokalny\n";
 } else {
     echo "Problem.\n";
 }
 
-// zamknięcie połączenia
+// zamkniÄcie poĹÄczenia
 ftp_close($conn_id);
 
 ?>

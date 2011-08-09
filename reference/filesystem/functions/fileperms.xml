@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.fileperms" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>fileperms</refname>
-  <refpurpose>Pobiera prawa dostępu pliku</refpurpose>
+  <refpurpose>Pobiera prawa dostÄpu pliku</refpurpose>
  </refnamediv>
  <refsect1>
   <title>Opis</title>
@@ -13,12 +13,12 @@
    <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Zwraca prawa dostępu pliku, lub &false; w przypadku błędu.
+   Zwraca prawa dostÄpu pliku, lub &false; w przypadku bĹÄdu.
   </para>
   &note.clearstatcache;
   &tip.fopen-wrapper.stat;
   <example>
-   <title>Wyświetlanie uprawnień w postaci ósemkowej</title>
+   <title>WyĹwietlanie uprawnieĹ w postaci Ăłsemkowej</title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -27,7 +27,7 @@ echo substr(sprintf('%o', fileperms('/etc/passwd')), -4);
 ?>
 ]]>
     </programlisting>
-    <para>To powino wyświetlić:</para>
+    <para>To powino wyĹwietliÄ:</para>
    <screen>
 <![CDATA[
 1777
@@ -36,7 +36,7 @@ echo substr(sprintf('%o', fileperms('/etc/passwd')), -4);
    </screen>
   </example>
   <example>
-   <title>Wyświetlanie wszystkich uprawnień</title>
+   <title>WyĹwietlanie wszystkich uprawnieĹ</title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -49,16 +49,16 @@ if (($perms & 0xC000) == 0xC000) {
   // Link symboliczny
   $info = 'l';
 } elseif (($perms & 0x8000) == 0x8000) {
-  // Zwykły plik
+  // ZwykĹy plik
   $info = '-';
 } elseif (($perms & 0x6000) == 0x6000) {
-  // Urządzenie blokowe
+  // UrzÄdzenie blokowe
   $info = 'b';
 } elseif (($perms & 0x4000) == 0x4000) {
   // Katalog
   $info = 'd';
 } elseif (($perms & 0x2000) == 0x2000) {
-  // Urządzenie znakowe
+  // UrzÄdzenie znakowe
   $info = 'c';
 } elseif (($perms & 0x1000) == 0x1000) {
   // Potok (FIFO)
@@ -68,7 +68,7 @@ if (($perms & 0xC000) == 0xC000) {
    $info = 'u';
 }
 
-// Właściciel
+// WĹaĹciciel
 $info .= (($perms & 0x0100) ? 'r' : '-');
 $info .= (($perms & 0x0080) ? 'w' : '-');
 $info .= (($perms & 0x0040) ?
@@ -82,7 +82,7 @@ $info .= (($perms & 0x0008) ?
          (($perms & 0x0400) ? 's' : 'x' ) :
          (($perms & 0x0400) ? 'S' : '-'));
 
-// Świat
+// Ĺwiat
 $info .= (($perms & 0x0004) ? 'r' : '-');
 $info .= (($perms & 0x0002) ? 'w' : '-');
 $info .= (($perms & 0x0001) ?
@@ -93,7 +93,7 @@ echo $info;
 ?>
 ]]>
      </programlisting>
-    <para>To powino wyświetlić:</para>
+    <para>To powino wyĹwietliÄ:</para>
     <screen>
 <![CDATA[
 -rw-r--r--
@@ -101,7 +101,7 @@ echo $info;
     </screen>
    </example>
   <simpara>
-   Patrz także: <function>is_readable</function>,
+   Patrz takĹźe: <function>is_readable</function>,
    i <function>stat</function>
   </simpara>
  </refsect1>

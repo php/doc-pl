@@ -1,16 +1,16 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.ftp-pwd" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>ftp_pwd</refname>
-  <refpurpose>Zwraca nazwę katalogu bieżącego</refpurpose>
+  <refpurpose>Zwraca nazwÄ katalogu bieĹźÄcego</refpurpose>
  </refnamediv>
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>string</type><methodname>ftp_pwd</methodname>
-   <methodparam><type>resource</type><parameter>strumień_ftp</parameter></methodparam>
+   <methodparam><type>resource</type><parameter>strumieĹ_ftp</parameter></methodparam>
   </methodsynopsis>
   <para>
   </para>
@@ -20,10 +20,10 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>strumień_ftp</parameter></term>
+     <term><parameter>strumieĹ_ftp</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia z serwerem FTP.
+       Identyfikator poĹÄczenia z serwerem FTP.
       </para>
      </listitem>
     </varlistentry>
@@ -33,31 +33,31 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca nazwę bieżącego katalogu, lub &false; w przypadku napotkania błędu.
+   Zwraca nazwÄ bieĹźÄcego katalogu, lub &false; w przypadku napotkania bĹÄdu.
   </para>
  </refsect1>
  <refsect1 role="examples">
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład użycia <function>ftp_pwd</function></title>
+    <title>PrzykĹad uĹźycia <function>ftp_pwd</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
 
-// nawiązanie połączenia
+// nawiÄzanie poĹÄczenia
 $conn_id = ftp_connect($ftp_server);
 
 // logowanie
 $login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass);
 
-// zmiana katalogu bieżącego na public_html
+// zmiana katalogu bieĹźÄcego na public_html
 ftp_chdir($conn_id, 'public_html');
 
-// wyświetlenie katalogu bieżącego
+// wyĹwietlenie katalogu bieĹźÄcego
 echo ftp_pwd($conn_id); // /public_html
 
-// zamknięcie połączenia
+// zamkniÄcie poĹÄczenia
 ftp_close($conn_id);
 ?>
 ]]>

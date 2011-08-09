@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.file" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>file</refname>
-  <refpurpose>Czyta całą zawartość pliku do tablicy</refpurpose>
+  <refpurpose>Czyta caĹÄ zawartoĹÄ pliku do tablicy</refpurpose>
  </refnamediv>
  <refsect1>
   <title>Opis</title>
@@ -15,15 +15,15 @@
    <methodparam choice="opt"><type>resource</type><parameter>kontekst</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Działa podobnie do <function>file_get_contents</function>, tylko że
-   <function>file</function> zwraca plik w tablicy. Każdy
-   element tablicy odpowiada linii w pliku. Elementy tablicy zawierają
-   znak nowej linii. W przypadku błędu, <function>file</function>
+   DziaĹa podobnie do <function>file_get_contents</function>, tylko Ĺźe
+   <function>file</function> zwraca plik w tablicy. KaĹźdy
+   element tablicy odpowiada linii w pliku. Elementy tablicy zawierajÄ
+   znak nowej linii. W przypadku bĹÄdu, <function>file</function>
    zwraca &false;.
   </para>
   <para>
-   Opcjonalny parametr <parameter>flagi</parameter> może być jedną lub więcej, z
-   następujących stałych:
+   Opcjonalny parametr <parameter>flagi</parameter> moĹźe byÄ jednÄ lub wiÄcej, z
+   nastÄpujÄcych staĹych:
    <variablelist>
     <varlistentry>
      <term>
@@ -41,7 +41,7 @@
      </term>
      <listitem>
       <simpara>
-       Nie dodawaj nowej lini na na końcu każdego elementu tablicy.
+       Nie dodawaj nowej lini na na koĹcu kaĹźdego elementu tablicy.
       </simpara>
      </listitem>
     </varlistentry>
@@ -51,7 +51,7 @@
      </term>
      <listitem>
       <simpara>
-       Pomiń puste linie.
+       PomiĹ puste linie.
       </simpara>
      </listitem>
     </varlistentry>
@@ -60,8 +60,8 @@
   <note>
    <para>
     Przed PHP 5.0.0 parametr <parameter>flagi</parameter> jedynie
-    ukrywał <link linkend="ini.include-path">include_path</link> i był
-    włączany przez 1.
+    ukrywaĹ <link linkend="ini.include-path">include_path</link> i byĹ
+    wĹÄczany przez 1.
    </para>
   </note>
   <para>
@@ -69,16 +69,16 @@
     <programlisting role="php">
 <![CDATA[
 <?php
-// Pobierz plik do tablicy. W tym przykładzie poprzez HTTP pobierzemy
-// źródło HTML z URL
+// Pobierz plik do tablicy. W tym przykĹadzie poprzez HTTP pobierzemy
+// ĹşrĂłdĹo HTML z URL
 $lines = file('http://www.example.com/');
-// Za pomocą pętli przeglądamy naszą tablicę i pokazujemy źródło strony w postaci
-// źródła HTML oraz numery linii.
+// Za pomocÄ pÄtli przeglÄdamy naszÄ tablicÄ i pokazujemy ĹşrĂłdĹo strony w postaci
+// ĹşrĂłdĹa HTML oraz numery linii.
   foreach ($lines as $line_num => $line) {
       echo "Linia #<b>{$line_num}</b> : " . htmlspecialchars($line) . "<br />\n";
 }
 
-// Kolejny przyklad pozwala pobrać stronę i umieścić ją w łańcuchu znaków  Zobacz także file_get_contents().
+// Kolejny przyklad pozwala pobraÄ stronÄ i umieĹciÄ jÄ w ĹaĹcuchu znakĂłw  Zobacz takĹźe file_get_contents().
 $html = implode ('', file ('http://www.example.com/'));
 ?>
 ]]>
@@ -88,24 +88,24 @@ $html = implode ('', file ('http://www.example.com/'));
     &tip.fopen-wrapper;
     <note>
      <para>
-      Każda linia w wynikowej tabeli będzie zawierać znak(i) końca linii chyba, że jest użyte FILE_IGNORE_NEW_LINES,
-      jeśli nie chcesz ich musisz uzyć <function>rtrim</function>.
+      KaĹźda linia w wynikowej tabeli bÄdzie zawieraÄ znak(i) koĹca linii chyba, Ĺźe jest uĹźyte FILE_IGNORE_NEW_LINES,
+      jeĹli nie chcesz ich musisz uzyÄ <function>rtrim</function>.
      </para>
     </note>
     &note.line-endings;
   <note>
    <para>
-    W PHP 4.3.0 możesz użyć <function>file_get_contents</function> aby
-    zwrócić zawartość pliku do łańcucha.
+    W PHP 4.3.0 moĹźesz uĹźyÄ <function>file_get_contents</function> aby
+    zwrĂłciÄ zawartoĹÄ pliku do ĹaĹcucha.
    </para>
    <para>
-     W PHP 4.3.0 <function>file</function> stał się binarnie bezpieczny.
+     W PHP 4.3.0 <function>file</function> staĹ siÄ binarnie bezpieczny.
    </para>
   </note>
     &note.context-support;
     &warn.ssl-non-standard;
   <para>
-   Patrz także: <function>readfile</function>,
+   Patrz takĹźe: <function>readfile</function>,
    <function>fopen</function>, <function>fsockopen</function>,
    <function>popen</function>, <function>file_get_contents</function>,
    <function>include</function> i

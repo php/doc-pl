@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.fbsql-query" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>fbsql_query</refname>
-  <refpurpose>Wysyła zapytanie do serwera FrontBase</refpurpose>
+  <refpurpose>WysyĹa zapytanie do serwera FrontBase</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
@@ -12,18 +12,18 @@
   <methodsynopsis>
    <type>resource</type><methodname>fbsql_query</methodname>
    <methodparam><type>string</type><parameter>zapytanie</parameter></methodparam>
-   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_poĹÄczenia</parameter></methodparam>
    <methodparam choice="opt"><type>int</type><parameter>rozmiar_partii_danych</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Wysyła <parameter>zapytanie</parameter> do bieżącej bazy danych na
+   WysyĹa <parameter>zapytanie</parameter> do bieĹźÄcej bazy danych na
    serwerze.
   </para>
   <para>
-   Jeśli wykonanie zapytania się powiedzie, możemy wywołać <function>fbsql_num_rows</function>
-   aby się dowiedzieć jak dużo wierszy zostało zwróconych przez instrukcję SELECT, lub
-   <function>fbsql_affected_rows</function> żeby wykryć ile wierszy zostało
-   przetworzonych przez instrukcję DELETE, INSERT, REPLACE, lub UPDATE.
+   JeĹli wykonanie zapytania siÄ powiedzie, moĹźemy wywoĹaÄ <function>fbsql_num_rows</function>
+   aby siÄ dowiedzieÄ jak duĹźo wierszy zostaĹo zwrĂłconych przez instrukcjÄ SELECT, lub
+   <function>fbsql_affected_rows</function> Ĺźeby wykryÄ ile wierszy zostaĹo
+   przetworzonych przez instrukcjÄ DELETE, INSERT, REPLACE, lub UPDATE.
   </para>
  </refsect1>
 
@@ -39,7 +39,7 @@
       </para>
       <note>
        <para>
-        Zapytanie powinno zawsze kończyć się średnikiem.
+        Zapytanie powinno zawsze koĹczyÄ siÄ Ĺrednikiem.
        </para>
       </note>
      </listitem>
@@ -60,51 +60,51 @@
   &reftitle.returnvalues;
   <para>
    <function>fbsql_query</function> zwraca &true; (nie zero) lub &false;
-   aby wskazać, czy zapytanie zostało wykonane prawidłowo.  Zwrócenie
-   &true; oznacza, że zapytanie było prawidłowe i mogło zostać wykonane
+   aby wskazaÄ, czy zapytanie zostaĹo wykonane prawidĹowo.  ZwrĂłcenie
+   &true; oznacza, Ĺźe zapytanie byĹo prawidĹowe i mogĹo zostaÄ wykonane
    przez serwer.  Funkcja nie informuje o liczbie przetworzonych
-   lub zwróconych wieszy.  Jest całkiem możliwe, że zapytanie było
-   prawidłowe, jednak nie przetworzyło ani nie zwróciło żadnych wierszy.
+   lub zwrĂłconych wieszy.  Jest caĹkiem moĹźliwe, Ĺźe zapytanie byĹo
+   prawidĹowe, jednak nie przetworzyĹo ani nie zwrĂłciĹo Ĺźadnych wierszy.
   </para>
   <para>
    Dla instrukcji SELECT <function>fbsql_query</function> zwraca nowy
-   identyfikator wyniku, który możemy przekazać do <function>fbsql_result</function>.
+   identyfikator wyniku, ktĂłry moĹźemy przekazaÄ do <function>fbsql_result</function>.
   </para>
   <para>
-   <function>fbsql_query</function> może się nie powieść i zwrócić &false; jeśli
-   nie mamy uprawnień dostępu do tabel określonych w zapytaniu.
+   <function>fbsql_query</function> moĹźe siÄ nie powieĹÄ i zwrĂłciÄ &false; jeĹli
+   nie mamy uprawnieĹ dostÄpu do tabel okreĹlonych w zapytaniu.
   </para>
  </refsect1>
 
  <refsect1 role="examples">
   &reftitle.examples;
    <para>
-   Poniższe zapytanie ma nieprawidłową składnię, a zatem wywołanie
-   <function>fbsql_query</function> się nie powiedzie i zwróci &false;:
+   PoniĹźsze zapytanie ma nieprawidĹowÄ skĹadniÄ, a zatem wywoĹanie
+   <function>fbsql_query</function> siÄ nie powiedzie i zwrĂłci &false;:
    <example>
-    <title>Przykład <function>fbsql_query</function></title>
+    <title>PrzykĹad <function>fbsql_query</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
 $result = fbsql_query("SELECT * WHERE 1=1")
-    or die ("Nieprawidłowe zapytanie");
+    or die ("NieprawidĹowe zapytanie");
 ?>
 ]]>
     </programlisting>
    </example>
   </para>
   <para>
-   Poniższe zapytanie ma nieprawidłową składnię, jeżeli
-   <literal>kolumna</literal> nie jest kolumną w tabeli
-   <literal>tabela</literal>, tak więc wywołanie <function>fbsql_query</function>
-   się nie powiedzie i zwróci &false;:
+   PoniĹźsze zapytanie ma nieprawidĹowÄ skĹadniÄ, jeĹźeli
+   <literal>kolumna</literal> nie jest kolumnÄ w tabeli
+   <literal>tabela</literal>, tak wiÄc wywoĹanie <function>fbsql_query</function>
+   siÄ nie powiedzie i zwrĂłci &false;:
    <example>
-    <title>Przykład <function>fbsql_query</function></title>
+    <title>PrzykĹad <function>fbsql_query</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
 $result = fbsql_query ("SELECT kolumna FROM tabela;")
-    or die ("Nieprawidłowe zapytanie");
+    or die ("NieprawidĹowe zapytanie");
 ?>
 ]]>
     </programlisting>

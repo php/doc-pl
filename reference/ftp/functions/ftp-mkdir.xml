@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.ftp-mkdir" xmlns="http://docbook.org/ns/docbook">
@@ -10,7 +10,7 @@
   &reftitle.description;
   <methodsynopsis>
    <type>string</type><methodname>ftp_mkdir</methodname>
-   <methodparam><type>resource</type><parameter>strumień_ftp</parameter></methodparam>
+   <methodparam><type>resource</type><parameter>strumieĹ_ftp</parameter></methodparam>
    <methodparam><type>string</type><parameter>katalog</parameter></methodparam>
   </methodsynopsis>
   <para> 
@@ -22,10 +22,10 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>strumień_ftp</parameter></term>
+     <term><parameter>strumieĹ_ftp</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia z serwerem FTP.
+       Identyfikator poĹÄczenia z serwerem FTP.
       </para>
      </listitem>
     </varlistentry>
@@ -33,7 +33,7 @@
      <term><parameter>katalog</parameter></term>
      <listitem>
       <para>
-       Nazwa katalogu, który ma być stworzony.
+       Nazwa katalogu, ktĂłry ma byÄ stworzony.
       </para>
      </listitem>
     </varlistentry>
@@ -43,34 +43,34 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca nazwę nowo stworzonego katalogu, lub &false; w przypadku błędu.
+   Zwraca nazwÄ nowo stworzonego katalogu, lub &false; w przypadku bĹÄdu.
   </para>
  </refsect1>
  <refsect1 role="examples">
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład użycia <function>ftp_mkdir</function></title>
+    <title>PrzykĹad uĹźycia <function>ftp_mkdir</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
 
 $katalog = 'www';
 
-// nawiązanie połączenia
+// nawiÄzanie poĹÄczenia
 $conn_id = ftp_connect($ftp_server);
 
 // logowanie
 $login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass);
 
-// próba stworzenia katalogu
+// prĂłba stworzenia katalogu
 if (ftp_mkdir($conn_id, $katalog)) {
- echo "Pomyślnie stworzono katalog $katalog\n";
+ echo "PomyĹlnie stworzono katalog $katalog\n";
 } else {
- echo "Wystąpiły błędy przy tworzeniu katalogu $katalog\n";
+ echo "WystÄpiĹy bĹÄdy przy tworzeniu katalogu $katalog\n";
 }
 
-// zamknięcie połączenia
+// zamkniÄcie poĹÄczenia
 ftp_close($conn_id);
 ?>
 ]]>

@@ -1,21 +1,21 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.ftp-rawlist" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>ftp_rawlist</refname>
-  <refpurpose>Zwraca szczegółową listę plików z podanego katalogu</refpurpose>
+  <refpurpose>Zwraca szczegĂłĹowÄ listÄ plikĂłw z podanego katalogu</refpurpose>
  </refnamediv>
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>array</type><methodname>ftp_rawlist</methodname>
-   <methodparam><type>resource</type><parameter>strumień_ftp</parameter></methodparam>
+   <methodparam><type>resource</type><parameter>strumieĹ_ftp</parameter></methodparam>
    <methodparam><type>string</type><parameter>katalog</parameter></methodparam>
    <methodparam choice="opt"><type>bool</type><parameter>rekurencyjnie</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>ftp_rawlist</function> wywołuje polecenie FTP
+   <function>ftp_rawlist</function> wywoĹuje polecenie FTP
    <command>LIST</command> i zwraca wynik tego polecenia w postaci tablicy.
   </para>
  </refsect1>
@@ -24,10 +24,10 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>strumień_ftp</parameter></term>
+     <term><parameter>strumieĹ_ftp</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia z serwerem FTP.
+       Identyfikator poĹÄczenia z serwerem FTP.
       </para>
      </listitem>
     </varlistentry>
@@ -35,7 +35,7 @@
      <term><parameter>katalog</parameter></term>
      <listitem>
       <para>
-       Ścieżka do wybranego katalogu.
+       ĹcieĹźka do wybranego katalogu.
       </para>
      </listitem>
     </varlistentry>
@@ -43,7 +43,7 @@
      <term><parameter>rekurencyjnie</parameter></term>
      <listitem>
       <para>
-       Jeśli argument ten ma wartość &true;, wydane zostanie polecenie
+       JeĹli argument ten ma wartoĹÄ &true;, wydane zostanie polecenie
        <command>LIST -R</command>.
       </para>
      </listitem>
@@ -54,11 +54,11 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca tablicę, w której każdy element odpowiada jednej linijce tekstu.
+   Zwraca tablicÄ, w ktĂłrej kaĹźdy element odpowiada jednej linijce tekstu.
   </para>
   <para>
-   Wynik nie jest przetwarzany w żaden sposób. Do interpretacji wyników może
-   być użyty identyfikator typu systemu zwracany przez funkcję
+   Wynik nie jest przetwarzany w Ĺźaden sposĂłb. Do interpretacji wynikĂłw moĹźe
+   byÄ uĹźyty identyfikator typu systemu zwracany przez funkcjÄ
    <function>ftp_systype</function>.
   </para>
  </refsect1>
@@ -66,24 +66,24 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład użycia <function>ftp_rawlist</function></title>
+    <title>PrzykĹad uĹźycia <function>ftp_rawlist</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
 
-// nawiązanie połączenia
+// nawiÄzanie poĹÄczenia
 $conn_id = ftp_connect($ftp_server);
 
 // logowanie
 $login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass);
 
-// pobranie listy plików dla katalogu głównego
+// pobranie listy plikĂłw dla katalogu gĹĂłwnego
 $buff = ftp_rawlist($conn_id, '/');
 
-// zamknięcie połączenia
+// zamkniÄcie poĹÄczenia
 ftp_close($conn_id);
 
-// wyświetlenie bufora
+// wyĹwietlenie bufora
 var_dump($buff);
 ?>
 ]]>

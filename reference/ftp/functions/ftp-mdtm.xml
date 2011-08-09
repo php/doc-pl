@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.ftp-mdtm" xmlns="http://docbook.org/ns/docbook">
@@ -10,7 +10,7 @@
   &reftitle.description;
   <methodsynopsis>
    <type>int</type><methodname>ftp_mdtm</methodname>
-   <methodparam><type>resource</type><parameter>strumień_ftp</parameter></methodparam>
+   <methodparam><type>resource</type><parameter>strumieĹ_ftp</parameter></methodparam>
    <methodparam><type>string</type><parameter>plik_zdalny</parameter></methodparam>
   </methodsynopsis>
   <para>
@@ -19,12 +19,12 @@
   </para>
   <note>
    <para>
-    Nie wszystkie serwery FTP obsługują tą opcję.
+    Nie wszystkie serwery FTP obsĹugujÄ tÄ opcjÄ.
    </para>
   </note>
   <note>
    <para>
-    <function>ftp_mdtm</function> nie działa dla katalogów.
+    <function>ftp_mdtm</function> nie dziaĹa dla katalogĂłw.
    </para>
   </note>
  </refsect1>
@@ -33,10 +33,10 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>strumień_ftp</parameter></term>
+     <term><parameter>strumieĹ_ftp</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia z serwerem FTP.
+       Identyfikator poĹÄczenia z serwerem FTP.
       </para>
      </listitem>
     </varlistentry>
@@ -44,7 +44,7 @@
      <term><parameter>plik_zdalny</parameter></term>
      <listitem>
       <para>
-       Plik, którego data ostatniej modyfikacji ma być zwrócona.
+       Plik, ktĂłrego data ostatniej modyfikacji ma byÄ zwrĂłcona.
       </para>
      </listitem>
     </varlistentry>
@@ -55,21 +55,21 @@
   &reftitle.returnvalues;
   <para>
    Zwraca czas ostatniej modyfikacji w postaci Uniksowego znacznika czasu
-   (timestamp) w przypadku sukcesu, lub -1 w przypadku błędu.
+   (timestamp) w przypadku sukcesu, lub -1 w przypadku bĹÄdu.
   </para>
  </refsect1>
  <refsect1 role="examples">
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład użycia <function>ftp_mdtm</function></title>
+    <title>PrzykĹad uĹźycia <function>ftp_mdtm</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
 
 $plik = 'plik.txt';
 
-// nawiązanie połączenia
+// nawiÄzanie poĹÄczenia
 $conn_id = ftp_connect($ftp_server);
 
 // logowanie
@@ -79,13 +79,13 @@ $login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass);
 $buff = ftp_mdtm($conn_id, $plik);
 
 if ($buff != -1) {
-    // plik.txt został zmodyfikowany 26.03.2003 14:16:41.
-    echo "$plik został zmodyfikowany " . date("d.m.Y H:i:s.", $buff);
+    // plik.txt zostaĹ zmodyfikowany 26.03.2003 14:16:41.
+    echo "$plik zostaĹ zmodyfikowany " . date("d.m.Y H:i:s.", $buff);
 } else {
-    echo "Data modyfikacji nie została pobrana.";
+    echo "Data modyfikacji nie zostaĹa pobrana.";
 }
 
-// zamknięcie połączenia
+// zamkniÄcie poĹÄczenia
 ftp_close($conn_id);
 
 ?>

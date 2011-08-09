@@ -1,20 +1,20 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id='function.ftp-exec' xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>ftp_exec</refname>
-  <refpurpose>Żąda wykonanie polecenia przez serwer FTP</refpurpose>
+  <refpurpose>ĹťÄda wykonanie polecenia przez serwer FTP</refpurpose>
  </refnamediv>
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>ftp_exec</methodname>
-   <methodparam><type>resource</type><parameter>strumień_ftp</parameter></methodparam>
+   <methodparam><type>resource</type><parameter>strumieĹ_ftp</parameter></methodparam>
    <methodparam><type>string</type><parameter>polecenie</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Wysyła żądanie SITE EXEC <parameter>polecenie</parameter> do serwera FTP.
+   WysyĹa ĹźÄdanie SITE EXEC <parameter>polecenie</parameter> do serwera FTP.
   </para>
  </refsect1>
  <refsect1 role="parameters">
@@ -22,10 +22,10 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>strumień_ftp</parameter></term>
+     <term><parameter>strumieĹ_ftp</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia z serwerem FTP.
+       Identyfikator poĹÄczenia z serwerem FTP.
       </para>
      </listitem>
     </varlistentry>
@@ -43,16 +43,16 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca &true; jeśli polecenie zostało pomyślnie wykonane (to znaczy serwer
-   zwrócił kod <literal>200</literal>). W przeciwnym przypadku zwracana jest
-   wartość &false;.
+   Zwraca &true; jeĹli polecenie zostaĹo pomyĹlnie wykonane (to znaczy serwer
+   zwrĂłciĹ kod <literal>200</literal>). W przeciwnym przypadku zwracana jest
+   wartoĹÄ &false;.
   </para>
  </refsect1>
  <refsect1 role="examples">
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład użycia <function>ftp_exec</function></title>
+    <title>PrzykĹad uĹźycia <function>ftp_exec</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -60,20 +60,20 @@
 // przygotowanie polecenia
 $polecenie = 'ls -al >files.txt';
 
-// nawiązanie połączenia
+// nawiÄzanie poĹÄczenia
 $conn_id = ftp_connect($ftp_server);
 
 // logowanie
 $login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass);
 
-// próba wywołania polecenia
+// prĂłba wywoĹania polecenia
 if (ftp_exec($conn_id, $polecenie)) {
-    echo "$polecenie wykonane pomyślnie\n";
+    echo "$polecenie wykonane pomyĹlnie\n";
 } else {
-    echo "Nie można wykonać polecenia $polecenie\n";
+    echo "Nie moĹźna wykonaÄ polecenia $polecenie\n";
 }
 
-// zamknięcie połączenia
+// zamkniÄcie poĹÄczenia
 ftp_close($conn_id);
 
 ?>

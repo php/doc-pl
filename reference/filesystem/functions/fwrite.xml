@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.fwrite" xmlns="http://docbook.org/ns/docbook">
@@ -12,12 +12,12 @@
   <methodsynopsis>
    <type>int</type><methodname>fwrite</methodname>
    <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam>
-   <methodparam><type>string</type><parameter>łańcuch</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>długość</parameter></methodparam>
+   <methodparam><type>string</type><parameter>ĹaĹcuch</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>dĹugoĹÄ</parameter></methodparam>
   </methodsynopsis>
   <simpara>
-   <function>fwrite</function> zapisuje treść
-   <parameter>łańcuch</parameter> do strumienia pliku wskazanego przez
+   <function>fwrite</function> zapisuje treĹÄ
+   <parameter>ĹaĹcuch</parameter> do strumienia pliku wskazanego przez
    <parameter>uchwyt</parameter>.
   </simpara>
  </refsect1>
@@ -33,28 +33,28 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>łańcuch</parameter></term>
+     <term><parameter>ĹaĹcuch</parameter></term>
      <listitem>
       <para>
-       Łańcuch znaków, który ma być zapisany.
+       ĹaĹcuch znakĂłw, ktĂłry ma byÄ zapisany.
       </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>długość</parameter></term>
+     <term><parameter>dĹugoĹÄ</parameter></term>
      <listitem>
       <para>
-       Jeśli podany jest argument <parameter>długość</parameter>, zapisywanie
-       zakończy się po zapisaniu <parameter>długości</parameter> bajtów lub
-       gdy osiagnięty zostanie koniec <parameter>łańcucha</parameter>, cokolwiek zdarzy
-       się pierwsze.
+       JeĹli podany jest argument <parameter>dĹugoĹÄ</parameter>, zapisywanie
+       zakoĹczy siÄ po zapisaniu <parameter>dĹugoĹci</parameter> bajtĂłw lub
+       gdy osiagniÄty zostanie koniec <parameter>ĹaĹcucha</parameter>, cokolwiek zdarzy
+       siÄ pierwsze.
       </para>
       <para>
-        Zauważ, że jeśli argument <parameter>długość</parameter> zosta podany,
+        ZauwaĹź, Ĺźe jeĹli argument <parameter>dĹugoĹÄ</parameter> zosta podany,
         to konfiguracja <link
         linkend="ini.magic-quotes-runtime">magic_quotes_runtime</link>
-        zostaje zignorowana i żadne slashe nie zostaną usunięte z
-        <parameter>łańcucha</parameter>.
+        zostaje zignorowana i Ĺźadne slashe nie zostanÄ usuniÄte z
+        <parameter>ĹaĹcucha</parameter>.
       </para>
      </listitem>
     </varlistentry>
@@ -65,8 +65,8 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <simpara>
-   <function>fwrite</function> zwraca liczbę zapisanych bajtów
-   lub &false; w przypadku błędu.
+   <function>fwrite</function> zwraca liczbÄ zapisanych bajtĂłw
+   lub &false; w przypadku bĹÄdu.
   </simpara>
  </refsect1>
 
@@ -74,26 +74,26 @@
   &reftitle.notes;
   <note>
    <para>
-    W systemach, które rozróżniają pliki na binarne i tekstowe
-    (np. Windows) plik musi zostać otworzony z 'b' włączonym do
+    W systemach, ktĂłre rozrĂłĹźniajÄ pliki na binarne i tekstowe
+    (np. Windows) plik musi zostaÄ otworzony z 'b' wĹÄczonym do
     parametru tryb funkcji <function>fopen</function>.
    </para>
   </note>
   <note>
    <para>
-    Jeśli <parameter>uchwyt</parameter> został utworzony za pomocą <function>fopen</function> w
-    trybie dopisywania, zapis do pliku jest niepodzielny (chyba, że rozmiar
-    <parameter>łańcuch</parameter>a przekracza blok systemu plików, na niektórych
-    platformach, przy założeniu, że plik jest na lokalnym systemie plików). Jeśli tak,
-    to nie ma potrzeby <function>flock</function>owanie zasobu przed wywołaniem
-    <function>fwrite</function>; wszystkie dane zostaną zapisane bez
+    JeĹli <parameter>uchwyt</parameter> zostaĹ utworzony za pomocÄ <function>fopen</function> w
+    trybie dopisywania, zapis do pliku jest niepodzielny (chyba, Ĺźe rozmiar
+    <parameter>ĹaĹcuch</parameter>a przekracza blok systemu plikĂłw, na niektĂłrych
+    platformach, przy zaĹoĹźeniu, Ĺźe plik jest na lokalnym systemie plikĂłw). JeĹli tak,
+    to nie ma potrzeby <function>flock</function>owanie zasobu przed wywoĹaniem
+    <function>fwrite</function>; wszystkie dane zostanÄ zapisane bez
     przerywania.
    </para>
   </note>
   <note>
    <para>
-    Jeśli, zapiszemy dwukrotnie do wskaźnika pliku, dane zostaną dołączone na
-    koncu treści pliku, oznacza to, że poniższy przykład nie zadziała jak się
+    JeĹli, zapiszemy dwukrotnie do wskaĹşnika pliku, dane zostanÄ doĹÄczone na
+    koncu treĹci pliku, oznacza to, Ĺźe poniĹźszy przykĹad nie zadziaĹa jak siÄ
     tego spodziewamy.
     
         <programlisting role="php">
@@ -104,7 +104,7 @@ fwrite($fp, '1');
 fwrite($fp, '23');
 fclose($fp);
 
-// plik 'data.txt' ma treść 123, a nie 23!
+// plik 'data.txt' ma treĹÄ 123, a nie 23!
 ?>
 ]]>
         </programlisting>
@@ -116,27 +116,27 @@ fclose($fp);
   &reftitle.examples;
   <para>
    <example>
-    <title>Prosty przykład <function>fwrite</function></title>
+    <title>Prosty przykĹad <function>fwrite</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
 $nazwapliku = 'test.txt';
 $trochetresci = "Dodaj to do pliku\n";
 
-// Najpierw przekonaj się czy plik istnieje i jest zapisywalny.
+// Najpierw przekonaj siÄ czy plik istnieje i jest zapisywalny.
 if (is_writable($nazwapliku)) {
 
-// W naszym przykładzie otwieramy $nazwapliku w trybie dopisywania.
-// Wskaźnik pliku jest ustawiony na końcu pliku gdzie znajdzie
-// się zawartość $trochetresci po wykonaniu fwrite().
+// W naszym przykĹadzie otwieramy $nazwapliku w trybie dopisywania.
+// WskaĹşnik pliku jest ustawiony na koĹcu pliku gdzie znajdzie
+// siÄ zawartoĹÄ $trochetresci po wykonaniu fwrite().
 if (!$uchwyt = fopen($nazwapliku, 'a')) {
-   echo "Nie mogę otworzyć pliku ($nazwapliku)";
+   echo "Nie mogÄ otworzyÄ pliku ($nazwapliku)";
    exit;
  }
 
 // Zapis $trochetresci do naszego otwartego pliku.
 if (fwrite($uchwyt, $trochetresci) === FALSE) {
-   echo "Nie mogę zapisać do pliku ($nazwapliku)";
+   echo "Nie mogÄ zapisaÄ do pliku ($nazwapliku)";
    exit;
  }
 

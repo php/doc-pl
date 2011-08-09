@@ -1,25 +1,25 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.ftp-close" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>ftp_close</refname>
-  <refpurpose>Zamyka połączenie FTP</refpurpose>
+  <refpurpose>Zamyka poĹÄczenie FTP</refpurpose>
  </refnamediv>
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>ftp_close</methodname>
-   <methodparam><type>resource</type><parameter>strumień_ftp</parameter></methodparam>
+   <methodparam><type>resource</type><parameter>strumieĹ_ftp</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>ftp_close</function> zamyka połączenie o podanym identyfikatorze
+   <function>ftp_close</function> zamyka poĹÄczenie o podanym identyfikatorze
    i zwalnia przypisane do niego zasoby.
   </para>
   <note>
    <para>
-    Po wywołaniu tej funkcji nie jest możliwe korzystanie z danego połączenia
-    FTP - należy stworzyć nowe za pomocą funkcji
+    Po wywoĹaniu tej funkcji nie jest moĹźliwe korzystanie z danego poĹÄczenia
+    FTP - naleĹźy stworzyÄ nowe za pomocÄ funkcji
     <function>ftp_connect</function>.
    </para>
   </note>
@@ -29,10 +29,10 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>strumień_ftp</parameter></term>
+     <term><parameter>strumieĹ_ftp</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia z serwerem FTP.
+       Identyfikator poĹÄczenia z serwerem FTP.
       </para>
      </listitem>
     </varlistentry>
@@ -49,21 +49,21 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład użycia <function>ftp_close</function></title>
+    <title>PrzykĹad uĹźycia <function>ftp_close</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
 
-// Nawiązanie połączenia
+// NawiÄzanie poĹÄczenia
 $conn_id = ftp_connect($ftp_server);
 
 // Logowanie
 $login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass);
 
-// Wyświetlenie bieżącego katalogu
+// WyĹwietlenie bieĹźÄcego katalogu
 echo ftp_pwd($conn_id); // /
 
-// Zamknięcie połączenia
+// ZamkniÄcie poĹÄczenia
 ftp_close($conn_id);
 ?>
 ]]>

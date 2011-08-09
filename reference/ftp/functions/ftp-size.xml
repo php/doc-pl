@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.ftp-size" xmlns="http://docbook.org/ns/docbook">
@@ -10,16 +10,16 @@
   &reftitle.description;
   <methodsynopsis>
    <type>int</type><methodname>ftp_size</methodname>
-   <methodparam><type>resource</type><parameter>strumień_ftp</parameter></methodparam>
+   <methodparam><type>resource</type><parameter>strumieĹ_ftp</parameter></methodparam>
    <methodparam><type>string</type><parameter>plik_zdalny</parameter></methodparam>
   </methodsynopsis>
   <para>
    <function>ftp_size</function> zwraca rozmiar podanego pliku zdalnego
-   wyrażony w bajtach.
+   wyraĹźony w bajtach.
   </para>
   <note>
    <para>
-    Nie wszystkie serwery obsługują tą opcję.
+    Nie wszystkie serwery obsĹugujÄ tÄ opcjÄ.
    </para>
   </note>
  </refsect1>
@@ -28,10 +28,10 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>strumień_ftp</parameter></term>
+     <term><parameter>strumieĹ_ftp</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia z serwerem FTP.
+       Identyfikator poĹÄczenia z serwerem FTP.
       </para>
      </listitem>
     </varlistentry>
@@ -39,7 +39,7 @@
      <term><parameter>plik_zdalny</parameter></term>
      <listitem>
       <para>
-       Plik zdalny, którego rozmiar ma być zwrócony.
+       Plik zdalny, ktĂłrego rozmiar ma byÄ zwrĂłcony.
       </para>
      </listitem>
     </varlistentry>
@@ -49,21 +49,21 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca rozmiar pliku w przypadku powodzenia lub -1 w przypadku błędu.
+   Zwraca rozmiar pliku w przypadku powodzenia lub -1 w przypadku bĹÄdu.
   </para>
  </refsect1>
  <refsect1 role="examples">
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład użycia <function>ftp_size</function></title>
+    <title>PrzykĹad uĹźycia <function>ftp_size</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
 
 $plik = 'plik.txt';
 
-// nawiązanie połączenia
+// nawiÄzanie poĹÄczenia
 $conn_id = ftp_connect($ftp_server);
 
 // logowanie
@@ -73,12 +73,12 @@ $login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass);
 $res = ftp_size($conn_id, $plik);
 
 if ($res != -1) {
-    echo "Rozmiar pliku $plik to $res bajtów";
+    echo "Rozmiar pliku $plik to $res bajtĂłw";
 } else {
-    echo "Nie można pobrać wielkości pliku.";
+    echo "Nie moĹźna pobraÄ wielkoĹci pliku.";
 }
 
-// zamknięcie połączenia
+// zamkniÄcie poĹÄczenia
 ftp_close($conn_id);
 
 ?>

@@ -1,22 +1,22 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.ftp-rename" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>ftp_rename</refname>
-  <refpurpose>Zmienia nazwę pliku lub katalogu na serwerze FTP</refpurpose>
+  <refpurpose>Zmienia nazwÄ pliku lub katalogu na serwerze FTP</refpurpose>
  </refnamediv>
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>ftp_rename</methodname>
-   <methodparam><type>resource</type><parameter>strumień_ftp</parameter></methodparam>
+   <methodparam><type>resource</type><parameter>strumieĹ_ftp</parameter></methodparam>
    <methodparam><type>string</type><parameter>stara_nazwa</parameter></methodparam>
    <methodparam><type>string</type><parameter>nowa_nazwa</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>ftp_rename</function> zmienia nazwę pliku lub katalogu
-   znajdującego się na serwerze FTP.
+   <function>ftp_rename</function> zmienia nazwÄ pliku lub katalogu
+   znajdujÄcego siÄ na serwerze FTP.
   </para>
  </refsect1>
  <refsect1 role="parameters">
@@ -24,10 +24,10 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>strumień_ftp</parameter></term>
+     <term><parameter>strumieĹ_ftp</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia z serwerem FTP.
+       Identyfikator poĹÄczenia z serwerem FTP.
       </para>
      </listitem>
     </varlistentry>
@@ -60,27 +60,27 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład użycia <function>ftp_rename</function></title>
+    <title>PrzykĹad uĹźycia <function>ftp_rename</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
 $stary_plik = 'plik.txt.bak';
 $nowy_plik  = 'plik.txt';
 
-// nawiązanie połączenia
+// nawiÄzanie poĹÄczenia
 $conn_id = ftp_connect($ftp_server);
 
 // logowanie
 $login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass);
 
-// próba zmiany nazwy $stary_plik na $nowy_plik
+// prĂłba zmiany nazwy $stary_plik na $nowy_plik
 if (ftp_rename($conn_id, $stary_plik, $nowy_plik)) {
- echo "Pomyślnie zmieniono nazwę pliku $stary_plik na $nowy_plik\n";
+ echo "PomyĹlnie zmieniono nazwÄ pliku $stary_plik na $nowy_plik\n";
 } else {
- echo "Wystąpił problem przy zmianie nazwy $stary_plik na $nowy_plik\n";
+ echo "WystÄpiĹ problem przy zmianie nazwy $stary_plik na $nowy_plik\n";
 }
 
-// zamknięcie połączenia
+// zamkniÄcie poĹÄczenia
 ftp_close($conn_id);
 ?>
 ]]>

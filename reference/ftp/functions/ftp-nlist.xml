@@ -1,16 +1,16 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.ftp-nlist" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>ftp_nlist</refname>
-  <refpurpose>Zwraca listę plików z podanego katalogu</refpurpose>
+  <refpurpose>Zwraca listÄ plikĂłw z podanego katalogu</refpurpose>
  </refnamediv>
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>array</type><methodname>ftp_nlist</methodname>
-   <methodparam><type>resource</type><parameter>strumień_ftp</parameter></methodparam>
+   <methodparam><type>resource</type><parameter>strumieĹ_ftp</parameter></methodparam>
    <methodparam><type>string</type><parameter>katalog</parameter></methodparam>
   </methodsynopsis>
  </refsect1>
@@ -19,10 +19,10 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>strumień_ftp</parameter></term>
+     <term><parameter>strumieĹ_ftp</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia z serwerem FTP.
+       Identyfikator poĹÄczenia z serwerem FTP.
       </para>
      </listitem>
     </varlistentry>
@@ -30,11 +30,11 @@
      <term><parameter>katalog</parameter></term>
      <listitem>
       <para>
-       Katalog, którego zawartość ma być zwrócona. Parametr ten może także
-       zawierać argumenty, na przykład
-       ftp_nlist($conn_id, "-la /twój/katalog");
-       Należy pamiętać, że parametr ten nie jest dalej przetwarzany, więc mogą
-       się pojawić pewne problemy z nazwami plików zawierającymi spacje i inne
+       Katalog, ktĂłrego zawartoĹÄ ma byÄ zwrĂłcona. Parametr ten moĹźe takĹźe
+       zawieraÄ argumenty, na przykĹad
+       ftp_nlist($conn_id, "-la /twĂłj/katalog");
+       NaleĹźy pamiÄtaÄ, Ĺźe parametr ten nie jest dalej przetwarzany, wiÄc mogÄ
+       siÄ pojawiÄ pewne problemy z nazwami plikĂłw zawierajÄcymi spacje i inne
        znaki.
       </para>
      </listitem>
@@ -45,29 +45,29 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca tablicę nazw plików z podanego katalogu w przypadku powodzenia, lub
-   &false; w przypadku błędu.
+   Zwraca tablicÄ nazw plikĂłw z podanego katalogu w przypadku powodzenia, lub
+   &false; w przypadku bĹÄdu.
   </para>
  </refsect1>
  <refsect1 role="examples">
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład użycia <function>ftp_nlist</function></title>
+    <title>PrzykĹad uĹźycia <function>ftp_nlist</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
 
-// nawiązanie połączenia
+// nawiÄzanie poĹÄczenia
 $conn_id = ftp_connect($ftp_server);
 
 // logowanie
 $login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass);
 
-// pobranie zawartości bieżącego katalogu
+// pobranie zawartoĹci bieĹźÄcego katalogu
 $zawartosc = ftp_nlist($conn_id, ".");
 
-// wyświetlenie zawartości
+// wyĹwietlenie zawartoĹci
 var_dump($zawartosc);
 
 ?>

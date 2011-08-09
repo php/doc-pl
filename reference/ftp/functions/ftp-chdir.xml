@@ -1,20 +1,20 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.ftp-chdir" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>ftp_chdir</refname>
-  <refpurpose>Zmienia bieżący katalog na serwerze FTP</refpurpose>
+  <refpurpose>Zmienia bieĹźÄcy katalog na serwerze FTP</refpurpose>
  </refnamediv>
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>ftp_chdir</methodname>
-   <methodparam><type>resource</type><parameter>strumień_ftp</parameter></methodparam>
+   <methodparam><type>resource</type><parameter>strumieĹ_ftp</parameter></methodparam>
    <methodparam><type>string</type><parameter>katalog</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Zmienia bieżący katalog na podany jako argument.
+   Zmienia bieĹźÄcy katalog na podany jako argument.
   </para>
  </refsect1>
  <refsect1 role="parameters">
@@ -22,10 +22,10 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>strumień_ftp</parameter></term>
+     <term><parameter>strumieĹ_ftp</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia z serwerem FTP.
+       Identyfikator poĹÄczenia z serwerem FTP.
       </para>
      </listitem>
     </varlistentry>
@@ -44,39 +44,39 @@
   &reftitle.returnvalues;
   <para>
    &return.success;
-   Jeśli zmiana katalogu się nie powiedzie, PHP wygeneruje także ostrzeżenie.
+   JeĹli zmiana katalogu siÄ nie powiedzie, PHP wygeneruje takĹźe ostrzeĹźenie.
   </para>
  </refsect1>
  <refsect1 role="examples">
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład użycia <function>ftp_chdir</function></title>
+    <title>PrzykĹad uĹźycia <function>ftp_chdir</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
 
-// Nawiązanie połączenia
+// NawiÄzanie poĹÄczenia
 $conn_id = ftp_connect($ftp_server); 
 
 // Logowanie
 $login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass); 
 
-// Weryfikacja połączenia
+// Weryfikacja poĹÄczenia
 if ((!$conn_id) || (!$login_result)) {
-    die("Połączenie z serwerem FTP nie zostało nawiązane!");
+    die("PoĹÄczenie z serwerem FTP nie zostaĹo nawiÄzane!");
 }
 
-echo "Bieżący katalog: " . ftp_pwd($conn_id) . "\n";
+echo "BieĹźÄcy katalog: " . ftp_pwd($conn_id) . "\n";
 
-// Próba zmiany katalogu bieżącego na 'jakis_katalog'
+// PrĂłba zmiany katalogu bieĹźÄcego na 'jakis_katalog'
 if (ftp_chdir($conn_id, "jakis_katalog")) {
-    echo "Bieżący katalog to teraz: " . ftp_pwd($conn_id) . "\n";
+    echo "BieĹźÄcy katalog to teraz: " . ftp_pwd($conn_id) . "\n";
 } else { 
-    echo "Nie powiodła się zmiana katalogu\n";
+    echo "Nie powiodĹa siÄ zmiana katalogu\n";
 }
 
-// Zamknięcie połączenia
+// ZamkniÄcie poĹÄczenia
 ftp_close($conn_id);
 ?>
 ]]>

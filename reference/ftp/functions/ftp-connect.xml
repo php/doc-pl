@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.ftp-connect" xmlns="http://docbook.org/ns/docbook">
@@ -15,7 +15,7 @@
    <methodparam choice="opt"><type>int</type><parameter>timeout</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>ftp_connect</function> otwiera połączenie z serwerem FTP podanym
+   <function>ftp_connect</function> otwiera poĹÄczenie z serwerem FTP podanym
    jak argument.
   </para>
  </refsect1>
@@ -27,8 +27,8 @@
      <term><parameter>host</parameter></term>
      <listitem>
       <para>
-       Adres serwera ftp. Wartość tego argumentu nie powinna mieć żadnych
-       znaków przed nazwą hosta, jak również nie powinien zaczynać się od
+       Adres serwera ftp. WartoĹÄ tego argumentu nie powinna mieÄ Ĺźadnych
+       znakĂłw przed nazwÄ hosta, jak rĂłwnieĹź nie powinien zaczynaÄ siÄ od
        <literal>ftp://</literal>.
       </para>
      </listitem>
@@ -37,9 +37,9 @@
      <term><parameter>port</parameter></term>
      <listitem>
       <para>
-       Argument ten określa port, z którym ma nastąpić połączenie. Jeśli
-       argument ten zostanie pominięty, albo podana zostanie wartość zero,
-       użyty zostanie domyślny port usługi FTP, czyli 21.
+       Argument ten okreĹla port, z ktĂłrym ma nastÄpiÄ poĹÄczenie. JeĹli
+       argument ten zostanie pominiÄty, albo podana zostanie wartoĹÄ zero,
+       uĹźyty zostanie domyĹlny port usĹugi FTP, czyli 21.
       </para>
      </listitem>
     </varlistentry>
@@ -47,10 +47,10 @@
      <term><parameter>timeout</parameter></term>
      <listitem>
       <para>
-       Argument ten określa maksymalny czas, jaki mogą zająć wszystkie
-       następujace po sobie operacje sieciowe. Jeśli argument ten zostanie
-       pominięty, uznana zostanie domyślna wartość 90 sekund. Wartość ta może
-       być później odczytana i zmieniona za pomocą funkcji
+       Argument ten okreĹla maksymalny czas, jaki mogÄ zajÄÄ wszystkie
+       nastÄpujace po sobie operacje sieciowe. JeĹli argument ten zostanie
+       pominiÄty, uznana zostanie domyĹlna wartoĹÄ 90 sekund. WartoĹÄ ta moĹźe
+       byÄ pĂłĹşniej odczytana i zmieniona za pomocÄ funkcji
        <function>ftp_set_option</function> i
        <function>ftp_get_option</function>.
       </para>
@@ -62,22 +62,22 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   W przypadku powodzenia zwraca strumień FTP lub &false; w przypadku błędu.
+   W przypadku powodzenia zwraca strumieĹ FTP lub &false; w przypadku bĹÄdu.
   </para>
  </refsect1>
  <refsect1 role="examples">
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład użycia <function>ftp_connect</function></title>
+    <title>PrzykĹad uĹźycia <function>ftp_connect</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
 
 $ftp_server = "ftp.example.com";
 
-// nawiąż połączenie lub zakończ pracę.
-$conn_id = ftp_connect($ftp_server) or die("Nie można nawiązać połączenia z $ftp_server"); 
+// nawiÄĹź poĹÄczenie lub zakoĹcz pracÄ.
+$conn_id = ftp_connect($ftp_server) or die("Nie moĹźna nawiÄzaÄ poĹÄczenia z $ftp_server"); 
 
 ?>
 ]]>  

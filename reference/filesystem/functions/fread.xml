@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.fread" xmlns="http://docbook.org/ns/docbook">
@@ -11,26 +11,26 @@
   <methodsynopsis>
    <type>string</type><methodname>fread</methodname>
    <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam>
-   <methodparam><type>int</type><parameter>długość</parameter></methodparam>
+   <methodparam><type>int</type><parameter>dĹugoĹÄ</parameter></methodparam>
   </methodsynopsis>
   <simpara>
    <function>fread</function> odczytuje do
-   <parameter>długość</parameter> bajtów ze wskaźnika pliku
-   określonego przez <parameter>uchwyt</parameter>. Czytanie kończy się
-   gdy odczytano <parameter>długość</parameter> bajtów, osiągnięty
-   został koniec pliku (EOF),  (dla sieciowych strumieni), kiedy pakiet
-   stanie się dostępny lub (po otwarciu strumienia z przestrzeni użytkownika)
-   kiedy 8192 bajtów zostanie odczytanych, cokolwiek nastąpi pierwsze.
+   <parameter>dĹugoĹÄ</parameter> bajtĂłw ze wskaĹşnika pliku
+   okreĹlonego przez <parameter>uchwyt</parameter>. Czytanie koĹczy siÄ
+   gdy odczytano <parameter>dĹugoĹÄ</parameter> bajtĂłw, osiÄgniÄty
+   zostaĹ koniec pliku (EOF),  (dla sieciowych strumieni), kiedy pakiet
+   stanie siÄ dostÄpny lub (po otwarciu strumienia z przestrzeni uĹźytkownika)
+   kiedy 8192 bajtĂłw zostanie odczytanych, cokolwiek nastÄpi pierwsze.
   </simpara>
   <simpara>
-   Zwraca łańcuch znaków lub &false; w przypadku błędu.
+   Zwraca ĹaĹcuch znakĂłw lub &false; w przypadku bĹÄdu.
   </simpara>
   <para>
    <informalexample>
     <programlisting role="php">
 <![CDATA[
 <?php
-// pobierz zawartość pliku do łańcucha
+// pobierz zawartoĹÄ pliku do ĹaĹcucha
 $nazwa_pliku = "/usr/local/jakis.txt";
 $uchwyt = fopen($nazwa_pliku, "r");
 $tresc = fread($uchwyt, filesize($nazwa_pliku));
@@ -42,8 +42,8 @@ fclose($uchwyt);
    </para>
    <warning>
     <para>
-     W systemach, które rozróżniają pliki binarne i tekstowe
-     (np. Windows) plik musi zostać otworzony z 'b' dołączonym do
+     W systemach, ktĂłre rozrĂłĹźniajÄ pliki binarne i tekstowe
+     (np. Windows) plik musi zostaÄ otworzony z 'b' doĹÄczonym do
      parametru tryb <function>fopen</function>.
     </para>
    </warning>
@@ -64,11 +64,11 @@ fclose($uchwyt);
 
    <warning>
     <para>
-     Kiedy następuje odczyt z czegokolwiek innego niż zwykłe lokalne pliki, takich jak
-     strumienie zwrócone gdy odczytujesz <link linkend="features.remote-files">zdalne pliki</link> lub z
-     <function>popen</function> i <function>fsockopen</function>, odczyt zakończy się
-     po tym jak pakiet jest dostępny. To znaczy, że powinieneś gromadzić dane razem
-     z kawałków jak pokazano na poniższych przykładach.
+     Kiedy nastÄpuje odczyt z czegokolwiek innego niĹź zwykĹe lokalne pliki, takich jak
+     strumienie zwrĂłcone gdy odczytujesz <link linkend="features.remote-files">zdalne pliki</link> lub z
+     <function>popen</function> i <function>fsockopen</function>, odczyt zakoĹczy siÄ
+     po tym jak pakiet jest dostÄpny. To znaczy, Ĺźe powinieneĹ gromadziÄ dane razem
+     z kawaĹkĂłw jak pokazano na poniĹźszych przykĹadach.
     </para>
    </warning>
    <para>
@@ -103,12 +103,12 @@ fclose($uchwyt);
    </para>
    <note>
     <para>
-     Jeśli po prostu chcesz otrzymać treść pliku w stringu, użyj <function>file_get_contents</function>
-     dlatego, że ma to dużo lepszą wydajność niż kod powyżej.
+     JeĹli po prostu chcesz otrzymaÄ treĹÄ pliku w stringu, uĹźyj <function>file_get_contents</function>
+     dlatego, Ĺźe ma to duĹźo lepszÄ wydajnoĹÄ niĹź kod powyĹźej.
     </para>
    </note>
   <simpara>
-   Patrz także: <function>fwrite</function>, <function>fopen</function>,
+   Patrz takĹźe: <function>fwrite</function>, <function>fopen</function>,
    <function>fsockopen</function>, <function>popen</function>,
    <function>fgets</function>, <function>fgetss</function>, 
    <function>fscanf</function>, <function>file</function> i

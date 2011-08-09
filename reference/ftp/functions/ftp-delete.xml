@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.ftp-delete" xmlns="http://docbook.org/ns/docbook">
@@ -10,11 +10,11 @@
   &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>ftp_delete</methodname>
-   <methodparam><type>resource</type><parameter>strumień_ftp</parameter></methodparam>
-   <methodparam><type>string</type><parameter>ścieżka</parameter></methodparam>
+   <methodparam><type>resource</type><parameter>strumieĹ_ftp</parameter></methodparam>
+   <methodparam><type>string</type><parameter>ĹcieĹźka</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>ftp_delete</function> usuwa plik, do którego ścieżka podawana
+   <function>ftp_delete</function> usuwa plik, do ktĂłrego ĹcieĹźka podawana
    jest jako argument.
   </para>
  </refsect1>
@@ -23,18 +23,18 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>strumień_ftp</parameter></term>
+     <term><parameter>strumieĹ_ftp</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia z serwerem FTP.
+       Identyfikator poĹÄczenia z serwerem FTP.
       </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>ścieżka</parameter></term>
+     <term><parameter>ĹcieĹźka</parameter></term>
      <listitem>
       <para>
-       Plik do usunięcia.
+       Plik do usuniÄcia.
       </para>
      </listitem>
     </varlistentry>
@@ -51,26 +51,26 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład użycia <function>ftp_delete</function></title>
+    <title>PrzykĹad uĹźycia <function>ftp_delete</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
 $plik = 'public_html/old.txt';
 
-// nawiązanie połączenia
+// nawiÄzanie poĹÄczenia
 $conn_id = ftp_connect($ftp_server);
 
 // logowanie
 $login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass);
 
-// próba usunięcia $plik
+// prĂłba usuniÄcia $plik
 if (ftp_delete($conn_id, $plik)) {
- echo "Plik $plik został usunięty\n";
+ echo "Plik $plik zostaĹ usuniÄty\n";
 } else {
- echo "Nie powiodła się próba usunięcia pliku $plik\n";
+ echo "Nie powiodĹa siÄ prĂłba usuniÄcia pliku $plik\n";
 }
 
-// zamknięcie połączenia
+// zamkniÄcie poĹÄczenia
 ftp_close($conn_id);
 ?>
 ]]>

@@ -1,27 +1,27 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: leszek -->
 <refentry xml:id="function.ftp-site" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>ftp_site</refname>
-  <refpurpose>Wysyła polecenie SITE do serwera FTP</refpurpose>
+  <refpurpose>WysyĹa polecenie SITE do serwera FTP</refpurpose>
  </refnamediv>
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>ftp_site</methodname>
-   <methodparam><type>resource</type><parameter>strumień_ftp</parameter></methodparam>
+   <methodparam><type>resource</type><parameter>strumieĹ_ftp</parameter></methodparam>
    <methodparam><type>string</type><parameter>polecenie</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>ftp_site</function> wysyła podane polecenie <literal>SITE</literal> 
+   <function>ftp_site</function> wysyĹa podane polecenie <literal>SITE</literal> 
    do serwera FTP
   </para>
   <para>
-   Polecenia <literal>SITE</literal> nie są ustandaryzowane i mogą się różnić
-   zależnie od serwera FTP. Są one przydatne w przypadku ustalania praw
-   dostępu do plików lub przynależności do grup.
+   Polecenia <literal>SITE</literal> nie sÄ ustandaryzowane i mogÄ siÄ rĂłĹźniÄ
+   zaleĹźnie od serwera FTP. SÄ one przydatne w przypadku ustalania praw
+   dostÄpu do plikĂłw lub przynaleĹźnoĹci do grup.
   </para>
  </refsect1>
  <refsect1 role="parameters">
@@ -29,10 +29,10 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>strumień_ftp</parameter></term>
+     <term><parameter>strumieĹ_ftp</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia z serwerem FTP.
+       Identyfikator poĹÄczenia z serwerem FTP.
       </para>
      </listitem>
     </varlistentry>
@@ -40,8 +40,8 @@
      <term><parameter>polecenie</parameter></term>
      <listitem>
       <para>
-       Polecenie SITE. Nalezy pamiętać, że argument ten nie jest przetwarzany,
-       co może spowodować pewne błędy przy plikach zawierających spacje i inne
+       Polecenie SITE. Nalezy pamiÄtaÄ, Ĺźe argument ten nie jest przetwarzany,
+       co moĹźe spowodowaÄ pewne bĹÄdy przy plikach zawierajÄcych spacje i inne
        znaki.
       </para>
      </listitem>
@@ -59,22 +59,22 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Wysyłanie polecenia SITE do serwera FTP</title>
+    <title>WysyĹanie polecenia SITE do serwera FTP</title>
     <programlisting role="php">
 <![CDATA[
 <?php
-// Łączenie z serwerem
+// ĹÄczenie z serwerem
 $conn = ftp_connect('ftp.example.com');
-if (!$conn) die('Nie można się połączyć z ftp.example.com');
+if (!$conn) die('Nie moĹźna siÄ poĹÄczyÄ z ftp.example.com');
 
-// Logowanie jako "uzytkownik" z hasłem "haslo"
-if (!ftp_login($conn, 'uzytkownik', 'haslo')) die('Błąd przy logowaniu się do ftp.example.com');
+// Logowanie jako "uzytkownik" z hasĹem "haslo"
+if (!ftp_login($conn, 'uzytkownik', 'haslo')) die('BĹÄd przy logowaniu siÄ do ftp.example.com');
 
 // Wykonanie polecenia "SITE CHMOD 0600 /home/uzytkownik/plik"
 if (ftp_site($conn, 'CHMOD 0600 /home/uzytkownik/plik')) {
-   echo "Polecenie wykonane pomyślnie.\n";
+   echo "Polecenie wykonane pomyĹlnie.\n";
 } else {
-   die('Wykonanie polecenia się nie powiodło.');
+   die('Wykonanie polecenia siÄ nie powiodĹo.');
 }
 ?>
 ]]>

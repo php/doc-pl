@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.ftp-fget" xmlns="http://docbook.org/ns/docbook">
@@ -10,7 +10,7 @@
   &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>ftp_fget</methodname>
-   <methodparam><type>resource</type><parameter>strumień_ftp</parameter></methodparam>
+   <methodparam><type>resource</type><parameter>strumieĹ_ftp</parameter></methodparam>
    <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam>
    <methodparam><type>string</type><parameter>plik_zdalny</parameter></methodparam>
    <methodparam><type>int</type><parameter>tryb</parameter></methodparam>
@@ -26,10 +26,10 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>strumień_ftp</parameter></term>
+     <term><parameter>strumieĹ_ftp</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia z serwerem FTP.
+       Identyfikator poĹÄczenia z serwerem FTP.
       </para>
      </listitem>
     </varlistentry>
@@ -37,7 +37,7 @@
      <term><parameter>uchwyt</parameter></term>
      <listitem>
       <para>
-       Otwarty uchwyt do pliku, w którym będą zapisane dane.
+       Otwarty uchwyt do pliku, w ktĂłrym bÄdÄ zapisane dane.
       </para>
      </listitem>
     </varlistentry>
@@ -45,7 +45,7 @@
      <term><parameter>plik_zdalny</parameter></term>
      <listitem>
       <para>
-       Ścieżka do pliku zdalnego.
+       ĹcieĹźka do pliku zdalnego.
       </para>
      </listitem>
     </varlistentry>
@@ -53,7 +53,7 @@
      <term><parameter>tryb</parameter></term>
      <listitem>
       <para>
-       Tryb transferu. Musi to być <constant>FTP_ASCII</constant> lub
+       Tryb transferu. Musi to byÄ <constant>FTP_ASCII</constant> lub
        <constant>FTP_BINARY</constant>.
       </para>
      </listitem>
@@ -62,7 +62,7 @@
      <term><parameter>resumepos</parameter></term>
      <listitem>
       <para>
-       Pozycja w pliku zdalnym, od której rozpoczęte zostanie pobieranie.
+       Pozycja w pliku zdalnym, od ktĂłrej rozpoczÄte zostanie pobieranie.
       </para>
      </listitem>
     </varlistentry>
@@ -79,32 +79,32 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład użycia <function>ftp_fget</function></title>
+    <title>PrzykĹad uĹźycia <function>ftp_fget</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
 
-// ścieżki do plików
+// ĹcieĹźki do plikĂłw
 $plik_zdalny = 'jakis_plik.txt';
 $plik_lokalny = 'plik_lokalny.txt';
 
 // otwarcie pliku do zapisu
 $uchwyt = fopen($plik_lokalny, 'w');
 
-// nawiązanie połączenia
+// nawiÄzanie poĹÄczenia
 $conn_id = ftp_connect($ftp_server);
 
 // logowanie
 $login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass);
 
-// próba pobrania pliku $plik_zdalny
+// prĂłba pobrania pliku $plik_zdalny
 if (ftp_fget($conn_id, $uchwyt, $plik_zdalny, FTP_ASCII, 0)) {
- echo "pomyślnie pobrano plik $plik_zdalny\n";
+ echo "pomyĹlnie pobrano plik $plik_zdalny\n";
 } else {
- echo "próba pobrania pliku $plik_zdalny do $plik_lokalny nie powiodła się\n";
+ echo "prĂłba pobrania pliku $plik_zdalny do $plik_lokalny nie powiodĹa siÄ\n";
 }
 
-// zamknięcie połączenia i uchwytu
+// zamkniÄcie poĹÄczenia i uchwytu
 ftp_close($conn_id);
 fclose($uchwyt);
 

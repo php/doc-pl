@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
 <!-- splitted from ./pl/functions/filesystem.xml, last change in rev 1.1 -->
 <refentry xml:id="function.popen" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>popen</refname>
-  <refpurpose>Otwiera wskaźnik pliku do procesu</refpurpose>
+  <refpurpose>Otwiera wskaĹşnik pliku do procesu</refpurpose>
  </refnamediv>
  <refsect1>
   <title>Opis</title>
@@ -19,25 +19,25 @@
    podanego w parametrze polecenie.
   </para>
   <para>
-   Zwraca wskaźnik pliku identyczny do tego zwracanego przez
-   <function>fopen</function> z wyjątkiem tego, że jest on jednokierunkowy
-   (może być tylko użyty do odczytu lub zapisu) i musi być zamknięty za pomocą
-   <function>pclose</function>. Wskaźnik ten może być użyty z
+   Zwraca wskaĹşnik pliku identyczny do tego zwracanego przez
+   <function>fopen</function> z wyjÄtkiem tego, Ĺźe jest on jednokierunkowy
+   (moĹźe byÄ tylko uĹźyty do odczytu lub zapisu) i musi byÄ zamkniÄty za pomocÄ
+   <function>pclose</function>. WskaĹşnik ten moĹźe byÄ uĹźyty z
    <function>fgets</function>, <function>fgetss</function> i
    <function>fwrite</function>.
    </para>
   <para>
-   W przypadku błędu, zwraca &false;.
+   W przypadku bĹÄdu, zwraca &false;.
   </para>
   <note>
    <para>
-    Jeśli szukasz dwukierunkowej obsługi (w obie strony), użyj
+    JeĹli szukasz dwukierunkowej obsĹugi (w obie strony), uĹźyj
     <function>proc_open</function>.
    </para>
   </note>
   <para>
    <example>
-    <title><function>popen</function> przykład</title>
+    <title><function>popen</function> przykĹad</title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -48,17 +48,17 @@ $uchwyt = popen("/bin/ls", "r");
    </example>
   </para>
   <para>
-   Jeśli polecenie uruchamiane nie może zostać znalezione, poprawny
-   zasób jest zwracany. To może wydawać się dziwne, ale ma sens;
-   pozwala tobie na dostęp do wszystkich informacji o błędach zwracanych
-   przez powłokę.
+   JeĹli polecenie uruchamiane nie moĹźe zostaÄ znalezione, poprawny
+   zasĂłb jest zwracany. To moĹźe wydawaÄ siÄ dziwne, ale ma sens;
+   pozwala tobie na dostÄp do wszystkich informacji o bĹÄdach zwracanych
+   przez powĹokÄ.
    <informalexample>
     <programlisting role="php">
 <![CDATA[
 <?php
 error_reporting(E_ALL);
 
-/* Dodanie przekierowania, aby móc dostać stderr. */
+/* Dodanie przekierowania, aby mĂłc dostaÄ stderr. */
 $uchwyt = popen('/sciezka/do/czegos 2>&1', 'r');
 echo "'$uchwyt'; " . gettype($uchwyt) . "\n";
 $czytaj = fread($uchwyt, 2096);
@@ -72,7 +72,7 @@ pclose($uchwyt);
   &note.exec-path;
   &warn.sm.exec;
   <para>
-   Patrz także <function>pclose</function>, <function>fopen</function> i
+   Patrz takĹźe <function>pclose</function>, <function>fopen</function> i
    <function>proc_open</function>.
   </para>
  </refsect1>

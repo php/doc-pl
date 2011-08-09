@@ -1,19 +1,19 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.ftp-cdup" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>ftp_cdup</refname>
-  <refpurpose>Zmienia bieżący katalog na nadrzędny</refpurpose>
+  <refpurpose>Zmienia bieĹźÄcy katalog na nadrzÄdny</refpurpose>
  </refnamediv>
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>ftp_cdup</methodname>
-   <methodparam><type>resource</type><parameter>strumień_ftp</parameter></methodparam>
+   <methodparam><type>resource</type><parameter>strumieĹ_ftp</parameter></methodparam>
   </methodsynopsis>
   <para> 
-   Zmienia bieżący katalog na nadrzędny.
+   Zmienia bieĹźÄcy katalog na nadrzÄdny.
   </para>
  </refsect1>
  <refsect1 role="parameters">
@@ -21,10 +21,10 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>strumień_ftp</parameter></term>
+     <term><parameter>strumieĹ_ftp</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia z serwerem FTP.
+       Identyfikator poĹÄczenia z serwerem FTP.
       </para>
      </listitem>
     </varlistentry>
@@ -41,26 +41,26 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład użycia <function>ftp_cdup</function></title>
+    <title>PrzykĹad uĹźycia <function>ftp_cdup</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
-// nawiąż połączenie
+// nawiÄĹź poĹÄczenie
 $conn_id = ftp_connect($ftp_server);
 
-// zaloguj się
+// zaloguj siÄ
 $login_result = ftp_login($conn_id, $ftp_nazwa_uzytkownika, $ftp_haslo);
 
-// zmień bieżący katalog na 'html'
+// zmieĹ bieĹźÄcy katalog na 'html'
 ftp_chdir($conn_id, 'html');
 
 echo ftp_pwd($conn_id); // /html
 
-// powróć do katalogu nadrzędnego
+// powrĂłÄ do katalogu nadrzÄdnego
 if (ftp_cdup($conn_id)) { 
-  echo "cdup wykonane pomyślnie\n";
+  echo "cdup wykonane pomyĹlnie\n";
 } else {
-  echo "Błąd w wykonaniu cdup\n";
+  echo "BĹÄd w wykonaniu cdup\n";
 }
 
 echo ftp_pwd($conn_id); // /

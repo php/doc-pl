@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.fscanf" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>fscanf</refname>
-  <refpurpose>Przetwarza dane z pliku według formatu</refpurpose>
+  <refpurpose>Przetwarza dane z pliku wedĹug formatu</refpurpose>
  </refnamediv>
  <refsect1>
   <title>Opis</title>
@@ -16,32 +16,32 @@
   </methodsynopsis>
   <para>
    Funkcja <function>fscanf</function> jest podobna do
-   <function>sscanf</function>, ale pobiera dane wejściowe z pliku
+   <function>sscanf</function>, ale pobiera dane wejĹciowe z pliku
    skojarzonego z <parameter>uchwyt</parameter>em i interpretuje je
-   zgodnie z podanym <parameter>format</parameter>em, który opisany jest
+   zgodnie z podanym <parameter>format</parameter>em, ktĂłry opisany jest
    w dokumentacji do <function>sprintf</function>.
-   Jeśli tylko dwa parametry zostaną podane do funkcji, przetworzone
-   wartości zostaną zwrócone w tablicy.
-   W przeciwnym razie, jeśli opcjonalne parametry zostaną podane,
-   funkcja zwróci numer przypisany do wartości. Opcjonalny parametr
-   musi być podawany przez referencje.
+   JeĹli tylko dwa parametry zostanÄ podane do funkcji, przetworzone
+   wartoĹci zostanÄ zwrĂłcone w tablicy.
+   W przeciwnym razie, jeĹli opcjonalne parametry zostanÄ podane,
+   funkcja zwrĂłci numer przypisany do wartoĹci. Opcjonalny parametr
+   musi byÄ podawany przez referencje.
   </para>
   <para>
-   Dowolny biały znak w łańcuchu formatującym pasuje do dowolnego białego znaku
-   w strumieniu wejściowym. To znaczy, że nawet tabulacja <literal>\t</literal>
-   w łańcuchu formatującym może być dopasowana do pojedynczego znaku spacji
-   w strumieniu wejściowym.
+   Dowolny biaĹy znak w ĹaĹcuchu formatujÄcym pasuje do dowolnego biaĹego znaku
+   w strumieniu wejĹciowym. To znaczy, Ĺźe nawet tabulacja <literal>\t</literal>
+   w ĹaĹcuchu formatujÄcym moĹźe byÄ dopasowana do pojedynczego znaku spacji
+   w strumieniu wejĹciowym.
   </para>
   <para>
    <example>
-    <title><function>fscanf</function> Przykład</title>
+    <title><function>fscanf</function> PrzykĹad</title>
     <programlisting role="php">
 <![CDATA[
 <?php
 $uchwyt = fopen("users.txt", "r");
 while ($userinfo = fscanf($uchwyt, "%s\t%s\t%s\n")) {
     list ($name, $profession, $countrycode) = $userinfo;
-     //... zrób coś z wartościami
+     //... zrĂłb coĹ z wartoĹciami
 }
 fclose($uchwyt);
 ?>
@@ -49,7 +49,7 @@ fclose($uchwyt);
     </programlisting>
    </example>
    <example>
-    <title>Zawartość pliku users.txt</title>
+    <title>ZawartoĹÄ pliku users.txt</title>
     <programlisting role="txt">
 <![CDATA[
 javier  argonaut        pe
@@ -62,13 +62,13 @@ luigi   florist it
   </para>
   <note>
    <simpara>
-    Przed PHP 4.3.0, maksymalną liczbą znaków czytanych z pliku było
-    512 (lub do pierwszego wystąpienia \n, cokolwiek nastąpiło pierwsze).
-    Od PHP 4.3.0 dowolnie długie linie są czytane i skanowane.
+    Przed PHP 4.3.0, maksymalnÄ liczbÄ znakĂłw czytanych z pliku byĹo
+    512 (lub do pierwszego wystÄpienia \n, cokolwiek nastÄpiĹo pierwsze).
+    Od PHP 4.3.0 dowolnie dĹugie linie sÄ czytane i skanowane.
    </simpara>
   </note>
   <para>
-   Patrz także: <function>fread</function>, <function>fgets</function>,
+   Patrz takĹźe: <function>fread</function>, <function>fgets</function>,
    <function>fgetss</function>, <function>sscanf</function>,
    <function>printf</function> i <function>sprintf</function>.
   </para>
