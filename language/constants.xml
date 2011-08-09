@@ -1,43 +1,43 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: pirate Status: ready -->
 <!-- $Revision$ -->
  <chapter xml:id="language.constants" xmlns="http://docbook.org/ns/docbook">
-  <title>Stałe</title>
+  <title>StaĹe</title>
 
   <simpara>
-   Stałe są to nazwy, identyfikujące proste wartości. Jak sama nazwa 
-   wskazuje, nie mogą się one zmieniać w trakcie wykonywania skryptu 
-   (wyjątkiem są <link linkend="language.constants.predefined">
-   magiczne stałe</link>, które własciwie nie sa stałymi). 
-   W nazwach stałych domyślnie rozróżniana jest wielkość liter. 
-   Zgodnie z ogólnie przyjętą konwencją, nazwy stałych zawsze pisane sa wielkimi literami.
+   StaĹe sÄ to nazwy, identyfikujÄce proste wartoĹci. Jak sama nazwa 
+   wskazuje, nie mogÄ siÄ one zmieniaÄ w trakcie wykonywania skryptu 
+   (wyjÄtkiem sÄ <link linkend="language.constants.predefined">
+   magiczne staĹe</link>, ktĂłre wĹasciwie nie sa staĹymi). 
+   W nazwach staĹych domyĹlnie rozrĂłĹźniana jest wielkoĹÄ liter. 
+   Zgodnie z ogĂłlnie przyjÄtÄ konwencjÄ, nazwy staĹych zawsze pisane sa wielkimi literami.
   </simpara>
   <para>
-   Nazwy stałych obowiązują identyczne zasady, jak w przypadku wszystkich innych etykiet. 
-   Poprawna nazwa stałej zaczyna się od litery lub podkreślnika, po których następuje 
-   dowolna ilość liter, cyfr i podkreślników. Jako wyrażenie regularne, określone 
-   zostałoby to następująco: 
+   Nazwy staĹych obowiÄzujÄ identyczne zasady, jak w przypadku wszystkich innych etykiet. 
+   Poprawna nazwa staĹej zaczyna siÄ od litery lub podkreĹlnika, po ktĂłrych nastÄpuje 
+   dowolna iloĹÄ liter, cyfr i podkreĹlnikĂłw. Jako wyraĹźenie regularne, okreĹlone 
+   zostaĹoby to nastÄpujÄco: 
    <literal>[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*</literal>
   </para>
   &tip.userlandnaming;
   <para>
    <example>
-    <title>Poprawne i niepoprawne nazwy stałych</title>
+    <title>Poprawne i niepoprawne nazwy staĹych</title>
     <programlisting role="php">
 <![CDATA[
 <?php
 
-// Poprawne nazwy stałych
+// Poprawne nazwy staĹych
 define("FOO",     "something");
 define("FOO2",    "something else");
 define("FOO_BAR", "something more");
 
-// Niepoprawne nazwy stałych
+// Niepoprawne nazwy staĹych
 define("2FOO",    "something");
 
-// Pomimo tego, że poniższy zapis jest poprawny, powinno się go unikać:
-// PHP może kiedyś zawierać magiczną stałą,
-// która zepsuje Twój skrypt
+// Pomimo tego, Ĺźe poniĹźszy zapis jest poprawny, powinno siÄ go unikaÄ:
+// PHP moĹźe kiedyĹ zawieraÄ magicznÄ staĹÄ,
+// ktĂłra zepsuje TwĂłj skrypt
 define("__FOO__", "something"); 
 
 ?>
@@ -47,89 +47,89 @@ define("__FOO__", "something");
   </para>
   <note>
    <simpara>
-    Dla naszych celów, literami są a-z, A-Z, oraz znaki ASCII 
-    z przedziału od 127 do 255 (0x7f-0xff).
+    Dla naszych celĂłw, literami sÄ a-z, A-Z, oraz znaki ASCII 
+    z przedziaĹu od 127 do 255 (0x7f-0xff).
    </simpara>
   </note>
 
   <simpara>
-   Podobnie jak &link.superglobals;, zasięg stałych jest globalny.  
-   Można sie odwoływać do nich w każdym miejscu pliku, nie przejmując sie zasięgiem.  
-   Więcej informacji na ten temat znajdziesz w rozdziale pt. 
-   <link linkend="language.variables.scope">zasięg zmiennych</link>.
+   Podobnie jak &link.superglobals;, zasiÄg staĹych jest globalny.  
+   MoĹźna sie odwoĹywaÄ do nich w kaĹźdym miejscu pliku, nie przejmujÄc sie zasiÄgiem.  
+   WiÄcej informacji na ten temat znajdziesz w rozdziale pt. 
+   <link linkend="language.variables.scope">zasiÄg zmiennych</link>.
   </simpara>
 
   <sect1 xml:id="language.constants.syntax">
-   <title>Składnia</title>
+   <title>SkĹadnia</title>
    <simpara>
-    Możesz zdefiniować stałą, używając funkcji 
-    <function>define</function>. Raz zdefiniowana stała 
-    nie może byc zmieniona ani usunięta.
+    MoĹźesz zdefiniowaÄ staĹÄ, uĹźywajÄc funkcji 
+    <function>define</function>. Raz zdefiniowana staĹa 
+    nie moĹźe byc zmieniona ani usuniÄta.
    </simpara>
    <simpara>
-    Stałe mogą zawierać jedynie dane skalarne 
+    StaĹe mogÄ zawieraÄ jedynie dane skalarne 
     (<type>boolean</type>, <type>integer</type>, 
     <type>float</type> oraz <type>string</type>) 
-    Stałe nie mogą być typu <type>resource</type>.
+    StaĹe nie mogÄ byÄ typu <type>resource</type>.
    </simpara>
    <simpara>
-    Wartość stałej otrzymujemy, używając jej nazwy.
-    W przeciwieństwie do zmiennych, nazw stałych <emphasis>nie</emphasis> poprzedzamy
+    WartoĹÄ staĹej otrzymujemy, uĹźywajÄc jej nazwy.
+    W przeciwieĹstwie do zmiennych, nazw staĹych <emphasis>nie</emphasis> poprzedzamy
     znakiem <literal>$</literal>.
-    Możesz także użyć funkcji <function>constant</function> do 
-    odczytania wartości stałej, jeśli chcesz wygenerować jej nazwę
+    MoĹźesz takĹźe uĹźyÄ funkcji <function>constant</function> do 
+    odczytania wartoĹci staĹej, jeĹli chcesz wygenerowaÄ jej nazwÄ
     dynamicznie. 
-    Aby uzyskać listę wszystkich zdefiniowanych stałych, użyj <function>get_defined_constants</function>.
+    Aby uzyskaÄ listÄ wszystkich zdefiniowanych staĹych, uĹźyj <function>get_defined_constants</function>.
     
    </simpara>
    <note>
     <simpara>
-     Stałe i zmienne globalne operują w różnych przestrzeniach nazw. 
-     Oznacza to, że na przykład &true; i 
-     <varname>$TRUE</varname> oznaczają co innego.
+     StaĹe i zmienne globalne operujÄ w rĂłĹźnych przestrzeniach nazw. 
+     Oznacza to, Ĺźe na przykĹad &true; i 
+     <varname>$TRUE</varname> oznaczajÄ co innego.
     </simpara>
    </note>
    <simpara>
-    Jeśli używasz niezdefiniowanej stałej, PHP traktuje to, jak gdybyś chciał
-    użyć nazwy stałej jako wartości typu <type>string</type> (STAŁA a "STAŁA").
-    Błąd typu
-    <link linkend="ref.errorfunc">E_NOTICE</link> zostanie wywołany,
-    kiedy to się stanie.  Przeczytaj także, dlaczego 
+    JeĹli uĹźywasz niezdefiniowanej staĹej, PHP traktuje to, jak gdybyĹ chciaĹ
+    uĹźyÄ nazwy staĹej jako wartoĹci typu <type>string</type> (STAĹA a "STAĹA").
+    BĹÄd typu
+    <link linkend="ref.errorfunc">E_NOTICE</link> zostanie wywoĹany,
+    kiedy to siÄ stanie.  Przeczytaj takĹźe, dlaczego 
     <link linkend="language.types.array.foo-bar">$foo[bar]</link> jest
-    niepoprawne (jeśli nie zdefiniujesz
-    <literal>bar</literal> jako stałej).  Chcąc sprawdzić,
-    czy dana stała istnieje, użyj funkcji <function>defined</function>.
+    niepoprawne (jeĹli nie zdefiniujesz
+    <literal>bar</literal> jako staĹej).  ChcÄc sprawdziÄ,
+    czy dana staĹa istnieje, uĹźyj funkcji <function>defined</function>.
    </simpara>
    <para>
-    Oto różnice pomiędzy stałymi i zmiennymi:
+    Oto rĂłĹźnice pomiÄdzy staĹymi i zmiennymi:
     <itemizedlist>
      <listitem>
       <simpara>
-       Nazwy stałych nie są poprzedzone znakiem dolara (<literal>$</literal>);
+       Nazwy staĹych nie sÄ poprzedzone znakiem dolara (<literal>$</literal>);
        
       </simpara>
      </listitem>
      <listitem>
       <simpara>
-       Stałe mogą zostać zdefiniowane jedynie przy użyciu funkcji
-       <function>define</function> a nie poprzez zwykłe przypisanie;
+       StaĹe mogÄ zostaÄ zdefiniowane jedynie przy uĹźyciu funkcji
+       <function>define</function> a nie poprzez zwykĹe przypisanie;
       </simpara>
      </listitem>
      <listitem>
       <simpara>
-       Stałe mogą być definiowane i używane wszędzie, niezależnie
-       od zasięgu zmiennych;
+       StaĹe mogÄ byÄ definiowane i uĹźywane wszÄdzie, niezaleĹźnie
+       od zasiÄgu zmiennych;
       </simpara>
      </listitem>
      <listitem>
       <simpara>
-       Stałe nie mogą być zmieniane ani usuwane jeśli raz zostały ustawione
+       StaĹe nie mogÄ byÄ zmieniane ani usuwane jeĹli raz zostaĹy ustawione
        ; oraz
       </simpara>
      </listitem>
      <listitem>
       <simpara>
-       Stałe mogą zawierać jedynie wartości skalarne.
+       StaĹe mogÄ zawieraÄ jedynie wartoĹci skalarne.
        </simpara>
      </listitem>
     </itemizedlist>
@@ -137,13 +137,13 @@ define("__FOO__", "something");
 
    <para>
     <example>
-     <title>Definiowanie stałych</title>
+     <title>Definiowanie staĹych</title>
      <programlisting role="php">
 <![CDATA[
 <?php
 define("CONSTANT", "Hello world.");
 echo CONSTANT; // wypisuje "Hello world."
-echo Constant; // wypisuje "Constant" i wywoułuje ostrzeżenie.
+echo Constant; // wypisuje "Constant" i wywouĹuje ostrzeĹźenie.
 ?>
 ]]>
      </programlisting>
@@ -152,32 +152,32 @@ echo Constant; // wypisuje "Constant" i wywoułuje ostrzeżenie.
    </para>
 
    <simpara>
-    Zobacz także <link linkend="language.oop5.constants">Stałe Klas</link>.
+    Zobacz takĹźe <link linkend="language.oop5.constants">StaĹe Klas</link>.
    </simpara>
   </sect1>
   
   <sect1 xml:id="language.constants.predefined">
-   <title>Magiczne stałe</title>
+   <title>Magiczne staĹe</title>
 
    <simpara>
     PHP zapewnia szeroki zakres <link
-    linkend="reserved.constants">predefiniowanych stałych</link> każdemu
-    skryptowi, który jest uruchamiany. Wiele z tych stałych jest jednak dostępnych
-    dzieki różnym rozszerzeniom i można z nich korzystać jedynie, kiedy te rozszerzenia
-    sa dostępne przez dynamiczne załadowanie, badź też
-    zostały wkompilowane.
+    linkend="reserved.constants">predefiniowanych staĹych</link> kaĹźdemu
+    skryptowi, ktĂłry jest uruchamiany. Wiele z tych staĹych jest jednak dostÄpnych
+    dzieki rĂłĹźnym rozszerzeniom i moĹźna z nich korzystaÄ jedynie, kiedy te rozszerzenia
+    sa dostÄpne przez dynamiczne zaĹadowanie, badĹş teĹź
+    zostaĹy wkompilowane.
    </simpara>
    
    <para>
-    Istnieje siedem magicznych stałych, które zmieniają sie w zależności
-    od tego, gdzie są użyte.  Na przykład, wartość
-    <constant>__LINE__</constant> zależy od linii, w której ta 
-    stała została użyta. Nazwy tych magicznych stałych 
-    są niezależne od wielkości liter:
+    Istnieje siedem magicznych staĹych, ktĂłre zmieniajÄ sie w zaleĹźnoĹci
+    od tego, gdzie sÄ uĹźyte.  Na przykĹad, wartoĹÄ
+    <constant>__LINE__</constant> zaleĹźy od linii, w ktĂłrej ta 
+    staĹa zostaĹa uĹźyta. Nazwy tych magicznych staĹych 
+    sÄ niezaleĹźne od wielkoĹci liter:
    </para>
    <para>
     <table>
-     <title>Kilka "magicznych" stałych PHP</title>
+     <title>Kilka "magicznych" staĹych PHP</title>
      <tgroup cols="2">
       <thead>
        <row>
@@ -195,50 +195,50 @@ echo Constant; // wypisuje "Constant" i wywoułuje ostrzeżenie.
        <row>
         <entry><constant>__FILE__</constant></entry>
         <entry>
-         Pełna scieżka i nazwa pliku.  Jeśli użyta wewnątrz dołączonego pliku,
+         PeĹna scieĹźka i nazwa pliku.  JeĹli uĹźyta wewnÄtrz doĹÄczonego pliku,
          jego nazwa jest zwracana.
          Od PHP 4.0.2, <constant>__FILE__</constant>zawsze zawiera
-         bezwzględną scieżkę z rozwiązanymi dowiązaniami symbolicznymi, podczas kiedy w starszych wersjach
-         czasem zawierała scieżkę względną.
+         bezwzglÄdnÄ scieĹźkÄ z rozwiÄzanymi dowiÄzaniami symbolicznymi, podczas kiedy w starszych wersjach
+         czasem zawieraĹa scieĹźkÄ wzglÄdnÄ.
         </entry>
        </row>
        <row>
         <entry><constant>__DIR__</constant></entry>
         <entry>
-         Nazwa katalogu pliku.  Jeśli użyta wewnątrz dołączonego pliku,
-         zwraca nazwę jego katalogu. Odpowiada 
+         Nazwa katalogu pliku.  JeĹli uĹźyta wewnÄtrz doĹÄczonego pliku,
+         zwraca nazwÄ jego katalogu. Odpowiada 
          <literal>dirname(__FILE__)</literal>. Zwracana nazwa nie zawiera
-         końcowego ukośnika, chyba że jest to katalog root.
+         koĹcowego ukoĹnika, chyba Ĺźe jest to katalog root.
          (Dodano w PHP 5.3.0.)
         </entry>
        </row>
        <row>
         <entry><constant>__FUNCTION__</constant></entry>
         <entry>
-         Nazwa funkcji. (Dodano w PHP 4.3.0)  W PHP 5 ta stała 
-         zwraca nazwę funkcji tak jak ją zadeklarowano (z uwzględnieniem wielkości liter), podczas
-         kiedy w PHP 4 zwracana wartość zawiera jedynie małe litery.
+         Nazwa funkcji. (Dodano w PHP 4.3.0)  W PHP 5 ta staĹa 
+         zwraca nazwÄ funkcji tak jak jÄ zadeklarowano (z uwzglÄdnieniem wielkoĹci liter), podczas
+         kiedy w PHP 4 zwracana wartoĹÄ zawiera jedynie maĹe litery.
         </entry>
        </row>
        <row>
         <entry><constant>__CLASS__</constant></entry>
         <entry>
-         Nazwa klasy. (Dodano w PHP 4.3.0)  W PHP 5 ta stała 
-         zwraca nazwę klasy tak jak ją zadeklarowano (z uwzględnieniem wielkości liter), podczas
-         kiedy w PHP 4 zwracana wartość zawiera jedynie małe litery.
+         Nazwa klasy. (Dodano w PHP 4.3.0)  W PHP 5 ta staĹa 
+         zwraca nazwÄ klasy tak jak jÄ zadeklarowano (z uwzglÄdnieniem wielkoĹci liter), podczas
+         kiedy w PHP 4 zwracana wartoĹÄ zawiera jedynie maĹe litery.
         </entry>
        </row>
        <row>
         <entry><constant>__METHOD__</constant></entry>
         <entry>
          Nazwa metody. (Dodano w PHP 5.0.0) Nazwa metody zwracana jest
-         tak jak ją zadeklarowano (z uwzględnieniem wielkości liter).
+         tak jak jÄ zadeklarowano (z uwzglÄdnieniem wielkoĹci liter).
         </entry>
        </row>
        <row>
         <entry><constant>__NAMESPACE__</constant></entry>
         <entry>
-         Nazwa aktualnej przestrzeni nazw (z uwzględnieniem wielkości liter). Ta stała 
+         Nazwa aktualnej przestrzeni nazw (z uwzglÄdnieniem wielkoĹci liter). Ta staĹa 
          definiowana jest w czasie kompilacji (Dodano w PHP 5.3.0).
         </entry>
        </row>
@@ -247,7 +247,7 @@ echo Constant; // wypisuje "Constant" i wywoułuje ostrzeżenie.
     </table>
    </para>
    <para>
-    Zobacz także 
+    Zobacz takĹźe 
     <function>get_class</function>,
     <function>get_object_vars</function>,
     <function>file_exists</function>&listendand;

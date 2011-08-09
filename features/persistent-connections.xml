@@ -1,118 +1,118 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: slawek -->
  <chapter xml:id="features.persistent-connections" xmlns="http://docbook.org/ns/docbook">
-  <title>Stałe połączenia z bazami danych</title>
+  <title>StaĹe poĹÄczenia z bazami danych</title>
 
   <simpara>
-   Stałe połączenia (persistent connections) to połączenia, które nie są
-   zamykane po wykonaniu skryptu. Kiedy skrypt próbuje nawiązać stałe
-   połączenie, PHP sprawdza czy istnieje już identyczne połączenie (otwarte
-   wcześniej) i jeśli istnieje, używa go. Jeżeli nie, tworzone
-   jest nowe. Połączenie 'identyczne' to połączenie z tym samym hostem,
-   z taką samą nazwą użytkownika i hasłem.
+   StaĹe poĹÄczenia (persistent connections) to poĹÄczenia, ktĂłre nie sÄ
+   zamykane po wykonaniu skryptu. Kiedy skrypt prĂłbuje nawiÄzaÄ staĹe
+   poĹÄczenie, PHP sprawdza czy istnieje juĹź identyczne poĹÄczenie (otwarte
+   wczeĹniej) i jeĹli istnieje, uĹźywa go. JeĹźeli nie, tworzone
+   jest nowe. PoĹÄczenie 'identyczne' to poĹÄczenie z tym samym hostem,
+   z takÄ samÄ nazwÄ uĹźytkownika i hasĹem.
   </simpara>
   <simpara>
-   Ludzie niezbyt dobrze znający zasady działania serwerów mogą czasem
-   brać stałe połączenia za coś, czym te nie są. Stałe połączenia
-   <emphasis>nie</emphasis> stwarzają możliwości otwarcia połączenia dla
-   konkretnego użytkonika, <emphasis>nie</emphasis> pozwalają na skuteczne
-   stworzenie systemu transakcji, i nie robią wielu innych rzeczy.
-   Powiedzmy to jasno, stałe połączenia nie oferują <emphasis>nic</emphasis>
-   ponad to, co robią 'zwykłe' połączenia.
+   Ludzie niezbyt dobrze znajÄcy zasady dziaĹania serwerĂłw mogÄ czasem
+   braÄ staĹe poĹÄczenia za coĹ, czym te nie sÄ. StaĹe poĹÄczenia
+   <emphasis>nie</emphasis> stwarzajÄ moĹźliwoĹci otwarcia poĹÄczenia dla
+   konkretnego uĹźytkonika, <emphasis>nie</emphasis> pozwalajÄ na skuteczne
+   stworzenie systemu transakcji, i nie robiÄ wielu innych rzeczy.
+   Powiedzmy to jasno, staĹe poĹÄczenia nie oferujÄ <emphasis>nic</emphasis>
+   ponad to, co robiÄ 'zwykĹe' poĹÄczenia.
   </simpara>
   <simpara>
    Dlaczego?
   </simpara> 
   <simpara>
-   Jest to związane z zasadą działania serwerów. Są trzy sposoby na
-   które serwer może wykorzystac PHP do generowania stron.
+   Jest to zwiÄzane z zasadÄ dziaĹania serwerĂłw. SÄ trzy sposoby na
+   ktĂłre serwer moĹźe wykorzystac PHP do generowania stron.
   </simpara>
   <simpara>
-   Pierwsza metoda to wykorzystanie PHP jako "wrappera" CGI. Przy wywołaniu
-   skryptu każdorazowo uruchamiany i niszczony jest egzamplarz PHP. Jako, że
-   jest on niszczony po każdym wywołaniu, wszystkie zasoby przez niego
-   posiadane (na przykład połączenia z bazą danych) są tracone. W tym przypadku
-   używanie stałych połączeń nie przynosi korzyści, one po prostu nie są stałe.
+   Pierwsza metoda to wykorzystanie PHP jako "wrappera" CGI. Przy wywoĹaniu
+   skryptu kaĹźdorazowo uruchamiany i niszczony jest egzamplarz PHP. Jako, Ĺźe
+   jest on niszczony po kaĹźdym wywoĹaniu, wszystkie zasoby przez niego
+   posiadane (na przykĹad poĹÄczenia z bazÄ danych) sÄ tracone. W tym przypadku
+   uĹźywanie staĹych poĹÄczeĹ nie przynosi korzyĹci, one po prostu nie sÄ staĹe.
   </simpara>
   <simpara>
-   Druga, najpopularniejsza metoda, to uruchomienie PHP jako modułu
+   Druga, najpopularniejsza metoda, to uruchomienie PHP jako moduĹu
    w wieloprocesowym serwerze, co obecnie dotyczy jedynie serwera Apache.
-   Serwer wieloprocesowy zwykle uruchamia jeden proces (rodzica), który
-   koordynuje inne procesy (potomne) zajmujące się dostarczaniem stron.
-   Kiedy nadchodzi żądanie od klienta, jest ono przekazywane jednemu z
-   procesów potomnych, który w danym momencie nie obsługuje innego klienta.
-   Oznacza to, że gdy ten sam klient wyśle do serwera kolejne żądanie, może
-   zostać obsłużony przez inny proces niż za pierwszym razem. Stałe połączenie
-   w tym przypadku oznacza, że każdy proces potomny ustanawia połączenie
-   z serwerem SQL przy pierwszym wywołaniu strony, która takiego połączenia
-   używa.
+   Serwer wieloprocesowy zwykle uruchamia jeden proces (rodzica), ktĂłry
+   koordynuje inne procesy (potomne) zajmujÄce siÄ dostarczaniem stron.
+   Kiedy nadchodzi ĹźÄdanie od klienta, jest ono przekazywane jednemu z
+   procesĂłw potomnych, ktĂłry w danym momencie nie obsĹuguje innego klienta.
+   Oznacza to, Ĺźe gdy ten sam klient wyĹle do serwera kolejne ĹźÄdanie, moĹźe
+   zostaÄ obsĹuĹźony przez inny proces niĹź za pierwszym razem. StaĹe poĹÄczenie
+   w tym przypadku oznacza, Ĺźe kaĹźdy proces potomny ustanawia poĹÄczenie
+   z serwerem SQL przy pierwszym wywoĹaniu strony, ktĂłra takiego poĹÄczenia
+   uĹźywa.
   </simpara>
   <simpara>
    Ostatnia metoda to wykorzystanie PHP jako wtyczki (plug-in) do
-   serwera wielowątkowego. Obecnie PHP4 zawiera obsługę mechanizmów
-   ISAPI, WSAPI i NSAPI (w Windows), które umożliwiają uruchomienie PHP
-   jako wtyczki do wielowątkowych serwerów takich jak Netscape FastTrack
+   serwera wielowÄtkowego. Obecnie PHP4 zawiera obsĹugÄ mechanizmĂłw
+   ISAPI, WSAPI i NSAPI (w Windows), ktĂłre umoĹźliwiajÄ uruchomienie PHP
+   jako wtyczki do wielowÄtkowych serwerĂłw takich jak Netscape FastTrack
    (iPlanet), Microsoft Internet Information Server (IIS) i O'Reilly WebSite
    Pro. Zachowanie PHP jest zasadniczo takie samo jak w przypadku opisanego
-   wcześniej modelu wieloprocesowego. 
+   wczeĹniej modelu wieloprocesowego. 
   </simpara>
   <simpara>
-   Skoro stałe połączenia nie dostarczają większej funkcjonalności, do czego
-   mogą być przydatne?
+   Skoro staĹe poĹÄczenia nie dostarczajÄ wiÄkszej funkcjonalnoĹci, do czego
+   mogÄ byÄ przydatne?
   </simpara>
   <simpara>
-   Odpowiedź jest niezwykle prosta -- wydajność. Stałe połączenia
-   sprawdzają się w przypadku, gdy koszt nawiązania połączenia z SQL
-   serwerem jest wysoki. To czy koszt jest duży czy nie zależy od wielu
-   czynników. Na przykład od typu bazy danych, od tego czy znajduje się
-   ona na tym samym serwerze, od obciążenia maszyny, która obsługuje serwer
-   SQL, itd. Jeśli zatem koszt połączenia jest wysoki, stałe połączenia
-   znacznie pomagają. Sprawiają, że proces potomny łączy się z serwerem SQL
-   tylko raz podczas swojego życia, zamiast otwierać połączenie za każdym
-   razem gdy zażąda tego skrypt. Oznacza to, że każdy proces potomny, który
-   nawiązał stałe połączenie, będzie posiadał własne połączenie z serwerem
-   bazy danych. Dla przykładu, jeżeli 20 procesów potomnych uruchomi skrypt,
-   który ustanowi stałe połączenie z serwerem SQL, będziesz mieć 20 różnych
-   połączeń z serwerem, jedno na każdy proces.
+   OdpowiedĹş jest niezwykle prosta -- wydajnoĹÄ. StaĹe poĹÄczenia
+   sprawdzajÄ siÄ w przypadku, gdy koszt nawiÄzania poĹÄczenia z SQL
+   serwerem jest wysoki. To czy koszt jest duĹźy czy nie zaleĹźy od wielu
+   czynnikĂłw. Na przykĹad od typu bazy danych, od tego czy znajduje siÄ
+   ona na tym samym serwerze, od obciÄĹźenia maszyny, ktĂłra obsĹuguje serwer
+   SQL, itd. JeĹli zatem koszt poĹÄczenia jest wysoki, staĹe poĹÄczenia
+   znacznie pomagajÄ. SprawiajÄ, Ĺźe proces potomny ĹÄczy siÄ z serwerem SQL
+   tylko raz podczas swojego Ĺźycia, zamiast otwieraÄ poĹÄczenie za kaĹźdym
+   razem gdy zaĹźÄda tego skrypt. Oznacza to, Ĺźe kaĹźdy proces potomny, ktĂłry
+   nawiÄzaĹ staĹe poĹÄczenie, bÄdzie posiadaĹ wĹasne poĹÄczenie z serwerem
+   bazy danych. Dla przykĹadu, jeĹźeli 20 procesĂłw potomnych uruchomi skrypt,
+   ktĂłry ustanowi staĹe poĹÄczenie z serwerem SQL, bÄdziesz mieÄ 20 rĂłĹźnych
+   poĹÄczeĹ z serwerem, jedno na kaĹźdy proces.
   </simpara>
   <simpara>
-   Trzeba jednak zauważyć, że może to mieć swoje ujemne strony w przypadku,
-   gdy limit połączeń do bazy danych zostanie przekroczony przez stałe
-   połączenia z procesów potomnych. Jeśli twoja baza danych posiada limit
-   szesnastu jednoczesnych połączeń, a w danej chwili obciążenie jest
-   wysokie, siedemnasty proces nie będzie mógł się połączyć. Jeśli twoje
-   skrypty zawierają błędy, które nie pozwalają zamknąć połączeń (na przykłąd
-   nieskończone pętle), baza danych z limitem 16 połączeń może szybko zostać
-   zapchana. Poszukaj w dokumentacji swojej bazy danych w jaki sposób radzi
-   sobie ona z porzuconymi lub bezczynnymi połączeniami.
+   Trzeba jednak zauwaĹźyÄ, Ĺźe moĹźe to mieÄ swoje ujemne strony w przypadku,
+   gdy limit poĹÄczeĹ do bazy danych zostanie przekroczony przez staĹe
+   poĹÄczenia z procesĂłw potomnych. JeĹli twoja baza danych posiada limit
+   szesnastu jednoczesnych poĹÄczeĹ, a w danej chwili obciÄĹźenie jest
+   wysokie, siedemnasty proces nie bÄdzie mĂłgĹ siÄ poĹÄczyÄ. JeĹli twoje
+   skrypty zawierajÄ bĹÄdy, ktĂłre nie pozwalajÄ zamknÄÄ poĹÄczeĹ (na przykĹÄd
+   nieskoĹczone pÄtle), baza danych z limitem 16 poĹÄczeĹ moĹźe szybko zostaÄ
+   zapchana. Poszukaj w dokumentacji swojej bazy danych w jaki sposĂłb radzi
+   sobie ona z porzuconymi lub bezczynnymi poĹÄczeniami.
   </simpara>
   <warning>
    <simpara>
-    Istnieje kilka zagrożeń, które należy brać pod uwagę decydując się na
-    używanie stałych połączeń. Jednym z nich jest sytuacja, w której skrypt
-    blokujący tabelę, z jakiegokolwiek powodu nie może zdjąć blokady. Wtedy
-    kolejne skrypty korzystające z tego samego połączenia będą zablokowane i
-    może zajść potrzeba ponownego uruchomienia serwera httpd lub serwera bazy
-    danych. Kolejne zagrożenie dotyczy transakcji. Jeśli skrypt używający
-    transakcji zakończy działanie przed zakończeniem bloku transakcji, to
-    zostanie on (blok) przeniesiony do następnego skryptu. W obu przypadkach
-    można użyć <function>register_shutdown_function</function>, aby
-    zarejestrować funkcję porządkującą, która odblokuje tabele lub wycofa
-    transakcje. Najlepiej jednak jest zrezygnować ze stałych połączeń w
-    skryptach używających blokowania tabel lub transakcji.
+    Istnieje kilka zagroĹźeĹ, ktĂłre naleĹźy braÄ pod uwagÄ decydujÄc siÄ na
+    uĹźywanie staĹych poĹÄczeĹ. Jednym z nich jest sytuacja, w ktĂłrej skrypt
+    blokujÄcy tabelÄ, z jakiegokolwiek powodu nie moĹźe zdjÄÄ blokady. Wtedy
+    kolejne skrypty korzystajÄce z tego samego poĹÄczenia bÄdÄ zablokowane i
+    moĹźe zajĹÄ potrzeba ponownego uruchomienia serwera httpd lub serwera bazy
+    danych. Kolejne zagroĹźenie dotyczy transakcji. JeĹli skrypt uĹźywajÄcy
+    transakcji zakoĹczy dziaĹanie przed zakoĹczeniem bloku transakcji, to
+    zostanie on (blok) przeniesiony do nastÄpnego skryptu. W obu przypadkach
+    moĹźna uĹźyÄ <function>register_shutdown_function</function>, aby
+    zarejestrowaÄ funkcjÄ porzÄdkujÄcÄ, ktĂłra odblokuje tabele lub wycofa
+    transakcje. Najlepiej jednak jest zrezygnowaÄ ze staĹych poĹÄczeĹ w
+    skryptach uĹźywajÄcych blokowania tabel lub transakcji.
    </simpara>
   </warning>
   <simpara>
-   Istotne podsumowanie. Stałe połączenia zostały zaprojektowane tak, by
-   odpowiadać zwykłym połączeniom. Oznacza to, że <emphasis>zawsze</emphasis>
-   możesz zastąpić stałe połączenia zwykłymi i nie zmieni to zachowania
-   skryptu. Natomiast <emphasis>może</emphasis> zmienić (i zapewne zmieni)
-   jego wydajność!
+   Istotne podsumowanie. StaĹe poĹÄczenia zostaĹy zaprojektowane tak, by
+   odpowiadaÄ zwykĹym poĹÄczeniom. Oznacza to, Ĺźe <emphasis>zawsze</emphasis>
+   moĹźesz zastÄpiÄ staĹe poĹÄczenia zwykĹymi i nie zmieni to zachowania
+   skryptu. Natomiast <emphasis>moĹźe</emphasis> zmieniÄ (i zapewne zmieni)
+   jego wydajnoĹÄ!
   </simpara>
   <para>
-   Zobacz także <function>fbsql_pconnect</function>,
+   Zobacz takĹźe <function>fbsql_pconnect</function>,
    <function>ibase_pconnect</function>, <function>ifx_pconnect</function>,
    <function>ingres_pconnect</function>,
    <function>msql_pconnect</function>, <function>mssql_pconnect</function>,

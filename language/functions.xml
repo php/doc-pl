@@ -1,24 +1,24 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: pirate Status: ready -->
 <!-- $Revision$ -->
  <chapter xml:id="language.functions" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
   <title>Funkcje</title>
 
   <sect1 xml:id="functions.user-defined">
-   <title>Funkcje definiowane przez użytkownika</title>
+   <title>Funkcje definiowane przez uĹźytkownika</title>
  
    <para>
-    Funkcja może być definiowana przy użyciu następującej składni:
+    Funkcja moĹźe byÄ definiowana przy uĹźyciu nastÄpujÄcej skĹadni:
    </para>
    <para>
     <example>
-     <title>Pseudokod demonstrujący użycie funkcji</title>
+     <title>Pseudokod demonstrujÄcy uĹźycie funkcji</title>
      <programlisting role="php">
 <![CDATA[
 <?php
 function foo($arg_1, $arg_2, /* ..., */ $arg_n)
 {
-    echo "Przykładowa funkcja.\n";
+    echo "PrzykĹadowa funkcja.\n";
     return $retval;
 }
 ?>
@@ -28,27 +28,27 @@ function foo($arg_1, $arg_2, /* ..., */ $arg_n)
    </para>
    
    <simpara>
-    Każdy poprawny kod może być użyty wewnątrz funkcji,
-    łącznie z definicjami innych funkcji i 
+    KaĹźdy poprawny kod moĹźe byÄ uĹźyty wewnÄtrz funkcji,
+    ĹÄcznie z definicjami innych funkcji i 
     <link linkend="keyword.class">klas</link>.
    </simpara>
    <para>
-    Nazwy funkcji obowiązują identyczne zasady, jak w przypadku wszystkich innych etykiet w PHP. 
-    Poprawna nazwa funkcji zaczyna się od litery lub podkreślnika, po których następuje 
-    dowolna ilość liter, cyfr i podkreślników. Jako wyrażenie regularne, określone 
-   zostałoby to następująco: 
+    Nazwy funkcji obowiÄzujÄ identyczne zasady, jak w przypadku wszystkich innych etykiet w PHP. 
+    Poprawna nazwa funkcji zaczyna siÄ od litery lub podkreĹlnika, po ktĂłrych nastÄpuje 
+    dowolna iloĹÄ liter, cyfr i podkreĹlnikĂłw. Jako wyraĹźenie regularne, okreĹlone 
+   zostaĹoby to nastÄpujÄco: 
     <literal>[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*</literal>.
    </para>
    &tip.userlandnaming;
    <simpara>
-    Funkcje nie muszą być zdefiniowane przed odniesieniem się do nich,
-    <emphasis>oprócz</emphasis> sytuacji, w których funkcja jest
-    zdefiniowana warunkowo jak w dwóch poniższych przykładach.
+    Funkcje nie muszÄ byÄ zdefiniowane przed odniesieniem siÄ do nich,
+    <emphasis>oprĂłcz</emphasis> sytuacji, w ktĂłrych funkcja jest
+    zdefiniowana warunkowo jak w dwĂłch poniĹźszych przykĹadach.
    </simpara>
    <para>
-    Kiedy funkcja jest zdefiniowana warunkowo, jak w dwóch poniższych przykładach,
-    jej definicja musi być przetworzona <emphasis>przed</emphasis>
-    jej wywołaniem.
+    Kiedy funkcja jest zdefiniowana warunkowo, jak w dwĂłch poniĹźszych przykĹadach,
+    jej definicja musi byÄ przetworzona <emphasis>przed</emphasis>
+    jej wywoĹaniem.
    </para>
    <para>
     <example>
@@ -59,27 +59,27 @@ function foo($arg_1, $arg_2, /* ..., */ $arg_n)
 
 $makefoo = true;
 
-/* Nie możemy tu wywołać foo() 
-   ponieważ jeszcze nie istnieje,
-   ale możemy wywołać bar() */
+/* Nie moĹźemy tu wywoĹaÄ foo() 
+   poniewaĹź jeszcze nie istnieje,
+   ale moĹźemy wywoĹaÄ bar() */
 
 bar();
 
 if ($makefoo) {
   function foo()
   {
-    echo "Nie istnieję, dopóki nie zostanę wykonana.\n";
+    echo "Nie istniejÄ, dopĂłki nie zostanÄ wykonana.\n";
   }
 }
 
-/* Teraz możemy bezpiecznie wywołać foo()
-   ponieważ $makefoo ma wartość logiczną 1 */
+/* Teraz moĹźemy bezpiecznie wywoĹaÄ foo()
+   poniewaĹź $makefoo ma wartoĹÄ logicznÄ 1 */
 
 if ($makefoo) foo();
 
 function bar() 
 {
-  echo "Istnieję od początku działania skryptu.\n";
+  echo "IstniejÄ od poczÄtku dziaĹania skryptu.\n";
 }
 
 ?>
@@ -89,7 +89,7 @@ function bar()
    </para>
    <para>
     <example>
-     <title>Funkcje wewnątrz funkcji</title>
+     <title>Funkcje wewnÄtrz funkcji</title>
      <programlisting role="php">
 <![CDATA[
 <?php
@@ -97,18 +97,18 @@ function foo()
 {
   function bar() 
   {
-    echo "Nie istnieję, dopóki foo() nie jest wywołana.\n";
+    echo "Nie istniejÄ, dopĂłki foo() nie jest wywoĹana.\n";
   }
 }
 
-/* Nie możemy tu wywołać bar() 
-   ponieważ jeszcze nie istnieje. */
+/* Nie moĹźemy tu wywoĹaÄ bar() 
+   poniewaĹź jeszcze nie istnieje. */
 
 foo();
 
-/* Teraz możemy wywołać bar(),
-   wykonanie foo() spodowało
-   że jest to już możliwe. */
+/* Teraz moĹźemy wywoĹaÄ bar(),
+   wykonanie foo() spodowaĹo
+   Ĺźe jest to juĹź moĹźliwe. */
 
 bar();
 
@@ -118,33 +118,33 @@ bar();
     </example>
    </para>
    <para>
-    Wszystkie funkcje i klasy w PHP mają globalny zasięg - mogą być
-    wykonane poza funkcją, nawet jeśli były zdefiniowane wewnątrz niej, i odwrotnie.
+    Wszystkie funkcje i klasy w PHP majÄ globalny zasiÄg - mogÄ byÄ
+    wykonane poza funkcjÄ, nawet jeĹli byĹy zdefiniowane wewnÄtrz niej, i odwrotnie.
    </para>
    <simpara>
-    PHP nie umożliwia przeładowywania funkcji, nie jest też możliwe
-    usunięcie jej definicji lub redefiniowanie poprzednio określonych funkcji.
+    PHP nie umoĹźliwia przeĹadowywania funkcji, nie jest teĹź moĹźliwe
+    usuniÄcie jej definicji lub redefiniowanie poprzednio okreĹlonych funkcji.
    </simpara>
    <note>
     <simpara>
-     Nazwy funkcji nie rozróżniają wielkości liter, ale dobrym zwyczajem jest
-     wywoływanie ich w formie, w której zostały zdefiniowane.
+     Nazwy funkcji nie rozrĂłĹźniajÄ wielkoĹci liter, ale dobrym zwyczajem jest
+     wywoĹywanie ich w formie, w ktĂłrej zostaĹy zdefiniowane.
     </simpara>
    </note>   
    <simpara>
-    Zarówno <link linkend="functions.variable-arg-list">przyjmowanie różnej ilości
-    argumentów</link> jak i <link linkend="functions.arguments.default">wartości domyślne
-    argumentów</link> są obsługiwane w funkcjach. Zobacz także opisy
+    ZarĂłwno <link linkend="functions.variable-arg-list">przyjmowanie rĂłĹźnej iloĹci
+    argumentĂłw</link> jak i <link linkend="functions.arguments.default">wartoĹci domyĹlne
+    argumentĂłw</link> sÄ obsĹugiwane w funkcjach. Zobacz takĹźe opisy
     funkcji
     <function>func_num_args</function>,
     <function>func_get_arg</function>, i
-    <function>func_get_args</function> aby uzyskać więcej informacji.
+    <function>func_get_args</function> aby uzyskaÄ wiÄcej informacji.
    </simpara>
    
    <para>
-    W PHP jest możliwe wykonywanie rekurencyjnych funkcji. Unikaj jednak wywoływania
-    rekurencyjnych funkcji/metod które osiągają poziom rekurencji większy niż 100-200,
-    ponieważ może to spowodować przepełnienie stosu i zakończenie wykonywania skryptu.
+    W PHP jest moĹźliwe wykonywanie rekurencyjnych funkcji. Unikaj jednak wywoĹywania
+    rekurencyjnych funkcji/metod ktĂłre osiÄgajÄ poziom rekurencji wiÄkszy niĹź 100-200,
+    poniewaĹź moĹźe to spowodowaÄ przepeĹnienie stosu i zakoĹczenie wykonywania skryptu.
     <example>
      <title>Funkcje rekurencyjne</title>
      <programlisting role="php">
@@ -169,19 +169,19 @@ function recursion($a)
    <title>Argumenty funkcji</title>
  
    <simpara>
-    Dane mogą być przekazywane do funkcji przez listę argumentów,
-    która jest listą oddzielonych przecinkami wyrażeń.
+    Dane mogÄ byÄ przekazywane do funkcji przez listÄ argumentĂłw,
+    ktĂłra jest listÄ oddzielonych przecinkami wyraĹźeĹ.
    </simpara> 
    <para>
-    PHP obsługuje podawanie argumentów jako wartości (domyślnie), <link
+    PHP obsĹuguje podawanie argumentĂłw jako wartoĹci (domyĹlnie), <link
     linkend="functions.arguments.by-reference">przez
-    referencję</link>, oraz <link
-    linkend="functions.arguments.default">domyślne wartości
-    argumentów</link>. <link linkend="functions.variable-arg-list">Różna ilość
-    argumentów</link> także jest obsługiwana, zobacz opisy funkcji
+    referencjÄ</link>, oraz <link
+    linkend="functions.arguments.default">domyĹlne wartoĹci
+    argumentĂłw</link>. <link linkend="functions.variable-arg-list">RĂłĹźna iloĹÄ
+    argumentĂłw</link> takĹźe jest obsĹugiwana, zobacz opisy funkcji
     <function>func_num_args</function>,
     <function>func_get_arg</function>, i
-    <function>func_get_args</function> aby dowiedzieć się więcej.
+    <function>func_get_args</function> aby dowiedzieÄ siÄ wiÄcej.
    </para>
    <para>
     <example>
@@ -200,31 +200,31 @@ function takes_array($input)
    </para>
  
    <sect2 xml:id="functions.arguments.by-reference">
-    <title>Podawanie argumentów jako referencji</title>
+    <title>Podawanie argumentĂłw jako referencji</title>
  
     <simpara>
-     Domyślnie, argumenty funkcji podawane są jako wartości (kiedy
-     wartość argumentu wewnątrz funkcji się zmienia, nie wpływa
-     to na wartość zmiennej poza funkcją). Aby pozwolić funkcji na modyfikację jej
-     jej argumentów, muszą one być podane przez referencję.
+     DomyĹlnie, argumenty funkcji podawane sÄ jako wartoĹci (kiedy
+     wartoĹÄ argumentu wewnÄtrz funkcji siÄ zmienia, nie wpĹywa
+     to na wartoĹÄ zmiennej poza funkcjÄ). Aby pozwoliÄ funkcji na modyfikacjÄ jej
+     jej argumentĂłw, muszÄ one byÄ podane przez referencjÄ.
     </simpara>
     <para>
-     Aby argument zawsze był podawany przez referencję, poprzedź nazwę
+     Aby argument zawsze byĹ podawany przez referencjÄ, poprzedĹş nazwÄ
      argumentu znakiem (&amp;) w definicji funkcji:
     </para>
     <para>
      <example>
-      <title>Podawanie parametrów funkcji przez referencję</title>
+      <title>Podawanie parametrĂłw funkcji przez referencjÄ</title>
       <programlisting role="php">
 <![CDATA[
 <?php
 function add_some_extra(&$string)
 {
-    $string .= 'i coś ekstra.';
+    $string .= 'i coĹ ekstra.';
 }
-$str = 'To jest ciąg znaków, ';
+$str = 'To jest ciÄg znakĂłw, ';
 add_some_extra($str);
-echo $str;    // wypisuje 'To jest ciąg znaków, i coś ekstra.'
+echo $str;    // wypisuje 'To jest ciÄg znakĂłw, i coĹ ekstra.'
 ?>
 ]]>
       </programlisting>
@@ -234,21 +234,21 @@ echo $str;    // wypisuje 'To jest ciąg znaków, i coś ekstra.'
    </sect2>
  
    <sect2 xml:id="functions.arguments.default">
-    <title>Domyślne wartości argumentów</title>
+    <title>DomyĹlne wartoĹci argumentĂłw</title>
  
     <para>
-     Można zdefiniować domyślne wartości skalarne 
-     argumentów w stylu C++ następująco:
+     MoĹźna zdefiniowaÄ domyĹlne wartoĹci skalarne 
+     argumentĂłw w stylu C++ nastÄpujÄco:
     </para>
     <para>
      <example>
-      <title>Użycie domyślnych wartości argumentów w funkcji</title>
+      <title>UĹźycie domyĹlnych wartoĹci argumentĂłw w funkcji</title>
       <programlisting role="php">
 <![CDATA[
 <?php
 function makecoffee($type = "cappuccino")
 {
-    return "Robię kubek $type.\n";
+    return "RobiÄ kubek $type.\n";
 }
 echo makecoffee();
 echo makecoffee(null);
@@ -260,29 +260,29 @@ echo makecoffee("espresso");
     </para>
  
     <para>
-     Wynikiem powyższego kodu jest:
+     Wynikiem powyĹźszego kodu jest:
     </para>
     <para>
      <screen>
-Robię kubek cappuccino.
-Robię kubek .
-Robię kubek espresso.
+RobiÄ kubek cappuccino.
+RobiÄ kubek .
+RobiÄ kubek espresso.
      </screen>
     </para>
     <para>
-     PHP pozwala również na użycie tablic(<type>array</type>) i specjalnego typu &null;
-     jako domyślnych wartości, na przykład:
+     PHP pozwala rĂłwnieĹź na uĹźycie tablic(<type>array</type>) i specjalnego typu &null;
+     jako domyĹlnych wartoĹci, na przykĹad:
     </para>
     <para>
      <example>
-      <title>Użycie nie-skalarnych typów jako domyślnych wartości</title>
+      <title>UĹźycie nie-skalarnych typĂłw jako domyĹlnych wartoĹci</title>
       <programlisting role="php">
 <![CDATA[
 <?php
 function makecoffee($types = array("cappuccino"), $coffeeMaker = NULL)
 {
-    $device = is_null($coffeeMaker) ? "rąk" : $coffeeMaker;
-    return "Robię kubek ".join(", ", $types)." za pomocą $device.\n";
+    $device = is_null($coffeeMaker) ? "rÄk" : $coffeeMaker;
+    return "RobiÄ kubek ".join(", ", $types)." za pomocÄ $device.\n";
 }
 echo makecoffee();
 echo makecoffee(array("cappuccino", "lavazza"), "teapot");
@@ -293,17 +293,17 @@ echo makecoffee(array("cappuccino", "lavazza"), "teapot");
     
     </para>
     <simpara>
-     Domyślna wartość musi być stałym wyrażeniem, a nie na przykład
-     zmienną, członkiem klasy czy wywołaniem funkcji.
+     DomyĹlna wartoĹÄ musi byÄ staĹym wyraĹźeniem, a nie na przykĹad
+     zmiennÄ, czĹonkiem klasy czy wywoĹaniem funkcji.
     </simpara>
     <para>
-     Zauważ, że przy użyciu domyślnych wartości, powinne one być
-     zdefiniowane po prawej stronie nie-domyślnych argumentów; 
-     W przeciwnym wypadku, nie zadziała to jak powinno. Na przykład: 
+     ZauwaĹź, Ĺźe przy uĹźyciu domyĹlnych wartoĹci, powinne one byÄ
+     zdefiniowane po prawej stronie nie-domyĹlnych argumentĂłw; 
+     W przeciwnym wypadku, nie zadziaĹa to jak powinno. Na przykĹad: 
     </para>
     <para>
      <example>
-      <title>Niepoprawne użycie domyślnych wartości argumentów</title>
+      <title>Niepoprawne uĹźycie domyĹlnych wartoĹci argumentĂłw</title>
       <programlisting role="php">
 <![CDATA[
 <?php
@@ -312,7 +312,7 @@ function makeyogurt($type = "acidophilus", $flavour)
     return "Making a bowl of $type $flavour.\n";
 }
  
-echo makeyogurt("raspberry");   // nie zadziała tak, jak oczekujemy
+echo makeyogurt("raspberry");   // nie zadziaĹa tak, jak oczekujemy
 ?>
 ]]>
       </programlisting>
@@ -320,7 +320,7 @@ echo makeyogurt("raspberry");   // nie zadziała tak, jak oczekujemy
     </para>
  
     <para>
-     Wynik powyższego skryptu to:
+     Wynik powyĹźszego skryptu to:
     </para>
     <para>
      <screen>
@@ -330,20 +330,20 @@ Making a bowl of raspberry .
      </screen>
     </para>
     <para>
-     Porównaj go teraz z:
+     PorĂłwnaj go teraz z:
     </para>
     <para>
      <example>
-      <title>Poprawne użycie domyślnych wartości argumentów</title>
+      <title>Poprawne uĹźycie domyĹlnych wartoĹci argumentĂłw</title>
       <programlisting role="php">
 <![CDATA[
 <?php
 function makeyogurt($flavour, $type = "jogurtu")
 {
-    return "Robię miskę $type $flavour.\n";
+    return "RobiÄ miskÄ $type $flavour.\n";
 }
  
-echo makeyogurt("malinowego");   // działa zgodnie z naszymi oczekiwaniami
+echo makeyogurt("malinowego");   // dziaĹa zgodnie z naszymi oczekiwaniami
 ?>
 ]]>
       </programlisting>
@@ -351,37 +351,37 @@ echo makeyogurt("malinowego");   // działa zgodnie z naszymi oczekiwaniami
     </para>
  
     <para>
-     Wynikiem działania powyższego przykładu jest:
+     Wynikiem dziaĹania powyĹźszego przykĹadu jest:
     </para>
     <para>
      <screen>
-Robię miskę malinowego jogurtu.
+RobiÄ miskÄ malinowego jogurtu.
      </screen>
     </para>
     
     <note>
      <simpara>
-      Od PHP 5 domyślne wartości argumentów mogą być podawane przez referencję.
+      Od PHP 5 domyĹlne wartoĹci argumentĂłw mogÄ byÄ podawane przez referencjÄ.
      </simpara>
     </note>
 
    </sect2>
 
    <sect2 xml:id="functions.variable-arg-list">
-    <title>Podawanie różnej ilości argumentów</title>
+    <title>Podawanie rĂłĹźnej iloĹci argumentĂłw</title>
 
     <simpara>
-     Od PHP 4 możliwe jest użycie różnej ilości argumentów dla
-     funkcji definiowanych przez użytkownika. Jest to dosyć proste przy użyciu funkcji
+     Od PHP 4 moĹźliwe jest uĹźycie rĂłĹźnej iloĹci argumentĂłw dla
+     funkcji definiowanych przez uĹźytkownika. Jest to dosyÄ proste przy uĹźyciu funkcji
      <function>func_num_args</function>,
      <function>func_get_arg</function> i
      <function>func_get_args</function>.
     </simpara>
 
     <simpara>
-     Nie wymaga to żadnej specjalnej składni, listy argumentów
-     w dalszym ciągu podawane są przy definiowaniu funkcji i zachowują
-     się normalnie.
+     Nie wymaga to Ĺźadnej specjalnej skĹadni, listy argumentĂłw
+     w dalszym ciÄgu podawane sÄ przy definiowaniu funkcji i zachowujÄ
+     siÄ normalnie.
     </simpara>
 
    </sect2>
@@ -389,18 +389,18 @@ Robię miskę malinowego jogurtu.
   </sect1>
  
   <sect1 xml:id="functions.returning-values">
-   <title>Zwracanie wartości</title>
+   <title>Zwracanie wartoĹci</title>
  
    <para>
-    Wartości zwracane są przy użyciu opcjonalnego wyrażenia return. Wszystkie
-    typy mogą być zwracane, łącznie z tablicami i obiektami. Powoduje to natychmiastowe
-    zakończenie wykonywania funkcji i wznowienie wykonywania skryptu od linijki w której
-    funkcja została wywołana. Zobacz <function>return</function>
-    aby uzyskać więcej informacji.
+    WartoĹci zwracane sÄ przy uĹźyciu opcjonalnego wyraĹźenia return. Wszystkie
+    typy mogÄ byÄ zwracane, ĹÄcznie z tablicami i obiektami. Powoduje to natychmiastowe
+    zakoĹczenie wykonywania funkcji i wznowienie wykonywania skryptu od linijki w ktĂłrej
+    funkcja zostaĹa wywoĹana. Zobacz <function>return</function>
+    aby uzyskaÄ wiÄcej informacji.
    </para>
    <para>
     <example>
-     <title>Użycie <function>return</function></title>
+     <title>UĹźycie <function>return</function></title>
      <programlisting role="php">
 <![CDATA[
 <?php
@@ -416,8 +416,8 @@ echo square(4);   // wypisuje '16'.
    </para>
       
    <para>
-    Funkcjia nie może zwracać wielu wartości, ale podobny efekt
-    może zostać osiągnięty poprzez zwracanie tablicy.
+    Funkcjia nie moĹźe zwracaÄ wielu wartoĹci, ale podobny efekt
+    moĹźe zostaÄ osiÄgniÄty poprzez zwracanie tablicy.
    </para>
    <para>
     <example>
@@ -436,8 +436,8 @@ list ($zero, $one, $two) = small_numbers();
     </example>
    </para>
    <para>
-    Aby zwrócić referencję, użyj operatora &amp; zarówno
-    w deklaracji funkcji jak i podczas przypisywania zwracanej wartości
+    Aby zwrĂłciÄ referencjÄ, uĹźyj operatora &amp; zarĂłwno
+    w deklaracji funkcji jak i podczas przypisywania zwracanej wartoĹci
     zmiennej:
    </para>
    <para>
@@ -458,8 +458,8 @@ $newref =& returns_reference();
     </example>
    </para>
    <simpara>
-    Aby uzyskać więcej informacji o referencjach, przejdź do <link
-    linkend="language.references">Wyjaśnienie Referencji</link>.
+    Aby uzyskaÄ wiÄcej informacji o referencjach, przejdĹş do <link
+    linkend="language.references">WyjaĹnienie Referencji</link>.
    </simpara>
   </sect1>
  
@@ -467,23 +467,23 @@ $newref =& returns_reference();
    <title>Funkcje zmiennych</title>
 
    <para>
-    PHP obsługuje opcję funkcji zmiennych. Oznacza to, że jeśli
-    do nazwy zmiennej dodane są nawiasy, PHP postara się znaleźć
-    funkcję o nazwie takiej jak wartość zmiennej
-    i spróbuje ją wykonać. Między innymi, może to służyć do
-    zaimplementowania tzw. callbacks, tablic funkcji, a także wielu innych rzeczy.
+    PHP obsĹuguje opcjÄ funkcji zmiennych. Oznacza to, Ĺźe jeĹli
+    do nazwy zmiennej dodane sÄ nawiasy, PHP postara siÄ znaleĹşÄ
+    funkcjÄ o nazwie takiej jak wartoĹÄ zmiennej
+    i sprĂłbuje jÄ wykonaÄ. MiÄdzy innymi, moĹźe to sĹuĹźyÄ do
+    zaimplementowania tzw. callbacks, tablic funkcji, a takĹźe wielu innych rzeczy.
    </para>
    <para>
-    Funkcje zmiennych nie zadziałają z takimi elementami języka
+    Funkcje zmiennych nie zadziaĹajÄ z takimi elementami jÄzyka
     jak <function>echo</function>, <function>print</function>,
     <function>unset</function>, <function>isset</function>,
     <function>empty</function>, <function>include</function>,
-    <function>require</function> i podobnymi. Używaj okrężnych funkcji
-    aby skorzystać z któregoś z powyższych elementów języka jako funkcji zmiennych.
+    <function>require</function> i podobnymi. UĹźywaj okrÄĹźnych funkcji
+    aby skorzystaÄ z ktĂłregoĹ z powyĹźszych elementĂłw jÄzyka jako funkcji zmiennych.
    </para>
    <para>
     <example>
-     <title>Przykład funkcji zmiennych</title>
+     <title>PrzykĹad funkcji zmiennych</title>
      <programlisting role="php">
 <![CDATA[
 <?php
@@ -493,32 +493,32 @@ function foo() {
 
 function bar($arg = '')
 {
-    echo "W bar(); argumentem było '$arg'.<br />\n";
+    echo "W bar(); argumentem byĹo '$arg'.<br />\n";
 }
 
-// To jest funkcja okrężna dla "echo"
+// To jest funkcja okrÄĹźna dla "echo"
 function echoit($string)
 {
     echo $string;
 }
 
 $func = 'foo';
-$func();        // Wywołuje foo()
+$func();        // WywoĹuje foo()
 
 $func = 'bar';
-$func('test');  // Wywołuje bar()
+$func('test');  // WywoĹuje bar()
 
 $func = 'echoit';
-$func('test');  // Wywołuje echoit()
+$func('test');  // WywoĹuje echoit()
 ?>
 ]]>
      </programlisting>
     </example>
    </para>
    <para>
-    Jako funkcje zmiennych mogą być także wywoływane metody obiektów.
+    Jako funkcje zmiennych mogÄ byÄ takĹźe wywoĹywane metody obiektĂłw.
     <example>
-     <title>Przykład metod zmiennych</title>
+     <title>PrzykĹad metod zmiennych</title>
      <programlisting role="php">
 <![CDATA[
 <?php
@@ -527,7 +527,7 @@ class Foo
     function Zmienna()
     {
         $name = 'Bar';
-        $this->$name(); // Wywołuje metodę Bar()
+        $this->$name(); // WywoĹuje metodÄ Bar()
     }
     
     function Bar()
@@ -538,7 +538,7 @@ class Foo
 
 $foo = new Foo();
 $funcname = "Zmienna";
-$foo->$funcname();  // Wywołuje $foo->Zmienna()
+$foo->$funcname();  // WywoĹuje $foo->Zmienna()
 
 ?>
 ]]>
@@ -546,59 +546,59 @@ $foo->$funcname();  // Wywołuje $foo->Zmienna()
     </example>
    </para>
    <para>
-    Zobacz także <function>call_user_func</function>,
+    Zobacz takĹźe <function>call_user_func</function>,
     <link linkend="language.variables.variable">
     zmienne zmienne</link> oraz <function>function_exists</function>.
    </para>
   </sect1>
   
   <sect1 xml:id="functions.internal">
-   <title>Wewnętrzne (wbudowane) funkcje</title>
+   <title>WewnÄtrzne (wbudowane) funkcje</title>
    
    <para>
-    PHP zapewnia wiele wbudowanych funkcji i konstrukcji. Istnieją także
-    funkcje wymagające wkompilowania specyficznych rozszerzeń PHP, w przeciwnym wypadku
-    wywołanie ich skutkuje błędami "undefined function". Na przykładd, aby użyć funkcji
-    <link linkend="ref.image">obrazków</link> takich jak
-    <function>imagecreatetruecolor</function>, PHP musi być skompilowane z obsługą
-    <productname>GD</productname>. Aby użyć
-    <function>mysql_connect</function>, PHP musi być skompilowane z obsługą
+    PHP zapewnia wiele wbudowanych funkcji i konstrukcji. IstniejÄ takĹźe
+    funkcje wymagajÄce wkompilowania specyficznych rozszerzeĹ PHP, w przeciwnym wypadku
+    wywoĹanie ich skutkuje bĹÄdami "undefined function". Na przykĹadd, aby uĹźyÄ funkcji
+    <link linkend="ref.image">obrazkĂłw</link> takich jak
+    <function>imagecreatetruecolor</function>, PHP musi byÄ skompilowane z obsĹugÄ
+    <productname>GD</productname>. Aby uĹźyÄ
+    <function>mysql_connect</function>, PHP musi byÄ skompilowane z obsĹugÄ
     <link linkend="ref.mysql">MySQL</link>. Jest wiele funkcji wbudowanych
-    w rdzeń każdej wersji PHP, takich jak funkcje
+    w rdzeĹ kaĹźdej wersji PHP, takich jak funkcje
     <link linkend="ref.strings">typu string</link> oraz 
-    <link linkend="ref.var">zmiennych</link>. Wywołanie
+    <link linkend="ref.var">zmiennych</link>. WywoĹanie
     to <function>phpinfo</function> lub
-    <function>get_loaded_extensions</function> pokaże, które rozszerzenia
-    PHP są załadowane. Zauważ, że wiele rozszerzeń jest domyślnie załadowanych i 
-    podręcznik PHP jest podzielony według rozszerzeń. Zobacz rozdziały o 
+    <function>get_loaded_extensions</function> pokaĹźe, ktĂłre rozszerzenia
+    PHP sÄ zaĹadowane. ZauwaĹź, Ĺźe wiele rozszerzeĹ jest domyĹlnie zaĹadowanych i 
+    podrÄcznik PHP jest podzielony wedĹug rozszerzeĹ. Zobacz rozdziaĹy o 
     <link linkend="configuration">konfiguracji</link>,
-    <link linkend="install">instalacji</link>, a także te dotyczące
-    poszczególnych rozszerzeń, aby dowiedzieć się jak uruchomić PHP.
+    <link linkend="install">instalacji</link>, a takĹźe te dotyczÄce
+    poszczegĂłlnych rozszerzeĹ, aby dowiedzieÄ siÄ jak uruchomiÄ PHP.
    </para>
    <para>
-    Czytanie i rozumienie prototypów funkcji wyjaśnione jest w rozdziale
-    podręcznika zatytułowanym <link linkend="about.prototypes">jak czytać
-    definicje funkcji</link>. Ważne jest zrozumienie, czy funkcja zwraca konkretną wartość
-    czy operuje bezpośrednio na podanej zmiennej. Na przykład,
-    <function>str_replace</function> zwróci zmodyfikowany obiekt typu string, podczas gdy
-    <function>usort</function> pracuje bezpośrednio na podanej zmiennej.
-    Każda funkcja posiada swoją stronę w podręczniku PHP, która podaje informacje takie jak
-    parametry funkcji, jej zachowanie, wartości zwracane po poprawnym wykonaniu i w przypadku błędu,
-    a także dane dotyczące jej dostępności.
-    Znanie tych ważnych (chociaż często drobnych) różnic jest kluczowe podczas
+    Czytanie i rozumienie prototypĂłw funkcji wyjaĹnione jest w rozdziale
+    podrÄcznika zatytuĹowanym <link linkend="about.prototypes">jak czytaÄ
+    definicje funkcji</link>. WaĹźne jest zrozumienie, czy funkcja zwraca konkretnÄ wartoĹÄ
+    czy operuje bezpoĹrednio na podanej zmiennej. Na przykĹad,
+    <function>str_replace</function> zwrĂłci zmodyfikowany obiekt typu string, podczas gdy
+    <function>usort</function> pracuje bezpoĹrednio na podanej zmiennej.
+    KaĹźda funkcja posiada swojÄ stronÄ w podrÄczniku PHP, ktĂłra podaje informacje takie jak
+    parametry funkcji, jej zachowanie, wartoĹci zwracane po poprawnym wykonaniu i w przypadku bĹÄdu,
+    a takĹźe dane dotyczÄce jej dostÄpnoĹci.
+    Znanie tych waĹźnych (chociaĹź czÄsto drobnych) rĂłĹźnic jest kluczowe podczas
     pisania kodu w PHP.
    </para>
    <note>
     <simpara>
-     Jeśli parametry podane funkcji nie są takie, jak spodziewane, na przykład 
+     JeĹli parametry podane funkcji nie sÄ takie, jak spodziewane, na przykĹad 
      tablica(<type>array</type>) podawana jest w miejscu, gdzie oczekiwana jest zmienna typu <type>string</type>, 
-     wartość zwracana przez funkcję nie jest zdefiniowana. W takim wypadku funkcja prawdopodobnie
-     zwróci &null; ale jest to jedynie konwencja
-     a nie zasada, na której można się opierać.
+     wartoĹÄ zwracana przez funkcjÄ nie jest zdefiniowana. W takim wypadku funkcja prawdopodobnie
+     zwrĂłci &null; ale jest to jedynie konwencja
+     a nie zasada, na ktĂłrej moĹźna siÄ opieraÄ.
     </simpara>
    </note>
    <para>
-    Zobacz także <function>function_exists</function>, 
+    Zobacz takĹźe <function>function_exists</function>, 
     <link linkend="funcref">the function reference</link>,
     <function>get_extension_funcs</function> i 
     <function>dl</function>.

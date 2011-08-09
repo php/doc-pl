@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
  <chapter xml:id="language.oop" xmlns="http://docbook.org/ns/docbook">
@@ -7,10 +7,10 @@
   <sect1 xml:id="keyword.class">
    <title><literal>klasa</literal></title>
    <para>
-    Klasa jest to zbiór zmiennych i funkcji operujących na tych zmiennych.
-    Zmienne są definiowane słowem kluczowym <literal>var</literal>, a funkcje
-    - <literal>function</literal>.  Do definicji klasy używana jest
-    następująca składnia:
+    Klasa jest to zbiĂłr zmiennych i funkcji operujÄcych na tych zmiennych.
+    Zmienne sÄ definiowane sĹowem kluczowym <literal>var</literal>, a funkcje
+    - <literal>function</literal>.  Do definicji klasy uĹźywana jest
+    nastÄpujÄca skĹadnia:
    </para>
    <para>
     <informalexample>
@@ -20,13 +20,13 @@
 class Koszyk {
     var $zakupy;  // Zakupy w naszym koszyku
    
-    // Dodaj $num artykułów typu $artnr do wózka
+    // Dodaj $num artykuĹĂłw typu $artnr do wĂłzka
  
     function dodaj_produkt ($artnr, $num) {
         $this->zakupy[$artnr] += $num;
     }
    
-    // Usuń $num artykułów typu $artnr z wózka
+    // UsuĹ $num artykuĹĂłw typu $artnr z wĂłzka
  
     function usun_produkt ($artnr, $num) {
         if ($this->zakupy[$artnr] > $num) {
@@ -47,17 +47,17 @@ class Koszyk {
    </para>
  
    <para>
-    Definiuje to klasę o nazwie Koszyk, która zawiera tablicę asocjacyjną
-    artykułów znajdujących się w wózku i dwie funkcje do dodawania i usuwania
-    produktów z koszyka.
+    Definiuje to klasÄ o nazwie Koszyk, ktĂłra zawiera tablicÄ asocjacyjnÄ
+    artykuĹĂłw znajdujÄcych siÄ w wĂłzku i dwie funkcje do dodawania i usuwania
+    produktĂłw z koszyka.
    </para>
 
    <warning>
     <simpara>
-     <emphasis>NIE</emphasis> jest możliwe rozbicie definicji klasy na wiele
-     plików. Także <emphasis>NIE</emphasis> jest możliwe rozbicie definicji
-     klasy na wiele bloków PHP, chyba że rozbicie to znajduje się wewnątrz
-     definicji metody. Poniższy kod nie będzie działać.
+     <emphasis>NIE</emphasis> jest moĹźliwe rozbicie definicji klasy na wiele
+     plikĂłw. TakĹźe <emphasis>NIE</emphasis> jest moĹźliwe rozbicie definicji
+     klasy na wiele blokĂłw PHP, chyba Ĺźe rozbicie to znajduje siÄ wewnÄtrz
+     definicji metody. PoniĹźszy kod nie bÄdzie dziaĹaÄ.
     </simpara>
     <para>
      <informalexample>
@@ -77,7 +77,7 @@ class test {
      </informalexample>
     </para>
     <simpara>
-     Jednakże poniższy kod jest dozwolony:
+     JednakĹźe poniĹźszy kod jest dozwolony:
     </simpara>
     <para>
      <informalexample>
@@ -98,49 +98,49 @@ class test {
     </para>
    </warning>
    <simpara>
-    Poniższe uwagi dotyczą PHP 4.
+    PoniĹźsze uwagi dotyczÄ PHP 4.
    </simpara>
     
    <caution>
     <simpara>
-     Nazwa <literal>stdClass</literal> jest używana wewnętrznie przez Zend i
-     jest zarezerwowana. W PHP nie możesz zdefiniować klasy o nazwie
+     Nazwa <literal>stdClass</literal> jest uĹźywana wewnÄtrznie przez Zend i
+     jest zarezerwowana. W PHP nie moĹźesz zdefiniowaÄ klasy o nazwie
      <literal>stdClass</literal>.
     </simpara>
    </caution>
    <caution>
     <simpara>
       Nazwy funkcji <literal>__sleep</literal> i <literal>__wakeup</literal>
-      mają magiczne znaczenie dla klas w PHP. Klasy nie mogą zawierać funkcji
-      o tych nazwach, chyba że zgadzasz się na przypisanie do nich magicznej
-      funkcjonalności. Poniżej możesz znaleźć więcej informacji.
+      majÄ magiczne znaczenie dla klas w PHP. Klasy nie mogÄ zawieraÄ funkcji
+      o tych nazwach, chyba Ĺźe zgadzasz siÄ na przypisanie do nich magicznej
+      funkcjonalnoĹci. PoniĹźej moĹźesz znaleĹşÄ wiÄcej informacji.
     </simpara>
    </caution>
    <caution>
     <simpara>
-      PHP rezerwuje wszystkie nazwy funkcji zaczynające się od __ na funkcje
-      magiczne. Zalecane jest nieużywanie funkcji z nazwami zaczynającymi się
-      od __ chyba że chcesz jakiejś magicznej funkcjonalności.
+      PHP rezerwuje wszystkie nazwy funkcji zaczynajÄce siÄ od __ na funkcje
+      magiczne. Zalecane jest nieuĹźywanie funkcji z nazwami zaczynajÄcymi siÄ
+      od __ chyba Ĺźe chcesz jakiejĹ magicznej funkcjonalnoĹci.
     </simpara>
    </caution>
 
    <simpara>
-    W PHP 4 dozwolone są tylko stałe inicjalizatory zmiennych
-    <literal>var</literal>. Aby zainicjalizować zmienne z nie-stałymi
-    wartościami, potrzebujesz funkcję inicjalizacyjną, która jest wywoływana
+    W PHP 4 dozwolone sÄ tylko staĹe inicjalizatory zmiennych
+    <literal>var</literal>. Aby zainicjalizowaÄ zmienne z nie-staĹymi
+    wartoĹciami, potrzebujesz funkcjÄ inicjalizacyjnÄ, ktĂłra jest wywoĹywana
     automatycznie zaraz po utworzeniu obiektu z danej klasy. Taka funkcja
-    zwana jest konstruktorem (zobacz poniżej).
+    zwana jest konstruktorem (zobacz poniĹźej).
    </simpara>
    <informalexample>
     <programlisting role="php">
 <![CDATA[
 <?php
 class Koszyk {
-/* Nic z tego nie będzie działać w PHP 4. */
+/* Nic z tego nie bÄdzie dziaĹaÄ w PHP 4. */
     var $dzisiejsza_data = date("Y-m-d");
     var $nazwa = $imie;
     var $wlasciciel = 'Fred ' . 'Jones';
-/* Jednakże tablice zawierające stałe - będą */
+/* JednakĹźe tablice zawierajÄce staĹe - bÄdÄ */
     var $artykuly = array("VCR", "TV");
 }
 
@@ -161,8 +161,8 @@ class Koszyk {
     </programlisting>
    </informalexample>
    <para>
-    Klasy są typami, które są w zasadzie tylko schematami dla właściwych
-    zmiennych. Zmienne pożądanego typu musisz stworzyć korzystając z operatora
+    Klasy sÄ typami, ktĂłre sÄ w zasadzie tylko schematami dla wĹaĹciwych
+    zmiennych. Zmienne poĹźÄdanego typu musisz stworzyÄ korzystajÄc z operatora
     <literal>new</literal>.
    </para>
  
@@ -182,26 +182,26 @@ $inny_koszyk->dodaj_produkt("0815", 3);
    <para>
     Kod ten tworzy obiekty <varname>$koszyk</varname> i
     <varname>$inny_koszyk</varname>, oba klasy Koszyk. Funkcja dodaj_produkt()
-    obiektu <varname>$koszyk</varname> zostaje wywołana w celu dodania 1
-    artykułu typu "10" do koszyka <varname>$koszyk</varname>. 3 przedmioty
-    typu "0815" dodawane są do koszyka <varname>$inny_koszyk</varname>.
+    obiektu <varname>$koszyk</varname> zostaje wywoĹana w celu dodania 1
+    artykuĹu typu "10" do koszyka <varname>$koszyk</varname>. 3 przedmioty
+    typu "0815" dodawane sÄ do koszyka <varname>$inny_koszyk</varname>.
    </para>
    
    <para>
-    I <varname>$koszyk</varname> i <varname>$inny_koszyk</varname> mają
-    funkcje dodaj_produkt(), usun_produkt() i zmienne. Są to osobne funkcje i
-    zmienne. Obiekty mogą być postrzegane jako katalogi w systemie plików. W
-    systemie plików możesz mieć dwa różne pliki
-    <filename>README.TXT</filename>, ale tylko jeśli istnieją w osobnych
-    katalogach. Aby odczytać plik, będąc w głównym katalogu, musisz podać
-    pełną ścieżkę do tego pliku.  Tak samo jest przy obiektach: musisz podać
-    pełną nazwę funkcji, z której chcesz skorzystać. W terminologii PHP
-    katalogiem głównym będzie globalna przestrzeń nazw a separatorem ścieżki
-    będzie -&gt;. W związku z tym nazwy $koszyk i $inny_koszyk zawierają
-    zupełnie inne zmienne. Zauważ, że zmienna nazywa się
+    I <varname>$koszyk</varname> i <varname>$inny_koszyk</varname> majÄ
+    funkcje dodaj_produkt(), usun_produkt() i zmienne. SÄ to osobne funkcje i
+    zmienne. Obiekty mogÄ byÄ postrzegane jako katalogi w systemie plikĂłw. W
+    systemie plikĂłw moĹźesz mieÄ dwa rĂłĹźne pliki
+    <filename>README.TXT</filename>, ale tylko jeĹli istniejÄ w osobnych
+    katalogach. Aby odczytaÄ plik, bÄdÄc w gĹĂłwnym katalogu, musisz podaÄ
+    peĹnÄ ĹcieĹźkÄ do tego pliku.  Tak samo jest przy obiektach: musisz podaÄ
+    peĹnÄ nazwÄ funkcji, z ktĂłrej chcesz skorzystaÄ. W terminologii PHP
+    katalogiem gĹĂłwnym bÄdzie globalna przestrzeĹ nazw a separatorem ĹcieĹźki
+    bÄdzie -&gt;. W zwiÄzku z tym nazwy $koszyk i $inny_koszyk zawierajÄ
+    zupeĹnie inne zmienne. ZauwaĹź, Ĺźe zmienna nazywa siÄ
     <varname>$koszyk-&gt;artykuly</varname>, a nie
-    <varname>$koszyk-&gt;$artykuly</varname>, ponieważ nazwa zmiennej może
-    zawierać tylko jeden znak dolara.
+    <varname>$koszyk-&gt;$artykuly</varname>, poniewaĹź nazwa zmiennej moĹźe
+    zawieraÄ tylko jeden znak dolara.
    </para>
 
    <informalexample>
@@ -211,11 +211,11 @@ $inny_koszyk->dodaj_produkt("0815", 3);
 // poprawnie, jeden $
 $koszyk->artykuly = array("10" => 1); 
 
-// niepoprawnie, poniważ $koszyk->$artykuly zamienia się na $koszyk->""
+// niepoprawnie, poniwaĹź $koszyk->$artykuly zamienia siÄ na $koszyk->""
 $koszyk->$artykuly = array("10" => 1);
 
-// poprawnie, ale może (ale nie musi) nie być tym, co zamierzaliśmy:
-// $koszyk->$zmienna staje się $koszyk->artykuly
+// poprawnie, ale moĹźe (ale nie musi) nie byÄ tym, co zamierzaliĹmy:
+// $koszyk->$zmienna staje siÄ $koszyk->artykuly
 $zmienna = 'artykuly';
 $koszyk->$zmienna = array("10" => 1);
 ?>
@@ -224,19 +224,19 @@ $koszyk->$zmienna = array("10" => 1);
    </informalexample>
 
    <para>
-    Wewnątrz definicji klasy, nie wiesz pod jaką nazwą obiekt będzie dostępny
-    dla twojego programu: w momencie pisania klasy Koszyk, nie było wiadomo,
-    czy obiekty będą się nazywać <varname>$koszyk</varname>,
-    <varname>$inny_koszyk</varname>, lub inaczej. W związku z tym nie możesz napisać
-    <varname>$koszyk-&gt;artykuly</varname> wewnątrz klasy Koszyk. Zamiast
-    tego, aby uzyskać dostęp do funkcji i zmiennych zawartych w klasie, można
-    użyć pseudo-zmiennej $this, która może być odczytana jako 'moje własne'
-    lub 'bieżący obiekt'. A więc
+    WewnÄtrz definicji klasy, nie wiesz pod jakÄ nazwÄ obiekt bÄdzie dostÄpny
+    dla twojego programu: w momencie pisania klasy Koszyk, nie byĹo wiadomo,
+    czy obiekty bÄdÄ siÄ nazywaÄ <varname>$koszyk</varname>,
+    <varname>$inny_koszyk</varname>, lub inaczej. W zwiÄzku z tym nie moĹźesz napisaÄ
+    <varname>$koszyk-&gt;artykuly</varname> wewnÄtrz klasy Koszyk. Zamiast
+    tego, aby uzyskaÄ dostÄp do funkcji i zmiennych zawartych w klasie, moĹźna
+    uĹźyÄ pseudo-zmiennej $this, ktĂłra moĹźe byÄ odczytana jako 'moje wĹasne'
+    lub 'bieĹźÄcy obiekt'. A wiÄc
     '<varname>$this-&gt;artykuly[$nrart]</varname> +=
-    <varname>$liczba</varname>' może być odczytane jako 'dodaj
+    <varname>$liczba</varname>' moĹźe byÄ odczytane jako 'dodaj
     <varname>$liczba</varname> do licznika <varname>$nrart</varname> z mojej
-    własnej tablicy artykuly' lub 'dodaj <varname>$liczba</varname> do
-    licznika <varname>$nrartz</varname> tablicy artykuly zawartej w bieżącym
+    wĹasnej tablicy artykuly' lub 'dodaj <varname>$liczba</varname> do
+    licznika <varname>$nrartz</varname> tablicy artykuly zawartej w bieĹźÄcym
     obiekcie'.
    </para>
    <!-- TODO -->
@@ -298,9 +298,9 @@ $this is not defined.
 
    <note>
     <para>
-     Istnieje kilka przyjemnych funkcji do obsługi klas i obiektów. Możesz je
-     zobaczyć w rozdziale <link linkend="ref.classobj">Funkcje obsługi klas i
-      obiektów</link>.
+     Istnieje kilka przyjemnych funkcji do obsĹugi klas i obiektĂłw. MoĹźesz je
+     zobaczyÄ w rozdziale <link linkend="ref.classobj">Funkcje obsĹugi klas i
+      obiektĂłw</link>.
     </para>
    </note>
   </sect1>
@@ -309,18 +309,18 @@ $this is not defined.
    <title><literal>extends</literal></title>
 
    <para>
-    Bardzo często zachodzi potrzeba stworzenia klasy o funkcjach i zmiennych
-    podobnych do już istniejącej klasy. Zasadniczo dobrze jest stworzyć
-    szablonową klasę, która może być użyta we wszystkich twoich projektach i
-    przystosowywać ją do specyficznych potrzeb twojego projektu. Aby ułatwić
-    ten proces, klasy mogą być rozszerzeniami innych klas. Rozszerzone, lub
-    mówiąc inaczej 'dziedziczone', klasy mają wszystkie zmienne i funkcje
-    klasy podstawowej (nazywa się to dziedziczeniem, mimo że nikt nie
-    umarł) oraz to co do niej dodałeś w definicji rozszerzenia. Nie można
-    odjąć pewnych rzeczy z klasy podstawowej, czyli oddefiniować istniejących
+    Bardzo czÄsto zachodzi potrzeba stworzenia klasy o funkcjach i zmiennych
+    podobnych do juĹź istniejÄcej klasy. Zasadniczo dobrze jest stworzyÄ
+    szablonowÄ klasÄ, ktĂłra moĹźe byÄ uĹźyta we wszystkich twoich projektach i
+    przystosowywaÄ jÄ do specyficznych potrzeb twojego projektu. Aby uĹatwiÄ
+    ten proces, klasy mogÄ byÄ rozszerzeniami innych klas. Rozszerzone, lub
+    mĂłwiÄc inaczej 'dziedziczone', klasy majÄ wszystkie zmienne i funkcje
+    klasy podstawowej (nazywa siÄ to dziedziczeniem, mimo Ĺźe nikt nie
+    umarĹ) oraz to co do niej dodaĹeĹ w definicji rozszerzenia. Nie moĹźna
+    odjÄÄ pewnych rzeczy z klasy podstawowej, czyli oddefiniowaÄ istniejÄcych
     w klasie podstawowej funkcji i zmiennych. Rozszerzona klasa jest zawsze
-    zależna od jednej klasy bazowej - dziedziczenie wielokrotne nie jest
-    obsługiwane. Klasy można rozszerzyć używając słowa kluczowego 'extends'.
+    zaleĹźna od jednej klasy bazowej - dziedziczenie wielokrotne nie jest
+    obsĹugiwane. Klasy moĹźna rozszerzyÄ uĹźywajÄc sĹowa kluczowego 'extends'.
    </para>
  
    <informalexample>
@@ -340,42 +340,42 @@ class Nazwany_Koszyk extends Koszyk {
    </informalexample>
  
    <para>
-    Definiuje to klasę Nazwany_Koszyk, który ma wszystkie zmienne i funkcje
+    Definiuje to klasÄ Nazwany_Koszyk, ktĂłry ma wszystkie zmienne i funkcje
     klasy Koszyk plus dodatkowa zmienna <varname>$wlasciciel</varname> i
-    dodatkowa funkcja ustaw_wlasciciela(). Nazwany koszyk tworzy się normalnym
-    sposobem.  Możesz teraz ustawiać i pobierać nazwę właściciela koszyka.
-    Cały czas możesz używać zwykłych funkcji koszyka dla nazwanego koszyka:
+    dodatkowa funkcja ustaw_wlasciciela(). Nazwany koszyk tworzy siÄ normalnym
+    sposobem.  MoĹźesz teraz ustawiaÄ i pobieraÄ nazwÄ wĹaĹciciela koszyka.
+    CaĹy czas moĹźesz uĹźywaÄ zwykĹych funkcji koszyka dla nazwanego koszyka:
    </para>
  
    <informalexample>
     <programlisting role="php">
 <![CDATA[
 <?php
-$nkoszyk = new Nazwany_Koszyk;        // Stwórz nazwany koszyk
+$nkoszyk = new Nazwany_Koszyk;        // StwĂłrz nazwany koszyk
 $nkoszyk->ustaw_wlasciciela("kris");  // Nazwij koszyk
-print $nkoszyk->wlasciciel;           // Wyświetl właściciela koszyka
-$nkoszyk->dodaj_przedmiot("10", 1);   // (funkcjonalność odziedziczona z
+print $nkoszyk->wlasciciel;           // WyĹwietl wĹaĹciciela koszyka
+$nkoszyk->dodaj_przedmiot("10", 1);   // (funkcjonalnoĹÄ odziedziczona z
                                       // koszyka)
 ?>
 ]]>
     </programlisting>
    </informalexample>
    <para>
-    Taka relacja nazywana jest często relacją "rodzic-potomek". Tworzysz
-    klasę - rodzica - i używasz <literal>extends</literal> aby stworzyć klasę
-    <emphasis>opartą</emphasis> o klasę rodzica: klasę potomną. Możesz także
-    tworzyć nowe klasy potomne oparte o tą klasę potomną.
+    Taka relacja nazywana jest czÄsto relacjÄ "rodzic-potomek". Tworzysz
+    klasÄ - rodzica - i uĹźywasz <literal>extends</literal> aby stworzyÄ klasÄ
+    <emphasis>opartÄ</emphasis> o klasÄ rodzica: klasÄ potomnÄ. MoĹźesz takĹźe
+    tworzyÄ nowe klasy potomne oparte o tÄ klasÄ potomnÄ.
    </para>
    <note>
     <para>
-     Klasy musza być zdefiniowane zanim zostaną użyte! Jeśli chcesz, aby klasa
-     <literal>Nazwany_Koszyk</literal> rozszerzała klasę
-     <literal>Koszyk</literal>, musisz zdefiniować klasę
-     <literal>Koszyk</literal> jako pierwszą. Jeśli chcesz stworzyć kolejną
-     klasę nazwaną <literal>Niebieski_Nazwany_Koszyk</literal> opartą o
-     klasę <literal>Nazwany_Koszyk</literal>, musisz najpierw zdefiniować
-     klasę <literal>Nazwany_Koszyk</literal>. W skrócie: kolejność, w jakiej
-     klasy są definiowane, jest bardzo ważna.
+     Klasy musza byÄ zdefiniowane zanim zostanÄ uĹźyte! JeĹli chcesz, aby klasa
+     <literal>Nazwany_Koszyk</literal> rozszerzaĹa klasÄ
+     <literal>Koszyk</literal>, musisz zdefiniowaÄ klasÄ
+     <literal>Koszyk</literal> jako pierwszÄ. JeĹli chcesz stworzyÄ kolejnÄ
+     klasÄ nazwanÄ <literal>Niebieski_Nazwany_Koszyk</literal> opartÄ o
+     klasÄ <literal>Nazwany_Koszyk</literal>, musisz najpierw zdefiniowaÄ
+     klasÄ <literal>Nazwany_Koszyk</literal>. W skrĂłcie: kolejnoĹÄ, w jakiej
+     klasy sÄ definiowane, jest bardzo waĹźna.
     </para>
    </note>
   </sect1>
@@ -384,11 +384,11 @@ $nkoszyk->dodaj_przedmiot("10", 1);   // (funkcjonalność odziedziczona z
    <title>Konstruktory</title>
 
    <para>
-    Konstruktory są funkcjami klasy, które są automatycznie wywoływane przy
-    tworzeniu nowej instancji klasy korzystając z operatora
-    <literal>new</literal>. Funkcja staje się konstruktorem kiedy ma
-    taką samą nazwę jak klasa. Jeśli klasa nie ma konstruktora, użyty zostanie
-    konstruktor klasy nadrzędnej, jeśli taka istnieje.
+    Konstruktory sÄ funkcjami klasy, ktĂłre sÄ automatycznie wywoĹywane przy
+    tworzeniu nowej instancji klasy korzystajÄc z operatora
+    <literal>new</literal>. Funkcja staje siÄ konstruktorem kiedy ma
+    takÄ samÄ nazwÄ jak klasa. JeĹli klasa nie ma konstruktora, uĹźyty zostanie
+    konstruktor klasy nadrzÄdnej, jeĹli taka istnieje.
    </para>
  
    <informalexample>
@@ -407,13 +407,13 @@ class Auto_Koszyk extends Koszyk {
    </informalexample>
  
    <para>
-    Ten kod definiuję klasę Auto_Koszyk, który jest klasą Koszyk pluc
-    konstruktor, który inicjalizuje wózek z jednym artykułem "10" za każdym
-    razem, kiedy Auto_Koszyk jest tworzony operatorem "new". Konstruktory mogą
-    pobierać argumenty i te argumenty mogą być opcjonalne, przez co są jeszcze
-    bardziej użyteczne. Aby w dalszym ciągu móc używać klasy bez parametrów,
-    wszystkie parametry konstruktora powinny stać się opcjonalne przez dodanie
-    domyślnych wartości.
+    Ten kod definiujÄ klasÄ Auto_Koszyk, ktĂłry jest klasÄ Koszyk pluc
+    konstruktor, ktĂłry inicjalizuje wĂłzek z jednym artykuĹem "10" za kaĹźdym
+    razem, kiedy Auto_Koszyk jest tworzony operatorem "new". Konstruktory mogÄ
+    pobieraÄ argumenty i te argumenty mogÄ byÄ opcjonalne, przez co sÄ jeszcze
+    bardziej uĹźyteczne. Aby w dalszym ciÄgu mĂłc uĹźywaÄ klasy bez parametrĂłw,
+    wszystkie parametry konstruktora powinny staÄ siÄ opcjonalne przez dodanie
+    domyĹlnych wartoĹci.
    </para>
  
    <informalexample>
@@ -438,8 +438,8 @@ $inny_koszyk = new Konstruktor_Koszyk("20", 17);
    </informalexample>
 
    <para>
-    Możesz także użyć operatora <literal>@</literal> aby
-    <emphasis>wyciszyć</emphasis> błędy zachodzące w konstruktorze, np.
+    MoĹźesz takĹźe uĹźyÄ operatora <literal>@</literal> aby
+    <emphasis>wyciszyÄ</emphasis> bĹÄdy zachodzÄce w konstruktorze, np.
     <literal>@new</literal>
    </para>
 
@@ -456,7 +456,7 @@ class A
 
     function B()
     {
-        echo "Jestem zwykłą funkcją o nazwie B w klasie A.<br />\n";
+        echo "Jestem zwykĹÄ funkcjÄ o nazwie B w klasie A.<br />\n";
         echo "Nie jestem konstruktorem w klasie A.<br />\n";
     }
 }
@@ -465,7 +465,7 @@ class B extends A
 {
 }
 
-// Wywoła to B() jako konstruktor.
+// WywoĹa to B() jako konstruktor.
 $b = new B;
 ?>
 ]]>
@@ -473,41 +473,41 @@ $b = new B;
    </informalexample>
    
    <para>
-    Funkcja B() z klasy A niespodziewanie stanie się konstruktorem w
-    klasie B, pomimo że wcale nie miała nim być.  PHP 4 nie
-    obchodzi czy funkcja została zdefiniowana w klasie B czy została
+    Funkcja B() z klasy A niespodziewanie stanie siÄ konstruktorem w
+    klasie B, pomimo Ĺźe wcale nie miaĹa nim byÄ.  PHP 4 nie
+    obchodzi czy funkcja zostaĹa zdefiniowana w klasie B czy zostaĹa
     odziedziczona.
    </para>
    
    <caution>
     <simpara>
-     PHP 4 nie wywołuje automatycznie konstruktora klasy bazowej z
-     kontruktora klasy pochodnej. Twoim zadaniem jest propagacja wywołań
-     konstruktorów klas nadrzędnych, jeśli to konieczne.
+     PHP 4 nie wywoĹuje automatycznie konstruktora klasy bazowej z
+     kontruktora klasy pochodnej. Twoim zadaniem jest propagacja wywoĹaĹ
+     konstruktorĂłw klas nadrzÄdnych, jeĹli to konieczne.
     </simpara>
    </caution>
    
    <para>
-    Destruktory są funkcjami, które są wywoływanie automatycznie kiedy obiekty
-    są niszczone albo przez użycie <function>unset</function> albo przez
-    wyjście z zasięgu. W PHP nie ma destruktorów. Można jednak użyć funkcji
-    <function>register_shutdown_function</function> aby symulować działanie
-    destruktorów.
+    Destruktory sÄ funkcjami, ktĂłre sÄ wywoĹywanie automatycznie kiedy obiekty
+    sÄ niszczone albo przez uĹźycie <function>unset</function> albo przez
+    wyjĹcie z zasiÄgu. W PHP nie ma destruktorĂłw. MoĹźna jednak uĹźyÄ funkcji
+    <function>register_shutdown_function</function> aby symulowaÄ dziaĹanie
+    destruktorĂłw.
    </para>
   </sect1>
 
  <sect1 xml:id="keyword.paamayim-nekudotayim"><!-- :-) -->
-   <title>Operator rozróżnienia zasięgu (<literal>::</literal>)</title>
+   <title>Operator rozrĂłĹźnienia zasiÄgu (<literal>::</literal>)</title>
 
    <caution>
     <simpara>
-     Poniższe dotyczy tylko PHP 4 i nowszych.
+     PoniĹźsze dotyczy tylko PHP 4 i nowszych.
     </simpara>
    </caution>
 
    <para>
-    Czasami dobrze jest odnosić się do funkcji i zmiennych w klasie bazowej
-    lub odnosić się do funkcji i klas które nie mają jeszcze instancji. Służy
+    Czasami dobrze jest odnosiÄ siÄ do funkcji i zmiennych w klasie bazowej
+    lub odnosiÄ siÄ do funkcji i klas ktĂłre nie majÄ jeszcze instancji. SĹuĹźy
     do tego operator ::.
    </para>
    
@@ -517,28 +517,28 @@ $b = new B;
 <?php
 class A {
     function przyklad() {
-        echo "Jestem orginalną funkcją A::przyklad().<br />\n";
+        echo "Jestem orginalnÄ funkcjÄ A::przyklad().<br />\n";
     }
 }
 
 class B extends A {
     function przyklad() {
-        echo "Jestem przedefiniowaną funkcją B::przyklad().<br />\n";
+        echo "Jestem przedefiniowanÄ funkcjÄ B::przyklad().<br />\n";
         A::przyklad();
     }
 }
 
 // nie ma obiektu klasy A.
-// poniższe wyświetli
-//   Jestem orginalną funkcją A::przyklad().<br />
+// poniĹźsze wyĹwietli
+//   Jestem orginalnÄ funkcjÄ A::przyklad().<br />
 A::przyklad();
 
-// stwórz nowy obiekt klasy B.
+// stwĂłrz nowy obiekt klasy B.
 $b = new B;
 
-// poniższe wyświetli
-//   Jestem przedefiniowaną funkcją B::przyklad().<br />
-//   Jestem orginalną funkcją A::przyklad().<br />
+// poniĹźsze wyĹwietli
+//   Jestem przedefiniowanÄ funkcjÄ B::przyklad().<br />
+//   Jestem orginalnÄ funkcjÄ A::przyklad().<br />
 $b->przyklad();
 ?>
 ]]>
@@ -546,31 +546,31 @@ $b->przyklad();
    </informalexample>
 
    <para>
-    Powyższy przekład wywołuje funkcję przyklad() z klasy A, ale nie tworząc
-    obiektu tej klasy, przez co nie możemy napisać nic w stylu $a->przyklad().
-    Zamiast tego możemy wywołać przyklad() jako 'funkcję klasy', czyli jako
-    funkcję tylko klasy, nie żadnego obiektu tej klasy.
+    PowyĹźszy przekĹad wywoĹuje funkcjÄ przyklad() z klasy A, ale nie tworzÄc
+    obiektu tej klasy, przez co nie moĹźemy napisaÄ nic w stylu $a->przyklad().
+    Zamiast tego moĹźemy wywoĹaÄ przyklad() jako 'funkcjÄ klasy', czyli jako
+    funkcjÄ tylko klasy, nie Ĺźadnego obiektu tej klasy.
    </para>
    
    <para>
-    Istnieją funkcje klasy, ale nie ma zmiennych klasy. Faktycznie w czasie
-    wykonania nie ma żadnego obiektu. W związku z tym funkcje klasy nie mogą
-    używać żadnych zmiennych obiektu (ale mogą używać zmiennych lokalnych i
-    globalnych), ani w ogóle <varname>$this</varname>.
+    IstniejÄ funkcje klasy, ale nie ma zmiennych klasy. Faktycznie w czasie
+    wykonania nie ma Ĺźadnego obiektu. W zwiÄzku z tym funkcje klasy nie mogÄ
+    uĹźywaÄ Ĺźadnych zmiennych obiektu (ale mogÄ uĹźywaÄ zmiennych lokalnych i
+    globalnych), ani w ogĂłle <varname>$this</varname>.
    </para>
 
    <para>
-    W powyższym przykładzie, klasa B przedefiniowuje funkcję przyklad().
-    Orginalna definicja z klasy A jest zasłonięta i niedostępna, chyba że
-    odwołasz się do konkretnej implementacji poprzez operator ::. Aby to
-    zrobić, napisz A::przyklad() (powinieneś jednak użyć parent::przyklad(),
-    tak jak to pokazano w następnej części).
+    W powyĹźszym przykĹadzie, klasa B przedefiniowuje funkcjÄ przyklad().
+    Orginalna definicja z klasy A jest zasĹoniÄta i niedostÄpna, chyba Ĺźe
+    odwoĹasz siÄ do konkretnej implementacji poprzez operator ::. Aby to
+    zrobiÄ, napisz A::przyklad() (powinieneĹ jednak uĹźyÄ parent::przyklad(),
+    tak jak to pokazano w nastÄpnej czÄĹci).
    </para>
    
    <para>
-    W tym kontekście, istnieje bieżący obiekt i który ma zmienne obiektu. W
-    związu z tym jeśli funkcja jest użyta Z WEWNĄTRZ funkcji obiektu, możesz
-    używać <varname>$this</varname> i zmiennych obiektu.
+    W tym kontekĹcie, istnieje bieĹźÄcy obiekt i ktĂłry ma zmienne obiektu. W
+    zwiÄzu z tym jeĹli funkcja jest uĹźyta Z WEWNÄTRZ funkcji obiektu, moĹźesz
+    uĹźywaÄ <varname>$this</varname> i zmiennych obiektu.
    </para>
 
  </sect1>
@@ -579,19 +579,19 @@ $b->przyklad();
    <title><literal>parent</literal></title>
 
   <para>
-   Może się zdarzyć, że będziesz pisał kod, który odnosi się do funkcji i
-   zmiennych klasy bazowej. Jest to możliwe jeśli twoja klasa pochodna jest
-   uściśleniem lub specjalizacją klasy bazowej.
+   MoĹźe siÄ zdarzyÄ, Ĺźe bÄdziesz pisaĹ kod, ktĂłry odnosi siÄ do funkcji i
+   zmiennych klasy bazowej. Jest to moĹźliwe jeĹli twoja klasa pochodna jest
+   uĹciĹleniem lub specjalizacjÄ klasy bazowej.
   </para>
   
   <para>
-   Zamiast jawnego podawania nazwy klasy bazowej w kodzie, powinieneś użyć
-   specjalnej nazwy <literal>parent</literal>, która odnosi się do nazwy klasy
+   Zamiast jawnego podawania nazwy klasy bazowej w kodzie, powinieneĹ uĹźyÄ
+   specjalnej nazwy <literal>parent</literal>, ktĂłra odnosi siÄ do nazwy klasy
    bazowej podanej przy <literal>extends</literal> podczas deklaracji twojej
-   klasy. Robiąc to, unikasz użycia nazwy klasy bazowej w więcej niż jednym
-   miejscu. Jeśli twoje drzewo dziedziczenia zmieniłoby się podczas
-   implementacji, zmiana będzie wymagała poprawki tylko w jednym miejscu -
-   przy słowie kluczowym <literal>extends</literal> w deklaracji klasy.
+   klasy. RobiÄc to, unikasz uĹźycia nazwy klasy bazowej w wiÄcej niĹź jednym
+   miejscu. JeĹli twoje drzewo dziedziczenia zmieniĹoby siÄ podczas
+   implementacji, zmiana bÄdzie wymagaĹa poprawki tylko w jednym miejscu -
+   przy sĹowie kluczowym <literal>extends</literal> w deklaracji klasy.
   </para>
 
   <informalexample>
@@ -600,20 +600,20 @@ $b->przyklad();
 <?php
 class A {
     function przyklad() {
-        echo "Jestem A::przyklad() I dostarczam podstawową funkcjonalność.<br />\n";
+        echo "Jestem A::przyklad() I dostarczam podstawowÄ funkcjonalnoĹÄ.<br />\n";
     }
 }
 
 class B extends A {
     function przyklad() {
-        echo "Jestem B::przyklad() i dostarczam dodatkową funkcjonalność.<br />\n";
+        echo "Jestem B::przyklad() i dostarczam dodatkowÄ funkcjonalnoĹÄ.<br />\n";
         parent::przyklad();
     }
 }
 
 $b = new B;
 
-// Wywoła to B::przyklad(), który z kolei wywoła A::przyklad().
+// WywoĹa to B::przyklad(), ktĂłry z kolei wywoĹa A::przyklad().
 $b->przyklad();
 ?>
 ]]>
@@ -622,27 +622,27 @@ $b->przyklad();
  </sect1>
 
  <sect1 xml:id="language.oop.serialization">
-  <title>Serializacja obiektów - obiekty w sesjach</title>
+  <title>Serializacja obiektĂłw - obiekty w sesjach</title>
 
   <para>
-   <function>serialize</function> zwraca string będący reprezentacją dowolnej
-   wartości, która może być przechowywana przez PHP.
-   <function>unserialize</function> może użyć tego stringu aby odtworzyć
-   orginalne wartości zmiennej. Użycie serializacji do zapisania obiektu
-   zachowa wszystkie zmienne z obiektu. Zapisane nie będą funkcje z obiektu, a
+   <function>serialize</function> zwraca string bÄdÄcy reprezentacjÄ dowolnej
+   wartoĹci, ktĂłra moĹźe byÄ przechowywana przez PHP.
+   <function>unserialize</function> moĹźe uĹźyÄ tego stringu aby odtworzyÄ
+   orginalne wartoĹci zmiennej. UĹźycie serializacji do zapisania obiektu
+   zachowa wszystkie zmienne z obiektu. Zapisane nie bÄdÄ funkcje z obiektu, a
    jedynie nazwa klasy.
   </para>
   
   <para>
-   Aby istniała możliwość użycia funkcji <function>unserialize</function> do
-   odzyskania obiektu, musi być zdefiniowana klasa tego obiektu. Oznacza to,
-   że jeśli obiekt <varname>$a</varname> klasy A istnieje na page1.php i
-   zostanie on zserializowany, otrzymany zostanie ciąg znakowy, który odnosi
-   się do klasy A i zawiera wartości wszystkich zmiennych zawartych w
-   <varname>$a</varname>. Aby istniała możliwość deserializacji tego obiektu
-   na page2.php, na page2.php musi istnieć definicja klasy A. Można to zrobić
-   na przykład przez przechowywanie definicji klasy A w zewnętrznym pliku
-   dołączanym przez page1.php i page2.php.
+   Aby istniaĹa moĹźliwoĹÄ uĹźycia funkcji <function>unserialize</function> do
+   odzyskania obiektu, musi byÄ zdefiniowana klasa tego obiektu. Oznacza to,
+   Ĺźe jeĹli obiekt <varname>$a</varname> klasy A istnieje na page1.php i
+   zostanie on zserializowany, otrzymany zostanie ciÄg znakowy, ktĂłry odnosi
+   siÄ do klasy A i zawiera wartoĹci wszystkich zmiennych zawartych w
+   <varname>$a</varname>. Aby istniaĹa moĹźliwoĹÄ deserializacji tego obiektu
+   na page2.php, na page2.php musi istnieÄ definicja klasy A. MoĹźna to zrobiÄ
+   na przykĹad przez przechowywanie definicji klasy A w zewnÄtrznym pliku
+   doĹÄczanym przez page1.php i page2.php.
   </para>
   
   <informalexample>
@@ -664,20 +664,20 @@ $b->przyklad();
   
   $a = new A;
   $s = serialize($a);
-  // przechowaj $s gdzieś, gdzie page2.php będzie mogła go znaleźć
+  // przechowaj $s gdzieĹ, gdzie page2.php bÄdzie mogĹa go znaleĹşÄ
   $fp = fopen("store", "w");
   fwrite($fp, $s);
   fclose($fp);
 
 // page2.php:
 
-  // to jest niezbędne aby funkcja unserialize działała prawidłowo.
+  // to jest niezbÄdne aby funkcja unserialize dziaĹaĹa prawidĹowo.
   include("classa.inc");
 
   $s = implode("", @file("store"));
   $a = unserialize($s);
 
-  // teraz użyj funkcji pokaz_jeden z obiektu $a.
+  // teraz uĹźyj funkcji pokaz_jeden z obiektu $a.
   $a->pokaz_jeden();
 ?>
 ]]>
@@ -685,26 +685,26 @@ $b->przyklad();
   </informalexample>
   
   <para>
-   Jeśli używasz sesji i <function>session_register</function> do rejestracji
-   obiektów, te obiekty są serializowane automatycznie na końcu każdej strony
-   PHP i odserializowane automatycznie na każdej z następnych stron.
-   Zasadniczo znaczy to, że te obiekty mogą pokazać się na dowolnej z twoich
-   stron jeśli tylko staną się częścią twojej sesji.
+   JeĹli uĹźywasz sesji i <function>session_register</function> do rejestracji
+   obiektĂłw, te obiekty sÄ serializowane automatycznie na koĹcu kaĹźdej strony
+   PHP i odserializowane automatycznie na kaĹźdej z nastÄpnych stron.
+   Zasadniczo znaczy to, Ĺźe te obiekty mogÄ pokazaÄ siÄ na dowolnej z twoich
+   stron jeĹli tylko stanÄ siÄ czÄĹciÄ twojej sesji.
   </para>
   
   <para>
    Mocno zalecane jest includowanie definicji klas wszystkich zarejestrowanych
-   obiektów na wszystkich twoich stronach, nawet jeśli nie używasz tych
-   zmiennych na twoich stronach. Jeśli tego nie zrobisz a obiekty zostaną
-   odserializowane bez definicji klasy, powiązania klasowe zostaną utracone a
-   obiek stanie się obiektem klasy <literal>stdClass</literal> bez żadnych
-   dostępnych funkcji, a więc będzie całkiem bezużyteczny.
+   obiektĂłw na wszystkich twoich stronach, nawet jeĹli nie uĹźywasz tych
+   zmiennych na twoich stronach. JeĹli tego nie zrobisz a obiekty zostanÄ
+   odserializowane bez definicji klasy, powiÄzania klasowe zostanÄ utracone a
+   obiek stanie siÄ obiektem klasy <literal>stdClass</literal> bez Ĺźadnych
+   dostÄpnych funkcji, a wiÄc bÄdzie caĹkiem bezuĹźyteczny.
   </para>
   
   <para>
-   A więc jeśli w powyższym przykładzie <varname>$a</varname> stanie się
-   częścią sesji przez wywołanie <literal>session_register("a")</literal>,
-   powinieneć includować plik <literal>classa.inc</literal> na wszystkich
+   A wiÄc jeĹli w powyĹźszym przykĹadzie <varname>$a</varname> stanie siÄ
+   czÄĹciÄ sesji przez wywoĹanie <literal>session_register("a")</literal>,
+   powinieneÄ includowaÄ plik <literal>classa.inc</literal> na wszystkich
    stronach, nie tylko page1.php i page2.php.
   </para>
  </sect1>
@@ -713,39 +713,39 @@ $b->przyklad();
   <title>Magiczne funkcje <literal>__sleep</literal> i <literal>__wakeup</literal></title>
 
   <para>
-   <function>serialize</function> sprawdza, czy twoja klasa zawiera funkcję o
-   magicznej nazwie <literal>__sleep</literal>. Jeśli tak, ta funkcja jest
-   wywoływana przed każdą serializacją. Może ona czyścić obiekt i powinna
-   zwracać tablicę z nazwami wszystkich zmiennych obiektu, które powinny być
-   serializowane. Jeśli metoda nie zwraca żadnej wartości, serializowana jest
-   wartość &null; i wystosowywane jest ostrzeżenie klasy E_NOTICE.
+   <function>serialize</function> sprawdza, czy twoja klasa zawiera funkcjÄ o
+   magicznej nazwie <literal>__sleep</literal>. JeĹli tak, ta funkcja jest
+   wywoĹywana przed kaĹźdÄ serializacjÄ. MoĹźe ona czyĹciÄ obiekt i powinna
+   zwracaÄ tablicÄ z nazwami wszystkich zmiennych obiektu, ktĂłre powinny byÄ
+   serializowane. JeĹli metoda nie zwraca Ĺźadnej wartoĹci, serializowana jest
+   wartoĹÄ &null; i wystosowywane jest ostrzeĹźenie klasy E_NOTICE.
   </para>
   
   <para>
-   Założonym użyciem <literal>__sleep</literal> jest zatwierdzenie
-   wszystkich oczekujących danych lub wykonanie innych podobnych czynności
-   czyszczących. Funkcja ta jest także przydatna jeśli masz bardzo duże
-   obiekty, które nie muszą być zachowane w całości.
+   ZaĹoĹźonym uĹźyciem <literal>__sleep</literal> jest zatwierdzenie
+   wszystkich oczekujÄcych danych lub wykonanie innych podobnych czynnoĹci
+   czyszczÄcych. Funkcja ta jest takĹźe przydatna jeĹli masz bardzo duĹźe
+   obiekty, ktĂłre nie muszÄ byÄ zachowane w caĹoĹci.
   </para>
   
   <para>
    Analogicznie, <function>unserialize</function> sprawdza czy istnieje
-   funkcja o magicznej nazwie <literal>__wakeup</literal>. Jeśli tak, funkcja
-   może rekonstruować dowolne zasoby które obiekt może posiadać.
+   funkcja o magicznej nazwie <literal>__wakeup</literal>. JeĹli tak, funkcja
+   moĹźe rekonstruowaÄ dowolne zasoby ktĂłre obiekt moĹźe posiadaÄ.
   </para>
   
   <para>
-    Założonym użyciem <literal>__wakeup</literal> jest odnowienie połączeń z
-    bazami danych, które mogły zostac utracone w procesie serializacji, oraz
-    wykonanie innych czynności odbudowujących obiekt.
+    ZaĹoĹźonym uĹźyciem <literal>__wakeup</literal> jest odnowienie poĹÄczeĹ z
+    bazami danych, ktĂłre mogĹy zostac utracone w procesie serializacji, oraz
+    wykonanie innych czynnoĹci odbudowujÄcych obiekt.
   </para>
  </sect1>
   
  <sect1 xml:id="language.oop.newref">
-   <title>Referencje wewnątrz konstruktora</title>
+   <title>Referencje wewnÄtrz konstruktora</title>
    <para>
-    Tworzenie referencji wewnątrz konstruktora może prowadzić do dziwnych
-    efektów. Ten rozdział ma pomóc w unikaniu takich problemów.
+    Tworzenie referencji wewnÄtrz konstruktora moĹźe prowadziÄ do dziwnych
+    efektĂłw. Ten rozdziaĹ ma pomĂłc w unikaniu takich problemĂłw.
  
     <informalexample>
      <programlisting role="php">
@@ -756,9 +756,9 @@ class Foo {
         // stworz referencje wewnatrz globalnej tablicy $globalref
         global $globalref;
         $globalref[] = &$this;
-        // ustaw nazwę na przekazaną wartość
+        // ustaw nazwÄ na przekazanÄ wartoĹÄ
         $this->ustawNazwe($nazwa);
-        // i wyświetl ją
+        // i wyĹwietl jÄ
         $this->wyswietlNazwe();
     }
 
@@ -777,10 +777,10 @@ class Foo {
   </para>
     
    <para>
-    Sprawdźmy, czy jest jakaś różnica pomiędzy
-    <varname>$bar1</varname>, który jest tworzony przy pomocy operatora
-    przypisania <literal>=</literal>, a <varname>$bar2</varname>, który został
-    stworzony używając operatora referencji <literal>=&amp;</literal>...
+    SprawdĹşmy, czy jest jakaĹ rĂłĹźnica pomiÄdzy
+    <varname>$bar1</varname>, ktĂłry jest tworzony przy pomocy operatora
+    przypisania <literal>=</literal>, a <varname>$bar2</varname>, ktĂłry zostaĹ
+    stworzony uĹźywajÄc operatora referencji <literal>=&amp;</literal>...
 
     <informalexample>
      <programlisting role="php">
@@ -790,7 +790,7 @@ $bar1 = new Foo('ustawione w konstruktorze');
 $bar1->wyswietlNazwe();
 $globalref[0]->wyswietlNazwe();
 
-/* wyjście:
+/* wyjĹcie:
 ustawione w konstruktorze
 ustawione w konstruktorze
 ustawione w konstruktorze */
@@ -799,7 +799,7 @@ $bar2 =& new Foo('ustawione w konstruktorze');
 $bar2->wyswietlNazwe();
 $globalref[1]->wyswietlNazwe();
 
-/* wyjście:
+/* wyjĹcie:
 ustawione w konstruktorze
 ustawione w konstruktorze
 ustawione w konstruktorze */
@@ -809,61 +809,61 @@ ustawione w konstruktorze */
     </informalexample>
    </para>
    <para>
-    Wydaje się, że nie ma żadnej różnicy, ale na prawdę jest jedna, i to
+    Wydaje siÄ, Ĺźe nie ma Ĺźadnej rĂłĹźnicy, ale na prawdÄ jest jedna, i to
     bardzo istotna: <varname>$bar1</varname> i
-    <varname>$globalref[0]</varname> <emphasis>NIE</emphasis> są referencjami,
-    <emphasis>NIE</emphasis> są tą samą zmienna. Dzieje się tak, ponieważ
-    "new" nie zwraca domyślnie referencji, ale kopię.
+    <varname>$globalref[0]</varname> <emphasis>NIE</emphasis> sÄ referencjami,
+    <emphasis>NIE</emphasis> sÄ tÄ samÄ zmienna. Dzieje siÄ tak, poniewaĹź
+    "new" nie zwraca domyĹlnie referencji, ale kopiÄ.
     <note>
      <simpara>
-      Zwracanie kopii zamiast referencji nie powoduje utraty wydajności (od
-      PHP 4 używane jest zliczanie referencji). Jednakże zazwyczaj lepiej jest
-      pracować poprostu z kopiami zamiast referencji, poniewać tworzenie
-      referencji zabiera trochę czasu, podczas gdy tworzenie kopii obiektów
-      teoretycznie w ogóle nie zabiera czasu (chyba że któraś z tych zmiennych
-      jest dużą tablicą lub obiektem i jedno z nich ulega zmianie, po czym tej
-      samej zmianie ulegają pozostałe zmienne; wtedy lepiej jest użyć
-      referencji do zmieniania ich równolegle).
+      Zwracanie kopii zamiast referencji nie powoduje utraty wydajnoĹci (od
+      PHP 4 uĹźywane jest zliczanie referencji). JednakĹźe zazwyczaj lepiej jest
+      pracowaÄ poprostu z kopiami zamiast referencji, poniewaÄ tworzenie
+      referencji zabiera trochÄ czasu, podczas gdy tworzenie kopii obiektĂłw
+      teoretycznie w ogĂłle nie zabiera czasu (chyba Ĺźe ktĂłraĹ z tych zmiennych
+      jest duĹźÄ tablicÄ lub obiektem i jedno z nich ulega zmianie, po czym tej
+      samej zmianie ulegajÄ pozostaĹe zmienne; wtedy lepiej jest uĹźyÄ
+      referencji do zmieniania ich rĂłwnolegle).
      </simpara>
     </note>
-    Aby udowodnić to, co zostało zapisane powyżej, przyjrzyjmy się poniższemu
+    Aby udowodniÄ to, co zostaĹo zapisane powyĹźej, przyjrzyjmy siÄ poniĹźszemu
     programowi.
 
     <informalexample>
      <programlisting role="php">
 <![CDATA[
 <?php
-// teraz zmienimy nazwę. czego się spodziewasz?
-// możesz się spodziewać, że i $bar1 i $globalref[0] zmienią swoje nazwy...
-$bar1->ustawNazwe('ustawiona z zewnątrz');
+// teraz zmienimy nazwÄ. czego siÄ spodziewasz?
+// moĹźesz siÄ spodziewaÄ, Ĺźe i $bar1 i $globalref[0] zmieniÄ swoje nazwy...
+$bar1->ustawNazwe('ustawiona z zewnÄtrz');
 
-// jak napisano powyżej, nic takiego się nie stanie
+// jak napisano powyĹźej, nic takiego siÄ nie stanie
 $bar1->wyswietlNazwe();
 $globalref[0]->wyswietlNazwe();
 
-/* wyjście:
-ustawiona z zewnątrz
+/* wyjĹcie:
+ustawiona z zewnÄtrz
 ustawiona w konstruktorze */
 
-// zobaczmy co się dzieje z $bar2 i $globalref[1]
-$bar2->ustawNazwe('ustawiona z zewnątrz');
+// zobaczmy co siÄ dzieje z $bar2 i $globalref[1]
+$bar2->ustawNazwe('ustawiona z zewnÄtrz');
 
-// na szczęście ta zmienna nie zachowuje się jak ta z poprzedniego przypadku
-// są to te same zmienne, z więc $bar2->nazwa i $globalref[1]->nazwa są także
+// na szczÄĹcie ta zmienna nie zachowuje siÄ jak ta z poprzedniego przypadku
+// sÄ to te same zmienne, z wiÄc $bar2->nazwa i $globalref[1]->nazwa sÄ takĹźe
 // tymi samymi zmiennymi
 $bar2->wyswietlNazwe();
 $globalref[1]->wyswietlNazwe();
 
-/* wyjście:
-ustawiona z zewnątrz
-ustawiona z zewnątrz */
+/* wyjĹcie:
+ustawiona z zewnÄtrz
+ustawiona z zewnÄtrz */
 ?>
 ]]>
      </programlisting>
     </informalexample>   
    </para>   
    <para>
-   Ustatni przykład. Postaraj się go zrozumieć/
+   Ustatni przykĹad. Postaraj siÄ go zrozumieÄ/
    
     <informalexample>
      <programlisting role="php">
@@ -872,7 +872,7 @@ ustawiona z zewnątrz */
 class A {
     function A($i) {
         $this->wartosc = $i;
-        // domyśl się dlaczego nie potrzebujemy tutaj referencji
+        // domyĹl siÄ dlaczego nie potrzebujemy tutaj referencji
         $this->b = new B($this);
     }
 
@@ -895,8 +895,8 @@ class B {
         echo "<br />","klasa ",get_class($this),': ',$this->a->value;
     }
 }
-// spróbuj zrozumieć dlaczego użycie tu prostego kopiowania może powodować
-// nieporządany efekt w linii uznaczonej znaczkiem '*'
+// sprĂłbuj zrozumieÄ dlaczego uĹźycie tu prostego kopiowania moĹźe powodowaÄ
+// nieporzÄdany efekt w linii uznaczonej znaczkiem '*'
 $a =& new A(10);
 $a->stworzRef();
 
@@ -928,17 +928,17 @@ klasa B: 11
    </para>
   </sect1>
   <sect1 xml:id="language.oop.object-comparison">
-   <title>Porównywanie obiektów</title>
+   <title>PorĂłwnywanie obiektĂłw</title>
    <para>
-    W PHP 4 obiekty są porównywane w bardzo prosty sposób, to znaczy dwie
-    instancje obiektów są uważane za równe, jeśli posiadają te same atrybuty i
-    ich wartości, a także są instancjami tej samej klasy. Podobne reguły są
-    stosowane, jeśli dwa obiekty są porównywane za pomocą operatora
-    identyczności (<literal>===</literal>).
+    W PHP 4 obiekty sÄ porĂłwnywane w bardzo prosty sposĂłb, to znaczy dwie
+    instancje obiektĂłw sÄ uwaĹźane za rĂłwne, jeĹli posiadajÄ te same atrybuty i
+    ich wartoĹci, a takĹźe sÄ instancjami tej samej klasy. Podobne reguĹy sÄ
+    stosowane, jeĹli dwa obiekty sÄ porĂłwnywane za pomocÄ operatora
+    identycznoĹci (<literal>===</literal>).
   </para>
   <para>
    <example>
-    <title>Przykład porównania obiektów w PHP 4</title>
+    <title>PrzykĹad porĂłwnania obiektĂłw w PHP 4</title>
     <programlisting role='php'>
 <![CDATA[
 <?php
@@ -982,13 +982,13 @@ $q = new Flaga();
 
 $r = new przelaczalnaFlaga();
 
-echo "Porównaj instancje stworzone z tymi samymi argumentami\n";
+echo "PorĂłwnaj instancje stworzone z tymi samymi argumentami\n";
 porownajObiekty($o, $q);
 
-echo "\nPorównaj instancje stworzone z różnymi argumentami\n";
+echo "\nPorĂłwnaj instancje stworzone z rĂłĹźnymi argumentami\n";
 porownajObiekty($o, $p);
 
-echo "\nPorównaj instancję klasy nadrzędnej z instancją klasy podrzędnej\n";
+echo "\nPorĂłwnaj instancjÄ klasy nadrzÄdnej z instancjÄ klasy podrzÄdnej\n";
 porownajObiekty($o, $r);
 ?>
 ]]>
@@ -996,19 +996,19 @@ porownajObiekty($o, $r);
     &example.outputs;
     <screen>
 <![CDATA[    
-Porównaj instancje stworzone z tymi samymi argumentami
+PorĂłwnaj instancje stworzone z tymi samymi argumentami
 o1 == o2 : TRUE
 o1 != o2 : FALSE
 o1 === o2 : TRUE
 o1 !== o2 : FALSE
 
-Porównaj instancje stworzone z różnymi argumentami
+PorĂłwnaj instancje stworzone z rĂłĹźnymi argumentami
 o1 == o2 : FALSE
 o1 != o2 : TRUE
 o1 === o2 : FALSE
 o1 !== o2 : TRUE
 
-Porównaj instancję klasy nadrzędnej z instancją klasy podrzędnej
+PorĂłwnaj instancjÄ klasy nadrzÄdnej z instancjÄ klasy podrzÄdnej
 o1 == o2 : FALSE
 o1 != o2 : TRUE
 o1 === o2 : FALSE
@@ -1018,18 +1018,18 @@ o1 !== o2 : TRUE
    </example>   
   </para>
   <para>
-   Wynik działania powyższego skryptu jest całkowicie przewidywalny na
-   podstawie przedstawionych wyżej reguł. Tylko instancje o tych samych
-   wartościach tych samych atrybutów, pochodzące z tej samej klasy, są
-   uznawane za równe i identyczne.
+   Wynik dziaĹania powyĹźszego skryptu jest caĹkowicie przewidywalny na
+   podstawie przedstawionych wyĹźej reguĹ. Tylko instancje o tych samych
+   wartoĹciach tych samych atrybutĂłw, pochodzÄce z tej samej klasy, sÄ
+   uznawane za rĂłwne i identyczne.
   </para>
   <para>
-   Nawet w przypadku kompozycji obiektów stosowane są te same reguły
-   porównywania. W poniższym przykładzie stworzona została klasa-pojemnik,
-   która zawiera tablicę asocjacyjną obiektów klasy
+   Nawet w przypadku kompozycji obiektĂłw stosowane sÄ te same reguĹy
+   porĂłwnywania. W poniĹźszym przykĹadzie stworzona zostaĹa klasa-pojemnik,
+   ktĂłra zawiera tablicÄ asocjacyjnÄ obiektĂłw klasy
    <classname>Flaga</classname>.
    <example>
-    <title>Porównywanie obiektów złożonych w PHP 4</title>
+    <title>PorĂłwnywanie obiektĂłw zĹoĹźonych w PHP 4</title>
     <programlisting role='php'>
 <![CDATA[
 <?php
@@ -1058,7 +1058,7 @@ $u->addFlag('flag2', $p);
 $v = new ZbiorFlag(array('flag1'=>$q, 'flag2'=>$p));
 $w = new ZbiorFlag(array('flag1'=>$q));
 
-echo "\nObiekty złożone u(o,p) i v(q,p)\n";
+echo "\nObiekty zĹoĹźone u(o,p) i v(q,p)\n";
 porownajObiekty($u, $v);
 
 echo "\nu(o,p) i w(q)\n";
@@ -1069,7 +1069,7 @@ porownajObiekty($u, $w);
     &example.outputs;
     <screen>
 <![CDATA[
-Obiekty złożone u(o,p) i v(q,p)
+Obiekty zĹoĹźone u(o,p) i v(q,p)
 o1 == o2 : TRUE
 o1 != o2 : FALSE
 o1 === o2 : TRUE

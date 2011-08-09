@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: garbus Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: qrak -->
@@ -9,15 +9,15 @@
    <title>Podstawy</title>
 
    <simpara>
-    Każdą zmienną w PHP zapisuje się, poprzedzając jej nazwę znakiem dolara "$".
-    Wielkość liter w nazwie zmiennej jest rozróżniana.
+    KaĹźdÄ zmiennÄ w PHP zapisuje siÄ, poprzedzajÄc jej nazwÄ znakiem dolara "$".
+    WielkoĹÄ liter w nazwie zmiennej jest rozrĂłĹźniana.
    </simpara>
 
    <para>
-    Nazw zmiennych dotyczą te same reguły, co innych rodzajów nazw w PHP.
-    Poprawna nazwa zmiennej zaczyna się od litery lub znaku podkreślenia "_",
-    po których może wystąpić dowolna ilość liter, cyfr lub znaków podkreślenia.
-    Jako wyrażenie regularne, można to zapisać tak:
+    Nazw zmiennych dotyczÄ te same reguĹy, co innych rodzajĂłw nazw w PHP.
+    Poprawna nazwa zmiennej zaczyna siÄ od litery lub znaku podkreĹlenia "_",
+    po ktĂłrych moĹźe wystÄpiÄ dowolna iloĹÄ liter, cyfr lub znakĂłw podkreĹlenia.
+    Jako wyraĹźenie regularne, moĹźna to zapisaÄ tak:
     '[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*'
    </para>
    
@@ -30,16 +30,16 @@
 
    <note>
     <simpara>
-     <literal>$this</literal> to specialna zmienna, której nie można
-     definiować.
+     <literal>$this</literal> to specialna zmienna, ktĂłrej nie moĹźna
+     definiowaÄ.
     </simpara>
    </note>
 
    &tip.userlandnaming;
 
    <para>
-    Aby uzyskać więcej informacji na temat funkcji powiązanych ze zmiennymi, zobacz
-    <link linkend="ref.var">Funkcje Obsługi Zmiennych</link>.
+    Aby uzyskaÄ wiÄcej informacji na temat funkcji powiÄzanych ze zmiennymi, zobacz
+    <link linkend="ref.var">Funkcje ObsĹugi Zmiennych</link>.
    </para>
 
    <para>
@@ -49,11 +49,11 @@
 <?php
 $zmienna = 'Pan';
 $Zmienna = 'Jan';
-echo "$zmienna, $Zmienna";  // wyświetla "Pan, Jan"
+echo "$zmienna, $Zmienna";  // wyĹwietla "Pan, Jan"
 
-$7dni = 'tydzień';          // niepoprawna nazwa - zaczyna się od cyfry
-$_7dni = 'tydzień';         // poprawna nazwa - zaczyna się znakiem podkreślenia
-$jaźń = 'osobowość';        // poprawna nazwa - "ń" i "ź" należą do ASCII 127-255
+$7dni = 'tydzieĹ';          // niepoprawna nazwa - zaczyna siÄ od cyfry
+$_7dni = 'tydzieĹ';         // poprawna nazwa - zaczyna siÄ znakiem podkreĹlenia
+$jaĹşĹ = 'osobowoĹÄ';        // poprawna nazwa - "Ĺ" i "Ĺş" naleĹźÄ do ASCII 127-255
 ?>
 ]]>
      </programlisting>
@@ -61,37 +61,37 @@ $jaźń = 'osobowość';        // poprawna nazwa - "ń" i "ź" należą do ASCII 127-25
    </para>
 
    <para>
-    Domyślnie, zmienne zawsze są zawsze przypisywane przez wartość. Innymi
-    słowy, jeśli przypiszesz do zmiennej jakieś wyrażenie, wartość tego
-    wyrażenia zostanie skopiowana do zmiennej. Oznacza to, że po przypisaniu
-    wartości jednej zmiennej do drugiej, późniejsza 
-    zmiana wartości jednej z nich nie spowoduje zmiany wartości drugiej.
-    Więcej informacji na ten temat w
+    DomyĹlnie, zmienne zawsze sÄ zawsze przypisywane przez wartoĹÄ. Innymi
+    sĹowy, jeĹli przypiszesz do zmiennej jakieĹ wyraĹźenie, wartoĹÄ tego
+    wyraĹźenia zostanie skopiowana do zmiennej. Oznacza to, Ĺźe po przypisaniu
+    wartoĹci jednej zmiennej do drugiej, pĂłĹşniejsza 
+    zmiana wartoĹci jednej z nich nie spowoduje zmiany wartoĹci drugiej.
+    WiÄcej informacji na ten temat w
     rozdziale <link 
-    linkend="language.expressions">Wyrażenia</link>.
+    linkend="language.expressions">WyraĹźenia</link>.
    </para>
    <para>
-    PHP oferuje jeszcze jeden sposób przypisywania wartości do zmiennych:
-    <link linkend="language.references">przypisanie przez referencję</link>.
-    Oznacza to, że nowa zmienna tylko odnosi się (innymi słowy, 
-    "staje się aliasem" lub "wskazuje na") do pierwotnej zmiennej. 
-    Zmiany wykonane na nowej zmiennej oddziałują także na pierwotną zmienną i vice versa. 
+    PHP oferuje jeszcze jeden sposĂłb przypisywania wartoĹci do zmiennych:
+    <link linkend="language.references">przypisanie przez referencjÄ</link>.
+    Oznacza to, Ĺźe nowa zmienna tylko odnosi siÄ (innymi sĹowy, 
+    "staje siÄ aliasem" lub "wskazuje na") do pierwotnej zmiennej. 
+    Zmiany wykonane na nowej zmiennej oddziaĹujÄ takĹźe na pierwotnÄ zmiennÄ i vice versa. 
    </para>
    <para>
-    Aby przypisać przez referencję, postaw znak ampersand (&amp;)
-    przed nazwą zmiennej przypisywanej (zmiennej od której pobierasz
-    wartość). Na przykład poniższy kod wyświetla "To jest 
+    Aby przypisaÄ przez referencjÄ, postaw znak ampersand (&amp;)
+    przed nazwÄ zmiennej przypisywanej (zmiennej od ktĂłrej pobierasz
+    wartoĹÄ). Na przykĹad poniĹźszy kod wyĹwietla "To jest 
     PHP" dwa razy:
     
     <informalexample>
      <programlisting role="php">
 <![CDATA[
 <?php
-$foo = "PHP";               // Przypisz wartość "PHP" do $foo.
+$foo = "PHP";               // Przypisz wartoĹÄ "PHP" do $foo.
 $bar = &$foo;               // Przypisz referencyjnie $foo do $bar.
-$bar = "To jest $bar";      // Zmień $bar...
+$bar = "To jest $bar";      // ZmieĹ $bar...
 echo $bar;
-echo $foo;                  // $foo też się zmieniło.
+echo $foo;                  // $foo teĹź siÄ zmieniĹo.
 ?>
 ]]>
      </programlisting>
@@ -99,15 +99,15 @@ echo $foo;                  // $foo też się zmieniło.
    </para>
 
    <para>
-    Należy pamiętać, że tylko wyrażenia posiadające nazwę mogą być przypisane
-    przez referencję.
+    NaleĹźy pamiÄtaÄ, Ĺźe tylko wyraĹźenia posiadajÄce nazwÄ mogÄ byÄ przypisane
+    przez referencjÄ.
     <informalexample>
      <programlisting role="php">
 <![CDATA[ 
 <?php
 $foo = 25;
 $bar = &$foo;      // Przypisanie poprawne.
-$bar = &(24 * 7);  // Przypisanie niepoprawne - do nienazwanego wyrażenia.
+$bar = &(24 * 7);  // Przypisanie niepoprawne - do nienazwanego wyraĹźenia.
 
 function test()
 {
@@ -123,40 +123,40 @@ $bar = &test();    // Niepoprawne.
    
    <para>
     W PHP nie jest konieczne inicjowanie zmiennych, jednak jest to bardzo
-    dobry nawyk. Niezainicjowane zmienne mają domyślne wartości dla ich typu, zależnie od kontekstu, w jaki zmienne te zostały użyte
-    - zmienne logiczne typu boolean domyślnie przyjmują wartość &false;, zmiennym całkowitym typu integer domyślnie nadawane jest zero, łańcuchom tekstowym
-    (np. użytym wewnątrz <function>echo</function>) nadany jest łańcuch pusty, natomiast tablice zostają pustymi tablicami.
+    dobry nawyk. Niezainicjowane zmienne majÄ domyĹlne wartoĹci dla ich typu, zaleĹźnie od kontekstu, w jaki zmienne te zostaĹy uĹźyte
+    - zmienne logiczne typu boolean domyĹlnie przyjmujÄ wartoĹÄ &false;, zmiennym caĹkowitym typu integer domyĹlnie nadawane jest zero, ĹaĹcuchom tekstowym
+    (np. uĹźytym wewnÄtrz <function>echo</function>) nadany jest ĹaĹcuch pusty, natomiast tablice zostajÄ pustymi tablicami.
    </para>
    <para>
     <example>
-     <title>Domyślne wartości niezainicjowanych zmiennych</title>
+     <title>DomyĹlne wartoĹci niezainicjowanych zmiennych</title>
      <programlisting role="php">
 <![CDATA[
 <?php
-// Zmienna bez nadanej wartości ORAZ bez odwołań do niej (brak kontekstu, w jakim została użyta); zwróci NULL
+// Zmienna bez nadanej wartoĹci ORAZ bez odwoĹaĹ do niej (brak kontekstu, w jakim zostaĹa uĹźyta); zwrĂłci NULL
 var_dump($zmienna_bez_kontekstu_uzycia);
 
-// Używanie zmiennej logicznej typu boolean; zwróci 'false' (Zobacz informacje o operatorach trójparametrowych, by poznać tę składnię)
+// UĹźywanie zmiennej logicznej typu boolean; zwrĂłci 'false' (Zobacz informacje o operatorach trĂłjparametrowych, by poznaÄ tÄ skĹadniÄ)
 echo($nieinicjowana_zmiena_bool ? "true\n" : "false\n");
 
-// Używanie łańcuchów; zwróci 'string(3) "abc"'
+// UĹźywanie ĹaĹcuchĂłw; zwrĂłci 'string(3) "abc"'
 $nieinicjowany_lancuch .= 'abc';
 var_dump($nieinicjowany_lancuch);
 
-// Używanie zmiennych całkowitych; zwróci 'int(25)'
+// UĹźywanie zmiennych caĹkowitych; zwrĂłci 'int(25)'
 $nieinicjowana_zmienna_int += 25; // 0 + 25 => 25
 var_dump($nieinicjowana_zmienna_int);
 
-// Używanie zmiennych typu float/double; zwróci 'float(1.25)'
+// UĹźywanie zmiennych typu float/double; zwrĂłci 'float(1.25)'
 $nieinicjowana_zmienna_float += 1.25;
 var_dump($nieinicjowana_zmienna_float);
 
-// Używanie tablicy; zwróci array(1) {  [3]=> string(3) "def" }
+// UĹźywanie tablicy; zwrĂłci array(1) {  [3]=> string(3) "def" }
 $nieinicjowana_tablica[3] = "def"; // array() + array(3 => "def") => array(3 => "def")
 var_dump($nieinicjowana_tablica);
 
-// Używanie obiektu; stworzy nowy obiekt stdClass (zobacz http://www.php.net/manual/pl/reserved.classes.php)
-// Zwróci: object(stdClass)#1 (1) {  ["foo"]=>  string(3) "bar" }
+// UĹźywanie obiektu; stworzy nowy obiekt stdClass (zobacz http://www.php.net/manual/pl/reserved.classes.php)
+// ZwrĂłci: object(stdClass)#1 (1) {  ["foo"]=>  string(3) "bar" }
 $nieinicjowany_obiekt->foo = 'bar';
 var_dump($nieinicjowany_obiekt);
 ?>
@@ -165,15 +165,15 @@ var_dump($nieinicjowany_obiekt);
     </example>
    </para>
    <para>
-    Poleganie na domyślnej wartości niezainicjowanej zmiennej jest problematyczne,
-    w razie zawarcia jednego pliku wewnątrz innego, posiadającego tak samo
-    nazwane zmienne. Jest to również poważne <link
-    linkend="security.globals">zagrożenie dla bezpieczeństwa</link> przy włączonej opcji <link
-    linkend="ini.register-globals">register_globals</link>. Ostrzeżenie klasy <link
-    linkend="errorfunc.constants.errorlevels.e-notice">E_NOTICE</link> pojawi się podczas
+    Poleganie na domyĹlnej wartoĹci niezainicjowanej zmiennej jest problematyczne,
+    w razie zawarcia jednego pliku wewnÄtrz innego, posiadajÄcego tak samo
+    nazwane zmienne. Jest to rĂłwnieĹź powaĹźne <link
+    linkend="security.globals">zagroĹźenie dla bezpieczeĹstwa</link> przy wĹÄczonej opcji <link
+    linkend="ini.register-globals">register_globals</link>. OstrzeĹźenie klasy <link
+    linkend="errorfunc.constants.errorlevels.e-notice">E_NOTICE</link> pojawi siÄ podczas
     pracy z niezainicjowanymi zmiennymi, jednak w przypadku przypisywania
-    elentów do niezainicjowanych tablic - już nie. Funkcja <function>isset</function> 
-    może zostać użyta w celu wykrycia, czy zmienna została już zainicjowana.
+    elentĂłw do niezainicjowanych tablic - juĹź nie. Funkcja <function>isset</function> 
+    moĹźe zostaÄ uĹźyta w celu wykrycia, czy zmienna zostaĹa juĹź zainicjowana.
    </para>
   </sect1>
 	 
@@ -181,24 +181,24 @@ var_dump($nieinicjowany_obiekt);
    <title>Zmienne Predefiniowane</title>
 
    <simpara>
-    PHP udostępnia dla każdego pracującego skryptu dużą ilość predefiniowanych
-    zmiennych. Jednakże wiele spośród tych zmiennych nie może być w pełni
-    objaśnionych, gdyż są zależne od rodzaju serwera, jego wersji, ustawień
-    i innych czynników. Niektóre z tych zmiennych nie będą dostępne dla
-    skryptów PHP uruchomionych z 
-    <link linkend="features.commandline">Linii Poleceń</link>. 
-    Lista tych zmiennych znajduje się w rozdziale 
+    PHP udostÄpnia dla kaĹźdego pracujÄcego skryptu duĹźÄ iloĹÄ predefiniowanych
+    zmiennych. JednakĹźe wiele spoĹrĂłd tych zmiennych nie moĹźe byÄ w peĹni
+    objaĹnionych, gdyĹź sÄ zaleĹźne od rodzaju serwera, jego wersji, ustawieĹ
+    i innych czynnikĂłw. NiektĂłre z tych zmiennych nie bÄdÄ dostÄpne dla
+    skryptĂłw PHP uruchomionych z 
+    <link linkend="features.commandline">Linii PoleceĹ</link>. 
+    Lista tych zmiennych znajduje siÄ w rozdziale 
     <link linkend="reserved.variables">Predefiniowane Zmienne</link>. 
    </simpara>
 
    <warning>
     <simpara>
-     W PHP 4.2.0 i późniejszych, domyślne ustawienie dla instrukcji PHP <link
+     W PHP 4.2.0 i pĂłĹşniejszych, domyĹlne ustawienie dla instrukcji PHP <link
      linkend="ini.register-globals">register_globals</link> jest 
-     <emphasis>wyłączone</emphasis>. Jest to bardzo istotna zmiana w PHP. Mając opcję
-     register_globals <emphasis>wyłączoną</emphasis> wpływamy na ustawienie zmiennych
-     predefiniowanych, dostępnych globalnie. Na przykład, aby poznać wartość
-     <varname>DOCUMENT_ROOT</varname> użyjesz
+     <emphasis>wyĹÄczone</emphasis>. Jest to bardzo istotna zmiana w PHP. MajÄc opcjÄ
+     register_globals <emphasis>wyĹÄczonÄ</emphasis> wpĹywamy na ustawienie zmiennych
+     predefiniowanych, dostÄpnych globalnie. Na przykĹad, aby poznaÄ wartoĹÄ
+     <varname>DOCUMENT_ROOT</varname> uĹźyjesz
      <varname>$_SERVER['DOCUMENT_ROOT']</varname> zamiast
      <varname>$DOCUMENT_ROOT</varname>, lub <varname>$_GET['id']</varname>
      z adresu URL <literal>http://www.example.com/test.php?id=3</literal> zamiast
@@ -206,33 +206,33 @@ var_dump($nieinicjowany_obiekt);
      <varname>$HOME</varname>.
     </simpara>
     <simpara> 
-     Aby uzyskać informacje powiązane z tą zmianą, przeczytaj część o konfiguracji
-     <link linkend="ini.register-globals">register_globals</link>, rozdziału
-     o bezpieczeństwie <link linkend="security.globals">Używanie Register Globals
+     Aby uzyskaÄ informacje powiÄzane z tÄ zmianÄ, przeczytaj czÄĹÄ o konfiguracji
+     <link linkend="ini.register-globals">register_globals</link>, rozdziaĹu
+     o bezpieczeĹstwie <link linkend="security.globals">UĹźywanie Register Globals
      </link>, oraz w informacjach o wydaniu (ang. Release Announcements) PHP <link xlink:href="&url.php.release4.1.0;">
      4.1.0</link> jak i <link xlink:href="&url.php.release4.2.0;">
      4.2.0</link>
     </simpara>
     <simpara>
-     Używanie dostępnych zmiennych predefiniowanych, jak 
+     UĹźywanie dostÄpnych zmiennych predefiniowanych, jak 
      <link linkend="language.variables.superglobals">tablice superglobalne</link>, 
      jest zalecane.
     </simpara>
    </warning>
    
    <simpara>
-    Począwszy od wersji 4.1.0, PHP udostępnia dodatkowo zestaw predefiniowanych tablic,
-    które zawierają zmienne serwera, zmienne środowiskowe oraz zmienne
-    użytkownika. Tablice te są dość specyficzne, gdyż
-    są one automatycznie globalne, tzn. automatycznie
-    dostępne w każdym miejscu. Dlatego nazywa się
-    je "superglobalami". (W PHP nie ma mechanizmu pozwalającego użytkownikowi na definiowanie
-    własnych superglobali.) Superglobale PHP wymienione są poniżej;
-    jednakże wykaz ich zawartości i głębsze omówienie
-    prefiniowanych zmiennych PHP oraz ich natury znajduje się w rozdziale
+    PoczÄwszy od wersji 4.1.0, PHP udostÄpnia dodatkowo zestaw predefiniowanych tablic,
+    ktĂłre zawierajÄ zmienne serwera, zmienne Ĺrodowiskowe oraz zmienne
+    uĹźytkownika. Tablice te sÄ doĹÄ specyficzne, gdyĹź
+    sÄ one automatycznie globalne, tzn. automatycznie
+    dostÄpne w kaĹźdym miejscu. Dlatego nazywa siÄ
+    je "superglobalami". (W PHP nie ma mechanizmu pozwalajÄcego uĹźytkownikowi na definiowanie
+    wĹasnych superglobali.) Superglobale PHP wymienione sÄ poniĹźej;
+    jednakĹźe wykaz ich zawartoĹci i gĹÄbsze omĂłwienie
+    prefiniowanych zmiennych PHP oraz ich natury znajduje siÄ w rozdziale
     <link linkend="reserved.variables">predefiniowane zmienne</link>.
-    Zauważ także, że starsze zmienne predefiniowane 
-    (<varname>$HTTP_*_VARS</varname>) wciąż funkcjonują.
+    ZauwaĹź takĹźe, Ĺźe starsze zmienne predefiniowane 
+    (<varname>$HTTP_*_VARS</varname>) wciÄĹź funkcjonujÄ.
 
     &avail.register-long-arrays;
    </simpara>
@@ -240,35 +240,35 @@ var_dump($nieinicjowany_obiekt);
    <note>
     <title>Zmienne zmienne</title>
     <para>
-     Zmienne superglobale nie mogą być użyte jako
+     Zmienne superglobale nie mogÄ byÄ uĹźyte jako
      <link linkend="language.variables.variable">zmienne zmienne</link>
-     wewnątrz funkcji, ani jako metody klasy.
+     wewnÄtrz funkcji, ani jako metody klasy.
     </para>
    </note>
    
    <note>
     <para>
-     Nawet pomimo tego, że zmienne superglobalne i HTTP_*_VARS mogą istnieć w tym samym
-     czasie; nie są one tożsame, czyli zmiana jednej nie zmieni drugiej.
+     Nawet pomimo tego, Ĺźe zmienne superglobalne i HTTP_*_VARS mogÄ istnieÄ w tym samym
+     czasie; nie sÄ one toĹźsame, czyli zmiana jednej nie zmieni drugiej.
     </para>
    </note>
    
    <para>
-    Jeśli pewne zmienne w <link
-    linkend="ini.variables-order">variables_order</link> nie są ustawione, to ich
-    odpowiedniki zmiennych predefiniowanych PHP również są puste.
+    JeĹli pewne zmienne w <link
+    linkend="ini.variables-order">variables_order</link> nie sÄ ustawione, to ich
+    odpowiedniki zmiennych predefiniowanych PHP rĂłwnieĹź sÄ puste.
    </para>
   </sect1>
 
 
   <sect1 xml:id="language.variables.scope">
-   <title>Zasięg zmiennych</title>
+   <title>ZasiÄg zmiennych</title>
 
    <simpara>
-    Zasięg zmiennej zależy od miejsca, w jakim ją zdefiniowano.
-    Najczęściej zmienne PHP widoczne są tylko w jednym zasięgu.
-    Taki zasięg obejmuje również pliki dołączone funkcjami include i require.  Na
-    przykład:
+    ZasiÄg zmiennej zaleĹźy od miejsca, w jakim jÄ zdefiniowano.
+    NajczÄĹciej zmienne PHP widoczne sÄ tylko w jednym zasiÄgu.
+    Taki zasiÄg obejmuje rĂłwnieĹź pliki doĹÄczone funkcjami include i require.  Na
+    przykĹad:
    </simpara>
    <informalexample>
     <programlisting role="php">
@@ -281,22 +281,22 @@ include 'b.inc';
     </programlisting>
    </informalexample>
    <simpara>
-    Tutaj zmienna <varname>$a</varname> będzie dostępna także wewnątrz dołączonego
-    funkcją include pliku <filename>b.inc</filename> w skrypcie. Jednakże wewnątrz
-    funkcji zdefiniowanych samodzielnie zmienne mają zasięg lokalny. Każda
-    zmienna użyta wewnątrz funkcji jest domyślnie ograniczona do zasięgu lokalnego
-    funkcji.  Na przykład:
+    Tutaj zmienna <varname>$a</varname> bÄdzie dostÄpna takĹźe wewnÄtrz doĹÄczonego
+    funkcjÄ include pliku <filename>b.inc</filename> w skrypcie. JednakĹźe wewnÄtrz
+    funkcji zdefiniowanych samodzielnie zmienne majÄ zasiÄg lokalny. KaĹźda
+    zmienna uĹźyta wewnÄtrz funkcji jest domyĹlnie ograniczona do zasiÄgu lokalnego
+    funkcji.  Na przykĹad:
    </simpara>
     
    <informalexample>
     <programlisting role="php"> 
 <![CDATA[
 <?php
-$a = 1; /* zasięg globalny */ 
+$a = 1; /* zasiÄg globalny */ 
 
 function test()
 { 
-    echo $a; /* odwołanie do zmiennej o zasięgu lokalnym */ 
+    echo $a; /* odwoĹanie do zmiennej o zasiÄgu lokalnym */ 
 } 
 
 test();
@@ -306,26 +306,26 @@ test();
    </informalexample>
 
    <simpara>
-    Ten skrypt nie wyświetli niczego, ponieważ instrukcja echo
-    odwołuje się do zmiennej lokalnej <varname>$a</varname>,
-    której jak dotąd nie została przypisana żadna wartość. Można
-    tu zauważyć różnicę w stosunku do języka C, gdzie
-    zmienne globalne są zawsze dostępne wewnątrz
-    definicji funkcji, o ile nie zostały nadpisane przez lokalną definicję
-    zmiennej. Może to spowodować problem, że ktoś może nieodwracalnie
-    zmienić wartość zmiennej globalnej. W PHP zmienne globalne muszą
-    być jawnie określone jako globalne wewnątrz funkcji, w której mają być użyte, 
-    do czego używamy słowa kluczowego global.
+    Ten skrypt nie wyĹwietli niczego, poniewaĹź instrukcja echo
+    odwoĹuje siÄ do zmiennej lokalnej <varname>$a</varname>,
+    ktĂłrej jak dotÄd nie zostaĹa przypisana Ĺźadna wartoĹÄ. MoĹźna
+    tu zauwaĹźyÄ rĂłĹźnicÄ w stosunku do jÄzyka C, gdzie
+    zmienne globalne sÄ zawsze dostÄpne wewnÄtrz
+    definicji funkcji, o ile nie zostaĹy nadpisane przez lokalnÄ definicjÄ
+    zmiennej. MoĹźe to spowodowaÄ problem, Ĺźe ktoĹ moĹźe nieodwracalnie
+    zmieniÄ wartoĹÄ zmiennej globalnej. W PHP zmienne globalne muszÄ
+    byÄ jawnie okreĹlone jako globalne wewnÄtrz funkcji, w ktĂłrej majÄ byÄ uĹźyte, 
+    do czego uĹźywamy sĹowa kluczowego global.
    </simpara>
 
    <sect2 xml:id="language.variables.scope.global">
     <title>polecenie global</title>
     <simpara>
-     Najpierw, przykład użycia <literal>global</literal>:
+     Najpierw, przykĹad uĹźycia <literal>global</literal>:
     </simpara>
     <para>
      <example>
-      <title>Używanie polecenia global</title>
+      <title>UĹźywanie polecenia global</title>
       <programlisting role="php">
 <![CDATA[
 <?php
@@ -348,21 +348,21 @@ echo $b;
     </para>
 
    <simpara>
-    Powyższy skrypt wyświetli wynik &quot;3&quot;.  Przez zadeklarowanie
-    wewnątrz funkcji globalności zmiennych <varname>$a</varname> i
-    <varname>$b</varname>, wszystkie odwołania do tych zmiennych 
-    będą odnosiły się do ich globalnych wersji. Nie ma żadnych ograniczeń
-    w ilości zmiennych globalnych, na których chcemy operować wewnątrz funkcji.
+    PowyĹźszy skrypt wyĹwietli wynik &quot;3&quot;.  Przez zadeklarowanie
+    wewnÄtrz funkcji globalnoĹci zmiennych <varname>$a</varname> i
+    <varname>$b</varname>, wszystkie odwoĹania do tych zmiennych 
+    bÄdÄ odnosiĹy siÄ do ich globalnych wersji. Nie ma Ĺźadnych ograniczeĹ
+    w iloĹci zmiennych globalnych, na ktĂłrych chcemy operowaÄ wewnÄtrz funkcji.
    </simpara>
 
    <simpara>
-    Drugim sposobem uzyskania dostępu do zmiennych globalnych wewnątrz funkcji
-    jest użycie specjalnej, zdefiniowanej przez PHP tablicy 
-    <varname>$GLOBALS</varname>. Powyższy przykład można zatem przepisać tak:
+    Drugim sposobem uzyskania dostÄpu do zmiennych globalnych wewnÄtrz funkcji
+    jest uĹźycie specjalnej, zdefiniowanej przez PHP tablicy 
+    <varname>$GLOBALS</varname>. PowyĹźszy przykĹad moĹźna zatem przepisaÄ tak:
    </simpara>
    <para>
     <example>
-     <title>Używanie <varname>$GLOBALS</varname> zamiast polecenia global</title>
+     <title>UĹźywanie <varname>$GLOBALS</varname> zamiast polecenia global</title>
      <programlisting role="php">
 <![CDATA[
 <?php
@@ -383,32 +383,32 @@ echo $b;
    </para>
 	        		 
    <simpara>
-    Tablica <varname>$GLOBALS</varname> jest asocjacyjną tablicą,
-    w której nazwa zmiennej jest kluczem, a zawartość zmiennej
-    wartością komórki tablicy.
-    Zauważ, że <varname>$GLOBALS</varname> jest dostępna z każdego miejsca,
-    ponieważ $GLOBALS jest <link
-    linkend="language.variables.superglobals">tablicą superglobalną</link>.
-    Poniżej przykład demonstrujący moc superglobali:
+    Tablica <varname>$GLOBALS</varname> jest asocjacyjnÄ tablicÄ,
+    w ktĂłrej nazwa zmiennej jest kluczem, a zawartoĹÄ zmiennej
+    wartoĹciÄ komĂłrki tablicy.
+    ZauwaĹź, Ĺźe <varname>$GLOBALS</varname> jest dostÄpna z kaĹźdego miejsca,
+    poniewaĹź $GLOBALS jest <link
+    linkend="language.variables.superglobals">tablicÄ superglobalnÄ</link>.
+    PoniĹźej przykĹad demonstrujÄcy moc superglobali:
    </simpara>
    <para>
     <example>
-     <title>Przykład demonstrujący superglobale i zasięg zmiennych</title>
+     <title>PrzykĹad demonstrujÄcy superglobale i zasiÄg zmiennych</title>
      <programlisting role="php">
 <![CDATA[
 <?php
 function test_global()
 {
-    // Większość predefiniowanych zmiennych nie jest "super i wymaga
-    // 'global', by być dostępnymi w zasięgu lokalnym funkcji.
+    // WiÄkszoĹÄ predefiniowanych zmiennych nie jest "super i wymaga
+    // 'global', by byÄ dostÄpnymi w zasiÄgu lokalnym funkcji.
     global $HTTP_POST_VARS;
     
     echo $HTTP_POST_VARS['name'];
     
-    // Superglobale są dostępne z każdego miejsca 
-    // i nie wymagają 'global'. Superglobale udostępniono
+    // Superglobale sÄ dostÄpne z kaĹźdego miejsca 
+    // i nie wymagajÄ 'global'. Superglobale udostÄpniono
     // wraz z PHP 4.1.0, a HTTP_POST_VARS jest 
-    // uważane za przestarzałe.
+    // uwaĹźane za przestarzaĹe.
     echo $_POST['name'];
 }
 ?>
@@ -419,17 +419,17 @@ function test_global()
   </sect2>
  
   <sect2 xml:id="language.variables.scope.static">
-   <title>Używanie zmiennych statycznych</title>
+   <title>UĹźywanie zmiennych statycznych</title>
    <simpara>
-    Jeszcze jedną ważną rzeczą, związaną z zasięgiem zmiennych jest zmienna
+    Jeszcze jednÄ waĹźnÄ rzeczÄ, zwiÄzanÄ z zasiÄgiem zmiennych jest zmienna
     statyczna (ang. <emphasis>static</emphasis> variable). Zmienna statyczna
-    może mieć wyłącznie zasięg lokalny, ale nie traci swojej wartości, kiedy
-    program opuści ten zasięg lokalny, w którym dana zmienna statyczna się
-    znajduje. Rozważmy poniższy przykład:
+    moĹźe mieÄ wyĹÄcznie zasiÄg lokalny, ale nie traci swojej wartoĹci, kiedy
+    program opuĹci ten zasiÄg lokalny, w ktĂłrym dana zmienna statyczna siÄ
+    znajduje. RozwaĹźmy poniĹźszy przykĹad:
    </simpara>
    <para>
     <example>
-     <title>Przykład ukazujący przydatność zmiennych statycznych</title>
+     <title>PrzykĹad ukazujÄcy przydatnoĹÄ zmiennych statycznych</title>
      <programlisting role="php">
 <![CDATA[
 <?php
@@ -445,17 +445,17 @@ function test()
     </example>
    </para>
    <simpara> 
-    Ta funkcja jest bezużyteczna, gdyż przy każdym jej wywołaniu zmienna
-    <varname>$a</varname> otrzymuje wartość <literal>0</literal>, w związku
-    z czym funkcja stale wyświetla &quot;0&quot;. Występująca potem
-    inkrementacja <varname>$a</varname>++ nie ma żadnego znaczenia, gdyż
-    funkcja się kończy i zmienna <varname>$a</varname> znika. Aby powyższa
-    funkcja miała jakiś sens, należy zapobiec gubieniu wartości
-    <varname>$a</varname>, do czego używamy słowa kluczowego static:
+    Ta funkcja jest bezuĹźyteczna, gdyĹź przy kaĹźdym jej wywoĹaniu zmienna
+    <varname>$a</varname> otrzymuje wartoĹÄ <literal>0</literal>, w zwiÄzku
+    z czym funkcja stale wyĹwietla &quot;0&quot;. WystÄpujÄca potem
+    inkrementacja <varname>$a</varname>++ nie ma Ĺźadnego znaczenia, gdyĹź
+    funkcja siÄ koĹczy i zmienna <varname>$a</varname> znika. Aby powyĹźsza
+    funkcja miaĹa jakiĹ sens, naleĹźy zapobiec gubieniu wartoĹci
+    <varname>$a</varname>, do czego uĹźywamy sĹowa kluczowego static:
    </simpara>
    <para>
     <example>
-     <title>Przykład użycia zmiennych statycznych</title>
+     <title>PrzykĹad uĹźycia zmiennych statycznych</title>
      <programlisting role="php">
 <![CDATA[
 <?php
@@ -471,19 +471,19 @@ function Test()
     </example>
    </para>
    <simpara>
-    Teraz, <varname>$a</varname> jest inicjowana tylko pry pierwszym wywołaniu funkcji
-    a, przy każdym wywołaniu funkcji test(), zostanie wyświetlona wartość
+    Teraz, <varname>$a</varname> jest inicjowana tylko pry pierwszym wywoĹaniu funkcji
+    a, przy kaĹźdym wywoĹaniu funkcji test(), zostanie wyĹwietlona wartoĹÄ
     zmiennej <varname>$a</varname>, po czym ta zmienna zostanie inkrementowana.
    </simpara>
 
    <simpara>
-    Zmienne statyczne pozwalają też na wykorzystanie funkcji rekurencyjnych,
-    czyli takich, które wywołują same siebie. Funkcje rekurencyjne
-    należy pisać ostrożnie, gdyż łatwo jest wywołać nieskończoną
-    rekurencję. Musisz być pewny, że masz odpowiednie mechanizmy
-    do zatrzymania rekurencji w jakimś momencie. Poniższa, prosta
-    funkcja rekurencyjnie liczy do 10, używając zmiennej
-    statycznej <varname>$licznik</varname>, aby wiedzieć, kiedy się zatrzymać:
+    Zmienne statyczne pozwalajÄ teĹź na wykorzystanie funkcji rekurencyjnych,
+    czyli takich, ktĂłre wywoĹujÄ same siebie. Funkcje rekurencyjne
+    naleĹźy pisaÄ ostroĹźnie, gdyĹź Ĺatwo jest wywoĹaÄ nieskoĹczonÄ
+    rekurencjÄ. Musisz byÄ pewny, Ĺźe masz odpowiednie mechanizmy
+    do zatrzymania rekurencji w jakimĹ momencie. PoniĹźsza, prosta
+    funkcja rekurencyjnie liczy do 10, uĹźywajÄc zmiennej
+    statycznej <varname>$licznik</varname>, aby wiedzieÄ, kiedy siÄ zatrzymaÄ:
    </simpara>
    <para>
     <example>
@@ -510,9 +510,9 @@ function test()
 
     <note>
      <para>
-      Zmienne statyczne mogą być deklarowane, tak jak w powyższym przykładzie.
-      Próba przypisania wartości do tego typu zmiennych, poprzez wynik
-      jakiegoś wyrażenia, spowoduje błąd składni (ang. Parse error).
+      Zmienne statyczne mogÄ byÄ deklarowane, tak jak w powyĹźszym przykĹadzie.
+      PrĂłba przypisania wartoĹci do tego typu zmiennych, poprzez wynik
+      jakiegoĹ wyraĹźenia, spowoduje bĹÄd skĹadni (ang. Parse error).
      </para>
      <para>
       <example>
@@ -521,9 +521,9 @@ function test()
 <![CDATA[
 <?php
 function foo(){
-    static $int = 0;          // prawidłowo
-    static $int = 1+2;        // błąd  (w rzeczywistości to jest wyrażenie)
-    static $int = sqrt(121);  // błąd  (to również jest wyrażenie)
+    static $int = 0;          // prawidĹowo
+    static $int = 1+2;        // bĹÄd  (w rzeczywistoĹci to jest wyraĹźenie)
+    static $int = sqrt(121);  // bĹÄd  (to rĂłwnieĹź jest wyraĹźenie)
 
     $int++;
     echo $int;
@@ -539,14 +539,14 @@ function foo(){
   <sect2 xml:id="language.variables.scope.references">
    <title>Referencje do zmiennych statycznych i globalnych</title>
    <simpara>
-    Silnik Zend 1 (ang. Zend Engine 1) napędzający PHP4, implementuje modyfikatory
+    Silnik Zend 1 (ang. Zend Engine 1) napÄdzajÄcy PHP4, implementuje modyfikatory
     <link linkend="language.variables.scope.static">statyczny</link> oraz
     <link linkend="language.variables.scope.global">globalny</link>
-    dla zmiennych, pod względem <link linkend="language.references">
-    referencji</link>. Na przykład, w rzeczywistości globalna zmienna
-    wprowadzona wewnątrz zasięgu funkcji z wyrażeniem <literal>global</literal>
-    na dziś dzień tworzy referencję do zmiennej globalnej. Takie zachowanie może
-    prowadzić do nieoczekiwanych sytuacji, czego dowodzi poniższy przykład:
+    dla zmiennych, pod wzglÄdem <link linkend="language.references">
+    referencji</link>. Na przykĹad, w rzeczywistoĹci globalna zmienna
+    wprowadzona wewnÄtrz zasiÄgu funkcji z wyraĹźeniem <literal>global</literal>
+    na dziĹ dzieĹ tworzy referencjÄ do zmiennej globalnej. Takie zachowanie moĹźe
+    prowadziÄ do nieoczekiwanych sytuacji, czego dowodzi poniĹźszy przykĹad:
    </simpara>
 
    <informalexample>
@@ -573,7 +573,7 @@ var_dump($obj);
    </informalexample>	
 
    <simpara>
-    Wykonanie tego przykładu da następujące wyniki:
+    Wykonanie tego przykĹadu da nastÄpujÄce wyniki:
    </simpara>
 
    <screen>
@@ -584,7 +584,7 @@ object(stdClass)(0) {
 
    <simpara>
     Podobna sytuacja dotyczy deklaracji <literal>static</literal>.
-    Referencje nie są magazynowane statycznie:
+    Referencje nie sÄ magazynowane statycznie:
    </simpara>
 
    <informalexample>
@@ -628,7 +628,7 @@ $still_obj2 = get_instance_noref();
    </informalexample>
 
    <simpara>
-    Wykonanie tego przykładu da następujące wyniki:
+    Wykonanie tego przykĹadu da nastÄpujÄce wyniki:
    </simpara>
 
    <screen>
@@ -643,9 +643,9 @@ Obiekt statyczny: object(stdClass)(1) {
    </screen>
           
    <simpara>
-    Ten przykład pokazuje, że podczas przypisywania referencji do zmiennej
-    statycznej, nie następuje <emphasis>zapamiętanie</emphasis>, gdy wywołasz
-    funkcję <literal>&amp;get_instance_ref()</literal> po raz drugi.
+    Ten przykĹad pokazuje, Ĺźe podczas przypisywania referencji do zmiennej
+    statycznej, nie nastÄpuje <emphasis>zapamiÄtanie</emphasis>, gdy wywoĹasz
+    funkcjÄ <literal>&amp;get_instance_ref()</literal> po raz drugi.
    </simpara>
    </sect2>
   </sect1>
@@ -654,9 +654,9 @@ Obiekt statyczny: object(stdClass)(1) {
    <title>Zmienne zmienne</title>
 
    <simpara>
-    W niektórych przypadkach jest wygodne, by móc użyć zmiennej o zmiennej
-    nazwie. To znaczy zmiennej, której nazwa może być zmieniana dynamicznie.
-    Zwykła zmienna jest ustawiana wyrażeniem jak poniżej:
+    W niektĂłrych przypadkach jest wygodne, by mĂłc uĹźyÄ zmiennej o zmiennej
+    nazwie. To znaczy zmiennej, ktĂłrej nazwa moĹźe byÄ zmieniana dynamicznie.
+    ZwykĹa zmienna jest ustawiana wyraĹźeniem jak poniĹźej:
    </simpara>
 
    <informalexample>
@@ -670,26 +670,26 @@ $a = "witaj";
    </informalexample>
 
    <simpara>
-    Zmienna zmienna pobiera wartość jednej zmiennej i traktuje ją
-    jako nazwę innej.  W powyższym przykładzie,
-    <emphasis>witaj</emphasis>, może stać się nazwą zmiennej,
-    dzięki użyciu dwóch znaków dolara, tzn.
+    Zmienna zmienna pobiera wartoĹÄ jednej zmiennej i traktuje jÄ
+    jako nazwÄ innej.  W powyĹźszym przykĹadzie,
+    <emphasis>witaj</emphasis>, moĹźe staÄ siÄ nazwÄ zmiennej,
+    dziÄki uĹźyciu dwĂłch znakĂłw dolara, tzn.
    </simpara>
 
    <informalexample>
     <programlisting role="php">
 <![CDATA[
 <?php
-$$a = "świecie";
+$$a = "Ĺwiecie";
 ?>
 ]]>
     </programlisting>
    </informalexample>
 
    <simpara>
-    W tym momencie dwie zmienne zostały zdefiniowane i umieszczone w drzewie
-    symbolicznym PHP: <varname>$a</varname> zawierająca "witaj" i 
-    <varname>$witaj</varname> zawierająca "świecie". Zatem poniższy
+    W tym momencie dwie zmienne zostaĹy zdefiniowane i umieszczone w drzewie
+    symbolicznym PHP: <varname>$a</varname> zawierajÄca "witaj" i 
+    <varname>$witaj</varname> zawierajÄca "Ĺwiecie". Zatem poniĹźszy
     zapis:
    </simpara>
 
@@ -718,41 +718,41 @@ echo "$a $witaj";
    </informalexample>
 
    <simpara>
-    tzn. obydwa wyświetlą: <computeroutput>witaj świecie</computeroutput>.
+    tzn. obydwa wyĹwietlÄ: <computeroutput>witaj Ĺwiecie</computeroutput>.
    </simpara>
 
    <simpara>
-    Aby używać zmiennych zmiennych jako tablic, trzeba
-    wyjaśnić pewną niejasność. Mianowicie, jeśli napiszesz
-    <varname>$$a[1]</varname>, parser musi wiedzieć, czy
-    chesz użyć <varname>$a[1]</varname> jako nazwy zmiennej, czy
-    <varname>$$a</varname> jako nazwy tablicy, której rekord [1] cię
-    interesuje. W tym przypadku należy zastosować odrębną
-    składnię: <varname>${$a[1]}</varname> dla pierwszego przypadku a
+    Aby uĹźywaÄ zmiennych zmiennych jako tablic, trzeba
+    wyjaĹniÄ pewnÄ niejasnoĹÄ. Mianowicie, jeĹli napiszesz
+    <varname>$$a[1]</varname>, parser musi wiedzieÄ, czy
+    chesz uĹźyÄ <varname>$a[1]</varname> jako nazwy zmiennej, czy
+    <varname>$$a</varname> jako nazwy tablicy, ktĂłrej rekord [1] ciÄ
+    interesuje. W tym przypadku naleĹźy zastosowaÄ odrÄbnÄ
+    skĹadniÄ: <varname>${$a[1]}</varname> dla pierwszego przypadku a
     <varname>${$a}[1]</varname> dla drugiego.
    </simpara>
    
    <warning>   
     <simpara>
-     Zauważ, że zmienne zmienne nie mogą być używane z
+     ZauwaĹź, Ĺźe zmienne zmienne nie mogÄ byÄ uĹźywane z
      <link linkend="language.variables.superglobals">Tablicami superglobalnymi</link>
-     PHP, wewnątrz funkcji, czy metod klas. Zmienna <literal>$this</literal>
-     jest także specjalną zmienną, dla której referencje dynamiczne nie są dozwolone.
+     PHP, wewnÄtrz funkcji, czy metod klas. Zmienna <literal>$this</literal>
+     jest takĹźe specjalnÄ zmiennÄ, dla ktĂłrej referencje dynamiczne nie sÄ dozwolone.
     </simpara>
    </warning>
 
   </sect1>
 
   <sect1 xml:id="language.variables.external">
-   <title>Zmienne ze źródeł zewnętrznych</title>
+   <title>Zmienne ze ĹşrĂłdeĹ zewnÄtrznych</title>
 
    <sect2 xml:id="language.variables.external.form">
     <title>Formularze HTML (GET i POST)</title>
 
     <simpara>
-     Kiedy do skryptu PHP zostanie wysłany formularz, informacja
-     z niego jest automatycznie dostępna w skrypcie. Istnieje
-     wiele sposobów na uzyskanie tych informacji, dla przykładu:
+     Kiedy do skryptu PHP zostanie wysĹany formularz, informacja
+     z niego jest automatycznie dostÄpna w skrypcie. Istnieje
+     wiele sposobĂłw na uzyskanie tych informacji, dla przykĹadu:
     </simpara>
 
     <para>
@@ -771,17 +771,17 @@ echo "$a $witaj";
     </para>
 
     <para>
-     W zależności od twoich szczególnych ustawień i osobistych upodobań, istnieje
-     wiele sposobów dostępu do danych z twoich formularzy HTML. Oto kilka przykładów:
+     W zaleĹźnoĹci od twoich szczegĂłlnych ustawieĹ i osobistych upodobaĹ, istnieje
+     wiele sposobĂłw dostÄpu do danych z twoich formularzy HTML. Oto kilka przykĹadĂłw:
     </para>
 
     <para>
      <example>
-      <title>Dostęp do informacji z prostego formularza HTML (wysłanego metodą POST)</title>
+      <title>DostÄp do informacji z prostego formularza HTML (wysĹanego metodÄ POST)</title>
       <programlisting role="html">
 <![CDATA[
 <?php
-// Możliwe od PHP 4.1.0
+// MoĹźliwe od PHP 4.1.0
       
    echo $_POST['imie'];
    echo $_REQUEST['imie'];
@@ -789,13 +789,13 @@ echo "$a $witaj";
    import_request_variables('p', 'p_');
    echo $p_imie;
 
-// Niedostępne od PHP 6. Od PHP 5.0.0, te długie predefiniowane
-// zmienne mogą być niedostępne z włączoną opcją register_long_arrays.
+// NiedostÄpne od PHP 6. Od PHP 5.0.0, te dĹugie predefiniowane
+// zmienne mogÄ byÄ niedostÄpne z wĹÄczonÄ opcjÄ register_long_arrays.
 
    echo $HTTP_POST_VARS['imie'];
 
-// Dostępne, jeśli opcja register_globals jest włączona - "on". Począwszy od
-// PHP 4.2.0 domyślna wartość opcji register_globals to off.
+// DostÄpne, jeĹli opcja register_globals jest wĹÄczona - "on". PoczÄwszy od
+// PHP 4.2.0 domyĹlna wartoĹÄ opcji register_globals to off.
 // Nie jest zalecane poleganie na tej metodzie.
 
    echo $imie;
@@ -805,55 +805,55 @@ echo "$a $witaj";
      </example>	      
     </para>
     <para>
-     Przesyłanie danych z formularza metodą GET jest podobne, z takim wyjątkiem, że użyjesz
-     zmienną predefiniowaną odpowiednią dla tej metody, zamiast poprzedniej. GET także
-     odnosi się do tzw. QUERY_STRING (informacje w adresie URL, po znaku '?'). Tak więc,
-     dla przykładu, <literal>http://www.example.com/test.php?id=3</literal>
-     zawiera dane dla metody GET, dostępne poprzez <varname>$_GET['id']</varname>.
-     Zobacz także <varname>$_REQUEST</varname> oraz
+     PrzesyĹanie danych z formularza metodÄ GET jest podobne, z takim wyjÄtkiem, Ĺźe uĹźyjesz
+     zmiennÄ predefiniowanÄ odpowiedniÄ dla tej metody, zamiast poprzedniej. GET takĹźe
+     odnosi siÄ do tzw. QUERY_STRING (informacje w adresie URL, po znaku '?'). Tak wiÄc,
+     dla przykĹadu, <literal>http://www.example.com/test.php?id=3</literal>
+     zawiera dane dla metody GET, dostÄpne poprzez <varname>$_GET['id']</varname>.
+     Zobacz takĹźe <varname>$_REQUEST</varname> oraz
      <function>import_request_variables</function>.
     </para>
 
     <note>
      <para>
       <link linkend="language.variables.superglobals">Tablice superglobalne</link>,
-      takie jak <varname>$_POST</varname> i <varname>$_GET</varname>, zostały
-      udostępnione w PHP 4.1.0
+      takie jak <varname>$_POST</varname> i <varname>$_GET</varname>, zostaĹy
+      udostÄpnione w PHP 4.1.0
      </para>
     </note>
 
     <para>
-     Jak widać, przed PHP 4.2.0 domyślną wartością opcji <link
+     Jak widaÄ, przed PHP 4.2.0 domyĹlnÄ wartoĹciÄ opcji <link
      linkend="ini.register-globals">register_globals</link>
-     było <emphasis>on</emphasis>. Społeczność PHP
-     jest całkowiie przekonana, by nie polegać na tej opcji;
-     i rzeczywiście najlepiej jest nadać jej wartość <emphasis>off</emphasis>, oraz
-     przystosować do tego kod.
+     byĹo <emphasis>on</emphasis>. SpoĹecznoĹÄ PHP
+     jest caĹkowiie przekonana, by nie polegaÄ na tej opcji;
+     i rzeczywiĹcie najlepiej jest nadaÄ jej wartoĹÄ <emphasis>off</emphasis>, oraz
+     przystosowaÄ do tego kod.
     </para>
 
     <note>
      <para>
       Dyrektywa konfiguracyjna <link linkend="ini.magic-quotes-gpc">magic_quotes_gpc</link>
-      oddziałuje na zmienne z Get, Post i Cookie. Jeśli jest włączona,
-      tekst (It's "PHP!") automagicznie zmieni się w (It\'s \"PHP!\").
-      Jest to potrzebne przy wpisywaniu danych do baz danych. Zobacz także
+      oddziaĹuje na zmienne z Get, Post i Cookie. JeĹli jest wĹÄczona,
+      tekst (It's "PHP!") automagicznie zmieni siÄ w (It\'s \"PHP!\").
+      Jest to potrzebne przy wpisywaniu danych do baz danych. Zobacz takĹźe
       <function>addslashes</function>, <function>stripslashes</function> i
       <link linkend="ini.magic-quotes-sybase">magic_quotes_sybase</link>.
      </para>
     </note>
     
     <simpara>
-     PHP obsługuje także tablice w kontekście zmiennych z formularzy 
-     (zajrzyj do <link linkend="faq.html">FAQ</link>). Można 
-     na przykład pogrupować razem powiązane zmienne lub użyć tej 
-     możliwości do pobrania wartości z pola wyboru (select). Na 
-     przykład, wyślijmy formularz z pliku metodą POST do samego siebie
-     i wyświetlmy te dane:
+     PHP obsĹuguje takĹźe tablice w kontekĹcie zmiennych z formularzy 
+     (zajrzyj do <link linkend="faq.html">FAQ</link>). MoĹźna 
+     na przykĹad pogrupowaÄ razem powiÄzane zmienne lub uĹźyÄ tej 
+     moĹźliwoĹci do pobrania wartoĹci z pola wyboru (select). Na 
+     przykĹad, wyĹlijmy formularz z pliku metodÄ POST do samego siebie
+     i wyĹwietlmy te dane:
     </simpara>
 
     <para>
      <example>
-      <title>Bardziej złożone zmienne w formularzach</title>
+      <title>Bardziej zĹoĹźone zmienne w formularzach</title>
       <programlisting role="php">
 <![CDATA[
 <?php
@@ -868,11 +868,11 @@ if ($_POST) {
     Email: <input type="text" name="personal[email]"><br />
     Piwo: <br />
     <select multiple name="piwo[]">
-        <option value="zywiec">Żywiec</option>
+        <option value="zywiec">Ĺťywiec</option>
         <option value="tyskie">Tyskie</option>
         <option value="lech">Lech</option>
     </select><br />
-    <input type="submit" value="Wyślij mnie!" />
+    <input type="submit" value="WyĹlij mnie!" />
 </form>
 ]]>
       </programlisting>
@@ -883,8 +883,8 @@ if ($_POST) {
      <title>Nazwy zmiennych dla SUBMIT w postaci obrazka</title>
 
      <simpara>
-      Przy tworzeniu formularza, można użyć obrazka, zamiast standardowego
-      przycisku Wyślij, za pomocą takiego znacznika:
+      Przy tworzeniu formularza, moĹźna uĹźyÄ obrazka, zamiast standardowego
+      przycisku WyĹlij, za pomocÄ takiego znacznika:
      </simpara>
 
      <informalexample>
@@ -896,13 +896,13 @@ if ($_POST) {
      </informalexample>
 
      <simpara>
-      Kiedy użytkownik kliknie gdzieś na obrazku, formularz, którego
-      to dotyczy, zostanie wysłany do serwera z dwiema dodatkowymi
-      zmiennymi, sub_x i sub_y. Zawierają one współrzędne miejsca
-      kliknięcia na obrazek. Można przy tym zauważyć, że
-      na razie w nazwach zmiennych znajduje się kropka
-      zamiast podkreślnika, ale PHP konwertuje kropkę na
-      podkreślnik automatycznie.
+      Kiedy uĹźytkownik kliknie gdzieĹ na obrazku, formularz, ktĂłrego
+      to dotyczy, zostanie wysĹany do serwera z dwiema dodatkowymi
+      zmiennymi, sub_x i sub_y. ZawierajÄ one wspĂłĹrzÄdne miejsca
+      klikniÄcia na obrazek. MoĹźna przy tym zauwaĹźyÄ, Ĺźe
+      na razie w nazwach zmiennych znajduje siÄ kropka
+      zamiast podkreĹlnika, ale PHP konwertuje kropkÄ na
+      podkreĹlnik automatycznie.
      </simpara>
     </sect3>
 
@@ -912,24 +912,24 @@ if ($_POST) {
     <title>Ciasteczka HTTP</title>
 
     <simpara>
-     PHP bez problemu obsługuje ciasteczka HTTP, takie jak zdefiniowano w <link
-     xlink:href="&spec.cookies;">Specyfikacji Netscape'a</link>. Ciasteczka są
-     mechanizmem przechowywania informacji w przeglądarce klienta w celu
-     śledzenia lub identyfikowania stałych bywalców strony. Ciasteczka ustawia
-     się za pomocą funkcji <function>setcookie</function>. Ciasteczka są częścią
-     nagłówka HTTP, więc funkcja SetCookie musi być wywołana zanim jakakolwiek
-     inna informacja zostanie wysłana do przeglądarki. Takie samo ograniczenie
+     PHP bez problemu obsĹuguje ciasteczka HTTP, takie jak zdefiniowano w <link
+     xlink:href="&spec.cookies;">Specyfikacji Netscape'a</link>. Ciasteczka sÄ
+     mechanizmem przechowywania informacji w przeglÄdarce klienta w celu
+     Ĺledzenia lub identyfikowania staĹych bywalcĂłw strony. Ciasteczka ustawia
+     siÄ za pomocÄ funkcji <function>setcookie</function>. Ciasteczka sÄ czÄĹciÄ
+     nagĹĂłwka HTTP, wiÄc funkcja SetCookie musi byÄ wywoĹana zanim jakakolwiek
+     inna informacja zostanie wysĹana do przeglÄdarki. Takie samo ograniczenie
      dotyczy funkcji <function>header</function>. Dane z ciasteczek 
-     są wówczas dostępne w odpowiednich tablicach danych cookies, takich 
+     sÄ wĂłwczas dostÄpne w odpowiednich tablicach danych cookies, takich 
      jak <varname>$_COOKIE</varname>, <varname>$HTTP_COOKIE_VARS</varname> 
-     jak również <varname>$_REQUEST</varname>. Zobacz także 
-     stronę dotyczącą funkcji <function>setcookie</function> aby poznać więcej 
-     informacji i przykładów.
+     jak rĂłwnieĹź <varname>$_REQUEST</varname>. Zobacz takĹźe 
+     stronÄ dotyczÄcÄ funkcji <function>setcookie</function> aby poznaÄ wiÄcej 
+     informacji i przykĹadĂłw.
     </simpara>
 
     <simpara>
-     Jeśli chcesz przypisać wiele wartości do jednego ciasteczka, możesz
-     po prostu złączyć je w tablicę. Na przykład:
+     JeĹli chcesz przypisaÄ wiele wartoĹci do jednego ciasteczka, moĹźesz
+     po prostu zĹÄczyÄ je w tablicÄ. Na przykĹad:
     </simpara>
 
     <informalexample>
@@ -944,21 +944,21 @@ if ($_POST) {
     </informalexample>
 
     <simpara>
-     Spowoduje to stworzenie dwóch oddzielnych ciasteczek, mimo, iż MojeCiasteczko będzie teraz
-     pojedynczą tablicą w twoim skrypcie. Jeśli chcesz ustawić tylko jedno ciasteczko
-     z wieloma wartościami, rozważ możliwość użycia przedtem funkcji <function>serialize</function>
-     lub <function>explode</function> na wartości.
+     Spowoduje to stworzenie dwĂłch oddzielnych ciasteczek, mimo, iĹź MojeCiasteczko bÄdzie teraz
+     pojedynczÄ tablicÄ w twoim skrypcie. JeĹli chcesz ustawiÄ tylko jedno ciasteczko
+     z wieloma wartoĹciami, rozwaĹź moĹźliwoĹÄ uĹźycia przedtem funkcji <function>serialize</function>
+     lub <function>explode</function> na wartoĹci.
     </simpara>
 
     <simpara>
-     Pamiętaj, że wysłane ciasteczko zastąpi wcześniejsze ciasteczko o tej
-     nazwie, o ile ścieżka lub domena nie są różne. Na przykład dla koszyka
-     do zakupów możesz potrzebować licznika a jego wartość stale przekazywać
+     PamiÄtaj, Ĺźe wysĹane ciasteczko zastÄpi wczeĹniejsze ciasteczko o tej
+     nazwie, o ile ĹcieĹźka lub domena nie sÄ rĂłĹźne. Na przykĹad dla koszyka
+     do zakupĂłw moĹźesz potrzebowaÄ licznika a jego wartoĹÄ stale przekazywaÄ
      dalej, tzn.
     </simpara>
 
     <example>
-     <title>Przykład użycia funkcji <function>setcookie</function></title>
+     <title>PrzykĹad uĹźycia funkcji <function>setcookie</function></title>
      <programlisting role="php">
 <![CDATA[
 <?php
@@ -981,9 +981,9 @@ setcookie("Cart[$ile]", $pozycja, time()+3600);
 
     <para>
      PHP normalnie nie zmienia nazw zmiennych podczas
-     przekazywania ich do skryptu. Jednakże należy pamiętać, że
+     przekazywania ich do skryptu. JednakĹźe naleĹźy pamiÄtaÄ, Ĺźe
      kropka "." nie jest poprawnym znakiem w
-     nazwie zmiennej PHP. Dlaczego? Proszę spojrzeć na to:
+     nazwie zmiennej PHP. Dlaczego? ProszÄ spojrzeÄ na to:
      <programlisting role="php">
 <![CDATA[
 <?php
@@ -992,32 +992,32 @@ $varname.ext;  /* niepoprawna nazwa zmiennej */
 ]]>
      </programlisting>
      To co widzi parser, to zmienna o nazwie
-     <varname>$varname</varname>, po której pojawia się operator konkatenacji,
-     a następnie pusty łańcuch (czyli taki, który
-     nie jest żadnym słowem kluczowym, ani zarezerwowanym) "ext". Oczywiście,
-     nie daje to żadnego sensownego wyniku.
+     <varname>$varname</varname>, po ktĂłrej pojawia siÄ operator konkatenacji,
+     a nastÄpnie pusty ĹaĹcuch (czyli taki, ktĂłry
+     nie jest Ĺźadnym sĹowem kluczowym, ani zarezerwowanym) "ext". OczywiĹcie,
+     nie daje to Ĺźadnego sensownego wyniku.
     </para>
 
     <para>
-     Warto zatem wiedzieć, że PHP automatycznie
-     zastąpi podkreślnikiem "_" każdą kropkę w nazwie każdej
+     Warto zatem wiedzieÄ, Ĺźe PHP automatycznie
+     zastÄpi podkreĹlnikiem "_" kaĹźdÄ kropkÄ w nazwie kaĹźdej
      odebranej zmiennej.
     </para>
 
    </sect2>
 
    <sect2 xml:id="language.variables.determining-type-of">
-    <title>Określanie typów zmiennych</title>
+    <title>OkreĹlanie typĂłw zmiennych</title>
 
     <para>
-     Ponieważ PHP samodzielnie określa typy zmiennych i konwertuje je
+     PoniewaĹź PHP samodzielnie okreĹla typy zmiennych i konwertuje je
      (zasadniczo) jak potrzeba, nie zawsze jest jasne, jakiego typu jest dana
-     zmienna w danym momencie. PHP zawiera kilka funkcji do określania typów
+     zmienna w danym momencie. PHP zawiera kilka funkcji do okreĹlania typĂłw
      zmiennych, takich jak:
      <function>gettype</function>, <function>is_array</function>,
      <function>is_float</function>, <function>is_int</function>,
      <function>is_object</function> i
-     <function>is_string</function>. Zobacz także rozdział
+     <function>is_string</function>. Zobacz takĹźe rozdziaĹ
      o <link linkend="language.types">Typach</link>.
     </para>
    </sect2>

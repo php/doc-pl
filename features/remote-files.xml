@@ -1,34 +1,34 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: slawek -->
  <chapter xml:id="features.remote-files" xmlns="http://docbook.org/ns/docbook">
-  <title>Korzystanie ze zdalnych plików</title>
+  <title>Korzystanie ze zdalnych plikĂłw</title>
 
   <para>
-   Jeśli parametr <option>allow_url_fopen</option> w pliku &php.ini;
-   zostanie włączony, będzie można używać adresów <acronym>HTTP</acronym> i
-   <acronym>FTP</acronym> w większości
-   funkcji, które jako parametr przyjmują nazwę pliku, włączając w to instrukcje
+   JeĹli parametr <option>allow_url_fopen</option> w pliku &php.ini;
+   zostanie wĹÄczony, bÄdzie moĹźna uĹźywaÄ adresĂłw <acronym>HTTP</acronym> i
+   <acronym>FTP</acronym> w wiÄkszoĹci
+   funkcji, ktĂłre jako parametr przyjmujÄ nazwÄ pliku, wĹÄczajÄc w to instrukcje
    <function>include</function>,
    <function>include_once</function>, <function>require</function> oraz
    <function>require_once</function> (od PHP 5.2.0,
-   musi być włączona opcja <option>allow_url_include</option>). 
-   Więcej informacji o protokołach obsługiwanych przez PHP
-   znajduje się w <xref linkend="wrappers"/>.
+   musi byÄ wĹÄczona opcja <option>allow_url_include</option>). 
+   WiÄcej informacji o protokoĹach obsĹugiwanych przez PHP
+   znajduje siÄ w <xref linkend="wrappers"/>.
   </para>
   <note>
    <para>
-   W PHP 4.0.3 i starszych, aby używać opakowań URL, należy
-   skonfigurowć PHP z opcją
+   W PHP 4.0.3 i starszych, aby uĹźywaÄ opakowaĹ URL, naleĹźy
+   skonfigurowÄ PHP z opcjÄ
    <option>--enable-url-fopen-wrapper</option>.
    </para>
   </note>
   <para>
    <note>
     <para>
-     PHP dla Windows, w wersji wcześniejszej niż 4.3 nie
-     obsługiwało zdalnego dostępu do plików przy użyciu instrukcji:
+     PHP dla Windows, w wersji wczeĹniejszej niĹź 4.3 nie
+     obsĹugiwaĹo zdalnego dostÄpu do plikĂłw przy uĹźyciu instrukcji:
      <function>include</function>, <function>include_once</function>,
      <function>require</function> i <function>require_once</function> oraz
      rodziny funkcji imagecreatefromXXX z rozszerzenia
@@ -37,25 +37,25 @@
    </note>
   </para>
   <para>
-   Możesz wykorzystać tę własność aby otworzyć plik na zdalnym serwrze,
-   przetworzyć jego zawartość i użyć wyników w zapytaniu do bazy danych,
-   lub po prostu wyświetlić plik dostosowując jego wygląd
+   MoĹźesz wykorzystaÄ tÄ wĹasnoĹÄ aby otworzyÄ plik na zdalnym serwrze,
+   przetworzyÄ jego zawartoĹÄ i uĹźyÄ wynikĂłw w zapytaniu do bazy danych,
+   lub po prostu wyĹwietliÄ plik dostosowujÄc jego wyglÄd
    do swojej strony.
   </para>
   <para>
    <example>
-    <title>Pobieranie tytułu zdalnej strony</title>
+    <title>Pobieranie tytuĹu zdalnej strony</title>
     <programlisting role="php">
 <![CDATA[
 <?php
 $file = fopen ("http://www.example.com/", "r");
 if (!$file) {
-    echo "<p>Nie można otworzyć zdalnego pliku.\n";
+    echo "<p>Nie moĹźna otworzyÄ zdalnego pliku.\n";
     exit;
 }
 while (!feof ($file)) {
     $line = fgets ($file, 1024);
-    /* Zadziała tylko wtedy, gdy tytuł i jego znaczniki są w tej samej linii */
+    /* ZadziaĹa tylko wtedy, gdy tytuĹ i jego znaczniki sÄ w tej samej linii */
     if (preg_match ("@\<title\>(.*)\</title\>@i", $line, $out)) {
         $title = $out[1];
         break;
@@ -68,17 +68,17 @@ fclose($file);
    </example>
   </para>
   <para>
-   Możesz również zapisywać pliki na serwerach FTP (zakładając, że połączyłeś
-   się jako użytkownik z odpowiednimi prawami dostepu). Przy użyciu tej metody
-   możesz jedynie tworzyć nowe pliki. Jeśli spróbujesz nadpisać istniejący
-   plik, wywołanie funkcji <function>fopen</function>
-   zwróci błąd.
+   MoĹźesz rĂłwnieĹź zapisywaÄ pliki na serwerach FTP (zakĹadajÄc, Ĺźe poĹÄczyĹeĹ
+   siÄ jako uĹźytkownik z odpowiednimi prawami dostepu). Przy uĹźyciu tej metody
+   moĹźesz jedynie tworzyÄ nowe pliki. JeĹli sprĂłbujesz nadpisaÄ istniejÄcy
+   plik, wywoĹanie funkcji <function>fopen</function>
+   zwrĂłci bĹÄd.
   </para>
   <para>
-   Aby połączyć się jako użytkowni inny niż 'anonymous', należy określić
-   nazwę uzytkownika (możliwe, że i hasło) w URL, w następujący sposób
-   '<literal>ftp://użytkownik:hasło@ftp.example.com/ścieżka/do/pliku</literal>'.
-   (Można używać takiej samej składni aby uzyskać dostęp do plików za pomocą
+   Aby poĹÄczyÄ siÄ jako uĹźytkowni inny niĹź 'anonymous', naleĹźy okreĹliÄ
+   nazwÄ uzytkownika (moĹźliwe, Ĺźe i hasĹo) w URL, w nastÄpujÄcy sposĂłb
+   '<literal>ftp://uĹźytkownik:hasĹo@ftp.example.com/ĹcieĹźka/do/pliku</literal>'.
+   (MoĹźna uĹźywaÄ takiej samej skĹadni aby uzyskaÄ dostÄp do plikĂłw za pomocÄ
    <acronym>HTTP</acronym> w czasie wykorzystywania uwierzytelnienia typu Basic.)
   </para>
   <para>
@@ -89,7 +89,7 @@ fclose($file);
 <?php
 $file = fopen ("ftp://ftp.example.com/incoming/outputfile", "w");
 if (!$file) {
-    echo "<p>Nie można otworzyć zdalnego pliku do zapisu.\n";
+    echo "<p>Nie moĹźna otworzyÄ zdalnego pliku do zapisu.\n";
     exit;
 }
 /* Tutaj zapisujemy dane. */
@@ -103,11 +103,11 @@ fclose ($file);
   <para>
    <note>
     <para>
-     Być może powyższy przykład nasunął ci pomysł, by użyć tej metody
-     do zdalnego zapisywania logów. Niestety taka próba się nie powiedzie,
-     gdyż wywołanie <function>fopen</function> zwróci błąd, jeśli zdalny
-     plik już istnieje. Aby zrealizować zdalne logowanie powinieneś przyjrzeć
-     się funkcji <function>syslog</function>.
+     ByÄ moĹźe powyĹźszy przykĹad nasunÄĹ ci pomysĹ, by uĹźyÄ tej metody
+     do zdalnego zapisywania logĂłw. Niestety taka prĂłba siÄ nie powiedzie,
+     gdyĹź wywoĹanie <function>fopen</function> zwrĂłci bĹÄd, jeĹli zdalny
+     plik juĹź istnieje. Aby zrealizowaÄ zdalne logowanie powinieneĹ przyjrzeÄ
+     siÄ funkcji <function>syslog</function>.
     </para> 
    </note>
   </para>

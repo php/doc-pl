@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: slawek -->
  <chapter xml:id="features.connection-handling" xmlns="http://docbook.org/ns/docbook">
-  <title>Obsługa połączeń</title>
+  <title>ObsĹuga poĹÄczeĹ</title>
 
   <para>
-   PHP wewnętrznie zarządza stanem połączenia. Mogą wystąpić
+   PHP wewnÄtrznie zarzÄdza stanem poĹÄczenia. MogÄ wystÄpiÄ
    trzy stany:
    <itemizedlist>
     <listitem><simpara>0 - NORMAL</simpara></listitem>
@@ -16,59 +16,59 @@
   </para>
 
   <simpara>
-   Kiedy skrypt PHP się wykonuje, aktywny jest stan NORMAL.
-   Jeśli klient się rozłączy, stan przechodzi w ABORTED.
-   Zwykle ma to miejsce gdy użytkownik naciśnie przycisk STOP w
-   przeglądarce. Jeśli przekroczony zostanie narzucony limit czasu
-   (patrz <function>set_time_limit</function>), stan zmienia się
+   Kiedy skrypt PHP siÄ wykonuje, aktywny jest stan NORMAL.
+   JeĹli klient siÄ rozĹÄczy, stan przechodzi w ABORTED.
+   Zwykle ma to miejsce gdy uĹźytkownik naciĹnie przycisk STOP w
+   przeglÄdarce. JeĹli przekroczony zostanie narzucony limit czasu
+   (patrz <function>set_time_limit</function>), stan zmienia siÄ
    na TIMEOUT.
   </simpara>
 
   <simpara>
-   Możesz zdecydować czy po rozłączeniu klienta praca skryptu ma zostać
-   przerwana. Czasem przydatne jest by skrypty działały do końca, nawet
-   gdy braknie przeglądarki do której można wysyłać dane. Domyślnie,
-   po rozłączeniu się klienta, działanie skryptu jest przerywane. To
-   zachowanie można zmienić dzięki opcji ignore_user_abort w &php.ini;, jak
-   również dyrektywie Apache &httpd.conf; <literal>php_value ignore_user_abort</literal> 
-   lub funkcji <function>ignore_user_abort</function>. Jeśli nie każesz PHP ignorować
-   rozłączeń klienta, a klient rozłączy się, skrypt zakończy działanie.
-   Jedyny wyjątek wystąpi, jeśli zarejestrujesz funkcję zamykającą, używając
-   <function>register_shutdown_function</function>. Wtedy, gdy użytkownik
-   wciśnie przycisk STOP i przy kolejnej próbie wysłania wyniku PHP
-   wykryje przerwanie połączenia, zostanie wykonana funkcja zamykająca.
-   Będzie ona również wywoływana przy normalnym zakończeniu pracy skryptu,
-   zatem, by wykonać inne czynności gdy klient się rozłączy, można
-   użyć funkcji <function>connection_aborted</function>. Zwraca ona
-   &true; jeśli połączenie zostało przerwane.
+   MoĹźesz zdecydowaÄ czy po rozĹÄczeniu klienta praca skryptu ma zostaÄ
+   przerwana. Czasem przydatne jest by skrypty dziaĹaĹy do koĹca, nawet
+   gdy braknie przeglÄdarki do ktĂłrej moĹźna wysyĹaÄ dane. DomyĹlnie,
+   po rozĹÄczeniu siÄ klienta, dziaĹanie skryptu jest przerywane. To
+   zachowanie moĹźna zmieniÄ dziÄki opcji ignore_user_abort w &php.ini;, jak
+   rĂłwnieĹź dyrektywie Apache &httpd.conf; <literal>php_value ignore_user_abort</literal> 
+   lub funkcji <function>ignore_user_abort</function>. JeĹli nie kaĹźesz PHP ignorowaÄ
+   rozĹÄczeĹ klienta, a klient rozĹÄczy siÄ, skrypt zakoĹczy dziaĹanie.
+   Jedyny wyjÄtek wystÄpi, jeĹli zarejestrujesz funkcjÄ zamykajÄcÄ, uĹźywajÄc
+   <function>register_shutdown_function</function>. Wtedy, gdy uĹźytkownik
+   wciĹnie przycisk STOP i przy kolejnej prĂłbie wysĹania wyniku PHP
+   wykryje przerwanie poĹÄczenia, zostanie wykonana funkcja zamykajÄca.
+   BÄdzie ona rĂłwnieĹź wywoĹywana przy normalnym zakoĹczeniu pracy skryptu,
+   zatem, by wykonaÄ inne czynnoĹci gdy klient siÄ rozĹÄczy, moĹźna
+   uĹźyÄ funkcji <function>connection_aborted</function>. Zwraca ona
+   &true; jeĹli poĹÄczenie zostaĹo przerwane.
   </simpara>
 
   <simpara>
-   Skrypt może zostać również zakończony przez wbudowany licznik czasu.
-   Domyślnie czas ten wynosi 30 sekund. Wartość tę można zmienić
-   używając opcji <option>max_execution_time</option> w &php.ini;, jak również dyrektywy
+   Skrypt moĹźe zostaÄ rĂłwnieĹź zakoĹczony przez wbudowany licznik czasu.
+   DomyĹlnie czas ten wynosi 30 sekund. WartoĹÄ tÄ moĹźna zmieniÄ
+   uĹźywajÄc opcji <option>max_execution_time</option> w &php.ini;, jak rĂłwnieĹź dyrektywy
    Apache &httpd.conf; <literal>php_value max_execution_time</literal> lub funkcji
-   <function>set_time_limit</function>. Kiedy czas na wykonanie się
-   skończy, skrypt zostanie przerwany podobnie jak w przypadku rozłączenia
-   się klienta (patrz wyżej). Jeśli funkcja zamykająca była zarejestrowana,
-   zostanie wywołana. Wewnątrz funkcji zamykającej możesz sprawdzić czy
-   została ona wywołana wskutek przekroczenia czasu. Do tego celu użyj
-   funkcji <function>connection_status</function>. Funkcja zwróci 2, jeśli to
-   przekroczenie limitu czasu spowodowało wywołanie funkcji
-   zamykającej.
+   <function>set_time_limit</function>. Kiedy czas na wykonanie siÄ
+   skoĹczy, skrypt zostanie przerwany podobnie jak w przypadku rozĹÄczenia
+   siÄ klienta (patrz wyĹźej). JeĹli funkcja zamykajÄca byĹa zarejestrowana,
+   zostanie wywoĹana. WewnÄtrz funkcji zamykajÄcej moĹźesz sprawdziÄ czy
+   zostaĹa ona wywoĹana wskutek przekroczenia czasu. Do tego celu uĹźyj
+   funkcji <function>connection_status</function>. Funkcja zwrĂłci 2, jeĹli to
+   przekroczenie limitu czasu spowodowaĹo wywoĹanie funkcji
+   zamykajÄcej.
   </simpara>
 
   <simpara>
-   Należy zwrócić uwagę, że stany ABORTED i TIMEOUT mogą być aktywne
-   jednocześnie. Jest to możliwe, jeśli każesz PHP ignorować rozłączenia
-   klienta. PHP będzie brało pod uwagę fakt, że połączenie z klientem
-   mogło zostać zerwane, ale skrypt będzie pracował dalej. Gdy minie czas
+   NaleĹźy zwrĂłciÄ uwagÄ, Ĺźe stany ABORTED i TIMEOUT mogÄ byÄ aktywne
+   jednoczeĹnie. Jest to moĹźliwe, jeĹli kaĹźesz PHP ignorowaÄ rozĹÄczenia
+   klienta. PHP bÄdzie braĹo pod uwagÄ fakt, Ĺźe poĹÄczenie z klientem
+   mogĹo zostaÄ zerwane, ale skrypt bÄdzie pracowaĹ dalej. Gdy minie czas
    przeznaczony na wykonanie skryptu, zostanie on przerwany i uruchomiona
-   zostanie funkcja zamykająca (jeśli była ustawiona). W tym momencie funkcje
+   zostanie funkcja zamykajÄca (jeĹli byĹa ustawiona). W tym momencie funkcje
    <function>connection_timeout</function> i
-   <function>connection_aborted</function> będą zwracały &true;. Możesz
-   także sprawdzić oba stany przy pomocy funkcji
-   <function>connection_status</function> w takim wypadku zwróci ona 3.
+   <function>connection_aborted</function> bÄdÄ zwracaĹy &true;. MoĹźesz
+   takĹźe sprawdziÄ oba stany przy pomocy funkcji
+   <function>connection_status</function> w takim wypadku zwrĂłci ona 3.
   </simpara>
  </chapter>
 

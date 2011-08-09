@@ -1,28 +1,28 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: dombal Status: ready -->
 <!-- $Revision$ -->
  <chapter xml:id="language.references" xmlns="http://docbook.org/ns/docbook">
   <title>Referencje</title>
 
   <sect1 xml:id="language.references.whatare">
-   <title>Czym są referencje</title>
+   <title>Czym sÄ referencje</title>
    <simpara>  
-    W PHP referencje są środkiem dostępu do tej samej wartości zmiennej
-    poprzez różne nazwy. Nie działają na takiej zasadzie jak wskaźniki w C,
-    lecz są aliasami w tablicy symboli. Zwróc uwagę na to, że w PHP nazwa
-    zmiennej oraz wartość zmiennej są dwiema różnymi rzeczami, wobec tego ta
-    sama wartość może być dostępna poprzez różne nazwy. Najbliższą analogią
-    jest Uniksowy system plików i ich nazw - nazwy zmiennych to wpisy
-    katalogowe, a wartości to same pliki. Można myśleć o referencjach jak o
-    twardych dowiązaniach w Uniksowym systemie plików.
+    W PHP referencje sÄ Ĺrodkiem dostÄpu do tej samej wartoĹci zmiennej
+    poprzez rĂłĹźne nazwy. Nie dziaĹajÄ na takiej zasadzie jak wskaĹşniki w C,
+    lecz sÄ aliasami w tablicy symboli. ZwrĂłc uwagÄ na to, Ĺźe w PHP nazwa
+    zmiennej oraz wartoĹÄ zmiennej sÄ dwiema rĂłĹźnymi rzeczami, wobec tego ta
+    sama wartoĹÄ moĹźe byÄ dostÄpna poprzez rĂłĹźne nazwy. NajbliĹźszÄ analogiÄ
+    jest Uniksowy system plikĂłw i ich nazw - nazwy zmiennych to wpisy
+    katalogowe, a wartoĹci to same pliki. MoĹźna myĹleÄ o referencjach jak o
+    twardych dowiÄzaniach w Uniksowym systemie plikĂłw.
    </simpara>
   </sect1>
 
   <sect1 xml:id="language.references.whatdo">
-   <title>Co robią referencje</title>
+   <title>Co robiÄ referencje</title>
    <para>
-    W PHP referencje pozwalają na stworzenie dwu zmiennych zawierających tą
-    samą zawartość. Więc poniższy skrypt:
+    W PHP referencje pozwalajÄ na stworzenie dwu zmiennych zawierajÄcych tÄ
+    samÄ zawartoĹÄ. WiÄc poniĹźszy skrypt:
     <informalexample>
      <programlisting role="php">
 <![CDATA[
@@ -32,20 +32,20 @@ $a =& $b
 ]]>
      </programlisting>
     </informalexample>
-    znaczy tyle, że <varname>$a</varname> oraz <varname>$b</varname>
-    wskazują na tą samą zmienną.
+    znaczy tyle, Ĺźe <varname>$a</varname> oraz <varname>$b</varname>
+    wskazujÄ na tÄ samÄ zmiennÄ.
     <note>
      <para>
-      <varname>$a</varname> oraz <varname>$b</varname> są całkowicie równe,
+      <varname>$a</varname> oraz <varname>$b</varname> sÄ caĹkowicie rĂłwne,
       czyli nie <varname>$a</varname> wskazuje na <varname>$b</varname> lub
       odwrotnie, lecz <varname>$a</varname> oraz <varname>$b</varname>
-      wskazują na to samo miejsce.
+      wskazujÄ na to samo miejsce.
      </para>
     </note>
    </para>
    <para>
-    Ta sama składnia może być używana z funkcjami zwracającymi referencje, i z
-    operatorem <literal>new</literal> (w PHP 4.0.4 i późniejszych):
+    Ta sama skĹadnia moĹźe byÄ uĹźywana z funkcjami zwracajÄcymi referencje, i z
+    operatorem <literal>new</literal> (w PHP 4.0.4 i pĂłĹşniejszych):
     <informalexample>
      <programlisting role="php">
 <![CDATA[
@@ -60,28 +60,28 @@ $foo =& znajdx_zmienna($bar);
     <note>
      <para>
       Brak operatora <literal>&amp;</literal> powoduje powstanie kopii
-      obiektu. Jeżeli użyjesz <literal>$this</literal> wewnątrz klasy, zmienna
-      ta będzie pracować na bieżącym egzemplarzu danej klasy. Dowiązanie bez
-      użycia <literal>&amp;</literal> spowoduje powstanie kopii egzemplarza
-      danej klasy (czyli naszego obiektu) i <literal>$this</literal> będzie
-      pracować na kopii, co nie jest zwykle tym czego byśmy chcieli. Zwykle
-      pożądane jest posiadanie tylko jednego egzemplarza z którym chcemy
-      pracować, z powodów wydajności i zajętości pamięci.
+      obiektu. JeĹźeli uĹźyjesz <literal>$this</literal> wewnÄtrz klasy, zmienna
+      ta bÄdzie pracowaÄ na bieĹźÄcym egzemplarzu danej klasy. DowiÄzanie bez
+      uĹźycia <literal>&amp;</literal> spowoduje powstanie kopii egzemplarza
+      danej klasy (czyli naszego obiektu) i <literal>$this</literal> bÄdzie
+      pracowaÄ na kopii, co nie jest zwykle tym czego byĹmy chcieli. Zwykle
+      poĹźÄdane jest posiadanie tylko jednego egzemplarza z ktĂłrym chcemy
+      pracowaÄ, z powodĂłw wydajnoĹci i zajÄtoĹci pamiÄci.
      </para>
      <para>
-      Pomimo tego, że możliwe jest użycie operatora <literal>@</literal> do
-      <emphasis>wyciszenia</emphasis> ewentualnych błędów w konstruktorze
-      podczas użycia go w konstrukcji <literal>@new</literal>, to zapis ten
-      nie działa kiedy używana jest konstrukcja <literal>&amp;new</literal>.
-      Jest to ograniczenie silnika Zend (Zend Engine) i użycie takiego zapisu
-      spowoduje błąd parsowania.
+      Pomimo tego, Ĺźe moĹźliwe jest uĹźycie operatora <literal>@</literal> do
+      <emphasis>wyciszenia</emphasis> ewentualnych bĹÄdĂłw w konstruktorze
+      podczas uĹźycia go w konstrukcji <literal>@new</literal>, to zapis ten
+      nie dziaĹa kiedy uĹźywana jest konstrukcja <literal>&amp;new</literal>.
+      Jest to ograniczenie silnika Zend (Zend Engine) i uĹźycie takiego zapisu
+      spowoduje bĹÄd parsowania.
      </para>
    </note>
    <para>
-    Drugą rzeczą na którą pozwalają referencje jest przekazywanie zmiennych
-    przez-referencje. Możliwe jest to przez uczynienie zmiennej lokalnej w
-    funkcji i zmiennej w zakresie wywoływania tej funkcji odwołujacych się do
-    tej samej wartości. Na przykład:
+    DrugÄ rzeczÄ na ktĂłrÄ pozwalajÄ referencje jest przekazywanie zmiennych
+    przez-referencje. MoĹźliwe jest to przez uczynienie zmiennej lokalnej w
+    funkcji i zmiennej w zakresie wywoĹywania tej funkcji odwoĹujacych siÄ do
+    tej samej wartoĹci. Na przykĹad:
     <informalexample>
      <programlisting role="php">
 <![CDATA[
@@ -97,24 +97,24 @@ foo ($a);
 ]]>
      </programlisting>
     </informalexample>
-    spowoduje, że <varname>$a</varname> będzie równe 6. Dzieje się tak,
-    ponieważ w funkcji <varname>foo</varname> zmienna
-    <varname>$zmienna</varname> odwołuje się do tej samaj zawartości jak
-    zmienna <varname>$a</varname>. Zobacz również bardiej dokładne wyjaśniena
+    spowoduje, Ĺźe <varname>$a</varname> bÄdzie rĂłwne 6. Dzieje siÄ tak,
+    poniewaĹź w funkcji <varname>foo</varname> zmienna
+    <varname>$zmienna</varname> odwoĹuje siÄ do tej samaj zawartoĹci jak
+    zmienna <varname>$a</varname>. Zobacz rĂłwnieĹź bardiej dokĹadne wyjaĹniena
     na temat <link
-    linkend="language.references.pass">przekazywania przez referencję</link>.
+    linkend="language.references.pass">przekazywania przez referencjÄ</link>.
    </para>
    <simpara>
-    Trzecią rzeczą którą umożliwiają referencje jest <link
+    TrzeciÄ rzeczÄ ktĂłrÄ umoĹźliwiajÄ referencje jest <link
     linkend="language.references.return">zwracanie przez referencje</link>.
    </simpara>
   </sect1>
 
   <sect1 xml:id="language.references.arent">
-   <title>Czym nie są referencje</title>
+   <title>Czym nie sÄ referencje</title>
    <para>
-    Jak powiedizano wcześniej, referencje nie są wskaźnikami. To znaczy, że
-    poniższy zapis nie zadziała tak jak się wydaje:
+    Jak powiedizano wczeĹniej, referencje nie sÄ wskaĹşnikami. To znaczy, Ĺźe
+    poniĹźszy zapis nie zadziaĹa tak jak siÄ wydaje:
     <informalexample>
      <programlisting role="php">
 <![CDATA[
@@ -130,24 +130,24 @@ foo($bar);
     </informalexample>
    </para>
    <simpara>
-    To, co się faktycznie dzieje, to zmienna <varname>$zmienna</varname> w
-    funkcji <varname>foo</varname> będzie związana ze zmienną
-    <varname>$bar</varname> podczas wywołania, lecz zaraz potem będzie
-    związana po raz wtóry, tym razem z <varname>$GLOBALS["baz"]</varname>. Nie
-    ma sposobu by związać <varname>$bar</varname> w zakresie wywoływującym
-    funkcję z czymś innym, używając mechanizmu referencji, ponieważ zmienna
-    <varname>$bar</varname> nie jest dostępna w funkcji <varname>foo</varname>
-    (jest tylko reprezentowana przez zmienną <varname>$zmienna</varname>,
-    lecz <varname>$zmienna</varname> zawiera tylko wartość zmiennej, a nie
-    jest wiązaniem nazwa-wartość w tablicy symboli).
+    To, co siÄ faktycznie dzieje, to zmienna <varname>$zmienna</varname> w
+    funkcji <varname>foo</varname> bÄdzie zwiÄzana ze zmiennÄ
+    <varname>$bar</varname> podczas wywoĹania, lecz zaraz potem bÄdzie
+    zwiÄzana po raz wtĂłry, tym razem z <varname>$GLOBALS["baz"]</varname>. Nie
+    ma sposobu by zwiÄzaÄ <varname>$bar</varname> w zakresie wywoĹywujÄcym
+    funkcjÄ z czymĹ innym, uĹźywajÄc mechanizmu referencji, poniewaĹź zmienna
+    <varname>$bar</varname> nie jest dostÄpna w funkcji <varname>foo</varname>
+    (jest tylko reprezentowana przez zmiennÄ <varname>$zmienna</varname>,
+    lecz <varname>$zmienna</varname> zawiera tylko wartoĹÄ zmiennej, a nie
+    jest wiÄzaniem nazwa-wartoĹÄ w tablicy symboli).
    </simpara>
   </sect1>
 
   <sect1 xml:id="language.references.pass">
    <title>Przekazywanie przez referencje</title>
    <para>
-    Możesz przekazać zmienną do funkcji poprzez referencję, by funkcja mogła
-    modyfikować swoje parametry. Skłania jest jak następuje:
+    MoĹźesz przekazaÄ zmiennÄ do funkcji poprzez referencjÄ, by funkcja mogĹa
+    modyfikowaÄ swoje parametry. SkĹania jest jak nastÄpuje:
     <informalexample>
      <programlisting role="php">
 <![CDATA[
@@ -159,18 +159,18 @@ function foo (&$zmienna)
 
 $a=5;
 foo ($a);
-// $a jest równe 6 w tym momencie
+// $a jest rĂłwne 6 w tym momencie
 ?>
 ]]>
      </programlisting>
     </informalexample>
-    Weź pod uwagę to, że nie ma znaku odwoływania się przez referencję przy
-    wywoływaniu funkcji - istnieje tylko w definicji funkcji. Sama definicja
-    funkcji jest wystarczającym miejscem do zaznaczenia przekazywania
-    argumentów przez referencję.
+    WeĹş pod uwagÄ to, Ĺźe nie ma znaku odwoĹywania siÄ przez referencjÄ przy
+    wywoĹywaniu funkcji - istnieje tylko w definicji funkcji. Sama definicja
+    funkcji jest wystarczajÄcym miejscem do zaznaczenia przekazywania
+    argumentĂłw przez referencjÄ.
   </para>
   <para>
-   Przez referencję mogą być przekazywane następujące rzeczy:
+   Przez referencjÄ mogÄ byÄ przekazywane nastÄpujÄce rzeczy:
    <itemizedlist>
     <listitem>
      <simpara>
@@ -184,7 +184,7 @@ foo ($a);
     </listitem>
     <listitem>
      <para>
-      Referencję, zwracane z funkcji, np.:
+      ReferencjÄ, zwracane z funkcji, np.:
     <informalexample>
      <programlisting role="php">
 <![CDATA[
@@ -199,43 +199,43 @@ foo(bar());
 ]]>
      </programlisting>
     </informalexample>
-    Zobacz również wyjaśnienia na temat <link
-    linkend="language.references.return">zwracania przez referencję</link>. 
+    Zobacz rĂłwnieĹź wyjaĹnienia na temat <link
+    linkend="language.references.return">zwracania przez referencjÄ</link>. 
      </para>
     </listitem>
   </itemizedlist>
   </para>
   <para>
-   Każde inne wyrażenie nie powinno być przekazywane przez referencję,
-   ponieważ wynik takiego przekazania jest nieprzewidywalny. Dla przykładu,
-   poniższe przykłady przekazywania przez referencję są niepoprawne:
+   KaĹźde inne wyraĹźenie nie powinno byÄ przekazywane przez referencjÄ,
+   poniewaĹź wynik takiego przekazania jest nieprzewidywalny. Dla przykĹadu,
+   poniĹźsze przykĹady przekazywania przez referencjÄ sÄ niepoprawne:
     <informalexample>
      <programlisting role="php">
 <![CDATA[
 <?php
-function bar() // Zwróć uwagę na brak &
+function bar() // ZwrĂłÄ uwagÄ na brak &
 {
     $a = 5;
     return $a;
 }
 foo(bar());
 
-foo($a = 5); // Wyrażenie, nie zmienna
-foo(5); // Stała, nie zmienna
+foo($a = 5); // WyraĹźenie, nie zmienna
+foo(5); // StaĹa, nie zmienna
 ?>
 ]]>
      </programlisting>
     </informalexample>
-    Te wymagania są dla PHP 4.0.4 i wyższych wersji.
+    Te wymagania sÄ dla PHP 4.0.4 i wyĹźszych wersji.
   </para>
   </sect1>
 
   <sect1 xml:id="language.references.return">
    <title>Zwracanie referencji</title>
    <para>
-    Zwracanie przez-referencję jest użyteczne gdy chcesz użyć funkcji do
-    znalezienia zmiennej do której referencją powinna być dowiązana. Zwracając
-    referencje używaj tej składni:
+    Zwracanie przez-referencjÄ jest uĹźyteczne gdy chcesz uĹźyÄ funkcji do
+    znalezienia zmiennej do ktĂłrej referencjÄ powinna byÄ dowiÄzana. ZwracajÄc
+    referencje uĹźywaj tej skĹadni:
     <informalexample>
      <programlisting role="php">
 <![CDATA[
@@ -252,17 +252,17 @@ $foo->x = 2;
 ]]>
      </programlisting>
     </informalexample>
-    W tym przykładzie, będzie zmieniona własność obiektu zwróconego przez
-    funkcję <varname>znajdz_zmienna</varname>, a nie własność kopii obiektu,
-    jak to by było bez użycia składni referencji.
+    W tym przykĹadzie, bÄdzie zmieniona wĹasnoĹÄ obiektu zwrĂłconego przez
+    funkcjÄ <varname>znajdz_zmienna</varname>, a nie wĹasnoĹÄ kopii obiektu,
+    jak to by byĹo bez uĹźycia skĹadni referencji.
    </para>
    <note>
     <simpara>
-     Inaczej niż przy przekazywaniu parametrów, tutaj musisz używać
-     <literal>&amp;</literal> w obu miejscach - by wskazać, że zwracasz
-     przez-referencję, a nie kopię jak normalnie, i by zwrócić uwagę, że
-     dla zmiennej <varname>$foo</varname> powinno być użyte powiązanie przez
-     referencję, a nie zwykłe przypisanie.
+     Inaczej niĹź przy przekazywaniu parametrĂłw, tutaj musisz uĹźywaÄ
+     <literal>&amp;</literal> w obu miejscach - by wskazaÄ, Ĺźe zwracasz
+     przez-referencjÄ, a nie kopiÄ jak normalnie, i by zwrĂłciÄ uwagÄ, Ĺźe
+     dla zmiennej <varname>$foo</varname> powinno byÄ uĹźyte powiÄzanie przez
+     referencjÄ, a nie zwykĹe przypisanie.
     </simpara>
    </note>
   </sect1>
@@ -270,9 +270,9 @@ $foo->x = 2;
   <sect1 xml:id="language.references.unset">
    <title>Niszczenie referencji</title>
    <para>
-    Kiedy niszczysz referencje, zrywasz wiązanie między nazwą zmiennej a jej
-    zawartością. Nie znaczy to, że ta zawartość będzie zniszczona. Na
-    przykład:
+    Kiedy niszczysz referencje, zrywasz wiÄzanie miÄdzy nazwÄ zmiennej a jej
+    zawartoĹciÄ. Nie znaczy to, Ĺźe ta zawartoĹÄ bÄdzie zniszczona. Na
+    przykĹad:
     <informalexample>
      <programlisting role="php">
 <![CDATA[
@@ -287,26 +287,26 @@ unset ($a);
     nie zniszczy <varname>$b</varname>, tylko <varname>$a</varname>. 
    </para>
    <simpara>
-    Znów, pomocne będzie pomyślenie o tym jak o analogii do Uniksowego
-    wywołania <command>unlink</command>.
+    ZnĂłw, pomocne bÄdzie pomyĹlenie o tym jak o analogii do Uniksowego
+    wywoĹania <command>unlink</command>.
    </simpara>
   </sect1>
 
   <sect1 xml:id="language.references.spot">
    <title>Znajdywanie referencji</title>
    <simpara>
-    Wiele konstrukcji składniowych w PHP jest zaimplementowanych przy użyciu
-    referencji, tak więc wszystko co zostało powiedziane wcześniej o
-    referencjach dotyczyć będzie również tych konstrukcji. Pewne konstrukcje,
-    jak przekazywanie i zwracanie przez referencje, są wspomniane wyżej.
-    Innymi konstrukcjami używającymi mechanizmu referencji są:
+    Wiele konstrukcji skĹadniowych w PHP jest zaimplementowanych przy uĹźyciu
+    referencji, tak wiÄc wszystko co zostaĹo powiedziane wczeĹniej o
+    referencjach dotyczyÄ bÄdzie rĂłwnieĹź tych konstrukcji. Pewne konstrukcje,
+    jak przekazywanie i zwracanie przez referencje, sÄ wspomniane wyĹźej.
+    Innymi konstrukcjami uĹźywajÄcymi mechanizmu referencji sÄ:
    </simpara>
 
    <sect2 xml:id="references.global">
     <title>Referencje konstrukcji <literal>global</literal></title>
     <para>
-     Kiedy deklarujesz zmienną jako <command>global $var</command> to tak
-     naprawdę tworzysz referencję do zmiennej globalnej. To znaczy, że działa
+     Kiedy deklarujesz zmiennÄ jako <command>global $var</command> to tak
+     naprawdÄ tworzysz referencjÄ do zmiennej globalnej. To znaczy, Ĺźe dziaĹa
      to tak samo jak:
      <informalexample>
       <programlisting role="php">
@@ -319,7 +319,7 @@ $zmienna =& $GLOBALS["zmienna"];
      </informalexample>
     </para>
     <simpara>
-     To znaczy, na przykład, że usunięcie <varname>$zmienna</varname>
+     To znaczy, na przykĹad, Ĺźe usuniÄcie <varname>$zmienna</varname>
      nie usunie zmiennej globalnej.
     </simpara>
    </sect2>
@@ -327,8 +327,8 @@ $zmienna =& $GLOBALS["zmienna"];
    <sect2 xml:id="references.this">
     <title><literal>$this</literal></title>
     <simpara>
-     W metodach obiektowych, <varname>$this</varname> jest zawsze referencją
-     do obiektu wywłującego daną metodę.
+     W metodach obiektowych, <varname>$this</varname> jest zawsze referencjÄ
+     do obiektu wywĹujÄcego danÄ metodÄ.
     </simpara>
    </sect2>
   </sect1>
