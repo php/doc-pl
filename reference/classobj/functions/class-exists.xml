@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: dombal -->
 <refentry xml:id="function.class-exists" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>class_exists</refname>
-  <refpurpose>Sprawdza, czy klasa została zdefiniowana</refpurpose>
+  <refpurpose>Sprawdza, czy klasa zostaĹa zdefiniowana</refpurpose>
  </refnamediv>
  <refsect1 role="description">
   &reftitle.description;
@@ -15,7 +15,7 @@
    <methodparam choice="opt"><type>bool</type><parameter>autoload</parameter><initializer>true</initializer></methodparam>
   </methodsynopsis>
   <para>
-   Funkcja sprawdza, czy podana klasa została zdefiniowana.
+   Funkcja sprawdza, czy podana klasa zostaĹa zdefiniowana.
   </para>
  </refsect1>
  <refsect1 role="parameters">
@@ -26,7 +26,7 @@
      <term><parameter>nazwa_klasy</parameter></term>
      <listitem>
       <para>
-       Nazwa klasy. Wielkość liter w nazwie klasy nie ma znaczenia.
+       Nazwa klasy. WielkoĹÄ liter w nazwie klasy nie ma znaczenia.
       </para>
      </listitem>
     </varlistentry>
@@ -34,7 +34,7 @@
      <term><parameter>autoload</parameter></term>
      <listitem>
       <para>
-       Czy wywołać domyślnie &link.autoload;.
+       Czy wywoĹaÄ domyĹlnie &link.autoload;.
       </para>
      </listitem>
     </varlistentry>
@@ -44,7 +44,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca &true; jeśli <parameter>nazwa_klasy</parameter> jest klasą,
+   Zwraca &true; jeĹli <parameter>nazwa_klasy</parameter> jest klasÄ,
    w przeciwnym przypadku zwraca &false;.
   </para>
  </refsect1>
@@ -63,8 +63,8 @@
       <row>
        <entry>5.0.2</entry>
        <entry>
-        Nie zwraca już &true; dla zdefiniowanych interfejsów.
-        W przypadku interfesów należy używać <function>interface_exists</function>.
+        Nie zwraca juĹź &true; dla zdefiniowanych interfejsĂłw.
+        W przypadku interfesĂłw naleĹźy uĹźywaÄ <function>interface_exists</function>.
        </entry>
       </row>
       <row>
@@ -82,11 +82,11 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład <function>class_exists</function></title>
+    <title>PrzykĹad <function>class_exists</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
-// Sprawdź czy klasa istnieje przed próbą jej użycia
+// SprawdĹş czy klasa istnieje przed prĂłbÄ jej uĹźycia
 if (class_exists('MyClass')) {
     $myclass = new MyClass();
 }
@@ -96,7 +96,7 @@ if (class_exists('MyClass')) {
     </programlisting>
    </example>
    <example>
-    <title>Przykład z parametrem <parameter>autoload</parameter></title>
+    <title>PrzykĹad z parametrem <parameter>autoload</parameter></title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -104,9 +104,9 @@ function __autoload($class)
 {
     include($class . '.php');
 
-    // Sprawdź czy w dołączanym pliku była deklaracja klasy
+    // SprawdĹş czy w doĹÄczanym pliku byĹa deklaracja klasy
     if (!class_exists($class, false)) {
-        trigger_error("Nie można załadować klasy: $class", E_USER_WARNING);
+        trigger_error("Nie moĹźna zaĹadowaÄ klasy: $class", E_USER_WARNING);
     }
 }
 

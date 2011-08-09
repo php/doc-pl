@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: dombal -->
@@ -7,11 +7,11 @@
 <appendix xml:id="classobj.examples">
  &reftitle.examples;
  <para>
-  W tym przykładzie najpierw zdefiniujemy bazową klasę i jej
+  W tym przykĹadzie najpierw zdefiniujemy bazowÄ klasÄ i jej
   rozszerzenie. Klasa bazowa opisuje normalne warzywo, czy jest
   jadalne czy nie oraz jego kolor. Podklasa <varname>Szpinak</varname>
-  dodaje metodę pozwalającą go ugotować, i drugą, która pozwala
-  dowiedzieć się, czy jest ugotowany.
+  dodaje metodÄ pozwalajÄcÄ go ugotowaÄ, i drugÄ, ktĂłra pozwala
+  dowiedzieÄ siÄ, czy jest ugotowany.
  </para>
  <para>
   <example>
@@ -20,7 +20,7 @@
 <![CDATA[
 <?php
 
-// klasa bazowa wraz z jej właściwościami i metodami
+// klasa bazowa wraz z jej wĹaĹciwoĹciami i metodami
 class Warzywo {
 
     var $jadalne;
@@ -41,7 +41,7 @@ class Warzywo {
 
 } // koniec klasy Warzywo
 
-// rozrzesza klasę bazową
+// rozrzesza klasÄ bazowÄ
 class Szpinak extends Warzywo {
 
     var $ugotowane = false;
@@ -66,10 +66,10 @@ class Szpinak extends Warzywo {
   </example>
  </para>
  <para>
- Teraz możemy stworzyć dwa egzemplarze tych klas i wydrukować
- informacje o nich, włączając w to informacje o przodkach.
- Zdefiniujemy także kilka użytecznych funkcji, głównie po to,
- by uzyskać ładny wydruk zmiennych.
+ Teraz moĹźemy stworzyÄ dwa egzemplarze tych klas i wydrukowaÄ
+ informacje o nich, wĹÄczajÄc w to informacje o przodkach.
+ Zdefiniujemy takĹźe kilka uĹźytecznych funkcji, gĹĂłwnie po to,
+ by uzyskaÄ Ĺadny wydruk zmiennych.
  </para>
  <para>
   <example>
@@ -81,7 +81,7 @@ class Szpinak extends Warzywo {
 
 include "classes.inc";
 
-// funkcje użytkowe
+// funkcje uĹźytkowe
 
 function drukuj_wlasciwosci($obj) {
     foreach (get_object_vars($obj) as $wlasc => $wart) {
@@ -99,28 +99,28 @@ function drukuj_metody($obj) {
 function przodkowie_klasy($obj, $klasa) {
     global $$obj;
     if (is_subclass_of($GLOBALS[$obj], $klasa)) {
-        echo "Obiekt $obj należy do klasy ".get_class($$obj);
+        echo "Obiekt $obj naleĹźy do klasy ".get_class($$obj);
         echo ", podklasy $klasa\n";
     } else {
-        echo "Obiekt $obj nie należy do podklasy $klass\n";
+        echo "Obiekt $obj nie naleĹźy do podklasy $klass\n";
     }
 }
 
-// tworzymy 2 egzemplarze obiektów
+// tworzymy 2 egzemplarze obiektĂłw
 
 $warzywko = new Warzywo(true, "niebieski");
 $lisciaste = new Szpinak();
 
-// wydrukujemy informację o obiektach
+// wydrukujemy informacjÄ o obiektach
 echo "warzywko: KLASA ".get_class($warzywko)."\n";
 echo "lisciaste: KLASA ".get_class($lisciaste);
 echo ", PRZODEK ".get_parent_class($lisciaste)."\n";
 
-// pokażmy właściwości warzywka
-echo "\nwarzywko: Właściwości\n";
+// pokaĹźmy wĹaĹciwoĹci warzywka
+echo "\nwarzywko: WĹaĹciwoĹci\n";
 drukuj_wlasciwosci($warzywko);
 
-// i metody liściastego
+// i metody liĹciastego
 echo "\nlisciaste: Metody\n";
 drukuj_metody($lisciaste);
 
@@ -132,18 +132,18 @@ przodkowie_klasy("lisciaste", "Warzywo");
 ]]>
    </programlisting>
    <para>
-    Wartą odnotowania rzeczą w powyższym przykładzie jest to,
-    że obiekt <varname>$lisciaste</varname> jest egzemplarzem klasy
-    <classname>Szpinak</classname> która to jest podklasą klasy
-    <classname>Warzywo</classname>, i tak ostatnia część powyższego
-    skryptu pokaże na wyjściu:
+    WartÄ odnotowania rzeczÄ w powyĹźszym przykĹadzie jest to,
+    Ĺźe obiekt <varname>$lisciaste</varname> jest egzemplarzem klasy
+    <classname>Szpinak</classname> ktĂłra to jest podklasÄ klasy
+    <classname>Warzywo</classname>, i tak ostatnia czÄĹÄ powyĹźszego
+    skryptu pokaĹźe na wyjĹciu:
    </para>
    <screen>
 <![CDATA[
        [...]
 Przodkowie:
-Obiekt lisciasty nie należy do podklasy Szpinak
-Obiekt lisciasty należy do klasy Szpinak, podklasy Warzywo
+Obiekt lisciasty nie naleĹźy do podklasy Szpinak
+Obiekt lisciasty naleĹźy do klasy Szpinak, podklasy Warzywo
 ]]>
    </screen>
   </example>
