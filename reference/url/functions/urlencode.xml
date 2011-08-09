@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
   <refentry xml:id="function.urlencode" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
    <refnamediv>
     <refname>urlencode</refname>
-    <refpurpose>Koduje łańcuch metodą kodowania URLi</refpurpose>
+    <refpurpose>Koduje ĹaĹcuch metodÄ kodowania URLi</refpurpose>
    </refnamediv>
    
    <refsect1>
@@ -14,21 +14,21 @@
       <methodparam><type>string</type><parameter>str</parameter></methodparam>
      </methodsynopsis>
     <para>
-     Zwraca łańcuch w którym wszystkie nie alfanumeryczne znaki
-     z wyjątkiem <screen>-_.</screen> zostały zastąpione przez
+     Zwraca ĹaĹcuch w ktĂłrym wszystkie nie alfanumeryczne znaki
+     z wyjÄtkiem <screen>-_.</screen> zostaĹy zastÄpione przez
      dwie cyfry szesnastkowe poprzedzone znakiem procenta
-     (<literal>%</literal>), a spacje kodowane są jako znak
+     (<literal>%</literal>), a spacje kodowane sÄ jako znak
      (<literal>+</literal>). To kodowanie jest takie same jak
-     wykorzystywane przy przesyłaniu danych z formularzy WWW, tj.
+     wykorzystywane przy przesyĹaniu danych z formularzy WWW, tj.
      takie samo jak w media typie:
      <literal>application/x-www-form-urlencoded</literal>.
-     Różni się od kodowania z RFC1738 (zobacz
-     <function>rawurlencode</function>) tym, że z powodów historycznych,
-     spacje są kodowane jako znak plus (+).  Funkcja ta jest odpowiednia
-     do zakodowania łańcucha używanego w zapytaniu URL oraz
-     jako zmienna przekazywana do następnej strony:
+     RĂłĹźni siÄ od kodowania z RFC1738 (zobacz
+     <function>rawurlencode</function>) tym, Ĺźe z powodĂłw historycznych,
+     spacje sÄ kodowane jako znak plus (+).  Funkcja ta jest odpowiednia
+     do zakodowania ĹaĹcucha uĹźywanego w zapytaniu URL oraz
+     jako zmienna przekazywana do nastÄpnej strony:
      <example>
-      <title><function>urlencode</function> przykład</title>
+      <title><function>urlencode</function> przykĹad</title>
       <programlisting role="php">
 <![CDATA[
 <?php
@@ -39,25 +39,25 @@ echo '<a href="mycgi?foo=', urlencode($userinput), '">';
      </example>
     </para>
     <para>
-    Notka: Uważaj na zmienne, które mogą zawierać HTML'owe encje.
-    Rzeczy jak &amp;amp, &amp;copy i &amp;pound są przetwarzane przez
-    przeglądarkę i ich aktualna postać jest używana dalej zamiast
-    porządanej nazwy zmiennej.  To jest oczywisty problem, o którym W3C
-    informuje ludzi od lat. Referencje są tutaj:
-    <link xlink:href="&url.argsep;">&url.argsep;</link>. PHP obsługuje
-    zmianę separatora argumentów na zalecany przez W3C średnik
-    poprzez dyrektywę arg_separator .ini.  Niestety większość przeglądarek
-    nie wysyła danych z formularza w formacie używającym średnik jako
-    separator. Bardziej przenośnym rozwiązaniem jest użycie &amp;amp;
-    jako separatora zamiast &amp;.  Nie musisz zmieniać PHP'owego
-    arg_separator aby to uzyskać.  Zostaw separator jako &amp;, ale
-    koduj swoje URL'e używając <function>htmlentities</function>lub  
+    Notka: UwaĹźaj na zmienne, ktĂłre mogÄ zawieraÄ HTML'owe encje.
+    Rzeczy jak &amp;amp, &amp;copy i &amp;pound sÄ przetwarzane przez
+    przeglÄdarkÄ i ich aktualna postaÄ jest uĹźywana dalej zamiast
+    porzÄdanej nazwy zmiennej.  To jest oczywisty problem, o ktĂłrym W3C
+    informuje ludzi od lat. Referencje sÄ tutaj:
+    <link xlink:href="&url.argsep;">&url.argsep;</link>. PHP obsĹuguje
+    zmianÄ separatora argumentĂłw na zalecany przez W3C Ĺrednik
+    poprzez dyrektywÄ arg_separator .ini.  Niestety wiÄkszoĹÄ przeglÄdarek
+    nie wysyĹa danych z formularza w formacie uĹźywajÄcym Ĺrednik jako
+    separator. Bardziej przenoĹnym rozwiÄzaniem jest uĹźycie &amp;amp;
+    jako separatora zamiast &amp;.  Nie musisz zmieniaÄ PHP'owego
+    arg_separator aby to uzyskaÄ.  Zostaw separator jako &amp;, ale
+    koduj swoje URL'e uĹźywajÄc <function>htmlentities</function>lub  
     <function>htmlspecialchars</function>. 
 	</para>  
     <para>  
      <example>
       <title><function>urlencode</function> i
-             <function>htmlentities</function> przykład</title>
+             <function>htmlentities</function> przykĹad</title>
       <programlisting role="php">
 <![CDATA[
 <?php
@@ -69,7 +69,7 @@ echo '<a href="mycgi?' . htmlentities($query_string) . '">';
      </example>
     </para>
     <para>
-     Patrz także: <function>urldecode</function>,
+     Patrz takĹźe: <function>urldecode</function>,
      <function>htmlentities</function>,
      <function>rawurldecode</function> i
      <function>rawurlencode</function>.

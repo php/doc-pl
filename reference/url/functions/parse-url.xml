@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.parse-url" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>parse_url</refname>
-  <refpurpose>Przetwarza adres URL i zwraca jego składowe</refpurpose>
+  <refpurpose>Przetwarza adres URL i zwraca jego skĹadowe</refpurpose>
  </refnamediv>
  
  <refsect1 role="description">
@@ -12,16 +12,16 @@
   <methodsynopsis>
    <type>mixed</type><methodname>parse_url</methodname>
    <methodparam><type>string</type><parameter>url</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>składnik</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>skĹadnik</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Funkcja przetwarza URL i zwraca tablicę asocjacyjną zawierającą każdy z 
-   komponentów wchodzących w skład URL.
+   Funkcja przetwarza URL i zwraca tablicÄ asocjacyjnÄ zawierajÄcÄ kaĹźdy z 
+   komponentĂłw wchodzÄcych w skĹad URL.
    </para>
   <para>
-   Ta funkcja <emphasis role="strong">nie służy</emphasis> do sprawdzania
-   poprawności podanego URL, tylko rozbija go na podane niżej części. Częściowe
-   URLe także są obsługiwane <function>parse_url</function> postara się przetworzyć
+   Ta funkcja <emphasis role="strong">nie sĹuĹźy</emphasis> do sprawdzania
+   poprawnoĹci podanego URL, tylko rozbija go na podane niĹźej czÄĹci. CzÄĹciowe
+   URLe takĹźe sÄ obsĹugiwane <function>parse_url</function> postara siÄ przetworzyÄ
    je poprawnie.
   </para>
  </refsect1>
@@ -41,14 +41,14 @@
    </variablelist>
    <variablelist>
     <varlistentry>
-     <term><parameter>składnik</parameter></term>
+     <term><parameter>skĹadnik</parameter></term>
      <listitem>
       <para>
-       Podaj jedną ze stałych <constant>PHP_URL_SCHEME</constant>,
+       Podaj jednÄ ze staĹych <constant>PHP_URL_SCHEME</constant>,
        <constant>PHP_URL_HOST</constant>, <constant>PHP_URL_PORT</constant>,
        <constant>PHP_URL_USER</constant>, <constant>PHP_URL_PASS</constant>,
        <constant>PHP_URL_PATH</constant>, <constant>PHP_URL_QUERY</constant>
-       or <constant>PHP_URL_FRAGMENT</constant> aby otrzymać określony składnik URL
+       or <constant>PHP_URL_FRAGMENT</constant> aby otrzymaÄ okreĹlony skĹadnik URL
        jako <type>string</type>.
       </para>
      </listitem>
@@ -60,13 +60,13 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   W przypadku poważnie zdeformowanych URLi, <function>parse_url</function> może zwrócić
-   &false; i wyemitować <constant>E_WARNING</constant>. W przeciwnym wypadku zostanie zwrócona asocjatywna tablica,
-   której składowe mogą być następujące (wystąpi przynajmnej jedena):  
+   W przypadku powaĹźnie zdeformowanych URLi, <function>parse_url</function> moĹźe zwrĂłciÄ
+   &false; i wyemitowaÄ <constant>E_WARNING</constant>. W przeciwnym wypadku zostanie zwrĂłcona asocjatywna tablica,
+   ktĂłrej skĹadowe mogÄ byÄ nastÄpujÄce (wystÄpi przynajmnej jedena):  
    <itemizedlist>
     <listitem>
      <simpara>
-      <varname remap="structfield">scheme (protokół)</varname> - np. http
+      <varname remap="structfield">scheme (protokĂłĹ)</varname> - np. http
      </simpara>
     </listitem>
     <listitem>
@@ -81,17 +81,17 @@
     </listitem>
     <listitem>
      <simpara>
-      <varname remap="structfield">user (użytkownik)</varname>
+      <varname remap="structfield">user (uĹźytkownik)</varname>
      </simpara>
     </listitem>
     <listitem>
      <simpara>
-      <varname remap="structfield">pass (hasło)</varname>
+      <varname remap="structfield">pass (hasĹo)</varname>
      </simpara>
     </listitem>
     <listitem>
      <simpara>
-      <varname remap="structfield">path (ścieżka)</varname>
+      <varname remap="structfield">path (ĹcieĹźka)</varname>
      </simpara>
     </listitem>
     <listitem>
@@ -107,7 +107,7 @@
    </itemizedlist> 
   </para>
   <para>
-   Jeśli parametr <parameter>składnik</parameter> jest określony, zwracany jest
+   JeĹli parametr <parameter>skĹadnik</parameter> jest okreĹlony, zwracany jest
    <type>string</type> zamiast <type>array</type>.
   </para>
  </refsect1>
@@ -126,7 +126,7 @@
      <tbody>
       <row>
        <entry>5.1.2</entry>
-       <entry>Dodano parametr <parameter>składnik</parameter></entry>
+       <entry>Dodano parametr <parameter>skĹadnik</parameter></entry>
       </row>
      </tbody>
     </tgroup>
@@ -137,7 +137,7 @@
  <refsect1 role="examples"> &reftitle.examples; 
   <para>
    <example> 
-    <title>A <function>parse_url</function> przykład</title>
+    <title>A <function>parse_url</function> przykĹad</title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -173,15 +173,15 @@ Array
   &reftitle.notes;
   <note>
    <para>
-    Funkcja nie działa na relatywnych URLach.
+    Funkcja nie dziaĹa na relatywnych URLach.
    </para>
   </note>
   <note>
    <para>
     Ta funkcja jest przeznaczona do przetwarzania URLi, a nie URI.
-    Jednakże, aby zastosować wymóg wstecznej kompatybilności PHP, zrobiono wyjątek dla
-    protokołu file:// gdzie potrójne ukośniki (file:///...) są dozwolone. Dla innych protokołów
-    jest to nieprawidłowe.
+    JednakĹźe, aby zastosowaÄ wymĂłg wstecznej kompatybilnoĹci PHP, zrobiono wyjÄtek dla
+    protokoĹu file:// gdzie potrĂłjne ukoĹniki (file:///...) sÄ dozwolone. Dla innych protokoĹĂłw
+    jest to nieprawidĹowe.
    </para>
   </note>
  </refsect1>
