@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: leniwiec Status: ready -->
 <!-- $Revision$ -->
 <!-- splitted from ./en/functions/dir.xml, last change in rev 1.2 -->
@@ -16,7 +16,7 @@
    <methodparam choice="opt"><type>resource</type><parameter>context</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Zwraca wskaźnik do otwartego katalogu, który może być następnie
+   Zwraca wskaĹşnik do otwartego katalogu, ktĂłry moĹźe byÄ nastÄpnie
      wykorzystany przez
    <function>closedir</function>, <function>readdir</function>, and
    <function>rewinddir</function> calls.
@@ -31,7 +31,7 @@
      <term><parameter>path</parameter></term>
      <listitem>
       <para>
-       Ścieżka do katalogu który ma zostać otwarty
+       ĹcieĹźka do katalogu ktĂłry ma zostaÄ otwarty
       </para>
      </listitem>
     </varlistentry>
@@ -40,7 +40,7 @@
      <listitem>
       <para>
        Po opis parametru <parameter>context</parameter>, 
-       sięgnij do <link linkend="ref.stream">the streams section</link>
+       siÄgnij do <link linkend="ref.stream">the streams section</link>
       </para> 
      </listitem>
     </varlistentry>
@@ -51,19 +51,19 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   W przypadku sukcesu zwraca wskaźnik do katalogu <type>resource</type>, w
+   W przypadku sukcesu zwraca wskaĹşnik do katalogu <type>resource</type>, w
    przypadku niepowodzenia zwraca 
    &false;.
   </para> 
   <para>
-     Jeśli <parameter>path</parameter> nie jest katalogiem lub jeśli katalog nie
-     posiada odpowiednich praw dostępu, lub gdy system plików zawiódł  
-     <function>opendir</function> zwróci &false; i
-     wygeneruje błąd PHP <link linkend="errorfunc.constants">
-      E_WARNING</link>. Można wyłączyć wyświetlanie błędów 
+     JeĹli <parameter>path</parameter> nie jest katalogiem lub jeĹli katalog nie
+     posiada odpowiednich praw dostÄpu, lub gdy system plikĂłw zawiĂłdĹ  
+     <function>opendir</function> zwrĂłci &false; i
+     wygeneruje bĹÄd PHP <link linkend="errorfunc.constants">
+      E_WARNING</link>. MoĹźna wyĹÄczyÄ wyĹwietlanie bĹÄdĂłw 
      <function>opendir</function> poprzez postawienie znaku 
      '<link linkend="language.operators.errorcontrol">@</link>' przed
-     wywołaniem funkcji.
+     wywoĹaniem funkcji.
   </para>
  </refsect1>
 
@@ -89,8 +89,8 @@
       <row>
        <entry>4.3.0</entry>
        <entry>
-        <parameter>path</parameter> może być również
-        URL-em odnoszącym się do katalogu, jednak tylko <literal>file://</literal>
+        <parameter>path</parameter> moĹźe byÄ rĂłwnieĹź
+        URL-em odnoszÄcym siÄ do katalogu, jednak tylko <literal>file://</literal>
         URL wrapper jest wspierany w wersji PHP 4.3. 
        </entry>
       </row>
@@ -110,7 +110,7 @@
 <?php
 $dir = "/etc/php5/";
 
-// Otwarcie prawidłowego katalogu i pobranie jego zawartości
+// Otwarcie prawidĹowego katalogu i pobranie jego zawartoĹci
 if (is_dir($dir)) {
     if ($dh = opendir($dir)) {
         while (($file = readdir($dh)) !== false) {

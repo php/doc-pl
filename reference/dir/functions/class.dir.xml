@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: leniwiec -->
@@ -31,11 +31,11 @@
   <para>
    Pseudoobiektowy mechanizm czytania katalogu.
    Podany <parameter>katalog</parameter> zostaje otwarty.
-   Gdy katalog zostaje otwarty dostępne są dwie właściwości. Właściwość
-   handle może zostać użyta z innymi funkcjami takimi jak:
+   Gdy katalog zostaje otwarty dostÄpne sÄ dwie wĹaĹciwoĹci. WĹaĹciwoĹÄ
+   handle moĹźe zostaÄ uĹźyta z innymi funkcjami takimi jak:
    <function>readdir</function>, <function>rewinddir</function> oraz
-   <function>closedir</function>. Właściwość path określa ścieżke do
-   aktualnie otwartego katalogu. Dostępne są również trzy metody: read,
+   <function>closedir</function>. WĹaĹciwoĹÄ path okreĹla ĹcieĹźke do
+   aktualnie otwartego katalogu. DostÄpne sÄ rĂłwnieĹź trzy metody: read,
    rewind oraz close.
   </para>
  </refsect1>
@@ -44,22 +44,22 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład <function>dir</function></title>
+    <title>PrzykĹad <function>dir</function></title>
     <para>
-     Sposób w jaki zwrócona przez <function>dir::read</function> wartość
-     powinna być sprawdzona, obrazuje poniższy przykład. Należy sprawdzić
-     czy zwrócona wartość jest równa (jest tego samego typu - zobacz
-     również <link linkend="language.operators.comparison">
-     Operatory Porównania</link>) &false;.  W przeciwnym razie plik
-     o nazwie &false; znajdujący się w czytanym katalogu
-     zatrzymałby pętle.
+     SposĂłb w jaki zwrĂłcona przez <function>dir::read</function> wartoĹÄ
+     powinna byÄ sprawdzona, obrazuje poniĹźszy przykĹad. NaleĹźy sprawdziÄ
+     czy zwrĂłcona wartoĹÄ jest rĂłwna (jest tego samego typu - zobacz
+     rĂłwnieĹź <link linkend="language.operators.comparison">
+     Operatory PorĂłwnania</link>) &false;.  W przeciwnym razie plik
+     o nazwie &false; znajdujÄcy siÄ w czytanym katalogu
+     zatrzymaĹby pÄtle.
     </para>
     <programlisting role="php">
 <![CDATA[
 <?php
 $d = dir("/etc/php5");
 echo "Uchwyt: " . $d->handle . "\n";
-echo "Ścieżka: " . $d->path . "\n";
+echo "ĹcieĹźka: " . $d->path . "\n";
 while (false !== ($entry = $d->read())) {
    echo $entry."\n";
 }
@@ -71,7 +71,7 @@ $d->close();
     <screen>
 <![CDATA[
 Uchwyt: Resource id #2
-Ścieżka: /etc/php5
+ĹcieĹźka: /etc/php5
 .
 ..
 apache
@@ -87,8 +87,8 @@ cli
   &reftitle.notes;
   <note>
    <para>
-    Kolejność w jakiej zostają zwrócone kolejne pliki czytanego katalogu,
-    podczas korzystania z metody read jest zależna od systemu plików.
+    KolejnoĹÄ w jakiej zostajÄ zwrĂłcone kolejne pliki czytanego katalogu,
+    podczas korzystania z metody read jest zaleĹźna od systemu plikĂłw.
    </para>
   </note>
  </refsect1>

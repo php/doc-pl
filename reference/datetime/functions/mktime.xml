@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: qrak Status: ready -->
 <!-- $Revision$ -->
 <!-- splitted from ./en/functions/datetime.xml, last change in rev 1.2 -->
@@ -14,35 +14,35 @@
       <methodparam><type>int</type><parameter>godzina</parameter></methodparam>
       <methodparam><type>int</type><parameter>minuta</parameter></methodparam>
       <methodparam><type>int</type><parameter>sekunda</parameter></methodparam>
-      <methodparam><type>int</type><parameter>miesiąc</parameter></methodparam>
-      <methodparam><type>int</type><parameter>dzień</parameter></methodparam>
+      <methodparam><type>int</type><parameter>miesiÄc</parameter></methodparam>
+      <methodparam><type>int</type><parameter>dzieĹ</parameter></methodparam>
       <methodparam><type>int</type><parameter>rok</parameter></methodparam>
       <methodparam choice="opt"><type>int</type><parameter>letni/zimowy</parameter></methodparam>
      </methodsynopsis>
     <para>
-     <emphasis>Uwaga:</emphasis> Proszę zwrócić uwagę na dziwną kolejność
-     argumentów, zupełnie odmienną od spotykanej w standardowym wywołaniu
-     uniksowym mktime(); która w dodatku nie jest praktyczna przy opuszczaniu
-     argumentów
-     od prawej do lewej (patrz niżej). Częstym błędem w skryptach są pomyłki
-     w kolejności tych argumentów.
+     <emphasis>Uwaga:</emphasis> ProszÄ zwrĂłciÄ uwagÄ na dziwnÄ kolejnoĹÄ
+     argumentĂłw, zupeĹnie odmiennÄ od spotykanej w standardowym wywoĹaniu
+     uniksowym mktime(); ktĂłra w dodatku nie jest praktyczna przy opuszczaniu
+     argumentĂłw
+     od prawej do lewej (patrz niĹźej). CzÄstym bĹÄdem w skryptach sÄ pomyĹki
+     w kolejnoĹci tych argumentĂłw.
     </para>
     <para>
-     Funkcja zwraca uniksowy znacznik czasu odpowiadający podanym argumentom.
-     Znacznik czasu jest liczbą całkowitą długą (long integer) zawierającą
-     liczbę sekund dzielącą uniksową Epokę (1 stycznia 1970) od podanego
+     Funkcja zwraca uniksowy znacznik czasu odpowiadajÄcy podanym argumentom.
+     Znacznik czasu jest liczbÄ caĹkowitÄ dĹugÄ (long integer) zawierajÄcÄ
+     liczbÄ sekund dzielÄcÄ uniksowÄ EpokÄ (1 stycznia 1970) od podanego
      w argumentach czasu.
     </para>
     <para>
-     Argumenty mogą być opuszczane w kolejności od prawej do lewej. Za każdy
-     pominięty argument będzie wówczas wstawiona aktualna wartość, zgodnie
-     z lokalnym czasem/datą.
+     Argumenty mogÄ byÄ opuszczane w kolejnoĹci od prawej do lewej. Za kaĹźdy
+     pominiÄty argument bÄdzie wĂłwczas wstawiona aktualna wartoĹÄ, zgodnie
+     z lokalnym czasem/datÄ.
     </para>
     <para>
-     Argument <parameter>letni/zimowy</parameter> może być ustawiony na 1, jeśli
-     to czas zimowy, lub 0 jeśli letni, lub -1 (domyślnie) jeśli niewiadomo,
-     czy letni czy zimowy. Jeśli niewiadomo, PHP spróbuje ustalić to
-     samodzielnie. Może to powodować nieoczekiwane (ale na pewno poprawne)
+     Argument <parameter>letni/zimowy</parameter> moĹźe byÄ ustawiony na 1, jeĹli
+     to czas zimowy, lub 0 jeĹli letni, lub -1 (domyĹlnie) jeĹli niewiadomo,
+     czy letni czy zimowy. JeĹli niewiadomo, PHP sprĂłbuje ustaliÄ to
+     samodzielnie. MoĹźe to powodowaÄ nieoczekiwane (ale na pewno poprawne)
      wyniki.
     </para>
     <note>
@@ -51,12 +51,12 @@
      </para>
     </note>
     <para>
-     Funkcja <function>mktime</function> przydaje się przy wykonywaniu
-     arytmetyki dat i walidacji, gdyż automatycznie policzy właściwą wartość
-     dla danych spoza przedziałów. Na przykład, każda poniższa linia wyświetli
+     Funkcja <function>mktime</function> przydaje siÄ przy wykonywaniu
+     arytmetyki dat i walidacji, gdyĹź automatycznie policzy wĹaĹciwÄ wartoĹÄ
+     dla danych spoza przedziaĹĂłw. Na przykĹad, kaĹźda poniĹźsza linia wyĹwietli
      "Jan-01-1998".
      <example>
-      <title>przykład <function>mktime</function></title>
+      <title>przykĹad <function>mktime</function></title>
       <programlisting role="php">
 <![CDATA[
 <?php
@@ -68,48 +68,48 @@ echo date ("M-d-Y", mktime (0,0,0,1,1,98));
 ]]>
       </programlisting>
      </example>
-     <parameter>rok</parameter> może być liczbą dwu lub czterocyfrową, przy
-     czym wartości dwucyfrowe z przedziału 0-69 będą mapowane do 2000-2069,
-     a z przedziału 70-99 do 1970-1999 (w systemach, w których time_t jest
-     32-bitową liczbą całkowitą ze znakiem, co jest obecnie najpopularniejszym
-     rozwiązaniem, poprawny zakres argumentu <parameter>rok</parameter>
-     zawiera się pomiędzy 1902 a 2037).
+     <parameter>rok</parameter> moĹźe byÄ liczbÄ dwu lub czterocyfrowÄ, przy
+     czym wartoĹci dwucyfrowe z przedziaĹu 0-69 bÄdÄ mapowane do 2000-2069,
+     a z przedziaĹu 70-99 do 1970-1999 (w systemach, w ktĂłrych time_t jest
+     32-bitowÄ liczbÄ caĹkowitÄ ze znakiem, co jest obecnie najpopularniejszym
+     rozwiÄzaniem, poprawny zakres argumentu <parameter>rok</parameter>
+     zawiera siÄ pomiÄdzy 1902 a 2037).
     </para>
     <para>
        <note>
         <title>Windows</title>
         <simpara>
-         Żadna znana wersja systemu Windows nie obsługuje ujemnych znaczników
-         czasu. Z tego powodu zakres poprawnych dat zawiera się pomiędzy rokiem
+         Ĺťadna znana wersja systemu Windows nie obsĹuguje ujemnych znacznikĂłw
+         czasu. Z tego powodu zakres poprawnych dat zawiera siÄ pomiÄdzy rokiem
          1970 a 2038.
         </simpara>
        </note>
     </para>
     <para>
-     Ostatni dzień dowolnego miesiąca może być wyrażony jako zerowy dzień
-     następnego miesiąca, ale nie jako -1 dzień. Obydwa poniższe przykłady
-     wyświetlą "Ostatni dzień lutego 2000 to: 29".
+     Ostatni dzieĹ dowolnego miesiÄca moĹźe byÄ wyraĹźony jako zerowy dzieĹ
+     nastÄpnego miesiÄca, ale nie jako -1 dzieĹ. Obydwa poniĹźsze przykĹady
+     wyĹwietlÄ "Ostatni dzieĹ lutego 2000 to: 29".
      <example>
-      <title>Ostatni dzień miesiąca</title>
+      <title>Ostatni dzieĹ miesiÄca</title>
       <programlisting role="php">
 <![CDATA[
 <?php
 $ostatni = mktime (0,0,0,3,0,2000);
-echo strftime ("Ostatni dzień lutego 2000 to: %d", $ostatni);
+echo strftime ("Ostatni dzieĹ lutego 2000 to: %d", $ostatni);
      
 $ostatni = mktime (0,0,0,4,-31,2000);
-echo strftime ("Ostatni dzień lutego 2000 to: %d", $ostatni);
+echo strftime ("Ostatni dzieĹ lutego 2000 to: %d", $ostatni);
 ?>
 ]]>
       </programlisting>
      </example>
     </para>
     <simpara>
-    Data z rokiem, miesiącem i dniem równym zero jest niepoprawna (w przeciwnym
-    razie oznaczałoby to 30.11.1999, co mogłoby powodować dziwne rezultaty).
+    Data z rokiem, miesiÄcem i dniem rĂłwnym zero jest niepoprawna (w przeciwnym
+    razie oznaczaĹoby to 30.11.1999, co mogĹoby powodowaÄ dziwne rezultaty).
     </simpara>
     <para>
-     Patrz także <function>date</function> i <function>time</function>.
+     Patrz takĹźe <function>date</function> i <function>time</function>.
     </para>
    </refsect1>
   </refentry>

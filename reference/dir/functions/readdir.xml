@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: leniwiec -->
@@ -6,19 +6,19 @@
 <refentry xml:id="function.readdir" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>readdir</refname>
-  <refpurpose>Czyta zawartość katalogu</refpurpose>
+  <refpurpose>Czyta zawartoĹÄ katalogu</refpurpose>
  </refnamediv>
  
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>string</type><methodname>readdir</methodname>
-   <methodparam choice="opt"><type>zasób</type><parameter>uchwyt_katalogu</parameter></methodparam>
+   <methodparam choice="opt"><type>zasĂłb</type><parameter>uchwyt_katalogu</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Zwraca nazwę kolejnego pliku z katalogu. Nazwy plików
-   są zwracane w kolejności posortowanej przez
-   system plików.
+   Zwraca nazwÄ kolejnego pliku z katalogu. Nazwy plikĂłw
+   sÄ zwracane w kolejnoĹci posortowanej przez
+   system plikĂłw.
   </para>
  </refsect1>
 
@@ -30,9 +30,9 @@
      <term><parameter>uchwyt_katalogu</parameter></term>
      <listitem>
       <para>
-       Uchwyt katalogu (<type>zasób</type>) otwarty wcześniej za pomocą
-       <function>opendir</function>. Jeśli uchwyt katalogu nie jest
-       podany, przyjmowany jest ostatni wskaźnik katalogu utworzony
+       Uchwyt katalogu (<type>zasĂłb</type>) otwarty wczeĹniej za pomocÄ
+       <function>opendir</function>. JeĹli uchwyt katalogu nie jest
+       podany, przyjmowany jest ostatni wskaĹşnik katalogu utworzony
        przez <function>opendir</function>.
       </para>
      </listitem>
@@ -44,7 +44,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca nazwę pliku w przypadku powodzenia&return.falseforfailure;.
+   Zwraca nazwÄ pliku w przypadku powodzenia&return.falseforfailure;.
   </para>
   &return.falseproblem; 
  </refsect1>
@@ -53,20 +53,20 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Lista wszystkich plików w katalogu</title>
+    <title>Lista wszystkich plikĂłw w katalogu</title>
     <para>
-     Sposób w jaki zwrócona przez <function>readdir</function> wartość powinna
-     być sprawdzona, obrazuje poniższy przykład. Należy sprawdzić czy zwrócona
-     wartość jest równa (jest tego samego typu -- zobacz również
+     SposĂłb w jaki zwrĂłcona przez <function>readdir</function> wartoĹÄ powinna
+     byÄ sprawdzona, obrazuje poniĹźszy przykĹad. NaleĹźy sprawdziÄ czy zwrĂłcona
+     wartoĹÄ jest rĂłwna (jest tego samego typu -- zobacz rĂłwnieĹź
      <link linkend="language.operators.comparison">Comparison
       Operators</link>) &false;. W przeciwnym razie plik o nazwie &false; (jak
-     również "0")
-     znajdujący się w czytanym katalogu zatrzymałby pętle.
+     rĂłwnieĹź "0")
+     znajdujÄcy siÄ w czytanym katalogu zatrzymaĹby pÄtle.
     </para>
     <programlisting role="php">
 <![CDATA[
 <?php
-//  !== nie istniał w wersji wcześniejszej niż 4.0.0-RC2
+//  !== nie istniaĹ w wersji wczeĹniejszej niĹź 4.0.0-RC2
 
 if ($handle = opendir('/path/to/files')) {
     echo "Directory handle: $handle\n";
@@ -77,7 +77,7 @@ if ($handle = opendir('/path/to/files')) {
         echo "$file\n";
     }
 
-    /* To jest ZŁA metoda */
+    /* To jest ZĹA metoda */
     while ($file = readdir($handle)) {
         echo "$file\n";
     }
@@ -92,7 +92,7 @@ if ($handle = opendir('/path/to/files')) {
   <para>
    <example>
     <title>
-    Lista wszystkich plików w wskazanym katalogu oprócz <literal>.</literal>
+    Lista wszystkich plikĂłw w wskazanym katalogu oprĂłcz <literal>.</literal>
     i <literal>..</literal>
     </title>
     <programlisting role="php">
