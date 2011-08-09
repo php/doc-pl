@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: dombal Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: joeaccord -->
@@ -6,21 +6,21 @@
 <appendix xml:id="tokenizer.examples">
  &reftitle.examples;
  <para>
-  Poniżej zamieszczony jest prosty przykład skryptu PHP,
-  który używa tokenizera. Skrypt wczytuje plik PHP, usuwa wszystkie
-  komentarze z kodu źródłowego i wyświetla sam czysty kod.
+  PoniĹźej zamieszczony jest prosty przykĹad skryptu PHP,
+  ktĂłry uĹźywa tokenizera. Skrypt wczytuje plik PHP, usuwa wszystkie
+  komentarze z kodu ĹşrĂłdĹowego i wyĹwietla sam czysty kod.
  </para>
  <example>
-  <title>Usuwanie komentarzy za pomocą tokenizera</title>
+  <title>Usuwanie komentarzy za pomocÄ tokenizera</title>
   <programlisting role="php">
 <![CDATA[
 <?php
   /* T_ML_COMMENT nie istnieje w PHP 5.
-   * Następujące trzy linie definiują tę stałą, by zachować kompatybilność
-   * wsteczną.
+   * NastÄpujÄce trzy linie definiujÄ tÄ staĹÄ, by zachowaÄ kompatybilnoĹÄ
+   * wstecznÄ.
    *
-   * Kolejne dwie linie definiują istniejącą tylko w PHP 5 stałą
-   * T_DOC_COMMENT, którą w PHP 4 podmienimy jako T_ML_COMMENT.
+   * Kolejne dwie linie definiujÄ istniejÄcÄ tylko w PHP 5 staĹÄ
+   * T_DOC_COMMENT, ktĂłrÄ w PHP 4 podmienimy jako T_ML_COMMENT.
    */
   if (!defined('T_ML_COMMENT')) {
     define('T_ML_COMMENT', T_COMMENT);
@@ -36,17 +36,17 @@
       // prosty token jednoznakowy
       echo $token;
     } else {
-      // tablica definiująca token
+      // tablica definiujÄca token
       list($id, $tekst) = $token;
 
       switch ($id) {
         case T_COMMENT:
-        case T_ML_COMMENT: // to zdefiniowaliśmy
-        case T_DOC_COMMENT: // to też
+        case T_ML_COMMENT: // to zdefiniowaliĹmy
+        case T_DOC_COMMENT: // to teĹź
           // brak akcji dla komentarzy
           break;
         default:
-          // wszystko inne -> wyświetl "takie, jakie jest"
+          // wszystko inne -> wyĹwietl "takie, jakie jest"
           echo $tekst;
           break;
       }

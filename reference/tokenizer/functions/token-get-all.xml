@@ -1,29 +1,29 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: dombal -->
 <refentry xml:id="function.token-get-all" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>token_get_all</refname>
-  <refpurpose>Dzieli zadane źródło na tokeny PHP</refpurpose>
+  <refpurpose>Dzieli zadane ĹşrĂłdĹo na tokeny PHP</refpurpose>
  </refnamediv>
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>array</type><methodname>token_get_all</methodname>
-   <methodparam><type>string</type><parameter>źródło</parameter></methodparam>
+   <methodparam><type>string</type><parameter>ĹşrĂłdĹo</parameter></methodparam>
   </methodsynopsis>
   <para>
    <function>token_get_all</function> parsuje zadane
-   <parameter>źródło</parameter>, czyli ciąg znaków zawierający kod PHP,
-   zamieniając je na tokeny języka PHP przy użyciu analizy leksykalnej
+   <parameter>ĹşrĂłdĹo</parameter>, czyli ciÄg znakĂłw zawierajÄcy kod PHP,
+   zamieniajÄc je na tokeny jÄzyka PHP przy uĹźyciu analizy leksykalnej
    silnika Zend.
   </para>
   <para>	
-   Listę tokenów identyfikowanych przez parser znajdziesz w <xref
-   linkend="tokens"/>, możesz także użyć funkcji
-   <function>token_name</function> by przetłumaczyć wartość tokena na jego
-   nazwę.
+   ListÄ tokenĂłw identyfikowanych przez parser znajdziesz w <xref
+   linkend="tokens"/>, moĹźesz takĹźe uĹźyÄ funkcji
+   <function>token_name</function> by przetĹumaczyÄ wartoĹÄ tokena na jego
+   nazwÄ.
   </para>
  </refsect1>
  <refsect1 role="parameters">
@@ -31,10 +31,10 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>źródło</parameter></term>
+     <term><parameter>ĹşrĂłdĹo</parameter></term>
      <listitem>
       <para>
-       Źródło PHP do sparsowania.
+       ĹšrĂłdĹo PHP do sparsowania.
       </para>
      </listitem>
     </varlistentry>
@@ -44,18 +44,18 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Tablica zindentyfikowanych tokenów. Każdy pojedynczy token identyfikowany
+   Tablica zindentyfikowanych tokenĂłw. KaĹźdy pojedynczy token identyfikowany
    jest poprzez pojedynczy znak (np.: <literal>;</literal>, <literal>.</literal>, 
    <literal>&gt;</literal>, <literal>!</literal>, etc...),
-   lub trójelementową tablicę zawierającą indeks tokenu w elemencie 0 i
-   łańcuch znaków zawierający oryginalny token w elemencie 1 i numer linii w elemencie 2.
+   lub trĂłjelementowÄ tablicÄ zawierajÄcÄ indeks tokenu w elemencie 0 i
+   ĹaĹcuch znakĂłw zawierajÄcy oryginalny token w elemencie 1 i numer linii w elemencie 2.
   </para>
  </refsect1>
  <refsect1 role="examples">
   &reftitle.examples;
   <para>
     <example>
-     <title>Przykłady użycia <function>token_get_all</function></title>
+     <title>PrzykĹady uĹźycia <function>token_get_all</function></title>
       <programlisting role="php">
 <![CDATA[
 <?php
@@ -65,10 +65,10 @@
                                                     ';',
                                                     array(T_CLOSE_TAG, '?>') ); */
 .
-/* W następnym przykładzie zwróć uwagę na fakt, iż ciąg znaków jest parsowany
-   jako T_INLINE_HTML, inaczej niż oczekiwane T_COMMENT (T_ML_COMMENT w PHP
-   <5). Jest tak z powodu braku w "kodzie" otwierających/zamykających tagów
-   PHP. Jest to jednoznaczne z komentarzem znajdującym się poza tagami <?php
+/* W nastÄpnym przykĹadzie zwrĂłÄ uwagÄ na fakt, iĹź ciÄg znakĂłw jest parsowany
+   jako T_INLINE_HTML, inaczej niĹź oczekiwane T_COMMENT (T_ML_COMMENT w PHP
+   <5). Jest tak z powodu braku w "kodzie" otwierajÄcych/zamykajÄcych tagĂłw
+   PHP. Jest to jednoznaczne z komentarzem znajdujÄcym siÄ poza tagami <?php
    ?> w normalnym pliku. */
   $tokeny = token_get_all('/* koment. */'); // => array(array(T_INLINE_HTML, '/* koment. */'));
 ?>

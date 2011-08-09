@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='iso-8859-2'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 1.6 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.tidy-construct" xmlns="http://docbook.org/ns/docbook">
@@ -12,21 +12,21 @@
    <type>tidy</type><methodname>tidy::__construct</methodname>
    <methodparam choice="opt"><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
    <methodparam choice="opt"><type>mixed</type><parameter>konfiguracja</parameter></methodparam>
-   <methodparam choice="opt"><type>string</type><parameter>kodowanie_znaków</parameter></methodparam>
-   <methodparam choice="opt"><type>bool</type><parameter>użyj_include_path</parameter></methodparam>
+   <methodparam choice="opt"><type>string</type><parameter>kodowanie_znakĂłw</parameter></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>uĹźyj_include_path</parameter></methodparam>
   </methodsynopsis>
   <para>
    <function>tidy::__construct</function> tworzy nowy obiekt Tidy.
   </para>
   <para>
-   Jeśli jest podany argument <parameter>nazwa_pliku</parameter>, to funkcja
-   powinna odczytać ten plik i zainicjalizować obiekt z pliku,
-   działając podobnie jak <function>tidy_parse_file</function>.
+   JeĹli jest podany argument <parameter>nazwa_pliku</parameter>, to funkcja
+   powinna odczytaÄ ten plik i zainicjalizowaÄ obiekt z pliku,
+   dziaĹajÄc podobnie jak <function>tidy_parse_file</function>.
   </para>
   &tidy.conf-enc;
   <para>
    <example>
-    <title>Przykład <function>tidy::__construct</function></title>
+    <title>PrzykĹad <function>tidy::__construct</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -37,7 +37,7 @@ $html = <<< HTML
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head><title>Tytuł</title></head>
+<head><title>TytuĹ</title></head>
 <body>
 <p>paragraf <bt />
 tekst</p>
@@ -51,7 +51,7 @@ $tidy->parseString($html);
 $tidy->CleanRepair();
 
 if ($tidy->errorBuffer) {
-    echo "Wykryto następujące błędy:\n";
+    echo "Wykryto nastÄpujÄce bĹÄdy:\n";
     echo $tidy->errorBuffer;
 }
 
@@ -61,7 +61,7 @@ if ($tidy->errorBuffer) {
     &example.outputs;
     <screen>
 <![CDATA[
-Wykryto następujące błędy:
+Wykryto nastÄpujÄce bĹÄdy:
 line 8 column 14 - Error: <bt> is not recognized!
 line 8 column 14 - Warning: discarding unexpected <bt>
 ]]>
@@ -69,7 +69,7 @@ line 8 column 14 - Warning: discarding unexpected <bt>
    </example>
   </para>
   <para>
-   Zobacz też: <function>tidy_parse_file</function>
+   Zobacz teĹź: <function>tidy_parse_file</function>
    i <function>tidy_parse_string</function>.
   </para>
  </refsect1>

@@ -1,10 +1,10 @@
-<?xml version='1.0' encoding='iso-8859-2'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 1.7 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.tidy-getopt" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>tidy_getopt</refname>
-  <refpurpose>Zwraca wartość określonej opcji konfiguracyjnej dla obiektu Tidy</refpurpose>
+  <refpurpose>Zwraca wartoĹÄ okreĹlonej opcji konfiguracyjnej dla obiektu Tidy</refpurpose>
  </refnamediv>
  <refsect1>
   <title>Opis</title>
@@ -20,22 +20,22 @@
    <methodparam><type>string</type><parameter>opcja</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>tidy_getopt</function> zwraca wartość określonej
+   <function>tidy_getopt</function> zwraca wartoĹÄ okreĹlonej
    <parameter>opcji</parameter> dla danego
-   <parameter>obiektu</parameter> Tidy. Zwracany typ zależy od typu
-   określonej <parameter>opcji</parameter>. Pełną listę opcji
-   konfiguracyjnych i ich typy można znaleźć na stronie: <link
+   <parameter>obiektu</parameter> Tidy. Zwracany typ zaleĹźy od typu
+   okreĹlonej <parameter>opcji</parameter>. PeĹnÄ listÄ opcji
+   konfiguracyjnych i ich typy moĹźna znaleĹşÄ na stronie: <link
     xlink:href="&url.tidy.conf;">&url.tidy.conf;</link>.
   </para>
   <para>
    <example>
-    <title>Przykład <function>tidy_getopt</function></title>
+    <title>PrzykĹad <function>tidy_getopt</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
 
 $html ='<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2//EN">
-<html><head><title>Tytuł</title></head>
+<html><head><title>TytuĹ</title></head>
 <body>
 
 <p><img src="img.png"></p>
@@ -43,7 +43,7 @@ $html ='<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2//EN">
 </body></html>';
 
 $config = array('accessibility-check' => 3,
-                'alt-text' => 'jakiś tekst');
+                'alt-text' => 'jakiĹ tekst');
 
 $tidy = new tidy();
 $tidy->parseString($html, $config);
@@ -61,7 +61,7 @@ var_dump($tidy->getOpt('alt-text')); //string
 <![CDATA[
 int(3)
 bool(true)
-string(11) "jakiś tekst"
+string(11) "jakiĹ tekst"
 ]]>
     </screen>
    </example>

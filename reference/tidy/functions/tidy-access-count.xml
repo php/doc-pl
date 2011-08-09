@@ -1,10 +1,10 @@
-<?xml version='1.0' encoding='iso-8859-2'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 2fd3f0c96d9d221fe37109775af4df4cf949d5d8 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.tidy-access-count" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>tidy_access_count</refname>
-  <refpurpose>Zwraca liczbę dostępnych ostrzeżeń napotkanych w określonym dokumencie</refpurpose>
+  <refpurpose>Zwraca liczbÄ dostÄpnych ostrzeĹźeĹ napotkanych w okreĹlonym dokumencie</refpurpose>
  </refnamediv>
  <refsect1 role="description">
   &reftitle.description;
@@ -13,8 +13,8 @@
    <methodparam><type>tidy</type><parameter>obiekt</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>tidy_access_count</function> zwraca liczbę
-   dostępnych ostrzeżeń znalezionych w danym dokumencie.
+   <function>tidy_access_count</function> zwraca liczbÄ
+   dostÄpnych ostrzeĹźeĹ znalezionych w danym dokumencie.
   </para>
  </refsect1>
  <refsect1 role="parameters">
@@ -35,20 +35,20 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca liczbę ostrzeżeń.
+   Zwraca liczbÄ ostrzeĹźeĹ.
   </para>
  </refsect1>
  <refsect1 role="examples">
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład <function>tidy_access_count</function></title>
+    <title>PrzykĹad <function>tidy_access_count</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
 
 $html ='<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2//EN">
-<html><head><title>Tytuł</title></head>
+<html><head><title>TytuĹ</title></head>
 <body>
 
 <p><img src="img.png"></p>
@@ -56,14 +56,14 @@ $html ='<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2//EN">
 </body></html>';
 
 
-// wybierz poziom sprawdzania dostępności: 1, 2 lub 3
+// wybierz poziom sprawdzania dostÄpnoĹci: 1, 2 lub 3
 $config = array('accessibility-check' => 3);
 
 $tidy = new tidy();
 $tidy->parseString($html, $config);
 $tidy->CleanRepair();
 
-/* Nigdy nie zapomnij wywołać tej metody! */
+/* Nigdy nie zapomnij wywoĹaÄ tej metody! */
 $tidy->diagnose();
 
 echo tidy_access_count($tidy); //5
@@ -78,10 +78,10 @@ echo tidy_access_count($tidy); //5
   &reftitle.notes;
   <note>
    <para>
-    Ponieważ biblioteka Tidy została tak zaprojektowana, należy wywołać
+    PoniewaĹź biblioteka Tidy zostaĹa tak zaprojektowana, naleĹźy wywoĹaÄ
     <function>tidy_diagnose</function> przed
     <function>tidy_access_count</function>, bo inaczej ta funkcja zawsze
-    będzie zwracała <literal>0</literal>. Należy także aktywować opcję
+    bÄdzie zwracaĹa <literal>0</literal>. NaleĹźy takĹźe aktywowaÄ opcjÄ
     <literal>accessibility-check</literal>.
    </para>
   </note>
