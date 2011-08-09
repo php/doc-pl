@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
   <refentry xml:id="function.session-register" xmlns="http://docbook.org/ns/docbook">
    <refnamediv>
     <refname>session_register</refname>
     <refpurpose>
-     Zarejestruj jedną lub więcej zmiennych globalnych w bieżącej sesji
+     Zarejestruj jednÄ lub wiÄcej zmiennych globalnych w bieĹźÄcej sesji
     </refpurpose>
    </refnamediv>
    <refsect1>
@@ -16,72 +16,72 @@
       <methodparam choice="opt"><type>mixed</type><parameter>...</parameter></methodparam>
      </methodsynopsis>
     <para>
-     <function>session_register</function> jest funkcją o zmiennej liczbie
-     argumentów, z których każdy może być albo stringiem zawierającym nazwę
-     zmiennej lub tablicą zawierającą nazwy zmiennych lub inne tablice. Dla
-     każdej napotkanej nazwy zmiennej, <function>session_register</function>
-     rejestruje w bieżącej sesji globalną zmienną o danej nazwie.
+     <function>session_register</function> jest funkcjÄ o zmiennej liczbie
+     argumentĂłw, z ktĂłrych kaĹźdy moĹźe byÄ albo stringiem zawierajÄcym nazwÄ
+     zmiennej lub tablicÄ zawierajÄcÄ nazwy zmiennych lub inne tablice. Dla
+     kaĹźdej napotkanej nazwy zmiennej, <function>session_register</function>
+     rejestruje w bieĹźÄcej sesji globalnÄ zmiennÄ o danej nazwie.
     </para>
     <caution>
      <para>
-      Jeśli skrypt ma działać niezależnie od ustawienia
-      <link linkend="ini.register-globals">register_globals</link>, niezbędne
-      jest użycie tablicy
-      <link linkend="reserved.variables.session">$_SESSION</link>, jako że
-      elementy <varname>$_SESSION</varname> są atomatycznie rejestrowane.
-      Jeśli skrypt korzysta z <function>session_register</function>, nie
-      będzie on działać w środowisku z wyłączoną dyrektywą
+      JeĹli skrypt ma dziaĹaÄ niezaleĹźnie od ustawienia
+      <link linkend="ini.register-globals">register_globals</link>, niezbÄdne
+      jest uĹźycie tablicy
+      <link linkend="reserved.variables.session">$_SESSION</link>, jako Ĺźe
+      elementy <varname>$_SESSION</varname> sÄ atomatycznie rejestrowane.
+      JeĹli skrypt korzysta z <function>session_register</function>, nie
+      bÄdzie on dziaĹaÄ w Ĺrodowisku z wyĹÄczonÄ dyrektywÄ
       <link linkend="ini.register-globals">register_globals</link>.
      </para>
     </caution>
     &note.registerglobals;
     <caution>
      <para>
-      Funkcja ta rejestruje <emphasis>globalną</emphasis> zmienną. Jeśli
-      zachodzi konieczność zarejestrowania zmiennej sesyjnej z wnętrza
-      funkcji, należy uczynić ją globalną poprzez użycie instrukcji
+      Funkcja ta rejestruje <emphasis>globalnÄ</emphasis> zmiennÄ. JeĹli
+      zachodzi koniecznoĹÄ zarejestrowania zmiennej sesyjnej z wnÄtrza
+      funkcji, naleĹźy uczyniÄ jÄ globalnÄ poprzez uĹźycie instrukcji
       <link
        linkend="language.variables.scope"><command>global</command></link>,
-      przez tablicę <varname>$GLOBALS[]</varname> lub prez użycie specjalnych
-      tablic opisanych poniżej.
+      przez tablicÄ <varname>$GLOBALS[]</varname> lub prez uĹźycie specjalnych
+      tablic opisanych poniĹźej.
      </para>
     </caution>
     <caution>
      <para>
       Przy korzystaniu z tablicy <varname>$_SESSION</varname>
-      (lub <varname>$HTTP_SESSION_VARS</varname>) nie nalezy korzystać z
+      (lub <varname>$HTTP_SESSION_VARS</varname>) nie nalezy korzystaÄ z
       funkcji <function>session_register</function>,
       <function>session_is_registered</function> i
       <function>session_unregister</function>.
      </para>
     </caution>
     <para>
-     Funkcja ta zwraca wartość &true; jeśli wszystkie zmienne zostały
-     pomyślnie zarejestrowane w sesji.
+     Funkcja ta zwraca wartoĹÄ &true; jeĹli wszystkie zmienne zostaĹy
+     pomyĹlnie zarejestrowane w sesji.
     </para>
     <para>
-     Jeśli przed wywołaniem tej funkcji nie wywołano
-     <function>session_start</function>, dokonane zostanie niejawne wywołanie
-     <function>session_start</function> bez żadnych parametrów. Tablica
-     <varname>$_SESSION</varname> nie naśladuje tego zachowania i wymaga
-     wywołania <function>session_start</function> przed korzystaniem z niej.
+     JeĹli przed wywoĹaniem tej funkcji nie wywoĹano
+     <function>session_start</function>, dokonane zostanie niejawne wywoĹanie
+     <function>session_start</function> bez Ĺźadnych parametrĂłw. Tablica
+     <varname>$_SESSION</varname> nie naĹladuje tego zachowania i wymaga
+     wywoĹania <function>session_start</function> przed korzystaniem z niej.
     </para>
     <para>
-     Możesz tworzyć zmienne sesyjne po prostu przez dopisywanie odpowiednich
-     wpisów do tablic <varname>$_SESSION</varname> lub 
+     MoĹźesz tworzyÄ zmienne sesyjne po prostu przez dopisywanie odpowiednich
+     wpisĂłw do tablic <varname>$_SESSION</varname> lub 
      <varname>$HTTP_SESSION_VARS</varname> (PHP &lt; 4.1.0).
      <informalexample>
       <programlisting role="php">
 <![CDATA[
 <?php
-// Nie powinno się już używać session_register()
-$barney = "Duży fioletowy dinozaur.";
+// Nie powinno siÄ juĹź uĹźywaÄ session_register()
+$barney = "DuĹźy fioletowy dinozaur.";
 session_register("barney");
 
-// Od PHP 4.1.0 Preferowane jest użycie $_SESSION
-$_SESSION["zim"] = "Najeźdźca z innej planety.";
+// Od PHP 4.1.0 Preferowane jest uĹźycie $_SESSION
+$_SESSION["zim"] = "NajeĹşdĹşca z innej planety.";
 
-// Stara metoda opiera się o $HTTP_SESSION_VARS
+// Stara metoda opiera siÄ o $HTTP_SESSION_VARS
 $HTTP_SESSION_VARS["spongebob"] = "Ma kwadratowe spodnie.";
 ?>
 ]]>       
@@ -90,24 +90,24 @@ $HTTP_SESSION_VARS["spongebob"] = "Ma kwadratowe spodnie.";
     </para>
     <note>
      <para>
-      W chwili obecnej niemożliwe jest zarejestrowanie w sesji zmiennych
-      zawierających zasoby. Na przykład, nie możesz stworzyć połączenia do
-      bazy danych i zachować identyfikator połączenia jako zmienną sesyjną i
-      oczekować, że połączenie ciągle będzie aktywne po odtworzeniu danych
-      sesji. Funkcję PHP, która zwraca zasoby, identyfikuje się przez
-      zwracanie typu <literal>resource</literal> w definicji funkcji. Listę
-      funkcji, które zwracają zasoby, można znaleźć w załączniku
-      <link linkend="resource">typy zasobów</link>.
+      W chwili obecnej niemoĹźliwe jest zarejestrowanie w sesji zmiennych
+      zawierajÄcych zasoby. Na przykĹad, nie moĹźesz stworzyÄ poĹÄczenia do
+      bazy danych i zachowaÄ identyfikator poĹÄczenia jako zmiennÄ sesyjnÄ i
+      oczekowaÄ, Ĺźe poĹÄczenie ciÄgle bÄdzie aktywne po odtworzeniu danych
+      sesji. FunkcjÄ PHP, ktĂłra zwraca zasoby, identyfikuje siÄ przez
+      zwracanie typu <literal>resource</literal> w definicji funkcji. ListÄ
+      funkcji, ktĂłre zwracajÄ zasoby, moĹźna znaleĹşÄ w zaĹÄczniku
+      <link linkend="resource">typy zasobĂłw</link>.
      </para>
      <para>
-      Jeśli użyta jest tablica <varname>$_SESSION</varname> (lub
+      JeĹli uĹźyta jest tablica <varname>$_SESSION</varname> (lub
       <varname>$HTTP_SESSION_VARS</varname> dla PHP 4.0.6 i starszych),
-      przypisz vartość do <varname>$_SESSION</varname>, na przykład
+      przypisz vartoĹÄ do <varname>$_SESSION</varname>, na przykĹad
       $_SESSION['var'] = 'ABC';
      </para>
     </note>
     <para>
-     Patrz także: <function>session_is_registered</function>,
+     Patrz takĹźe: <function>session_is_registered</function>,
      <function>session_unregister</function> i
      <link linkend="reserved.variables.session">$_SESSION</link>.
     </para>

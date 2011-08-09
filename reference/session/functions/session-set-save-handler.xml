@@ -1,18 +1,18 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
   <refentry xml:id="function.session-set-save-handler" xmlns="http://docbook.org/ns/docbook">
    <refnamediv>
     <refname>session_set_save_handler</refname>
     <refpurpose>
-     Ustawia funkcje użytkownika do przechowywania sesji
+     Ustawia funkcje uĹźytkownika do przechowywania sesji
     </refpurpose>
    </refnamediv>
    <refsect1>
     <title>Opis</title>
      <methodsynopsis>
       <type>bool</type><methodname>session_set_save_handler</methodname>
-      <methodparam><type>callback</type><parameter>otwórz</parameter></methodparam>
+      <methodparam><type>callback</type><parameter>otwĂłrz</parameter></methodparam>
       <methodparam><type>callback</type><parameter>zamknij</parameter></methodparam>
       <methodparam><type>callback</type><parameter>czytaj</parameter></methodparam>
       <methodparam><type>callback</type><parameter>zapisz</parameter></methodparam>
@@ -20,50 +20,50 @@
       <methodparam><type>callback</type><parameter>gc</parameter></methodparam>
      </methodsynopsis>
     <para>
-     <function>session_set_save_handler</function> ustawia funkcje użytkownika
-     do obsługi przechowywania sesji, które używane sa do zapisywania i
-     odtwarzania danych skojarzonych z sesją. Jest to bardzo przydatne jeśli
-     preferowany jest sposób przechowywania sesji inny niż ten, który jest
+     <function>session_set_save_handler</function> ustawia funkcje uĹźytkownika
+     do obsĹugi przechowywania sesji, ktĂłre uĹźywane sa do zapisywania i
+     odtwarzania danych skojarzonych z sesjÄ. Jest to bardzo przydatne jeĹli
+     preferowany jest sposĂłb przechowywania sesji inny niĹź ten, ktĂłry jest
      dostarczany z PHP, np. przechowywanie danych sesji w lokalnej bazie
      danych.
      &return.success;
     </para>
     <note>
      <para>
-      Procedura obsługi "zapisz" nie będzie wywołana dopóki strumień wyjściowy
-      jest otwarty. W związku z tym, wyjście instrukcji debugowania zawartych
-      w procedurze "zapisz" nigdy nie będzie widoczne w oknie przeglądarki.
-      Jeśli konieczne jest wyjście debugowania, sugerowane jest zapisanie tego
-      wyjścia do pliku.
+      Procedura obsĹugi "zapisz" nie bÄdzie wywoĹana dopĂłki strumieĹ wyjĹciowy
+      jest otwarty. W zwiÄzku z tym, wyjĹcie instrukcji debugowania zawartych
+      w procedurze "zapisz" nigdy nie bÄdzie widoczne w oknie przeglÄdarki.
+      JeĹli konieczne jest wyjĹcie debugowania, sugerowane jest zapisanie tego
+      wyjĹcia do pliku.
      </para>
     </note>
     <para>
-     Poniższy przykład opisuje metodę przechowywania danych sesyjnych w
-     plikach, podobną do tej obsługiwanej wewnętrznie przez PHP. Przykład ten
-     może być łatwo rozszerzony aby móc użyć go z twoją ulubioną bazą danych
-     obsługiwaną przez PHP.
+     PoniĹźszy przykĹad opisuje metodÄ przechowywania danych sesyjnych w
+     plikach, podobnÄ do tej obsĹugiwanej wewnÄtrznie przez PHP. PrzykĹad ten
+     moĹźe byÄ Ĺatwo rozszerzony aby mĂłc uĹźyÄ go z twojÄ ulubionÄ bazÄ danych
+     obsĹugiwanÄ przez PHP.
     </para>
     <para>
-     Funkcja czytająca zawsze musi zwracać ciąg aby procedura obsługi działała
-     zgodnie z przewidywaniami. Zwróć pusty ciąg jeśli nie ma żadnych danych
-     do odczytania. Wartości zwracane przez inne procedury obsługi są
-     konwertowane na wyrażenia logiczne. &true; dla sukcesu, &false; dla
+     Funkcja czytajÄca zawsze musi zwracaÄ ciÄg aby procedura obsĹugi dziaĹaĹa
+     zgodnie z przewidywaniami. ZwrĂłÄ pusty ciÄg jeĹli nie ma Ĺźadnych danych
+     do odczytania. WartoĹci zwracane przez inne procedury obsĹugi sÄ
+     konwertowane na wyraĹźenia logiczne. &true; dla sukcesu, &false; dla
      niepowodzenia.
     </para>
     <warning>
      <para>
-      Od wersji PHP 5.0.5, funkcje obsługi zapisu i zamykania wywoływane są po
-      zniszczeniu obiektów. W związku z tym, destruktory mogą używać sesji,
-      ale nie mogą używać obiektów. W wersjach wcześniejszych, wywoływane były
-      w odwrotnej koljeności. Możliwe jest wywołanie
-      <function>session_write_close</function> z destruktora aby rozwiązać ten
+      Od wersji PHP 5.0.5, funkcje obsĹugi zapisu i zamykania wywoĹywane sÄ po
+      zniszczeniu obiektĂłw. W zwiÄzku z tym, destruktory mogÄ uĹźywaÄ sesji,
+      ale nie mogÄ uĹźywaÄ obiektĂłw. W wersjach wczeĹniejszych, wywoĹywane byĹy
+      w odwrotnej koljenoĹci. MoĹźliwe jest wywoĹanie
+      <function>session_write_close</function> z destruktora aby rozwiÄzaÄ ten
       problem kury i jajka.
      </para>
     </warning>
     <para>
      <example>
       <title>
-       Przykład <function>session_set_save_handler</function>
+       PrzykĹad <function>session_set_save_handler</function>
       </title>
       <programlisting role="php">
 <![CDATA[
@@ -92,7 +92,7 @@ function read ($id)
     $sess_data = fread($fp, filesize($sess_file));
     return($sess_data);
   } else {
-  return(""); // Zawsze musi zwracać ""
+  return(""); // Zawsze musi zwracaÄ ""
   }
 
 }
@@ -119,8 +119,8 @@ function destroy ($id)
 }
 
 /*********************************************
- * UWAGA: Musisz sam zaimplementować obsługę *
- * zbierania śmieci (gc)                     *
+ * UWAGA: Musisz sam zaimplementowaÄ obsĹugÄ *
+ * zbierania Ĺmieci (gc)                     *
  *********************************************/
  function gc ($maxlifetime)
  {
@@ -131,7 +131,7 @@ session_set_save_handler ("open", "close", "read", "write", "destroy", "gc");
 
 session_start();
 
-// dalej normalnie używaj sesji
+// dalej normalnie uĹźywaj sesji
 
 ?>
 ]]>
@@ -139,7 +139,7 @@ session_start();
      </example>
     </para>
     <para>
-     Zobacz także opis dyrektywy konfiguracji <link
+     Zobacz takĹźe opis dyrektywy konfiguracji <link
       linkend="ini.session.save-handler">session.save_handler</link>.
     </para>
    </refsect1>

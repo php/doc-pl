@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
   <refentry xml:id="function.session-destroy" xmlns="http://docbook.org/ns/docbook">
@@ -14,37 +14,37 @@
      </methodsynopsis>
     <simpara>
      <function>session_destroy</function> niszczy wszystkie dane skojarzone z
-     bieżącą sesją. Nie usuwa żadnych globalnych zmiennych związanych z sesją.
-     Nie usuwa też ciasteczka sesyjnego.
+     bieĹźÄcÄ sesjÄ. Nie usuwa Ĺźadnych globalnych zmiennych zwiÄzanych z sesjÄ.
+     Nie usuwa teĹź ciasteczka sesyjnego.
     </simpara>
     <para>	
-     Aby "zabić" całość sesji, na przykład aby wylogować użytwkonika, należy
-     także usunąć identyfikator sesji. Jeśli do propagowania identyfikatora
-     sesji jużyte było ciasteczko, to usunięte musi być ciasteczko sesyjne.
-     Można do tego użyć funkcji <function>setcookie</function>.
+     Aby "zabiÄ" caĹoĹÄ sesji, na przykĹad aby wylogowaÄ uĹźytwkonika, naleĹźy
+     takĹźe usunÄÄ identyfikator sesji. JeĹli do propagowania identyfikatora
+     sesji juĹźyte byĹo ciasteczko, to usuniÄte musi byÄ ciasteczko sesyjne.
+     MoĹźna do tego uĹźyÄ funkcji <function>setcookie</function>.
     </para>
     <simpara>
      &return.success;
     </simpara>
     <para>
      <example>
-      <title>Niszczenie sesji przy użyciu <varname>$_SESSION</varname></title>
+      <title>Niszczenie sesji przy uĹźyciu <varname>$_SESSION</varname></title>
       <programlisting role="php">
 <![CDATA[
 <?php
-// Inicjalizuj sesję
-// Jeśli używasz sesion_name("cośtam"), nie zapomnij o tym teraz!
+// Inicjalizuj sesjÄ
+// JeĹli uĹźywasz sesion_name("coĹtam"), nie zapomnij o tym teraz!
 session_start();
-// Usuń wszystkie zmienne sesyjne
+// UsuĹ wszystkie zmienne sesyjne
 $_SESSION = array();
 
-// Jeśli pożądane jest zabicie sesji, usuń także ciasteczko sesyjne.
-// Uwaga: to usunie sesję, nie tylko dane sesji
+// JeĹli poĹźÄdane jest zabicie sesji, usuĹ takĹźe ciasteczko sesyjne.
+// Uwaga: to usunie sesjÄ, nie tylko dane sesji
 if (isset($_COOKIE[session_name()])) { 
    setcookie(session_name(), '', time()-42000, '/'); 
 }
 
-// Na koniec zniszcz sesję
+// Na koniec zniszcz sesjÄ
 session_destroy();
 ]]>
       </programlisting>
@@ -52,12 +52,12 @@ session_destroy();
     </para>
     <note>	
      <para>	
-      <function>session_unset</function> należy używać dla starszego kodu,
-      który nie korzysta z <varname>$_SESSION</varname>.
+      <function>session_unset</function> naleĹźy uĹźywaÄ dla starszego kodu,
+      ktĂłry nie korzysta z <varname>$_SESSION</varname>.
      </para>	
     </note>
     <para>
-     Patrz także: <function>unset</function> i <function>setcookie</function>.
+     Patrz takĹźe: <function>unset</function> i <function>setcookie</function>.
     </para>
    </refsect1>
   </refentry>

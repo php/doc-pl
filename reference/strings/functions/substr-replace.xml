@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: sMeRFx Status: ready -->
 <!-- splitted from ./en/functions/strings.xml, last change in rev 1.2 -->
 <!-- $Revision$ -->
   <refentry xml:id="function.substr-replace" xmlns="http://docbook.org/ns/docbook">
    <refnamediv>
     <refname>substr_replace</refname>
-    <refpurpose>Zastępuje tekst wewnątrz części łańcucha</refpurpose>
+    <refpurpose>ZastÄpuje tekst wewnÄtrz czÄĹci ĹaĹcucha</refpurpose>
    </refnamediv>
    <refsect1>
     <title>Opis</title>
@@ -14,57 +14,57 @@
       <methodparam><type>mixed</type><parameter>string</parameter></methodparam>
       <methodparam><type>string</type><parameter>replacement</parameter></methodparam>
       <methodparam><type>int</type><parameter>start</parameter></methodparam>
-      <methodparam choice="opt"><type>int</type><parameter>długość</parameter></methodparam>
+      <methodparam choice="opt"><type>int</type><parameter>dĹugoĹÄ</parameter></methodparam>
      </methodsynopsis>
     <para>
-     <function>substr_replace</function> zastępuje kopię
-     <parameter>string</parameter> ograniczoną przez parametry
+     <function>substr_replace</function> zastÄpuje kopiÄ
+     <parameter>string</parameter> ograniczonÄ przez parametry
      <parameter>start</parameter> i (opcjonalnie)
-     <parameter>długość</parameter>  do  łańcucha podanym w
-     <parameter>replacement</parameter>. W rezultacie zwracany jest łańcuch.
-     Jeżeli <parameter>string</parameter> jest tablicą, wtedy zwracana jest tablica.
+     <parameter>dĹugoĹÄ</parameter>  do  ĹaĹcucha podanym w
+     <parameter>replacement</parameter>. W rezultacie zwracany jest ĹaĹcuch.
+     JeĹźeli <parameter>string</parameter> jest tablicÄ, wtedy zwracana jest tablica.
     </para>
     <para>
-     Jeżeli <parameter>start</parameter> jest dodatni, zastąpienie
-     będzie zaczynać się od <parameter>start</parameter> znaku w
+     JeĹźeli <parameter>start</parameter> jest dodatni, zastÄpienie
+     bÄdzie zaczynaÄ siÄ od <parameter>start</parameter> znaku w
      <parameter>string</parameter>.
     </para>
     <para>
-     Jeżeli<parameter>start</parameter> jest ujemny, zastąpienie będzie
-     zaczynać się od<parameter>start</parameter> znaku od
-     końca<parameter>string</parameter>.
+     JeĹźeli<parameter>start</parameter> jest ujemny, zastÄpienie bÄdzie
+     zaczynaÄ siÄ od<parameter>start</parameter> znaku od
+     koĹca<parameter>string</parameter>.
     </para>
     <para>
-     Jeśli<parameter>długość</parameter> jest podana i jest dodatnia, 
-     stanowi długość części
-     <parameter>string</parameter> która będzie zastąpiona. Jeśli jest
-     ujemna, stanowi liczbę znaków od końca 
-     <parameter>string</parameter> po których ma być zatrzymane zastępowanie. Jeśli
-     nie jest podana, wtedy domyślnie wynosi strlen(
-     <parameter>string</parameter> ); tj. koniec zastąpienia na 
-     końcu<parameter>string</parameter>. Oczywiście, jeśli
-     <parameter>długość</parameter> jest zerem wtedy funkcja będzie powodowała
+     JeĹli<parameter>dĹugoĹÄ</parameter> jest podana i jest dodatnia, 
+     stanowi dĹugoĹÄ czÄĹci
+     <parameter>string</parameter> ktĂłra bÄdzie zastÄpiona. JeĹli jest
+     ujemna, stanowi liczbÄ znakĂłw od koĹca 
+     <parameter>string</parameter> po ktĂłrych ma byÄ zatrzymane zastÄpowanie. JeĹli
+     nie jest podana, wtedy domyĹlnie wynosi strlen(
+     <parameter>string</parameter> ); tj. koniec zastÄpienia na 
+     koĹcu<parameter>string</parameter>. OczywiĹcie, jeĹli
+     <parameter>dĹugoĹÄ</parameter> jest zerem wtedy funkcja bÄdzie powodowaĹa
      efekt wstawienia <parameter>replacement</parameter> w
-     <parameter>string</parameter> w określonym przez 
+     <parameter>string</parameter> w okreĹlonym przez 
      <parameter>start</parameter> miejscu.
     </para>
     <para>
      <example>
-      <title><function>substr_replace</function> przykłady</title>
+      <title><function>substr_replace</function> przykĹady</title>
       <programlisting role="php">
 <![CDATA[
 <?php
 $var = 'ABCDEFGH:/MNRPQR/';
 echo "Original: $var<hr />\n";
 
-/* Te dwa przykłady zastępują całość $var ciągiem 'bob'. */
+/* Te dwa przykĹady zastÄpujÄ caĹoĹÄ $var ciÄgiem 'bob'. */
 echo substr_replace($var, 'bob', 0) . "<br />\n";
 echo substr_replace($var, 'bob', 0, strlen($var)) . "<br />\n";
 
-/* Wstawia 'bob' odpowiednio na początku $var. */
+/* Wstawia 'bob' odpowiednio na poczÄtku $var. */
 echo substr_replace($var, 'bob', 0, 0) . "<br />\n";
 
-/* Następne zastępują  'MNRPQR' w $var ciągiem 'bob'. */
+/* NastÄpne zastÄpujÄ  'MNRPQR' w $var ciÄgiem 'bob'. */
 echo substr_replace($var, 'bob', 10, -1) . "<br />\n";
 echo substr_replace($var, 'bob', -7, -1) . "<br />\n";
 
@@ -79,7 +79,7 @@ echo substr_replace($var, '', 10, -1) . "<br />\n";
     &note.bin-safe;
 
     <para>
-     Patrz również <function>str_replace</function> i
+     Patrz rĂłwnieĹź <function>str_replace</function> i
      <function>substr</function>.
     </para>
    </refsect1>

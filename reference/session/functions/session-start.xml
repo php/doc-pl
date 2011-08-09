@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
   <refentry xml:id="function.session-start" xmlns="http://docbook.org/ns/docbook">
@@ -13,28 +13,28 @@
       <void/>
      </methodsynopsis>
     <simpara>
-     <function>session_start</function> tworzy sesję lub wznawia bieżącą na
-     podstawie aktualnego identyfikatora sesji przekazanego przy wywołaniu,
-     poprzez metodę GET, POST lub ciasteczko.
+     <function>session_start</function> tworzy sesjÄ lub wznawia bieĹźÄcÄ na
+     podstawie aktualnego identyfikatora sesji przekazanego przy wywoĹaniu,
+     poprzez metodÄ GET, POST lub ciasteczko.
     </simpara>
     <simpara>
-     Jeśli chcesz, aby sesja była nazwana, przed wywołaniem
-     <function>session_start</function> musisz wywołać
+     JeĹli chcesz, aby sesja byĹa nazwana, przed wywoĹaniem
+     <function>session_start</function> musisz wywoĹaÄ
      <function>session_name</function>.
     </simpara>
     <simpara>
-     Ta funkcja zawsze zwraca wartość &true;.
+     Ta funkcja zawsze zwraca wartoĹÄ &true;.
     </simpara>
     <note>
      <para>
-      Jeśli używasz sesji opartych o ciasteczka, to
-      <function>session_start</function> musi być wywołane przed wysłaniem
-      jakichkolwiek danych do przeglądarki.
+      JeĹli uĹźywasz sesji opartych o ciasteczka, to
+      <function>session_start</function> musi byÄ wywoĹane przed wysĹaniem
+      jakichkolwiek danych do przeglÄdarki.
      </para>
     </note>
     <para>
      <example>
-      <title>Przykład sesji: <filename>page1.php</filename></title>
+      <title>PrzykĹad sesji: <filename>page1.php</filename></title>
       <programlisting role="php">
 <![CDATA[
 <?php
@@ -48,10 +48,10 @@ $_SESSION['kolor']     = 'zielony';
 $_SESSION['zwierze']   = 'kot';
 $_SESSION['czas']      = time();
 
-// Działa jeśli ciasteczko sesyjne zostało zaakceptowane
+// DziaĹa jeĹli ciasteczko sesyjne zostaĹo zaakceptowane
 echo '<br /><a href="page2.php">strona 2</a>';
 
-// Lub może przekaż ciasteczko sesyjne, jeśli to konieczne
+// Lub moĹźe przekaĹź ciasteczko sesyjne, jeĹli to konieczne
 echo '<br /><a href="page2.php?' . SID . '">strona 2</a>';
 ?>
 ]]>
@@ -60,15 +60,15 @@ echo '<br /><a href="page2.php?' . SID . '">strona 2</a>';
     </para>
     <para>
      Po odwiedzeniu strony <filename>page1.php</filename>, druga strona,
-     <filename>page2.php</filename> będzie magicznie zawierała dane sesji. W
-     rozdziale <link linkend="ref.session">Sesje</link> znajduje się więcej
+     <filename>page2.php</filename> bÄdzie magicznie zawieraĹa dane sesji. W
+     rozdziale <link linkend="ref.session">Sesje</link> znajduje siÄ wiÄcej
      informacji na temat <link linkend="session.idpassing">propagowania
-      identyfikatora sesji</link>, gdzie można znaleźć na przykład
-     wytłumaczenie co zawiera stała <constant>SID</constant>.
+      identyfikatora sesji</link>, gdzie moĹźna znaleĹşÄ na przykĹad
+     wytĹumaczenie co zawiera staĹa <constant>SID</constant>.
     </para>
     <para>
      <example>
-      <title>Przykład sesji: <filename>page2.php</filename></title>
+      <title>PrzykĹad sesji: <filename>page2.php</filename></title>
       <programlisting role="php">
 <![CDATA[
 <?php
@@ -82,7 +82,7 @@ echo $_SESSION['kolor']; // zielony
 echo $_SESSION['zwierze'];   // not
 echo date('Y m d H:i:s', $_SESSION['time']);
 
-// Tu można wstawić SID, podobnie jak to był na page1.php
+// Tu moĹźna wstawiÄ SID, podobnie jak to byĹ na page1.php
 echo '<br /><a href="page1.php">page 1</a>';
 ?>
 ]]>
@@ -90,36 +90,36 @@ echo '<br /><a href="page1.php">page 1</a>';
      </example>
     </para>
     <simpara>
-     W celu stworzenia nazwanej sesji, niezbędne jest wywołanie funkcji
-     <function>session_name</function> przed wywołaniem
+     W celu stworzenia nazwanej sesji, niezbÄdne jest wywoĹanie funkcji
+     <function>session_name</function> przed wywoĹaniem
      <function>session_start</function>.
     </simpara>
     <simpara>
-     <function>session_start</function> zarejestruje wewnętrzny uchwyt obsługi 
-     wyjścia dla przepisywania URLi jeśli włączona jest opcja
-     <literal>trans-sid</literal>. Jeśli użytkownik używa
+     <function>session_start</function> zarejestruje wewnÄtrzny uchwyt obsĹugi 
+     wyjĹcia dla przepisywania URLi jeĹli wĹÄczona jest opcja
+     <literal>trans-sid</literal>. JeĹli uĹźytkownik uĹźywa
      <literal>ob_gzhandler</literal> lub podobne z
-     <function>ob_start</function>, kolejność uchwytów obsługi wyjścia jest
-     ważna dla prawidłowego wyjścia. Na przykład, użytkownik musi
-     zarejestrować <literal>ob_gzhandler</literal> przed rozpoczęciem sesji.
+     <function>ob_start</function>, kolejnoĹÄ uchwytĂłw obsĹugi wyjĹcia jest
+     waĹźna dla prawidĹowego wyjĹcia. Na przykĹad, uĹźytkownik musi
+     zarejestrowaÄ <literal>ob_gzhandler</literal> przed rozpoczÄciem sesji.
     </simpara>
     <note>
      <simpara>
-      Wskazane jest użycie
+      Wskazane jest uĹźycie
       <link linkend="ini.zlib.output-compression">zlib.output_compression</link>
       zamiast <literal>ob_gzhandler</literal>
      </simpara>
     </note>
     <note>
      <para>
-      Od PHP 4.3.3, wywołanie <function>session_start</function> podczas gdy
-      sesja już została rozpoczęta, spowoduje błąd poziomu
-      <constant>E_NOTICE</constant>. Drugie rozpoczęcie sesji zostanie
+      Od PHP 4.3.3, wywoĹanie <function>session_start</function> podczas gdy
+      sesja juĹź zostaĹa rozpoczÄta, spowoduje bĹÄd poziomu
+      <constant>E_NOTICE</constant>. Drugie rozpoczÄcie sesji zostanie
       zignorowane.
      </para>
     </note>
     <para>
-     Patrz także:
+     Patrz takĹźe:
      <link linkend="reserved.variables.session">$_SESSION</link>,
      <link linkend="ini.session.auto-start">session.auto_start</link> i
      <function>session_id</function>.

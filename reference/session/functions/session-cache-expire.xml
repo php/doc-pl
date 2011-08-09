@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
   <refentry xml:id='function.session-cache-expire' xmlns="http://docbook.org/ns/docbook">
    <refnamediv>
     <refname>session_cache_expire</refname>
-    <refpurpose>Zwróć bieżący czas przedawnienia pamięci podręcznej</refpurpose>
+    <refpurpose>ZwrĂłÄ bieĹźÄcy czas przedawnienia pamiÄci podrÄcznej</refpurpose>
    </refnamediv>
    <refsect1>
     <title>Opis</title>
@@ -13,40 +13,40 @@
       <methodparam choice="opt"><type>int</type><parameter>nowy_czas</parameter></methodparam>
      </methodsynopsis>
     <para>
-     <function>session_cache_expire</function> zwraca bieżące ustawienie
-     <literal>session.cache_expire</literal>. Zwrócona wartość podana jest w
-     minutach. Jeśli podany zostanie parametr
-     <parameter>nowy_czas</parameter>, bieżący czas przedawnienia
+     <function>session_cache_expire</function> zwraca bieĹźÄce ustawienie
+     <literal>session.cache_expire</literal>. ZwrĂłcona wartoĹÄ podana jest w
+     minutach. JeĹli podany zostanie parametr
+     <parameter>nowy_czas</parameter>, bieĹźÄcy czas przedawnienia
      zostanie zamieniony na <parameter>nowy_czas</parameter>.
     </para>
     <para>
-     Czas przedawnienia jest ustawiany na wartość 180 przechowywaną w
-     <literal>session.cache_limiter</literal> w momencie startu. W związku z
-     tym niezbędne jest wywołanie <function>session_cache_expire</function>
-     dla każdego żądania pobrania strony (zanim zostanie wywołane
+     Czas przedawnienia jest ustawiany na wartoĹÄ 180 przechowywanÄ w
+     <literal>session.cache_limiter</literal> w momencie startu. W zwiÄzku z
+     tym niezbÄdne jest wywoĹanie <function>session_cache_expire</function>
+     dla kaĹźdego ĹźÄdania pobrania strony (zanim zostanie wywoĹane
      <function>session_start</function>).
     </para>
     <example>
-     <title>Przykład użycia <function>session_cache_expire</function></title>
+     <title>PrzykĹad uĹźycia <function>session_cache_expire</function></title>
      <programlisting role="php">
 <![CDATA[
 <?php
 
-/* ustaw ogranicznik pamięci podręcznej na 'private' */
+/* ustaw ogranicznik pamiÄci podrÄcznej na 'private' */
 
 session_cache_limiter('private');
 $cache_limiter = session_cache_limiter();
 
-/* ustaw czas przedawnienia pamięci podręcznej na 30 minut */
+/* ustaw czas przedawnienia pamiÄci podrÄcznej na 30 minut */
 session_cache_expire(30);
 $cache_expire = session_cache_expire();
 
-/* rozpocznij sesję */
+/* rozpocznij sesjÄ */
 
 session_start();
 
-echo "Ogranicznik pamięci podręcznej to $cache_limiter<br />";
-echo "Znajdujące się w pamięci podręcznej strony sesyjne przedawnią się " .
+echo "Ogranicznik pamiÄci podrÄcznej to $cache_limiter<br />";
+echo "ZnajdujÄce siÄ w pamiÄci podrÄcznej strony sesyjne przedawniÄ siÄ " .
    "po $cache_expire minutach";
 ?>
 ]]>
@@ -54,13 +54,13 @@ echo "Znajdujące się w pamięci podręcznej strony sesyjne przedawnią się " .
     </example>
     <note>
      <simpara>
-      Ustawienie <parameter>nowy_czas</parameter> ma efekt tylko jeśli
-      <literal>session.cache_limiter</literal> ma wartość
-      <emphasis>różną</emphasis> od <literal>nocache</literal>.
+      Ustawienie <parameter>nowy_czas</parameter> ma efekt tylko jeĹli
+      <literal>session.cache_limiter</literal> ma wartoĹÄ
+      <emphasis>rĂłĹźnÄ</emphasis> od <literal>nocache</literal>.
      </simpara>
     </note>
     <para>
-     Patrz także: <link linkend="ini.session.cache-expire">
+     Patrz takĹźe: <link linkend="ini.session.cache-expire">
      session.cache_expire</link>, <link linkend="ini.session.cache-limiter">
      session.cache_limiter</link> i <function>session_cache_limiter</function>.
     </para>

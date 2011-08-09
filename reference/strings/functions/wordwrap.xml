@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: sMeRFx Status: ready -->
 <!-- splitted from ./en/functions/strings.xml, last change in rev 1.142 -->
   <refentry xml:id="function.wordwrap" xmlns="http://docbook.org/ns/docbook">
    <refnamediv>
     <refname>wordwrap</refname>
     <refpurpose>
-     Zawija łańcuch znaków po podanej liczbie znaków używając znaku
-     łamania łańcucha.
+     Zawija ĹaĹcuch znakĂłw po podanej liczbie znakĂłw uĹźywajÄc znaku
+     Ĺamania ĹaĹcucha.
     </refpurpose>
    </refnamediv>
    <refsect1>
@@ -14,40 +14,40 @@
      <methodsynopsis>
       <type>string</type><methodname>wordwrap</methodname>
       <methodparam><type>string</type><parameter>str</parameter></methodparam>
-      <methodparam choice="opt"><type>int</type><parameter>szerokość</parameter></methodparam>
+      <methodparam choice="opt"><type>int</type><parameter>szerokoĹÄ</parameter></methodparam>
       <methodparam choice="opt"><type>string</type><parameter>break</parameter></methodparam>
       <methodparam choice="opt"><type>bool</type><parameter>cut</parameter></methodparam>
      </methodsynopsis>
     <para>
-     Zwraca łańcuch <parameter>str</parameter> zawinięty
-     w kolumny o odpowiedniej ilości znaków określonej przez opcjonalny parametr
-     <parameter>szerokość</parameter>.  Linia jest łamana
-     przy użyciu (opcjonalnego)parametru <parameter>break</parameter> .
+     Zwraca ĹaĹcuch <parameter>str</parameter> zawiniÄty
+     w kolumny o odpowiedniej iloĹci znakĂłw okreĹlonej przez opcjonalny parametr
+     <parameter>szerokoĹÄ</parameter>.  Linia jest Ĺamana
+     przy uĹźyciu (opcjonalnego)parametru <parameter>break</parameter> .
     </para>
     <para>
-     <function>wordwrap</function> będzie automatycznie zawijał  kolumny co
-     75 znaków używając '<literal>\n</literal>' (nowa linia) jeżeli
-     <parameter>szerokość</parameter> lub<parameter>break</parameter> 
-     nie zostaną podane.
+     <function>wordwrap</function> bÄdzie automatycznie zawijaĹ  kolumny co
+     75 znakĂłw uĹźywajÄc '<literal>\n</literal>' (nowa linia) jeĹźeli
+     <parameter>szerokoĹÄ</parameter> lub<parameter>break</parameter> 
+     nie zostanÄ podane.
     </para>
     <para>
-     Jeżeli <parameter>cut</parameter> jest ustawiony na &true;, łańcuch jest
-     zawsze łamany w określonej szerkości. Gdy mamy wyraz,
-     który jest dłuższy od podanej szerokości, zostanie on przełamany.
-     (Zobacz drugi przykład).
+     JeĹźeli <parameter>cut</parameter> jest ustawiony na &true;, ĹaĹcuch jest
+     zawsze Ĺamany w okreĹlonej szerkoĹci. Gdy mamy wyraz,
+     ktĂłry jest dĹuĹźszy od podanej szerokoĹci, zostanie on przeĹamany.
+     (Zobacz drugi przykĹad).
      <note>
       <para>
-       Parametr opcjonalny <parameter>cut</parameter>  został dodany w PHP
+       Parametr opcjonalny <parameter>cut</parameter>  zostaĹ dodany w PHP
        4.0.3
       </para>
      </note>
     </para>
     <example>
-     <title><function>wordwrap</function> przykład</title>
+     <title><function>wordwrap</function> przykĹad</title>
      <programlisting role="php">
 <![CDATA[
 <?php
-$tekst = "Szybki, brązowy lis przeskoczył nad leniwym psem.";
+$tekst = "Szybki, brÄzowy lis przeskoczyĹ nad leniwym psem.";
 $nowytekst = wordwrap($tekst, 20, "<br />\n");
 
 echo $nowytekst;
@@ -55,22 +55,22 @@ echo $nowytekst;
 ]]>
     </programlisting>
     <para>
-     Ten przykład powinien wyświetlić:
+     Ten przykĹad powinien wyĹwietliÄ:
     </para>
     <screen>
 <![CDATA[
-Szybki, brązowy lis <br />
-przeskoczył nad <br />
+Szybki, brÄzowy lis <br />
+przeskoczyĹ nad <br />
 leniwym psem
 ]]>
      </screen>
     </example>
     <example>
-     <title><function>wordwrap</function> przykład</title>
+     <title><function>wordwrap</function> przykĹad</title>
      <programlisting role="php">
 <![CDATA[
 <?php
-$tekst = "Bardzo długie słooooooooooowo.";
+$tekst = "Bardzo dĹugie sĹooooooooooowo.";
 $nowytekst = wordwrap($tekst, 8, "\n", true);
 
 echo "$newtext\n";
@@ -78,19 +78,19 @@ echo "$newtext\n";
 ]]>
     </programlisting>
     <para>
-     Ten przykład powinien wyświetlić:
+     Ten przykĹad powinien wyĹwietliÄ:
     </para>
     <screen>
 <![CDATA[
 Bardzo
-długie
-słoooooo
+dĹugie
+sĹoooooo
 ooooowo.
 ]]>
      </screen>
     </example>
     <para>
-     Patrz również <function>nl2br</function> i
+     Patrz rĂłwnieĹź <function>nl2br</function> i
      <function>chunk_split</function>.
     </para>
    </refsect1>

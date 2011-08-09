@@ -1,58 +1,58 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: qrak Status: ready -->
 <!-- $Revision$ -->
 <!-- splitted from ./en/functions/math.xml, last change in rev 1.2 -->
   <refentry xml:id="function.number-format" xmlns="http://docbook.org/ns/docbook">
    <refnamediv>
     <refname>number_format</refname>
-    <refpurpose>Formatuje liczbę według szablonu</refpurpose>
+    <refpurpose>Formatuje liczbÄ wedĹug szablonu</refpurpose>
    </refnamediv>
    <refsect1>
     <title>Opis</title>
      <methodsynopsis>
       <type>string</type><methodname>number_format</methodname>
       <methodparam><type>float</type><parameter>liczba</parameter></methodparam>
-      <methodparam choice="opt"><type>int</type><parameter>miejsc_dziesiętnych</parameter></methodparam>
-      <methodparam choice="opt"><type>string</type><parameter>przecinek_dziesiętny</parameter></methodparam>
-      <methodparam><type>string</type><parameter>separator_tysięcy</parameter></methodparam>
+      <methodparam choice="opt"><type>int</type><parameter>miejsc_dziesiÄtnych</parameter></methodparam>
+      <methodparam choice="opt"><type>string</type><parameter>przecinek_dziesiÄtny</parameter></methodparam>
+      <methodparam><type>string</type><parameter>separator_tysiÄcy</parameter></methodparam>
      </methodsynopsis>
     <para>
-     Funkcja <function>number_format</function> zwraca sformatowaną liczbę
-     <parameter>liczba</parameter> według podanych argumentów. Ta funkcja
+     Funkcja <function>number_format</function> zwraca sformatowanÄ liczbÄ
+     <parameter>liczba</parameter> wedĹug podanych argumentĂłw. Ta funkcja
      przyjmuje jeden, dwa lub cztery argumenty (nie trzy):
     </para>
     <para>
-     Jeśli podany jest tylko jeden argument, <parameter>liczba</parameter>
-     zostanie sformatowana bez miejsc dziesiętnych ale z przecinkiem (",")
-     pomiędzy każdą grupą tysięcy.
+     JeĹli podany jest tylko jeden argument, <parameter>liczba</parameter>
+     zostanie sformatowana bez miejsc dziesiÄtnych ale z przecinkiem (",")
+     pomiÄdzy kaĹźdÄ grupÄ tysiÄcy.
     </para>
     <para>
-     Jeśli podane są dwa argumenty, <parameter>liczba</parameter> będzie
-     sformatowana z <parameter>miejsc_dziesiętnych</parameter>, z kropką
-     (".") w charakterze przecinka dziesiętnego i przecinkiem (",")
-     pomiędzy każdą grupą tysięcy.
+     JeĹli podane sÄ dwa argumenty, <parameter>liczba</parameter> bÄdzie
+     sformatowana z <parameter>miejsc_dziesiÄtnych</parameter>, z kropkÄ
+     (".") w charakterze przecinka dziesiÄtnego i przecinkiem (",")
+     pomiÄdzy kaĹźdÄ grupÄ tysiÄcy.
     </para>
     <para>
-     Kiedy wszystkie cztery parametry są podane, <parameter>liczba</parameter>
-     będzie sformatowana z <parameter>miejsc_dziesiętnych</parameter>,
-     z <parameter>przecinek_dziesiętny</parameter> zamiast kropki (".") i
-     <parameter>separator_tysięcy</parameter> pomiędzy każdą grupą tysięcy.
+     Kiedy wszystkie cztery parametry sÄ podane, <parameter>liczba</parameter>
+     bÄdzie sformatowana z <parameter>miejsc_dziesiÄtnych</parameter>,
+     z <parameter>przecinek_dziesiÄtny</parameter> zamiast kropki (".") i
+     <parameter>separator_tysiÄcy</parameter> pomiÄdzy kaĹźdÄ grupÄ tysiÄcy.
     </para>
     <note>
      <para>
-      Tylko pierwszy znak z <parameter>separator_tysięcy</parameter> jest
-      wykorzystywany. Na przykład, jeśli użyjesz <literal>foo</literal> jako
-      separatora, to z liczby <literal>1000</literal> funkcja zwróci
+      Tylko pierwszy znak z <parameter>separator_tysiÄcy</parameter> jest
+      wykorzystywany. Na przykĹad, jeĹli uĹźyjesz <literal>foo</literal> jako
+      separatora, to z liczby <literal>1000</literal> funkcja zwrĂłci
       <literal>1f000</literal>.
      </para>
     </note>
     <para>
     <example>
-     <title><function>number_format</function> - przykłady</title>
+     <title><function>number_format</function> - przykĹady</title>
      <para>
-      W polskiej notacji liczbowej używa się przecinka (",") jako przecinka
-      dziesiętnego i spacji (" ") jako separatora tysięcy. W PHP można
-      to zrobić tak:
+      W polskiej notacji liczbowej uĹźywa siÄ przecinka (",") jako przecinka
+      dziesiÄtnego i spacji (" ") jako separatora tysiÄcy. W PHP moĹźna
+      to zrobiÄ tak:
      </para>
       <programlisting role="php">
 <![CDATA[
@@ -60,7 +60,7 @@
 
     $liczba = 1234.56;
 
-    // notacja angielska (domyślna)
+    // notacja angielska (domyĹlna)
     $notacja_angielska = number_format($liczba);
     // 1,234.56
 
@@ -70,7 +70,7 @@
 
     $number = 1234.5678;
 
-    // notacja angielska bez separatora tysięcy
+    // notacja angielska bez separatora tysiÄcy
     $notacja_angielska = number_format($liczba, 2, '.', '');
     // 1234.57
 
@@ -80,7 +80,7 @@
      </example>
     </para>
     <para>
-     Patrz także: <function>money_format</function>, <function>sprintf</function>,
+     Patrz takĹźe: <function>money_format</function>, <function>sprintf</function>,
      <function>printf</function> i <function>sscanf</function>.
     </para>
    </refsect1>

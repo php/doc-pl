@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
   <refentry xml:id="function.session-cache-limiter" xmlns="http://docbook.org/ns/docbook">
    <refnamediv>
     <refname>session_cache_limiter</refname>
     <refpurpose>
-     Pobierz i/lub ustaw bieżący ogranicznik pamięci podręcznej
+     Pobierz i/lub ustaw bieĹźÄcy ogranicznik pamiÄci podrÄcznej
     </refpurpose>
    </refnamediv>
    <refsect1>
@@ -15,59 +15,59 @@
       <methodparam choice="opt"><type>string</type><parameter>ogranicznik</parameter></methodparam>
      </methodsynopsis>
     <para>
-     <function>session_cache_limiter</function> zwraca nazwę bieżącego
-     ogranicznika pamięci podręcznej. Jeśli podany został parametr
-     <parameter>ogranicznik</parameter>, nazwa bieżącego ogranicznego zostanie
-     zmieniona na nową wartość.
+     <function>session_cache_limiter</function> zwraca nazwÄ bieĹźÄcego
+     ogranicznika pamiÄci podrÄcznej. JeĹli podany zostaĹ parametr
+     <parameter>ogranicznik</parameter>, nazwa bieĹźÄcego ogranicznego zostanie
+     zmieniona na nowÄ wartoĹÄ.
     </para>
     <para>
-     Ogranicznik pamięci podręcznej kontroluje nagłówki HTTP wysyłane do
-     klienta. Nagłówki te ustalają zasady, według których zawartość strony
-     może być przechowywana w pamięci podręcznej przeglądarki. Ustawiając
-     ogranicznik pamięci podręcznej na <literal>nocache</literal>
-     zabronimy jakiekolwiek zachowywanie strony po stronie klienta. Wartość
+     Ogranicznik pamiÄci podrÄcznej kontroluje nagĹĂłwki HTTP wysyĹane do
+     klienta. NagĹĂłwki te ustalajÄ zasady, wedĹug ktĂłrych zawartoĹÄ strony
+     moĹźe byÄ przechowywana w pamiÄci podrÄcznej przeglÄdarki. UstawiajÄc
+     ogranicznik pamiÄci podrÄcznej na <literal>nocache</literal>
+     zabronimy jakiekolwiek zachowywanie strony po stronie klienta. WartoĹÄ
      <literal>public</literal> pozwoli na takie przechywanie. Ogranicznikiem
-     może być też <literal>private</literal>, który jest troszkę bardziej
-     restrykcyjny niż <literal>public</literal>.
+     moĹźe byÄ teĹź <literal>private</literal>, ktĂłry jest troszkÄ bardziej
+     restrykcyjny niĹź <literal>public</literal>.
     </para>
     <para>
-     W trybie <literal>private</literal> nagłówek <literal>Expire</literal>,
-     który jest wysyłany do klienta, może spowodować nieoczekiwane działanie
-     niektórych przeglądarek, między innymi Mozilli. Możesz uniknąć tego
-     problemu używając trybu <literal>private_no_expire</literal>. Nagłówek
-     <literal>Expire</literal> nie jest w tym wypadku wysyłany do klienta.
+     W trybie <literal>private</literal> nagĹĂłwek <literal>Expire</literal>,
+     ktĂłry jest wysyĹany do klienta, moĹźe spowodowaÄ nieoczekiwane dziaĹanie
+     niektĂłrych przeglÄdarek, miÄdzy innymi Mozilli. MoĹźesz uniknÄÄ tego
+     problemu uĹźywajÄc trybu <literal>private_no_expire</literal>. NagĹĂłwek
+     <literal>Expire</literal> nie jest w tym wypadku wysyĹany do klienta.
     </para>
     <note>
      <para>
-      <literal>private_no_expire</literal> zostało dodane w PHP 4.2.0.
+      <literal>private_no_expire</literal> zostaĹo dodane w PHP 4.2.0.
      </para>
     </note>
     <para>
-     Ogranicznik pamięci podręcznej w momencie wywołania skryptu jest zerowany
-     do wartości domyślnej przechowywanej w <link
+     Ogranicznik pamiÄci podrÄcznej w momencie wywoĹania skryptu jest zerowany
+     do wartoĹci domyĹlnej przechowywanej w <link
       linkend="ini.session.cache-limiter">session.cache_limiter</link>. W
-     związku z tym niezbędne jest wywołanie
-     <function>session_cache_limiter</function> dla każdego wywołania skryptu
-     (i przed wywołaniem <function>session_start</function>).
+     zwiÄzku z tym niezbÄdne jest wywoĹanie
+     <function>session_cache_limiter</function> dla kaĹźdego wywoĹania skryptu
+     (i przed wywoĹaniem <function>session_start</function>).
     </para>
     <example>
-     <title>Przykłady <function>session_cache_limiter</function></title>
+     <title>PrzykĹady <function>session_cache_limiter</function></title>
      <programlisting role="php">
 <![CDATA[
 <?php
 
-/* Ustaw ogranicznik pamięci podręcznej na 'private' */
+/* Ustaw ogranicznik pamiÄci podrÄcznej na 'private' */
 
 session_cache_limiter('private');
 $cache_limiter = session_cache_limiter();
 
-echo "Ogranicznikiem pamięci podręcznej jest teraz $cache_limiter<br />";
+echo "Ogranicznikiem pamiÄci podrÄcznej jest teraz $cache_limiter<br />";
 ?>
 ]]>
      </programlisting>
     </example>
     <para>
-     Patrz także:
+     Patrz takĹźe:
      <link linkend="ini.session.cache-limiter">session.cache_limiter</link>.
     </para>
    </refsect1>
