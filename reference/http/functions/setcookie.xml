@@ -1,96 +1,96 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 1.3 Maintainer: qrak Status: ready -->
 <!-- $Revision$ -->
   <refentry xml:id="function.setcookie" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
    <refnamediv>
     <refname>setcookie</refname>
-    <refpurpose>Wysyła ciasteczko</refpurpose>
+    <refpurpose>WysyĹa ciasteczko</refpurpose>
    </refnamediv>
    <refsect1>
     <title>Opis</title>
      <methodsynopsis>
       <type>int</type><methodname>setcookie</methodname>
       <methodparam><type>string</type><parameter>nazwa</parameter></methodparam>
-      <methodparam choice="opt"><type>string</type><parameter>wartość</parameter></methodparam>
-      <methodparam choice="opt"><type>int</type><parameter>data_ważności</parameter></methodparam>
-      <methodparam choice="opt"><type>string</type><parameter>ścieżka</parameter></methodparam>
+      <methodparam choice="opt"><type>string</type><parameter>wartoĹÄ</parameter></methodparam>
+      <methodparam choice="opt"><type>int</type><parameter>data_waĹźnoĹci</parameter></methodparam>
+      <methodparam choice="opt"><type>string</type><parameter>ĹcieĹźka</parameter></methodparam>
       <methodparam choice="opt"><type>string</type><parameter>domena</parameter></methodparam>
       <methodparam choice="opt"><type>int</type><parameter>bezpieczne</parameter></methodparam>
      </methodsynopsis>
     <para>
-     <function>setcookie</function> określa ciasteczko (ang. cookie) do
-     wysłania z nagłówkami HTTP. Ciasteczko musi być wysłane <emphasis>zanim
-     </emphasis> jakiekolwiek inne nagłówki zostaną wysłane (to jest
+     <function>setcookie</function> okreĹla ciasteczko (ang. cookie) do
+     wysĹania z nagĹĂłwkami HTTP. Ciasteczko musi byÄ wysĹane <emphasis>zanim
+     </emphasis> jakiekolwiek inne nagĹĂłwki zostanÄ wysĹane (to jest
      ograniczenie ciasteczek, nie PHP). To wymaga od ciebie umieszczenia
-     wywołań tej funkcji przed znacznikami <literal>&lt;html></literal> czy
+     wywoĹaĹ tej funkcji przed znacznikami <literal>&lt;html></literal> czy
      <literal>&lt;head></literal>.
     </para>
     <para>
-     Wszystkie argumenty poza <parameter>nazwa</parameter> są opcjonalne.
-     Jeśli tylko argument nazwa jest obecny, ciasteczko o takie nazwie zostanie
-     usunięte z klienta. Możesz też opuścić argumenty za pomocą pustego łańcucha
-     (<emphasis>&quot;&quot;</emphasis>). Argumenty <parameter>data_ważności
-     </parameter> i <parameter>bezpieczne</parameter> są liczbami całkowitymi
-     i nie można ich opuścić wstawiając pusty łańcuch. Zamiast niego użyj
+     Wszystkie argumenty poza <parameter>nazwa</parameter> sÄ opcjonalne.
+     JeĹli tylko argument nazwa jest obecny, ciasteczko o takie nazwie zostanie
+     usuniÄte z klienta. MoĹźesz teĹź opuĹciÄ argumenty za pomocÄ pustego ĹaĹcucha
+     (<emphasis>&quot;&quot;</emphasis>). Argumenty <parameter>data_waĹźnoĹci
+     </parameter> i <parameter>bezpieczne</parameter> sÄ liczbami caĹkowitymi
+     i nie moĹźna ich opuĹciÄ wstawiajÄc pusty ĹaĹcuch. Zamiast niego uĹźyj
      liczby zero (<emphasis>0</emphasis>). Argument 
-     <parameter>data_ważności</parameter> 
+     <parameter>data_waĹźnoĹci</parameter> 
      jest regularnym uniksowym znacznikiem czasu, takim jak
      zwracany przez funkcje <function>time</function> lub <function>mktime
-     </function>. Argument <parameter>bezpieczne</parameter> oznacza, że
-     ciasteczko może być przekazywane tylko poprzez bezpieczne połączenie HTTPS.
+     </function>. Argument <parameter>bezpieczne</parameter> oznacza, Ĺźe
+     ciasteczko moĹźe byÄ przekazywane tylko poprzez bezpieczne poĹÄczenie HTTPS.
     </para>
     <para>
-     Wysłane ciasteczko jest dostępne już przy następnym załadowaniu strony
-     w tablicy <varname>$_COOKIE</varname>. W wersjach PHP do 4.1.0 była to
+     WysĹane ciasteczko jest dostÄpne juĹź przy nastÄpnym zaĹadowaniu strony
+     w tablicy <varname>$_COOKIE</varname>. W wersjach PHP do 4.1.0 byĹa to
      tablica <varname>$HTTP_COOKIE_VARS</varname>.
     </para>
     <para>
-     Częste pułapki:
+     CzÄste puĹapki:
      <itemizedlist>
       <listitem>
        <simpara>
-        Ciasteczka nie będą widziane do następnego przeładowania strony
-        dla której mają być widoczne.
+        Ciasteczka nie bÄdÄ widziane do nastÄpnego przeĹadowania strony
+        dla ktĂłrej majÄ byÄ widoczne.
        </simpara>
       </listitem>
       <listitem>
        <simpara>
-        Ciasteczko może być usunięte tylko z tymi parametrami, z jakimi je
+        Ciasteczko moĹźe byÄ usuniÄte tylko z tymi parametrami, z jakimi je
         ustawiono.
        </simpara>
       </listitem>
      </itemizedlist>
     </para>
     <simpara>
-     W PHP 3, wielokrotne wywołania <function>setcookie</function> w jednym
-     skrypcie wykonywane były w odwrotnej kolejności. Jeśli chcesz usunąć jedno
-     ciastko przed wprowadzeniem kolejnego, powinieneś umieścić wprowadzenie
-     nowego przed usunęciem starego. W PHP 4, wielokrotne wywołania 
-     <function>setcookie</function> wykonywane są we właściwej kolejności.
+     W PHP 3, wielokrotne wywoĹania <function>setcookie</function> w jednym
+     skrypcie wykonywane byĹy w odwrotnej kolejnoĹci. JeĹli chcesz usunÄÄ jedno
+     ciastko przed wprowadzeniem kolejnego, powinieneĹ umieĹciÄ wprowadzenie
+     nowego przed usunÄciem starego. W PHP 4, wielokrotne wywoĹania 
+     <function>setcookie</function> wykonywane sÄ we wĹaĹciwej kolejnoĹci.
     </simpara>
     <para>
-     Parę przykładów - jak wysyłać ciasteczka:
+     ParÄ przykĹadĂłw - jak wysyĹaÄ ciasteczka:
      <example>
-      <title><function>setcookie</function> wysyła przykładowe ciasteczka
+      <title><function>setcookie</function> wysyĹa przykĹadowe ciasteczka
       </title>
       <programlisting role="php">
 <![CDATA[
 setcookie ("TestCookie", $value);
-setcookie ("TestCookie", $value,time()+3600);  /* traci ważność za godzinę */
+setcookie ("TestCookie", $value,time()+3600);  /* traci waĹźnoĹÄ za godzinÄ */
 setcookie ("TestCookie", $value,time()+3600, "/~rasmus/", ".utoronto.ca", 1);
 ]]>
       </programlisting>
      </example>
     </para>
     <para>
-     Aby skasować ciasteczko, należy ustawić datę ważności na datę w
-     przeszłości, co uruchomi w przeglądarce mechanizm kasowania ciasteczek.
-     A teraz, jak usunąć ciasteczka z poprzedniego przykładu:
+     Aby skasowaÄ ciasteczko, naleĹźy ustawiÄ datÄ waĹźnoĹci na datÄ w
+     przeszĹoĹci, co uruchomi w przeglÄdarce mechanizm kasowania ciasteczek.
+     A teraz, jak usunÄÄ ciasteczka z poprzedniego przykĹadu:
      <example>
       <title>Kasowanie ciasteczek</title>
       <programlisting role="php">
 <![CDATA[
-// ustaw datę ważności na godzinę wstecz
+// ustaw datÄ waĹźnoĹci na godzinÄ wstecz
 setcookie ("TestCookie", "", time() - 3600);
 setcookie ("TestCookie", "", time() - 3600, "/~rasmus/", ".utoronto.ca", 1);
 ]]>
@@ -98,11 +98,11 @@ setcookie ("TestCookie", "", time() - 3600, "/~rasmus/", ".utoronto.ca", 1);
      </example>
     </para>
     <para>
-     Proszę zwrócić uwagę, że zawartość ciasteczka jest automatycznie kodowana
+     ProszÄ zwrĂłciÄ uwagÄ, Ĺźe zawartoĹÄ ciasteczka jest automatycznie kodowana
      do formatu
-     URL przy wysyłaniu, a po odebraniu automatycznie dekodowana i przypisywana
-     do zmiennej o tej samej nazwie co ciasteczko. Aby poznać zawartość
-     przykładowego ciasteczka ze skryptu, należy zastosować poniższy przykład:
+     URL przy wysyĹaniu, a po odebraniu automatycznie dekodowana i przypisywana
+     do zmiennej o tej samej nazwie co ciasteczko. Aby poznaÄ zawartoĹÄ
+     przykĹadowego ciasteczka ze skryptu, naleĹźy zastosowaÄ poniĹźszy przykĹad:
      <informalexample>
       <programlisting role="php">
 <![CDATA[
@@ -113,10 +113,10 @@ echo $_COOKIE["TestCookie"];
      </informalexample>
     </para>
     <para>
-     Można też tworzyć tablice złożone z ciasteczek za pomocą zapisu tablicowego
+     MoĹźna teĹź tworzyÄ tablice zĹoĹźone z ciasteczek za pomocÄ zapisu tablicowego
      w nazwie ciasteczka. Powoduje to utworzenie tylu ciasteczek, ile jest
-     elemetów tablicy, a po otrzymaniu takiego ciasteczka, jego wartości
-     umieszczane są w tablicy o nazwie takiej jak ciasteczko.
+     elemetĂłw tablicy, a po otrzymaniu takiego ciasteczka, jego wartoĹci
+     umieszczane sÄ w tablicy o nazwie takiej jak ciasteczko.
      <informalexample>
       <programlisting role="php">
 <![CDATA[
@@ -133,19 +133,19 @@ if (isset ($cookie)) {
      </informalexample>
     </para>
     <para>
-     Więcej informacji na temat ciasteczek znajduje się w specyfikacji
+     WiÄcej informacji na temat ciasteczek znajduje siÄ w specyfikacji
      Netscape'a, na stronie <link
      xlink:href="&spec.cookies;">&spec.cookies;</link>.
     </para>
     <simpara>
      Microsoft Internet Explorer 4 z zainstalowanym Service Pack 1 nie radzi
-     sobie poprawnie z ciasteczkami, które mają ustawiony parametr
-     <parameter>ścieżka</parameter>. 
+     sobie poprawnie z ciasteczkami, ktĂłre majÄ ustawiony parametr
+     <parameter>ĹcieĹźka</parameter>. 
     </simpara>
     <simpara>
      Netscape Communicator 4.05 i Microsoft Internet Explorer 3.x niepoprawnie
-     obsługują ciasteczka, w których <parameter>ścieżka</parameter> i 
-     <parameter>data_ważności</parameter> nie są ustawione.
+     obsĹugujÄ ciasteczka, w ktĂłrych <parameter>ĹcieĹźka</parameter> i 
+     <parameter>data_waĹźnoĹci</parameter> nie sÄ ustawione.
     </simpara>
    </refsect1>
   </refentry>
