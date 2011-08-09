@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 79422caf1a86d08a9ab1799c450c537e8a63646f Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.json-decode" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>json_decode</refname>
-  <refpurpose>Dekoduje łańcuch JSON</refpurpose>
+  <refpurpose>Dekoduje ĹaĹcuch JSON</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
@@ -13,11 +13,11 @@
    <type>mixed</type><methodname>json_decode</methodname>
    <methodparam><type>string</type><parameter>json</parameter></methodparam>
    <methodparam choice="opt"><type>bool</type><parameter>asocjacyjnie</parameter><initializer>false</initializer></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>poziom_zagłębienia</parameter><initializer>512</initializer></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>poziom_zagĹÄbienia</parameter><initializer>512</initializer></methodparam>
    <methodparam choice="opt"><type>int</type><parameter>opcje</parameter><initializer>0</initializer></methodparam>
   </methodsynopsis>
   <para>
-   Konwertuje łańcuch JSON do zmiennej PHP.
+   Konwertuje ĹaĹcuch JSON do zmiennej PHP.
   </para>
  </refsect1>
 
@@ -32,7 +32,7 @@
        Dekodowany <parameter>json</parameter> <type>string</type>.
       </para>
       <para>
-       Ta funkcja działa tylko z danymi w kodowaniu znaków UTF-8.
+       Ta funkcja dziaĹa tylko z danymi w kodowaniu znakĂłw UTF-8.
       </para>
      </listitem>
     </varlistentry>
@@ -40,16 +40,16 @@
      <term><parameter>asocjacyjnie</parameter></term>
      <listitem>
       <para>
-       Gdy jest ustawiony na &true;, zwracane <type>obiekty</type> zostaną
+       Gdy jest ustawiony na &true;, zwracane <type>obiekty</type> zostanÄ
        przekonwertowane do <type>tablic</type> asocjacyjnych.
       </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>poziom_zagłębienia</parameter></term>
+     <term><parameter>poziom_zagĹÄbienia</parameter></term>
      <listitem>
       <para>
-       Limit zagnieżdżania danych określony przez użytkownika.
+       Limit zagnieĹźdĹźania danych okreĹlony przez uĹźytkownika.
       </para>
      </listitem>
     </varlistentry>
@@ -57,9 +57,9 @@
      <term><parameter>opcje</parameter></term>
      <listitem>
       <para>
-       Maska bitowa - opcje dekodowania JSON.  Obecnie obsługiwana
+       Maska bitowa - opcje dekodowania JSON.  Obecnie obsĹugiwana
        jest tylko <constant>JSON_BIGINT_AS_STRING</constant>
-       (domyślnie jest rzutowanie typów large integer na float)
+       (domyĹlnie jest rzutowanie typĂłw large integer na float)
       </para>
       <para>
        &version.trunk.after.53;
@@ -73,12 +73,12 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca wartość zakodowaną w <parameter>json</parameter> w odpowiednim
-   typie PHP. Wartości <literal>true</literal>, <literal>false</literal>
-   i <literal>null</literal> (niezależnie od wielkości liter) są zwracane odpowiednio
-   jako &true;, &false; i &null;. &null; jest zwracany jeśli parametr
-   <parameter>json</parameter> nie może zostać odkodowany, lub jeżeli zakodowane
-   dane znajdują się głębiej niż ustalony limit zagnieżdżania.
+   Zwraca wartoĹÄ zakodowanÄ w <parameter>json</parameter> w odpowiednim
+   typie PHP. WartoĹci <literal>true</literal>, <literal>false</literal>
+   i <literal>null</literal> (niezaleĹźnie od wielkoĹci liter) sÄ zwracane odpowiednio
+   jako &true;, &false; i &null;. &null; jest zwracany jeĹli parametr
+   <parameter>json</parameter> nie moĹźe zostaÄ odkodowany, lub jeĹźeli zakodowane
+   dane znajdujÄ siÄ gĹÄbiej niĹź ustalony limit zagnieĹźdĹźania.
   </para>
  </refsect1>
 
@@ -86,7 +86,7 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład <function>json_decode</function></title>
+    <title>PrzykĹad <function>json_decode</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -120,7 +120,7 @@ array(5) {
     </screen>
    </example>
    <example>
-    <title>Inny przykład</title>
+    <title>Inny przykĹad</title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -135,23 +135,23 @@ print $obj->{'foo-bar'}; // 12345
     </programlisting>
    </example>
    <example>
-    <title>Różne przykłady błędów <function>json_decode</function></title>
+    <title>RĂłĹźne przykĹady bĹÄdĂłw <function>json_decode</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
 
-// poniższe łańcucy są prawidłowe w JavaScript, ale nieprawidłowe w JSON
+// poniĹźsze ĹaĹcucy sÄ prawidĹowe w JavaScript, ale nieprawidĹowe w JSON
 
-// nazwa i wartość musi być zawarta w podwójny cudzysłów
-// pojedyńcze cudzysłowy nie są prawidłowe
+// nazwa i wartoĹÄ musi byÄ zawarta w podwĂłjny cudzysĹĂłw
+// pojedyĹcze cudzysĹowy nie sÄ prawidĹowe
 $bad_json = "{ 'bar': 'baz' }";
 json_decode($bad_json); // null
 
-// nazwa musi być zawarta w podwójny cudzysłów
+// nazwa musi byÄ zawarta w podwĂłjny cudzysĹĂłw
 $bad_json = '{ bar: "baz" }';
 json_decode($bad_json); // null
 
-// przecinki na końcu nie są dozwolone
+// przecinki na koĹcu nie sÄ dozwolone
 $bad_json = '{ bar: "baz", }';
 json_decode($bad_json); // null
 
@@ -160,7 +160,7 @@ json_decode($bad_json); // null
     </programlisting>
    </example>
    <example>
-    <title>Błędy - <parameter>poziom zagłębienia</parameter></title>
+    <title>BĹÄdy - <parameter>poziom zagĹÄbienia</parameter></title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -174,24 +174,24 @@ $json = json_encode(
             ),
             'Polish' => array(
                 'Jeden',
-                'Styczeń'
+                'StyczeĹ'
             )
         )
     )
 );
 
-// Określenie błędów.
+// OkreĹlenie bĹÄdĂłw.
 $json_errors = array(
-    JSON_ERROR_NONE => 'Nie wystąpił żaden błąd',
-    JSON_ERROR_DEPTH => 'Przekroczono maksymalny poziom zagłębienia',
-    JSON_ERROR_CTRL_CHAR => 'Błąd zanku sterującego, prawdopodobnie nieprawidłowo zakodowany',
-    JSON_ERROR_SYNTAX => 'Błąd składni',
+    JSON_ERROR_NONE => 'Nie wystÄpiĹ Ĺźaden bĹÄd',
+    JSON_ERROR_DEPTH => 'Przekroczono maksymalny poziom zagĹÄbienia',
+    JSON_ERROR_CTRL_CHAR => 'BĹÄd zanku sterujÄcego, prawdopodobnie nieprawidĹowo zakodowany',
+    JSON_ERROR_SYNTAX => 'BĹÄd skĹadni',
 );
 
-// Pokaż błędy na różych poziomach zagłębienia.
+// PokaĹź bĹÄdy na rĂłĹźych poziomach zagĹÄbienia.
 foreach(range(4, 3, -1) as $depth) {
     var_dump(json_decode($json, True, $depth));
-    echo 'Ostatni błąd : ', $json_errors[json_last_error()], PHP_EOL, PHP_EOL;
+    echo 'Ostatni bĹÄd : ', $json_errors[json_last_error()], PHP_EOL, PHP_EOL;
     }
 ?>
 ]]>
@@ -214,14 +214,14 @@ array(1) {
       [0]=>
       string(3) "Jeden"
       [1]=>
-      string(7) "Styczeń"
+      string(7) "StyczeĹ"
     }
   }
 }
-Ostatni błąd : Nie wystąpił żaden błąd
+Ostatni bĹÄd : Nie wystÄpiĹ Ĺźaden bĹÄd
 
 NULL
-Ostatni błąd : Przekroczono maksymalny poziom zagłębienia
+Ostatni bĹÄd : Przekroczono maksymalny poziom zagĹÄbienia
 ]]>
     </screen>
    </example>
@@ -259,7 +259,7 @@ string(20) "12345678901234567890"
   <note>
    <para>
     W przypadku niepowodzenia dekodowania danych funkcja <function>json_last_error</function>
-    może zostać użyta do ścisłego ustalenia rodzaju błędu.
+    moĹźe zostaÄ uĹźyta do ĹcisĹego ustalenia rodzaju bĹÄdu.
    </para>
   </note>
  </refsect1>
@@ -284,11 +284,11 @@ string(20) "12345678901234567890"
       </row>
       <row>
        <entry>5.3.0</entry>
-       <entry>Dodano opcjonalny parametr <parameter>poziom_zagłębienia</parameter>. Domyślny limit zagnieżdżania danych został zwiększony z 128 do 512</entry>
+       <entry>Dodano opcjonalny parametr <parameter>poziom_zagĹÄbienia</parameter>. DomyĹlny limit zagnieĹźdĹźania danych zostaĹ zwiÄkszony z 128 do 512</entry>
       </row>
       <row>
        <entry>5.2.3</entry>
-       <entry>Limit zagnieżdżania danych został zwiększony z 20 do 128</entry>
+       <entry>Limit zagnieĹźdĹźania danych zostaĹ zwiÄkszony z 20 do 128</entry>
       </row>
      </tbody>
     </tgroup>

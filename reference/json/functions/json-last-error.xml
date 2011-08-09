@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: a72b61edd5305b4bd1efc2112b9d64c6aed43987 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.json-last-error" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>json_last_error</refname>
-  <refpurpose>Zwraca ostatni błąd JSON</refpurpose>
+  <refpurpose>Zwraca ostatni bĹÄd JSON</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
@@ -14,7 +14,7 @@
    <void />
   </methodsynopsis>
   <para>
-   Zwraca ostatni błąd, który wystąpił podaczas parsowania JSON.
+   Zwraca ostatni bĹÄd, ktĂłry wystÄpiĹ podaczas parsowania JSON.
   </para>
  </refsect1>
 
@@ -26,48 +26,48 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwaraca kod błędu jako integer. Wartość może być jedną z następujących
-   stałych:
+   Zwaraca kod bĹÄdu jako integer. WartoĹÄ moĹźe byÄ jednÄ z nastÄpujÄcych
+   staĹych:
   </para>
   <table>
    <title>JSON error codes</title>
    <tgroup cols="2">
     <thead>
      <row>
-      <entry>Stała</entry>
+      <entry>StaĹa</entry>
       <entry>Znaczenie</entry>
-      <entry>Dostępność</entry>
+      <entry>DostÄpnoĹÄ</entry>
      </row>
     </thead>
     <tbody>
      <row>
       <entry><constant>JSON_ERROR_NONE</constant></entry>
-      <entry>Nie wystąpił żaden błąd</entry>
+      <entry>Nie wystÄpiĹ Ĺźaden bĹÄd</entry>
       <entry></entry>
      </row>
      <row>
       <entry><constant>JSON_ERROR_DEPTH</constant></entry>
-      <entry>Przekroczono maksymalny poziom zagnieżdżenia danych</entry>
+      <entry>Przekroczono maksymalny poziom zagnieĹźdĹźenia danych</entry>
       <entry></entry>
      </row>
      <row>
       <entry><constant>JSON_ERROR_CTRL_CHAR</constant></entry>
-      <entry>Błąd znaku kontrolnego. Prawdopodobnie został nieprawidłowo zakodowany</entry>
+      <entry>BĹÄd znaku kontrolnego. Prawdopodobnie zostaĹ nieprawidĹowo zakodowany</entry>
       <entry></entry>
      </row>
      <row>
       <entry><constant>JSON_ERROR_STATE_MISMATCH</constant></entry>
-      <entry>Niepoprawny składniowo lub zniekształcony JSON</entry>
+      <entry>Niepoprawny skĹadniowo lub znieksztaĹcony JSON</entry>
       <entry></entry>
      </row>
      <row>
       <entry><constant>JSON_ERROR_SYNTAX</constant></entry>
-      <entry>Błąd składni</entry>
+      <entry>BĹÄd skĹadni</entry>
       <entry></entry>
      </row>
      <row>
       <entry><constant>JSON_ERROR_UTF8</constant></entry>
-      <entry>Nieprawidłowe znaki UTF-8. Możliwe, że nieprawidłowo zakodowane</entry>
+      <entry>NieprawidĹowe znaki UTF-8. MoĹźliwe, Ĺźe nieprawidĹowo zakodowane</entry>
       <entry>PHP 5.3.3</entry>
      </row>
     </tbody>
@@ -79,15 +79,15 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład <function>json_last_error</function></title>
+    <title>PrzykĹad <function>json_last_error</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
-// Prawidłowy łańcuch znaków JSON
+// PrawidĹowy ĹaĹcuch znakĂłw JSON
 $json[] = '{"Organizacja": "PHP Documentation Team"}';
 
-// Nieprawidłowy łańcuch znaków JSON spowoduje błąd składni.
-// W tym przypadku został użyty znak ' zamiast "
+// NieprawidĹowy ĹaĹcuch znakĂłw JSON spowoduje bĹÄd skĹadni.
+// W tym przypadku zostaĹ uĹźyty znak ' zamiast "
 $json[] = "{'Organizacja': 'PHP Documentation Team'}";
 
 
@@ -99,16 +99,16 @@ foreach($json as $string)
     switch(json_last_error())
     {
         case JSON_ERROR_DEPTH:
-            echo ' - Przekroczono maksymalny poziom zagnieżdżania danych';
+            echo ' - Przekroczono maksymalny poziom zagnieĹźdĹźania danych';
         break;
         case JSON_ERROR_CTRL_CHAR:
             echo ' - Znaleziono niespodziewany znak kontrolny';
         break;
         case JSON_ERROR_SYNTAX:
-            echo ' - Błąd składni. Źle skonstruowany JSON';
+            echo ' - BĹÄd skĹadni. Ĺšle skonstruowany JSON';
         break;
         case JSON_ERROR_NONE:
-            echo ' - Brak błędów';
+            echo ' - Brak bĹÄdĂłw';
         break;
     }
 
@@ -120,8 +120,8 @@ foreach($json as $string)
     &example.outputs;
     <screen>
 <![CDATA[
-Decoding: {"Organizacja": "PHP Documentation Team"} - Brak błędów
-Decoding: {'Organizacja': 'PHP Documentation Team'} - Błąd składni. Źle skonstruowany JSON
+Decoding: {"Organizacja": "PHP Documentation Team"} - Brak bĹÄdĂłw
+Decoding: {'Organizacja': 'PHP Documentation Team'} - BĹÄd skĹadni. Ĺšle skonstruowany JSON
 ]]>
     </screen>
    </example>

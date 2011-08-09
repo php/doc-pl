@@ -1,22 +1,22 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 6557e8b9b677612e90628adefa62a8107e7f9408 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.json-encode" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>json_encode</refname>
-  <refpurpose>Zwraca JSON reprezentujący wartość</refpurpose>
+  <refpurpose>Zwraca JSON reprezentujÄcy wartoĹÄ</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>string</type><methodname>json_encode</methodname>
-   <methodparam><type>mixed</type><parameter>wartość</parameter></methodparam>
+   <methodparam><type>mixed</type><parameter>wartoĹÄ</parameter></methodparam>
    <methodparam choice="opt"><type>int</type><parameter>opcje</parameter><initializer>0</initializer></methodparam>
   </methodsynopsis>
   <para>
-   Zwraca łańcuch JSON reprezentujący
-   <parameter>wartość</parameter>.
+   Zwraca ĹaĹcuch JSON reprezentujÄcy
+   <parameter>wartoĹÄ</parameter>.
   </para>
  </refsect1>
 
@@ -25,14 +25,14 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>wartość</parameter></term>
+     <term><parameter>wartoĹÄ</parameter></term>
      <listitem>
       <para>
-       <parameter>wartość</parameter> zostanie zakodowana i może być dowolnego typu,
-       wykluczając <type>zasoby</type>.
+       <parameter>wartoĹÄ</parameter> zostanie zakodowana i moĹźe byÄ dowolnego typu,
+       wykluczajÄc <type>zasoby</type>.
       </para>
       <para>
-       Ta funkcja działa tylko na danych zakodowanych w formacie UTF-8.
+       Ta funkcja dziaĹa tylko na danych zakodowanych w formacie UTF-8.
       </para>
      </listitem>
     </varlistentry>
@@ -40,7 +40,7 @@
      <term><parameter>opcje</parameter></term>
      <listitem>
       <para>
-       Struktura bitów składająca się z <constant>JSON_HEX_QUOT</constant>,
+       Struktura bitĂłw skĹadajÄca siÄ z <constant>JSON_HEX_QUOT</constant>,
        <constant>JSON_HEX_TAG</constant>,
        <constant>JSON_HEX_AMP</constant>,
        <constant>JSON_HEX_APOS</constant>,
@@ -80,7 +80,7 @@
       <row>
        <entry>5.2.1</entry>
        <entry>
-        Dodano do JSON obsługę kodowania podstawowych typów.
+        Dodano do JSON obsĹugÄ kodowania podstawowych typĂłw.
        </entry>
       </row>
      </tbody>
@@ -93,7 +93,7 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład <function>json_encode</function></title>
+    <title>PrzykĹad <function>json_encode</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -112,7 +112,7 @@ echo json_encode($arr);
    </example>
 
    <example>
-    <title>Przykład <function>json_encode</function> pokazuje zastosowanie parametru: opcje</title>
+    <title>PrzykĹad <function>json_encode</function> pokazuje zastosowanie parametru: opcje</title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -121,7 +121,7 @@ $a = array('<foo>',"'bar'",'"baz"','&blong&');
 echo "Standardowo: ", json_encode($a), "\n";
 echo "Znaczniki: ",   json_encode($a,JSON_HEX_TAG), "\n";
 echo "Apostrofy: ",   json_encode($a,JSON_HEX_APOS), "\n";
-echo "Cudzysłowy: ",   json_encode($a,JSON_HEX_QUOT), "\n";
+echo "CudzysĹowy: ",   json_encode($a,JSON_HEX_QUOT), "\n";
 echo "Znaki et (etki): ",    json_encode($a,JSON_HEX_AMP), "\n";
 echo "Wszystkie opcje: ",    json_encode($a,JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_HEX_AMP), "\n\n";
 
@@ -148,7 +148,7 @@ echo "Asocjacyjna tablica zwracana zawsze jako obiekt: ", json_encode($d, JSON_F
 Standardowo: ["<foo>","'bar'","\"baz\"","&blong&"]
 Znaczniki: ["\u003Cfoo\u003E","'bar'","\"baz\"","&blong&"]
 Apostrofy: ["<foo>","\u0027bar\u0027","\"baz\"","&blong&"]
-Cudzysłowy: ["<foo>","'bar'","\u0022baz\u0022","&blong&"]
+CudzysĹowy: ["<foo>","'bar'","\u0022baz\u0022","&blong&"]
 Znaki et (etki): ["<foo>","'bar'","\"baz\"","\u0026blong\u0026"]
 Wszystkie opcje: ["\u003Cfoo\u003E","\u0027bar\u0027","\u0022baz\u0022","\u0026blong\u0026"]
 
@@ -170,8 +170,8 @@ Asocjacyjna tablica zwracana zawsze jako obiekt: {"foo":"bar","baz":"long"}
   &reftitle.notes;
   <note>
    <para>
-    W przypadku wystąpienia błędu kodowania, funkcja <function>json_last_error</function>
-    może być użyta do dokładnego określenia rodzaju błędu.
+    W przypadku wystÄpienia bĹÄdu kodowania, funkcja <function>json_last_error</function>
+    moĹźe byÄ uĹźyta do dokĹadnego okreĹlenia rodzaju bĹÄdu.
    </para>
   </note>
  </refsect1>
