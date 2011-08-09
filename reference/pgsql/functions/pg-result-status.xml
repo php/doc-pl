@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: garbus Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.58 -->
@@ -20,7 +20,7 @@
   </methodsynopsis>
   <para>
    <function>pg_result_status</function> zwraca stan identyfikatora wyniku,
-   lub oznaczenie dopełnienia komendy, związane z wynikiem
+   lub oznaczenie dopeĹnienia komendy, zwiÄzane z wynikiem
   </para>
  </refsect1>
 
@@ -32,9 +32,9 @@
      <term><parameter>wynik</parameter></term>
      <listitem>
       <para>
-       Identyfikator wyniku zapytania PostgreSQL-a, zwrócony przez <function>pg_query</function>,
+       Identyfikator wyniku zapytania PostgreSQL-a, zwrĂłcony przez <function>pg_query</function>,
        <function>pg_query_params</function> lub <function>pg_execute</function>
-       (między innymi).
+       (miÄdzy innymi).
       </para>
      </listitem>
     </varlistentry>
@@ -42,10 +42,10 @@
      <term><parameter>typ</parameter></term>
      <listitem>
       <para>
-       Zarówno <constant>PGSQL_STATUS_LONG</constant> aby zwrócić liczbowy stan
+       ZarĂłwno <constant>PGSQL_STATUS_LONG</constant> aby zwrĂłciÄ liczbowy stan
        parametru <parameter>wynik</parameter>, jak i <constant>PGSQL_STATUS_STRING</constant>
-       aby zwrócić oznaczenie parametru <parameter>wynik</parameter>.
-       Jeśli nie podano, <constant>PGSQL_STATUS_LONG</constant> zostanie domyślnie użyte.
+       aby zwrĂłciÄ oznaczenie parametru <parameter>wynik</parameter>.
+       JeĹli nie podano, <constant>PGSQL_STATUS_LONG</constant> zostanie domyĹlnie uĹźyte.
       </para>
      </listitem>
     </varlistentry>
@@ -56,11 +56,11 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Możliwe zwracane wartości to: <constant>PGSQL_EMPTY_QUERY</constant>,
+   MoĹźliwe zwracane wartoĹci to: <constant>PGSQL_EMPTY_QUERY</constant>,
    <constant>PGSQL_COMMAND_OK</constant>, <constant>PGSQL_TUPLES_OK</constant>, <constant>PGSQL_COPY_OUT</constant>,
    <constant>PGSQL_COPY_IN</constant>, <constant>PGSQL_BAD_RESPONSE</constant>, <constant>PGSQL_NONFATAL_ERROR</constant> oraz
-   <constant>PGSQL_FATAL_ERROR</constant> gdy określono <constant>PGSQL_STATUS_LONG</constant>.
-   W przeciwnym wypadku łańcuch (ang. <type>string</type>) zawierający oznaczenie komendy PostgreSQL-a jest zwracany.
+   <constant>PGSQL_FATAL_ERROR</constant> gdy okreĹlono <constant>PGSQL_STATUS_LONG</constant>.
+   W przeciwnym wypadku ĹaĹcuch (ang. <type>string</type>) zawierajÄcy oznaczenie komendy PostgreSQL-a jest zwracany.
   </para>
  </refsect1>
 
@@ -79,7 +79,7 @@
       <row>
        <entry>4.3.0</entry>
        <entry>
-        Parametr <parameter>typ</parameter> został dodany.
+        Parametr <parameter>typ</parameter> zostaĹ dodany.
        </entry>
       </row>
      </tbody>
@@ -92,12 +92,12 @@
   &reftitle.examples;
   <para>
    <example>
-    <title><function>pg_result_status</function> - przykład</title>
+    <title><function>pg_result_status</function> - przykĹad</title>
     <programlisting role="php">
 <![CDATA[
 <?php
 
-// Połącz się z bazą
+// PoĹÄcz siÄ z bazÄ
 $polaczenie = pg_pconnect("dbname=wydawca");
 
 // Wykonaj COPY
@@ -108,9 +108,9 @@ $stan = pg_result_status($wynik);
 
 // Ustal stan
 if ($stan == PGSQL_COPY_IN)
-   echo "Kopiowanie rozpoczęło się.";
+   echo "Kopiowanie rozpoczÄĹo siÄ.";
 else
-   echo "Kopiowanie nie powiodło się.";
+   echo "Kopiowanie nie powiodĹo siÄ.";
  
 ?>
 ]]>
@@ -118,7 +118,7 @@ else
     &example.outputs;
     <screen>
 <![CDATA[
-Kopiowanie rozpoczęło się.
+Kopiowanie rozpoczÄĹo siÄ.
 ]]>
     </screen>
    </example>

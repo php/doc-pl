@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: garbus Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.2 -->
@@ -6,7 +6,7 @@
 <refentry xml:id="function.pg-field-prtlen" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>pg_field_prtlen</refname>
-  <refpurpose>Zwraca drukowalną długość</refpurpose>
+  <refpurpose>Zwraca drukowalnÄ dĹugoĹÄ</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
@@ -23,23 +23,23 @@
    <methodparam><type>mixed</type><parameter>nazwa_pola_lub_numer</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>pg_field_prtlen</function> zwraca aktualną drukowalną
-   długość (liczbę znaków) wskazanej danej wyniku parametru
-   <parameter>wynik</parameter> PostgreSQL-a. Wiersze są numerowane od zera. Funkcja
-   zwraca -1 w razie błędu.
+   <function>pg_field_prtlen</function> zwraca aktualnÄ drukowalnÄ
+   dĹugoĹÄ (liczbÄ znakĂłw) wskazanej danej wyniku parametru
+   <parameter>wynik</parameter> PostgreSQL-a. Wiersze sÄ numerowane od zera. Funkcja
+   zwraca -1 w razie bĹÄdu.
   </para>
   <para>
-   Parametr <parameter>nazwa_pola_lub_numer</parameter> przyjmie wartości zarówno liczbowe
-   (<type>integer</type>), jak również łańcuchowe (ang. <type>string</type>). Jeśli podano liczbę całkowitą
+   Parametr <parameter>nazwa_pola_lub_numer</parameter> przyjmie wartoĹci zarĂłwno liczbowe
+   (<type>integer</type>), jak rĂłwnieĹź ĹaĹcuchowe (ang. <type>string</type>). JeĹli podano liczbÄ caĹkowitÄ
    (<type>integer</type>), PHP rozpozna to jako numer pola, w przeciwnym wypadku jako 
-   nazwę pola. 
+   nazwÄ pola. 
   </para>
   <para>
-   Proszę spojrzeć na przykład zawarty na stronie opisującej funkcję <function>pg_field_name</function>.
+   ProszÄ spojrzeÄ na przykĹad zawarty na stronie opisujÄcej funkcjÄ <function>pg_field_name</function>.
   </para>
   <note>
    <para>
-     Ta funkcja była poprzednio nazwana <function>pg_fieldprtlen</function>.
+     Ta funkcja byĹa poprzednio nazwana <function>pg_fieldprtlen</function>.
    </para>
   </note>
  </refsect1>
@@ -52,9 +52,9 @@
      <term><parameter>wynik</parameter></term>
      <listitem>
       <para>
-       Identyfikator wyniku zapytania do PostgreSQL, zwrócony przez <function>pg_guery</function>,
+       Identyfikator wyniku zapytania do PostgreSQL, zwrĂłcony przez <function>pg_guery</function>,
        <function>pg_query_params</function> lub <function>pg_execute</function>
-       (między innymi).
+       (miÄdzy innymi).
       </para>
      </listitem>
     </varlistentry>
@@ -62,7 +62,7 @@
      <term><parameter>wiersz</parameter></term>
      <listitem>
       <para>
-       Numer wiersza w wyniku.  Wiersze są numerowane od zera w górę.  Jeśli pominięto,
+       Numer wiersza w wyniku.  Wiersze sÄ numerowane od zera w gĂłrÄ.  JeĹli pominiÄto,
        pobierany jest aktualny wiersz.
       </para>
      </listitem>
@@ -74,7 +74,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Długość drukowailna pola, lub &false; w przypadku błędu.
+   DĹugoĹÄ drukowailna pola, lub &false; w przypadku bĹÄdu.
   </para>
  </refsect1>
 
@@ -82,11 +82,11 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Pobieranie informacji na temat pól</title>
+    <title>Pobieranie informacji na temat pĂłl</title>
     <programlisting role="php">
 <![CDATA[
 <?php
-  $polaczenie_z_baza = pg_connect("dbname=wydawca") or die("Nie można się połączyć.");
+  $polaczenie_z_baza = pg_connect("dbname=wydawca") or die("Nie moĹźna siÄ poĹÄczyÄ.");
 
   $wyn = pg_query($polaczenie_z_baza, "select * from autorzy where autor = 'Orwell'");
   $i = pg_num_fields($wyn);
@@ -94,8 +94,8 @@
       echo "kolumna $j\n";
       $nazwa_pola = pg_field_name($wyn, $j);
       echo "nazwa pola: $nazwa_pola\n";
-      echo "długość drukowalna: " . pg_field_prtlen($wyn, $nazwa_pola) . " znaki(ów)\n";
-      echo "realna długość: " . pg_field_size($wyn, $j) . " bajty(ów)\n";
+      echo "dĹugoĹÄ drukowalna: " . pg_field_prtlen($wyn, $nazwa_pola) . " znaki(Ăłw)\n";
+      echo "realna dĹugoĹÄ: " . pg_field_size($wyn, $j) . " bajty(Ăłw)\n";
       echo "typ pola: " . pg_field_type($wyn, $j) . " \n\n";
   }
 ?>
@@ -106,20 +106,20 @@
 <![CDATA[
 kolumna 0
 nazwa pola: autor
-długość drukowalna: 6 znaki(ów)
-realna długość: -1 bajt(ów)
+dĹugoĹÄ drukowalna: 6 znaki(Ăłw)
+realna dĹugoĹÄ: -1 bajt(Ăłw)
 typ pola: varchar
 
 kolumna 1
 nazwa pola: rok
-długość drukowalna: 4 znaki(ów)
-realna długość: 2 bajt(ów)
+dĹugoĹÄ drukowalna: 4 znaki(Ăłw)
+realna dĹugoĹÄ: 2 bajt(Ăłw)
 typ pola: int2
 
 kolumna 2
-nazwa pola: tytuł
-długość drukowalna: 24 znaki(ów)
-realna długość: -1 bajt(ów)
+nazwa pola: tytuĹ
+dĹugoĹÄ drukowalna: 24 znaki(Ăłw)
+realna dĹugoĹÄ: -1 bajt(Ăłw)
 typ pola: varchar
 ]]>
     </screen>

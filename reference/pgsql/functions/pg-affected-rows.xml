@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: jarek Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.2 -->
   <refentry xml:id="function.pg-affected-rows" xmlns="http://docbook.org/ns/docbook">
    <refnamediv>
     <refname>pg_affected_rows</refname>
-    <refpurpose>Zwraca liczbę zmodyfikowanych wierszy</refpurpose>
+    <refpurpose>Zwraca liczbÄ zmodyfikowanych wierszy</refpurpose>
    </refnamediv>
    
    <refsect1 role="description">
@@ -15,13 +15,13 @@
      <methodparam><type>resource</type><parameter>result</parameter></methodparam>
     </methodsynopsis>
     <para>
-     <function>pg_affected_rows</function> zwraca liczbę wierszy
-     dodanych, zmodyfikowanych lub usuniętych przez zapytania <literal>INSERT</literal>,
+     <function>pg_affected_rows</function> zwraca liczbÄ wierszy
+     dodanych, zmodyfikowanych lub usuniÄtych przez zapytania <literal>INSERT</literal>,
      <literal>UPDATE</literal> i <literal>DELETE</literal>.
 </para>
   <note>
    <para>
-    Ta funkcja była nazwana <function>pg_cmdtuples</function>.
+    Ta funkcja byĹa nazwana <function>pg_cmdtuples</function>.
    </para>
   </note>
  </refsect1>
@@ -34,9 +34,9 @@
      <term><parameter>result</parameter></term>
      <listitem>
       <para>
-	   Zasób, wynik zapytania PostgreSQL, zwrócony przez <function>pg_query</function>,
+	   ZasĂłb, wynik zapytania PostgreSQL, zwrĂłcony przez <function>pg_query</function>,
        <function>pg_query_params</function> lub <function>pg_execute</function>
-	   (wśród innych).
+	   (wĹrĂłd innych).
       </para>
      </listitem>
     </varlistentry>
@@ -47,8 +47,8 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Liczba wierszy na które wpływ ma zapytanie. Jeśli nie wystąpił taki wiersz, zostanie 
-   zwrócone 0.    
+   Liczba wierszy na ktĂłre wpĹyw ma zapytanie. JeĹli nie wystÄpiĹ taki wiersz, zostanie 
+   zwrĂłcone 0.    
    </para>
  </refsect1>
  
@@ -57,20 +57,20 @@
   <para>
 	 
      <example>
-      <title><function>pg_affected_rows</function> przykład</title>
+      <title><function>pg_affected_rows</function> przykĹad</title>
       <programlisting role="php">
 <![CDATA[
 <?php
      $result = pg_query($conn, "INSERT INTO authors VALUES ('Orwell', 2002, 'Animal Farm')");
      $cmdtuples = pg_affected_rows ($result);
-     echo $cmdtuples . " wiersz(e), na które miało wpływ zapytanie.\n";
+     echo $cmdtuples . " wiersz(e), na ktĂłre miaĹo wpĹyw zapytanie.\n";
 ?>
 ]]>
      </programlisting>
     &example.outputs;
     <screen>
 <![CDATA[
-1 wiersz(e), na które miało wpływ zapytanie.
+1 wiersz(e), na ktĂłre miaĹo wpĹyw zapytanie.
 ]]>
     </screen>
    </example>

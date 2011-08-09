@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: garbus Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.80 -->
@@ -7,7 +7,7 @@
  <refnamediv>
   <refname>pg_update</refname>
   <refpurpose>
-   Aktualizuje tabelę
+   Aktualizuje tabelÄ
   </refpurpose>
  </refnamediv>
 
@@ -15,17 +15,17 @@
   &reftitle.description;
   <methodsynopsis>
    <type>mixed</type><methodname>pg_update</methodname>
-   <methodparam><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+   <methodparam><type>resource</type><parameter>identyfikator_poĹÄczenia</parameter></methodparam>
    <methodparam><type>string</type><parameter>nazwa_tabeli</parameter></methodparam>
    <methodparam><type>array</type><parameter>dane</parameter></methodparam>
    <methodparam><type>array</type><parameter>warunek</parameter></methodparam>
    <methodparam choice="opt"><type>int</type><parameter>opcje</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>pg_update</function> aktualizuje wiersze spełniające warunki zawarte w parametrze
-   <literal>warunek</literal> używając danych z parametru <literal>dane</literal>. 
-   Jeśli jest użyty parametr <literal>opcje</literal>, jest on
-   przekazywany do wywołania <function>pg_convert</function> z opcjami w parametrze
+   <function>pg_update</function> aktualizuje wiersze speĹniajÄce warunki zawarte w parametrze
+   <literal>warunek</literal> uĹźywajÄc danych z parametru <literal>dane</literal>. 
+   JeĹli jest uĹźyty parametr <literal>opcje</literal>, jest on
+   przekazywany do wywoĹania <function>pg_convert</function> z opcjami w parametrze
    <literal>dane</literal>.
   </para>
   &warn.experimental.func;
@@ -36,10 +36,10 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>identyfikator_połączenia</parameter></term>
+     <term><parameter>identyfikator_poĹÄczenia</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia do bazy PostgreSQL.
+       Identyfikator poĹÄczenia do bazy PostgreSQL.
       </para>
      </listitem>
     </varlistentry>
@@ -47,7 +47,7 @@
      <term><parameter>nazwa_tabeli</parameter></term>
      <listitem>
       <para>
-       Nazwa tabeli, w której będą aktualizowane wiersze.
+       Nazwa tabeli, w ktĂłrej bÄdÄ aktualizowane wiersze.
       </para>
      </listitem>
     </varlistentry>
@@ -55,8 +55,8 @@
      <term><parameter>dane</parameter></term>
      <listitem>
       <para>
-       Tablica (ang. <type>array</type>), której klucze są nazwami kolumn w tabeli <parameter>nazwa_tabeli</parameter>,
-       oraz której wartości są nową zawartością pasujących do warunków wierszy.
+       Tablica (ang. <type>array</type>), ktĂłrej klucze sÄ nazwami kolumn w tabeli <parameter>nazwa_tabeli</parameter>,
+       oraz ktĂłrej wartoĹci sÄ nowÄ zawartoĹciÄ pasujÄcych do warunkĂłw wierszy.
       </para>
      </listitem>
     </varlistentry>
@@ -64,8 +64,8 @@
      <term><parameter>warunek</parameter></term>
      <listitem>
       <para>
-       Tablica (ang. <type>array</type>), której klucze są nazwami kolumn w tabeli <parameter>nazwa_tabeli</parameter>,
-       oraz której wartości są warunkami, jakie muszą spełnić uaktualniane wiersze.
+       Tablica (ang. <type>array</type>), ktĂłrej klucze sÄ nazwami kolumn w tabeli <parameter>nazwa_tabeli</parameter>,
+       oraz ktĂłrej wartoĹci sÄ warunkami, jakie muszÄ speĹniÄ uaktualniane wiersze.
       </para>
      </listitem>
     </varlistentry>
@@ -73,11 +73,11 @@
      <term><parameter>opcje</parameter></term>
      <listitem>
       <para>
-       Dowolna kombinacja dowolnej ilości parametrów: <constant>PGSQL_CONV_OPTS</constant>,
+       Dowolna kombinacja dowolnej iloĹci parametrĂłw: <constant>PGSQL_CONV_OPTS</constant>,
        <constant>PGSQL_DML_NO_CONV</constant>,
        <constant>PGSQL_DML_EXEC</constant> oraz
-       <constant>PGSQL_DML_STRING</constant>. Jeśli <constant>PGSQL_DML_STRING</constant> został podany w parametrze
-       <parameter>opcje</parameter>, zostanie zwrócony łańcuch zapytania.
+       <constant>PGSQL_DML_STRING</constant>. JeĹli <constant>PGSQL_DML_STRING</constant> zostaĹ podany w parametrze
+       <parameter>opcje</parameter>, zostanie zwrĂłcony ĹaĹcuch zapytania.
       </para>
      </listitem>
     </varlistentry>
@@ -88,7 +88,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   &return.success;  Zwraca łańcuch (ang. <type>string</type>) gdy <constant>PGSQL_DML_STRING</constant> został podany
+   &return.success;  Zwraca ĹaĹcuch (ang. <type>string</type>) gdy <constant>PGSQL_DML_STRING</constant> zostaĹ podany
    poprzez <parameter>opcje</parameter>.
   </para>
  </refsect1>
@@ -97,19 +97,19 @@
   &reftitle.examples;
   <para>
    <example>
-    <title><function>pg_update</function> - przykład</title>
+    <title><function>pg_update</function> - przykĹad</title>
     <programlisting role="php">
 <![CDATA[
 <?php 
   $polaczenie = pg_connect ('dbname=foo');
   $dane = array('kolumna1'=>'AA', 'kolumna2'=>'BB');
 
-  // To jest bezpieczne, gdyż $_POST jest konwertowane automatycznie
+  // To jest bezpieczne, gdyĹź $_POST jest konwertowane automatycznie
   $res = pg_update($polaczenie, 'kopia_post', $_POST, $dane);
   if ($res) {
-      echo "Dane zostały zaktualizowane: $res\n";
+      echo "Dane zostaĹy zaktualizowane: $res\n";
   } else {
-      echo "Użytkownik wprowadził błędne dane\n";
+      echo "UĹźytkownik wprowadziĹ bĹÄdne dane\n";
   }
 ?>
 ]]>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: garbus Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.82 -->
@@ -18,10 +18,10 @@
   <para>
    <function>pg_end_copy</function> synchronizuje
    klienta PostgreSQL z serwerem po wykonaniu
-   operacji kopiowania przez funkcję
+   operacji kopiowania przez funkcjÄ
    <function>pg_put_line</function>. Funkcja <function>pg_end_copy</function>
-   musi być wywołana, inaczej serwer PostgreSQL-a może być niezsychronizowany
-   z klientem i może wystąpić błąd.
+   musi byÄ wywoĹana, inaczej serwer PostgreSQL-a moĹźe byÄ niezsychronizowany
+   z klientem i moĹźe wystÄpiÄ bĹÄd.
   </para>
  </refsect1>
 
@@ -33,9 +33,9 @@
      <term><parameter>polaczenie</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia do bazy danych PostgreSQL. Gdy
-       <parameter>polaczenie</parameter> nie zostało podane, domyślne połączenie
-       jest użyte. Domyślnym połączeniem jest ostatnie połączenie stworzone przez
+       Identyfikator poĹÄczenia do bazy danych PostgreSQL. Gdy
+       <parameter>polaczenie</parameter> nie zostaĹo podane, domyĹlne poĹÄczenie
+       jest uĹźyte. DomyĹlnym poĹÄczeniem jest ostatnie poĹÄczenie stworzone przez
        <function>pg_connect</function> lub <function>pg_pconnect</function>.
       </para>
      </listitem>
@@ -55,15 +55,15 @@
   &reftitle.examples;
   <para>
    <example>
-    <title><function>pg_end_copy</function> - przykład</title>
+    <title><function>pg_end_copy</function> - przykĹad</title>
     <programlisting role="php">
 <![CDATA[
 <?php 
   $polaczenie = pg_pconnect("dbname=foo");
   pg_query($polaczenie, "create table bar (a int4, b char(16), d float8)");
   pg_query($polaczenie, "copy bar from stdin");
-  pg_put_line($polaczenie, "3\twitaj świecie\t4.5\n");
-  pg_put_line($polaczenie, "4\tżegnaj świecie\t7.11\n");
+  pg_put_line($polaczenie, "3\twitaj Ĺwiecie\t4.5\n");
+  pg_put_line($polaczenie, "4\tĹźegnaj Ĺwiecie\t7.11\n");
   pg_put_line($polaczenie, "\\.\n");
   pg_end_copy($polaczenie);
 ?>

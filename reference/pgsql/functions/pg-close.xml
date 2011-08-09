@@ -1,34 +1,34 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: jarek Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.82 -->
   <refentry xml:id="function.pg-close" xmlns="http://docbook.org/ns/docbook">
    <refnamediv>
     <refname>pg_close</refname>
-    <refpurpose>Zamyka połączenie z PostgreSQL</refpurpose>
+    <refpurpose>Zamyka poĹÄczenie z PostgreSQL</refpurpose>
    </refnamediv>
    
    <refsect1 role="description">
     &reftitle.description;
      <methodsynopsis>
       <type>bool</type><methodname>pg_close</methodname>
-      <methodparam choice="opt"><type>resource</type><parameter>połączenie</parameter></methodparam>
+      <methodparam choice="opt"><type>resource</type><parameter>poĹÄczenie</parameter></methodparam>
      </methodsynopsis>
     <para>
-     <function>pg_close</function> zamyka tymczasowe połączenie z 
-     serwerem PostgreSQL związane z podanym parametrem 
-     <parameter>połączenie</parameter>.
+     <function>pg_close</function> zamyka tymczasowe poĹÄczenie z 
+     serwerem PostgreSQL zwiÄzane z podanym parametrem 
+     <parameter>poĹÄczenie</parameter>.
     </para>
     <note>
      <para>
-      Używanie <function>pg_close</function> jest z reguły niepotrzebne,
-      jako że połączenia tymczasowe są zamykane automatycznie po zakończeniu
+      UĹźywanie <function>pg_close</function> jest z reguĹy niepotrzebne,
+      jako Ĺźe poĹÄczenia tymczasowe sÄ zamykane automatycznie po zakoĹczeniu
       wykonywania skryptu.
      </para>
     </note>
     <para>
-     Nie wolno zamykać połączenia jeśli jest otwarty wielki obiekt.
-     W pierwszej kolejności należy zamknąć wszystkie wielkie obiekty.
+     Nie wolno zamykaÄ poĹÄczenia jeĹli jest otwarty wielki obiekt.
+     W pierwszej kolejnoĹci naleĹźy zamknÄÄ wszystkie wielkie obiekty.
     </para>
    </refsect1>
 
@@ -37,12 +37,12 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>połączenie</parameter></term>
+     <term><parameter>poĹÄczenie</parameter></term>
      <listitem>
       <para>
-        Zasób, połączenie do bazy PostgreSQL. Kiedy parametr
-	   <parameter>połączenie</parameter> nie jest podany, użyte zostanie domyślne połączenie.
-	   Domyślne połączenie to ostatnie połączenie utworzone przez 
+        ZasĂłb, poĹÄczenie do bazy PostgreSQL. Kiedy parametr
+	   <parameter>poĹÄczenie</parameter> nie jest podany, uĹźyte zostanie domyĹlne poĹÄczenie.
+	   DomyĹlne poĹÄczenie to ostatnie poĹÄczenie utworzone przez 
        <function>pg_connect</function> lub <function>pg_pconnect</function>.
       </para>
      </listitem>
@@ -62,13 +62,13 @@
   &reftitle.examples;
   <para>
    <example>
-    <title><function>pg_close</function> przykład</title>
+    <title><function>pg_close</function> przykĹad</title>
     <programlisting role="php">
 <![CDATA[
 <?php
 $dbconn = pg_connect("host=localhost port=5432 dbname=mary")
-   or die("Nie można się połączyć");
-echo "Poprawnie połączono";
+   or die("Nie moĹźna siÄ poĹÄczyÄ");
+echo "Poprawnie poĹÄczono";
 pg_close($dbconn);
 ?>
 ]]>
@@ -76,7 +76,7 @@ pg_close($dbconn);
     &example.outputs;
     <screen>
 <![CDATA[
-Poprawnie połączono
+Poprawnie poĹÄczono
 ]]>
     </screen>
    </example>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 79dcbe011fb254dcd92c597064571fe313362a09 Maintainer: jarek Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: joeaccord -->
@@ -6,25 +6,25 @@
 <chapter xml:id="pgsql.examples" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  &reftitle.examples;
  <section xml:id="pgsql.examples-basic">
-  <title>Podstawowe użycie</title>
+  <title>Podstawowe uĹźycie</title>
   <para>
-   Ten nieskomplikowany przykład pokazuje jak można nawiązać połączenie,
-   wykonać zapytanie, wyświetlić wyniki i rozłączyć się z bazą danych
+   Ten nieskomplikowany przykĹad pokazuje jak moĹźna nawiÄzaÄ poĹÄczenie,
+   wykonaÄ zapytanie, wyĹwietliÄ wyniki i rozĹÄczyÄ siÄ z bazÄ danych
    PostgreSQL.
    <example>
-    <title>Przykład działania rozszerzenia PostgreSQL</title>
+    <title>PrzykĹad dziaĹania rozszerzenia PostgreSQL</title>
     <programlisting role="php">
 <![CDATA[
 <?php
-// Nawiązanie połączenia, wybór bazy danych
+// NawiÄzanie poĹÄczenia, wybĂłr bazy danych
 $dbconn = pg_connect("host=localhost dbname=publikacje user=www password=tajne")
-    or die('Nie można nawiązać połączenia: ' . pg_last_error());
+    or die('Nie moĹźna nawiÄzaÄ poĹÄczenia: ' . pg_last_error());
 
 // Wykonanie zapytania SQL
 $query = 'SELECT * FROM authors';
-$result = pg_query($query) or die('Nieprawidłowe zapytanie: ' . pg_last_error());
+$result = pg_query($query) or die('NieprawidĹowe zapytanie: ' . pg_last_error());
 
-// Wyświetlenie wyników w postaci HTML
+// WyĹwietlenie wynikĂłw w postaci HTML
 echo "<table>\n";
 while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
     echo "\t<tr>\n";
@@ -35,10 +35,10 @@ while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
 }
 echo "</table>\n";
 
-// Zwolnienie zasobów wyniku zapytania
+// Zwolnienie zasobĂłw wyniku zapytania
 pg_free_result($result);
 
-// Zamknięcie połączenia
+// ZamkniÄcie poĹÄczenia
 pg_close($dbconn);
 ?>
 ]]>

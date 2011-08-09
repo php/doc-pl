@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: garbus Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.80 -->
@@ -7,7 +7,7 @@
  <refnamediv>
   <refname>pg_convert</refname>
   <refpurpose>
-   Konwertuje tablice asocjacyjne na postać użyteczną w zapytaniu SQL.
+   Konwertuje tablice asocjacyjne na postaÄ uĹźytecznÄ w zapytaniu SQL.
   </refpurpose>
  </refnamediv>
 
@@ -15,28 +15,28 @@
   &reftitle.description;
   <methodsynopsis>
    <type>array</type><methodname>pg_convert</methodname>
-   <methodparam><type>resource</type><parameter>połączenie</parameter></methodparam>
+   <methodparam><type>resource</type><parameter>poĹÄczenie</parameter></methodparam>
    <methodparam><type>string</type><parameter>nazwa_tabeli</parameter></methodparam>
    <methodparam><type>array</type><parameter>tablica_asocjacyjna</parameter></methodparam>
    <methodparam choice="opt"><type>int</type><parameter>opcje</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>pg_convert</function> sprawdza i konwertuje wartości w
-   <parameter>tablica_asocjacyjna</parameter> na postać użyteczną dla
+   <function>pg_convert</function> sprawdza i konwertuje wartoĹci w
+   <parameter>tablica_asocjacyjna</parameter> na postaÄ uĹźytecznÄ dla
    zapytania SQL. Warunkiem koniecznym dla <function>pg_convert</function> jest
    istnienie tabeli <parameter>nazwa_tabeli</parameter>, ktora ma przynajmniej
-   tyle kolumn, ile <parameter>tablica_asocjacyjna</parameter> ma elementów. Nazwy
-   pól w <parameter>nazwa_tabeli</parameter> muszą pasować do indeksów w parametrze
-   <parameter>tablica_asocjacyjna</parameter> i odpowiednie typy danych muszą być
-   zgodne. Zwraca tabelę z przekonwertowanymi wartościami w razie sukcesu, &false;
+   tyle kolumn, ile <parameter>tablica_asocjacyjna</parameter> ma elementĂłw. Nazwy
+   pĂłl w <parameter>nazwa_tabeli</parameter> muszÄ pasowaÄ do indeksĂłw w parametrze
+   <parameter>tablica_asocjacyjna</parameter> i odpowiednie typy danych muszÄ byÄ
+   zgodne. Zwraca tabelÄ z przekonwertowanymi wartoĹciami w razie sukcesu, &false;
    w przeciwnym wypadku.
   </para>
   <note>
    <para>
-    Jeśli istnieją pola typu boolean w <parameter>nazwa_tabeli</parameter>, nie
-    używaj stałej wartości &true; w parametrze <parameter>tablica_asocjacyjna</parameter>. Zostanie on
-    przekonwertowany do łańcucha 'TRUE', który nie jest poprawnym wpisem dla pól typu boolean
-    w PostgreSQL. W zamian użyj jednej z propozycji: t, true, 1, y, yes.
+    JeĹli istniejÄ pola typu boolean w <parameter>nazwa_tabeli</parameter>, nie
+    uĹźywaj staĹej wartoĹci &true; w parametrze <parameter>tablica_asocjacyjna</parameter>. Zostanie on
+    przekonwertowany do ĹaĹcucha 'TRUE', ktĂłry nie jest poprawnym wpisem dla pĂłl typu boolean
+    w PostgreSQL. W zamian uĹźyj jednej z propozycji: t, true, 1, y, yes.
    </para>
   </note>
   &warn.experimental.func;
@@ -47,10 +47,10 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>połączenie</parameter></term>
+     <term><parameter>poĹÄczenie</parameter></term>
      <listitem>
       <para>
-       Źródło połączenia do bazy PostgreSQL.
+       ĹšrĂłdĹo poĹÄczenia do bazy PostgreSQL.
       </para>
      </listitem>
     </varlistentry>
@@ -58,7 +58,7 @@
      <term><parameter>nazwa_tabeli</parameter></term>
      <listitem>
       <para>
-       Nazwa tabeli, w stosunku do której będą konwertowane typy.
+       Nazwa tabeli, w stosunku do ktĂłrej bÄdÄ konwertowane typy.
       </para>
      </listitem>
     </varlistentry>
@@ -74,7 +74,7 @@
      <term><parameter>options</parameter></term>
      <listitem>
       <para>
-       Kombinacja dowolnej ilości poniższych stałych: <constant>PGSQL_CONV_IGNORE_DEFAULT</constant>,
+       Kombinacja dowolnej iloĹci poniĹźszych staĹych: <constant>PGSQL_CONV_IGNORE_DEFAULT</constant>,
        <constant>PGSQL_CONV_FORCE_NULL</constant> lub
        <constant>PGSQL_CONV_IGNORE_NOT_NULL</constant>.
       </para>
@@ -87,7 +87,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Typ tablicowy (ang. <type>array</type>) z przekonwertowanymi wartościami, lub &false; w razie błędu.
+   Typ tablicowy (ang. <type>array</type>) z przekonwertowanymi wartoĹciami, lub &false; w razie bĹÄdu.
   </para>
  </refsect1>
  
@@ -95,7 +95,7 @@
   &reftitle.examples;
   <para>
    <example>
-    <title><function>pg_convert</function> - przykład</title>
+    <title><function>pg_convert</function> - przykĹad</title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -104,7 +104,7 @@
   $tmp = array(
       'autor' => 'Jan Hakreski',
       'rok' => 2005,
-      'tytuł' => 'Życie Jana Hakerskiego'
+      'tytuĹ' => 'Ĺťycie Jana Hakerskiego'
   );
 
   $wartosci = pg_convert($polaczenie, 'autorzy', $tmp);

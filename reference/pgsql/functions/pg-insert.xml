@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: garbus Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.80 -->
@@ -7,7 +7,7 @@
  <refnamediv>
   <refname>pg_insert</refname>
   <refpurpose>
-   Wstawia tablicę do tabeli
+   Wstawia tablicÄ do tabeli
   </refpurpose>
  </refnamediv>
  
@@ -15,17 +15,17 @@
   &reftitle.description;
   <methodsynopsis>
    <type>mixed</type><methodname>pg_insert</methodname>
-   <methodparam><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+   <methodparam><type>resource</type><parameter>identyfikator_poĹÄczenia</parameter></methodparam>
    <methodparam><type>string</type><parameter>nazwa_tabeli</parameter></methodparam>
    <methodparam><type>array</type><parameter>tablica_asocjacyjna</parameter></methodparam>
    <methodparam choice="opt"><type>int</type><parameter>opcje</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>pg_insert</function> wstawia wartości parametru <parameter>tablica_asocjacyjna</parameter>
-   do tabeli określonej przez parametr <parameter>nazwa_tabeli</parameter>.
-   Jeśli określono jakieś <parameter>opcje</parameter>,
+   <function>pg_insert</function> wstawia wartoĹci parametru <parameter>tablica_asocjacyjna</parameter>
+   do tabeli okreĹlonej przez parametr <parameter>nazwa_tabeli</parameter>.
+   JeĹli okreĹlono jakieĹ <parameter>opcje</parameter>,
    funkcja <function>pg_convert</function> stosuje
-   do parametru <parameter>tablica_asocjacyjna</parameter> określone opcje.
+   do parametru <parameter>tablica_asocjacyjna</parameter> okreĹlone opcje.
   </para>
   &warn.experimental.func;
  </refsect1>
@@ -35,10 +35,10 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>identyfikator_połączenia</parameter></term>
+     <term><parameter>identyfikator_poĹÄczenia</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia do bazy PostgreSQL.
+       Identyfikator poĹÄczenia do bazy PostgreSQL.
       </para>
      </listitem>
     </varlistentry>
@@ -46,8 +46,8 @@
      <term><parameter>nazwa_tabeli</parameter></term>
      <listitem>
       <para>
-       Nazwa tabeli, do której mają zostać dodane wiersze.  Tabela <parameter>nazwa_tabeli</parameter> musi mieć
-       przynajmniej tyle kolumn, ile elementów ma <parameter>tablica_asocjacyjna</parameter>.
+       Nazwa tabeli, do ktĂłrej majÄ zostaÄ dodane wiersze.  Tabela <parameter>nazwa_tabeli</parameter> musi mieÄ
+       przynajmniej tyle kolumn, ile elementĂłw ma <parameter>tablica_asocjacyjna</parameter>.
       </para>
      </listitem>
     </varlistentry>
@@ -55,8 +55,8 @@
      <term><parameter>tablica_asocjacyjna</parameter></term>
      <listitem>
       <para>
-       Tablica (ang. <type>array</type>), której klucze to nazwy pól w tabeli <parameter>nazwa_tabeli</parameter>,
-       oraz której wartościami są wartości tych pól, które mają zostać wpisane.
+       Tablica (ang. <type>array</type>), ktĂłrej klucze to nazwy pĂłl w tabeli <parameter>nazwa_tabeli</parameter>,
+       oraz ktĂłrej wartoĹciami sÄ wartoĹci tych pĂłl, ktĂłre majÄ zostaÄ wpisane.
       </para>
      </listitem>
     </varlistentry>
@@ -64,12 +64,12 @@
      <term><parameter>opcje</parameter></term>
      <listitem>
       <para>
-       Dowolna kombinacja dowolnej ilości parametrów: <constant>PGSQL_CONV_OPTS</constant>, 
+       Dowolna kombinacja dowolnej iloĹci parametrĂłw: <constant>PGSQL_CONV_OPTS</constant>, 
        <constant>PGSQL_DML_NO_CONV</constant>,
        <constant>PGSQL_DML_EXEC</constant>,
        <constant>PGSQL_DML_ASYNC</constant> oraz
        <constant>PGSQL_DML_STRING</constant>. Gdy <constant>PGSQL_DML_STRING</constant> jest zawarty w parametrze
-       <parameter>opcje</parameter>, zwrócony zostanie łańcuch zapytania z URL (ang. query string).
+       <parameter>opcje</parameter>, zwrĂłcony zostanie ĹaĹcuch zapytania z URL (ang. query string).
       </para>
      </listitem>
     </varlistentry>
@@ -80,7 +80,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   &return.success;  Zwraca łańcuch (ang. <type>string</type>) jeśli <constant>PGSQL_DML_STRING</constant> zostało wprowadzone
+   &return.success;  Zwraca ĹaĹcuch (ang. <type>string</type>) jeĹli <constant>PGSQL_DML_STRING</constant> zostaĹo wprowadzone
    poprzez parametr <parameter>opcje</parameter>.
   </para>
  </refsect1>
@@ -89,17 +89,17 @@
   &reftitle.examples;
   <para>
    <example>
-    <title><function>pg_insert</function> - przykład</title>
+    <title><function>pg_insert</function> - przykĹad</title>
     <programlisting role="php">
 <![CDATA[
 <?php
   $polaczenie_do_bazy = pg_connect ('dbname=foo');
-  // To wywołanie jest bezpieczne, odkąd $_POST jest konwertowane automatycznie
+  // To wywoĹanie jest bezpieczne, odkÄd $_POST jest konwertowane automatycznie
   $res = pg_insert($polaczenie_do_bazy, 'kopia_post', $_POST);
   if ($res) {
-      echo "Dane z tablicy POST zapisane pomyślnie\n";
+      echo "Dane z tablicy POST zapisane pomyĹlnie\n";
   } else {
-      echo "Użytkownik musiał wysłać złe dane\n";
+      echo "UĹźytkownik musiaĹ wysĹaÄ zĹe dane\n";
   }
 ?>
 ]]>

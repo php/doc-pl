@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: garbus Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.61 -->
@@ -7,7 +7,7 @@
  <refnamediv>
   <refname>pg_escape_bytea</refname>
   <refpurpose>
-   Konwertuje łańcuch wstawiając sekwencje Escape dla typu bytea
+   Konwertuje ĹaĹcuch wstawiajÄc sekwencje Escape dla typu bytea
   </refpurpose>
  </refnamediv>
 
@@ -15,27 +15,27 @@
   &reftitle.description;
   <methodsynopsis>
    <type>string</type><methodname>pg_escape_bytea</methodname>
-   <methodparam choice="opt"><type>resource</type><parameter>połączenie</parameter></methodparam>
+   <methodparam choice="opt"><type>resource</type><parameter>poĹÄczenie</parameter></methodparam>
    <methodparam><type>string</type><parameter>dane</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>pg_escape_bytea</function> konwertuje łańcuch wstawiając 
-   sekwencje Escape dla typu bytea. Zwraca łańcuch z sekwencjami Escape.
+   <function>pg_escape_bytea</function> konwertuje ĹaĹcuch wstawiajÄc 
+   sekwencje Escape dla typu bytea. Zwraca ĹaĹcuch z sekwencjami Escape.
   </para>
   <note>
    <para>
-    Przy wywołaniu <literal>SELECT</literal> dla typu bytea, PostgrSQL zwraca łańcuchy
-    zawierające wartości ósemkowe poprzedzone znakiem "\" (np. \032).
-    Użytkownicy muszą samodzielnie odkodować te dane.
+    Przy wywoĹaniu <literal>SELECT</literal> dla typu bytea, PostgrSQL zwraca ĹaĹcuchy
+    zawierajÄce wartoĹci Ăłsemkowe poprzedzone znakiem "\" (np. \032).
+    UĹźytkownicy muszÄ samodzielnie odkodowaÄ te dane.
    </para>
    <para>
     Ta funkcja wymaga PostgreSQL 7.2 lub nowszego. Dla PostgreSQL
-    7.2.0 i 7.2.1, wartości bytea muszą być wskazane jeśli uruchomisz
+    7.2.0 i 7.2.1, wartoĹci bytea muszÄ byÄ wskazane jeĹli uruchomisz
     wsparcie dla kodowania wielobajtowego np. <literal>INSERT INTO tabela_testowa (obraz)
     VALUES ('$image_escaped'::bytea);</literal> PostgreSQL 7.2.2 i nowszy
-    nie potrzebuje wskazania typu. Wyjątkiem jest przypadek kiedy klient i serwer
-    posługują się różnymi stronami kodowymi. W takim przypadku może wystąpić błąd (ang. multi-byte
-    stream error). Użytkownik musi wtedy wskazać typ bytea, by uniknąć tego błędu.
+    nie potrzebuje wskazania typu. WyjÄtkiem jest przypadek kiedy klient i serwer
+    posĹugujÄ siÄ rĂłĹźnymi stronami kodowymi. W takim przypadku moĹźe wystÄpiÄ bĹÄd (ang. multi-byte
+    stream error). UĹźytkownik musi wtedy wskazaÄ typ bytea, by uniknÄÄ tego bĹÄdu.
    </para>
   </note>
  </refsect1>
@@ -45,12 +45,12 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>połączenie</parameter></term>
+     <term><parameter>poĹÄczenie</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia do bazy danych PostgreSQL.  Kiedy
-       <parameter>połączenie</parameter> nie został podany, domyślne połączenie
-       zostaje użyte. Domyślnym połączeniem jest ostatnie połączenie stworzone przez
+       Identyfikator poĹÄczenia do bazy danych PostgreSQL.  Kiedy
+       <parameter>poĹÄczenie</parameter> nie zostaĹ podany, domyĹlne poĹÄczenie
+       zostaje uĹźyte. DomyĹlnym poĹÄczeniem jest ostatnie poĹÄczenie stworzone przez
        <function>pg_connect</function> lub <function>pg_pconnect</function>.
       </para>
      </listitem>
@@ -59,7 +59,7 @@
      <term><parameter>dane</parameter></term>
      <listitem>
       <para>
-       Łańcuch (ang. <type>string</type>) zawierający tekst lub binarne dane wstawiane do kolumny
+       ĹaĹcuch (ang. <type>string</type>) zawierajÄcy tekst lub binarne dane wstawiane do kolumny
        bytea.
       </para>
      </listitem>
@@ -71,7 +71,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Łańcuch (ang. <type>string</type>) zawierający dane z sekwencjami Escape..
+   ĹaĹcuch (ang. <type>string</type>) zawierajÄcy dane z sekwencjami Escape..
   </para>
  </refsect1>
 
@@ -89,7 +89,7 @@
      <tbody>
       <row>
        <entry>5.2.0</entry>
-       <entry>Parametr <parameter>połączenie</parameter> został dodany</entry>
+       <entry>Parametr <parameter>poĹÄczenie</parameter> zostaĹ dodany</entry>
       </row>
      </tbody>
     </tgroup>
@@ -101,17 +101,17 @@
   &reftitle.examples;
   <para>
    <example>
-    <title><function>pg_escape_bytea</function> - przykład</title>
+    <title><function>pg_escape_bytea</function> - przykĹad</title>
     <programlisting role="php">
 <![CDATA[
 <?php
-  // Połącz z bazą
-  $połączenie = pg_connect('dbname=foo');
+  // PoĹÄcz z bazÄ
+  $poĹÄczenie = pg_connect('dbname=foo');
   
   // Przeczytaj z binarnego pliku
   $dane = file_get_contents('obrazek1.jpg');
 
-  // Poprzedź sekwencjami Escape dane binarne
+  // PoprzedĹş sekwencjami Escape dane binarne
   $escaped = pg_escape_bytea($dane);
   
   // Wpisz to do bazy danych

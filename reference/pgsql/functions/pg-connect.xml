@@ -1,35 +1,35 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: jarek Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.2 -->
   <refentry xml:id="function.pg-connect" xmlns="http://docbook.org/ns/docbook">
    <refnamediv>
     <refname>pg_connect</refname>
-    <refpurpose>Otwiera tymczasowe połączenie do PostgreSQL-a</refpurpose>
+    <refpurpose>Otwiera tymczasowe poĹÄczenie do PostgreSQL-a</refpurpose>
    </refnamediv>
    
   <refsect1 role="description">
     &reftitle.description;
     <methodsynopsis>
      <type>resource</type><methodname>pg_connect</methodname>
-     <methodparam><type>string</type><parameter>łąńcuch_połączenia</parameter></methodparam>
-	 <methodparam choice="opt"><type>int</type><parameter>typ_połączenia</parameter></methodparam>
+     <methodparam><type>string</type><parameter>ĹÄĹcuch_poĹÄczenia</parameter></methodparam>
+	 <methodparam choice="opt"><type>int</type><parameter>typ_poĹÄczenia</parameter></methodparam>
     </methodsynopsis>
     <para>
-     <function>pg_connect</function> Otwiera tymczasowe połączenie do serwera
-     PostgreSQL określonego przez <parameter>łąńcuch_połączenia</parameter>.
+     <function>pg_connect</function> Otwiera tymczasowe poĹÄczenie do serwera
+     PostgreSQL okreĹlonego przez <parameter>ĹÄĹcuch_poĹÄczenia</parameter>.
 	 </para>
 	 <para>
-	Jeśli funkcja <function>pg_connect</function> zostanie wywołana drugi raz z 
-    tym samym <parameter>łąńcuchem_połączenia</parameter> jak istniejące połączenie,
-	zostanie zwrócony identyfikator istniejącego połączenia chyba, że podasz 
+	JeĹli funkcja <function>pg_connect</function> zostanie wywoĹana drugi raz z 
+    tym samym <parameter>ĹÄĹcuchem_poĹÄczenia</parameter> jak istniejÄce poĹÄczenie,
+	zostanie zwrĂłcony identyfikator istniejÄcego poĹÄczenia chyba, Ĺźe podasz 
     <constant>PGSQL_CONNECT_FORCE_NEW</constant> jako
-    <parameter>typ_połączenia</parameter>.
+    <parameter>typ_poĹÄczenia</parameter>.
   </para>
   <para>
-   Stara składnia z wieloma parametrami
+   Stara skĹadnia z wieloma parametrami
    <command>$conn = pg_connect("host", "port", "opcje", "tty", "nazwa_bazy")
-   </command> jest przestarzała.
+   </command> jest przestarzaĹa.
   </para>
  </refsect1>
 
@@ -38,36 +38,36 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>łąńcuch_połączenia</parameter></term>
+     <term><parameter>ĹÄĹcuch_poĹÄczenia</parameter></term>
      <listitem>
       <para>
-	   <parameter>łąńcuch_połączenia</parameter> może być pusty, użyte zostaą wszystkie domyślne parametry lub
-	   może zawierać jeden lub więcej parametrów ustawień oddzielonych przez biały znak.
-       Każdy parametr ustawień jest w postaci <literal>słowo_kluczowe = wartość</literal>. Odstępy wokół
-	   znaku równości są opcjonalne. Aby zapisać pustą wartość lub wartość
-       zawierającą spacje, należy otoczyć ją przez pojedynczy cudzysłów, np. <literal>słowo_kluczowe = 
-       'ta wartość'</literal>. Pojedyncze cudzysłowy i lewe ukośniki w wartości musza być
-	   poprzedzone znakiem unikowym (lewym ukośnikiem) tj. \' i \\
+	   <parameter>ĹÄĹcuch_poĹÄczenia</parameter> moĹźe byÄ pusty, uĹźyte zostaÄ wszystkie domyĹlne parametry lub
+	   moĹźe zawieraÄ jeden lub wiÄcej parametrĂłw ustawieĹ oddzielonych przez biaĹy znak.
+       KaĹźdy parametr ustawieĹ jest w postaci <literal>sĹowo_kluczowe = wartoĹÄ</literal>. OdstÄpy wokĂłĹ
+	   znaku rĂłwnoĹci sÄ opcjonalne. Aby zapisaÄ pustÄ wartoĹÄ lub wartoĹÄ
+       zawierajÄcÄ spacje, naleĹźy otoczyÄ jÄ przez pojedynczy cudzysĹĂłw, np. <literal>sĹowo_kluczowe = 
+       'ta wartoĹÄ'</literal>. Pojedyncze cudzysĹowy i lewe ukoĹniki w wartoĹci musza byÄ
+	   poprzedzone znakiem unikowym (lewym ukoĹnikiem) tj. \' i \\
       </para>
       <para>
-	   Obecnie rozpoznwane parametry słów kluczowych to:
+	   Obecnie rozpoznwane parametry sĹĂłw kluczowych to:
        <parameter>host</parameter>, <parameter>hostaddr</parameter>, <parameter>port</parameter>,
        <parameter>dbname</parameter>, <parameter>user</parameter>,
        <parameter>password</parameter>, <parameter>connect_timeout</parameter>,
        <parameter>options</parameter>, <parameter>tty</parameter> (ignorowany), <parameter>sslmode</parameter>,
-       <parameter>requiressl</parameter> (przestarzały na rzecz <parameter>sslmode</parameter>) i
-       <parameter>service</parameter>.  Które z tych parametrów istnieją zależy
+       <parameter>requiressl</parameter> (przestarzaĹy na rzecz <parameter>sslmode</parameter>) i
+       <parameter>service</parameter>.  KtĂłre z tych parametrĂłw istniejÄ zaleĹźy
 	   od Twojej wersji PostgreSQL.
       </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>typ_połączenia</parameter></term>
+     <term><parameter>typ_poĹÄczenia</parameter></term>
      <listitem>
       <para>
-	   Jeśli jest podany <constant>PGSQL_CONNECT_FORCE_NEW</constant>, wtedy nowe połączenie
-       jest tworzone, nawet jeśli <parameter>łąńcuch_połączenia</parameter> jest identyczny z
-       istniejącym połączeniem.
+	   JeĹli jest podany <constant>PGSQL_CONNECT_FORCE_NEW</constant>, wtedy nowe poĹÄczenie
+       jest tworzone, nawet jeĹli <parameter>ĹÄĹcuch_poĹÄczenia</parameter> jest identyczny z
+       istniejÄcym poĹÄczeniem.
       </para>
      </listitem>
     </varlistentry>
@@ -78,7 +78,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zasób, połączenie do bazy PostgreSQL w przypadku powodzenia, lub &false; gdy zawiedzie.
+   ZasĂłb, poĹÄczenie do bazy PostgreSQL w przypadku powodzenia, lub &false; gdy zawiedzie.
   </para>
  </refsect1>
  
@@ -86,22 +86,22 @@
   &reftitle.examples;
   <para>
      <example>
-      <title>Używanie pg_connect</title>
+      <title>UĹźywanie pg_connect</title>
       <programlisting role="php">
 <![CDATA[
 <?php
 $dbconn = pg_connect ("dbname=mary");
-//Otwiera połączenie z bazą "mary"
+//Otwiera poĹÄczenie z bazÄ "mary"
 
 $dbconn2 = pg_connect ("host=localhost port=5432 dbname=mary");
-//Otwiera połączenie z bazą "mary" na komputerze "localhost" przez port "5432"
+//Otwiera poĹÄczenie z bazÄ "mary" na komputerze "localhost" przez port "5432"
 
 $dbconn3 = pg_connect ("host=sheep port=5432 dbname=mary user=lamb password=foo");
-//Otwiera połączenie z bazą "mary" na komputerze "sheep" z użyciem nazwy użytkownika i hasła
+//Otwiera poĹÄczenie z bazÄ "mary" na komputerze "sheep" z uĹźyciem nazwy uĹźytkownika i hasĹa
 
 $conn_string = "host=sheep port=5432 dbname=test user=lamb password=bar";
 $dbconn4 = pg_connect ($conn_string);
-//Otwiera połączenie z bazą "test" na komputerze "sheep" z użyciem nazwy użytkownika i hasła
+//Otwiera poĹÄczenie z bazÄ "test" na komputerze "sheep" z uĹźyciem nazwy uĹźytkownika i hasĹa
 ?>
 ]]>
        </programlisting>

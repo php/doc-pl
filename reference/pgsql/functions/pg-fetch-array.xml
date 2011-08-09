@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: e20370180535f0e945342bef8b0fa80778ea423f Maintainer: joeaccord Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.2 -->
@@ -6,7 +6,7 @@
 <refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.pg-fetch-array">
  <refnamediv>
   <refname>pg_fetch_array</refname>
-  <refpurpose>Pobiera wiersz jako tablicę</refpurpose>
+  <refpurpose>Pobiera wiersz jako tablicÄ</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
@@ -18,21 +18,21 @@
    <methodparam choice="opt"><type>int</type><parameter>typ_wyniku</parameter><initializer>PGSQL_BOTH</initializer></methodparam>
   </methodsynopsis>
   <para>
-   <function>pg_fetch_array</function> zwraca tablicę zawierającą dane z pobranego
+   <function>pg_fetch_array</function> zwraca tablicÄ zawierajÄcÄ dane z pobranego
    wiersza (rekordu).
   </para>
   <para>
-   <function>pg_fetch_array</function> jest rozszerzeną wersją
-   <function>pg_fetch_row</function>.  Oprócz zapisywania danych
-   w tablicy wyników indeksowanej numerycznie, zapisuje je też używając indeksów
-   przyporządkowujących (asocjacyjnych) tej tablicy, nazwy kolumn traktując jako klucze.
-   Domyślnie zapisywane są oba rodzaje indeksów.
+   <function>pg_fetch_array</function> jest rozszerzenÄ wersjÄ
+   <function>pg_fetch_row</function>.  OprĂłcz zapisywania danych
+   w tablicy wynikĂłw indeksowanej numerycznie, zapisuje je teĹź uĹźywajÄc indeksĂłw
+   przyporzÄdkowujÄcych (asocjacyjnych) tej tablicy, nazwy kolumn traktujÄc jako klucze.
+   DomyĹlnie zapisywane sÄ oba rodzaje indeksĂłw.
   </para>
   &database.fetch-null;
   <para>
    <function>pg_fetch_array</function> NIE jest znacznie
-   wolniejsze, niż używanie <function>pg_fetch_row</function>, oraz
-   jest zdecydowanie łatwiejsze do użycia.
+   wolniejsze, niĹź uĹźywanie <function>pg_fetch_row</function>, oraz
+   jest zdecydowanie Ĺatwiejsze do uĹźycia.
   </para>
  </refsect1>
 
@@ -44,9 +44,9 @@
      <term><parameter>wynik</parameter></term>
      <listitem>
       <para>
-       Identyfikator wyniku zapytania PostgreSQL, zwrócony przez <function>pg_query</function>,
+       Identyfikator wyniku zapytania PostgreSQL, zwrĂłcony przez <function>pg_query</function>,
        <function>pg_query_params</function> lub <function>pg_execute</function>
-       (między innymi).
+       (miÄdzy innymi).
       </para>
      </listitem>
     </varlistentry>
@@ -54,7 +54,7 @@
      <term><parameter>wiersz</parameter></term>
      <listitem>
       <para>
-       Numer wiersza w wyniku do pobrania.  Wiersze są numerowane od zera w górę.  Jeśli jest pominięty
+       Numer wiersza w wyniku do pobrania.  Wiersze sÄ numerowane od zera w gĂłrÄ.  JeĹli jest pominiÄty
        albo wynosi &null;, pobrany zostanie kolejny wiersz.
       </para>
      </listitem>
@@ -63,16 +63,16 @@
      <term><parameter>typ_wyniku</parameter></term>
      <listitem>
       <para>
-       Opcjonalny parametr kontrolujący
-       w jaki sposób zwrócona tablica (ang. <type>array</type>) jest indeksowana.
-       <parameter>typ_wyniku</parameter> jest stałą i może przyjąć
-       następujące wartości: <constant>PGSQL_ASSOC</constant>,
+       Opcjonalny parametr kontrolujÄcy
+       w jaki sposĂłb zwrĂłcona tablica (ang. <type>array</type>) jest indeksowana.
+       <parameter>typ_wyniku</parameter> jest staĹÄ i moĹźe przyjÄÄ
+       nastÄpujÄce wartoĹci: <constant>PGSQL_ASSOC</constant>,
        <constant>PGSQL_NUM</constant> oraz <constant>PGSQL_BOTH</constant>.
-       Używając <constant>PGSQL_NUM</constant>, <function>pg_fetch_array</function>
-       zwróci tablicę z indeksami numerycznymi, użycie
-       <constant>PGSQL_ASSOC</constant> zwróci wyłącznie indeksy asocjacyjne
-       podczas, gdy <constant>PGSQL_BOTH</constant>, wartość domyślna, zwróci oba 
-       rodzaje indeksów - numeryczne i asocjacyjne.
+       UĹźywajÄc <constant>PGSQL_NUM</constant>, <function>pg_fetch_array</function>
+       zwrĂłci tablicÄ z indeksami numerycznymi, uĹźycie
+       <constant>PGSQL_ASSOC</constant> zwrĂłci wyĹÄcznie indeksy asocjacyjne
+       podczas, gdy <constant>PGSQL_BOTH</constant>, wartoĹÄ domyĹlna, zwrĂłci oba 
+       rodzaje indeksĂłw - numeryczne i asocjacyjne.
       </para>
      </listitem>
     </varlistentry>
@@ -83,15 +83,15 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Tablica (ang. <type>array</type>) indeksowana numerycznie (zaczynając od zera) lub
+   Tablica (ang. <type>array</type>) indeksowana numerycznie (zaczynajÄc od zera) lub
    asocjacyjnie (indeksowana przez nazwy kolumn), lub tak i tak.
-   Każda wartość w tablicy (ang. <type>array</type>) jest przedstawiona jako łańcuch
-   (ang. <type>string</type>). Wartości <literal>NULL</literal> z bazy danych
-   są zwracane jako &null;.
+   KaĹźda wartoĹÄ w tablicy (ang. <type>array</type>) jest przedstawiona jako ĹaĹcuch
+   (ang. <type>string</type>). WartoĹci <literal>NULL</literal> z bazy danych
+   sÄ zwracane jako &null;.
   </para>
   <para>
-   &false; zostanie zwrócone jeśli <parameter>wiersz</parameter> przekracza ilość
-   wierszy w całym zbiorze, nie ma więcej wierszy, lub dowolnym innym błędzie.
+   &false; zostanie zwrĂłcone jeĹli <parameter>wiersz</parameter> przekracza iloĹÄ
+   wierszy w caĹym zbiorze, nie ma wiÄcej wierszy, lub dowolnym innym bĹÄdzie.
   </para>
  </refsect1>
 
@@ -110,7 +110,7 @@
       <row>
        <entry>4.1.0</entry>
        <entry>
-        Parametr <parameter>wiersz</parameter> stał się opcjonalnym.
+        Parametr <parameter>wiersz</parameter> staĹ siÄ opcjonalnym.
        </entry>
       </row>
      </tbody>
@@ -123,20 +123,20 @@
   &reftitle.examples;
   <para>
    <example>
-    <title><function>pg_fetch_array</function> - przykład</title>
+    <title><function>pg_fetch_array</function> - przykĹad</title>
     <programlisting role="php">
 <![CDATA[
 <?php 
 
 $polaczenie_z_baza = pg_pconnect("dbname=wydawca");
 if (!$polaczenie_z_baza) {
-  echo "Wystąpił błąd.\n";
+  echo "WystÄpiĹ bĹÄd.\n";
   exit;
 }
 
 $wynik = pg_query($polaczenie_z_baza, "SELECT autor, email FROM autorzy");
 if (!$wynik) {
-  echo "Wystąpił błąd.\n";
+  echo "WystÄpiĹ bĹÄd.\n";
   exit;
 }
 
@@ -144,9 +144,9 @@ $tab = pg_fetch_array($wynik, 0, PGSQL_NUM);
 echo $tab[0] . " <- Wiersz 1 Autor\n";
 echo $tab[1] . " <- Wiersz 1 E-mail\n";
 
-// Jako, że w PHP 4.1.0, parametr wiersz jest opcjonalny; można podać w zamian NULL,
-// by podać typ_wyniku.  Kolejne wywołanie funkcji pg_fetch_array zwróci
-// następny wiersz.
+// Jako, Ĺźe w PHP 4.1.0, parametr wiersz jest opcjonalny; moĹźna podaÄ w zamian NULL,
+// by podaÄ typ_wyniku.  Kolejne wywoĹanie funkcji pg_fetch_array zwrĂłci
+// nastÄpny wiersz.
 $tab = pg_fetch_array ($wynik, 1, PGSQL_ASSOC);
 echo $tab["autor"] . " <- Wiersz 2 Autor\n";
 echo $tab["email"] . " <- Wiersz 2 E-mail\n";

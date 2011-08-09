@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: garbus Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.58 -->
@@ -24,9 +24,9 @@
    <function>pg_send_execute</function>.
   </para>
   <para><function>pg_send_query</function> oraz
-   inne funkcje zapytań asynchronicznych
-   może wysyłać wiele zapytań do serwera PostgreSQL, natomiast
-   <function>pg_get_result</function> jest używana do pobierania wyników każdego zapytania
+   inne funkcje zapytaĹ asynchronicznych
+   moĹźe wysyĹaÄ wiele zapytaĹ do serwera PostgreSQL, natomiast
+   <function>pg_get_result</function> jest uĹźywana do pobierania wynikĂłw kaĹźdego zapytania
    po kolei.
   </para> 
  </refsect1>
@@ -39,7 +39,7 @@
      <term><parameter>polaczenie</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia z bazą PostgreSQL.
+       Identyfikator poĹÄczenia z bazÄ PostgreSQL.
       </para>
      </listitem>
     </varlistentry>
@@ -50,7 +50,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Identyfikator wyniku (ang. <type>resource</type>), lub &false; gdy brak więcej dostępnych wyników.
+   Identyfikator wyniku (ang. <type>resource</type>), lub &false; gdy brak wiÄcej dostÄpnych wynikĂłw.
   </para>
  </refsect1>
 
@@ -58,36 +58,36 @@
   &reftitle.examples;
   <para>
    <example>
-    <title><function>pg_get_result</function> - przykład</title>
+    <title><function>pg_get_result</function> - przykĹad</title>
     <programlisting role="php">
 <![CDATA[
 <?php
-  $polaczenie = pg_connect("dbname=wydawca") or die("Nie można się połączyć");
+  $polaczenie = pg_connect("dbname=wydawca") or die("Nie moĹźna siÄ poĹÄczyÄ");
 
   if (!pg_connection_busy($polaczenie)) {
       pg_send_query($polaczenie, "select * from autorzy; select count(*) from autorzy;");
   }
   
   $wyn1 = pg_get_result($polaczenie);
-  echo "Pierwsze wywołanie pg_get_result(): $wyn1\n";
+  echo "Pierwsze wywoĹanie pg_get_result(): $wyn1\n";
   $wiersze1 = pg_num_rows($wyn1);
-  echo "$wyn1 ma $wiersze1 rekordy(ów)\n\n";
+  echo "$wyn1 ma $wiersze1 rekordy(Ăłw)\n\n";
   
   $wyn2 = pg_get_result($polaczenie);
-  echo "Drugie wywołanie pg_get_result(): $wyn2\n";
+  echo "Drugie wywoĹanie pg_get_result(): $wyn2\n";
   $wiersze2 = pg_num_rows($wyn2);
-  echo "$wyn2 ma $wiersze2 rekordy(ów)\n";
+  echo "$wyn2 ma $wiersze2 rekordy(Ăłw)\n";
 ?>
 ]]>
     </programlisting>
     &example.outputs;
     <screen>
 <![CDATA[
-Pierwsze wywołanie pg_get_result(): Resource id #3
-Resource id #3 ma 3 rekordy(ów)
+Pierwsze wywoĹanie pg_get_result(): Resource id #3
+Resource id #3 ma 3 rekordy(Ăłw)
 
-Drugie wywołanie pg_get_result(): Resource id #4
-Resource id #4 ma 1 rekordy(ów)
+Drugie wywoĹanie pg_get_result(): Resource id #4
+Resource id #4 ma 1 rekordy(Ăłw)
 ]]>
     </screen>
    </example>

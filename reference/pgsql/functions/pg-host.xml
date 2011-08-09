@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: garbus Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.2 -->
@@ -7,7 +7,7 @@
  <refnamediv>
   <refname>pg_host</refname> 
   <refpurpose>
-   Zwraca nazwę komputera związanego z połączeniem
+   Zwraca nazwÄ komputera zwiÄzanego z poĹÄczeniem
   </refpurpose>
  </refnamediv>
 
@@ -18,9 +18,9 @@
    <methodparam choice="opt"><type>resource</type><parameter>polaczenie</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>pg_host</function> zwraca nazwę komputera,
+   <function>pg_host</function> zwraca nazwÄ komputera,
    dla danego identyfikatora <parameter>polaczenie</parameter>,
-   z którym połączony jest PostgreSQL.
+   z ktĂłrym poĹÄczony jest PostgreSQL.
   </para>
  </refsect1>
 
@@ -32,9 +32,9 @@
      <term><parameter>polaczenie</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia do bazy PostgreSQL.  Gdy parametr
-       <parameter>polaczenie</parameter> nie został podany, domyślne połączenie
-       jest używane. Domyślnym połączeniem jest ostatnie połączenie stworzone przez
+       Identyfikator poĹÄczenia do bazy PostgreSQL.  Gdy parametr
+       <parameter>polaczenie</parameter> nie zostaĹ podany, domyĹlne poĹÄczenie
+       jest uĹźywane. DomyĹlnym poĹÄczeniem jest ostatnie poĹÄczenie stworzone przez
        <function>pg_connect</function> lub <function>pg_pconnect</function>.
       </para>
      </listitem>
@@ -46,8 +46,8 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Łańcuch (ang. <type>string</type>) zawierający nazwę komputera, do którego
-   <parameter>polaczenie</parameter> jest nawiązane, lub &false; w razie błędu.
+   ĹaĹcuch (ang. <type>string</type>) zawierajÄcy nazwÄ komputera, do ktĂłrego
+   <parameter>polaczenie</parameter> jest nawiÄzane, lub &false; w razie bĹÄdu.
   </para>
  </refsect1>
 
@@ -55,14 +55,14 @@
   &reftitle.examples;
   <para>
    <example>
-    <title><function>pg_host</function> - przykład</title>
+    <title><function>pg_host</function> - przykĹad</title>
     <programlisting role="php">
 <![CDATA[
 <?php
 $pgsql_polacz = pg_connect("dbname=marek host=localhost");
 
 if ($pgsql_polacz) {
-   print "Nawiązano połączenie do: " . pg_host($pgsql_polacz) . "<br/>\n";
+   print "NawiÄzano poĹÄczenie do: " . pg_host($pgsql_polacz) . "<br/>\n";
 } else {
    print pg_last_error($pgsql_polacz);
    exit;

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.2 -->
@@ -7,7 +7,7 @@
  <refnamediv>
   <refname>pg_send_query</refname>
   <refpurpose>
-   Wysyła zapytanie asynchroniczne
+   WysyĹa zapytanie asynchroniczne
   </refpurpose>
  </refnamediv>
 
@@ -15,27 +15,27 @@
   &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>pg_send_query</methodname>
-   <methodparam><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+   <methodparam><type>resource</type><parameter>identyfikator_poĹÄczenia</parameter></methodparam>
    <methodparam><type>string</type><parameter>zapytanie</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>pg_send_query</function> wysyła asynchroniczne zapytanie lub zapytania do połączenia
-   określonego przez <parameter>identyfikator_połączenia</parameter>. W przeciwieństwie do
-   <function>pg_query</function>, pozwala wysłać jednorazowo wiele zapytań do PostgreSQL-a, na następnie
-   pobrać wyniki jeden po drugim używając funkcji
+   <function>pg_send_query</function> wysyĹa asynchroniczne zapytanie lub zapytania do poĹÄczenia
+   okreĹlonego przez <parameter>identyfikator_poĹÄczenia</parameter>. W przeciwieĹstwie do
+   <function>pg_query</function>, pozwala wysĹaÄ jednorazowo wiele zapytaĹ do PostgreSQL-a, na nastÄpnie
+   pobraÄ wyniki jeden po drugim uĹźywajÄc funkcji
    <function>pg_get_result</function>.
   </para>
   <para>
-   Wykonywanie skryptu nie jest blokowane w czasie wykonywania zapytań. Możesz
-   użyć <function>pg_connection_busy</function> aby sprawdzić czy połączenie jest
-   nie jest zajęte (np. wykonuje się inne zapytanie). Zapytania mogą zostać przerwane przez użycie
+   Wykonywanie skryptu nie jest blokowane w czasie wykonywania zapytaĹ. MoĹźesz
+   uĹźyÄ <function>pg_connection_busy</function> aby sprawdziÄ czy poĹÄczenie jest
+   nie jest zajÄte (np. wykonuje siÄ inne zapytanie). Zapytania mogÄ zostaÄ przerwane przez uĹźycie
    funkcji <function>pg_cancel_query</function>.
   </para>
   <para>
-   Tak więc użytkownik może wysłać wiele zapytań jednocześnie, ale
-   nie może ich wysyłać jeśli połączenie jest zajęte. Jeśli zapytanie będzie wysłane gdy
-   połączenie jest zajęte, będzie oczekiwało aż wykona się poprzednie zapytanie
-   i utracone zostaną wszystkie wyniki.
+   Tak wiÄc uĹźytkownik moĹźe wysĹaÄ wiele zapytaĹ jednoczeĹnie, ale
+   nie moĹźe ich wysyĹaÄ jeĹli poĹÄczenie jest zajÄte. JeĹli zapytanie bÄdzie wysĹane gdy
+   poĹÄczenie jest zajÄte, bÄdzie oczekiwaĹo aĹź wykona siÄ poprzednie zapytanie
+   i utracone zostanÄ wszystkie wyniki.
   </para>
  </refsect1>
  
@@ -44,10 +44,10 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>identyfikator_połączenia</parameter></term>
+     <term><parameter>identyfikator_poĹÄczenia</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia do bazy PostgreSQL.
+       Identyfikator poĹÄczenia do bazy PostgreSQL.
       </para>
      </listitem>
     </varlistentry>
@@ -58,7 +58,7 @@
        Instrukcja lub instrukcje SQL do wykonania.
       </para>
       <para>
-       Dane w zapytaniu powinny posiadać <link
+       Dane w zapytaniu powinny posiadaÄ <link
        linkend="function.pg-escape-string">znaki unikowe</link>.
       </para>
      </listitem>
@@ -71,7 +71,7 @@
   &reftitle.returnvalues;
   <para>&return.success;</para>
   <para>
-   Użyj <function>pg_get_result</function>, aby ustalić wynik zapytania. 
+   UĹźyj <function>pg_get_result</function>, aby ustaliÄ wynik zapytania. 
   </para>
  </refsect1>
 
@@ -79,36 +79,36 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład <function>pg_send_query</function></title>
+    <title>PrzykĹad <function>pg_send_query</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
-  $polaczenie_z_baza = pg_connect("dbname=wydawca") or die("Nie można było się połączyć");
+  $polaczenie_z_baza = pg_connect("dbname=wydawca") or die("Nie moĹźna byĹo siÄ poĹÄczyÄ");
 
   if (!pg_connection_busy($polaczenie_z_baza)) {
       pg_send_query($polaczenie_z_baza, "select * from autorzy; select count(*) from autorzy;");
   }
   
   $wynik1 = pg_get_result($polaczenie_z_baza);
-  echo "Pierwsze wywołanie pg_get_result(): $wynik1\n";
+  echo "Pierwsze wywoĹanie pg_get_result(): $wynik1\n";
   $wiersze1 = pg_num_rows($wynik1);
-  echo "$wynik1 ma $wiersze1 wpisów\n\n";
+  echo "$wynik1 ma $wiersze1 wpisĂłw\n\n";
   
   $wynik2 = pg_get_result($polaczenie_z_baza);
-  echo "Drugie wywołanie pg_get_result(): $wynik2\n";
+  echo "Drugie wywoĹanie pg_get_result(): $wynik2\n";
   $wiersze2 = pg_num_rows($wynik2);
-  echo "$wynik2 ma $wiersze2 wpisów\n";
+  echo "$wynik2 ma $wiersze2 wpisĂłw\n";
 ?>
 ]]>
     </programlisting>
     &example.outputs;
     <screen>
 <![CDATA[
-Pierwsze wywołanie pg_get_result(): Resource id #3
-Resource id #3 ma 8 wpisów
+Pierwsze wywoĹanie pg_get_result(): Resource id #3
+Resource id #3 ma 8 wpisĂłw
 
-Drugie wywołanie pg_get_result(): Resource id #4
-Resource id #4 ma 5 wpisów
+Drugie wywoĹanie pg_get_result(): Resource id #4
+Resource id #4 ma 5 wpisĂłw
 ]]>
     </screen>
    </example>

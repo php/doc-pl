@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: jarek Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.16 -->
@@ -6,7 +6,7 @@
    <refnamediv>
     <refname>pg_client_encoding</refname>
     <refpurpose>
-     Zwraca stronę kodową klienta
+     Zwraca stronÄ kodowÄ klienta
     </refpurpose>
    </refnamediv>
    
@@ -14,24 +14,24 @@
     &reftitle.description;
      <methodsynopsis>
       <type>string</type><methodname>pg_client_encoding</methodname>
-      <methodparam choice="opt"><type>resource</type><parameter>połączenie</parameter></methodparam>
+      <methodparam choice="opt"><type>resource</type><parameter>poĹÄczenie</parameter></methodparam>
      </methodsynopsis>
 	 <para> 
-	PostgreSQL wspiera automatyczną konwersję zestawu znaków pomiędzy
-	serwerem, a klientem dla pewnych systemów kodowania.  
-     <function>pg_client_encoding</function> zwraca stronę kodową klienta jako
-     łańcuch. Zwracany łańcuch będzie jednym ze standardowych identyfikatorów kodowania PostgreSQL.
+	PostgreSQL wspiera automatycznÄ konwersjÄ zestawu znakĂłw pomiÄdzy
+	serwerem, a klientem dla pewnych systemĂłw kodowania.  
+     <function>pg_client_encoding</function> zwraca stronÄ kodowÄ klienta jako
+     ĹaĹcuch. Zwracany ĹaĹcuch bÄdzie jednym ze standardowych identyfikatorĂłw kodowania PostgreSQL.
     </para>
     <note>
      <para>
       Ta funkcja wymaga PHP 4.0.3 lub nowszego i PostgreSQL 7.0 lub nowszego.
-      Jeśli libpq jest skompilowane bez wsparcia dla kodowania wielobajtowego,
+      JeĹli libpq jest skompilowane bez wsparcia dla kodowania wielobajtowego,
       <function>pg_client_encoding</function> zawsze zwraca
-      <literal>SQL_ASCII</literal>. Wspierane strony kodowe zależą od wersji PostgreSQL.
-      Sprawdź dokumentację PostgreSQL o wspieranych kodowaniach.
+      <literal>SQL_ASCII</literal>. Wspierane strony kodowe zaleĹźÄ od wersji PostgreSQL.
+      SprawdĹş dokumentacjÄ PostgreSQL o wspieranych kodowaniach.
      </para>
      <para>
-      Ta funkcja była poprzednio nazywana <function>pg_clientencoding</function>.
+      Ta funkcja byĹa poprzednio nazywana <function>pg_clientencoding</function>.
      </para>
     </note>
     </refsect1>
@@ -41,12 +41,12 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>połączenie</parameter></term>
+     <term><parameter>poĹÄczenie</parameter></term>
      <listitem>
       <para>
-	   Zasób, połączenie do bazy PostgreSQL. Kiedy parametr
-	   <parameter>połączenie</parameter> nie jest podany, użyte zostanie domyślne połączenie.
-	   Domyślne połączenie to ostatnie połączenie utworzone przez 
+	   ZasĂłb, poĹÄczenie do bazy PostgreSQL. Kiedy parametr
+	   <parameter>poĹÄczenie</parameter> nie jest podany, uĹźyte zostanie domyĹlne poĹÄczenie.
+	   DomyĹlne poĹÄczenie to ostatnie poĹÄczenie utworzone przez 
        <function>pg_connect</function> lub <function>pg_pconnect</function>.
       </para>
      </listitem>
@@ -58,7 +58,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-    Kodowanie klienta, lub &false; w przypadku błędu.
+    Kodowanie klienta, lub &false; w przypadku bĹÄdu.
   </para>
  </refsect1>
  
@@ -66,11 +66,11 @@
   &reftitle.examples;
   <para>
    <example>
-    <title><function>pg_client_encoding</function> przykład</title>
+    <title><function>pg_client_encoding</function> przykĹad</title>
     <programlisting role="php">
 <![CDATA[
 <?php
-// Zakładamy, że $conn jest połączeniem do bazy w ISO-8859-1
+// ZakĹadamy, Ĺźe $conn jest poĹÄczeniem do bazy w ISO-8859-1
 $encoding = pg_client_encoding($conn);
 
 echo "Kodowanie klienta to: ", $encoding, "\n";

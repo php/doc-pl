@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: garbus Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.82 -->
@@ -16,31 +16,31 @@
    <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>pg_last_oid</function> służy do pobrania <varname>OID</varname> 
+   <function>pg_last_oid</function> sĹuĹźy do pobrania <varname>OID</varname> 
    przypisanego do dopisanego wiersza. 
   </para>
   <para>
    OID jest polem opcjonalnym od wersji PostgreSQL 7.2 i nie pojawi
-   się domyślnie w PostgreSQL 8.1. Gdy
-   pole OID nie pojawia się w tabeli, programista musi użyć
-   <function>pg_result_status</function> aby sprawdzić czy rekord został
+   siÄ domyĹlnie w PostgreSQL 8.1. Gdy
+   pole OID nie pojawia siÄ w tabeli, programista musi uĹźyÄ
+   <function>pg_result_status</function> aby sprawdziÄ czy rekord zostaĹ
    dopisany czy nie.
   </para>
   <para>
-   Aby pobrać wartość pola <literal>SERIAL</literal> we wstawionym
-   wierszu, niezbędnym jest użycie funkcji PostgreSQL <literal>CURRVAL</literal>,
-   przekazując sekwencję, której wymagana jest ostatnia wartość.  Jeśli
-   nazwa sekwencji nie jest znana, konieczne jest użycie funkcji <literal>pg_get_serial_sequence</literal>
+   Aby pobraÄ wartoĹÄ pola <literal>SERIAL</literal> we wstawionym
+   wierszu, niezbÄdnym jest uĹźycie funkcji PostgreSQL <literal>CURRVAL</literal>,
+   przekazujÄc sekwencjÄ, ktĂłrej wymagana jest ostatnia wartoĹÄ.  JeĹli
+   nazwa sekwencji nie jest znana, konieczne jest uĹźycie funkcji <literal>pg_get_serial_sequence</literal>
    PostgreSQL-a 8.0.
   </para>
   <para>
-   PostgreSQL 8.1 ma funkcję <literal>LASTVAL</literal>, która zwraca
-   wartość ostatnio użytej sekwencji w sesji.  To uchyla
-   potrzebę powoływania razem sekwencji, tabeli lub kolumny.
+   PostgreSQL 8.1 ma funkcjÄ <literal>LASTVAL</literal>, ktĂłra zwraca
+   wartoĹÄ ostatnio uĹźytej sekwencji w sesji.  To uchyla
+   potrzebÄ powoĹywania razem sekwencji, tabeli lub kolumny.
   </para>
   <note>
    <para>
-    Ta funkcja była poprzednio nazwana <function>pg_getlastoid</function>.
+    Ta funkcja byĹa poprzednio nazwana <function>pg_getlastoid</function>.
    </para>
   </note>
  </refsect1>
@@ -53,9 +53,9 @@
      <term><parameter>wynik</parameter></term>
      <listitem>
       <para>
-       Identyfikator wyniku zapytania PostgreSQL-a, zwrócony przez <function>pg_query</function>,
+       Identyfikator wyniku zapytania PostgreSQL-a, zwrĂłcony przez <function>pg_query</function>,
        <function>pg_query_params</function> lub <function>pg_execute</function>
-       (między innymi).
+       (miÄdzy innymi).
       </para>
      </listitem>
     </varlistentry>
@@ -66,9 +66,9 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Łańcuch (ang. <type>string</type>) zawierający OID przydzielony do ostatnio wstawionego
-   wiersza w określonym parametrem <parameter>polaczenie</parameter> połączeniem, lub &false; w przypadku błędu lub
-   gdy OID nie jest dostępny.
+   ĹaĹcuch (ang. <type>string</type>) zawierajÄcy OID przydzielony do ostatnio wstawionego
+   wiersza w okreĹlonym parametrem <parameter>polaczenie</parameter> poĹÄczeniem, lub &false; w przypadku bĹÄdu lub
+   gdy OID nie jest dostÄpny.
   </para>
  </refsect1>
 
@@ -76,7 +76,7 @@
   &reftitle.examples;
   <para>
    <example>
-    <title><function>pg_last_oid</function> - przykład</title>
+    <title><function>pg_last_oid</function> - przykĹad</title>
     <programlisting role="php">
 <![CDATA[
 <?php

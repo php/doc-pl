@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: garbus Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.2 -->
@@ -6,7 +6,7 @@
 <refentry xml:id="function.pg-last-error" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>pg_last_error</refname>
-  <refpurpose>Zwraca łańcuch ostatniego komunikatu błędu dla połączenia</refpurpose>
+  <refpurpose>Zwraca ĹaĹcuch ostatniego komunikatu bĹÄdu dla poĹÄczenia</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
@@ -16,22 +16,22 @@
    <methodparam choice="opt"><type>resource</type><parameter>polaczenie</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>pg_last_error</function> zwraca ostatni komunikat błędu 
-   dla połączenia danego parametrem <parameter>polaczenie</parameter>. 
+   <function>pg_last_error</function> zwraca ostatni komunikat bĹÄdu 
+   dla poĹÄczenia danego parametrem <parameter>polaczenie</parameter>. 
   </para>
   <para>
-   Komunikaty błędów mogą być zamazane przez wewnętrzne wywołania
-   funkcji PostgreSQL(libpq). Funkcja może nie zwrócić właściwego
-   komunikatu, jeśli wewnątrz modułu PostgreSQL wystąpiło wiele błędów.
+   Komunikaty bĹÄdĂłw mogÄ byÄ zamazane przez wewnÄtrzne wywoĹania
+   funkcji PostgreSQL(libpq). Funkcja moĹźe nie zwrĂłciÄ wĹaĹciwego
+   komunikatu, jeĹli wewnÄtrz moduĹu PostgreSQL wystÄpiĹo wiele bĹÄdĂłw.
   </para>
   <para>
    Stosuj <function>pg_result_error</function>, <function>pg_result_error_field</function>,
    <function>pg_result_status</function> i
-   <function>pg_connection_status</function> dla lepszej obsługi błędów.
+   <function>pg_connection_status</function> dla lepszej obsĹugi bĹÄdĂłw.
   </para>
   <note>
    <para>
-    Ta funkcja była poprzednio nazwana <function>pg_errormessage</function>.
+    Ta funkcja byĹa poprzednio nazwana <function>pg_errormessage</function>.
    </para>
   </note>
  </refsect1>
@@ -44,9 +44,9 @@
      <term><parameter>polaczenie</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia do bazy danych PostgreSQL.  Gdy
-       <parameter>polaczenie</parameter> nie został podany, domyślne połączenie
-       jest użyte. Domyślnym połączeniem jest ostatnie, stworzone przez
+       Identyfikator poĹÄczenia do bazy danych PostgreSQL.  Gdy
+       <parameter>polaczenie</parameter> nie zostaĹ podany, domyĹlne poĹÄczenie
+       jest uĹźyte. DomyĹlnym poĹÄczeniem jest ostatnie, stworzone przez
        <function>pg_connect</function> lub <function>pg_pconnect</function>.
       </para>
      </listitem>
@@ -58,8 +58,8 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Łańcuch (ang. <type>string</type>) zawierający ostatni komunikat błędu dla
-   danego poprzez parametr <parameter>polaczenie</parameter> połączenia, lub &false; w razie niepowodzenia.
+   ĹaĹcuch (ang. <type>string</type>) zawierajÄcy ostatni komunikat bĹÄdu dla
+   danego poprzez parametr <parameter>polaczenie</parameter> poĹÄczenia, lub &false; w razie niepowodzenia.
   </para>
  </refsect1>
 
@@ -67,13 +67,13 @@
   &reftitle.examples;
   <para>
    <example>
-    <title><function>pg_last_error</function> - przykład</title>
+    <title><function>pg_last_error</function> - przykĹad</title>
     <programlisting role="php">
 <![CDATA[
 <?php
-  $polaczenie = pg_connect("dbname=wydawca") or die("Nie można się połączyć");
+  $polaczenie = pg_connect("dbname=wydawca") or die("Nie moĹźna siÄ poĹÄczyÄ");
 
-  // Zapytanie, które nie zostało wykonane
+  // Zapytanie, ktĂłre nie zostaĹo wykonane
   $wyn = pg_query($polaczenie, "select * from nie_istniejaca_tabela");
   
   echo pg_last_error($polaczenie);

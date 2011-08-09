@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: jarek Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.82 -->
@@ -6,7 +6,7 @@
    <refnamediv>
     <refname>pg_connection_busy</refname>
     <refpurpose>
-     Sprawdza czy połączenie jest zajęte czy wolne
+     Sprawdza czy poĹÄczenie jest zajÄte czy wolne
     </refpurpose>
    </refnamediv>
    
@@ -14,12 +14,12 @@
     &reftitle.description;
     <methodsynopsis>
      <type>bool</type><methodname>pg_connection_busy</methodname>
-     <methodparam><type>resource</type><parameter>połączenie</parameter></methodparam>
+     <methodparam><type>resource</type><parameter>poĹÄczenie</parameter></methodparam>
     </methodsynopsis>
     <para>
-     <function>pg_connection_busy</function> sprawdza czy połączenie
-	 jest zajęte. Jeśli jest zajęte, poprzednie zapytanie jest wciąż wykonywane.
-     Jeśli <function>pg_get_result</function> jest użyte na połączeniu, zostanie ono
+     <function>pg_connection_busy</function> sprawdza czy poĹÄczenie
+	 jest zajÄte. JeĹli jest zajÄte, poprzednie zapytanie jest wciÄĹź wykonywane.
+     JeĹli <function>pg_get_result</function> jest uĹźyte na poĹÄczeniu, zostanie ono
      zablokowane.
     </para>
   </refsect1>
@@ -29,10 +29,10 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>połączenie</parameter></term>
+     <term><parameter>poĹÄczenie</parameter></term>
      <listitem>
       <para>
-       Zasób, połączenie do bazy PostgreSQL.
+       ZasĂłb, poĹÄczenie do bazy PostgreSQL.
       </para>
      </listitem>
     </varlistentry>
@@ -43,7 +43,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
    <para>
-    Zwraca &true; jeśli połączenie jest zajęte, &false; w przeciwnym wypadku.
+    Zwraca &true; jeĹli poĹÄczenie jest zajÄte, &false; w przeciwnym wypadku.
    </para>
  </refsect1>
  
@@ -51,16 +51,16 @@
   &reftitle.examples;
   <para>
    <example>
-    <title><function>pg_connection_busy</function> przykład</title>
+    <title><function>pg_connection_busy</function> przykĹad</title>
     <programlisting role="php">
 <![CDATA[
 <?php
-  $dbconn = pg_connect("dbname=publisher") or die("Nie można się połączyć");
+  $dbconn = pg_connect("dbname=publisher") or die("Nie moĹźna siÄ poĹÄczyÄ");
   $bs = pg_connection_busy($dbconn);
   if ($bs) {
-      echo 'połączenie jest zajęte';
+      echo 'poĹÄczenie jest zajÄte';
   } else {
-     echo 'połączenie jest wolne';
+     echo 'poĹÄczenie jest wolne';
   }
 ?>
 ]]>

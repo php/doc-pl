@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: jarek Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.82 -->
@@ -14,7 +14,7 @@
     &reftitle.description;
      <methodsynopsis>
       <type>bool</type><methodname>pg_copy_from</methodname>
-      <methodparam><type>resource</type><parameter>połączenie</parameter></methodparam>
+      <methodparam><type>resource</type><parameter>poĹÄczenie</parameter></methodparam>
       <methodparam><type>string</type><parameter>nazwa_tabeli</parameter></methodparam>
       <methodparam><type>array</type><parameter>wiersze</parameter></methodparam>
       <methodparam choice="opt"><type>string</type><parameter>delimiter</parameter></methodparam>
@@ -22,8 +22,8 @@
      </methodsynopsis>
     <para>
      <function>pg_copy_from</function> wstawia wiersze do tabeli z tablicy
-     <parameter>wiersze</parameter>. Wywołuje wewnętrznie polecenie SQL <literal>COPY FROM</literal> 
-     aby wstawić wiersze.
+     <parameter>wiersze</parameter>. WywoĹuje wewnÄtrznie polecenie SQL <literal>COPY FROM</literal> 
+     aby wstawiÄ wiersze.
      &return.success;
     </para>
     </refsect1>
@@ -33,10 +33,10 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>połączenie</parameter></term>
+     <term><parameter>poĹÄczenie</parameter></term>
      <listitem>
       <para>
-       Zasób, połączenie do bazy danych PostgreSQL.
+       ZasĂłb, poĹÄczenie do bazy danych PostgreSQL.
       </para>
      </listitem>
     </varlistentry>
@@ -44,7 +44,7 @@
      <term><parameter>nazwa_tabeli</parameter></term>
      <listitem>
       <para>
-	   Nazwa tabeli do której będą kopiowane <parameter>wiersze</parameter>.
+	   Nazwa tabeli do ktĂłrej bÄdÄ kopiowane <parameter>wiersze</parameter>.
       </para>
      </listitem>
     </varlistentry>
@@ -52,10 +52,10 @@
      <term><parameter>wiersze</parameter></term>
      <listitem>
       <para>
-	   <type>Tablica</type> danych, które będą skopiowane do <parameter>nazwa_tabeli</parameter>. 
-	   Każda wartość w <parameter>wiersze</parameter> stanie się wierszem w <parameter>nazwa_tabeli</parameter>.
-       Każda wartość w <parameter>wiersze</parameter> powinna być łańcuchem znaków rozdzielonych wartości 
-	   do wstawienia w każde pole. Wartości powinny być zakończone przejściem do nowej linii.
+	   <type>Tablica</type> danych, ktĂłre bÄdÄ skopiowane do <parameter>nazwa_tabeli</parameter>. 
+	   KaĹźda wartoĹÄ w <parameter>wiersze</parameter> stanie siÄ wierszem w <parameter>nazwa_tabeli</parameter>.
+       KaĹźda wartoĹÄ w <parameter>wiersze</parameter> powinna byÄ ĹaĹcuchem znakĂłw rozdzielonych wartoĹci 
+	   do wstawienia w kaĹźde pole. WartoĹci powinny byÄ zakoĹczone przejĹciem do nowej linii.
 	  </para>
      </listitem>
     </varlistentry>
@@ -63,8 +63,8 @@
      <term><parameter>delimiter</parameter></term>
      <listitem>
       <para>
-	   Symbol jaki rozdziela wartości dla każdego pola w każdym elemencie
-	   <parameter>wiersza</parameter>. Domyślnie jest to <literal>TAB</literal>.
+	   Symbol jaki rozdziela wartoĹci dla kaĹźdego pola w kaĹźdym elemencie
+	   <parameter>wiersza</parameter>. DomyĹlnie jest to <literal>TAB</literal>.
       </para>
      </listitem>
     </varlistentry>
@@ -72,8 +72,8 @@
      <term><parameter>null_jako</parameter></term>
      <listitem>
       <para>
-       Jak wartość SQL <literal>NULL</literal> jest reprezentowana w
-       <parameter>wierszu</parameter>.  Domyślnie jest to \N ("\\N").
+       Jak wartoĹÄ SQL <literal>NULL</literal> jest reprezentowana w
+       <parameter>wierszu</parameter>.  DomyĹlnie jest to \N ("\\N").
       </para>
      </listitem>
     </varlistentry>
@@ -92,11 +92,11 @@
   &reftitle.examples;
   <para>
    <example>
-    <title><function>pg_copy_from</function> przykład</title>
+    <title><function>pg_copy_from</function> przykĹad</title>
     <programlisting role="php">
 <![CDATA[
 <?php
-   $db = pg_connect("dbname=publisher") or die("Nie można się połączyć");
+   $db = pg_connect("dbname=publisher") or die("Nie moĹźna siÄ poĹÄczyÄ");
    
    $rows = pg_copy_to($db, $table_name);
    

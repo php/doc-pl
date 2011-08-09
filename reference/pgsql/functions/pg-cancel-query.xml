@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: jarek Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.61 -->
@@ -14,12 +14,12 @@
     &reftitle.description;
      <methodsynopsis>
       <type>bool</type><methodname>pg_cancel_query</methodname>
-      <methodparam><type>resource</type><parameter>połączenie</parameter></methodparam>
+      <methodparam><type>resource</type><parameter>poĹÄczenie</parameter></methodparam>
      </methodsynopsis>
     <para>
-     <function>pg_cancel_query</function> przerywa zapytanie asynchroniczne wysłane przez
+     <function>pg_cancel_query</function> przerywa zapytanie asynchroniczne wysĹane przez
      <function>pg_send_query</function>, <function>pg_send_query_params</function> 
-     lub <function>pg_send_execute</function>. Nie można przerwać zapytania uruchomionego przez
+     lub <function>pg_send_execute</function>. Nie moĹźna przerwaÄ zapytania uruchomionego przez
      <function>pg_query</function>.
     </para>
    </refsect1>
@@ -29,10 +29,10 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>połączenie</parameter></term>
+     <term><parameter>poĹÄczenie</parameter></term>
      <listitem>
       <para>
-       Zasób, połączenie do bazy PostgreSQL.
+       ZasĂłb, poĹÄczenie do bazy PostgreSQL.
       </para>
      </listitem>
     </varlistentry>
@@ -51,22 +51,22 @@
   &reftitle.examples;
   <para>
    <example>
-    <title><function>pg_cancel_query</function> przykład</title>
+    <title><function>pg_cancel_query</function> przykĹad</title>
     <programlisting role="php">
 <![CDATA[
 <?php
-  $dbconn = pg_connect("dbname=publisher") or die("Nie można połączyć się");
+  $dbconn = pg_connect("dbname=publisher") or die("Nie moĹźna poĹÄczyÄ siÄ");
 
   if (!pg_connection_busy($dbconn)) {
       pg_send_query($dbconn, "select * from authors; select count(*) from authors;");
   }
   
   $res1 = pg_get_result($dbconn);
-  echo "Pierwsze wywołanie pg_get_result(): $res1\n";
+  echo "Pierwsze wywoĹanie pg_get_result(): $res1\n";
   $rows1 = pg_num_rows($res1);
-  echo "$res1 ma $rows1 rekordów\n\n";
+  echo "$res1 ma $rows1 rekordĂłw\n\n";
   
-  // Anuluj obecnie działające zapytanie.  Będzie to drugie zapytanie, jeśli się 
+  // Anuluj obecnie dziaĹajÄce zapytanie.  BÄdzie to drugie zapytanie, jeĹli siÄ 
   // jeszcze wykonuje.
   pg_cancel_query($dbconn);
 ?>
@@ -75,8 +75,8 @@
     &example.outputs;
     <screen>
 <![CDATA[
-Pierwsze wywołanie pg_get_result(): Resource id #3
-Resource id #3 ma 3 rekordów
+Pierwsze wywoĹanie pg_get_result(): Resource id #3
+Resource id #3 ma 3 rekordĂłw
 ]]>
     </screen>
    </example> 

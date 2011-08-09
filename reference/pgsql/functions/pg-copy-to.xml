@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: garbus Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.2 -->
@@ -7,7 +7,7 @@
  <refnamediv>
   <refname>pg_copy_to</refname>
   <refpurpose>
-   Kopiuje tabelę do tablicy
+   Kopiuje tabelÄ do tablicy
   </refpurpose>
  </refnamediv>
 
@@ -21,8 +21,8 @@
    <methodparam choice="opt"><type>string</type><parameter>null_jako</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>pg_copy_to</function> kopiuje tabelę do tablicy. Wywołuje
-   to wewnętrzne polecenie SQL <literal>COPY TO</literal> na
+   <function>pg_copy_to</function> kopiuje tabelÄ do tablicy. WywoĹuje
+   to wewnÄtrzne polecenie SQL <literal>COPY TO</literal> na
    wydobywane rekordy.
   </para>
  </refsect1>
@@ -35,7 +35,7 @@
      <term><parameter>polaczenie</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia do serwera PostgreSQL.
+       Identyfikator poĹÄczenia do serwera PostgreSQL.
       </para>
      </listitem>
     </varlistentry>
@@ -43,7 +43,7 @@
      <term><parameter>nazwa_tabeli</parameter></term>
      <listitem>
       <para>
-       Nazwa tabeli, z której zostaną skopiowane dane do zmiennej <parameter>wiersze</parameter>.
+       Nazwa tabeli, z ktĂłrej zostanÄ skopiowane dane do zmiennej <parameter>wiersze</parameter>.
       </para>
      </listitem>
     </varlistentry>
@@ -51,8 +51,8 @@
      <term><parameter>separator</parameter></term>
      <listitem>
       <para>
-       Znak oddzielający wartości dla każdego pola każdego elementu zmiennej
-       <parameter>wiersze</parameter>.  Domyślnie jest to <literal>TAB</literal>.
+       Znak oddzielajÄcy wartoĹci dla kaĹźdego pola kaĹźdego elementu zmiennej
+       <parameter>wiersze</parameter>.  DomyĹlnie jest to <literal>TAB</literal>.
       </para>
      </listitem>
     </varlistentry>
@@ -60,8 +60,8 @@
      <term><parameter>null_jako</parameter></term>
      <listitem>
       <para>
-       Jak wartości <literal>NULL</literal> z SQL są przedstawiane w zmiennej
-       <parameter>wiersze</parameter>.  Domyślnie jest to \N ("\\N").
+       Jak wartoĹci <literal>NULL</literal> z SQL sÄ przedstawiane w zmiennej
+       <parameter>wiersze</parameter>.  DomyĹlnie jest to \N ("\\N").
       </para>
      </listitem>
     </varlistentry>
@@ -72,8 +72,8 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
    <para>
-    Tablica (ang. <type>array</type>) z jednym elementem dla każdej linii kopiowanych (<literal>COPY</literal>) danych.
-    Zwraca &false; w przypadku błędu.
+    Tablica (ang. <type>array</type>) z jednym elementem dla kaĹźdej linii kopiowanych (<literal>COPY</literal>) danych.
+    Zwraca &false; w przypadku bĹÄdu.
    </para>
  </refsect1>
 
@@ -81,11 +81,11 @@
   &reftitle.examples;
   <para>
    <example>
-    <title><function>pg_copy_to</function> - przykład</title>
+    <title><function>pg_copy_to</function> - przykĹad</title>
     <programlisting role="php">
 <![CDATA[
 <?php
-   $baza = pg_connect("dbname=wydawca") or die("Nie można się połączyć");
+   $baza = pg_connect("dbname=wydawca") or die("Nie moĹźna siÄ poĹÄczyÄ");
    
    $wiersze = pg_copy_to($baza, $nazwa_tabeli);
    

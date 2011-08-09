@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: garbus Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.80 -->
@@ -15,15 +15,15 @@
   &reftitle.description;
   <methodsynopsis>
    <type>mixed</type><methodname>pg_delete</methodname>
-   <methodparam><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+   <methodparam><type>resource</type><parameter>identyfikator_poĹÄczenia</parameter></methodparam>
    <methodparam><type>string</type><parameter>nazwa_tabeli</parameter></methodparam>
    <methodparam><type>array</type><parameter>tablica_asocjacyjna</parameter></methodparam>
    <methodparam choice="opt"><type>int</type><parameter>opcje</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>pg_delete</function> usuwa wiersze z tabeli określonej przez
-   klucze i wartości w parametrze <parameter>tablica_asocjacyjna</parameter>. Jeśli <parameter>opcje</parameter> zostały
-   określone, to funkcja <function>pg_convert</function> stosuje
+   <function>pg_delete</function> usuwa wiersze z tabeli okreĹlonej przez
+   klucze i wartoĹci w parametrze <parameter>tablica_asocjacyjna</parameter>. JeĹli <parameter>opcje</parameter> zostaĹy
+   okreĹlone, to funkcja <function>pg_convert</function> stosuje
    do parametru <parameter>tablica_asocjacyjna</parameter> podane opcje. 
   </para>
  </refsect1>
@@ -33,10 +33,10 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>identyfikator_połączenia</parameter></term>
+     <term><parameter>identyfikator_poĹÄczenia</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia do bazy PostgreSQL.
+       Identyfikator poĹÄczenia do bazy PostgreSQL.
       </para>
      </listitem>
     </varlistentry>
@@ -44,7 +44,7 @@
      <term><parameter>nazwa_tabeli</parameter></term>
      <listitem>
       <para>
-       Nazwa tabeli, z której będą usuwane wiersze.
+       Nazwa tabeli, z ktĂłrej bÄdÄ usuwane wiersze.
       </para>
      </listitem>
     </varlistentry>
@@ -52,8 +52,8 @@
      <term><parameter>tablica_asocjacyjna</parameter></term>
      <listitem>
       <para>
-       Tablica (ang. <type>array</type>), której klucze są nazwami pól w określonej parametrem <parameter>nazwa_tabeli</parameter> tabeli,
-       oraz której wartościami, są wartości tych pól, które mają zostać usunięte.
+       Tablica (ang. <type>array</type>), ktĂłrej klucze sÄ nazwami pĂłl w okreĹlonej parametrem <parameter>nazwa_tabeli</parameter> tabeli,
+       oraz ktĂłrej wartoĹciami, sÄ wartoĹci tych pĂłl, ktĂłre majÄ zostaÄ usuniÄte.
       </para>
      </listitem>
     </varlistentry>
@@ -61,11 +61,11 @@
      <term><parameter>opcje</parameter></term>
      <listitem>
       <para>
-       Dowolna kombinacja, dowolnej ilości parametrów: <constant>PGSQL_CONV_FORCE_NULL</constant>,
+       Dowolna kombinacja, dowolnej iloĹci parametrĂłw: <constant>PGSQL_CONV_FORCE_NULL</constant>,
        <constant>PGSQL_DML_NO_CONV</constant>,
        <constant>PGSQL_DML_EXEC</constant> oraz
-       <constant>PGSQL_DML_STRING</constant>. Jeśli <constant>PGSQL_DML_STRING</constant> jest jedną z podanych w parametrze
-       <parameter>opcje</parameter> opcji, zostanie zwrócony łańcuch zapytania z URL (ang. query string).
+       <constant>PGSQL_DML_STRING</constant>. JeĹli <constant>PGSQL_DML_STRING</constant> jest jednÄ z podanych w parametrze
+       <parameter>opcje</parameter> opcji, zostanie zwrĂłcony ĹaĹcuch zapytania z URL (ang. query string).
       </para>
      </listitem>
     </varlistentry>
@@ -76,7 +76,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   &return.success;  Zwraca łańcuch (ang. <type>string</type>) gdy podano <constant>PGSQL_DML_STRING</constant> 
+   &return.success;  Zwraca ĹaĹcuch (ang. <type>string</type>) gdy podano <constant>PGSQL_DML_STRING</constant> 
    poprzez <parameter>opcje</parameter>.
   </para>
  </refsect1>
@@ -85,17 +85,17 @@
   &reftitle.examples;
   <para>
    <example>
-    <title><function>pg_delete</function> - przykład</title>
+    <title><function>pg_delete</function> - przykĹad</title>
     <programlisting role="php">
 <![CDATA[
 <?php 
   $polaczenie_do_bazy = pg_connect ('dbname=foo');
-  // To jest bezpieczne, odkąd $_POST jest konwertowane automatycznie
+  // To jest bezpieczne, odkÄd $_POST jest konwertowane automatycznie
   $res = pg_delete($polaczenie_do_bazy, 'kopia_post', $_POST);
   if ($res) {
-      echo "Dane określone przez POST zostały usunięte: $res\n";
+      echo "Dane okreĹlone przez POST zostaĹy usuniÄte: $res\n";
   } else {
-      echo "Użytkownik wprowadził błędne dane\n";
+      echo "UĹźytkownik wprowadziĹ bĹÄdne dane\n";
   }
 ?>
 ]]>

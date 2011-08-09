@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: garbus Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.2 -->
@@ -24,11 +24,11 @@
   </methodsynopsis>
   <para>
    <function>pg_field_is_null</function> sprawdza, czy pole identyfikatora
-   wyniku  PostgreSQL jest wartością <literal>NULL</literal> SQL-a czy nie.
+   wyniku  PostgreSQL jest wartoĹciÄ <literal>NULL</literal> SQL-a czy nie.
   </para>
   <note>
    <para>
-    Ta funkcja była poprzednio nazwana <function>pg_fieldisnull</function>.
+    Ta funkcja byĹa poprzednio nazwana <function>pg_fieldisnull</function>.
    </para>
   </note>
  </refsect1>
@@ -41,9 +41,9 @@
      <term><parameter>wynik</parameter></term>
      <listitem>
       <para>
-       Identyfikator wyniku PostgreSQL-q, zwrócony przez <function>pg_query</function>,
+       Identyfikator wyniku PostgreSQL-q, zwrĂłcony przez <function>pg_query</function>,
        <function>pg_query_params</function> lub <function>pg_execute</function>
-       (między innymi).
+       (miÄdzy innymi).
       </para>
      </listitem>
     </varlistentry>
@@ -51,7 +51,7 @@
      <term><parameter>wiersz</parameter></term>
      <listitem>
       <para>
-       Numer wiersza w wyniku do pobrania.  Wiersze są numerowane od zera, w górę.  Jeśli nie podano,
+       Numer wiersza w wyniku do pobrania.  Wiersze sÄ numerowane od zera, w gĂłrÄ.  JeĹli nie podano,
        aktualny wiersz jest pobierany.
       </para>
      </listitem>
@@ -60,8 +60,8 @@
      <term><parameter>pole</parameter></term>
       <listitem>
        <para>
-        Numer pola (zaczynając od zera) jako typ całkowity (ang. <type>integer</type>) lub
-        nazwa pola jako łańcuch (ang. <type>string</type>).
+        Numer pola (zaczynajÄc od zera) jako typ caĹkowity (ang. <type>integer</type>) lub
+        nazwa pola jako ĹaĹcuch (ang. <type>string</type>).
        </para>
      </listitem>
     </varlistentry>
@@ -72,8 +72,8 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca <literal>1</literal> jeśli pole w zadanym wierszu w bazie SQL jest wartością <literal>NULL</literal>, <literal>0</literal>
-   jeśli nią nie jest.  &false; jest zwracane, gdy podany wiersz jest poza przedziałem, lub przez każdy inny błąd.
+   Zwraca <literal>1</literal> jeĹli pole w zadanym wierszu w bazie SQL jest wartoĹciÄ <literal>NULL</literal>, <literal>0</literal>
+   jeĹli niÄ nie jest.  &false; jest zwracane, gdy podany wiersz jest poza przedziaĹem, lub przez kaĹźdy inny bĹÄd.
   </para>
  </refsect1>
 
@@ -81,18 +81,18 @@
   &reftitle.examples;
   <para>
    <example>
-    <title><function>pg_field_is_null</function> - przykład</title>
+    <title><function>pg_field_is_null</function> - przykĹad</title>
     <programlisting role="php">
 <![CDATA[
 <?php
-  $polaczenie = pg_connect("dbname=wydawca") or die ("Nie można się połączyć");
+  $polaczenie = pg_connect("dbname=wydawca") or die ("Nie moĹźna siÄ poĹÄczyÄ");
   $wyn = pg_query($polaczenie, "select * from autorzy where autor = 'Orwell'"
   if ($wyn) {
       if (pg_field_is_null($wyn, 0, "rok") == 1) {
-          echo "Wartość pola roku jest null.\n";
+          echo "WartoĹÄ pola roku jest null.\n";
       }
       if (pg_field_is_null($wyn, 0, "rok") == 0) {
-          echo "Wartość pola roku nie jest null.\n";
+          echo "WartoĹÄ pola roku nie jest null.\n";
     }
  }
 ?>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: garbus Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.2 -->
@@ -7,7 +7,7 @@
  <refnamediv>
   <refname>pg_field_size</refname> 
   <refpurpose>
-   Zwraca wewnętrzny rozmiar kolumny
+   Zwraca wewnÄtrzny rozmiar kolumny
   </refpurpose>
  </refnamediv>
 
@@ -19,13 +19,13 @@
    <methodparam><type>int</type><parameter>numer_pola</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>pg_field_size</function> zwraca wewnętrzny rozmiar 
+   <function>pg_field_size</function> zwraca wewnÄtrzny rozmiar 
    (w bajtach) wskazanej numerem kolumny w podanym wyniku
    <parameter>wynik</parameter> PostgreSQL-a.
   </para>
   <note>
    <para>
-    Ta funkcja była poprzednio nazwana <function>pg_fieldsize</function>.
+    Ta funkcja byĹa poprzednio nazwana <function>pg_fieldsize</function>.
    </para>
   </note>
  </refsect1>
@@ -38,9 +38,9 @@
      <term><parameter>wynik</parameter></term>
      <listitem>
       <para>
-       Identyfikator wyniku zapytania PostgreSQL, zwrócony przez <function>pg_query</function>,
+       Identyfikator wyniku zapytania PostgreSQL, zwrĂłcony przez <function>pg_query</function>,
        <function>pg_query_params</function> lub <function>pg_execute</function>
-       (między innymi).
+       (miÄdzy innymi).
       </para>
      </listitem>
     </varlistentry>
@@ -48,7 +48,7 @@
      <term><parameter>numer_pola</parameter></term>
       <listitem>
        <para>
-        Numer pola, zaczynając od zera.
+        Numer pola, zaczynajÄc od zera.
        </para>
      </listitem>
     </varlistentry>
@@ -59,8 +59,8 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Wewnętrzny rozmiar danego pola (w bajtach).  -1 oznacza niestałą
-   wielkość pola.  &false; zwracane jest w przypadku błędu.
+   WewnÄtrzny rozmiar danego pola (w bajtach).  -1 oznacza niestaĹÄ
+   wielkoĹÄ pola.  &false; zwracane jest w przypadku bĹÄdu.
   </para>
  </refsect1>
 
@@ -72,7 +72,7 @@
     <programlisting role="php">
 <![CDATA[
 <?php
-  $polaczenie = pg_connect("dbname=wydawca") or die("Nie można się połączyć");
+  $polaczenie = pg_connect("dbname=wydawca") or die("Nie moĹźna siÄ poĹÄczyÄ");
 
   $wyn = pg_query($polaczenie, "select * from autorzy where autor = 'Orwell'");
   $i = pg_num_fields($wyn);
@@ -80,8 +80,8 @@
       echo "kolumna $j\n";
       $nazwa_pola = pg_field_name($wyn, $j);
       echo "nazwa pola: $nazwa_pola\n";
-      echo "drukowalna długość: " . pg_field_prtlen($wyn, $nazwa_pola) . " znak(ów)\n";
-      echo "rzeczywista długość: " . pg_field_size($wyn, $j) . " bajt(ów)\n";
+      echo "drukowalna dĹugoĹÄ: " . pg_field_prtlen($wyn, $nazwa_pola) . " znak(Ăłw)\n";
+      echo "rzeczywista dĹugoĹÄ: " . pg_field_size($wyn, $j) . " bajt(Ăłw)\n";
       echo "typ pola: " . pg_field_type($wyn, $j) . " \n\n";
   }
 ?>
@@ -92,20 +92,20 @@
 <![CDATA[
 kolumna 0
 nazwa pola: autor
-drukowalna długość: 6 znak(ów)
-rzeczywista długość: -1 bajt(ów)
+drukowalna dĹugoĹÄ: 6 znak(Ăłw)
+rzeczywista dĹugoĹÄ: -1 bajt(Ăłw)
 typ pola: varchar
 
 kolumna 1
 nazwa pola: rok
-drukowalna długość: 4 znak(ów)
-rzeczywista długość: 2 bajt(ów)
+drukowalna dĹugoĹÄ: 4 znak(Ăłw)
+rzeczywista dĹugoĹÄ: 2 bajt(Ăłw)
 typ pola: int2
 
 kolumna 2
 nazwa pola: tytul
-drukowalna długość: 24 znak(ów)
-rzeczywista długość: -1 bajt(ów)
+drukowalna dĹugoĹÄ: 24 znak(Ăłw)
+rzeczywista dĹugoĹÄ: -1 bajt(Ăłw)
 typ pola: varchar
 ]]>
     </screen>

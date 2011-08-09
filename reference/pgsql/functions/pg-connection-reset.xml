@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: jarek Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.82 -->
@@ -6,7 +6,7 @@
    <refnamediv>
     <refname>pg_connection_reset</refname>
     <refpurpose>
-     Restartuje połączenie
+     Restartuje poĹÄczenie
     </refpurpose>
    </refnamediv>
    
@@ -14,10 +14,10 @@
     &reftitle.description;
     <methodsynopsis>
      <type>bool</type><methodname>pg_connection_reset</methodname>
-     <methodparam><type>resource</type><parameter>połączenie</parameter></methodparam>
+     <methodparam><type>resource</type><parameter>poĹÄczenie</parameter></methodparam>
     </methodsynopsis>
     <para>
-     <function>pg_connection_reset</function> restartuje połączenie. Jest użyteczne
+     <function>pg_connection_reset</function> restartuje poĹÄczenie. Jest uĹźyteczne
      w sytuacja awaryjnych.
     </para>
     </refsect1>
@@ -27,10 +27,10 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>połączenie</parameter></term>
+     <term><parameter>poĹÄczenie</parameter></term>
      <listitem>
       <para>
-       Zasób, połączenie do bazy PostgreSQL.
+       ZasĂłb, poĹÄczenie do bazy PostgreSQL.
       </para>
      </listitem>
     </varlistentry>
@@ -49,16 +49,16 @@
   &reftitle.examples;
   <para>
    <example>
-    <title><function>pg_connection_reset</function> przykład</title>
+    <title><function>pg_connection_reset</function> przykĹad</title>
     <programlisting role="php">
 <![CDATA[
 <?php
-  $dbconn = pg_connect("dbname=publisher") or die("Nie można się połączyć");
+  $dbconn = pg_connect("dbname=publisher") or die("Nie moĹźna siÄ poĹÄczyÄ");
   $dbconn2 = pg_connection_reset($dbconn);
   if ($dbconn2) {
       echo "restart poprawny\n";
   } else {
-      echo "restart nie powiódł się\n";
+      echo "restart nie powiĂłdĹ siÄ\n";
   }
 ?>
 ]]>

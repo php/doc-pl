@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: garbus Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.52 -->
@@ -19,20 +19,20 @@
    <methodparam><type>int</type><parameter>numer_kolumny</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>pg_field_type</function> zwraca łańcuch zawierający typ
+   <function>pg_field_type</function> zwraca ĹaĹcuch zawierajÄcy typ
    podstawowy kolumny wskazanej przez <parameter>numer_kolumny</parameter> w wyniku
    <parameter>wynik</parameter> PostgreSQL-a.
   </para>
   <note>
    <para>
-    Jeśli kolumna używa domeny PostgreSQL (zamiast typu podstawowego), jest to
-    nazwa podstawowego typu domeny, który jest zwrócony, zamiast
+    JeĹli kolumna uĹźywa domeny PostgreSQL (zamiast typu podstawowego), jest to
+    nazwa podstawowego typu domeny, ktĂłry jest zwrĂłcony, zamiast
     nazwy samej domeny.
    </para>
   </note>
   <note>
    <para>
-    Ta funkcja dawniej nazywała się <function>pg_fieldtype</function>.
+    Ta funkcja dawniej nazywaĹa siÄ <function>pg_fieldtype</function>.
    </para>
   </note>
  </refsect1>
@@ -45,9 +45,9 @@
      <term><parameter>wynik</parameter></term>
      <listitem>
       <para>
-       Identyfikator wyniku zapytania do bazy PostgreSQL, zwrócony przez funkcję <function>pg_query</function>,
+       Identyfikator wyniku zapytania do bazy PostgreSQL, zwrĂłcony przez funkcjÄ <function>pg_query</function>,
        <function>pg_query_params</function> lub <function>pg_execute</function>
-       (między innymi).
+       (miÄdzy innymi).
       </para>
      </listitem>
     </varlistentry>
@@ -55,7 +55,7 @@
      <term><parameter>numer_pola</parameter></term>
       <listitem>
        <para>
-        Numer pola, zaczynając od zera.
+        Numer pola, zaczynajÄc od zera.
        </para>
      </listitem>
     </varlistentry>
@@ -66,8 +66,8 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Łańcuch (ang. <type>string</type>) zawierający podstawową nazwę typu pola, lub &false;
-   w przypadku błędu.
+   ĹaĹcuch (ang. <type>string</type>) zawierajÄcy podstawowÄ nazwÄ typu pola, lub &false;
+   w przypadku bĹÄdu.
   </para>
  </refsect1>
 
@@ -79,19 +79,19 @@
     <programlisting role="php">
 <![CDATA[
 <?php
-  $polaczenie_do_bazy = pg_connect("dbname=publisher") or die("Nie można się połączyć");
+  $polaczenie_do_bazy = pg_connect("dbname=publisher") or die("Nie moĹźna siÄ poĹÄczyÄ");
 
-  // Załóżmy, że 'tytul' jest typu varchar
+  // ZaĹĂłĹźmy, Ĺźe 'tytul' jest typu varchar
   $res = pg_query($polaczenie_do_bazy, "select tytul from autorzy where autor = 'Orwell'");
 
-  echo "Typ pola tytułu: ", pg_field_type($res, 0);
+  echo "Typ pola tytuĹu: ", pg_field_type($res, 0);
 ?>
 ]]>
     </programlisting>
     &example.outputs;
     <screen>
 <![CDATA[
-Typ pola tytułu: varchar
+Typ pola tytuĹu: varchar
 ]]>
     </screen>
    </example>

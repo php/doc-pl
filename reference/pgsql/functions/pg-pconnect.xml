@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.82 -->
@@ -6,41 +6,41 @@
 <refentry xml:id="function.pg-pconnect" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>pg_pconnect</refname>
-  <refpurpose>Otwiera trwałe połączenie z serwerem PostgreSQL</refpurpose>
+  <refpurpose>Otwiera trwaĹe poĹÄczenie z serwerem PostgreSQL</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>resource</type><methodname>pg_pconnect</methodname>
-   <methodparam><type>string</type><parameter>łańcuch_połączenia</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>typ_połączenia</parameter></methodparam>
+   <methodparam><type>string</type><parameter>ĹaĹcuch_poĹÄczenia</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>typ_poĹÄczenia</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>pg_pconnect</function> otwiera trwałe połączenie
-   z serwerem PostgreSQL. Zwraca identyfikator połączenia
-   używany przez inne funkcje PostgreSQL-a.
+   <function>pg_pconnect</function> otwiera trwaĹe poĹÄczenie
+   z serwerem PostgreSQL. Zwraca identyfikator poĹÄczenia
+   uĹźywany przez inne funkcje PostgreSQL-a.
   </para>
   <para>
-   Ponowne wywołanie funkcji <function>pg_pconnect</function>
-   z identycznym parametrem <parameter>łańcuch_połączenia</parameter>, jak w połączeniu już istniejącym,
-   zwróci identyfikator istniejącego połączenia, chyba, że podasz
+   Ponowne wywoĹanie funkcji <function>pg_pconnect</function>
+   z identycznym parametrem <parameter>ĹaĹcuch_poĹÄczenia</parameter>, jak w poĹÄczeniu juĹź istniejÄcym,
+   zwrĂłci identyfikator istniejÄcego poĹÄczenia, chyba, Ĺźe podasz
    <constant>PGSQL_CONNECT_FORCE_NEW</constant> jako parametr
-   <parameter>typ_połączenia</parameter>.
+   <parameter>typ_poĹÄczenia</parameter>.
   </para>
   <para>
-   Aby zezwolić na używanie stałych połączeń, należy ustawić dyrektywę <link
+   Aby zezwoliÄ na uĹźywanie staĹych poĹÄczeĹ, naleĹźy ustawiÄ dyrektywÄ <link
    linkend="ini.pgsql.allow-persistent">pgsql.allow_persistent</link> w &php.ini;
-   na &quot;On&quot; (jest to ustawienie domyślne).
-   Maksymalna liczba jednoczesnych trwałych połączeń może być zdefiniowana przez
-   dyrektywę <link linkend="ini.pgsql.max-persistent">pgsql.max_persistent</link> w &php.ini;
-   (domyślnia wartość to -1 oznacza brak ograniczeń). Maksymalna liczba wszystkich połączeń
-   może być ustawiona przez dyrektywę <link
+   na &quot;On&quot; (jest to ustawienie domyĹlne).
+   Maksymalna liczba jednoczesnych trwaĹych poĹÄczeĹ moĹźe byÄ zdefiniowana przez
+   dyrektywÄ <link linkend="ini.pgsql.max-persistent">pgsql.max_persistent</link> w &php.ini;
+   (domyĹlnia wartoĹÄ to -1 oznacza brak ograniczeĹ). Maksymalna liczba wszystkich poĹÄczeĹ
+   moĹźe byÄ ustawiona przez dyrektywÄ <link
    linkend="ini.pgsql.max-links">pgsql.max_links</link>
    w &php.ini;.
   </para>
   <para>
-   <function>pg_close</function> nie zamyka trwałych połączeń otwartych przez
+   <function>pg_close</function> nie zamyka trwaĹych poĹÄczeĹ otwartych przez
    <function>pg_pconnect</function>.
   </para>
  </refsect1>
@@ -53,23 +53,23 @@
      <term><parameter>connection_string</parameter></term>
      <listitem>
       <para>
-       Parametr <parameter>łańcuch_połączenia</parameter> może zostać pusty w celu użycia domyślnych parametrów, lub
-       może zawierać jedno, lub więcej ustawień oddzielonych spacją.
-       Każde ustawienie ma format <literal>klucz = wartość</literal>. Spacje po obu stronach
-       znaku równości są opcjonalne. Aby stworzyć wartość pustą, lub
-       zawierającą spacje, otocz ją pojedynczymi znakami cudzysłowia, np. <literal>klucz =
-       'wartość'</literal>. Pojedyncze cudzysłowy, oraz backslashe wewnątrz wartości muszą być
+       Parametr <parameter>ĹaĹcuch_poĹÄczenia</parameter> moĹźe zostaÄ pusty w celu uĹźycia domyĹlnych parametrĂłw, lub
+       moĹźe zawieraÄ jedno, lub wiÄcej ustawieĹ oddzielonych spacjÄ.
+       KaĹźde ustawienie ma format <literal>klucz = wartoĹÄ</literal>. Spacje po obu stronach
+       znaku rĂłwnoĹci sÄ opcjonalne. Aby stworzyÄ wartoĹÄ pustÄ, lub
+       zawierajÄcÄ spacje, otocz jÄ pojedynczymi znakami cudzysĹowia, np. <literal>klucz =
+       'wartoĹÄ'</literal>. Pojedyncze cudzysĹowy, oraz backslashe wewnÄtrz wartoĹci muszÄ byÄ
        poprzedzone znakiem ucieczki "\", np., \' oraz \\.
       </para>
       <para>
-       Aktualnie rozpoznawanymi parametrami są:
+       Aktualnie rozpoznawanymi parametrami sÄ:
        <parameter>host</parameter>, <parameter>hostaddr</parameter>, <parameter>port</parameter>
        <parameter>dbname</parameter>, <parameter>user</parameter>,
        <parameter>password</parameter>, <parameter>connect_timeout</parameter>,
        <parameter>options</parameter>, <parameter>tty</parameter> (ignorowany), <parameter>sslmode</parameter>
-       <parameter>requiressl</parameter> (zdeprecjonowany na korzyść <parameter>sslmode</parameter>), oraz
-       <parameter>service</parameter>.  Niektóre z tych argumentów są zależne
-       od używanej wersji PostgreSQL.
+       <parameter>requiressl</parameter> (zdeprecjonowany na korzyĹÄ <parameter>sslmode</parameter>), oraz
+       <parameter>service</parameter>.  NiektĂłre z tych argumentĂłw sÄ zaleĹźne
+       od uĹźywanej wersji PostgreSQL.
       </para>
      </listitem>
     </varlistentry>
@@ -77,9 +77,9 @@
      <term><parameter>connect_type</parameter></term>
      <listitem>
       <para>
-       Jeśli podano <constant>PGSQL_CONNECT_FORCE_NEW</constant>, zostanie stworzone
-       nowe połączenie, nawet gdy <parameter>łańcuch_połączenia</parameter> jest identyczny, jak
-       w jakimś istniejącym połączeniu.
+       JeĹli podano <constant>PGSQL_CONNECT_FORCE_NEW</constant>, zostanie stworzone
+       nowe poĹÄczenie, nawet gdy <parameter>ĹaĹcuch_poĹÄczenia</parameter> jest identyczny, jak
+       w jakimĹ istniejÄcym poĹÄczeniu.
       </para>
      </listitem>
     </varlistentry>
@@ -90,7 +90,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Nawiązanie połączenie z serwerem PostgreSQL w przypadku powodzenia, &false; w razie błędu.
+   NawiÄzanie poĹÄczenie z serwerem PostgreSQL w przypadku powodzenia, &false; w razie bĹÄdu.
   </para>
  </refsect1>
 
@@ -98,22 +98,22 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Używanie <function>pg_pconnect</function></title>
+    <title>UĹźywanie <function>pg_pconnect</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
 $polaczenie = pg_pconnect("dbname=mary");
-//Połączenie z bazą o nazwie "mary"
+//PoĹÄczenie z bazÄ o nazwie "mary"
 
 $polaczenie2 = pg_pconnect("host=localhost port=5432 dbname=mary");
-//Połączenie z bazą o nazwie "mary" na "localhost" portem "5432"
+//PoĹÄczenie z bazÄ o nazwie "mary" na "localhost" portem "5432"
 
 $polaczenie3 = pg_pconnect("host=owca port=5432 dbname=mary user=jagnie password=foo");
-//Połączenie z bazą o nazwie "mary" na hoście "owca" z nazwą użytkownika i hasłem
+//PoĹÄczenie z bazÄ o nazwie "mary" na hoĹcie "owca" z nazwÄ uĹźytkownika i hasĹem
 
 $lancuch_polaczenia = "host=owca port=5432 dbname=test user=jagnie password=bar";
 $polaczenie4 = pg_pconnect($lancuch_polaczenia);
-//Połączenie z bazą o nazwie "test" na hoście "owca" z nazwą użytkownika i hasłem
+//PoĹÄczenie z bazÄ o nazwie "test" na hoĹcie "owca" z nazwÄ uĹźytkownika i hasĹem
 ?>
 ]]>
     </programlisting>
@@ -128,7 +128,7 @@ $polaczenie4 = pg_pconnect($lancuch_polaczenia);
     <member><function>pg_connect</function></member>
     <member>
      <link linkend="features.persistent-connections">
-     Trwałe połączenia z serwerem baz danych</link>
+     TrwaĹe poĹÄczenia z serwerem baz danych</link>
     </member>
    </simplelist>
   </para>

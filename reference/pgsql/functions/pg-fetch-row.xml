@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 18b6d437bc717532e758cb2edf522aad28bb4ada Maintainer: joeaccord Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.2 -->
@@ -6,7 +6,7 @@
 <refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.pg-fetch-row">
  <refnamediv>
   <refname>pg_fetch_row</refname>
-  <refpurpose>Pobiera wiersz jako tablicę z indeksami numerycznymi</refpurpose>
+  <refpurpose>Pobiera wiersz jako tablicÄ z indeksami numerycznymi</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
@@ -15,11 +15,11 @@
    <type>array</type><methodname>pg_fetch_row</methodname>
    <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
    <methodparam><type>int</type><parameter>wiersz</parameter></methodparam>
-   <!-- Nieudokumentowana, myląca funkcja: <methodparam choice="opt"><type>int</type><parameter>typ_wyniku</parameter></methodparam> -->
+   <!-- Nieudokumentowana, mylÄca funkcja: <methodparam choice="opt"><type>int</type><parameter>typ_wyniku</parameter></methodparam> -->
   </methodsynopsis>
   <para>
    <function>pg_fetch_row</function> pobiera jeden wiersz
-   z wyniku wskazanego przez określony identyfikator wyniku
+   z wyniku wskazanego przez okreĹlony identyfikator wyniku
    <parameter>wynik</parameter>.
   </para>
   &database.fetch-null;
@@ -33,9 +33,9 @@
      <term><parameter>wynik</parameter></term>
      <listitem>
       <para> 
-       Identyfikator wyniku zapytania bazy PostgreSQL, zwrócony przez jedną z funkcji <function>pg_query</function>,
+       Identyfikator wyniku zapytania bazy PostgreSQL, zwrĂłcony przez jednÄ z funkcji <function>pg_query</function>,
        <function>pg_query_params</function> lub <function>pg_execute</function>
-       (między innymi).
+       (miÄdzy innymi).
       </para>
      </listitem>
     </varlistentry>
@@ -43,7 +43,7 @@
      <term><parameter>wiersz</parameter></term>
      <listitem>
       <para>
-       Numer wiersza w wyniku do pobrania.  Wiersze numerowane są od zera w górę.  Jeśli jest pominięty
+       Numer wiersza w wyniku do pobrania.  Wiersze numerowane sÄ od zera w gĂłrÄ.  JeĹli jest pominiÄty
        albo wynosi &null;, pobrany zostanie kolejny wiersz.
       </para>
      </listitem>
@@ -55,13 +55,13 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Tablica (ang. <type>array</type>), indeksowana od zera w górę, z reprezentowaną
-   każdą wartością jako łańcuch (ang. <type>string</type>).  Wartości <literal>NULL</literal> z bazy danych
-   są zwracane jako &null;.
+   Tablica (ang. <type>array</type>), indeksowana od zera w gĂłrÄ, z reprezentowanÄ
+   kaĹźdÄ wartoĹciÄ jako ĹaĹcuch (ang. <type>string</type>).  WartoĹci <literal>NULL</literal> z bazy danych
+   sÄ zwracane jako &null;.
   </para>
   <para>
-   &false; jest zwracane, jeśli <parameter>wiersz</parameter> przekracza liczbę
-   wszystkich wierszy, nie ma więcej wierszy, lub w przypadku każdego innego błędu.
+   &false; jest zwracane, jeĹli <parameter>wiersz</parameter> przekracza liczbÄ
+   wszystkich wierszy, nie ma wiÄcej wierszy, lub w przypadku kaĹźdego innego bĹÄdu.
   </para>
  </refsect1>
 
@@ -80,7 +80,7 @@
       <row>
        <entry>4.1.0</entry>
        <entry>
-        Parametr <parameter>wiersz</parameter> stał się opcjonalny.
+        Parametr <parameter>wiersz</parameter> staĹ siÄ opcjonalny.
        </entry>
       </row>
      </tbody>
@@ -93,20 +93,20 @@
   &reftitle.examples;
   <para>
    <example>
-    <title><function>pg_fetch_row</function> - przykład</title>
+    <title><function>pg_fetch_row</function> - przykĹad</title>
     <programlisting role="php">
 <![CDATA[
 <?php 
 
 $polaczenie = pg_pconnect("dbname=wydawca");
 if (!$polaczenie) {
-  echo "Wystąpił błąd.\n";
+  echo "WystÄpiĹ bĹÄd.\n";
   exit;
 }
 
 $wynik = pg_query($polaczenie, "SELECT autor, email FROM autorzy");
 if (!$wynik) {
-  echo "Wystąpił błąd.\n";
+  echo "WystÄpiĹ bĹÄd.\n";
   exit;
 }
 

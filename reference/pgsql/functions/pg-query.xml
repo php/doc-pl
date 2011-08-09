@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: garbus Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.2 -->
@@ -17,32 +17,32 @@
   </methodsynopsis>
   <methodsynopsis>
    <type>resource</type><methodname>pg_query</methodname>
-   <methodparam><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+   <methodparam><type>resource</type><parameter>identyfikator_poĹÄczenia</parameter></methodparam>
    <methodparam><type>string</type><parameter>zapytanie</parameter></methodparam>
   </methodsynopsis>
   <para>
    <function>pg_query</function> wykonuje <parameter>zapytanie</parameter>
-   na określonej parametrem <parameter>identyfikator_połączenia</parameter> bazie danych.
+   na okreĹlonej parametrem <parameter>identyfikator_poĹÄczenia</parameter> bazie danych.
   </para>
   <para>
-   Jeśli nadarzy się błąd, oraz zwracane jest &false;, jego szczegóły mogą
-   zostać wydobyte dzięki użyciu funkcji <function>pg_last_error</function>,
-   jeśli połączenie jest poprawne.
+   JeĹli nadarzy siÄ bĹÄd, oraz zwracane jest &false;, jego szczegĂłĹy mogÄ
+   zostaÄ wydobyte dziÄki uĹźyciu funkcji <function>pg_last_error</function>,
+   jeĹli poĹÄczenie jest poprawne.
   </para>
   <para>
    <note>
     <simpara>
-     Chociaż <parameter>identyfikator_połączenia</parameter> można pominąć, nie jest 
-     to zalecane, gdyż może to powodować trudne do znalezienia
-     błędy w skrypcie.
+     ChociaĹź <parameter>identyfikator_poĹÄczenia</parameter> moĹźna pominÄÄ, nie jest 
+     to zalecane, gdyĹź moĹźe to powodowaÄ trudne do znalezienia
+     bĹÄdy w skrypcie.
     </simpara>
    </note>
   </para>
   <note>
    <para>
-    Ta funkcja była poprzednio nazwana <literal>pg_exec()</literal>.
-    <literal>pg_exec()</literal> jest wciąż dostępna w celu zachowania
-    kompatybilności, ale zalecane jest używanie nowej nazwy.
+    Ta funkcja byĹa poprzednio nazwana <literal>pg_exec()</literal>.
+    <literal>pg_exec()</literal> jest wciÄĹź dostÄpna w celu zachowania
+    kompatybilnoĹci, ale zalecane jest uĹźywanie nowej nazwy.
    </para>
   </note>
  </refsect1>
@@ -52,13 +52,13 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>identyfikator_połączenia</parameter></term>
+     <term><parameter>identyfikator_poĹÄczenia</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia do bazy PostgreSQL. Jeśli
-       <parameter>identyfikator_połączenia</parameter> nie został podany, zostanie użyte
-       domyślne połączenie. Domyślnym połączeniem jest to, które jako ostatnie zostało stworzone przez
-       jedną z funkcji: <function>pg_connect</function> lub <function>pg_pconnect</function>.
+       Identyfikator poĹÄczenia do bazy PostgreSQL. JeĹli
+       <parameter>identyfikator_poĹÄczenia</parameter> nie zostaĹ podany, zostanie uĹźyte
+       domyĹlne poĹÄczenie. DomyĹlnym poĹÄczeniem jest to, ktĂłre jako ostatnie zostaĹo stworzone przez
+       jednÄ z funkcji: <function>pg_connect</function> lub <function>pg_pconnect</function>.
       </para>
      </listitem>
     </varlistentry>
@@ -66,9 +66,9 @@
      <term><parameter>zapytanie</parameter></term>
      <listitem>
       <para>
-       Polecenie lub polecenia SQL, do wykonania. Kiedy do funkcji podane zostanie więcej jak jedno zapytanie,
-       wykonają się one automatycznie jako jedna operacja, chyba, że komendy BEGIN/COMMIT 
-       są zawarte w zapytaniu. Niemniej jednak, używanie wielu operacji w jednym wywołaniu funkcji nie jest zalecane.
+       Polecenie lub polecenia SQL, do wykonania. Kiedy do funkcji podane zostanie wiÄcej jak jedno zapytanie,
+       wykonajÄ siÄ one automatycznie jako jedna operacja, chyba, Ĺźe komendy BEGIN/COMMIT 
+       sÄ zawarte w zapytaniu. Niemniej jednak, uĹźywanie wielu operacji w jednym wywoĹaniu funkcji nie jest zalecane.
       </para>
      </listitem>
     </varlistentry>
@@ -87,20 +87,20 @@
   &reftitle.examples;
   <para>
    <example>
-    <title><function>pg_query</function> - przykład</title>
+    <title><function>pg_query</function> - przykĹad</title>
     <programlisting role="php">
 <![CDATA[
 <?php
 
 $polaczenie = pg_pconnect("dbname=publisher");
 if (!$polaczenie) {
-  echo "Wystąpił błąd.\n";
+  echo "WystÄpiĹ bĹÄd.\n";
   exit;
 }
 
 $wynik = pg_query($polaczenie, "SELECT autor, email FROM autorzy");
 if (!$wynik) {
-  echo "Wystąpił błąd.\n";
+  echo "WystÄpiĹ bĹÄd.\n";
   exit;
 }
 
@@ -116,14 +116,14 @@ while ($wiersz = pg_fetch_row($wynik)) {
   </para>
   <para>
    <example>
-    <title>Używanie <function>pg_query</function> z wieloma zapytaniami</title>
+    <title>UĹźywanie <function>pg_query</function> z wieloma zapytaniami</title>
     <programlisting role="php">
 <![CDATA[
 <?php
 
 $polaczenie = pg_pconnect("dbname=wydawca");
 
-// te polecenia wykonają się jako jedna operacja
+// te polecenia wykonajÄ siÄ jako jedna operacja
 
 $zapytanie = "UPDATE autorzy SET autor=UPPER(autor) WHERE id=1;";
 $zapytanie .= "UPDATE autorzy SET autor=LOWER(autor) WHERE id=2;";

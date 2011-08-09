@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 18b6d437bc717532e758cb2edf522aad28bb4ada Maintainer: joeaccord Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.2 -->
@@ -25,16 +25,16 @@
    <methodparam choice="opt"><type>array</type><parameter>parametry</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>pg_fetch_object</function> zwraca obiekt którego
-   atrybutami są nazwy pól pobranego wiersza. Może dodatkowo
-   tworzyć pewien obiekt określonej klasy, oraz wstawić parametry do
+   <function>pg_fetch_object</function> zwraca obiekt ktĂłrego
+   atrybutami sÄ nazwy pĂłl pobranego wiersza. MoĹźe dodatkowo
+   tworzyÄ pewien obiekt okreĹlonej klasy, oraz wstawiÄ parametry do
    konstruktora tej klasy.
   </para>
   &database.fetch-null;
   <para>
-   Pod względem szybkości funkcja ta jest identyczna jak
+   Pod wzglÄdem szybkoĹci funkcja ta jest identyczna jak
    <function>pg_fetch_array</function>, i prawie tak szybka jak
-   <function>pg_fetch_row</function> (różnica jest
+   <function>pg_fetch_row</function> (rĂłĹźnica jest
    znikoma).
   </para>
  </refsect1>
@@ -47,9 +47,9 @@
      <term><parameter>wynik</parameter></term>
      <listitem>
       <para>
-       Identyfikator wyniku zapytania PostgreSQL, zwrócony przez <function>pg_query</function>,
+       Identyfikator wyniku zapytania PostgreSQL, zwrĂłcony przez <function>pg_query</function>,
        <function>pg_query_params</function> lub <function>pg_execute</function>
-       (między innymi).
+       (miÄdzy innymi).
       </para>
      </listitem>
     </varlistentry>
@@ -57,7 +57,7 @@
      <term><parameter>wiersz</parameter></term>
      <listitem>
       <para>
-       Numer wiersza w wyniku do pobrania.  Wiersze są numerowane od zera w górę.  Jeśli jest pominięty
+       Numer wiersza w wyniku do pobrania.  Wiersze sÄ numerowane od zera w gĂłrÄ.  JeĹli jest pominiÄty
        albo wynosi &null;, pobrany zostanie kolejny wiersz.
       </para>
      </listitem>
@@ -66,7 +66,7 @@
      <term><parameter>typ_wyniku</parameter></term>
       <listitem>
        <para>
-        Pomijany i przestarzały.
+        Pomijany i przestarzaĹy.
        </para>
      </listitem>
     </varlistentry>
@@ -74,8 +74,8 @@
      <term><parameter>nazwa_klasy</parameter></term>
       <listitem>
        <para>
-        Nazwa klasy do wytworzenia, określenie zwracanych parametrów.
-        Jeśli nie podano, zwrócony zostanie obiekt <classname>stdClass</classname>.
+        Nazwa klasy do wytworzenia, okreĹlenie zwracanych parametrĂłw.
+        JeĹli nie podano, zwrĂłcony zostanie obiekt <classname>stdClass</classname>.
        </para>
      </listitem>
     </varlistentry>
@@ -83,8 +83,8 @@
      <term><parameter>parametry</parameter></term>
       <listitem>
        <para>
-        Opcjonalna tablica (ang. <type>array</type>) parametrów podawanych do konstruktora
-        obiektów klasy <parameter>nazwa_klasy</parameter>.
+        Opcjonalna tablica (ang. <type>array</type>) parametrĂłw podawanych do konstruktora
+        obiektĂłw klasy <parameter>nazwa_klasy</parameter>.
        </para>
      </listitem>
     </varlistentry>
@@ -95,13 +95,13 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Obiekt (ang. <type>object</type>) z atrybutem dla każdej nazwy 
-   kolumny w wyniku. Wartości <literal>NULL</literal> z bazy danych
-   są zwracane jako &null;.
+   Obiekt (ang. <type>object</type>) z atrybutem dla kaĹźdej nazwy 
+   kolumny w wyniku. WartoĹci <literal>NULL</literal> z bazy danych
+   sÄ zwracane jako &null;.
   </para>
   <para>
-   &false; jest zwracne, gdy parametr <parameter>wiersz</parameter> przekracza całkowitą
-   liczbę wierszy, gdy kolejny wiersz nie istnieje, lub w przypadku każdego innego błędu.
+   &false; jest zwracne, gdy parametr <parameter>wiersz</parameter> przekracza caĹkowitÄ
+   liczbÄ wierszy, gdy kolejny wiersz nie istnieje, lub w przypadku kaĹźdego innego bĹÄdu.
   </para>
  </refsect1>
 
@@ -121,22 +121,22 @@
        <entry>5.0.0</entry>
        <entry>
         Parametry <parameter>nazwa_klasy</parameter> oraz <parameter>parametry</parameter>
-        zostały dodane. Stara wersja z <parameter>typ_wyniku</parameter>
-        wciąż istnieje, w celu zachowania wstecznej kompatybilności.
+        zostaĹy dodane. Stara wersja z <parameter>typ_wyniku</parameter>
+        wciÄĹź istnieje, w celu zachowania wstecznej kompatybilnoĹci.
        </entry>
       </row>
       <row>
        <entry>4.3.0</entry>
        <entry>
-        Domyślną wartość parametru <parameter>typ_wyniku</parameter> zmieniono z
+        DomyĹlnÄ wartoĹÄ parametru <parameter>typ_wyniku</parameter> zmieniono z
         <constant>PGSQL_BOTH</constant> na <constant>PGSQL_ASSOC</constant>,
-        gdyż indeks numeryczny był niepoprawny.
+        gdyĹź indeks numeryczny byĹ niepoprawny.
        </entry>
       </row>
       <row>
        <entry>4.1.0</entry>
        <entry>
-        Parametr <parameter>wiersz</parameter> stał się opcjonalnym.
+        Parametr <parameter>wiersz</parameter> staĹ siÄ opcjonalnym.
        </entry>
       </row>
      </tbody>
@@ -149,7 +149,7 @@
   &reftitle.examples;
   <para>
    <example>
-    <title><function>pg_fetch_object</function> - przykład</title>
+    <title><function>pg_fetch_object</function> - przykĹad</title>
     <programlisting role="php">
 <![CDATA[
 <?php 
@@ -158,7 +158,7 @@ $baza = "magazyn";
 
 $polaczenie = pg_connect("host=localhost port=5432 dbname=$baza");
 if (!$polaczenie) { 
-  echo "Błąd połączenia do bazy PostgreSQL $baza\n";
+  echo "BĹÄd poĹÄczenia do bazy PostgreSQL $baza\n";
   exit;
 }
 

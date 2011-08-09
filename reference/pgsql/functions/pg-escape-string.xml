@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: garbus Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.61 -->
@@ -7,7 +7,7 @@
  <refnamediv>
   <refname>pg_escape_string</refname>
   <refpurpose>
-   Konwertuje łańcuch wpisywany do pola tekstowego, wstawiając sekwencje Escape
+   Konwertuje ĹaĹcuch wpisywany do pola tekstowego, wstawiajÄc sekwencje Escape
   </refpurpose>
  </refnamediv>
 
@@ -19,11 +19,11 @@
    <methodparam><type>string</type><parameter>dane</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>pg_escape_string</function> konwertuje łańcuch wstawiając 
-   sekwencje Escape przy wpisywaniu do bazy danych. Zwraca łańcuch z sekwencjami Escape
-   w formacie PostgreSQL-a. Zalecane jest używanie tej funkcji w miejsce
-   <function>addslashes</function>. Jeśli typem kolumny jest
-   bytea, trzeba użyć funkcji <function>pg_escape_bytea</function>
+   <function>pg_escape_string</function> konwertuje ĹaĹcuch wstawiajÄc 
+   sekwencje Escape przy wpisywaniu do bazy danych. Zwraca ĹaĹcuch z sekwencjami Escape
+   w formacie PostgreSQL-a. Zalecane jest uĹźywanie tej funkcji w miejsce
+   <function>addslashes</function>. JeĹli typem kolumny jest
+   bytea, trzeba uĹźyÄ funkcji <function>pg_escape_bytea</function>
    zamiast tej.
   </para>
   <note>
@@ -41,9 +41,9 @@
      <term><parameter>polaczenie</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia do bazy danych.  Gdy
-       <parameter>polaczenie</parameter> nie zostało podane, domyślne połączenie
-       jest użyte. Domyślnym połączeniem jest ostatnie połączenie stworzone przez
+       Identyfikator poĹÄczenia do bazy danych.  Gdy
+       <parameter>polaczenie</parameter> nie zostaĹo podane, domyĹlne poĹÄczenie
+       jest uĹźyte. DomyĹlnym poĹÄczeniem jest ostatnie poĹÄczenie stworzone przez
        <function>pg_connect</function> lub <function>pg_pconnect</function>.
       </para>
      </listitem>
@@ -52,7 +52,7 @@
      <term><parameter>dane</parameter></term>
      <listitem>
       <para>
-       Łańcuch (ang. <type>string</type>) zawierający tekst bez sekwencji Escape.
+       ĹaĹcuch (ang. <type>string</type>) zawierajÄcy tekst bez sekwencji Escape.
       </para>
      </listitem>
     </varlistentry>
@@ -63,7 +63,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Łańcuch (ang. <type>string</type>) zawierający dane z sekwencjami Escape.
+   ĹaĹcuch (ang. <type>string</type>) zawierajÄcy dane z sekwencjami Escape.
   </para>
  </refsect1>
 
@@ -81,7 +81,7 @@
      <tbody>
       <row>
        <entry>5.2.0</entry>
-       <entry>Parametr <parameter>polaczenie</parameter> został dodany</entry>
+       <entry>Parametr <parameter>polaczenie</parameter> zostaĹ dodany</entry>
       </row>
      </tbody>
     </tgroup>
@@ -93,14 +93,14 @@
   &reftitle.examples;
   <para>
    <example>
-    <title><function>pg_escape_string</function> - przykład</title>
+    <title><function>pg_escape_string</function> - przykĹad</title>
     <programlisting role="php">
 <![CDATA[
 <?php 
-  // Połączenie do bazy danych
+  // PoĹÄczenie do bazy danych
   $polaczenie = pg_connect('dbname=foo');
   
-  // Przeczytaj plik tekstowy (zawierający apostrofy i ukośniki wsteczne)
+  // Przeczytaj plik tekstowy (zawierajÄcy apostrofy i ukoĹniki wsteczne)
   $dane = file_get_contents('list.txt');
   
   // Dodaj sekwencje Escape do danych
