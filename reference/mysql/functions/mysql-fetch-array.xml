@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: slawek Status: ready -->
 <!-- $Revision$ -->
   <refentry xml:id="function.mysql-fetch-array" xmlns="http://docbook.org/ns/docbook">
@@ -18,24 +18,24 @@
        </parameter></methodparam>
      </methodsynopsis>
     <para> 
-     Zwraca tablicę zawierającą pobrany wiersz, lub
-     &false; jeżeli nie ma więcej wierszy w <parameter>wynik</parameter>.
+     Zwraca tablicÄ zawierajÄcÄ pobrany wiersz, lub
+     &false; jeĹźeli nie ma wiÄcej wierszy w <parameter>wynik</parameter>.
     </para>
     <para>
-     <function>mysql_fetch_array</function> jest rozszerzoną wersją
-     <function>mysql_fetch_row</function>. Oprócz zapisywania danych
-     w indeksach numerycznych, zapisuje je też w indeksach
-     przyporządkowujących (asocjacyjnych), używając nazw pól jako kluczy.
+     <function>mysql_fetch_array</function> jest rozszerzonÄ wersjÄ
+     <function>mysql_fetch_row</function>. OprĂłcz zapisywania danych
+     w indeksach numerycznych, zapisuje je teĹź w indeksach
+     przyporzÄdkowujÄcych (asocjacyjnych), uĹźywajÄc nazw pĂłl jako kluczy.
     </para>
     <para>
-     Jeżeli dwie lub więcej kolumn wyniku ma te same nazwy, ostatnia
-     kolumna będzie brana pod uwagę. Dostęp do innych kolumn o tej
-     samej nazwie jest możliwy jedynie przez indeksowanie numeryczne
-     lub przez stworzenie aliasa. Po stworzeniu aliasa nie można
-     już odwoływać się do danej kolumny używając jej prawdziwej nazwy
-     (w tym przykładzie używając <literal>'pole'</literal>).
+     JeĹźeli dwie lub wiÄcej kolumn wyniku ma te same nazwy, ostatnia
+     kolumna bÄdzie brana pod uwagÄ. DostÄp do innych kolumn o tej
+     samej nazwie jest moĹźliwy jedynie przez indeksowanie numeryczne
+     lub przez stworzenie aliasa. Po stworzeniu aliasa nie moĹźna
+     juĹź odwoĹywaÄ siÄ do danej kolumny uĹźywajÄc jej prawdziwej nazwy
+     (w tym przykĹadzie uĹźywajÄc <literal>'pole'</literal>).
      <example>
-      <title>Zapytanie z powtarzającymi się nazwami pól</title>
+      <title>Zapytanie z powtarzajÄcymi siÄ nazwami pĂłl</title>
       <programlisting role="sql">
 <![CDATA[
 select table1.field as foo table2.field as bar from table1, table2
@@ -44,18 +44,18 @@ select table1.field as foo table2.field as bar from table1, table2
      </example>
     </para>
     <para>
-     Godne uwagi jest to, że użycie <function>mysql_fetch_array</function>
-     <emphasis>nie jest</emphasis> znacząco wolniejsze od użycia
+     Godne uwagi jest to, Ĺźe uĹźycie <function>mysql_fetch_array</function>
+     <emphasis>nie jest</emphasis> znaczÄco wolniejsze od uĹźycia
      <function>mysql_fetch_row</function>, a jest bardziej funkcjonalne.
     </para>
     <para>
      Opcjonalny drugi argument <parameter>result_type</parameter> w
-     funkcji <function>mysql_fetch_array</function> jest stałą i może
-     przyjmować następujące wartości: MYSQL_ASSOC, MYSQL_NUM i MYSQL_BOTH.
-     Tę funkcjonalność dodano w PHP 3.0.7. Wartością domyślną jest MYSQL_BOTH.
+     funkcji <function>mysql_fetch_array</function> jest staĹÄ i moĹźe
+     przyjmowaÄ nastÄpujÄce wartoĹci: MYSQL_ASSOC, MYSQL_NUM i MYSQL_BOTH.
+     TÄ funkcjonalnoĹÄ dodano w PHP 3.0.7. WartoĹciÄ domyĹlnÄ jest MYSQL_BOTH.
     </para>
     <para>
-     Używając MYSQL_BOTH otrzymasz tablicę indeksowaną zarówno asocjacyjnie
+     UĹźywajÄc MYSQL_BOTH otrzymasz tablicÄ indeksowanÄ zarĂłwno asocjacyjnie
      jak i numerycznie. MYSQL_ASSOC dostarczy tablicy indeksowanej tylko
      asocjacyjnie (jak w <function>mysql_fetch_assoc</function>), natomiast
      MYSQL_NUM indeksowanej tylko numerycznie (jak w
@@ -67,7 +67,7 @@ select table1.field as foo table2.field as bar from table1, table2
 <![CDATA[
 <?php
 mysql_connect('localhost', 'uzytkownik', 'haslo') or
-    die('Nie można się połączyć: ' . mysql_error());
+    die('Nie moĹźna siÄ poĹÄczyÄ: ' . mysql_error());
 mysql_select_db('baza');
 
 $result = mysql_query("SELECT id, nazwa FROM tabela");
@@ -86,7 +86,7 @@ mysql_free_result($result);
 <![CDATA[
 <?php
 mysql_connect('localhost', 'uzytkownik', 'haslo') or
-    die('Nie można się połączyć: ' . mysql_error());
+    die('Nie moĹźna siÄ poĹÄczyÄ: ' . mysql_error());
 mysql_select_db('baza');
 
 $result = mysql_query("SELECT id, nazwa FROM tabela");
@@ -105,7 +105,7 @@ mysql_free_result($result);
 <![CDATA[
 <?php
 mysql_connect('localhost', 'uzytkownik', 'haslo') or
-    die('Nie można się połączyć: ' . mysql_error());
+    die('Nie moĹźna siÄ poĹÄczyÄ: ' . mysql_error());
 mysql_select_db('baza');
 
 $result = mysql_query("SELECT id, nazwa FROM tabela");
@@ -119,7 +119,7 @@ mysql_free_result($result);
      </programlisting>
     </example>
     <para>
-     Patrz także:
+     Patrz takĹźe:
      <function>mysql_fetch_row</function>,
      <function>mysql_fetch_assoc</function>.
     </para>

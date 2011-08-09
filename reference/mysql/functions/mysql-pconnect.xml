@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: slawek Status: ready -->
 <!-- $Revision$ -->
   <refentry xml:id="function.mysql-pconnect" xmlns="http://docbook.org/ns/docbook">
    <refnamediv>
     <refname>mysql_pconnect</refname> 
     <refpurpose>
-     Otwiera stałe połączenie z serwerem MySQL
+     Otwiera staĹe poĹÄczenie z serwerem MySQL
     </refpurpose>
    </refnamediv>
    <refsect1>
@@ -15,68 +15,68 @@
       <methodparam choice="opt"><type>string</type><parameter>
         serwer
        </parameter></methodparam>
-      <methodparam choice="opt"><type>string</type><parameter>użytkownik</parameter></methodparam>
-      <methodparam choice="opt"><type>string</type><parameter>hasło</parameter></methodparam>
+      <methodparam choice="opt"><type>string</type><parameter>uĹźytkownik</parameter></methodparam>
+      <methodparam choice="opt"><type>string</type><parameter>hasĹo</parameter></methodparam>
      </methodsynopsis>
     <para> 
-     Zwraca identyfikator połączenia w przypadku powodzenia, lub
-     &false; jeśli wystąpi błąd.
+     Zwraca identyfikator poĹÄczenia w przypadku powodzenia, lub
+     &false; jeĹli wystÄpi bĹÄd.
     </para>
     <para>
-     <function>mysql_connect</function> nawiązuje połączenie z serwerem
-     MySQL. Jeśli nie podano argumentów, przyjmowane są następujące
-     wartości domyślne: <parameter>host:port</parameter> =
-     'localhost:3306', <parameter>użytkownik</parameter> = nazwa użytkownika
-     będącego właścicielem procesu serwera, <parameter>hasło</parameter> =
-     puste hasło.
+     <function>mysql_connect</function> nawiÄzuje poĹÄczenie z serwerem
+     MySQL. JeĹli nie podano argumentĂłw, przyjmowane sÄ nastÄpujÄce
+     wartoĹci domyĹlne: <parameter>host:port</parameter> =
+     'localhost:3306', <parameter>uĹźytkownik</parameter> = nazwa uĹźytkownika
+     bÄdÄcego wĹaĹcicielem procesu serwera, <parameter>hasĹo</parameter> =
+     puste hasĹo.
     </para>
     <para>
-     Argument <parameter>host</parameter> może również zawierać
-     numer portu, np. &quot;host:port&quot; lub ścieżkę do gniaza np.
+     Argument <parameter>host</parameter> moĹźe rĂłwnieĹź zawieraÄ
+     numer portu, np. &quot;host:port&quot; lub ĹcieĹźkÄ do gniaza np.
      &quot;:/sciezka/do/gniazda&quot; dla localhosta.
      <note>
       <para>
-       Obsługę &quot;:port&quot; dodano w PHP 3.0B4.
+       ObsĹugÄ &quot;:port&quot; dodano w PHP 3.0B4.
       </para>
       <para>
-       Obsługę &quot;:/sciezka/do/gniazda&quot; dodano w PHP 3.0.10.
+       ObsĹugÄ &quot;:/sciezka/do/gniazda&quot; dodano w PHP 3.0.10.
       </para>
      </note>
     </para>     
     
     <!-- TODO move the story to features.persistent, and refer to that -->
     <para>
-     <function>mysql_pconnect</function> zachowuje się prawie jak
-     <function>mysql_connect</function> z dwoma zasadniczymi różnicami.
+     <function>mysql_pconnect</function> zachowuje siÄ prawie jak
+     <function>mysql_connect</function> z dwoma zasadniczymi rĂłĹźnicami.
     </para>
     <para> 
-     Pierwsza, podczas łączenia funkcja najpierw spróbuje znaleźć
-     połączenie (stałe) już otwarte dla tego samego hosta,
-     użytkownika i hasła. Jeżeli je znajdzie, jego identyfikator
-     zostanie zwrócony zamiast otwierania nowego połączenia.
+     Pierwsza, podczas ĹÄczenia funkcja najpierw sprĂłbuje znaleĹşÄ
+     poĹÄczenie (staĹe) juĹź otwarte dla tego samego hosta,
+     uĹźytkownika i hasĹa. JeĹźeli je znajdzie, jego identyfikator
+     zostanie zwrĂłcony zamiast otwierania nowego poĹÄczenia.
     </para>
     <para> 
-     Druga, połączenie z serwerem SQL nie zostanie zamknięte po
-     zakończeniu wykonywania skryptu. Zamiast tego połączenie
-     pozostanie otwarte do późniejszego użycia
-     (<function>mysql_close</function> nie zamyka połączeń
-     nawiązanych za pomocą <function>mysql_pconnect</function>).
+     Druga, poĹÄczenie z serwerem SQL nie zostanie zamkniÄte po
+     zakoĹczeniu wykonywania skryptu. Zamiast tego poĹÄczenie
+     pozostanie otwarte do pĂłĹşniejszego uĹźycia
+     (<function>mysql_close</function> nie zamyka poĹÄczeĹ
+     nawiÄzanych za pomocÄ <function>mysql_pconnect</function>).
     </para>
     <para> 
-     Dlatego też ten typ połączeń nazywany jest 'stałym'.
+     Dlatego teĹź ten typ poĹÄczeĹ nazywany jest 'staĹym'.
     </para>
     <note>
      <para>
-      Trzeba zaznaczyć, że stałe połączenia działają jedynie z PHP pracującym
-      jako moduł. Przeczytaj rozdział
-      <link linkend="features.persistent-connections">Stałe połączenia z bazami
-      danych</link> by dowiedzieć się więcej.
+      Trzeba zaznaczyÄ, Ĺźe staĹe poĹÄczenia dziaĹajÄ jedynie z PHP pracujÄcym
+      jako moduĹ. Przeczytaj rozdziaĹ
+      <link linkend="features.persistent-connections">StaĹe poĹÄczenia z bazami
+      danych</link> by dowiedzieÄ siÄ wiÄcej.
      </para>
     </note>
     <warning>
      <para>
-      Używanie stałych połączeń może wymagać dostrojenia konfiguracji
-      Apache'a i MySQLa, aby nie przekroczyć limitu jednoczesnych połączeń
+      UĹźywanie staĹych poĹÄczeĹ moĹźe wymagaÄ dostrojenia konfiguracji
+      Apache'a i MySQLa, aby nie przekroczyÄ limitu jednoczesnych poĹÄczeĹ
       dozwolonych przez MySQL.
      </para>
     </warning>

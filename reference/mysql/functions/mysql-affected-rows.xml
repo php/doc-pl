@@ -1,22 +1,22 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: slawek -->
 <refentry xml:id="function.mysql-affected-rows" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>mysql_affected_rows</refname>
-  <refpurpose>Zwraca liczbę wierszy przetworzonych w poprzedniej operacji MySQL</refpurpose>
+  <refpurpose>Zwraca liczbÄ wierszy przetworzonych w poprzedniej operacji MySQL</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>int</type><methodname>mysql_affected_rows</methodname>
-   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_poĹÄczenia</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Pobiera liczbę wierszy przetworzonych w ostatnim zapytaniu INSERT, UPDATE, REPLACE
-   lub DELETE skojarzonym z <parameter>identyfikator_połączenia</parameter>.
+   Pobiera liczbÄ wierszy przetworzonych w ostatnim zapytaniu INSERT, UPDATE, REPLACE
+   lub DELETE skojarzonym z <parameter>identyfikator_poĹÄczenia</parameter>.
   </para>
  </refsect1>
     
@@ -32,25 +32,25 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca liczbę przetworzonych wierszy w przypadku sukcesu i -1 jeśli ostatnie zapytanie
+   Zwraca liczbÄ przetworzonych wierszy w przypadku sukcesu i -1 jeĹli ostatnie zapytanie
    zawiedzie.
   </para>
   <para>
-   Jeżeli ostatnim zapytaniem było DELETE bez użycia klauzuli WHERE, wszystkie
-   rekordy zostaną usunięte z tabeli, ale
-   funkcja zwróci zero w wersjach MySQL starszych niż 4.1.2.
+   JeĹźeli ostatnim zapytaniem byĹo DELETE bez uĹźycia klauzuli WHERE, wszystkie
+   rekordy zostanÄ usuniÄte z tabeli, ale
+   funkcja zwrĂłci zero w wersjach MySQL starszych niĹź 4.1.2.
   </para>
   <para>
-   Podczas operacji UPDATE, MySQL nie aktualizuje kolumn w których
-   nowa wartość jest identyczna z poprzednią. Możliwe jest zatem, że
-   zwrócona przez <function>mysql_affected_rows</function> liczba nie
-   będzie odpowiadać liczbie wierszy pasujących do zapytania, ale
-   tych, które zostały faktycznie zmienione.
+   Podczas operacji UPDATE, MySQL nie aktualizuje kolumn w ktĂłrych
+   nowa wartoĹÄ jest identyczna z poprzedniÄ. MoĹźliwe jest zatem, Ĺźe
+   zwrĂłcona przez <function>mysql_affected_rows</function> liczba nie
+   bÄdzie odpowiadaÄ liczbie wierszy pasujÄcych do zapytania, ale
+   tych, ktĂłre zostaĹy faktycznie zmienione.
   </para>
   <para>
-   Wyrażenie REPLACE najpierw skasuje rekord z tym samym kluczem głównym
-   następnie wstawi nowy rekord. Ta funkcja zwraca liczbę 
-   skasowanych rekordów plus liczbę wstawionych rekordów.
+   WyraĹźenie REPLACE najpierw skasuje rekord z tym samym kluczem gĹĂłwnym
+   nastÄpnie wstawi nowy rekord. Ta funkcja zwraca liczbÄ 
+   skasowanych rekordĂłw plus liczbÄ wstawionych rekordĂłw.
   </para>
  </refsect1>
   
@@ -58,50 +58,50 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład <function>mysql_affected_rows</function></title>
+    <title>PrzykĹad <function>mysql_affected_rows</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
 $link = mysql_connect('localhost', 'mysql_user', 'mysql_password');
 if (!$link) {
-    die('Nie można się połączyć: ' . mysql_error());
+    die('Nie moĹźna siÄ poĹÄczyÄ: ' . mysql_error());
 }
 mysql_select_db('mydb');
   
-/* to powinno zwrócić prawidłową liczbę usuniętych rekordów */
+/* to powinno zwrĂłciÄ prawidĹowÄ liczbÄ usuniÄtych rekordĂłw */
 mysql_query('DELETE FROM mytable WHERE id < 10');
-printf("Usuniętych rekordów: %d\n", mysql_affected_rows());
+printf("UsuniÄtych rekordĂłw: %d\n", mysql_affected_rows());
 	   
-/* z klauzulą where, która nigdy nie jest prawdziwa, powinno zrwócic 0 */
+/* z klauzulÄ where, ktĂłra nigdy nie jest prawdziwa, powinno zrwĂłcic 0 */
 mysql_query('DELETE FROM mytable WHERE 0');
-printf("Usuniętych rekordów: %d\n", mysql_affected_rows());
+printf("UsuniÄtych rekordĂłw: %d\n", mysql_affected_rows());
 ?>
 ]]>
     </programlisting>
     &example.outputs.similar;
     <screen>
 <![CDATA[
-Usuniętych rekordów: 10
-Usuniętych rekordów: 0
+UsuniÄtych rekordĂłw: 10
+UsuniÄtych rekordĂłw: 0
 ]]>
     </screen>
    </example>
   </para>
   <para>
    <example>
-    <title>Przykład <function>mysql_affected_rows</function> używający transakcję</title>
+    <title>PrzykĹad <function>mysql_affected_rows</function> uĹźywajÄcy transakcjÄ</title>
     <programlisting role="php">
 <![CDATA[
 <?php
 $link = mysql_connect('localhost', 'mysql_user', 'mysql_password');
 if (!$link) {
-    die('Nie można się połączyć: ' . mysql_error());
+    die('Nie moĹźna siÄ poĹÄczyÄ: ' . mysql_error());
 }
 mysql_select_db('mydb');
     
-/* Uaktualnienie rekordów */
+/* Uaktualnienie rekordĂłw */
 mysql_query("UPDATE mytable SET used=1 WHERE id < 10");
-printf ("Zaktualizowanych rekordów: %d\n", mysql_affected_rows());
+printf ("Zaktualizowanych rekordĂłw: %d\n", mysql_affected_rows());
 mysql_query("COMMIT");
 ?>
 ]]>
@@ -109,7 +109,7 @@ mysql_query("COMMIT");
     &example.outputs.similar;
     <screen>
 <![CDATA[
-Zaktualizowanych rekordów: 10
+Zaktualizowanych rekordĂłw: 10
 ]]>
     </screen>
    </example>
@@ -121,7 +121,7 @@ Zaktualizowanych rekordów: 10
   <note>
    <title>Transakcje</title>
    <para>
-    Jeśli używasz transakcji musisz wywołać
+    JeĹli uĹźywasz transakcji musisz wywoĹaÄ
     <function>mysql_affected_rows</function> po Twoim zapytaniu INSERT, UPDATE lub
     DELETE, a nie po COMMIT.
    </para>
@@ -129,7 +129,7 @@ Zaktualizowanych rekordów: 10
   <note>
    <title>Instrukcja SELECT</title>
    <para>
-    Aby uzyskać liczbę wierszy zwróconych przez SELECT, można użyć
+    Aby uzyskaÄ liczbÄ wierszy zwrĂłconych przez SELECT, moĹźna uĹźyÄ
     use <function>mysql_num_rows</function>.
    </para>
   </note>
@@ -137,7 +137,7 @@ Zaktualizowanych rekordów: 10
    <title>Kaskadowe klucze obce</title>
    <para>
      <function>mysql_affected_rows</function> nie zwraca liczby wierszy
-     przetworzonych pośrednio przez użycie klauzuli ON DELETE CASCADE i/lub
+     przetworzonych poĹrednio przez uĹźycie klauzuli ON DELETE CASCADE i/lub
      ON UPDATE CASCADE w ograniczeniach kluczy obcych.
    </para>
   </note>

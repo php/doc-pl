@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: mroq Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: slawek -->
@@ -15,8 +15,8 @@
    <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Zwraca tablicę numeryczną, która odpowiada pobranemu wierszowi
-   i przesuwa do przodu wewnętrzny wskaźnik danych.   
+   Zwraca tablicÄ numerycznÄ, ktĂłra odpowiada pobranemu wierszowi
+   i przesuwa do przodu wewnÄtrzny wskaĹşnik danych.   
   </para>
  </refsect1>
 
@@ -32,14 +32,14 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca tablicę numeryczną, która odpowiada pobranemu wierszowi, lub
-   &false; jeśli nie ma więcej wierszy.   
+   Zwraca tablicÄ numerycznÄ, ktĂłra odpowiada pobranemu wierszowi, lub
+   &false; jeĹli nie ma wiÄcej wierszy.   
   </para>
   <para>
    <function>mysql_fetch_row</function> pobiera jeden wiersz danych
    z wyniku skojarzonego z podanym identyfikatorem wyniku. Wiersz
-   zwracany jest jako tablica. Komórki są umieszczone pod oddzielnymi
-   ofsetami, zaczynając od 0.   
+   zwracany jest jako tablica. KomĂłrki sÄ umieszczone pod oddzielnymi
+   ofsetami, zaczynajÄc od 0.   
   </para>
  </refsect1>
 
@@ -47,19 +47,19 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Pobieranie jednego wiersza za pomocą <function>mysql_fetch_row</function></title>
+    <title>Pobieranie jednego wiersza za pomocÄ <function>mysql_fetch_row</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
 $result = mysql_query("SELECT id,email FROM people WHERE id = '42'");
 if (!$result) {
-    echo 'Nie można uruchomić zapytania: ' . mysql_error();
+    echo 'Nie moĹźna uruchomiÄ zapytania: ' . mysql_error();
     exit;
 }
 $row = mysql_fetch_row($result);
 
 echo $row[0]; // 42
-echo $row[1]; // wartość kolumny email
+echo $row[1]; // wartoĹÄ kolumny email
 ?>
 ]]>
     </programlisting>

@@ -1,53 +1,53 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: slawek Status: ready -->
 <!-- $Revision$ -->
   <refentry xml:id="function.mysql-query" xmlns="http://docbook.org/ns/docbook">
    <refnamediv>
     <refname>mysql_query</refname>
-    <refpurpose>Wysyła zapytanie do serwera MySQL</refpurpose>
+    <refpurpose>WysyĹa zapytanie do serwera MySQL</refpurpose>
    </refnamediv>
    <refsect1>
     <title>Opis</title>
      <methodsynopsis>
       <type>resource</type><methodname>mysql_query</methodname>
       <methodparam><type>string</type><parameter>zapytanie</parameter></methodparam>
-      <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+      <methodparam choice="opt"><type>resource</type><parameter>identyfikator_poĹÄczenia</parameter></methodparam>
       <methodparam choice="opt"><type>int</type><parameter>typ_wyniku</parameter></methodparam>
      </methodsynopsis>
     <para> 
-     <function>mysql_query</function> wysyła zapytanie do aktywnej
-     bazy na serwerze skojarzonym z podanym identyfikatorem połączenia.
-     Jeżeli <parameter>identyfikator_połączenia</parameter> nie został podany,
-     wykorzystywane jest ostatnio otwarte połączenie. Jeżeli żadne
-     połączenie nie jest otwarte, podjęta zostanie próba ustanowienia
-     go, poprzez wywołanie <function>mysql_connect</function> bez argumentów.
+     <function>mysql_query</function> wysyĹa zapytanie do aktywnej
+     bazy na serwerze skojarzonym z podanym identyfikatorem poĹÄczenia.
+     JeĹźeli <parameter>identyfikator_poĹÄczenia</parameter> nie zostaĹ podany,
+     wykorzystywane jest ostatnio otwarte poĹÄczenie. JeĹźeli Ĺźadne
+     poĹÄczenie nie jest otwarte, podjÄta zostanie prĂłba ustanowienia
+     go, poprzez wywoĹanie <function>mysql_connect</function> bez argumentĂłw.
     </para>
     <para>
-     Opcjonalny argument <parameter>result_mode</parameter> może przyjmować
-     wartość MYSQL_USE_RESULT lub MYSQL_STORE_RESULT. Domyślnie używana jest
-     wartość MYSQL_STORE_RESULT, zatem wynik jest buforowany. Odpowiednikiem
-     użycia drugiej opcji jest funkcja <function>mysql_unbuffered_query</function>.
+     Opcjonalny argument <parameter>result_mode</parameter> moĹźe przyjmowaÄ
+     wartoĹÄ MYSQL_USE_RESULT lub MYSQL_STORE_RESULT. DomyĹlnie uĹźywana jest
+     wartoĹÄ MYSQL_STORE_RESULT, zatem wynik jest buforowany. Odpowiednikiem
+     uĹźycia drugiej opcji jest funkcja <function>mysql_unbuffered_query</function>.
     </para>
     <note>
      <para>
-      Zapytanie nie powinno kończyć się znakiem średnika.
+      Zapytanie nie powinno koĹczyÄ siÄ znakiem Ĺrednika.
      </para>
     </note>
     <para>
      <function>mysql_query</function> zwraca identyfikator wyniku (lub &false;
-     w przypadku niepowodzenia) jedynie dla zapytań typu SELECT, SHOW, EXPLAIN
+     w przypadku niepowodzenia) jedynie dla zapytaĹ typu SELECT, SHOW, EXPLAIN
      i DESCRIBE.
-     Dla innych zapytań SQL <function>mysql_query</function> zwraca &true;
-     lub &false; informując czy zapytanie zakończyło się sukcesem czy też nie.
-     Jeśli nie została zwrócona wartość &false; to znaczy, że zapytanie było
-     prawidłowe i może być wykonane przez serwer. Nie mówi natomiast nic o
-     liczbie przetworzonych lub zwróconych wierszy. Jest również możliwe, że
-     zapytanie zostanie wykonane poprawnie, nie przetwarzając lub
-     zwracając żadnych wierszy.
+     Dla innych zapytaĹ SQL <function>mysql_query</function> zwraca &true;
+     lub &false; informujÄc czy zapytanie zakoĹczyĹo siÄ sukcesem czy teĹź nie.
+     JeĹli nie zostaĹa zwrĂłcona wartoĹÄ &false; to znaczy, Ĺźe zapytanie byĹo
+     prawidĹowe i moĹźe byÄ wykonane przez serwer. Nie mĂłwi natomiast nic o
+     liczbie przetworzonych lub zwrĂłconych wierszy. Jest rĂłwnieĹź moĹźliwe, Ĺźe
+     zapytanie zostanie wykonane poprawnie, nie przetwarzajÄc lub
+     zwracajÄc Ĺźadnych wierszy.
     </para>
     <para>
-     Następujące zapytanie jest niepoprawne składniowo, dlatego
-     <function>mysql_query</function> zwróci &false;:
+     NastÄpujÄce zapytanie jest niepoprawne skĹadniowo, dlatego
+     <function>mysql_query</function> zwrĂłci &false;:
      <example>
       <title><function>mysql_query</function></title>
       <programlisting role="php">
@@ -61,10 +61,10 @@ $result = mysql_query("SELECT * WHERE 1=1")
      </example>
     </para>
     <para>
-     Następujące zapytanie jest niepoprawne semantycznie, jeżeli
-     <literal>my_col</literal> nie jest kolumną w tabeli
+     NastÄpujÄce zapytanie jest niepoprawne semantycznie, jeĹźeli
+     <literal>my_col</literal> nie jest kolumnÄ w tabeli
      <literal>my_tbl</literal>, dlatego <function>mysql_query</function>
-     zwróci &false;:
+     zwrĂłci &false;:
      <example>
       <title><function>mysql_query</function></title>
       <programlisting role="php">
@@ -78,27 +78,27 @@ $result = mysql_query("SELECT kolumna FROM tabela")
      </example>
     </para>
     <para>
-     <function>mysql_query</function> zwróci &false; również wtedy, gdy
-     nie będzie praw dostępu do tabel wyszczególnionych w zapytaniu.
+     <function>mysql_query</function> zwrĂłci &false; rĂłwnieĹź wtedy, gdy
+     nie bÄdzie praw dostÄpu do tabel wyszczegĂłlnionych w zapytaniu.
     </para>
     <para>
-     Przyjmując, że zapytanie się powiodło, można użyć
-     <function>mysql_num_rows</function> by uzyskać informację o liczbie
-     wierszy zwróconych w instrukcji SELECT, lub
+     PrzyjmujÄc, Ĺźe zapytanie siÄ powiodĹo, moĹźna uĹźyÄ
+     <function>mysql_num_rows</function> by uzyskaÄ informacjÄ o liczbie
+     wierszy zwrĂłconych w instrukcji SELECT, lub
      <function>mysql_affected_rows</function> w celu uzyskania liczby
      wierszy przetworzonych przez instrukcje DELETE, INSERT, REPLACE i UPDATE.
     </para>
     <para>
      Jedynie po operacjach SELECT, SHOW, EXPLAIN i DESCRIBE
-     <function>mysql_query</function> zwróci identyfikator wyniku, który można
-     przekazać do funkcji <function>mysql_fetch_array</function> lub innych
-     funkcji operujących na tablicach wyników. Po wykonaniu operacji na
-     wyniku, można zwolnić zasoby przez niego wykorzystywane wywołując
-     <function>mysql_free_result</function>. Po zakończeniu działania skryptu
-     pamięć i tak będzie automatycznie zwolniona.
+     <function>mysql_query</function> zwrĂłci identyfikator wyniku, ktĂłry moĹźna
+     przekazaÄ do funkcji <function>mysql_fetch_array</function> lub innych
+     funkcji operujÄcych na tablicach wynikĂłw. Po wykonaniu operacji na
+     wyniku, moĹźna zwolniÄ zasoby przez niego wykorzystywane wywoĹujÄc
+     <function>mysql_free_result</function>. Po zakoĹczeniu dziaĹania skryptu
+     pamiÄÄ i tak bÄdzie automatycznie zwolniona.
     </para>
     <para>
-     Patrz także: <function>mysql_num_rows</function>,
+     Patrz takĹźe: <function>mysql_num_rows</function>,
      <function>mysql_affected_rows</function>,
      <function>mysql_unbuffered_query</function>,
      <function>mysql_free_result</function>,

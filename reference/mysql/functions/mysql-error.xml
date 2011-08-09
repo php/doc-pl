@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: slawek Status: ready -->
 <!-- $Revision$ -->
   <refentry xml:id="function.mysql-error" xmlns="http://docbook.org/ns/docbook">
    <refnamediv>
     <refname>mysql_error</refname>
     <refpurpose>
-     Zwraca tekst komunikatu błędu z ostatniej operacji MySQL
+     Zwraca tekst komunikatu bĹÄdu z ostatniej operacji MySQL
     </refpurpose>
    </refnamediv>
    <refsect1>
@@ -13,23 +13,23 @@
      <methodsynopsis>
       <type>string</type><methodname>mysql_error</methodname>
       <methodparam choice="opt"><type>resource</type><parameter>
-        identyfikator_połączenia
+        identyfikator_poĹÄczenia
        </parameter></methodparam>
      </methodsynopsis>
     <para>
-     Zwraca tekst komunikatu błędu z ostatnio użytej funkcji MySQL, lub
-     <literal>''</literal> (pusty łańcuch) jeśli wystąpi błąd.
+     Zwraca tekst komunikatu bĹÄdu z ostatnio uĹźytej funkcji MySQL, lub
+     <literal>''</literal> (pusty ĹaĹcuch) jeĹli wystÄpi bĹÄd.
     </para>
     <para>
-     Błędy pochodzące z klienta bazy MySQL już nie powodują wyświetlania
-     ostrzeżeń. Zamiast tego, użyj <function>mysql_error</function>
-     by uzyskać komunikat błędu. Weź pod uwagę, że ta funkcja zwraca komunikat
-     błędu z ostatnio użytej funkcji MySQL (wyłączając
+     BĹÄdy pochodzÄce z klienta bazy MySQL juĹź nie powodujÄ wyĹwietlania
+     ostrzeĹźeĹ. Zamiast tego, uĹźyj <function>mysql_error</function>
+     by uzyskaÄ komunikat bĹÄdu. WeĹş pod uwagÄ, Ĺźe ta funkcja zwraca komunikat
+     bĹÄdu z ostatnio uĹźytej funkcji MySQL (wyĹÄczajÄc
      <function>mysql_error</function> i <function>mysql_errno</function>),
-     dlatego jeśli jej używasz, upewnij się, by zrobić to przed użyciem
-     następnej funkcji MySQL.
+     dlatego jeĹli jej uĹźywasz, upewnij siÄ, by zrobiÄ to przed uĹźyciem
+     nastÄpnej funkcji MySQL.
      <example>
-      <title>Przykład użycia mysql_error</title>
+      <title>PrzykĹad uĹźycia mysql_error</title>
       <programlisting role="php">
 <![CDATA[
 <?php
@@ -45,7 +45,7 @@ echo mysql_errno() . ": " . mysql_error() . "\n";
 ]]>
       </programlisting>
       <para>
-       Powyższy przykład da następujący wynik:
+       PowyĹźszy przykĹad da nastÄpujÄcy wynik:
       </para>
       <screen>
 <![CDATA[
@@ -57,13 +57,13 @@ echo mysql_errno() . ": " . mysql_error() . "\n";
     </para>
     <note> 
      <para>
-      Jeżeli jako opcjonalny argument zostanie podany identyfikator połączenia,
-      to zostanie on wykorzystany do wyciągnięcia numeru błędu. Jeśli nie,
-      wykorzystane zostanie ostatnio otwarte połączenie.
+      JeĹźeli jako opcjonalny argument zostanie podany identyfikator poĹÄczenia,
+      to zostanie on wykorzystany do wyciÄgniÄcia numeru bĹÄdu. JeĹli nie,
+      wykorzystane zostanie ostatnio otwarte poĹÄczenie.
      </para> 
     </note> 
     <para> 
-     Patrz także: <function>mysql_errno</function>
+     Patrz takĹźe: <function>mysql_errno</function>
     </para>
    </refsect1>
   </refentry>

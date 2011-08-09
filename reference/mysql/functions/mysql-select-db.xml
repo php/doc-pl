@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: mroq Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: slawek -->
 <refentry xml:id="function.mysql-select-db" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>mysql_select_db</refname>
-  <refpurpose>Wybiera bazę MySQL</refpurpose>
+  <refpurpose>Wybiera bazÄ MySQL</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
@@ -13,12 +13,12 @@
   <methodsynopsis>
    <type>bool</type><methodname>mysql_select_db</methodname>
    <methodparam><type>string</type><parameter>nazwa_bazy</parameter></methodparam>
-   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_poĹÄczenia</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Ustawia aktywną bazę danych na serwerze określonym przez podany 
-   identyfikator połączenia. Kolejne wywołania funkcji <function>mysql_query</function> 
-   będą dotyczyły aktywnej bazy danych.
+   Ustawia aktywnÄ bazÄ danych na serwerze okreĹlonym przez podany 
+   identyfikator poĹÄczenia. Kolejne wywoĹania funkcji <function>mysql_query</function> 
+   bÄdÄ dotyczyĹy aktywnej bazy danych.
   </para>
  </refsect1>
 
@@ -50,20 +50,20 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład użycia <function>mysql_select_db</function></title>
+    <title>PrzykĹad uĹźycia <function>mysql_select_db</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
 
 $link = mysql_connect('localhost', 'uzytkownik', 'haslo');
 if (!$link) {
-    die('Nie połączono : ' . mysql_error());
+    die('Nie poĹÄczono : ' . mysql_error());
 }
 
-// Ustaw foo jako aktualną bazę danych
+// Ustaw foo jako aktualnÄ bazÄ danych
 $db_selected = mysql_select_db('foo', $link);
 if (!$db_selected) {
-    die ('Nie można ustawić foo : ' . mysql_error());
+    die ('Nie moĹźna ustawiÄ foo : ' . mysql_error());
 }
 ?>
 ]]>

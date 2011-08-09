@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 304c83e61a2740869a8f0ec9e1f45659201add5e Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 
@@ -12,49 +12,49 @@
    Wymagania dla platform Win32.
   </para>
   <para>
-   Rozszerzenie wymaga aby w systemie, w którym jest zainstalowany PHP,
-   znajdowały się narzędzia MS SQL Client Tools.  Client Tools można
-   zainstalować z płyty instalacyjnej serwera MS SQL Server lub skopiować
+   Rozszerzenie wymaga aby w systemie, w ktĂłrym jest zainstalowany PHP,
+   znajdowaĹy siÄ narzÄdzia MS SQL Client Tools.  Client Tools moĹźna
+   zainstalowaÄ z pĹyty instalacyjnej serwera MS SQL Server lub skopiowaÄ
    plik <filename>ntwdblib.dll</filename> z katalogu
-   <filename>\winnt\system32</filename> systemu, na którym jest uruchomiony serwer do katalogu
-   <filename>\winnt\system32</filename> systemu, na którym znajduje się PHP.
-   Skopiowanie <filename>ntwdblib.dll</filename> powinno umożliwić tylko dostęp
+   <filename>\winnt\system32</filename> systemu, na ktĂłrym jest uruchomiony serwer do katalogu
+   <filename>\winnt\system32</filename> systemu, na ktĂłrym znajduje siÄ PHP.
+   Skopiowanie <filename>ntwdblib.dll</filename> powinno umoĹźliwiÄ tylko dostÄp
    poprzez potoki nazwane.
-   Pełna konfiguracja klienta wymaga instalacji wszystkich narzędzi Client Tools.
+   PeĹna konfiguracja klienta wymaga instalacji wszystkich narzÄdzi Client Tools.
   </para>
   <para>
-   To rozszerzenie nie jest już dostępne na Windows od PHP 5.3 i nowszych wersji.
+   To rozszerzenie nie jest juĹź dostÄpne na Windows od PHP 5.3 i nowszych wersji.
   </para>
   <para>
-   SqlSrv - opcjonalny sterownik do MS SQL jest dostępny na witrynie firmy Microsoft: <link
+   SqlSrv - opcjonalny sterownik do MS SQL jest dostÄpny na witrynie firmy Microsoft: <link
    xlink:href="&url.sqlsrv;">&url.sqlsrv;</link>. 
   </para>
   <para>
    Wymagania dla platform Unix/Linux.
   </para>
   <para>
-   Aby używać rozszerzenia MSSQL w Unix/Linux, należy najpierw skompilować
-   i zainstalować bibliotekę FreeTDS.  Kod źródłowy i instrukcje instalacji
-   są dostępne na witrynie FreeTDS:
+   Aby uĹźywaÄ rozszerzenia MSSQL w Unix/Linux, naleĹźy najpierw skompilowaÄ
+   i zainstalowaÄ bibliotekÄ FreeTDS.  Kod ĹşrĂłdĹowy i instrukcje instalacji
+   sÄ dostÄpne na witrynie FreeTDS:
    <link xlink:href="&url.freetds;">&url.freetds;</link>
   </para>
   <note>
    <para>
-    W Windows jest używana DBLIB Microsoftu.  Funkcje, które zwracają nazwy
-    kolumn używają wewnętrznej funkcji DBLIB <literal>dbcolname()</literal>.
-    DBLIB została zaprojektowana dla SQL Server 6.x gdzie maksymalna długość
-    identyfikatora wynosiła 30.  Z tego powodu, maksymalna długość zwracanej
-    nazwy kolumny wynosi 30 znaków.  Na platformach gdzie używa się FreeTDS
+    W Windows jest uĹźywana DBLIB Microsoftu.  Funkcje, ktĂłre zwracajÄ nazwy
+    kolumn uĹźywajÄ wewnÄtrznej funkcji DBLIB <literal>dbcolname()</literal>.
+    DBLIB zostaĹa zaprojektowana dla SQL Server 6.x gdzie maksymalna dĹugoĹÄ
+    identyfikatora wynosiĹa 30.  Z tego powodu, maksymalna dĹugoĹÄ zwracanej
+    nazwy kolumny wynosi 30 znakĂłw.  Na platformach gdzie uĹźywa siÄ FreeTDS
     (Linux), nie ma takiego problemu.
    </para>
   </note>
   <note>
    <para>
-    W Windows z zainstalowanym serwerem MSSQL 2005 lub nowszym należy skopiować
-    bibliotekę <literal>ntwdblib.dll</literal> do katalogu w którym jest
-    zainstalowany PHP i w razie potrzeby nadpisać znajdującą się tam bibliotekę.
-    Należy to zrobić, gdyż wersja biblioteki dystrybuowana z PHP jest przestarzała.
-    Innym sposobem nawiązania połączenia z MSSQL są rozszerzenia:
+    W Windows z zainstalowanym serwerem MSSQL 2005 lub nowszym naleĹźy skopiowaÄ
+    bibliotekÄ <literal>ntwdblib.dll</literal> do katalogu w ktĂłrym jest
+    zainstalowany PHP i w razie potrzeby nadpisaÄ znajdujÄcÄ siÄ tam bibliotekÄ.
+    NaleĹźy to zrobiÄ, gdyĹź wersja biblioteki dystrybuowana z PHP jest przestarzaĹa.
+    Innym sposobem nawiÄzania poĹÄczenia z MSSQL sÄ rozszerzenia:
     <link xlink:href="&url.sqlsrv;">&url.sqlsrv;</link>,
     <link linkend="book.uodbc">ODBC</link>,
     <link linkend="ref.pdo-dblib">PDO_DBLIB</link> lub
@@ -76,23 +76,23 @@
  <section xml:id="mssql.resources">
   &reftitle.resources;
   <section xml:id="mssql.resources.link">
-   <title>identyfikator połączenia mssql</title>
+   <title>identyfikator poĹÄczenia mssql</title>
    <para>
-    Identyfikator połączenia zwrócony przez <function>mssql_connect</function>
+    Identyfikator poĹÄczenia zwrĂłcony przez <function>mssql_connect</function>
     lub <function>mssql_pconnect</function>.
    </para>
   </section>
   <section xml:id="mssql.resources.result">
-   <title>zbiór wynikowy mssql</title>
+   <title>zbiĂłr wynikowy mssql</title>
    <para>
-    Zbiór wynikowy zwrócony przez <function>mssql_query</function> dla
-    zapytań <literal>SELECT</literal>.
+    ZbiĂłr wynikowy zwrĂłcony przez <function>mssql_query</function> dla
+    zapytaĹ <literal>SELECT</literal>.
    </para>
   </section>
   <section xml:id="mssql.resources.statement">
    <title>identyfikator instrukcji mssql</title>
    <para>
-    Identyfikator instrukcji zwrócony przez <function>mssql_init</function>.
+    Identyfikator instrukcji zwrĂłcony przez <function>mssql_init</function>.
    </para>
   </section>
  </section>

@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: mroq Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: slawek -->
 <refentry xml:id="function.mysql-field-table" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>mysql_field_table</refname>
-  <refpurpose>Pobiera nazwę tabeli w której znajduje się dane pole</refpurpose>
+  <refpurpose>Pobiera nazwÄ tabeli w ktĂłrej znajduje siÄ dane pole</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
@@ -16,7 +16,7 @@
    <methodparam><type>int</type><parameter>ofset_pola</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Zwraca nazwę tabeli w której znajduje się dane pole.
+   Zwraca nazwÄ tabeli w ktĂłrej znajduje siÄ dane pole.
   </para>
  </refsect1>
 
@@ -33,7 +33,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca nazwę tabeli w przypadku powodzenia.
+   Zwraca nazwÄ tabeli w przypadku powodzenia.
   </para>
  </refsect1>
 
@@ -41,7 +41,7 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład użycia <function>mysql_field_table</function></title>
+    <title>PrzykĹad uĹźycia <function>mysql_field_table</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -51,7 +51,7 @@ $query = "SELECT konto.*, panstwo.* FROM konto, panstwo WHERE konto.nazwa = 'Pol
 // Pobiera wynik z bazy danych
 $result = mysql_query($query);
 
-// Wyświetla nazwę tablicy, a następnie nazwę pola
+// WyĹwietla nazwÄ tablicy, a nastÄpnie nazwÄ pola
 for ($i = 0; $i < mysql_num_fields($result); ++$i) {
     $table = mysql_field_table($result, $i);
     $field = mysql_field_name($result, $i);

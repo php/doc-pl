@@ -1,31 +1,31 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 79dcbe011fb254dcd92c597064571fe313362a09 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 
 <chapter xml:id="msql.examples" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  &reftitle.examples;
  <section xml:id="msql.examples-basic">
-  <title>Podstawowe użycie</title>
+  <title>Podstawowe uĹźycie</title>
   <para>
-   Ten prosty przykład pokazuje jak można połączyć się do bazy mSQL,
-   wykonać zapytanie, wyświetlić wiersze z wynikami i zamknąć połączenie.
+   Ten prosty przykĹad pokazuje jak moĹźna poĹÄczyÄ siÄ do bazy mSQL,
+   wykonaÄ zapytanie, wyĹwietliÄ wiersze z wynikami i zamknÄÄ poĹÄczenie.
    <example>
-    <title>Przykład użycia mSQL</title>
+    <title>PrzykĹad uĹźycia mSQL</title>
     <programlisting role="php">
 <![CDATA[
 <?php
-/* Nawiązanie połączenia, wybór bazy danych */
+/* NawiÄzanie poĹÄczenia, wybĂłr bazy danych */
 $link = msql_connect('localhost')
-    or die('Nie można nawiązać połączenia : ' . msql_error());
+    or die('Nie moĹźna nawiÄzaÄ poĹÄczenia : ' . msql_error());
 
 msql_select_db('database', $link)
-    or die('Nie można wybrać bazy danych');
+    or die('Nie moĹźna wybraÄ bazy danych');
 
 /* Wykonanie zapytania SQL */
 $query = 'SELECT * FROM my_table';
-$result = msql_query($query, $link) or die('Wykonanie zapytania nie powiodło się : ' . msql_error());
+$result = msql_query($query, $link) or die('Wykonanie zapytania nie powiodĹo siÄ : ' . msql_error());
 
-/* Wyświetlenie wyników w postaci tabeli HTML */
+/* WyĹwietlenie wynikĂłw w postaci tabeli HTML */
 echo "<table>\n";
 while ($row = msql_fetch_array($result, MSQL_ASSOC)) {
     echo "\t<tr>\n";
@@ -36,10 +36,10 @@ while ($row = msql_fetch_array($result, MSQL_ASSOC)) {
 }
 echo "</table>\n";
 
-/* Zwolnienie pamięci zajmowanej przez wynik */
+/* Zwolnienie pamiÄci zajmowanej przez wynik */
 msql_free_result($result);
 
-/* Zamknięcie połączenia */
+/* ZamkniÄcie poĹÄczenia */
 msql_close($link);
 ?>
 ]]>

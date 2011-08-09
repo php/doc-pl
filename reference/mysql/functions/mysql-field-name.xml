@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: slawek Status: ready -->
 <!-- $Revision$ -->
   <refentry xml:id="function.mysql-field-name" xmlns="http://docbook.org/ns/docbook">
    <refnamediv>
     <refname>mysql_field_name</refname> 
-    <refpurpose>Podaje nazwę danego pola w wyniku</refpurpose>
+    <refpurpose>Podaje nazwÄ danego pola w wyniku</refpurpose>
    </refnamediv>
    <refsect1>
     <title>Opis</title>
@@ -14,17 +14,17 @@
       <methodparam><type>int</type><parameter>indeks_pola</parameter></methodparam>
      </methodsynopsis>
     <para>
-     <function>mysql_field_name</function> zwraca nazwę danego pola.
-     <parameter>wynik</parameter> musi być poprawnym identyfikatorem
-     wyniku, a <parameter>indeks_pola</parameter> powinien zawierać
+     <function>mysql_field_name</function> zwraca nazwÄ danego pola.
+     <parameter>wynik</parameter> musi byÄ poprawnym identyfikatorem
+     wyniku, a <parameter>indeks_pola</parameter> powinien zawieraÄ
      liczbowy indeks pola.
     </para>
     <note>
      <para>
-      <parameter>indeks_pola</parameter> liczy się od 0.
+      <parameter>indeks_pola</parameter> liczy siÄ od 0.
      </para>
      <para>
-      Indeksem trzeciego pola będzie liczba 2, czwartego 3 i tak dalej...
+      Indeksem trzeciego pola bÄdzie liczba 2, czwartego 3 i tak dalej...
      </para>
     </note>
     <para>
@@ -33,14 +33,14 @@
       <programlisting role="php">
 <![CDATA[
 <?php
-/* Tabela składa się z trzech pól: 
+/* Tabela skĹada siÄ z trzech pĂłl: 
  *   id_uzytkownika
  *   nazwa_uzytkownika
  *   haslo
  */
 $link = mysql_connect('localhost', 'uzytkownik', 'haslo');  
 mysql_select_db($dbname, $link)  
-    or die("Nie można otworzyć bazy $dbname");  
+    or die("Nie moĹźna otworzyÄ bazy $dbname");  
 $res = mysql_query("select * from users", $link);  
 echo mysql_field_name($res, 0) . "\n";
 echo mysql_field_name($res, 2);
@@ -48,7 +48,7 @@ echo mysql_field_name($res, 2);
 ]]>
       </programlisting>
       <para>
-       Powyższy przykład da następujący wynik:
+       PowyĹźszy przykĹad da nastÄpujÄcy wynik:
        <screen>
 <![CDATA[
 id_uzytkownika
@@ -59,7 +59,7 @@ haslo
      </example>
     </para>
     <para>
-     Aby zachować zgodność z poprzednimi wersjami, można użyć również 
+     Aby zachowaÄ zgodnoĹÄ z poprzednimi wersjami, moĹźna uĹźyÄ rĂłwnieĹź 
      <function>mysql_fieldname</function>. Jest to jednak niezalecane.
     </para>
    </refsect1>

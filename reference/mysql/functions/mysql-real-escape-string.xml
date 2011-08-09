@@ -1,36 +1,36 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: f97cf90f6426ca029ab138bcb9328aa053500be4 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: slawek, mroq -->
 <refentry xml:id="function.mysql-real-escape-string" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>mysql_real_escape_string</refname>
-  <refpurpose>Dodaje znaki unikowe w łańcuchu znaków do użycia w instrukcji SQL</refpurpose>
+  <refpurpose>Dodaje znaki unikowe w ĹaĹcuchu znakĂłw do uĹźycia w instrukcji SQL</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>string</type><methodname>mysql_real_escape_string</methodname>
-   <methodparam><type>string</type><parameter>łańcuch_bez_znaków_unikowych</parameter></methodparam>
-   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączeniar</parameter></methodparam>
+   <methodparam><type>string</type><parameter>ĹaĹcuch_bez_znakĂłw_unikowych</parameter></methodparam>
+   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_poĹÄczeniar</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Dodaje znaki unikowe do <parameter>łańcucha_bez_znaków_unikowych</parameter>, 
-   mając na uwadze aktualnie używany w połączeniu zestaw znaków by tak przygotowanego łańcucha
-   można bezpiecznie użyc w funkcji <function>mysql_query</function>. Jeśli dopisywane 
-   dane mają postać binarną wymagane jest użycie tej funkcji.
+   Dodaje znaki unikowe do <parameter>ĹaĹcucha_bez_znakĂłw_unikowych</parameter>, 
+   majÄc na uwadze aktualnie uĹźywany w poĹÄczeniu zestaw znakĂłw by tak przygotowanego ĹaĹcucha
+   moĹźna bezpiecznie uĹźyc w funkcji <function>mysql_query</function>. JeĹli dopisywane 
+   dane majÄ postaÄ binarnÄ wymagane jest uĹźycie tej funkcji.
   </para>
   <para>
-   <function>mysql_real_escape_string</function> wywołuje funkcję biblioteki MySQL
-   mysql_real_escape_string, która dodaje lewe ukośniki (backslash) do następujących znaków:
+   <function>mysql_real_escape_string</function> wywoĹuje funkcjÄ biblioteki MySQL
+   mysql_real_escape_string, ktĂłra dodaje lewe ukoĹniki (backslash) do nastÄpujÄcych znakĂłw:
    <literal>\x00</literal>, <literal>\n</literal>,
    <literal>\r</literal>, <literal>\</literal>, <literal>'</literal>,
    <literal>"</literal> and <literal>\x1a</literal>.
   </para>
   <para>
-   Użycie tej funkcji jest wymagane zawsze (poza kilkoma wyjątkami) przed wysłaniem
-   zapytania do bazy danych aby zabezpieczyć dane. 
+   UĹźycie tej funkcji jest wymagane zawsze (poza kilkoma wyjÄtkami) przed wysĹaniem
+   zapytania do bazy danych aby zabezpieczyÄ dane. 
   </para>
  </refsect1>
 
@@ -39,10 +39,10 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>łańcuch_bez_znaków_unikowych</parameter></term>
+     <term><parameter>ĹaĹcuch_bez_znakĂłw_unikowych</parameter></term>
      <listitem>
       <para>
-       Łańcuch, do którego zostaną dodane znaki unikowe.
+       ĹaĹcuch, do ktĂłrego zostanÄ dodane znaki unikowe.
       </para>
      </listitem>
     </varlistentry>
@@ -54,7 +54,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca łańcuch ze znakami unikowymi lub &false; w przypadku błędu.
+   Zwraca ĹaĹcuch ze znakami unikowymi lub &false; w przypadku bĹÄdu.
   </para>
  </refsect1>
 
@@ -62,7 +62,7 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład użycia <function>mysql_real_escape_string</function></title>
+    <title>PrzykĹad uĹźycia <function>mysql_real_escape_string</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -81,25 +81,25 @@ $query = sprintf("SELECT * FROM uzytkownicy WHERE uzytkownik='%s' AND haslo='%s'
   </para>
   <para>
    <example>
-    <title>Przykład ataku SQL Injection</title>
+    <title>PrzykĹad ataku SQL Injection</title>
     <programlisting role="php">
 <![CDATA[
 <?php
-// Nie sprawdziliśmy zmiennej $_POST['password'], która może zawierać wszystko czego chciał użytkownik! Na przykład:
+// Nie sprawdziliĹmy zmiennej $_POST['password'], ktĂłra moĹźe zawieraÄ wszystko czego chciaĹ uĹźytkownik! Na przykĹad:
 $_POST['username'] = 'aidan';
 $_POST['password'] = "' OR ''='";
 
-// Zapytanie pobierające pasujących użytkowników
+// Zapytanie pobierajÄce pasujÄcych uĹźytkownikĂłw
 $query = "SELECT * FROM users WHERE user='{$_POST['username']}' AND password='{$_POST['password']}'";
 mysql_query($query);
 
-// Oznacza to, że zapytanie ma postać:
+// Oznacza to, Ĺźe zapytanie ma postaÄ:
 echo $query;
 ?>
 ]]>
     </programlisting>
      <para>
-      Zapytanie wysłane do bazy danych:
+      Zapytanie wysĹane do bazy danych:
      </para>
     <screen>
 <![CDATA[
@@ -107,7 +107,7 @@ SELECT * FROM users WHERE user='aidan' AND password='' OR ''=''
 ]]>
     </screen>
     <para>
-     Zapytanie to pozwala zalogować się każdemu bez znajomości poprawnego hasła.
+     Zapytanie to pozwala zalogowaÄ siÄ kaĹźdemu bez znajomoĹci poprawnego hasĹa.
     </para>
    </example>
   </para>
@@ -117,31 +117,31 @@ SELECT * FROM users WHERE user='aidan' AND password='' OR ''=''
   &reftitle.notes;
   <note>
    <para>
-    Przed użyciem <function>mysql_real_escape_string</function> należy otworzyć
-    połączenie z MySQL, w przeciwnym razie zostanie wygenerowany błąd poziomu
-    <literal>E_WARNING</literal> i zwrócona zostanie wartość &false;.
-    Jeśli <parameter>identyfikator_połączenia</parameter> nie został zdefiniowany, zostanie
-    użyte ostatnie połączenie do serwera MySQL.
+    Przed uĹźyciem <function>mysql_real_escape_string</function> naleĹźy otworzyÄ
+    poĹÄczenie z MySQL, w przeciwnym razie zostanie wygenerowany bĹÄd poziomu
+    <literal>E_WARNING</literal> i zwrĂłcona zostanie wartoĹÄ &false;.
+    JeĹli <parameter>identyfikator_poĹÄczenia</parameter> nie zostaĹ zdefiniowany, zostanie
+    uĹźyte ostatnie poĹÄczenie do serwera MySQL.
    </para>
   </note>
   <note>
    <para>
-    Jeśli opcja <link linkend="ini.magic-quotes-gpc">magic_quotes_gpc</link> została włączona,
-    najpierw na danych należy użyć <function>stripslashes</function>. Użycie tej funkcji samej
-    spowoduje, że do danych zostaną dodane podwójne znaki unikowe.
+    JeĹli opcja <link linkend="ini.magic-quotes-gpc">magic_quotes_gpc</link> zostaĹa wĹÄczona,
+    najpierw na danych naleĹźy uĹźyÄ <function>stripslashes</function>. UĹźycie tej funkcji samej
+    spowoduje, Ĺźe do danych zostanÄ dodane podwĂłjne znaki unikowe.
    </para>
   </note>
   <note>
    <para>
-    Jeśli funkcja ta nie zostanie użyta na danych, zapytanie będzie podatne
+    JeĹli funkcja ta nie zostanie uĹźyta na danych, zapytanie bÄdzie podatne
     na ataki <link linkend="security.database.sql-injection">SQL Injection Attacks</link>.
    </para>
   </note>
   <note>
    <simpara>
-    <function>mysql_real_escape_string</function> nie dodaje znaków unikowych
-    do <literal>%</literal> i <literal>_</literal>. Te maski są stosowane
-    w zapytaniach MySQL w połączeniu z <literal>LIKE</literal>, <literal>GRANT</literal>
+    <function>mysql_real_escape_string</function> nie dodaje znakĂłw unikowych
+    do <literal>%</literal> i <literal>_</literal>. Te maski sÄ stosowane
+    w zapytaniach MySQL w poĹÄczeniu z <literal>LIKE</literal>, <literal>GRANT</literal>
     lub <literal>REVOKE</literal>.
    </simpara>
   </note>

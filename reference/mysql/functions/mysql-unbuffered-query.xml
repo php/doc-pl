@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: slawek -->
 <refentry xml:id="function.mysql-unbuffered-query" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>mysql_unbuffered_query</refname>
-  <refpurpose>Wysyła zapytanie do serwera MySQL nie pobierając i nie buforując wyniku</refpurpose>
+  <refpurpose>WysyĹa zapytanie do serwera MySQL nie pobierajÄc i nie buforujÄc wyniku</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
@@ -13,21 +13,21 @@
   <methodsynopsis>
    <type>resource</type><methodname>mysql_unbuffered_query</methodname>
    <methodparam><type>string</type><parameter>zapytanie</parameter></methodparam>
-   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_poĹÄczenia</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>mysql_unbuffered_query</function> wysyła
-   <parameter>zapytanie</parameter> SQL do serwera MySQL, nie pobierając
-   i nie buforując wyników zapytań, w przeciwieństwie do
+   <function>mysql_unbuffered_query</function> wysyĹa
+   <parameter>zapytanie</parameter> SQL do serwera MySQL, nie pobierajÄc
+   i nie buforujÄc wynikĂłw zapytaĹ, w przeciwieĹstwie do
    <function>mysql_query</function>.
-   To oszczędza znaczną ilość pamięci w zapytaniach SQL, które
-   generują duże zbiory wynikowe. Można pracować na zbiorze wynikowym
-   natychmiast po pobraniu pierwszego rekordu. Nie trzeba czekać, aż
-   zapytanie SQL zostanie w bazie danych wykonane do końca.
-   Aby posługiwać się funkcją <function>mysql_unbuffered_query</function>
-   z kilkoma połączeniami do baz danych, należy podawać opcjonalny parametr
-   <parameter>identyfikator_połączenia</parameter> określający, które
-   połączenie ma zostać wykorzystane.
+   To oszczÄdza znacznÄ iloĹÄ pamiÄci w zapytaniach SQL, ktĂłre
+   generujÄ duĹźe zbiory wynikowe. MoĹźna pracowaÄ na zbiorze wynikowym
+   natychmiast po pobraniu pierwszego rekordu. Nie trzeba czekaÄ, aĹź
+   zapytanie SQL zostanie w bazie danych wykonane do koĹca.
+   Aby posĹugiwaÄ siÄ funkcjÄ <function>mysql_unbuffered_query</function>
+   z kilkoma poĹÄczeniami do baz danych, naleĹźy podawaÄ opcjonalny parametr
+   <parameter>identyfikator_poĹÄczenia</parameter> okreĹlajÄcy, ktĂłre
+   poĹÄczenie ma zostaÄ wykorzystane.
   </para>
  </refsect1>
 
@@ -42,7 +42,7 @@
        Zapytanie SQL do wykonania
       </para>
       <para>
-       Dane w zapytaniu powinny być poprzedzone poprawnymi <link
+       Dane w zapytaniu powinny byÄ poprzedzone poprawnymi <link
        linkend="function.mysql-real-escape-string">znakami ucieczki</link>.
       </para>
      </listitem>
@@ -55,15 +55,15 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Dla wyrażeń SELECT, SHOW, DESCRIBE lub EXPLAIN,
+   Dla wyraĹźeĹ SELECT, SHOW, DESCRIBE lub EXPLAIN,
    <function>mysql_unbuffered_query</function>
-   zwraca <type>zasób</type> w przypadku sukcesu lub &false; gdy
-   nastąpi niepowodzenie.
+   zwraca <type>zasĂłb</type> w przypadku sukcesu lub &false; gdy
+   nastÄpi niepowodzenie.
   </para>
   <para>
-   Dla innych typów wyrażeń SQL, UPDATE, DELETE, DROP, etc,
-   <function>mysql_unbuffered_query</function> zwróci &true; w przypadku
-   powodzenia lub &false; gdy nastąpi błąd.
+   Dla innych typĂłw wyraĹźeĹ SQL, UPDATE, DELETE, DROP, etc,
+   <function>mysql_unbuffered_query</function> zwrĂłci &true; w przypadku
+   powodzenia lub &false; gdy nastÄpi bĹÄd.
   </para>
  </refsect1>
 
@@ -71,12 +71,12 @@
   &reftitle.notes;
   <note>
    <para>
-    Oprócz korzyści, funkcja <function>mysql_unbuffered_query</function>
-    wprowadza pewne ograniczenia: nie można użyć funkcji <function>mysql_num_rows</function> i
-    <function>mysql_data_seek</function> na zbiorze wynikowym, zwróconym przez
+    OprĂłcz korzyĹci, funkcja <function>mysql_unbuffered_query</function>
+    wprowadza pewne ograniczenia: nie moĹźna uĹźyÄ funkcji <function>mysql_num_rows</function> i
+    <function>mysql_data_seek</function> na zbiorze wynikowym, zwrĂłconym przez
     <function>mysql_unbuffered_query</function>.
-    Trzeba także pobrać wszystkie wiersze ze zbioru wynikowego niebuforowanego zapytania SQL
-    przed wysłaniem kolejnego.
+    Trzeba takĹźe pobraÄ wszystkie wiersze ze zbioru wynikowego niebuforowanego zapytania SQL
+    przed wysĹaniem kolejnego.
    </para>
   </note>
  </refsect1>

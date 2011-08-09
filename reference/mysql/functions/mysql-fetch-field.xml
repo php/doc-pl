@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: slawek Status: ready -->
 <!-- $Revision$ -->
   <refentry xml:id="function.mysql-fetch-field" xmlns="http://docbook.org/ns/docbook">
@@ -18,16 +18,16 @@
        </parameter></methodparam>
      </methodsynopsis>
     <para>
-     Zwraca obiekt zawierający informacje o polu.
+     Zwraca obiekt zawierajÄcy informacje o polu.
     </para>  
     <para>
-     <function>mysql_fetch_field</function> pozwala uzyskać
-     informacje o polach w danym wyniku zapytania. Jeżeli ofset pola
-     nie został podany, zwracane zostanie następne pole nie pobrane
+     <function>mysql_fetch_field</function> pozwala uzyskaÄ
+     informacje o polach w danym wyniku zapytania. JeĹźeli ofset pola
+     nie zostaĹ podany, zwracane zostanie nastÄpne pole nie pobrane
      jeszcze przez <function>mysql_fetch_field</function>.
     </para>
     <para>
-     Właściwości obiektu:
+     WĹaĹciwoĹci obiektu:
      <itemizedlist>
       <listitem>
        <simpara>
@@ -36,42 +36,42 @@
       </listitem>
       <listitem>
        <simpara>
-        table - nazwa tabeli do której należy kolumna
+        table - nazwa tabeli do ktĂłrej naleĹźy kolumna
        </simpara>
       </listitem>
       <listitem>
        <simpara>
-        max_length - maksymalna długość kolumny
+        max_length - maksymalna dĹugoĹÄ kolumny
        </simpara>
       </listitem>
       <listitem>
        <simpara>
-        not_null - 1 jeżeli pole nie może być puste (&null;)
+        not_null - 1 jeĹźeli pole nie moĹźe byÄ puste (&null;)
        </simpara>
       </listitem> 
       <listitem>
        <simpara>
-        primary_key - 1 jeżeli kolumna jest kluczem podstawowym
+        primary_key - 1 jeĹźeli kolumna jest kluczem podstawowym
        </simpara>
       </listitem> 
       <listitem>
        <simpara>
-        unique_key - 1 jeżeli kolumna jest kluczem unikatowym
+        unique_key - 1 jeĹźeli kolumna jest kluczem unikatowym
        </simpara>
       </listitem> 
       <listitem>
        <simpara>
-        multiple_key - 1 jeżeli kolumna jest kluczem nieunikatowym
+        multiple_key - 1 jeĹźeli kolumna jest kluczem nieunikatowym
        </simpara>
       </listitem> 
       <listitem>
        <simpara>
-        numeric - 1 jeżeli kolumna jest liczbowa
+        numeric - 1 jeĹźeli kolumna jest liczbowa
        </simpara>
       </listitem> 
       <listitem>
        <simpara>
-        blob - 1 jeżeli kolumna jest typu BLOOB
+        blob - 1 jeĹźeli kolumna jest typu BLOOB
        </simpara>
       </listitem>
       <listitem>
@@ -81,12 +81,12 @@
       </listitem>
       <listitem>
        <simpara>
-        unsigned - 1 jeżeli kolumna jest bez znaku (plus lub minus)
+        unsigned - 1 jeĹźeli kolumna jest bez znaku (plus lub minus)
        </simpara>
       </listitem>
       <listitem>
        <simpara>
-        zerofill - 1 jeżeli kolumna jest wypełniona zerami
+        zerofill - 1 jeĹźeli kolumna jest wypeĹniona zerami
        </simpara>
       </listitem>
      </itemizedlist>
@@ -97,17 +97,17 @@
 <![CDATA[
 <?php
 mysql_connect('localhost','uzytkownik','haslo');
-    or die ('Nie można się połączyć');
+    or die ('Nie moĹźna siÄ poĹÄczyÄ');
 mysql_select_db('baza');
 $result = mysql_query('select * from tabela')
-    or die('Zapytanie zakończone niepowodzeniem');
+    or die('Zapytanie zakoĹczone niepowodzeniem');
 /* pobieramy dane kolumny */
 $i = 0;
 while ($i < mysql_num_fields($result)) {
     echo "Informacje o kolumnie $i:<br />\n";
     $meta = mysql_fetch_field($result);
     if (!$meta) {
-        echo "Informacje niedostępne<br />\n";
+        echo "Informacje niedostÄpne<br />\n";
     }
     echo "<pre>
 blob:         $meta->blob
@@ -131,7 +131,7 @@ mysql_free_result($result);
      </programlisting>
     </example>
     <para>
-     Patrz także: <function>mysql_field_seek</function>.
+     Patrz takĹźe: <function>mysql_field_seek</function>.
     </para>
    </refsect1>
   </refentry>

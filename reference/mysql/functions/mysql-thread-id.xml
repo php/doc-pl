@@ -1,48 +1,48 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: slawek Status: ready -->
 <!-- $Revision$ -->
   <refentry xml:id="function.mysql-thread-id" xmlns="http://docbook.org/ns/docbook">
    <refnamediv>
     <refname>mysql_thread_id</refname>
-    <refpurpose>Zwraca id bieżącego wątku</refpurpose>
+    <refpurpose>Zwraca id bieĹźÄcego wÄtku</refpurpose>
    </refnamediv>
    <refsect1>
     <title>Opis</title>
     <methodsynopsis>
      <type>int</type><methodname>mysql_thread_id</methodname>
-     <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+     <methodparam choice="opt"><type>resource</type><parameter>identyfikator_poĹÄczenia</parameter></methodparam>
     </methodsynopsis>
     <para>
-     <function>mysql_thread_id</function> zwraca id bieżącego wątku. Jeśli
-     połączenie zostało przerwane i nawiązane ponownie przy użyciu funkcji
-     <function>mysql_ping</function>, to id wątku się zmieni. Oznacza to, że
-     nie powinno się pobierać id wątku i zapisywać do późniejszego użycia, lecz
-     pobierać zawsze, gdy jest potrzebny.
+     <function>mysql_thread_id</function> zwraca id bieĹźÄcego wÄtku. JeĹli
+     poĹÄczenie zostaĹo przerwane i nawiÄzane ponownie przy uĹźyciu funkcji
+     <function>mysql_ping</function>, to id wÄtku siÄ zmieni. Oznacza to, Ĺźe
+     nie powinno siÄ pobieraÄ id wÄtku i zapisywaÄ do pĂłĹşniejszego uĹźycia, lecz
+     pobieraÄ zawsze, gdy jest potrzebny.
     </para>
      <example>
-      <title>przykład użycia <function>mysql_list_processes</function></title>
+      <title>przykĹad uĹźycia <function>mysql_list_processes</function></title>
       <programlisting role="php">
 <![CDATA[
 <?php
 $link = mysql_connect('localhost', 'uzytkownik', 'haslo');
 $thread_id = mysql_thread_id($link);
 if ($thread_id){
-    printf ("id bieżącego wątku: %d\n", $thread_id);
+    printf ("id bieĹźÄcego wÄtku: %d\n", $thread_id);
 }
 ?>
 ]]>
       </programlisting>
       <para>
-       Powyższy przykład da następujący wynik:
+       PowyĹźszy przykĹad da nastÄpujÄcy wynik:
        <screen>
 <![CDATA[
-id bieżącego wątku: 73
+id bieĹźÄcego wÄtku: 73
 ]]>
        </screen>
       </para>
      </example>
     <para>
-     Patrz także:
+     Patrz takĹźe:
      <function>mysql_ping</function>,
      <function>mysql_list_processes</function>.
     </para>

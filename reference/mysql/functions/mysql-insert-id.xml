@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: slawek Status: ready -->
 <!-- $Revision$ -->
   <refentry xml:id="function.mysql-insert-id" xmlns="http://docbook.org/ns/docbook">
@@ -13,48 +13,48 @@
      <methodsynopsis>
       <type>int</type><methodname>mysql_insert_id</methodname>
       <methodparam choice="opt"><type>resource</type><parameter>
-        identyfikator_połączenia
+        identyfikator_poĹÄczenia
        </parameter></methodparam>
      </methodsynopsis>
     <para>
      <function>mysql_insert_id</function> zwraca ID wygenerowane dla
-     pola z własnością AUTO_INCREMENT. Funkcja zwróci ID wygenerowane
-     automatycznie przez ostatnią operację INSERT używającą podanego
-     <parameter>identyfikatora_połączenia</parameter>. Jeżeli
-     <parameter>identyfikator_połączenia</parameter> nie został podany,
-     wykorzystywane jest ostatnio otwarte połączenie.
+     pola z wĹasnoĹciÄ AUTO_INCREMENT. Funkcja zwrĂłci ID wygenerowane
+     automatycznie przez ostatniÄ operacjÄ INSERT uĹźywajÄcÄ podanego
+     <parameter>identyfikatora_poĹÄczenia</parameter>. JeĹźeli
+     <parameter>identyfikator_poĹÄczenia</parameter> nie zostaĹ podany,
+     wykorzystywane jest ostatnio otwarte poĹÄczenie.
     </para>
     <para>
-     <function>mysql_insert_id</function> zwróci 0 jeśli ostatnie zapytanie
-     nie generowało wartości AUTO_INCREMENT. Jeśli chcesz przechować zwrócony
-     przez tę funkcję wynik, upewnij się, że wywołujesz ją zaraz po zapytaniu
-     generującym nową wartość.
+     <function>mysql_insert_id</function> zwrĂłci 0 jeĹli ostatnie zapytanie
+     nie generowaĹo wartoĹci AUTO_INCREMENT. JeĹli chcesz przechowaÄ zwrĂłcony
+     przez tÄ funkcjÄ wynik, upewnij siÄ, Ĺźe wywoĹujesz jÄ zaraz po zapytaniu
+     generujÄcym nowÄ wartoĹÄ.
     </para>
     <note>
      <para>
       Funkcja MySQL <literal>LAST_INSERT_ID()</literal> zawsze zawiera
-      ostatnio wygenerowane ID, a zwracana wartośc nie jest czyszczona
-      pomiędzy kolejnymi zapytaniami.
+      ostatnio wygenerowane ID, a zwracana wartoĹc nie jest czyszczona
+      pomiÄdzy kolejnymi zapytaniami.
     </para>
     </note>
     <warning>
      <para>
-      <function>mysql_insert_id</function> konwertuje typ wartości otrzymanej
+      <function>mysql_insert_id</function> konwertuje typ wartoĹci otrzymanej
       od natywnej funkcji MySQL C API <literal>mysql_insert_id()</literal>
-      na typ <literal>long</literal> (czyli <type>int</type> w PHP). Jeśli
-      kolumna AUTO_INCREMENT jest typu BIGINT, wartość zwracana przez
-      <function>mysql_insert_id</function> będzie niepoprawna. Należy w
-      zapytaniu SQL użyć wewnętrznej funkcji MySQL
+      na typ <literal>long</literal> (czyli <type>int</type> w PHP). JeĹli
+      kolumna AUTO_INCREMENT jest typu BIGINT, wartoĹÄ zwracana przez
+      <function>mysql_insert_id</function> bÄdzie niepoprawna. NaleĹźy w
+      zapytaniu SQL uĹźyÄ wewnÄtrznej funkcji MySQL
       <literal>LAST_INSERT_ID()</literal>.
      </para>
     </warning>
     <example>
-     <title>Przykład użycia mysql_insert_id</title>
+     <title>PrzykĹad uĹźycia mysql_insert_id</title>
      <programlisting role="php">
 <![CDATA[
 <?php
     mysql_connect('localhost', 'uzytkownik', 'haslo') or
-        die('Nie można się połączyć');
+        die('Nie moĹźna siÄ poĹÄczyÄ');
     mysql_select_db('baza');
 
     mysql_query("INSERT INTO mytable (product) values ('kossu')");
@@ -64,7 +64,7 @@
      </programlisting>
     </example>
     <para>
-     Patrz także: <function>mysql_query</function>.
+     Patrz takĹźe: <function>mysql_query</function>.
     </para>
    </refsect1>
   </refentry>

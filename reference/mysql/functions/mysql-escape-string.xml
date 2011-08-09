@@ -1,59 +1,59 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: n/a Maintainer: slawek Status: ready -->
 <!-- $Revision$ -->
   <refentry xml:id="function.mysql-escape-string" xmlns="http://docbook.org/ns/docbook">
    <refnamediv>
     <refname>mysql_escape_string</refname> 
     <refpurpose>
-     Dodaje znaki unikowe na użytek mysql_query
+     Dodaje znaki unikowe na uĹźytek mysql_query
     </refpurpose>
    </refnamediv>
    <refsect1>
     <title>Opis</title>
      <methodsynopsis>
       <type>string</type><methodname>mysql_escape_string</methodname>
-      <methodparam><type>string</type><parameter>łańcuch_bez_znaków_unikowych</parameter></methodparam>
+      <methodparam><type>string</type><parameter>ĹaĹcuch_bez_znakĂłw_unikowych</parameter></methodparam>
      </methodsynopsis>
     <para>
      Ta funkcja wstawi znaki unikowe do
-     <parameter>łańcuch_bez_znaków_unikowych</parameter>, aby
-     bezpiecznym było umieszczenie go w <function>mysql_query</function>.
+     <parameter>ĹaĹcuch_bez_znakĂłw_unikowych</parameter>, aby
+     bezpiecznym byĹo umieszczenie go w <function>mysql_query</function>.
     </para>
     <note>
      <simpara>
-      <function>mysql_escape_string</function> nie dotyczy znaków
+      <function>mysql_escape_string</function> nie dotyczy znakĂłw
       <literal>%</literal> i <literal>_</literal>.
      </simpara>
      <simpara>
-      Funkcja ta działa identycznie jak <function>mysql_real_escape_string</function>,
-      z tym wyjątkiem, że <function>mysql_real_escape_string</function> pobiera identyfikator
-      połączenia i wstawia znaki unikowe zgodnie z bieżącym zestawem znaków.
+      Funkcja ta dziaĹa identycznie jak <function>mysql_real_escape_string</function>,
+      z tym wyjÄtkiem, Ĺźe <function>mysql_real_escape_string</function> pobiera identyfikator
+      poĹÄczenia i wstawia znaki unikowe zgodnie z bieĹźÄcym zestawem znakĂłw.
       <function>mysql_escape_string</function> nie pobiera identyfikatora
-      połączenia i nie bierze pod uwagę bieżącego zestawu znaków.
+      poĹÄczenia i nie bierze pod uwagÄ bieĹźÄcego zestawu znakĂłw.
      </simpara>
     </note>
     <example>
-     <title>przykład użycia <function>mysql_escape_string</function></title>
+     <title>przykĹad uĹźycia <function>mysql_escape_string</function></title>
      <programlisting role="php">
 <![CDATA[
 <?php
 $item = "Zak's Laptop";
 $escaped_item = mysql_escape_string($item); 
-printf ("Łańcuch ze znakami unikowymi: %s\n", $escaped_item);
+printf ("ĹaĹcuch ze znakami unikowymi: %s\n", $escaped_item);
 ?>
 ]]>
      </programlisting>
      <para>
-      Powyższy przykład da następujący wynik:
+      PowyĹźszy przykĹad da nastÄpujÄcy wynik:
       <screen>
 <![CDATA[
-Łańcuch ze znakami unikowymi: Zak\'s Laptop
+ĹaĹcuch ze znakami unikowymi: Zak\'s Laptop
 ]]>
       </screen>
      </para>
     </example>
     <para>
-     Patrz także:
+     Patrz takĹźe:
      <function>mysql_real_escape_string</function>,
      <function>addslashes</function> oraz dyrektywa
      <link linkend="ini.magic-quotes-gpc">magic_quotes_gpc</link>.

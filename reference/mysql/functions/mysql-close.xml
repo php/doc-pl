@@ -1,30 +1,30 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.mysql-close" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>mysql_close</refname>
-  <refpurpose>Zamyka połączenie MySQL</refpurpose>
+  <refpurpose>Zamyka poĹÄczenie MySQL</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>mysql_close</methodname>
-   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_poĹÄczenia</parameter></methodparam>
   </methodsynopsis>
   <para> 
-   <function>mysql_close</function> zamyka nie stałe połączenie do serwera MySQL,
-   które zostało skojarzone z podanym identyfikatorem połączenia. Jeśli
-   <parameter>identyfikator_połączenia</parameter> nie został określony, zostanie użyte
-   ostatnio używane połączenie.
+   <function>mysql_close</function> zamyka nie staĹe poĹÄczenie do serwera MySQL,
+   ktĂłre zostaĹo skojarzone z podanym identyfikatorem poĹÄczenia. JeĹli
+   <parameter>identyfikator_poĹÄczenia</parameter> nie zostaĹ okreĹlony, zostanie uĹźyte
+   ostatnio uĹźywane poĹÄczenie.
   </para>
   <para>
-   Używanie <function>mysql_close</function> nie jest zwykle konieczne,
-   ponieważ nie stałe linki są automatycznie zamykane na końcu
-   wykonywania skryptu. Patrz także
+   UĹźywanie <function>mysql_close</function> nie jest zwykle konieczne,
+   poniewaĹź nie staĹe linki sÄ automatycznie zamykane na koĹcu
+   wykonywania skryptu. Patrz takĹźe
    <link linkend="language.types.resource.self-destruct">zwalnianie
-   zasobów</link>.
+   zasobĂłw</link>.
   </para>
  </refsect1>
 
@@ -48,15 +48,15 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład <function>mysql_close</function></title>
+    <title>PrzykĹad <function>mysql_close</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
-$link = mysql_connect('localhost', 'użytkownik_mysql', 'hasło_mysql');
+$link = mysql_connect('localhost', 'uĹźytkownik_mysql', 'hasĹo_mysql');
 if (!$link) {
-    die('Nie można się połączyć: ' . mysql_error());
+    die('Nie moĹźna siÄ poĹÄczyÄ: ' . mysql_error());
 }
-echo 'Połączono poprawnie';
+echo 'PoĹÄczono poprawnie';
 mysql_close($link);
 ?>
 ]]>
@@ -64,7 +64,7 @@ mysql_close($link);
     &example.outputs;
     <screen>
 <![CDATA[
-Połączono poprawnie
+PoĹÄczono poprawnie
 ]]>
     </screen>
    </example>
@@ -75,7 +75,7 @@ Połączono poprawnie
   &reftitle.notes;
   <note>
    <para>
-    <function>mysql_close</function> nie zamknie stałych połączeń
+    <function>mysql_close</function> nie zamknie staĹych poĹÄczeĹ
     stworzonych przez <function>mysql_pconnect</function>.
    </para>
   </note>

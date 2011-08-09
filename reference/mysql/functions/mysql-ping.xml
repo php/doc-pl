@@ -1,29 +1,29 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: mroq Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: slawek -->
 <refentry xml:id="function.mysql-ping" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>mysql_ping</refname>
-  <refpurpose>Sprawdza połączenie z serwerem, lub nawiązuje połączenie, jeśli go nie było</refpurpose>
+  <refpurpose>Sprawdza poĹÄczenie z serwerem, lub nawiÄzuje poĹÄczenie, jeĹli go nie byĹo</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>mysql_ping</methodname>
-   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_poĹÄczenia</parameter></methodparam>
   </methodsynopsis>
   <para>
-     Sprawdza czy połączenie z serwerem działa
-     poprawnie. Jeśli zostało zamknięte, następuje próba ponownego połączenia.
-     Funkcja ta, w skryptach które pozostają długi czas w bezczynności,
-     może służyć do sprawdzenia czy serwer zamknął połączenie i, jeśli zajdzie
-     potrzeba, nawiązania go ponownie.
+     Sprawdza czy poĹÄczenie z serwerem dziaĹa
+     poprawnie. JeĹli zostaĹo zamkniÄte, nastÄpuje prĂłba ponownego poĹÄczenia.
+     Funkcja ta, w skryptach ktĂłre pozostajÄ dĹugi czas w bezczynnoĹci,
+     moĹźe sĹuĹźyÄ do sprawdzenia czy serwer zamknÄĹ poĹÄczenie i, jeĹli zajdzie
+     potrzeba, nawiÄzania go ponownie.
   </para>
   <note>
    <para>
-    Od wersji MySQL 5.0.13 automatyczne ponawianie połączenia jest wyłączone.
+    Od wersji MySQL 5.0.13 automatyczne ponawianie poĹÄczenia jest wyĹÄczone.
    </para>
   </note>
  </refsect1>
@@ -40,7 +40,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca &true; jeśli połączenie z serwerem działa poprawnie, w przeciwnym 
+   Zwraca &true; jeĹli poĹÄczenie z serwerem dziaĹa poprawnie, w przeciwnym 
    przypadku zwraca &false;.   
   </para>
  </refsect1>
@@ -49,7 +49,7 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład użycia <function>mysql_ping</function></title>
+    <title>PrzykĹad uĹźycia <function>mysql_ping</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -58,21 +58,21 @@ set_time_limit(0);
 $conn = mysql_connect('localhost', 'mysqluser', 'mypass');
 $db   = mysql_select_db('mydb');
 
-/* Zakładamy, że wykonanie zapytania zajmie dużo czasu */
+/* ZakĹadamy, Ĺźe wykonanie zapytania zajmie duĹźo czasu */
 $result = mysql_query($sql);
 if (!$result) {
-    echo 'Wykonanie zapytania #1 nie powiodło się, zamykanie.';
+    echo 'Wykonanie zapytania #1 nie powiodĹo siÄ, zamykanie.';
     exit;
 }
 
-/* Upewniamy się, że połączenie jest aktywne, w przeciwnym wypadku ponawiamy je */
+/* Upewniamy siÄ, Ĺźe poĹÄczenie jest aktywne, w przeciwnym wypadku ponawiamy je */
 if (!mysql_ping($conn)) {
-    echo 'Połączenie zerwane, zamykanie po zapytaniu #1';
+    echo 'PoĹÄczenie zerwane, zamykanie po zapytaniu #1';
     exit;
 }
 mysql_free_result($result);
 
-/* Jeśli połączenie jest aktywne wykonujemy następne zapytanie */
+/* JeĹli poĹÄczenie jest aktywne wykonujemy nastÄpne zapytanie */
 $result2 = mysql_query($sql2);
 ?>
 ]]>

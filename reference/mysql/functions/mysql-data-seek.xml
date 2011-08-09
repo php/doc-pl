@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: slawek Status: ready -->
 <!-- $Revision$ -->
 
 <refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.mysql-data-seek">
  <refnamediv>
   <refname>mysql_data_seek</refname>
-  <refpurpose>Przesuwa wewnętrzny wskaźnik wyniku</refpurpose>
+  <refpurpose>Przesuwa wewnÄtrzny wskaĹşnik wyniku</refpurpose>
  </refnamediv>
    
  <refsect1 role="description">
@@ -16,20 +16,20 @@
     <methodparam><type>int</type><parameter>numer_wiersza</parameter></methodparam>
    </methodsynopsis>
   <para> 
-   <function>mysql_data_seek</function> przesuwa wewnętrzny
-   wskaźnik wiersza wyniku operacji MySQL skojarzony z podanym
-   identyfikatorem wyniku na podany numer wiersza. Następne
-   wywołanie MySQLowej funkcji pobierającej, takiej jak     
-   <function>mysql_fetch_assoc</function> zwróci ten wiersz.
+   <function>mysql_data_seek</function> przesuwa wewnÄtrzny
+   wskaĹşnik wiersza wyniku operacji MySQL skojarzony z podanym
+   identyfikatorem wyniku na podany numer wiersza. NastÄpne
+   wywoĹanie MySQLowej funkcji pobierajÄcej, takiej jak     
+   <function>mysql_fetch_assoc</function> zwrĂłci ten wiersz.
   </para>
   <para>
-   <parameter>row_number</parameter> zaczyna się od 0. Parametr 
-   <parameter>row_number</parameter> powinien być wartością z zakresu od 0 do
-   <function>mysql_num_rows</function> - 1. Jednakże jeśli zbiór wyników 
-   jest pusty (<function>mysql_num_rows</function> == 0), przesunięcie na pozycję 0 
-   zawiedzie i wygeneruje ostrzeżenie 
+   <parameter>row_number</parameter> zaczyna siÄ od 0. Parametr 
+   <parameter>row_number</parameter> powinien byÄ wartoĹciÄ z zakresu od 0 do
+   <function>mysql_num_rows</function> - 1. JednakĹźe jeĹli zbiĂłr wynikĂłw 
+   jest pusty (<function>mysql_num_rows</function> == 0), przesuniÄcie na pozycjÄ 0 
+   zawiedzie i wygeneruje ostrzeĹźenie 
    <link linkend="errorfunc.constants.errorlevels.e-warning">E_WARNING</link>, 
-   <function>mysql_data_seek</function> zwróci &false;.
+   <function>mysql_data_seek</function> zwrĂłci &false;.
   </para>
  </refsect1>
  
@@ -42,7 +42,7 @@
     <term><parameter>row_number</parameter></term>
      <listitem>
       <para>
-       Pożądany numer wiersza dla nowego wskaźnika wyniku. 
+       PoĹźÄdany numer wiersza dla nowego wskaĹşnika wyniku. 
       </para>
      </listitem>
     </varlistentry>
@@ -61,28 +61,28 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład <function>mysql_data_seek</function></title>
+    <title>PrzykĹad <function>mysql_data_seek</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
 $link = mysql_connect('localhost', 'mysql_user', 'mysql_password');
 if (!$link) {
-  die('Nie można się połączyć: ' . mysql_error());
+  die('Nie moĹźna siÄ poĹÄczyÄ: ' . mysql_error());
 }
 $db_selected = mysql_select_db('sample_db');
 if (!$db_selected) {
-  die('Nie można wybrać bazy: ' . mysql_error());
+  die('Nie moĹźna wybraÄ bazy: ' . mysql_error());
 }
 $query = 'SELECT last_name, first_name FROM friends';
 $result = mysql_query($query);
 if (!$result) {
-  die('Błędne zapytanie: ' . mysql_error());
+  die('BĹÄdne zapytanie: ' . mysql_error());
 }
 
-/* pobieramy wiersze w odwrotnej kolejności */
+/* pobieramy wiersze w odwrotnej kolejnoĹci */
 for ($i = mysql_num_rows($result) - 1; $i >=0; $i--) {
     if (!mysql_data_seek($result, $i)) {
-        echo "Nie można przejść do wiersza $i: " . mysql_error() . "\n"; 
+        echo "Nie moĹźna przejĹÄ do wiersza $i: " . mysql_error() . "\n"; 
         continue;
     }
 
@@ -104,8 +104,8 @@ mysql_free_result($result);
   &reftitle.notes;
   <note>
    <para>
-    Funkcja <function>mysql_data_seek</function> może być uzyta
-    tylko w połączeniu z <function>mysql_query</function>, a nie z
+    Funkcja <function>mysql_data_seek</function> moĹźe byÄ uzyta
+    tylko w poĹÄczeniu z <function>mysql_query</function>, a nie z
     <function>mysql_unbuffered_query</function>.    
    </para>
   </note>

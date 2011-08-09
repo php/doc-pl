@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: slawek,mroq -->
 <refentry xml:id="function.mysql-db-query" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>mysql_db_query</refname>
-  <refpurpose>Wysyła zapytanie do bazy MySQL</refpurpose>
+  <refpurpose>WysyĹa zapytanie do bazy MySQL</refpurpose>
  </refnamediv>
    
  <refsect1 role="description">
@@ -14,10 +14,10 @@
    <type>resource</type><methodname>mysql_db_query</methodname>
    <methodparam><type>string</type><parameter>baza</parameter></methodparam>
    <methodparam><type>string</type><parameter>zapytanie</parameter></methodparam>
-   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_poĹÄczenia</parameter></methodparam>
   </methodsynopsis>
   <para> 
-   <function>mysql_db_query</function> wybiera bazę i wykonuje
+   <function>mysql_db_query</function> wybiera bazÄ i wykonuje
      na niej zapytanie.
   </para>
   &warn.deprecated.function-5-3-0.removed-6-0-0;
@@ -31,7 +31,7 @@
      <term><parameter>baza</parameter></term>
      <listitem>
       <para>
-       Nazwa bazy danych, która zostanie wybrana.
+       Nazwa bazy danych, ktĂłra zostanie wybrana.
       </para>
      </listitem>
     </varlistentry>
@@ -42,7 +42,7 @@
        Zapytanie do bazy MySQL.
       </para>
       <para>
-       Dane w zapytaniu powinny być poprzedzone poprawnymi <link
+       Dane w zapytaniu powinny byÄ poprzedzone poprawnymi <link
        linkend="function.mysql-real-escape-string">znakami ucieczki</link>.
       </para>
      </listitem>
@@ -55,10 +55,10 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca dodatni identyfikator wyniku MySQL wskazujący na wynik zapytania,
-   lub &false; w przypadku błędu. Wartość &true;/&false; jest także zwracana dla zapytań  
+   Zwraca dodatni identyfikator wyniku MySQL wskazujÄcy na wynik zapytania,
+   lub &false; w przypadku bĹÄdu. WartoĹÄ &true;/&false; jest takĹźe zwracana dla zapytaĹ  
    <literal>INSERT</literal>/<literal>UPDATE</literal>/<literal>DELETE</literal>
-   informując o sukcesie lub błędzie.
+   informujÄc o sukcesie lub bĹÄdzie.
   </para>
  </refsect1>
  
@@ -77,13 +77,13 @@
       <row>
        <entry>5.3.0</entry>
        <entry>
-        Ta funkcja zwraca wyjątek E_DEPRECATED.
+        Ta funkcja zwraca wyjÄtek E_DEPRECATED.
        </entry>
       </row>
       <row>
        <entry>4.0.6</entry>
        <entry>
-        Nie zaleca się używania tej funkcji. W zamian korzystaj z 
+        Nie zaleca siÄ uĹźywania tej funkcji. W zamian korzystaj z 
         <function>mysql_select_db</function> lub 
         <function>mysql_query</function>.
        </entry>
@@ -98,18 +98,18 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład <function>mysql_db_query</function></title>
+    <title>PrzykĹad <function>mysql_db_query</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
 
 if (!$link = mysql_connect('host', 'uzytkownik', 'haslo')) {
-    echo 'Nie można nawiązać połączenia z bazą danych';
+    echo 'Nie moĹźna nawiÄzaÄ poĹÄczenia z bazÄ danych';
     exit;
 }
 
 if (!mysql_select_db('nazwa_bazy', $link)) {
-    echo 'Nie można wybrać bazy danych';
+    echo 'Nie moĹźna wybraÄ bazy danych';
     exit;
 }
 
@@ -117,8 +117,8 @@ $sql    = 'SELECT foo FROM bar WHERE id = 42';
 $result = mysql_query($sql, $link);
 
 if (!$result) {
-    echo "Błąd bazy danych, nie można wykonać zapytania do bazy\n";
-    echo 'Błąd MySQL: ' . mysql_error();
+    echo "BĹÄd bazy danych, nie moĹźna wykonaÄ zapytania do bazy\n";
+    echo 'BĹÄd MySQL: ' . mysql_error();
     exit;
 }
 
@@ -139,11 +139,11 @@ mysql_free_result($result);
   &reftitle.notes;
   <note>
    <para>
-    Zwróć uwagę, że ta funkcja <emphasis role="strong">NIE</emphasis> wybierze
-    ponownie bazy danych, z którą byłeś połączony wcześniej. Innymi słowy,
-    funkcji tej nie można użyć do wysłania zapytania <emphasis>w tle</emphasis>
-    do innej bazy, w takim przypadku należy ręcznie przełączyć się z powrotem do 
-    pierwotnie wybranej bazy. Zamiast tego zaleca się stosowanie składni
+    ZwrĂłÄ uwagÄ, Ĺźe ta funkcja <emphasis role="strong">NIE</emphasis> wybierze
+    ponownie bazy danych, z ktĂłrÄ byĹeĹ poĹÄczony wczeĹniej. Innymi sĹowy,
+    funkcji tej nie moĹźna uĹźyÄ do wysĹania zapytania <emphasis>w tle</emphasis>
+    do innej bazy, w takim przypadku naleĹźy rÄcznie przeĹÄczyÄ siÄ z powrotem do 
+    pierwotnie wybranej bazy. Zamiast tego zaleca siÄ stosowanie skĹadni
     <literal>database.table</literal> lub
     <function>mysql_select_db</function> w zapytaniach SQL.
    </para>

@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: qrak -->
 <refentry xml:id="function.mail" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>mail</refname>
-  <refpurpose>Wysyłanie poczty elektronicznej</refpurpose>
+  <refpurpose>WysyĹanie poczty elektronicznej</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
@@ -14,12 +14,12 @@
    <type>bool</type><methodname>mail</methodname>
    <methodparam><type>string</type><parameter>do</parameter></methodparam>
    <methodparam><type>string</type><parameter>temat</parameter></methodparam>
-   <methodparam><type>string</type><parameter>treść</parameter></methodparam>
-   <methodparam choice="opt"><type>string</type><parameter>dodatkowe_nagłówki</parameter></methodparam>
+   <methodparam><type>string</type><parameter>treĹÄ</parameter></methodparam>
+   <methodparam choice="opt"><type>string</type><parameter>dodatkowe_nagĹĂłwki</parameter></methodparam>
    <methodparam choice="opt"><type>string</type><parameter>dodatkowe_parametry</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Wysyła e-mail.
+   WysyĹa e-mail.
   </para>
  </refsect1>
 
@@ -34,8 +34,8 @@
        Odbiorca lub odbiorcy e-maila.
       </para>
       <para>
-       Format tego łańcucha musi być zgodny z
-       <link xlink:href="&url.rfc;2822">RFC 2822</link>. Oto kilka przykładów:
+       Format tego ĹaĹcucha musi byÄ zgodny z
+       <link xlink:href="&url.rfc;2822">RFC 2822</link>. Oto kilka przykĹadĂłw:
        <simplelist>
         <member>osoba@example.com</member>
         <member>osoba@example.com, imie.nazwisko@example.com</member>
@@ -53,27 +53,27 @@
       </para>
       <caution>
        <para>
-        Temat musi spełniać <link xlink:href="&url.rfc;2047">RFC 2047</link>.
+        Temat musi speĹniaÄ <link xlink:href="&url.rfc;2047">RFC 2047</link>.
        </para>
       </caution>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>treść</parameter></term>
+     <term><parameter>treĹÄ</parameter></term>
      <listitem>
       <para>
-       Treść wiadomości.
+       TreĹÄ wiadomoĹci.
       </para>
       <para>
-       Każdy wiersz tekstu powinien być zakończony znakiem końca linii LF (\n).
-       Wiersze nie powinny zawierać więcej niż 70 znaków.
+       KaĹźdy wiersz tekstu powinien byÄ zakoĹczony znakiem koĹca linii LF (\n).
+       Wiersze nie powinny zawieraÄ wiÄcej niĹź 70 znakĂłw.
       </para>
       <caution>
        <para>
-        (Tylko dla Windows) Kiedy PHP łaczy się bezpośrednio do serwera SMTP
-        i zostaną znalezione znaki wskazujące na koniec wiadomości (\n.)
-        to zostaną one usunięte, co spowoduje że wiadomość będzie mało czytelna.
-        Aby temu zapobiec, należy dodać dodatkową kropkę.
+        (Tylko dla Windows) Kiedy PHP Ĺaczy siÄ bezpoĹrednio do serwera SMTP
+        i zostanÄ znalezione znaki wskazujÄce na koniec wiadomoĹci (\n.)
+        to zostanÄ one usuniÄte, co spowoduje Ĺźe wiadomoĹÄ bÄdzie maĹo czytelna.
+        Aby temu zapobiec, naleĹźy dodaÄ dodatkowÄ kropkÄ.
         <programlisting role="php">
 <![CDATA[
 <?php
@@ -86,38 +86,38 @@ $text = str_replace("\n.", "\n..", $text);
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>dodatkowe_nagłówki</parameter> (opcjonalnie)</term>
+     <term><parameter>dodatkowe_nagĹĂłwki</parameter> (opcjonalnie)</term>
      <listitem>
       <para>
-       Łańcuchy znaków dodane na końcu nagłówka e-maila.
+       ĹaĹcuchy znakĂłw dodane na koĹcu nagĹĂłwka e-maila.
       </para>
       <para>
        Parametr jest zazwyczaj wykorzystywany do wstawienia dodatkowych
-       nagłówków (From, Cc, oraz Bcc). Dodatkowe nagłówki rozdziela się
-       za pomocą znaku powrotu karetki i nowego wiersza - CRLF (\r\n).
+       nagĹĂłwkĂłw (From, Cc, oraz Bcc). Dodatkowe nagĹĂłwki rozdziela siÄ
+       za pomocÄ znaku powrotu karetki i nowego wiersza - CRLF (\r\n).
       </para>
       <note>
        <para>
-        Każdy e-mail <emphasis>musi</emphasis> zawierać nagłówek
-        <literal>From</literal>. Można go podawać jako parametr
-        <parameter>dodatkowe_nagłówki</parameter> albo ustawić
+        KaĹźdy e-mail <emphasis>musi</emphasis> zawieraÄ nagĹĂłwek
+        <literal>From</literal>. MoĹźna go podawaÄ jako parametr
+        <parameter>dodatkowe_nagĹĂłwki</parameter> albo ustawiÄ
         w pliku &php.ini;.
        </para>
        <para>
-        Wynikiem pominięcia tego nagłówka będzie informacja o błędzie,
+        Wynikiem pominiÄcia tego nagĹĂłwka bÄdzie informacja o bĹÄdzie,
         podobna do tej: <literal>Warning: mail(): "sendmail_from" not
         set in php.ini or custom "From:" header missing</literal>.
-        W Windows nagłówek <literal>From</literal> ustawia także
+        W Windows nagĹĂłwek <literal>From</literal> ustawia takĹźe
         <literal>Return-Path</literal>.
        </para>
       </note>
       <note>
        <para>
-        Jeśli wiadomości nie są dostarczane, można spróbować używać
-        tylko znaku LF (\n). Niektóre, gorzej napisane MTA na systemy
-        Unix zamieniają automatycznie LF na CRLF (co powoduje
-        podwojenie CR jeśli zostało użyte CRLF). Powinno się to zrobić
-        w ostateczności, jako że nie jest to zgodne z dokumentem
+        JeĹli wiadomoĹci nie sÄ dostarczane, moĹźna sprĂłbowaÄ uĹźywaÄ
+        tylko znaku LF (\n). NiektĂłre, gorzej napisane MTA na systemy
+        Unix zamieniajÄ automatycznie LF na CRLF (co powoduje
+        podwojenie CR jeĹli zostaĹo uĹźyte CRLF). Powinno siÄ to zrobiÄ
+        w ostatecznoĹci, jako Ĺźe nie jest to zgodne z dokumentem
         <link xlink:href="&url.rfc;2822">RFC 2822</link>.
        </para>
       </note>
@@ -127,18 +127,18 @@ $text = str_replace("\n.", "\n..", $text);
      <term><parameter>dodatkowe_parametry</parameter> (opcjonalne)</term>
      <listitem>
       <para>
-       Parametr <parameter>dodatkowe_parametry</parameter> może być użyty
-       do przekazania dodatkowych opcji do programu wysyłającego e-maile.
-       Zostaną one użyte przy wysyłaniu e-maila w <literal>ścieżce sendmaila</literal>
-       jako ustawienia konfiguracyjne. Mogą one być użyte na przykład do
-       wprowadzenia adresu e-mail nadawcy, tak jakbyśmy użyli polecenia
-       sendmail z opcją <literal>-f</literal>.
+       Parametr <parameter>dodatkowe_parametry</parameter> moĹźe byÄ uĹźyty
+       do przekazania dodatkowych opcji do programu wysyĹajÄcego e-maile.
+       ZostanÄ one uĹźyte przy wysyĹaniu e-maila w <literal>ĹcieĹźce sendmaila</literal>
+       jako ustawienia konfiguracyjne. MogÄ one byÄ uĹźyte na przykĹad do
+       wprowadzenia adresu e-mail nadawcy, tak jakbyĹmy uĹźyli polecenia
+       sendmail z opcjÄ <literal>-f</literal>.
       </para>
       <para>
-       Użytkownik z którego prawami jest uruchomiony serwer WWW powinien być dodany
-       jako zaufany użytkownik w konfiguracji programu sendmail, aby zapobiec
-       dodawania nagłówka 'X-Warning' do wiadomości, kiedy ustawiany jest adres
-       nadawcy (-f). Dla użytkowników programu sendmail jest to plik
+       UĹźytkownik z ktĂłrego prawami jest uruchomiony serwer WWW powinien byÄ dodany
+       jako zaufany uĹźytkownik w konfiguracji programu sendmail, aby zapobiec
+       dodawania nagĹĂłwka 'X-Warning' do wiadomoĹci, kiedy ustawiany jest adres
+       nadawcy (-f). Dla uĹźytkownikĂłw programu sendmail jest to plik
        <filename>/etc/mail/trusted-users</filename>.
       </para>
      </listitem>
@@ -150,12 +150,12 @@ $text = str_replace("\n.", "\n..", $text);
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca &true; jeśli e-mail został zaakceptowany do wysłania, w przeciwnym
+   Zwraca &true; jeĹli e-mail zostaĹ zaakceptowany do wysĹania, w przeciwnym
    przypadku zwraca &false;.
   </para>
   <para>
-   Ważną informacją jest to, że pomimo iż e-mail został zaakceptowany do wysłania,
-   to NIE oznacza, że będzie on już w tej chwili wysyłany do odbiorców.
+   WaĹźnÄ informacjÄ jest to, Ĺźe pomimo iĹź e-mail zostaĹ zaakceptowany do wysĹania,
+   to NIE oznacza, Ĺźe bÄdzie on juĹź w tej chwili wysyĹany do odbiorcĂłw.
   </para>
  </refsect1>
 
@@ -174,20 +174,20 @@ $text = str_replace("\n.", "\n..", $text);
       <row>
        <entry>4.3.0 (tylko Windows)</entry>
        <entry>
-        Obsługiwane są wszystkie dodatkowe nagłówki (takie jak From, Cc, Bcc
-        i Date) i nie są w nich rozróżniane małe i duże litery.
-        (dodatkowe nagłówki nie były przetwarzane bezpośrednio przez MTA, tylko
-        wcześniej parsowane za pomocą PHP, a PHP &lt; 4.3 obsługiwał tylko
-        nagłówek Cc i rozróżniał małe i duże litery).
+        ObsĹugiwane sÄ wszystkie dodatkowe nagĹĂłwki (takie jak From, Cc, Bcc
+        i Date) i nie sÄ w nich rozrĂłĹźniane maĹe i duĹźe litery.
+        (dodatkowe nagĹĂłwki nie byĹy przetwarzane bezpoĹrednio przez MTA, tylko
+        wczeĹniej parsowane za pomocÄ PHP, a PHP &lt; 4.3 obsĹugiwaĹ tylko
+        nagĹĂłwek Cc i rozrĂłĹźniaĹ maĹe i duĹźe litery).
        </entry>
       </row>
       <row>
        <entry>4.2.3</entry>
        <entry>
-        Parametr <parameter>dodatkowe_parametry</parameter> jest wyłączony
+        Parametr <parameter>dodatkowe_parametry</parameter> jest wyĹÄczony
         w trybie <link linkend="ini.safe-mode">safe_mode</link>, a funkcja
-        <function>mail</function> wywołuje stosowny komunikat
-        i zwraca &false; w czasie próby jego użycia.
+        <function>mail</function> wywoĹuje stosowny komunikat
+        i zwraca &false; w czasie prĂłby jego uĹźycia.
        </entry>
       </row>
       <row>
@@ -206,29 +206,29 @@ $text = str_replace("\n.", "\n..", $text);
   &reftitle.examples;
   <para>
    <example>
-    <title>Wysłanie e-maila.</title>
+    <title>WysĹanie e-maila.</title>
     <para>
-     Użycie funkcji <function>mail</function> do wysłania prostej wiadomości:
+     UĹźycie funkcji <function>mail</function> do wysĹania prostej wiadomoĹci:
     </para>
     <programlisting role="php">
 <![CDATA[
 <?php
-// Wiadomość
+// WiadomoĹÄ
 $message = "Linia 1\nLinia 2\nLinia 3";
 
-// W przypadku każdej linii dłuższej niż 70 znaków powinniśmy użyć funkcji wordwrap()
+// W przypadku kaĹźdej linii dĹuĹźszej niĹź 70 znakĂłw powinniĹmy uĹźyÄ funkcji wordwrap()
 $message = wordwrap($message, 70);
 
-// Wyślij
-mail('osoba@example.com', 'Temat wiadomości', $message);
+// WyĹlij
+mail('osoba@example.com', 'Temat wiadomoĹci', $message);
 ?>
 ]]>
     </programlisting>
    </example>
    <example>
-    <title>Wysłanie e-maila z dodatkowymi nagłówkami.</title>
+    <title>WysĹanie e-maila z dodatkowymi nagĹĂłwkami.</title>
     <para>
-     Dodatkowe, podstawowe nagłówki informują program klienta poczty (MUA)
+     Dodatkowe, podstawowe nagĹĂłwki informujÄ program klienta poczty (MUA)
      o adresach From i Reply-To:
     </para>
     <programlisting role="php">
@@ -247,37 +247,37 @@ mail($to, $subject, $message, $headers);
     </programlisting>
    </example>
    <example>
-    <title>Wysłanie e-maila z dodatkowym parametrem wiersza poleceń.</title>
+    <title>WysĹanie e-maila z dodatkowym parametrem wiersza poleceĹ.</title>
     <para>
-     Parametr <parameter>dodatkowe_parametry</parameter> może być użyty
-     do przekazania dodatkowych opcji do programu wysyłającego e-maile.
-     Zostaną one użyte przy wysyłaniu e-maila w <literal>ścieżce sendmaila</literal>.
+     Parametr <parameter>dodatkowe_parametry</parameter> moĹźe byÄ uĹźyty
+     do przekazania dodatkowych opcji do programu wysyĹajÄcego e-maile.
+     ZostanÄ one uĹźyte przy wysyĹaniu e-maila w <literal>ĹcieĹźce sendmaila</literal>.
     </para>
     <programlisting role="php">
 <![CDATA[
 <?php
-mail('osoba@example.com', 'temat', 'wiadomość', null,
+mail('osoba@example.com', 'temat', 'wiadomoĹÄ', null,
    '-fwebmaster@example.com');
 ?>
 ]]>
     </programlisting>
    </example>
    <example>
-    <title>Wysłanie e-maila w formacie HTML</title>
+    <title>WysĹanie e-maila w formacie HTML</title>
     <para>
-     Za pomocą <function>mail</function> możliwe jest wysłanie maila z treścią w formacie HTML.
+     Za pomocÄ <function>mail</function> moĹźliwe jest wysĹanie maila z treĹciÄ w formacie HTML.
     </para>
     <programlisting role="php">
 <![CDATA[
 <?php
-// kilku odbiorców
-$to  = 'aidan@example.com' . ', '; // zwróćmy uwagę na przecinek
+// kilku odbiorcĂłw
+$to  = 'aidan@example.com' . ', '; // zwrĂłÄmy uwagÄ na przecinek
 $to .= 'wez@example.com';
 
 // temat
 $subject = 'Birthday Reminders for August';
 
-// wiadomość
+// wiadomoĹÄ
 $message = '
 <html>
 <head>
@@ -300,17 +300,17 @@ $message = '
 </html>
 ';
 
-// Aby wysłać e-mail HTML, musi być ustawiony nagłówek Content-type
+// Aby wysĹaÄ e-mail HTML, musi byÄ ustawiony nagĹĂłwek Content-type
 $headers  = 'MIME-Version: 1.0' . "\r\n";
 $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 
-// Dodatkowe nagłówki
+// Dodatkowe nagĹĂłwki
 $headers .= 'To: Mary <mary@example.com>, Kelly <kelly@example.com>' . "\r\n";
 $headers .= 'From: Birthday Reminder <birthday@example.com>' . "\r\n";
 $headers .= 'Cc: birthdayarchive@example.com' . "\r\n";
 $headers .= 'Bcc: birthdaycheck@example.com' . "\r\n";
 
-// Wysłanie e-maila
+// WysĹanie e-maila
 mail($to, $subject, $message, $headers);
 ?>
 ]]>
@@ -320,8 +320,8 @@ mail($to, $subject, $message, $headers);
   <para>
    <note>
     <para>
-     Jeśli mamy zamiar wysyłać HTML albo e-maile o złożonej zawartości, zaleca się
-     użyć pakietu PEAR <link xlink:href="&url.pear.package;Mail_Mime">PEAR::Mail_Mime</link>.
+     JeĹli mamy zamiar wysyĹaÄ HTML albo e-maile o zĹoĹźonej zawartoĹci, zaleca siÄ
+     uĹźyÄ pakietu PEAR <link xlink:href="&url.pear.package;Mail_Mime">PEAR::Mail_Mime</link>.
     </para>
    </note>
   </para>
@@ -332,37 +332,37 @@ mail($to, $subject, $message, $headers);
   <note>
    <para>
     Implementacja funkcji <function>mail</function> w systemach Windows
-    różni się pod wieloma względami od implementacji na platformach Unix.
-    Po pierwsze, do tworzenia wiadomości funkcja nie używa lokalnych poleceń
-    systemowych, tylko operuje bezpośrednio na gniazdach. To oznacza, że
-    wymagana jest dodatkowa usługa <literal>MTA</literal>, nasłuchująca na
-    porcie (która może działać na localhost lub maszynie zdalnej).
+    rĂłĹźni siÄ pod wieloma wzglÄdami od implementacji na platformach Unix.
+    Po pierwsze, do tworzenia wiadomoĹci funkcja nie uĹźywa lokalnych poleceĹ
+    systemowych, tylko operuje bezpoĹrednio na gniazdach. To oznacza, Ĺźe
+    wymagana jest dodatkowa usĹuga <literal>MTA</literal>, nasĹuchujÄca na
+    porcie (ktĂłra moĹźe dziaĹaÄ na localhost lub maszynie zdalnej).
    </para>
    <para>
-    Po drugie, dodatkowe nagłówki, takie jak
+    Po drugie, dodatkowe nagĹĂłwki, takie jak
     <literal>From:</literal>,
     <literal>Cc:</literal>,
     <literal>Bcc:</literal>
     i <literal>Date:</literal>
-    <emphasis role="strong">nie są</emphasis> przetwarzane przez
-    <literal>MTA</literal>, tylko parsowane za pomocą PHP.
+    <emphasis role="strong">nie sÄ</emphasis> przetwarzane przez
+    <literal>MTA</literal>, tylko parsowane za pomocÄ PHP.
    </para>
    <para>
-    Parametr <parameter>do</parameter> nie powinien być adresem
+    Parametr <parameter>do</parameter> nie powinien byÄ adresem
     w postaci &quot;Osoba &lt;ktokolwiek@example.com&gt;&quot;. Polecenie
-    mail może nie parsować tego właściwie, podczas komunikowania się
+    mail moĹźe nie parsowaÄ tego wĹaĹciwie, podczas komunikowania siÄ
     z MTA.
    </para>
   </note>
 
   <note>
    <para>
-    Nie warto używać funkcji <function>mail</function> do wysyłania dużej
-    ilości e-maili stosując pętle. Ta funkcja otwiera i zamyka gniazdo SMTP
-    dla każdego wysyłanego e-maila, a to jest mało wydajne.
+    Nie warto uĹźywaÄ funkcji <function>mail</function> do wysyĹania duĹźej
+    iloĹci e-maili stosujÄc pÄtle. Ta funkcja otwiera i zamyka gniazdo SMTP
+    dla kaĹźdego wysyĹanego e-maila, a to jest maĹo wydajne.
    </para>
    <para>
-    Do wysyłania dużej ilości e-maili można stosować pakiety
+    Do wysyĹania duĹźej iloĹci e-maili moĹźna stosowaÄ pakiety
     <link xlink:href="&url.pear.package;Mail">PEAR::Mail</link>,
     i <link xlink:href="&url.pear.package;Mail_Queue">PEAR::Mail_Queue</link>.
    </para>
@@ -370,7 +370,7 @@ mail($to, $subject, $message, $headers);
 
   <note>
    <para>
-    Poniższe dokumenty RFC mogą być pomocne:
+    PoniĹźsze dokumenty RFC mogÄ byÄ pomocne:
     <link xlink:href="&url.rfc;1896">RFC 1896</link>,
     <link xlink:href="&url.rfc;2045">RFC 2045</link>,
     <link xlink:href="&url.rfc;2046">RFC 2046</link>,
