@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.ovrimos-connect" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>ovrimos_connect</refname>
-  <refpurpose>Otwiera połączenie z określoną bazą danych</refpurpose>
+  <refpurpose>Otwiera poĹÄczenie z okreĹlonÄ bazÄ danych</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
@@ -13,11 +13,11 @@
    <type>int</type><methodname>ovrimos_connect</methodname>
    <methodparam><type>string</type><parameter>host</parameter></methodparam>
    <methodparam><type>string</type><parameter>nazwabazy_lub_port</parameter></methodparam>
-   <methodparam><type>string</type><parameter>użytkownik</parameter></methodparam>
-   <methodparam><type>string</type><parameter>hasło</parameter></methodparam>
+   <methodparam><type>string</type><parameter>uĹźytkownik</parameter></methodparam>
+   <methodparam><type>string</type><parameter>hasĹo</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Otwiera połączenie do określonej bazy danych.
+   Otwiera poĹÄczenie do okreĹlonej bazy danych.
   </para>
  </refsect1>
 
@@ -42,18 +42,18 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>użytkownik</parameter></term>
+     <term><parameter>uĹźytkownik</parameter></term>
      <listitem>
       <para>
-       Nazwa użytkownika.
+       Nazwa uĹźytkownika.
       </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>hasło</parameter></term>
+     <term><parameter>hasĹo</parameter></term>
      <listitem>
       <para>
-       Hasło <parameter>użytkownika</parameter>.
+       HasĹo <parameter>uĹźytkownika</parameter>.
       </para>
      </listitem>
     </varlistentry>
@@ -64,8 +64,8 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca identyfikator połączenia (wartość większa od 0)
-   w przypadku powodzenia, lub 0 w przypadku błędu.
+   Zwraca identyfikator poĹÄczenia (wartoĹÄ wiÄksza od 0)
+   w przypadku powodzenia, lub 0 w przypadku bĹÄdu.
   </para>
  </refsect1>
 
@@ -73,16 +73,16 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład <function>ovrimos_connect</function></title>
+    <title>PrzykĹad <function>ovrimos_connect</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
 $conn = ovrimos_connect("server.example.com", "8001", "admin", "password");
 if ($conn != 0) {
-    echo "Połączenie zostało nawiązane.";
+    echo "PoĹÄczenie zostaĹo nawiÄzane.";
     $res = ovrimos_exec($conn, "select table_id, table_name from sys.tables");
     if ($res != 0) {
-        echo "Instrukcja została wykonana prawidłowo.";
+        echo "Instrukcja zostaĹa wykonana prawidĹowo.";
         ovrimos_result_all($res);
         ovrimos_free_result($res);
     }

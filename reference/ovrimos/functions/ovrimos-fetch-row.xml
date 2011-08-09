@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.ovrimos-fetch-row" xmlns="http://docbook.org/ns/docbook">
@@ -12,12 +12,12 @@
   <methodsynopsis>
    <type>bool</type><methodname>ovrimos_fetch_row</methodname>
    <methodparam><type>int</type><parameter>identyfikator_wyniku</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>sposób</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>sposĂłb</parameter></methodparam>
    <methodparam choice="opt"><type>int</type><parameter>numer_wiersza</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Pobiera wiersz ze zbioru wyniku. Wartości kolumn powinny być odczytywane
-   przez wywołania innej funkcji.
+   Pobiera wiersz ze zbioru wyniku. WartoĹci kolumn powinny byÄ odczytywane
+   przez wywoĹania innej funkcji.
   </para>
  </refsect1>
 
@@ -29,17 +29,17 @@
      <term><parameter>identyfikator_wyniku</parameter></term>
      <listitem>
       <para>
-       Indetyfikator wyniku zwrócony przez <function>ovrimos_execute</function>
+       Indetyfikator wyniku zwrĂłcony przez <function>ovrimos_execute</function>
        lub <function>ovrimos_exec</function>.
       </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>sposób</parameter></term>
+     <term><parameter>sposĂłb</parameter></term>
      <listitem>
       <para>
-       Określa w jaki sposób będą pobierane wiersze. Może przyjmować jedną
-       z następujących wartości (wielkość liter nie ma znaczenia):
+       OkreĹla w jaki sposĂłb bÄdÄ pobierane wiersze. MoĹźe przyjmowaÄ jednÄ
+       z nastÄpujÄcych wartoĹci (wielkoĹÄ liter nie ma znaczenia):
        <informaltable>
         <tgroup cols="2">
          <thead>
@@ -52,14 +52,14 @@
           <row>
            <entry><literal>Next</literal></entry>
            <entry>
-            Następny z bieżącej pozycji.
-            To jest wartość domyślna.
+            NastÄpny z bieĹźÄcej pozycji.
+            To jest wartoĹÄ domyĹlna.
            </entry>
           </row>
           <row>
            <entry><literal>Prev</literal></entry>
            <entry>
-            Poprzedni z bieżącej pozycji.
+            Poprzedni z bieĹźÄcej pozycji.
            </entry>
           </row>
           <row>
@@ -77,7 +77,7 @@
           <row>
            <entry><literal>Absolute</literal></entry>
            <entry>
-            Wskazany numer, liczony od początku zbioru.
+            Wskazany numer, liczony od poczÄtku zbioru.
             Wymaga podania <parameter>numer_wiersza</parameter>.
            </entry>
           </row>
@@ -92,7 +92,7 @@
      <listitem>
       <para>
        Numer wiersza liczony od 0. Wymagany tylko, gdy
-       <parameter>sposób</parameter> ma wartość
+       <parameter>sposĂłb</parameter> ma wartoĹÄ
        <literal>Absolute</literal>.
       </para>
      </listitem>
@@ -112,16 +112,16 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład ovrimos_fetch_row</title>
+    <title>PrzykĹad ovrimos_fetch_row</title>
     <programlisting role="php">
 <![CDATA[
 <?php
 $conn = ovrimos_connect("remote.host", "8001", "admin", "password");
 if ($conn != 0) {
-    echo "Połączenie zostało nawiązane.";
+    echo "PoĹÄczenie zostaĹo nawiÄzane.";
     $res=ovrimos_exec($conn, "select table_id, table_name from sys.tables");
     if ($res != 0) {
-        echo "Instrukcja została wykonana prawidłowo.";
+        echo "Instrukcja zostaĹa wykonana prawidĹowo.";
         if (ovrimos_fetch_row($res, "First")) {
             $table_id = ovrimos_result($res, 1);
             $table_name = ovrimos_result($res, 2);
@@ -131,10 +131,10 @@ if ($conn != 0) {
                 $table_name = ovrimos_result($res, "table_name");
                 echo "table_id=" . $table_id . ", table_name=" . $table_name . "\n";
             } else {
-                echo "Następny: błąd\n";
+                echo "NastÄpny: bĹÄd\n";
             }
         } else {
-            echo "Pierwszy: błąd\n";
+            echo "Pierwszy: bĹÄd\n";
         }
         ovrimos_free_result($res);
     }
@@ -144,7 +144,7 @@ if ($conn != 0) {
 ]]>
     </programlisting>
    </example>
-   Pobranie wiersza i wyświetlenie wyniku.
+   Pobranie wiersza i wyĹwietlenie wyniku.
   </para>
  </refsect1>
 

@@ -1,25 +1,25 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 79dcbe011fb254dcd92c597064571fe313362a09 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 
 <chapter xml:id="ovrimos.examples" xmlns="http://docbook.org/ns/docbook">
  &reftitle.examples;
  <section xml:id="ovrimos.examples-basic">
-  <title>Podstawowe użycie</title>
+  <title>Podstawowe uĹźycie</title>
   <para>
    <example>
     <title>
-     Połączenie do Ovrimos SQL Server i pobranie danych z tabeli systemowej
+     PoĹÄczenie do Ovrimos SQL Server i pobranie danych z tabeli systemowej
     </title>
     <programlisting role="php">
 <![CDATA[
 <?php
 $conn = ovrimos_connect("server.domain.com", "8001", "admin", "password");
 if ($conn != 0) {
-    echo "Połączenie zostało nawiązane.";
+    echo "PoĹÄczenie zostaĹo nawiÄzane.";
     $res = ovrimos_exec($conn, "select table_id, table_name from sys.tables");
     if ($res != 0) {
-        echo "Instrukcja została wykonana prawidłowo.";
+        echo "Instrukcja zostaĹa wykonana prawidĹowo.";
         ovrimos_result_all($res);
         ovrimos_free_result($res);
     }

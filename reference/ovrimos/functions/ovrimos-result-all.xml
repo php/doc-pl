@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.ovrimos-result-all" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>ovrimos_result_all</refname>
-  <refpurpose>Wyświetla cały zbiór wyniku w postaci tabeli HTML</refpurpose>
+  <refpurpose>WyĹwietla caĹy zbiĂłr wyniku w postaci tabeli HTML</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
@@ -15,7 +15,7 @@
    <methodparam choice="opt"><type>string</type><parameter>format</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Wyświetla cały zbiór wyniku w postaci tabeli HTML.
+   WyĹwietla caĹy zbiĂłr wyniku w postaci tabeli HTML.
   </para>
  </refsect1>
 
@@ -27,7 +27,7 @@
      <term><parameter>identyfikator_wyniku</parameter></term>
      <listitem>
       <para>
-       Indetyfikator wyniku zwrócony przez <function>ovrimos_execute</function>
+       Indetyfikator wyniku zwrĂłcony przez <function>ovrimos_execute</function>
        lub <function>ovrimos_exec</function>.
       </para>
      </listitem>
@@ -36,7 +36,7 @@
      <term><parameter>format</parameter></term>
      <listitem>
       <para>
-       Opcjonalne atrybuty HTML używane podczas generowania tabeli.
+       Opcjonalne atrybuty HTML uĹźywane podczas generowania tabeli.
       </para>
      </listitem>
     </varlistentry>
@@ -47,36 +47,36 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca liczbę wierszy w wygenerowanej tabeli.
+   Zwraca liczbÄ wierszy w wygenerowanej tabeli.
   </para>
  </refsect1>
 
  <refsect1 role="examples">
   &reftitle.examples;
   <para>
-   Wykonanie instrukcji SQL i wyświetlenie wyniku w postaci
+   Wykonanie instrukcji SQL i wyĹwietlenie wyniku w postaci
    tabeli HTML.
    <example>
-    <title>Przygotowanie instrukcji, wykonanie, i wyświetlenie wyniku</title>
+    <title>Przygotowanie instrukcji, wykonanie, i wyĹwietlenie wyniku</title>
     <programlisting role="php">
 <![CDATA[
 <?php
 $conn = ovrimos_connect("db_host", "8001", "admin", "password");
 if ($conn != 0) {
-    echo "Połączenie zostało nawiązane.";
+    echo "PoĹÄczenie zostaĹo nawiÄzane.";
     $res = ovrimos_prepare($conn, "select table_id, table_name
                                     from sys.tables where table_id = 7");
     if ($res != 0) {
-        echo "Instrukcja została przygotowana prawidłowo";
+        echo "Instrukcja zostaĹa przygotowana prawidĹowo";
         if (ovrimos_execute($res, array(3))) {
-            echo "Wykonanie instrukcji powiodło się\n";
+            echo "Wykonanie instrukcji powiodĹo siÄ\n";
             ovrimos_result_all($res);
         } else {
-            echo "Wykonanie instrukcji nie powiodło się";
+            echo "Wykonanie instrukcji nie powiodĹo siÄ";
         }
         ovrimos_free_result($res);
     } else {
-        echo "Przygotowanie instrukcji nie powiodło się\n";
+        echo "Przygotowanie instrukcji nie powiodĹo siÄ\n";
     }
     ovrimos_close($conn);
 }
@@ -87,24 +87,24 @@ if ($conn != 0) {
   </para>
   <para>
    <example>
-    <title>Przykład <function>ovrimos_result_all</function> z metadanymi</title>
+    <title>PrzykĹad <function>ovrimos_result_all</function> z metadanymi</title>
     <programlisting role="php">
 <![CDATA[
 <?php
 $conn = ovrimos_connect("db_host", "8001", "admin", "password");
 if ($conn != 0) {
-    echo "Połączenie zostało nawiązane.";
+    echo "PoĹÄczenie zostaĹo nawiÄzane.";
     $res = ovrimos_exec($conn, "select table_id, table_name
                                  from sys.tables where table_id = 1");
     if ($res != 0) {
-        echo "Instrukcja została wykonana prawidłowo; cursor=" . ovrimos_cursor($res) . "\n";
+        echo "Instrukcja zostaĹa wykonana prawidĹowo; cursor=" . ovrimos_cursor($res) . "\n";
         $colnb = ovrimos_num_fields($res);
         echo "Liczba kolumn=" . $colnb . "\n";
         for ($i=1; $i <= $colnb; $i++) {
             $name = ovrimos_field_name($res, $i);
             $type = ovrimos_field_type($res, $i);
             $len = ovrimos_field_len($res, $i);
-            echo "Kolumna " . $i . " nazwa=" . $name . " typ=" . $type . " długość=" . $len . "\n";
+            echo "Kolumna " . $i . " nazwa=" . $name . " typ=" . $type . " dĹugoĹÄ=" . $len . "\n";
         }
         ovrimos_result_all($res);
         ovrimos_free_result($res);

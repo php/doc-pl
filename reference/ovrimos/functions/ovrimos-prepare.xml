@@ -1,21 +1,21 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.ovrimos-prepare" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>ovrimos_prepare</refname>
-  <refpurpose>Przygotowuje instrukcję SQL</refpurpose>
+  <refpurpose>Przygotowuje instrukcjÄ SQL</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>int</type><methodname>ovrimos_prepare</methodname>
-   <methodparam><type>int</type><parameter>identyfikator_połączenia</parameter></methodparam>
+   <methodparam><type>int</type><parameter>identyfikator_poĹÄczenia</parameter></methodparam>
    <methodparam><type>string</type><parameter>zapytanie</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Przygotowuje instrukcję SQL.
+   Przygotowuje instrukcjÄ SQL.
   </para>
  </refsect1>
 
@@ -24,11 +24,11 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>identyfikator_połączenia</parameter></term>
+     <term><parameter>identyfikator_poĹÄczenia</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia z serwerem Ovrimos,
-       zwrócony przez <function>ovrimos_connect</function>.
+       Identyfikator poĹÄczenia z serwerem Ovrimos,
+       zwrĂłcony przez <function>ovrimos_connect</function>.
       </para>
      </listitem>
     </varlistentry>
@@ -47,7 +47,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca identyfikator wyniku, lub &false; w przypadku błędu.
+   Zwraca identyfikator wyniku, lub &false; w przypadku bĹÄdu.
   </para>
  </refsect1>
 
@@ -55,29 +55,29 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład <function>ovrimos_prepare</function></title>
+    <title>PrzykĹad <function>ovrimos_prepare</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
 $conn=ovrimos_connect("db_host", "8001", "admin", "password");
 if ($conn!=0) {
-    echo "Połączenie zostało nawiązane.";
+    echo "PoĹÄczenie zostaĹo nawiÄzane.";
 
     // Przygotowanie instrukcji
     $res=ovrimos_prepare($conn, "select table_id, table_name
                                   from sys.tables where table_id=1");
     if ($res != 0) {
-        echo "Przygotowanie instrukcji powiodło się";
+        echo "Przygotowanie instrukcji powiodĹo siÄ";
         // Wykonanie przygotowanej instrukcji
         if (ovrimos_execute($res)) {
-            echo "Wykonanie instrukcji powiodło się\n";
+            echo "Wykonanie instrukcji powiodĹo siÄ\n";
             ovrimos_result_all($res);
         } else {
-            echo "Wykonanie instrukcji nie powiodło się";
+            echo "Wykonanie instrukcji nie powiodĹo siÄ";
         }
         ovrimos_free_result($res);
     } else {
-        echo "Przygotowanie instrukcji nie powiodło się\n";
+        echo "Przygotowanie instrukcji nie powiodĹo siÄ\n";
     }
     ovrimos_close($conn);
 }
