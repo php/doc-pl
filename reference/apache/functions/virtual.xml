@@ -27,23 +27,23 @@
      oczekujące na wysłanie nagłówki HTTP a następnie wszystkie bufory
      wyjścia zostaną opróżnione do przeglądarki.
     </para>
-	<warning> 
-      <para>
-	   Funkcja działa tylko jeśli PHP jest skompilowane w postaci modułu Apache,
-	   ponieważ używa API Apache do tworzenia pod żądań. Łańcuch zapytań (query string)
-	   może zostać przekazany do dołączanego pliku ale <varname>$_GET</varname>
-	   jest kopiowana ze skryptu rodzica i tylko <varname>$_SERVER['QUERY_STRING']</varname> 
-	   jest wypełniana przetwarzanym łańcuchem zapytań. Łańcuch zapytań może być przekazany
-	   tylko jeśli uzywasz Apache 2. Żądany plik nie zostanie wyszczególniony w
-	   dzienniku dostępu Apache.
-      </para> 
-     </warning> 
+    <warning> 
+     <para>
+      Funkcja działa tylko jeśli PHP jest skompilowane w postaci modułu Apache,
+      ponieważ używa API Apache do tworzenia pod żądań. Łańcuch zapytań (query string)
+      może zostać przekazany do dołączanego pliku ale <varname>$_GET</varname>
+      jest kopiowana ze skryptu rodzica i tylko <varname>$_SERVER['QUERY_STRING']</varname> 
+      jest wypełniana przetwarzanym łańcuchem zapytań. Łańcuch zapytań może być przekazany
+      tylko jeśli uzywasz Apache 2. Żądany plik nie zostanie wyszczególniony w
+      dzienniku dostępu Apache.
+     </para> 
+    </warning> 
     <para>
      Począwszy od PHP 4.0.6, można używać <function>virtual</function> do
      dołączania plików PHP, jednak w typowych sytuacjach bardziej sprawdzają się
      funkcje <function>include</function> lub <function>require</function>.
     </para>
-	&note.apache.nsapi-module;
+    &note.apache.nsapi-module;
    </refsect1>
   </refentry>
 
