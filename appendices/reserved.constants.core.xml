@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 6eef26240cbf7cb24f83add8a40e0896bc7b6b82 Maintainer: joeaccord Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 5a8719f61a2384a353959915bfdf3865f4e3ca79 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: qrak -->
  <sect2 xml:id="reserved.constants.core" xmlns="http://docbook.org/ns/docbook">
@@ -9,73 +9,82 @@
     silnik Zend i moduły SAPI.
    </simpara>
    <variablelist>
-    <varlistentry>
+    <varlistentry xml:id="constant.php-version">
      <term>
       <constant>PHP_VERSION</constant>
       (<type>string</type>)
      </term>
      <listitem>
       <simpara>
-
+       Bieżąca wersja PHP jest zapisywana jako string w postaci: 
+       "Numer_Główny.Numer_Dodatkowy.Numer_Wydania[Numer_specjalny]".
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.php-major-version">
      <term>
       <constant>PHP_MAJOR_VERSION</constant>
       (<type>integer</type>)
      </term>
      <listitem>
       <simpara>
-       Dostępna od PHP 5.2.7.
+       Bieżąca wersja PHP "Numer_Główny" jest typu integer (np., int(5) 
+       z wersji "5.2.7-extra"). Dostępna od PHP 5.2.7.
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.php-minor-version">
      <term>
       <constant>PHP_MINOR_VERSION</constant>
       (<type>integer</type>)
      </term>
      <listitem>
       <simpara>
-       Dostępna od PHP 5.2.7.
+       Bieżąca wersja PHP "Numer_Dodatkowy" jest typu integer (np., int(2) 
+       z wersji "5.2.7-extra"). Dostępna od PHP 5.2.7.
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.php-release-version">
      <term>
       <constant>PHP_RELEASE_VERSION</constant>
       (<type>integer</type>)
      </term>
      <listitem>
       <simpara>
-       Dostępna od PHP 5.2.7.
+       Bieżąca wersja PHP "Numer_Wydania" jest typu integer (np., int(7) 
+       z wersji "5.2.7-extra"). Dostępna od PHP 5.2.7.
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.php-version-id">
      <term>
       <constant>PHP_VERSION_ID</constant>
       (<type>integer</type>)
      </term>
      <listitem>
       <simpara>
+       Bieżąca wersja PHP jest typu integer, jest to przydatne 
+       do porównywania wersji (np., int(50207) z wersji "5.2.7-extra").
        Dostępna od PHP 5.2.7.
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.php-extra-version">
      <term>
       <constant>PHP_EXTRA_VERSION</constant>
       (<type>string</type>)
      </term>
      <listitem>
       <simpara>
+	   Bieżąca wersja PHP "Numer_Specjalny" jest typu string (np., '-extra'
+       z wersji "5.2.7-extra"). Jest ona często używana przez dystrybutorów
+       do oznaczania wersji pakietu.
        Dostępna od PHP 5.2.7.
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.php-zts">
      <term>
       <constant>PHP_ZTS</constant>
       (<type>integer</type>)
@@ -86,7 +95,7 @@
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.php-debug">
      <term>
       <constant>PHP_DEBUG</constant>
       (<type>integer</type>)
@@ -97,18 +106,19 @@
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.php-maxpathlen">
      <term>
       <constant>PHP_MAXPATHLEN</constant>
       (<type>integer</type>)
      </term>
      <listitem>
       <simpara>
-       Dostępna od PHP 5.3.0.
+       Maksymalna długość nazwy plików (włącznie ze ścieżką) obsługiwana
+       przez to wydanie PHP. Dostępna od PHP 5.3.0.
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.php-os">
      <term>
       <constant>PHP_OS</constant>
       (<type>string</type>)
@@ -119,40 +129,43 @@
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.php-sapi">
      <term>
       <constant>PHP_SAPI</constant>
       (<type>string</type>)
      </term>
      <listitem>
       <simpara>
+	   API serwera do tego wydania PHP.
        Dostępna od PHP 4.2.0. Patrz także <function>php_sapi_name</function>.
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.php-eol">
      <term>
       <constant>PHP_EOL</constant>
       (<type>string</type>)
      </term>
      <listitem>
       <simpara>
+	   Prawidłowy znak 'końca linii' dla tej platformy.
        Dostępna od PHP 4.3.10 i PHP 5.0.2
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.php-int-max">
      <term>
       <constant>PHP_INT_MAX</constant>
       (<type>integer</type>)
      </term>
      <listitem>
       <simpara>
+	   Największa wartość typu integer obsługiwana przez to wydanie PHP. Zwykle int(2147483647).
        Dostępna od PHP 4.4.0 i PHP 5.0.5
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.php-int-size">
      <term>
       <constant>PHP_INT_SIZE</constant>
       (<type>integer</type>)
@@ -163,7 +176,7 @@
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.default-include-path">
      <term>
       <constant>DEFAULT_INCLUDE_PATH</constant>
       (<type>string</type>)
@@ -174,7 +187,7 @@
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.pear-install-dir">
      <term>
       <constant>PEAR_INSTALL_DIR</constant>
       (<type>string</type>)
@@ -185,7 +198,7 @@
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.pear-extension-dir">
      <term>
       <constant>PEAR_EXTENSION_DIR</constant>
       (<type>string</type>)
@@ -196,7 +209,7 @@
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.php-extension-dir">
      <term>
       <constant>PHP_EXTENSION_DIR</constant>
       (<type>string</type>)
@@ -207,29 +220,41 @@
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.php-prefix">
      <term>
       <constant>PHP_PREFIX</constant>
       (<type>string</type>)
      </term>
      <listitem>
       <simpara>
-       Dostępna od PHP 4.3.0
+       Wartość "--prefix" użyta podczas konfiguracji. Dostępna od PHP 4.3.0
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.php-bindir">
      <term>
       <constant>PHP_BINDIR</constant>
       (<type>string</type>)
      </term>
      <listitem>
       <simpara>
-
+       Określa gdzie zostały zainstalowane pliki binarne.
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.php-binary">
+     <term>
+      <constant>PHP_BINARY</constant> 
+      (<type>string</type>)
+     </term>
+     <listitem>
+      <simpara>
+       Określa ścieżkę do pliku binarnego PHP wykonywującego skrypt.
+       Available since PHP 5.4.
+      </simpara>
+     </listitem>
+    </varlistentry>
+    <varlistentry xml:id="constant.php-mandir">	
      <term>
       <constant>PHP_MANDIR</constant>
       (<type>string</type>)
@@ -241,7 +266,7 @@
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.php-libdir">
      <term>
       <constant>PHP_LIBDIR</constant>
       (<type>string</type>)
@@ -252,7 +277,7 @@
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.php-datadir">
      <term>
       <constant>PHP_DATADIR</constant>
       (<type>string</type>)
@@ -263,7 +288,7 @@
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.php-sysconfdir">
      <term>
       <constant>PHP_SYSCONFDIR</constant>
       (<type>string</type>)
@@ -274,7 +299,7 @@
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.php-localstatedir">
      <term>
       <constant>PHP_LOCALSTATEDIR</constant>
       (<type>string</type>)
@@ -285,7 +310,7 @@
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.php-config-file-path">
      <term>
       <constant>PHP_CONFIG_FILE_PATH</constant>
       (<type>string</type>)
@@ -296,7 +321,7 @@
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.php-config-file-scan-dir">
      <term>
       <constant>PHP_CONFIG_FILE_SCAN_DIR</constant>
       (<type>string</type>)
@@ -307,152 +332,142 @@
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.php-shlib-suffix">
      <term>
       <constant>PHP_SHLIB_SUFFIX</constant>
       (<type>string</type>)
      </term>
      <listitem>
       <simpara>
-       Dostępna od PHP 4.3.0
+	   Rozszerzenie biblitek współdzielonych na danej platformie, takie jak "so" (większość Unixów)
+       lub "dll" (Windows). Dostępna od PHP 4.3.0
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.e-error">
      <term>
-      <constant>PHP_OUTPUT_HANDLER_START</constant>
+      <constant>E_ERROR</constant> 
       (<type>integer</type>)
      </term>
      <listitem>
       <simpara>
-
+       <link linkend="errorfunc.constants">Stałe raportowania błędów</link>
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.e-warning">
      <term>
-      <constant>PHP_OUTPUT_HANDLER_CONT</constant>
+      <constant>E_WARNING</constant> 
       (<type>integer</type>)
      </term>
      <listitem>
       <simpara>
-
+       
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.e-parse">
      <term>
-      <constant>PHP_OUTPUT_HANDLER_END</constant>
+      <constant>E_PARSE</constant> 
       (<type>integer</type>)
      </term>
      <listitem>
       <simpara>
-
+       
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.e-notice">
      <term>
-      <constant>PHP_WINDOWS_VERSION_MAJOR</constant>
+      <constant>E_NOTICE</constant> 
       (<type>integer</type>)
      </term>
      <listitem>
       <simpara>
-       Dostępna od PHP 5.3.0
+       
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.e-core-error">
      <term>
-      <constant>PHP_WINDOWS_VERSION_MINOR</constant>
+      <constant>E_CORE_ERROR</constant> 
       (<type>integer</type>)
      </term>
      <listitem>
       <simpara>
-       Dostępna od PHP 5.3.0
+       
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.e-core-warning">
      <term>
-      <constant>PHP_WINDOWS_VERSION_BUILD</constant>
+      <constant>E_CORE_WARNING</constant> 
       (<type>integer</type>)
      </term>
      <listitem>
       <simpara>
-       Dostępna od PHP 5.3.0
+       
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.e-compile-error">
      <term>
-      <constant>PHP_WINDOWS_VERSION_PLATFORM</constant>
+      <constant>E_COMPILE_ERROR</constant> 
       (<type>integer</type>)
      </term>
      <listitem>
       <simpara>
-       Dostępna od PHP 5.3.0
+       
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.e-compile-warning">
      <term>
-      <constant>PHP_WINDOWS_VERSION_SP_MAJOR</constant>
+      <constant>E_COMPILE_WARNING</constant> 
       (<type>integer</type>)
      </term>
      <listitem>
       <simpara>
-       Dostępna od PHP 5.3.0
+       
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.e-user-error">
      <term>
-      <constant>PHP_WINDOWS_VERSION_SP_MINOR</constant>
+      <constant>E_USER_ERROR</constant> 
       (<type>integer</type>)
      </term>
      <listitem>
       <simpara>
-       Dostępna od PHP 5.3.0
+       
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.e-user-warning">
      <term>
-      <constant>PHP_WINDOWS_VERSION_SUITEMASK</constant>
+      <constant>E_USER_WARNING</constant> 
       (<type>integer</type>)
      </term>
      <listitem>
       <simpara>
-       Dostępna od PHP 5.3.0
+       
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.e-user-notice">
      <term>
-      <constant>PHP_WINDOWS_VERSION_PRODUCTTYPE</constant>
+      <constant>E_USER_NOTICE</constant> 
       (<type>integer</type>)
      </term>
      <listitem>
       <simpara>
-       Dostępna od PHP 5.3.0
+       
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.e-deprecated">
      <term>
-      <constant>PHP_WINDOWS_NT_DOMAIN_CONTROLLER</constant>
-      (<type>integer</type>)
-     </term>
-     <listitem>
-      <simpara>
-       Dostępna od PHP 5.3.0
-      </simpara>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
-     <term>
-      <constant>PHP_WINDOWS_NT_SERVER</constant>
+      <constant>E_DEPRECATED</constant> 
       (<type>integer</type>)
      </term>
      <listitem>
@@ -461,9 +476,9 @@
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.e-user-deprecated">
      <term>
-      <constant>PHP_WINDOWS_NT_WORKSTATION</constant>
+      <constant>E_USER_DEPRECATED</constant> 
       (<type>integer</type>)
      </term>
      <listitem>
@@ -472,161 +487,18 @@
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.e-all">
      <term>
-      <constant>E_ERROR</constant>
+      <constant>E_ALL</constant> 
       (<type>integer</type>)
      </term>
      <listitem>
       <simpara>
-
+       
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
-     <term>
-      <constant>E_WARNING</constant>
-      (<type>integer</type>)
-     </term>
-     <listitem>
-      <simpara>
-
-      </simpara>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
-     <term>
-      <constant>E_PARSE</constant>
-      (<type>integer</type>)
-     </term>
-     <listitem>
-      <simpara>
-
-      </simpara>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
-     <term>
-      <constant>E_NOTICE</constant>
-      (<type>integer</type>)
-     </term>
-     <listitem>
-      <simpara>
-
-      </simpara>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
-     <term>
-      <constant>E_CORE_ERROR</constant>
-      (<type>integer</type>)
-     </term>
-     <listitem>
-      <simpara>
-
-      </simpara>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
-     <term>
-      <constant>E_CORE_WARNING</constant>
-      (<type>integer</type>)
-     </term>
-     <listitem>
-      <simpara>
-
-      </simpara>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
-     <term>
-      <constant>E_COMPILE_ERROR</constant>
-      (<type>integer</type>)
-     </term>
-     <listitem>
-      <simpara>
-
-      </simpara>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
-     <term>
-      <constant>E_COMPILE_WARNING</constant>
-      (<type>integer</type>)
-     </term>
-     <listitem>
-      <simpara>
-
-      </simpara>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
-     <term>
-      <constant>E_USER_ERROR</constant>
-      (<type>integer</type>)
-     </term>
-     <listitem>
-      <simpara>
-
-      </simpara>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
-     <term>
-      <constant>E_USER_WARNING</constant>
-      (<type>integer</type>)
-     </term>
-     <listitem>
-      <simpara>
-
-      </simpara>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
-     <term>
-      <constant>E_USER_NOTICE</constant>
-      (<type>integer</type>)
-     </term>
-     <listitem>
-      <simpara>
-
-      </simpara>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
-     <term>
-      <constant>E_DEPRECATED</constant>
-      (<type>integer</type>)
-     </term>
-     <listitem>
-      <simpara>
-       Dostępna od PHP 5.3.0
-      </simpara>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
-     <term>
-      <constant>E_USER_DEPRECATED</constant>
-      (<type>integer</type>)
-     </term>
-     <listitem>
-      <simpara>
-       Dostępna od PHP 5.3.0
-      </simpara>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
-     <term>
-      <constant>E_ALL</constant>
-      (<type>integer</type>)
-     </term>
-     <listitem>
-      <simpara>
-
-      </simpara>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.e-strict">
      <term>
       <constant>E_STRICT</constant>
       (<type>integer</type>)
@@ -637,7 +509,7 @@
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.compiler-halt-offset">
      <term>
       <constant>__COMPILER_HALT_OFFSET__</constant>
       (<type>integer</type>)
@@ -648,29 +520,29 @@
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.true">
      <term>
       &true;
       (<type>boolean</type>)
      </term>
      <listitem>
       <simpara>
-       Zobacz <link linkend="language.types.boolean">typy logiczne</link>.
+       Zobacz <link linkend="language.types.boolean">Booleans</link>.
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.false">
      <term>
       &false;
       (<type>boolean</type>)
      </term>
      <listitem>
       <simpara>
-       Zobacz <link linkend="language.types.boolean">typy logiczne</link>.
+       Zobacz <link linkend="language.types.boolean">Booleans</link>.
       </simpara>
      </listitem>
     </varlistentry>
-    <varlistentry>
+    <varlistentry xml:id="constant.null">
      <term>
       &null;
       (<type>boolean</type>)
