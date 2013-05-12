@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: d4482ec29dde1aee6cb22a8b0909e30b6353de72 Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: 0f2e02d872820af3f807c1bfba2bcde0764d175f Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS: leszek, adi -->
+<!-- CREDITS: joeaccord, adi -->
 <!-- Keep 'em sorted -->
 
 <!ENTITY changelog.randomseed '<row xmlns="http://docbook.org/ns/docbook"><entry xmlns="http://docbook.org/ns/docbook" >4.2.0</entry><entry xmlns="http://docbook.org/ns/docbook" >Losowa liczba
 generatora pseudolosowego jest inicjowana automatycznie.</entry></row>'>
 
 <!ENTITY installation.enabled.disable 'To rozszerzenie jest domyślnie włączone. Może być ono wyłączone za pomocą następującej opcji w czasie kompilacji: '>
+
+<!-- Cautions -->
+<!ENTITY caution.cryptographically-insecure '<caution xmlns="http://docbook.org/ns/docbook"><para>Ta funkcja nie generuje wartości bezpiecznych kryptograficznie, i w związku z tym nie powinna być używana w celach kryptograficznych. Jeśli potrzebujesz wartości bezpiecznych kryptograficznie, rozważ zastosowanie funkcji <function>openssl_random_pseudo_bytes</function>.</para></caution>'>
 
 <!-- Notes -->
 
@@ -26,7 +29,7 @@ więcej informacji.</simpara></note>'>
 
 <!ENTITY note.context-support '<note xmlns="http://docbook.org/ns/docbook"><simpara xmlns="http://docbook.org/ns/docbook">Obsługa kontekstów została
 dodana w <literal xmlns="http://docbook.org/ns/docbook">PHP 5.0.0</literal>. Opis <literal xmlns="http://docbook.org/ns/docbook">kontekstów</literal>
-znajduje się w rozdziale <xref xmlns="http://docbook.org/ns/docbook" linkend="ref.stream"/>.</simpara></note>'>
+znajduje się w rozdziale <xref xmlns="http://docbook.org/ns/docbook" linkend="book.stream"/>.</simpara></note>'>
 
 <!ENTITY note.exec-bg '<note xmlns="http://docbook.org/ns/docbook"><para xmlns="http://docbook.org/ns/docbook">Jeśli program uruchamiany w tle
 zawiera tę funkcję, należy upewnić się, że wyjście tego programu jest
@@ -98,7 +101,7 @@ o dostępności</title><para xmlns="http://docbook.org/ns/docbook">Tablice super
 od PHP 4.1.0. Aby uzyskać więcej informacji, należy zapoznać się z
 &link.superglobals;</para></note>'>
 
-<!ENTITY note.uses-ob '<note xmlns="http://docbook.org/ns/docbook"><para xmlns="http://docbook.org/ns/docbook">Ta funkcja używa wewnętrznie buforowania
+<!ENTITY note.uses-ob '<note xmlns="http://docbook.org/ns/docbook"><para>Stosując parametr <parameter>return</parameter>, ta funkcja używa wewnętrznie buforowania
 wyjścia, więc nie może być użyta wewnątrz funkcji callback podanej w wywołaniu
 <function xmlns="http://docbook.org/ns/docbook">ob_start</function>.</para></note>'>
 
@@ -108,6 +111,22 @@ o czasie dostępu może się różnić w zależności od systemu plików.</para>
 <!ENTITY note.uses-autoload '<note xmlns="http://docbook.org/ns/docbook">
 <para xmlns="http://docbook.org/ns/docbook">Using this function will use any registered
 <link xmlns="http://docbook.org/ns/docbook" linkend="language.oop5.autoload">autoloaders</link> if the class is not already known.</para></note>'>
+
+<!ENTITY note.network.header.sapi '<note xmlns="http://docbook.org/ns/docbook">
+   <para>
+    Nagłówki będą dostępne i zwracane tylko jeśli stosowane jest SAPI które je obsługuje.
+   </para>
+  </note>
+'>
+
+<!ENTITY note.passwordhashing '<note xmlns="http://docbook.org/ns/docbook">
+ <title>Bezpieczne skróty haseł</title>
+ <para>
+	 Nie jest zalecanestosowanie tej funkcji do zabezpieczania haseł ze względu na wysoką wydajność algorytmu skrótu.
+	 Zobacz <link linkend="faq.passwords.fasthash">tutaj</link> aby uzyskać więcej informacji.
+ </para>
+</note>
+'>
 
 <!-- Tips -->
 
@@ -121,11 +140,11 @@ obsługiwanych protokołów.
 
 <!ENTITY tip.fopen-wrapper.stat '<tip xmlns="http://docbook.org/ns/docbook"><simpara xmlns="http://docbook.org/ns/docbook">Od PHP 5.0.0 ta funkcja
 może być użyta także z <emphasis xmlns="http://docbook.org/ns/docbook">niektórymi</emphasis> nakładkami URL. Zobacz
-<xref xmlns="http://docbook.org/ns/docbook" linkend="wrappers"/> aby uzyskać listę nakładek, które obsługują
+<xref xmlns="http://docbook.org/ns/docbook" linkend="wrappers"/> aby dowiedzieć się które obsługują
 funkcjonalność z rodziny <function xmlns="http://docbook.org/ns/docbook">stat</function>.</simpara></tip>'>
 
 <!ENTITY tip.ob-capture '<tip xmlns="http://docbook.org/ns/docbook"><simpara xmlns="http://docbook.org/ns/docbook">Ze wszystkim, co wysyła dane bezpośrednio
-do przeglądarki, możesz używać <link xmlns="http://docbook.org/ns/docbook" linkend="ref.outcontrol">funkcji kontroli
+do przeglądarki, możesz używać <link xmlns="http://docbook.org/ns/docbook" linkend="book.outcontrol">funkcji kontroli
 wyjścia</link> aby przejąć wyjście tej funkcji i zapisać je w zmiennej
 tekstowej (na przykład).</simpara></tip>'>
 
@@ -161,6 +180,20 @@ xmlns="http://docbook.org/ns/docbook"><simpara xmlns="http://docbook.org/ns/docb
 <emphasis xmlns="http://docbook.org/ns/docbook">PRZESTARZAŁA</emphasis> od PHP 5.3.0.
 Używanie tej funkcji nie jest zalecane.</simpara></warning>'>
 
+<!ENTITY warn.deprecated.feature-5-3-0.removed-5-4-0 '<warning
+xmlns="http://docbook.org/ns/docbook"><simpara>Ta opcja jest
+<emphasis>PRZESTARZAŁA</emphasis> od PHP 5.3.0 i została <emphasis>USUNIĘTA</emphasis>
+w PHP 5.4.0.</simpara></warning>'>
+
+<!ENTITY warn.deprecated.function-5-3-0.removed-5-4-0 '<warning
+xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja jest
+<emphasis>PRZESTARZAŁA</emphasis> od PHP 5.3.0 i została <emphasis>USUNIĘTA</emphasis>
+w PHP 5.4.0.</simpara></warning>'>
+
+<!ENTITY warn.deprecated.feature-5-5-0 '<warning
+xmlns="http://docbook.org/ns/docbook"><simpara>Ta opcja jest
+<emphasis>PRZESTARZAŁA</emphasis> od PHP 5.5.0. Używanie tej opcji nie jest zalecane.</simpara></warning>'>
+
 <!ENTITY removed.php.future 'Ta przestarzała funkcja <emphasis xmlns="http://docbook.org/ns/docbook">zostanie</emphasis>
 na pewno w przyszłości <emphasis xmlns="http://docbook.org/ns/docbook">usunięta</emphasis>.'>
 
@@ -169,9 +202,25 @@ xmlns="http://docbook.org/ns/docbook"><simpara xmlns="http://docbook.org/ns/docb
 <emphasis xmlns="http://docbook.org/ns/docbook">PRZESTARZAŁA</emphasis> i zostanie <emphasis xmlns="http://docbook.org/ns/docbook">USUNIĘTA</emphasis>
 od PHP 5.3.0.</simpara></warning>'>
 
+<!ENTITY warn.deprecated.function.removed-5-5-0 '<warning
+xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja jest
+<emphasis>PRZESTARZAŁA</emphasis> i <emphasis>USUNIĘTA</emphasis> w PHP 5.5.0.</simpara></warning>'>
+
 <!ENTITY warn.deprecated.alias-5-3-0 '<warning xmlns="http://docbook.org/ns/docbook">
 <simpara xmlns="http://docbook.org/ns/docbook">Ten alias funkcji jest <emphasis xmlns="http://docbook.org/ns/docbook">PRZESTARZAŁY</emphasis> od PHP 5.3.0.
 Używanie tego aliasu nie jest zalecane.</simpara></warning>'>
+
+<!ENTITY warn.deprecated.func-5-4-0 '<warning xmlns="http://docbook.org/ns/docbook">
+<simpara>Ta funkcja jest <emphasis>PRZESTARZAŁA</emphasis> od PHP 5.4.0.
+Używanie tej funkcji nie jest zalecane.</simpara></warning>'>
+
+<!ENTITY warn.deprecated.alias-5-4-0 '<warning xmlns="http://docbook.org/ns/docbook">
+<simpara>Ten alias jest <emphasis>PRZESTARZAŁY</emphasis> od PHP 5.4.0.  
+Używanie tego aliasu nie jest zalecane.</simpara></warning>'>
+
+<!ENTITY warn.deprecated.func-5-5-0 '<warning xmlns="http://docbook.org/ns/docbook">
+<simpara>Ta funkcja jest <emphasis>PRZESTARZAŁA</emphasis> od PHP 5.5.0.
+Używanie tej funkcji nie jest zalecane.</simpara></warning>'>
 
 <!ENTITY warn.experimental.func '<warning 
 xmlns="http://docbook.org/ns/docbook"><simpara xmlns="http://docbook.org/ns/docbook">Ta funkcja jest w stadium
@@ -181,8 +230,8 @@ przyszłych wersjach PHP bez wcześniejszego uprzedzenia. Używaj tej funkcji na
 własne ryzyko.</simpara></warning>'>
 
 <!ENTITY warn.imaprecodeyaz '<warning xmlns="http://docbook.org/ns/docbook"><simpara xmlns="http://docbook.org/ns/docbook">Rozszerzenia <link xmlns="http://docbook.org/ns/docbook" 
-linkend="ref.imap">IMAP</link>, <link xmlns="http://docbook.org/ns/docbook" linkend="ref.recode">recode</link>, <link xmlns="http://docbook.org/ns/docbook" 
-linkend="ref.yaz">YAZ</link> i <link xmlns="http://docbook.org/ns/docbook" linkend="ref.cyrus">Cyrus</link> nie mogą
+linkend="book.imap">IMAP</link>, <link xmlns="http://docbook.org/ns/docbook" linkend="ref.recode">recode</link>, <link xmlns="http://docbook.org/ns/docbook" 
+linkend="book.yaz">YAZ</link> i <link xmlns="http://docbook.org/ns/docbook" linkend="ref.cyrus">Cyrus</link> nie mogą
 być używane razem. Dzieje się tak z powodu współdzielenia tych samych oznaczeń
 wewnętrznych. Notatka: problem nie dotyczy Yaz 2.0 i nowszych wersji.</simpara></warning>'>
 
@@ -223,6 +272,8 @@ nieudokumentowana, dostępna jest jedynie lista jej argumentów.
 
 <!-- Misc -->
 
+<!ENTITY version.exists.asof 'Istnieje od PHP '>
+
 <!ENTITY version.trunk.after.53 '<emphasis xmlns="http://docbook.org/ns/docbook">Ta zmiana
 istnieje w <link linkend="about.phpversions">wersji testowej</link> PHP, i będzie
 prawdopodobnie istniała w nowszych wersjach niż PHP 5.3.</emphasis>'>
@@ -232,6 +283,10 @@ prawdopodobnie istniała w nowszych wersjach niż PHP 5.3.</emphasis>'>
 <!ENTITY no.function.parameters '<para xmlns="http://docbook.org/ns/docbook">Ta funkcja nie posiada parametrów.</para>'>
 
 <!ENTITY example.outputs '<para xmlns="http://docbook.org/ns/docbook">Powyższy przykład wyświetli:</para>'>
+
+<!ENTITY example.outputs.53 '<para xmlns="http://docbook.org/ns/docbook">Powyższy przykład w PHP 5.3 wyświetli:</para>'>
+
+<!ENTITY example.outputs.54 '<para xmlns="http://docbook.org/ns/docbook">Powyższy przykład w PHP 5.4 wyświetli:</para>'>
 
 <!ENTITY example.outputs.32bit '<para xmlns="http://docbook.org/ns/docbook">Wyświetla następujący przykład na systemach 32 bitowych:</para>'>
 
@@ -250,7 +305,7 @@ podobnego do:</para>'>
 podobnego do:</para>'>
 
 <!ENTITY array.resetspointer '<note xmlns="http://docbook.org/ns/docbook"><simpara xmlns="http://docbook.org/ns/docbook">Ta funkcja
-<function xmlns="http://docbook.org/ns/docbook">zresetuje</function> wskaźnik <type>tablicy</type> po swoim
+zresetuje (zobacz <function xmlns="http://docbook.org/ns/docbook">reset</function>) wskaźnik <type>tablicy</type> wejściowej po swoim
 wykonaniu.</simpara></note>'>
 
 <!ENTITY seealso.array.sorting '<link xmlns="http://docbook.org/ns/docbook" linkend="array.sorting">porównanie funkcji sortujących tablice</link>'>
@@ -297,6 +352,8 @@ w <literal xmlns="http://docbook.org/ns/docbook">PATH</literal> systemu), ale ni
 
 <!ENTITY foreach '<link xmlns="http://docbook.org/ns/docbook" linkend="control-structures.foreach">foreach</link>'>
 
+<!ENTITY yield '<link xmlns="http://docbook.org/ns/docbook" linkend="control-structures.yield">yield</link>'>
+
 <!ENTITY parameter.context 'Opis <link xmlns="http://docbook.org/ns/docbook" linkend="context">kontekstów</link>
 podano w części podręcznika poświęconej <literal xmlns="http://docbook.org/ns/docbook">kontekstom</literal>.'>
 
@@ -313,10 +370,11 @@ przypadku błędu.'>
 
 <!ENTITY return.void 'Nie jest zwracana żadna wartość.'>
 
+<!ENTITY return.callbacksort 'Funkcja porównująca musi zwrócić liczbę całkowitą mniejszą, równą lub większą od zera jeśli pierwszy argument jest uważany za odpowiednio mniejszy, równy lub większy od drugiego.'>
+
 <!ENTITY return.falseproblem '<warning xmlns="http://docbook.org/ns/docbook"><simpara xmlns="http://docbook.org/ns/docbook">Ta funkcja może
 zwrócić Boolean &false;, ale może też zwrócić wartość innego typu niż Boolean, która oznacza
-wartość &false;, takie jak <literal xmlns="http://docbook.org/ns/docbook">0</literal> lub
-&quot;&quot;. Aby uzyskać więcej informacji proszę zapoznać się z rozdziałem <link xmlns="http://docbook.org/ns/docbook" 
+wartość &false;. Aby uzyskać więcej informacji proszę zapoznać się z rozdziałem <link xmlns="http://docbook.org/ns/docbook" 
 linkend="language.types.boolean">Typy logiczne</link>.
 Można używać operatora <link xmlns="http://docbook.org/ns/docbook" linkend="language.operators.comparison">===
 </link> do testowania zwracanych wartości przez tę
@@ -353,6 +411,8 @@ PHP zostało skompilowane z obsługą FreeType (<option role="configure">--with-
 <!ENTITY note.gd.2 '<note xmlns="http://docbook.org/ns/docbook"><simpara xmlns="http://docbook.org/ns/docbook">Ta funkcja wymaga GD 2.0.1 lub nowszej (2.0.28 lub nowsza jest zalecana).</simpara></note>'>
 
 <!ENTITY note.gd.notrequired '<note xmlns="http://docbook.org/ns/docbook"><para xmlns="http://docbook.org/ns/docbook">Ta funkcja nie wymaga dostępu do biblioteki GD.</para></note>'>
+
+ <!ENTITY note.gd.interpolation '<note xmlns="http://docbook.org/ns/docbook"><para>Na działanie tej funkcji wpływa metoda interpolacji ustawiana przez  <function>imagesetinterpolation</function>.</para></note>'>
 
 <!ENTITY gd.image.description '<varlistentry xmlns="http://docbook.org/ns/docbook"><term xmlns="http://docbook.org/ns/docbook"><parameter xmlns="http://docbook.org/ns/docbook">
 obraz</parameter></term><listitem xmlns="http://docbook.org/ns/docbook"><para xmlns="http://docbook.org/ns/docbook">Zasób obrazu, zwrócony przez jedną z funkcji tworzących obrazy, 
@@ -438,6 +498,14 @@ kodowania zanków.</para>'>
 
 <!ENTITY mbstring.warning.e-modifier '<warning xmlns="http://docbook.org/ns/docbook"><para xmlns="http://docbook.org/ns/docbook">Nigdy nie należy używać modyfikatora <literal xmlns="http://docbook.org/ns/docbook">e</literal> na niesprawdzonych danych wejściowych. Znaki unikowe nie są dodawane automatycznie (podobnie jak w <function xmlns="http://docbook.org/ns/docbook">preg_replace</function>). Nie zwracanie uwagi na to często powoduje, że aplikacje są podatne na zdalne wywoływania szkodliwego kodu.</para></warning>'>
 
+<!-- mcrypt notes -->
+
+<!ENTITY mcrypt.parameter.cipher '<para xmlns="http://docbook.org/ns/docbook">Jedna ze stałych <constant>MCRYPT_szyfr</constant>, lub nazwa algorytmu jako ciąg znaków.</para>'>
+
+<!ENTITY mcrypt.parameter.iv '<para xmlns="http://docbook.org/ns/docbook">Stosowany dla inicjalizacji trybów CBC, CFB, OFB, oraz - przy niektórych algorytmach - trybu STREAM. Nie podając IV, jeśli algorytm tego wymaga, spowoduje wygenerowanie ostrzeżenia i użycie IV ze wszystkimi bajtami ustawionymi na  "<literal>\0</literal>".</para>'>
+
+<!ENTITY mcrypt.parameter.mode '<para xmlns="http://docbook.org/ns/docbook">Jedna ze stałych <constant>MCRYPT_MODE_nazwatrybu</constant>, lub jeden z następujących ciągów znaków: "ecb", "cbc", "cfb", "ofb", "nofb" lub "stream".</para>'>
+
 <!-- MCVE notes -->
 
 <!ENTITY mcve.conn.description '<varlistentry xmlns="http://docbook.org/ns/docbook"><term xmlns="http://docbook.org/ns/docbook"><parameter xmlns="http://docbook.org/ns/docbook">
@@ -449,7 +517,7 @@ conn</parameter></term><listitem xmlns="http://docbook.org/ns/docbook"><para xml
 <!ENTITY memcached.parameter.expiration 'Czas wygaśnięcia, domyślnie 0. Zobacz <link xmlns="http://docbook.org/ns/docbook"
  linkend="memcached.expiration">Czasy wygaśnięcia</link>, aby dowiedzieć się wiecej.'>
 
-<!ENTITY memcached.parameter.server_key 'Klucz identyfikujący serwer do przechowywania wartości.'>
+<!ENTITY memcached.parameter.server_key 'Klucz identyfikujący serwer, na którym dane będą zapisywane lub z którego będą odczytywane. Zamiast stosowania funkcji skrótu na samym kluczu elementu, stosujemy ją na kluczu serwera decydując z którym serwerem memcached się łączyć. Pozwala to na grupowanie powiązanych ze sobą elementów na jednym serwerze pozwalając na zwiększenie wydajności przy wielokrotnych operacjach.'>
 
 <!ENTITY memcached.parameter.items 'Tablica, para kluczy/wartości do przechowywania na serwerze.'>
 
@@ -458,6 +526,16 @@ conn</parameter></term><listitem xmlns="http://docbook.org/ns/docbook"><para xml
 <!ENTITY memcached.parameter.value 'Wartość do przechowania.'>
 
 <!ENTITY memcached.result.getresultcode 'Użyj <methodname xmlns="http://docbook.org/ns/docbook">Memcached::getResultCode</methodname>, jeśli to konieczne.'>
+
+<!-- password notes -->
+
+<!ENTITY password.parameter.algo '<link xmlns="http://docbook.org/ns/docbook" linkend="password.constants">Stała algorytmu hasła</link> wyznaczająca algorytm stosowany przy generowaniu skrótu hasła.'>
+
+<!ENTITY password.parameter.hash 'Skrót wygenerowany przez <function xmlns="http://docbook.org/ns/docbook">password_hash</function>.'>
+
+<!ENTITY password.parameter.options 'Tablica asocjacyjna zawierająca opcje. Na chwilę obecną obsługiwane są dwie opcje: <literal xmlns="http://docbook.org/ns/docbook">salt</literal>, aby podać dodatkowy parametr ("salt") stosowany przy generowaniu skrótu hasła, i <literal xmlns="http://docbook.org/ns/docbook">cost</literal>, który wyznacza koszt algorytmiczny, który powinien być zastosowany. Przykłady tych wartości można znaleźć w opisie funkcji <function xmlns="http://docbook.org/ns/docbook">crypt</function>.'>
+
+<!ENTITY password.parameter.password 'Hasło użytkownika.'>
 
 <!-- geaman notes -->
 
@@ -561,9 +639,45 @@ zostanie wstawiony, np. funkcją <function xmlns="http://docbook.org/ns/docbook"
 <!-- Dom Notes -->
 <!ENTITY dom.node.inserted 'Ten węzeł nie pojawi się w dokumencie dopóki nie
 zostanie wstawiony, np. metodą <link xmlns="http://docbook.org/ns/docbook"
-linkend="domnode.appendchild">DOMNode->appendChild()</link>.'>
+linkend="domnode.appendchild">DOMNode::appendChild()</link>.'>
 
 <!ENTITY dom.allowstatic '<para xmlns="http://docbook.org/ns/docbook">Ta metoda <emphasis>może</emphasis> być wywoływana statycznie, ale spowoduje błąd <constant>E_STRICT</constant>.</para>'>
+
+<!ENTITY dom.malformederror '<para xmlns="http://docbook.org/ns/docbook">Podczas gdy nieprawidłowy kod HTML powinien zostać załadowany poprawnie, ta funkcja może wygenerować błąd poziomu <constant>E_WARNING</constant> po napotkaniu nieprawidłowej składni. Do poprawnej obsługi tych błędów można zastosować <link linkend="function.libxml-use-internal-errors">funkcje obsługi błędów biblioteki libxml</link>.</para>'>
+
+<!-- Dom Examples -->
+<!ENTITY dom.book.example '<para xmlns="http://docbook.org/ns/docbook">Poniższe przykłady stosują <filename>book.xml</filename> który zawiera poniższe dane:</para>
+<programlisting role="xml" xmlns="http://docbook.org/ns/docbook">
+<!-- Warning: The CDATA markup here is a little tricky. Please DO NOT BREAK it! -->
+<![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE books [
+  <!ELEMENT books   (book+)>
+  <!ELEMENT book    (title, author+, xhtml:blurb?)>
+  <!ELEMENT title   (#PCDATA)>
+  <!ELEMENT blurb   (#PCDATA)>
+  <!ELEMENT author  (#PCDATA)>
+  <!ATTLIST books   xmlns        CDATA  #IMPLIED>
+  <!ATTLIST books   xmlns:xhtml  CDATA  #IMPLIED>
+  <!ATTLIST book    id           ID     #IMPLIED>
+  <!ATTLIST author  email        CDATA  #IMPLIED>
+]>
+<?xml-stylesheet type="text/xsl" href="style.xsl"?>
+<books xmlns="http://books.php/" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <book id="php-basics">
+    <title>PHP Basics</title>
+    <author email="jim.smith@basics.php">Jim Smith</author>
+    <author email="jane.smith@basics.php">Jane Smith</author>
+    <xhtml:blurb><![CDATA[
+<p><em>PHP Basics</em> provides an introduction to PHP.</p>
+]]]]><![CDATA[></xhtml:blurb>
+  </book>
+  <book id="php-advanced">
+    <title>PHP Advanced Programming</title>
+    <author email="jon.doe@advanced.php">Jon Doe</author>
+  </book>
+</books>
+]]></programlisting>'>
 
 <!-- FileSystem entities -->
 
@@ -579,6 +693,11 @@ lub <function xmlns="http://docbook.org/ns/docbook">fsockopen</function> (a jedn
 
 <!ENTITY fs.file.pointer '<para xmlns="http://docbook.org/ns/docbook">Wskaźnik do systemu plików typu <type>resource</type>
 jest zazwyczaj tworzony poprzez funkcję <function xmlns="http://docbook.org/ns/docbook">fopen</function>.</para>'>
+
+<!ENTITY fs.file.32bit '<note xmlns="http://docbook.org/ns/docbook"><simpara>
+    Ponieważ typ integer stosowany w PHP zawiera bit znaku a wiele platform stosuje 32-bitowe liczby całkowite,
+	niektóre funkcje obsługi systemów plików mogą zwracać nieprzewidzane wyniki dla plików większych niż 2GB.
+   </simpara></note>'>
 
 <!-- GNUPG -->
 <!ENTITY gnupg.identifier '<para xmlns="http://docbook.org/ns/docbook">Identyfikator gnupg, do wywołania funkcji
@@ -746,6 +865,16 @@ przekonwertowany do formatu PDF za pomocą Acrobat Distiller™ lub Ghostview.</
 <!ENTITY note.xslt.windows '<note xmlns="http://docbook.org/ns/docbook"><para xmlns="http://docbook.org/ns/docbook">Zauważ, że należy podać
 <emphasis xmlns="http://docbook.org/ns/docbook">file://</emphasis> na początku ścieżki przy pracy pod systemem
 Windows.</para></note>'>
+
+<!ENTITY xslt.parameter.processor '<varlistentry xmlns="http://docbook.org/ns/docbook"><term><parameter>
+processor</parameter></term><listitem><para>Identyfikator łącza do procesora <acronym>XSLT</acronym>, stworzony za
+pomocą funkcji <function>xslt_create</function>.</para></listitem>
+</varlistentry>'>
+
+<!ENTITY xslt.parameter.xh '<varlistentry xmlns="http://docbook.org/ns/docbook"><term><parameter>
+xh</parameter></term><listitem><para>Identyfikator łącza do procesora <acronym>XSLT</acronym>, stworzony za
+pomocą funkcji <function>xslt_create</function>.</para></listitem>
+</varlistentry>'>
 
 <!-- Notes for safe-mode limited functions: -->
 <!ENTITY note.sm.disabled '<note xmlns="http://docbook.org/ns/docbook"><simpara xmlns="http://docbook.org/ns/docbook">&sm.disabled;</simpara></note>'>
@@ -924,6 +1053,13 @@ skala</parameter></term><listitem xmlns="http://docbook.org/ns/docbook"><para xm
 cyfr po kropce w wyniku. Możesz także ustawić globalnie domyślną skalę
 dla wszystkich funkcji używając <function xmlns="http://docbook.org/ns/docbook">bcscale</function>.</para></listitem></varlistentry>'>
 
+<!-- CTYPE Notes -->
+<!ENTITY note.ctype.parameter.integer '<note xmlns="http://docbook.org/ns/docbook"><para>
+Jeśli podana zostanie zmienna typu <type>integer</type> o wartości z zakresu -128 i 255 włącznie, jest ona interpretowana
+jako wartość ASCII dla pojedynczego znaku (do ujemnych wartości dodaje się liczbę 256 aby przejść do zakresu wartości
+występujących w rozszerzonej tablicy ASCII). Każda inna zmienna całkowita jest interpretowana jako ciąg znakowy zwierający
+cyfry dziesiętne liczby całkowitej.</para></note>'>
+
 <!-- FBSQL Notes -->
 <!ENTITY fbsql.link-identifier.description '<varlistentry xmlns="http://docbook.org/ns/docbook"><term xmlns="http://docbook.org/ns/docbook"><parameter xmlns="http://docbook.org/ns/docbook">
 link_identifier</parameter></term><listitem xmlns="http://docbook.org/ns/docbook"><para xmlns="http://docbook.org/ns/docbook">Identyfikator połączenia FrontBase
@@ -968,7 +1104,7 @@ wywołaniem <function>mysqli_real_connect</function>, ale po wywołaniu <functio
 <!-- Notes for SAPI/Apache -->
 <!ENTITY note.apache.nsapi-module '<note xmlns="http://docbook.org/ns/docbook"><para xmlns="http://docbook.org/ns/docbook">Od PHP 4.3.3 możliwe
 jest użycie tej funkcji przy pracy w trybie
-<link xmlns="http://docbook.org/ns/docbook" linkend="ref.nsapi">modułu NSAPI serwera</link> także w serwerach
+<link xmlns="http://docbook.org/ns/docbook" linkend="book.nsapi">modułu NSAPI serwera</link> także w serwerach
 Netscape/iPlanet/SunONE.</para></note>'>
 
 <!ENTITY apache.req.module '<simpara xmlns="http://docbook.org/ns/docbook">Funkcja ta jest dostępna tylko jeśli PHP
@@ -1049,6 +1185,13 @@ Jeśli żadne połączenie nie zostanie znalezione lub nawiązane, wygenerowany
 zostanie błąd poziomu <constant>E_WARNING</constant>.</para></listitem>
 </varlistentry>'>
 
+<!ENTITY mysql.linkid-noreopen.description '<varlistentry
+xmlns="http://docbook.org/ns/docbook"><term><parameter>
+link_identifier</parameter></term><listitem><para>Połączenie MySQL. Jeśli identyfikator połączenia nie zostanie
+podany, użyte zostanie ostatnie połączenie otwarte za pomocą funkcji 
+<function>mysql_connect</function>. Jeśli nie znalezione zostanie żadne połączenie, wygenerowany zostanie błąd
+poziomu <constant>E_WARNING</constant>.</para></listitem></varlistentry>'>
+
 <!ENTITY mysql.result.description '<varlistentry xmlns="http://docbook.org/ns/docbook"><term xmlns="http://docbook.org/ns/docbook"><parameter xmlns="http://docbook.org/ns/docbook">
 wynik</parameter></term><listitem xmlns="http://docbook.org/ns/docbook"><para xmlns="http://docbook.org/ns/docbook">Wynik w postaci zmiennej typu
 <type>resource</type>, które jest przetwarzane. Wynik ten pochodzi z wywołania
@@ -1061,7 +1204,12 @@ przesunięcie_pola</parameter></term><listitem xmlns="http://docbook.org/ns/docb
 <parameter xmlns="http://docbook.org/ns/docbook">przesunięcie_pola</parameter> nie istnieje, wygenerowane zostanie
 ostrzeżenie poziomu
 <constant>E_WARNING</constant>.</para></listitem></varlistentry>'>
-      
+
+<!ENTITY mysql.alternative.note '<para xmlns="http://docbook.org/ns/docbook">To rozszerzenie jest przestarzałe od PHP 5.5.0 i w przyszłości zostanie usunięte. Zamiast niego należy stosować rozszerzenia <link linkend="book.mysqli">MySQLi</link> lub <link linkend="ref.pdo-mysql">PDO_MySQL</link>.
+Zobacz też przewodnik <link linkend="mysqlinfo.api.choosing">MySQL: wybieranie API</link> i
+<link linkend="faq.databases.mysql.deprecated">stosowne FAQ</link> aby uzyskać więcej informacji. 
+Alternatywy dla tej funkcji to między innymi:</para>'>
+
 <!-- Sybase Notes --> 
 <!ENTITY sybase.ct.only '<note xmlns="http://docbook.org/ns/docbook"><simpara xmlns="http://docbook.org/ns/docbook">Ta funkcja jest dostępna tylko jeśli za
 interfejs do Sybase służy biblioteka CT, a nie DB.</simpara></note>'>
@@ -1223,6 +1371,7 @@ należy skorzystać z funkcji <function xmlns="http://docbook.org/ns/docbook">ss
 <!ENTITY returns.http.response 'Zwraca łańcuch znaków z odpowiedziami HTTP
 w przypadku powodzenia, lub &false; w przypadku błędu'>
 <!ENTITY returns.http.false.orexits 'Zwraca &false; lub <emphasis xmlns="http://docbook.org/ns/docbook">exist</emphasis> w przypadku sukcesu'>
+<!ENTITY returns.session.storage.retval 'Zwracana wartość (zazwyczaj &true; w przypadku sukcesu, &false; dla porażki). Wartość ta jest zwracana wewnętrznie do PHP w celu jej przetworzenia.'>
 <!ENTITY http.request.affects 'Podlega jedynie niżej wymienionym metodom żądania:'>
 <!ENTITY http.request.affects.any 'Podlega dowolnej metodzie żądania.'>
 <!ENTITY http.response.class.php51 'Klasa <link xmlns="http://docbook.org/ns/docbook" linkend="class.httpresponse"><classname
@@ -1405,7 +1554,7 @@ gdy PHP zostało skompilowane z biblioteką libxml 20620 lub nowszą.</para></ca
 <constant>E_WARNING</constant> jeśli wywołanie tej metody nie powiedzie się
 (np. nie jest zaimplementowana).</para>'>
 <!ENTITY userstream.updates.context '<note xmlns="http://docbook.org/ns/docbook"><para xmlns="http://docbook.org/ns/docbook">Właściwość
-<varname linkend="streamwrapper.props.context">streamWrapper->context</varname>
+<varname linkend="streamwrapper.props.context">streamWrapper::$context</varname>
 jest aktualizowana, jeśli do wywołującej funkcji jest przekazywany prawidłowy kontekst.</para></note>'>
 
 <!-- Gmagick -->
@@ -1421,6 +1570,9 @@ w przeciwnym przypadku jako &null;.'>
 <!-- //// TODO DOKOŃCZYĆ //// -->
 <!ENTITY reflection.export.param.return 'Setting to &true; will return the export,
 as opposed to emitting it. Setting to &false; (the default) will do the opposite.'>
+
+<!ENTITY reflection.invoke.reference 'Jeśli funkcja posiada argumenty które muszą być
+referencjami, muszą one być referencjami w przekazywanej liście argumentów.'>
 
 <!ENTITY reflection.export.param.name 'Refleksja do eksportu.'>
 
@@ -1449,3 +1601,164 @@ as opposed to emitting it. Setting to &false; (the default) will do the opposite
 <!ENTITY win32service.success.false.error 'Zwraca &true; w przypadku powodzenia &win32service.false.error;'>
 <!ENTITY win32service.noerror.false.error 'Zwraca <constant xmlns="http://docbook.org/ns/docbook">WIN32_NO_ERROR</constant> w przypadku powodzenia &win32service.false.error;'>
 
+<!-- SNMP -->
+<!ENTITY snmp.set.type.values '<para xmlns="http://docbook.org/ns/docbook">
+ <acronym>MIB</acronym> definiuje typ każdego id obiektu. Musi być podany jako pojedynczy znak z poniższej listy
+</para>
+<table xmlns="http://docbook.org/ns/docbook">
+ <title>types</title>
+ <tgroup cols="2">
+  <tbody>
+   <row><entry>=</entry><entry>Typ pobrany z MIB</entry></row>
+   <row><entry>i</entry><entry>INTEGER</entry> </row>
+   <row><entry>u</entry><entry>INTEGER</entry></row>
+   <row><entry>s</entry><entry>STRING</entry></row>
+   <row><entry>x</entry><entry>HEX STRING</entry></row>
+   <row><entry>d</entry><entry>DECIMAL STRING</entry></row>
+   <row><entry>n</entry><entry>NULLOBJ</entry></row>
+   <row><entry>o</entry><entry>OBJID</entry></row>
+   <row><entry>t</entry><entry>TIMETICKS</entry></row>
+   <row><entry>a</entry><entry>IPADDRESS</entry></row>
+   <row><entry>b</entry><entry>BITS</entry></row>
+  </tbody>
+ </tgroup>
+</table>
+<para xmlns="http://docbook.org/ns/docbook">
+ Jeśli przy kompilacji biblioteki acronym>SNMP</acronym> zdefiniowana została stała <constant>OPAQUE_SPECIAL_TYPES</constant>, dostępne są także poniższe wartości:
+</para>
+<table xmlns="http://docbook.org/ns/docbook">
+ <title>types</title>
+ <tgroup cols="2">
+  <tbody>
+   <row><entry>U</entry><entry>unsigned int64</entry></row>
+   <row><entry>I</entry><entry>signed int64</entry></row>
+   <row><entry>F</entry><entry>float</entry></row>
+   <row><entry>D</entry><entry>double</entry></row>
+  </tbody>
+ </tgroup>
+</table>
+'>
+<!ENTITY snmp.set.type.values.asn.mapping '<para xmlns="http://docbook.org/ns/docbook">
+ Większość z nich będzie w sposób oczywisty odpowiadać typowi ASN.1 &apos;s&apos;, &apos;x&apos;, &apos;d&apos; i &apos;b&apos; są różnymi sposobami na określenie wartości OCTET STRING, a typ &apos;u&apos; - bez określania znaku - stosowany jest także dla obsługi wartości Gauge32.
+</para>
+'>
+<!ENTITY snmp.set.type.values.equal.note '<para xmlns="http://docbook.org/ns/docbook">
+ Jeśli pliki MIB są ładowane do drzewa MIB poprzez "snmp_read_mib" lub przez podanie ich w konfiguracji libsnmp, &apos;=&apos; może być stosowane
+ jako wartość parametru <parameter>type</parameter> dla wszystkich id obiektów, jako że typ może być automatycznie odczytany z MIB.
+</para>
+'>
+<!ENTITY snmp.set.type.values.bitset.note '<para xmlns="http://docbook.org/ns/docbook">
+ Istnieją dwa sposoby aby ustawić wartość zmiennej typu BITS, przykładowo
+ "SYNTAX    BITS {telnet(0), ftp(1), http(2), icmp(3), snmp(4), ssh(5), https(6)}":
+</para>
+<itemizedlist xmlns="http://docbook.org/ns/docbook">
+ <listitem>
+  <simpara>
+	  Stosując typ "b" i listę wartości bitowych. Ta metoda nie jest zalecana ponieważ zapytanie GET dla dla tego samego OID zwróciłoby np. 0xF8.
+  </simpara>
+ </listitem>
+ <listitem>
+  <simpara>
+	  Stosując typ "x" i wartość szesnastkową bez zwyczajowego prefiksu "0x".
+  </simpara>
+ </listitem>
+</itemizedlist>
+<para xmlns="http://docbook.org/ns/docbook">
+ Zobacz też sekcję z przykładami.
+</para>
+'>
+<!ENTITY snmp.methods.exceptions_enable.refsect '<refsect1 role="errors" xmlns="http://docbook.org/ns/docbook">
+&reftitle.errors;
+<para>
+	Ta metoda domyślnie nie zwraca żadnych wyjątków.
+	Aby włączyć zwracanie wyjątku SNMPException przy wystąpieniu niektórych błędów biblioteki,
+	należy odpowiednio ustawić parametru klasy SNMP <parameter>exceptions_enabled</parameter>.
+	Zobacz <link linkend="snmp.props.exceptions-enabled">opis
+ <parameter>SNMP::$exceptions_enabled</parameter></link> aby dowiedzieć się więcej.
+</para>
+</refsect1>
+'>
+
+<!-- Eio -->
+<!ENTITY eio.callback.proto '<para xmlns="http://docbook.org/ns/docbook">
+Funkcja <parameter xmlns="http://docbook.org/ns/docbook">callback</parameter> jest wywoływana po zakończeniu wywołania. Powinna ona być zgodna z następującym prototypem: <programlisting role="php"><![CDATA[
+void callback(mixed $dane, int $wynik[, resource $zapytanie]);
+]]></programlisting>
+<variablelist xmlns="http://docbook.org/ns/docbook">
+<varlistentry xmlns="http://docbook.org/ns/docbook">
+<term><parameter>dane</parameter></term>
+<listitem><para>dane przekazywane do zapytania.</para></listitem>
+</varlistentry>
+<varlistentry xmlns="http://docbook.org/ns/docbook">
+<term><parameter>wynik</parameter></term>
+<listitem><para>wartość wynikowa, zależna od zapytania; ogólnie, jest to wartość zwracana przez odpowiednie wywołanie systemowe.</para></listitem>
+</varlistentry>
+<varlistentry xmlns="http://docbook.org/ns/docbook">
+<term><parameter>zapytanie</parameter></term>
+<listitem><para>opcjonalny zasób zapytania, który może być użyty z funkcjami takimi jak <function>eio_get_last_error</function></para></listitem>
+</varlistentry>
+</variablelist>
+</para>
+'>
+
+<!ENTITY eio.request.pri.values '<para
+xmlns="http://docbook.org/ns/docbook">Priorytet zapytania: <constant
+xmlns="http://docbook.org/ns/docbook">EIO_PRI_DEFAULT</constant>, <constant
+xmlns="http://docbook.org/ns/docbook">EIO_PRI_MIN</constant>, <constant
+xmlns="http://docbook.org/ns/docbook">EIO_PRI_MAX</constant>, lub &null;.
+Jeśli podana zostanie wartość &null;, parametr <parameter
+xmlns="http://docbook.org/ns/docbook">pri</parameter> jest wewnętrznie ustawiany na
+<constant xmlns="http://docbook.org/ns/docbook">EIO_PRI_DEFAULT</constant>.
+</para>
+'>
+
+<!ENTITY eio.warn.relpath '<warning
+xmlns="http://docbook.org/ns/docbook"><simpara xmlns="http://docbook.org/ns/docbook">Unikaj ścieżek względnych
+</simpara></warning>
+'>
+
+<!ENTITY trader.arg.array.of.real 'Tablica wartości zmiennoprzecinkowych.'>
+<!ENTITY trader.arg.array.of.real.high 'Najwyższa cena, High price, tablica wartości zmiennoprzecinkowych.'>
+<!ENTITY trader.arg.array.of.real.low 'Najniższa cena, tablica wartości zmiennoprzecinkowych.'>
+<!ENTITY trader.arg.array.of.real.close 'Cena zamknięcia, tablica wartości zmiennoprzecinkowych.'>
+<!ENTITY trader.arg.array.of.real.open 'Cena otwarcia, tablica wartości zmiennoprzecinkowych.'>
+<!ENTITY trader.arg.array.of.real.volume 'Wolumen obrotu, tablica wartości zmiennoprzecinkowych.'>
+<!ENTITY trader.arg.array.of.real.periods 'Tablica wartości zmiennoprzecinkowych.'>
+<!ENTITY trader.arg.penetration 'Procent penetracji świecy wewnątrz innej świecy.'>
+<!ENTITY trader.arg.vfactor 'Współczynnik wolumenu. Wartość z zakresu od 1 do 0.'>
+<!ENTITY trader.arg.time.period 'Numer okresu. Wartość z zakresu od 2 do 100000.'>
+<!ENTITY trader.arg.fast.period 'Numer okresu dla szybkiego MA. Wartość z zakresu od 2 do 100000.'>
+<!ENTITY trader.arg.slow.period 'Numer okresu dla wolnego MA. Wartość z zakresu od 2 do 100000.'>
+<!ENTITY trader.arg.signal.period 'Wygładzanie linii sygnału (numer okresu). Wartość z zakresu od 1 do 100000.'>
+<!ENTITY trader.arg.fastk.period 'Przedział czasowy dla budowania linii Fast-K. Wartość z zakresu od 1 do 100000.'>
+<!ENTITY trader.arg.fastd.period 'Wygładzanie do stworzenia linii Fast-D. Wartość z zakresu od 1 do 100000, zazwyczaj ustawiana na 3.'>
+<!ENTITY trader.arg.slowk.period 'Wygładzanie do stworzenia linii Slow-K. Wartość z zakresu od 1 do 100000, zazwyczaj ustawiana na 3.'>
+<!ENTITY trader.arg.slowd.period 'Wygładzanie do stworzenia linii Slow-D. Wartość z zakresu od 1 do 100000, zazwyczaj ustawiana na 3.'>
+<!ENTITY trader.arg.min.period 'Wartość mniejsza od minimalnej będzie zmieniona do wartości okresu minimalnego. Wartość z zakresu od 2 do 100000'>
+<!ENTITY trader.arg.max.period 'Wartość wyższa od minimalnej będzie zmieniona do wartości okresu maksymalnego. Wartość z zakresu od 2 do 100000'>
+<!ENTITY trader.arg.ma.type 'Typ ruchomej średniej. Należy stosować stałe z serii <link xmlns="http://docbook.org/ns/docbook" linkend="trader.constants">TRADER_MA_TYPE_*</link>.'>
+<!ENTITY trader.arg.fast.ma.type 'Typ ruchomej średniej dla szybkiego MA. Należy stosować stałe z serii <link xmlns="http://docbook.org/ns/docbook" linkend="trader.constants">TRADER_MA_TYPE_*</link>.'>
+<!ENTITY trader.arg.slow.ma.type 'Typ ruchomej średniej dla wolnego MA. Należy stosować stałe z serii <link xmlns="http://docbook.org/ns/docbook" linkend="trader.constants">TRADER_MA_TYPE_*</link>.'>
+<!ENTITY trader.arg.fastd.ma.type 'Typ ruchomej średniej dla Fast-D. Należy stosować stałe z serii <link xmlns="http://docbook.org/ns/docbook" linkend="trader.constants">TRADER_MA_TYPE_*</link>.'>
+<!ENTITY trader.arg.slowk.ma.type 'Typ ruchomej średniej dla Slow-K. Należy stosować stałe z serii <link xmlns="http://docbook.org/ns/docbook" linkend="trader.constants">TRADER_MA_TYPE_*</link>.'>
+<!ENTITY trader.arg.slowd.ma.type 'Typ ruchomej średniej dla Slow-D. Należy stosować stałe z serii <link xmlns="http://docbook.org/ns/docbook" linkend="trader.constants">TRADER_MA_TYPE_*</link>.'>
+<!ENTITY trader.arg.slowk.ma.type 'Typ ruchomej średniej dla Slow-K. Należy stosować stałe z serii <link xmlns="http://docbook.org/ns/docbook" linkend="trader.constants">TRADER_MA_TYPE_*</link>.'>
+<!ENTITY trader.arg.signal.ma.type 'Typ ruchomej średniej dla linii sygnału. Należy stosować stałe z serii <link xmlns="http://docbook.org/ns/docbook" linkend="trader.constants">TRADER_MA_TYPE_*</link>.'>
+<!ENTITY trader.arg.nbdevup 'Mnożnik odchylenia dla górnego zakresu. Wartość z przedziału od <link xmlns="http://docbook.org/ns/docbook" linkend="constant.trader-real-min">TRADER_REAL_MIN</link> do <link xmlns="http://docbook.org/ns/docbook" linkend="constant.trader-real-max">TRADER_REAL_MAX</link>.'>
+<!ENTITY trader.arg.nbdevdn 'Mnożnik odchylenia dla dolnego zakresu. Wartość z przedziału od <link xmlns="http://docbook.org/ns/docbook" linkend="constant.trader-real-min">TRADER_REAL_MIN</link> to <link xmlns="http://docbook.org/ns/docbook" linkend="constant.trader-real-max">TRADER_REAL_MAX</link>.'>
+<!ENTITY trader.arg.fast.limit 'Górny limit do stosowania w algorytmie adaptacyjnym. Wartość z zakresu od 0.01 do 0.99.'>
+<!ENTITY trader.arg.slow.limit 'Dolny limit do stosowania w algorytmie adaptacyjnym. Wartość z zakresu od 0.01 do 0.99.'>
+
+<!-- Mongo -->
+<!ENTITY mongo.setreadpreference.parameters '<variablelist xmlns="http://docbook.org/ns/docbook"><varlistentry><term><parameter>read_preference</parameter></term><listitem><para>Tryb preferencji odczytu: <constant>MongoClient::RP_PRIMARY</constant>, <constant>MongoClient::RP_PRIMARY_PREFERRED</constant>, <constant>MongoClient::RP_SECONDARY</constant>, <constant>MongoClient::RP_SECONDARY_PREFERRED</constant>, or <constant>MongoClient::RP_NEAREST</constant>.</para></listitem></varlistentry><varlistentry><term><parameter>tags</parameter></term><listitem><para>Tablica jednego lub więcej zbiorów tagów, gdzie każdy zbiór tagów jest sam w sobie tablicą kryteriów stosowanych do dopasowania tagów na elementach zbioru replik.</para></listitem></varlistentry></variablelist>'>
+<!ENTITY mongo.setreadpreference.returnvalues '<para xmlns="http://docbook.org/ns/docbook">Zwraca &true; w przypadku powodzenia lub &false; w przeciwnym przypadku.</para>'>
+<!ENTITY mongo.setreadpreference.errors '<para xmlns="http://docbook.org/ns/docbook">Generuje błąd poziomu <constant>E_WARNING</constant> jeśli parametr jest nieprawidłowy, lub podano jeden lub więcej zbiorów tagów przy stosowaniu trybu preferencji odczytu <constant>MongoClient::RP_PRIMARY</constant>.</para>'>
+<!ENTITY mongo.getreadpreference.returnvalues '<para xmlns="http://docbook.org/ns/docbook">Funkcja ta zwraca tablicę opisującą preferencję odczytu. Tablica zawiera wartości <literal>type</literal> dla stringowego trybu preferencji odczytu (odpowiadającego stałym <classname>MongoClient</classname>), i  <literal>tagsets</literal> zawierającą listę wszystkich kryteriów zbiorów tagów. Jeśli nie podano żadnego tagu, <literal>tagsets</literal> nie będzie obecne w tablicy.</para>'>
+<!ENTITY mongo.writes.parameters.writeconcern '<listitem xmlns="http://docbook.org/ns/docbook"><para><literal>"w"</literal></para><para>Zobacz <link linkend="mongo.writeconcerns">WriteConcerns</link>. Domyślną wartością dla <classname>MongoClient</classname> jest <literal>1</literal>.</para></listitem>'>
+<!ENTITY mongo.writes.parameters.fsync '<listitem xmlns="http://docbook.org/ns/docbook"><para><literal>"fsync"</literal></para><para>Wartość logiczna, domyślnie &false;. Wymusza aby dodawane dane były przenoszone na dysk przed zwracaniem informacji o pomyślnym zakończeniu operacji. Po ustawieniu na &true;, potwierdzone wstawienie danych jest dorozumiany i nadpisze ustawienie <literal>w</literal> na <literal>0</literal>.</para></listitem>'>
+<!ENTITY mongo.writes.parameters.timeout '<listitem xmlns="http://docbook.org/ns/docbook"><para><literal>"timeout"</literal></para><para>Wartość całkowita, domyślnie ustawiana na <literal>MongoCursor::$timeout</literal>.  Jeśli ustawiona jest opcja "safe", zmienna ta określa jak długo (w milisekundach) klient będzie oczekiwał na odpowiedź bazy danych. Jeśli baza danych nie odpowie w określonym przedziale czasu, wygenerowany zostanie wyjątek <classname>MongoCursorTimeoutException</classname>.</para></listitem>'>
+<!ENTITY mongo.writes.parameters.safe '<listitem xmlns="http://docbook.org/ns/docbook"><para><literal>"safe"</literal></para><para><emphasis>Przestarzałe</emphasis>. Należy stosować opcję <link linkend="mongo.writeconcerns">WriteConcern</link> <literal>w</literal>.</para></listitem>'>
+<!ENTITY mongo.errors.exceptions.writeconcern '<para xmlns="http://docbook.org/ns/docbook">Generuje wyjątek <classname>MongoCursorException</classname> jeśli opcja "w" jest ustawiona a zapis się nie powiedzie.</para><para xmlns="http://docbook.org/ns/docbook">Generuje wyjątek <classname>MongoCursorTimeoutException</classname> jeśli opcja "w" jest ustawiona na wartość większą niż jeden a operacja zabiera więcej czasu niż <varname>MongoCursor::$timeout</varname> milisekund. Nie usuwa to operacji na serwerze - jest to limit czasowy po stronie klienta. Operacja w <literal>MongoCollection::$wtimeout</literal> to milisekundy.</para>'>
+<!ENTITY mongo.errors.deprecated '<para xmlns="http://docbook.org/ns/docbook">Generuje ostrzeżenie typu <constant>E_DEPRECATED</constant></para>'>
+<!ENTITY mongo.gridfs.store.metadata.note '<note xmlns="http://docbook.org/ns/docbook"><para>Pola te mogą również nadpisywać te, które byłyby stworzone automatycznie przez sterownik, jak zostało to opisane w dokumentacji MongoDB dla <link xlink:href="&url.mongodb.docs.gridfs;#the-files-collection" xmlns:xlink="http://www.w3.org/1999/xlink">kolekcji plików</link>. Niektóre praktyczne zastosowania dla tego zachowania to podanie niestandardowych wartości <literal>chunkSize</literal> lub <literal>_id</literal> dla danego pliku.</para></note>'>
+<!ENTITY mongo.gridfs.store.return '<para xmlns="http://docbook.org/ns/docbook">Zwraca <literal>_id</literal> zapisanego dokumentu plikowego. Będzie to wygenerowane <classname>MongoId</classname>, chyba że <literal>_id</literal> zostało jawnie podane w parametrze <parameter>extra</parameter>.</para>'>
