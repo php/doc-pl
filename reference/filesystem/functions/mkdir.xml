@@ -1,73 +1,190 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: adi Status: ready -->
+<!-- EN-Revision: 50a515801ee034080dc27a9cf29e7ccfa2c23d5a Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-<refentry xml:id="function.mkdir" xmlns="http://docbook.org/ns/docbook">
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.mkdir">
  <refnamediv>
   <refname>mkdir</refname>
   <refpurpose>Tworzy katalog</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>mkdir</methodname>
-   <methodparam><type>string</type><parameter>nazwa_ścieżki</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>prawa dostępu</parameter></methodparam>
-   <methodparam choice="opt"><type>bool</type><parameter>rekursywność</parameter></methodparam>
+   <methodparam><type>string</type><parameter>ścieżka</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>prawa dostępu</parameter><initializer>0777</initializer></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>rekursywność</parameter><initializer>false</initializer></methodparam>
    <methodparam choice="opt"><type>resource</type><parameter>kontekst</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Tworzy katalog podany w nazwa_ścieżki.
+   Tworzy katalog podany w argumencie <parameter>ścieżka</parameter>.
   </para>
+  </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
   <para>
-   Uwaga: Prawdopodobnie chciałbyś podać prawa dostępu jako
-   wartość oktalną (ósemkową), co oznacza że powinieneś
-   poprzedzić je zerem.
-   Prawa dostępu mogą być także modyfikowane przez bieżący
-   umask, który możesz zmienić używając <function>umask</function>.
+   <variablelist>
+    <varlistentry>
+     <term><parameter>ścieżka</parameter></term>
+     <listitem>
+      <para>
+       Ścieżka do katalogu
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>prawa dostępu</parameter></term>
+     <listitem>
+      <para>
+       Domyślnym ustawieniem jest 0777, co oznacza najszerszy możliwy
+	   dostęp. By uzyskać więcej informacji o dostępie do plików
+	   przeczytaj opis funkcji <function>chmod</function>
+      </para>
+      <note>
+       <para>
+	    Ten argument jest ignorowany w systemie Windows.
+       </para>
+      </note>
+      <para>
+       Uwaga: Prawdopodobnie chciałbyś podać prawa dostępu jako
+       wartość oktalną (ósemkową), co oznacza że powinieneś
+       poprzedzić je zerem.
+       Prawa dostępu mogą być także modyfikowane przez bieżący
+       umask, który możesz zmienić używając <function>umask</function>.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>rekursywność</parameter></term>
+     <listitem>
+      <para>
+	   Pozwala na tworzenie zagnieżdżonych katalogów podanych
+	   w argumencie <parameter>ścieżka</parameter>.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>kontekst</parameter></term>
+     <listitem>
+      &note.context-support;
+     </listitem>
+    </varlistentry>
+   </variablelist>
   </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
   <para>
-   <note>
-    <para>
-     Prawa dostępu sa ignorowane w Windows, i stały się opcjonalne w PHP 4.2.0.
-    </para>
-   </note>
+   &return.success;
   </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
   <para>
-   Domyslnie prawa dostępu to 0777, co oznacza najbardziej otwarty dostęp.
-   Po więcej informacji na temat praw dostępu, przeczytaj na stronie
-   <function>chmod</function>.
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>5.0.0</entry>
+       <entry>
+        Dodano parametr <parameter>rekursywność</parameter>
+       </entry>
+      </row>
+      <row>
+       <entry>5.0.0</entry>
+       <entry>
+        Od PHP 5.0.0 <function>mkdir</function> może być użyty z <emphasis>
+		niektórymi</emphasis> wrapperami URL. Odwołaj się do <xref
+        linkend="wrappers"/>, aby zobaczyć, które wrappery są obsługiwane
+		przez funkcję <function>mkdir</function>
+       </entry>
+      </row>
+      <row>
+       <entry>4.2.0</entry>
+       <entry>
+	    Parametr <parameter>prawa dostępu</parameter> stał się opcjonalny.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
    <example>
-    <title><function>mkdir</function> przykład</title>
+    <title>Przykład użycia <function>mkdir</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
-mkdir ("/path/to/my/dir", 0700);
+mkdir("/path/to/my/dir", 0700);
 ?>
 ]]>
     </programlisting>
    </example>
   </para>
   <para>
-  &return.success;
-  </para>
-  <note>
-   <simpara>
-    Od PHP 5.0.0 <function>mkdir</function> może być użyta z
-    <emphasis>niektórymi</emphasis> wrapperami URL. Zajrzyj do <xref linkend="wrappers"/>
-    aby uzyskać listę wrapperów, które wspierają <function>mkdir</function>.
-   </simpara>
-  </note>
-  &note.context-support;
-  <note>
-   <simpara>
-    Parametr <parameter>rekursywność</parameter> został dodany w PHP 5.0.0.
-   </simpara>
-  </note>
-  &note.sm.uidcheck.dir;
-  <para>
-   Patrz także: <function>rmdir</function>.
+   <example>
+    <title>Użycie <function>mkdir</function> z parametrem <parameter>rekursywność</parameter></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// Pożądana struktura katalogów
+$structure = './depth1/depth2/depth3/';
+
+// Aby utworzyć strukturę zagnieżdżoną, musi zostać
+// podany parametr rekursywność
+
+if (!mkdir($structure, 0777, true)) {
+    die('Nie udało się utworzyć katalogów...');
+}
+
+// ...
+?>
+]]>
+    </programlisting>
+   </example>
   </para>
  </refsect1>
+
+ <refsect1 role="errors">
+  &reftitle.errors;
+  <para>
+   Wyrzuca <constant>E_WARNING</constant> jeżeli katalog
+   już istnieje.
+  </para>
+  <para>
+   Wyrzuca <constant>E_WARNING</constant> jeżeli nie ma uprawnień
+   do utworzenia katalogu.
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  &note.sm.uidcheck.dir;
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>is_dir</function></member>    
+    <member><function>rmdir</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
 </refentry>
 
 <!-- Keep this comment at the end of the file
