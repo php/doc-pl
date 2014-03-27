@@ -1,23 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 0640e024d4b8a9400d457143ccd0ea66e5f98ead Maintainer: mroq Status: ready -->
+<!-- EN-Revision: 65e697ff671608989432a6e6bf8ae8128b2be2c7 Maintainer: mroq Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS: slawek -->
+<!-- CREDITS: slawek, sobak -->
 <refentry xml:id="function.mysql-create-db" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>mysql_create_db</refname>
   <refpurpose>Tworzy bazę MySQL</refpurpose>
  </refnamediv>
-   
+
+ <refsynopsisdiv>
+  <warning>
+   &mysql.alternative.note;
+   <simplelist role="alternatives">
+    <member><function>mysqli_query</function></member>
+    <member><methodname>PDO::query</methodname></member>
+   </simplelist>
+  </warning>
+ </refsynopsisdiv>
+
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>mysql_create_db</methodname>
    <methodparam><type>string</type><parameter>nazwa_bazy</parameter></methodparam>
-   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter><initializer>NULL</initializer></methodparam>
   </methodsynopsis>
   <para> 
-   <function>mysql_create_db</function>tworzy nową 
-   bazę na serwerze skojarzonym z podanym identyfikatorem 
+   <function>mysql_create_db</function>tworzy nową
+   bazę na serwerze skojarzonym z podanym identyfikatorem
    połączenia.
   </para>
  </refsect1>
@@ -53,7 +63,7 @@
     <title><function>mysql_create_db</function> przykład alternatywny</title>
     <para>
      Stosowanie funkcji <function>mysql_create_db</function> jest nie zalecane. Sugerowane
-     jest wydawanie polecenia <literal>CREATE DATABASE</literal> przy użyciu funkcji 
+     jest wydawanie polecenia <literal>CREATE DATABASE</literal> przy użyciu funkcji
      <function>mysql_query</function>.
     </para>
     <programlisting role="php">

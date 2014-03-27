@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: jarek Status: ready -->
+<!-- EN-Revision: 2a97d230f25cb95942376f6b6d1d4fdc1f63d037 Maintainer: jarek Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.2 -->
   <refentry xml:id="function.pg-affected-rows" xmlns="http://docbook.org/ns/docbook">
@@ -18,13 +18,17 @@
      <function>pg_affected_rows</function> zwraca liczbę wierszy
      dodanych, zmodyfikowanych lub usuniętych przez zapytania <literal>INSERT</literal>,
      <literal>UPDATE</literal> i <literal>DELETE</literal>.
-</para>
-  <note>
-   <para>
-    Ta funkcja była nazwana <function>pg_cmdtuples</function>.
-   </para>
-  </note>
- </refsect1>
+    </para>
+	<para>
+	 Od wersji PostgreSQL 9.0 i nowszych serwer zwraca ilość wybranych wierszy.
+	 Starsze wersje zwracają 0 dla zapytań typu SELECT.
+	</para>
+    <note>
+     <para>
+      Ta funkcja była nazwana <function>pg_cmdtuples</function>.
+     </para>
+    </note>
+   </refsect1>
 
 <refsect1 role="parameters">
   &reftitle.parameters;

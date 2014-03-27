@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: mroq Status: ready -->
+<!-- EN-Revision: 65e697ff671608989432a6e6bf8ae8128b2be2c7 Maintainer: mroq Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS: slawek -->
+<!-- CREDITS: slawek, sobak -->
 <refentry xml:id="function.mysql-fetch-row" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>mysql_fetch_row</refname>
   <refpurpose>Zapisuje wiersz wyniku w tablicy wyliczeniowej</refpurpose>
  </refnamediv>  
+
+ <refsynopsisdiv>
+  <warning>
+   &mysql.alternative.note;
+   <simplelist role="alternatives">
+    <member><function>mysqli_fetch_row</function></member>
+    <member><methodname phd:args="PDO::FETCH_NUM">PDOStatement::fetch</methodname></member>
+   </simplelist>
+  </warning>
+ </refsynopsisdiv>
 
  <refsect1 role="description">
   &reftitle.description;
@@ -32,14 +42,14 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca tablicę numeryczną, która odpowiada pobranemu wierszowi, lub
-   &false; jeśli nie ma więcej wierszy.   
+   Zwraca tablicę numeryczną, która odpowiada pobranemu wierszowi lub
+   &false; jeśli nie ma więcej wierszy.
   </para>
   <para>
    <function>mysql_fetch_row</function> pobiera jeden wiersz danych
    z wyniku skojarzonego z podanym identyfikatorem wyniku. Wiersz
    zwracany jest jako tablica. Komórki są umieszczone pod oddzielnymi
-   ofsetami, zaczynając od 0.   
+   ofsetami, zaczynając od 0.
   </para>
  </refsect1>
 
