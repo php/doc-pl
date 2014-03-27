@@ -1,78 +1,151 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: qrak Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: aa742af0b78990a4e431dc3ba2452c2d75c99968 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-  <refentry xml:id="function.max" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>max</refname>
-    <refpurpose>Znajduje największą liczbę</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>mixed</type><methodname>max</methodname>
-      <methodparam><type>number</type><parameter>arg1</parameter></methodparam>
-      <methodparam><type>number</type><parameter>arg2</parameter></methodparam>
-      <methodparam choice="opt"><type>number</type><parameter>...</parameter></methodparam>
-     </methodsynopsis>
-     <methodsynopsis>
-      <type>mixed</type><methodname>max</methodname>
-      <methodparam><type>array</type><parameter>numbers</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     <function>max</function> zwraca największą liczbę spośród podanych
-     argumentów.
-    </para>
-    <para>
-     Jeśli pierwszym i jedynym argumentem jest tablica,
-     <function>max</function> zwróci największą liczbę z tej tablicy. Jeśli
-     pierwszy argument jest liczbą całkowitą, zmiennoprzecinkową czy łańcuchem
-     znaków, musisz mieć conajmniej dwa argumenty, spomiędzy których funkcja
-     <function>max</function> zwróci największą wartość. Za pomocą tej funkcji
-     można porównywać nieograniczoną ilość liczb.
-    </para>
-    <note>
-     <para>
-      PHP będzie uznawał nieliczbowe wartości typu <type>string</type> jako 
-      <literal>0</literal>, jednakże zwracany będzie ciąg znakowy, jesli
-      zostanie on oznany numerycznie za najmniejszą wartość. Jeśli wiele
-      argumentów zostanie uznanych za wartość
-      <literal>0</literal>, to <function>min</function> zwróci wartość
-      najmniejszą alfanumerycznie, jeśli zostały podane jakiekolwiek ciągi
-      znakowe. W przeciwnym przypadku zwrócona zostanie wartość
-      <literal>0</literal>.
-     </para>
-    </note>
-    <para>
-     <example>
-      <title>Przykłady użycia <function>max</function></title>
-      <programlisting role="php">
+<!-- CREDITS: qrak -->
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.max">
+ <refnamediv>
+  <refname>max</refname>
+  <refpurpose>Znajduje największą wartość</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>mixed</type><methodname>max</methodname>
+   <methodparam><type>array</type><parameter>wartości</parameter></methodparam>
+  </methodsynopsis>
+  <methodsynopsis>
+   <type>mixed</type><methodname>max</methodname>
+   <methodparam><type>mixed</type><parameter>wartość1</parameter></methodparam>
+   <methodparam><type>mixed</type><parameter>wartość2</parameter></methodparam>
+   <methodparam choice="opt"><type>mixed</type><parameter>...</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Jeśli pierwszym i jedynym argumentem jest tablica,
+   <function>max</function> zwróci największą liczbę z tej tablicy. Jeżeli
+   podano minimum dwa argumenty, funkcja zwróci największą wartość z pośród
+   nich.
+  </para>
+  <note>
+   <para>
+    PHP potraktuje nienumeryczny <type>string</type> jako
+	<literal>0</literal> jeżeli porównywany on będzie do
+	liczb. Funkcja wciąż może zwrócić jednak ciąg typu
+	<type>string</type> jeżeli zostanie on uznany za
+	największą wartość liczbową. Jeżeli wiele parametrów
+	zostanie uznanych za wartość <literal>0</literal>,
+	<function>max</function> zwróci numeryczne <literal>0</literal>,
+	w przeciwnym wypadku zwróci najwyższą wartość przy
+	sortowaniu alfabetycznym.
+   </para>
+  </note>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>wartości</parameter></term>
+     <listitem>
+      <para>
+       Tablica zawierająca dane do sprawdzenia przez funkcję.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>value2</parameter></term>
+     <listitem>
+      <para>
+       Dowolna <link linkend="language.operators.comparison">porównywalna</link>
+       wartość.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>value2</parameter></term>
+     <listitem>
+      <para>
+       Dowolna <link linkend="language.operators.comparison">porównywalna</link>
+       wartość.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>...</parameter></term>
+     <listitem>
+      <para>
+       Dowolna <link linkend="language.operators.comparison">porównywalna</link>
+       wartość.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   <function>max</function> zwraca najwyższą liczbę z podanych wartości.
+   Jeżeli wiele elementów zostanie uznanych za takie same, zostanie zwróćony
+   ten, który został podany jako pierwszy.
+  </para>
+  <para>
+   Kiedy do <function>max</function> zostanie przekazane wiele tablic, funkcja
+   zwróci najdłuższą z nich. Jeżeli wszystkie tablice mają taką samą długość,
+   <function>max</function> użyje sortowania leksograficznego, aby znaleźć
+   odpowiednią wartość.
+  </para>
+  <para>
+   Podane ciągi znaków zostaną potraktowane jak liczby (<type>integer</type>)
+   przy porównywaniu.
+  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykłady użycia <function>max</function></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 echo max(1, 3, 5, 6, 7);  // 7
 echo max(array(2, 4, 5)); // 5
 
+// 'hello' potraktowane jak liczba będzie równe 0. Oba parametry są
+// tak samo długie, więc wynik zależy od kolejności w tablicy wejściowej
 echo max(0, 'hello');     // 0
 echo max('hello', 0);     // hello
+
+echo max('42', 3); // '42'
+
+// Tutaj 0 > -1, więc zwróconą wartością jest 'hello'
 echo max(-1, 'hello');    // hello
 
-// W przypadku podania wielu tablic, min porównuje je od lewej do prawej, 
-// A więc w poniższym przykładzie 2 == 2, ale 4 < 5
+// Jeżeli podano kilka tablic o różnych długościach, max zwraca najdłuższą
+$val = max(array(2, 2, 2), array(1, 1, 1, 1)); // array(1, 1, 1, 1)
+
+// W wypadku tablic tej samej długości, max porównuje od lewej do prawej
+// używając sortowania leksograficznego, więc w naszym wypadku: 2 == 2, ale 4 < 5
 $val = max(array(2, 4, 8), array(2, 5, 7)); // array(2, 5, 7)
 
-// Jeśli podane zostaną tablice i nie-tablice, zawsze zwracana jest
-// tablica, jako że zawsze jest uznawana za element największy
+// Jeżeli podano tablicę i nie-tablicę, zawsze zostanie
+// zwrócona tablica, gdyż uznawana jest za wiekszą
 $val = max('string', array(2, 5, 7), 42);   // array(2, 5, 7)
 ?>
 ]]>
-      </programlisting>
-     </example>
-    </para>
-    <para>
-     Patrz także: <function>min</function> i <function>count</function>.
-    </para>
-
-   </refsect1>
-  </refentry>
+    </programlisting>
+    </example> 
+  </para>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>min</function></member>
+    <member><function>count</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
