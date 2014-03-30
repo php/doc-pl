@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 53b6f116ed5f8649ca540c38dfe0ce30619d0dd9 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <!-- splitted from ./en/functions/dir.xml, last change in rev 1.2 -->
 <refentry xml:id="function.dir" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>dir</refname>
-  <refpurpose>Return an instance of the Directory class</refpurpose>
+  <refpurpose>Zwraca obiekt klasy Directory</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
@@ -16,8 +17,8 @@
   </methodsynopsis>
   
   <para>
-   A pseudo-object oriented mechanism for reading a directory.  The
-   given <parameter>directory</parameter> is opened.
+   Mechanizm zorientowany obiektowo dla operacji na katalogach.
+   Otwierany jest katalog podany jako <parameter>directory</parameter>.
   </para>
  </refsect1>
 
@@ -28,7 +29,7 @@
     <term><parameter>directory</parameter></term>
     <listitem>
      <para>
-      Directory to open
+      Katalog do otwarcia
      </para>
     </listitem>
    </varlistentry>
@@ -46,8 +47,8 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Returns an instance of <classname>Directory</classname>, or &null; with
-   wrong parameters, or &false; in case of another error.
+   Zwraca obiekt klasy <classname>Directory</classname>, &null; jeżeli
+   podano złe parametry lub &false; w wypadku innego błędu.
   </para>
  </refsect1>
 
@@ -55,22 +56,21 @@
   &reftitle.examples;
   <para>
    <example>
-    <title><function>dir</function> example</title>
+    <title>Przykład użycia <function>dir</function></title>
     <para>
-     Please note the fashion in which <function>Directory::read</function>'s
-     return value is checked in the example below. We are explicitly
-     testing whether the return value is identical to (equal to and of
-     the same type as - see <link linkend="language.operators.comparison">
-     Comparison Operators</link> for more information) &false; since
-     otherwise, any directory entry whose name evaluates to &false; will
-     stop the loop.
+     Zauważ jak szczegółowo spprawdzana jest wartość zwrócona przez
+	 <function>Directory::read</function>. Dokładnie sprawdzamy czy
+	 zwrócona wartość jest identyczna (w tym jednakowy typ, zobacz
+	 <link linkend="language.operators.comparison">Operatory porównania</link>,
+	 aby dowiedzieć się więcej) z &false;, ponieważ bez porównywania typów
+	 każdy katalog o nazwie "false" zatrzymałby pętlę.
     </para>
     <programlisting role="php">
 <![CDATA[
 <?php
 $d = dir("/etc/php5");
-echo "Handle: " . $d->handle . "\n";
-echo "Path: " . $d->path . "\n";
+echo "Uchwyt: " . $d->handle . "\n";
+echo "Ścieżka: " . $d->path . "\n";
 while (false !== ($entry = $d->read())) {
    echo $entry."\n";
 }
@@ -81,8 +81,8 @@ $d->close();
     &example.outputs.similar;
     <screen>
 <![CDATA[
-Handle: Resource id #2
-Path: /etc/php5
+Uchwyt: Resource id #2
+Ścieżka: /etc/php5
 .
 ..
 apache
@@ -98,8 +98,8 @@ cli
   &reftitle.notes;
   <note>
    <para>
-    The order in which directory entries are returned by the read method is
-    system-dependent.
+    Kolejność, w jakiej metoda read zwraca elementy, jest zależna od systemu
+	operacyjnego.
    </para>
   </note>
  </refsect1>
