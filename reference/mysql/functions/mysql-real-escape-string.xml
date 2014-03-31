@@ -1,19 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: f97cf90f6426ca029ab138bcb9328aa053500be4 Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: 65e697ff671608989432a6e6bf8ae8128b2be2c7 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS: slawek, mroq -->
+<!-- CREDITS: slawek, mroq, sobak -->
 <refentry xml:id="function.mysql-real-escape-string" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>mysql_real_escape_string</refname>
   <refpurpose>Dodaje znaki unikowe w łańcuchu znaków do użycia w instrukcji SQL</refpurpose>
  </refnamediv>
 
+ <refsynopsisdiv>
+  <warning>
+   &mysql.alternative.note;
+   <simplelist role="alternatives">
+    <member><function>mysqli_real_escape_string</function></member>
+    <member><methodname>PDO::quote</methodname></member>
+   </simplelist>
+  </warning>
+ </refsynopsisdiv>
+ 
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>string</type><methodname>mysql_real_escape_string</methodname>
    <methodparam><type>string</type><parameter>łańcuch_bez_znaków_unikowych</parameter></methodparam>
-   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączeniar</parameter></methodparam>
+   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączeniar</parameter><initializer>NULL</initializer></methodparam>
   </methodsynopsis>
   <para>
    Dodaje znaki unikowe do <parameter>łańcucha_bez_znaków_unikowych</parameter>, 
@@ -30,8 +40,18 @@
   </para>
   <para>
    Użycie tej funkcji jest wymagane zawsze (poza kilkoma wyjątkami) przed wysłaniem
-   zapytania do bazy danych aby zabezpieczyć dane. 
+   zapytania do bazy danych, aby zabezpieczyć dane. 
   </para>
+  <caution>
+   <title>Bezpieczeństwo: domyślne kodowanie znaków</title>
+   <para>
+    Domyślne kodowanie znaków musi zostać ustawione na poziomie serwera lub
+    funkcją <function>mysql_set_charset</function> aby miało wpływ na
+    <function>mysql_real_escape_string</function>. Zobacz sekcję o
+    on <link linkend="mysqlinfo.concepts.charset">kodowaniu znaków</link>, aby
+    zdobyć więcej informacji.
+   </para>
+  </caution>
  </refsect1>
 
  <refsect1 role="parameters">
@@ -151,11 +171,12 @@ SELECT * FROM users WHERE user='aidan' AND password='' OR ''=''
   &reftitle.seealso;
   <para>
    <simplelist>
+    <member><function>mysql_set_charset</function></member>
     <member><function>mysql_client_encoding</function></member>
     <member><function>addslashes</function></member>
     <member><function>stripslashes</function></member>
-    <member>The <link linkend="ini.magic-quotes-gpc">magic_quotes_gpc</link> directive</member>
-    <member>The <link linkend="ini.magic-quotes-runtime">magic_quotes_runtime</link> directive</member>
+    <member>Dyrektywa <link linkend="ini.magic-quotes-gpc">magic_quotes_gpc</link></member>
+    <member>Dyrektywa <link linkend="ini.magic-quotes-runtime">magic_quotes_runtime</link></member>
    </simplelist>
   </para>
  </refsect1>

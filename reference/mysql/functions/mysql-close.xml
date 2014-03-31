@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 4a420d557a785ad4c2ad8a071e536c7302d1d026 Maintainer: adi Status: ready -->
+<!-- EN-Revision: 65e697ff671608989432a6e6bf8ae8128b2be2c7 Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.mysql-close" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
@@ -7,14 +7,24 @@
   <refpurpose>Zamyka połączenie MySQL</refpurpose>
  </refnamediv>
 
+ <refsynopsisdiv>
+  <warning>
+   &mysql.alternative.note;
+   <simplelist role="alternatives">
+    <member><function>mysqli_close</function></member>
+    <member>PDO: Przypisz wartość &null; do obiektu PDO</member>
+   </simplelist>
+  </warning>
+ </refsynopsisdiv>
+ 
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>mysql_close</methodname>
-   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter><initializer>&null;</initializer></methodparam>
+   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter><initializer>NULL</initializer></methodparam>
   </methodsynopsis>
   <para> 
-   <function>mysql_close</function> zamyka nie stałe połączenie do serwera MySQL,
+   <function>mysql_close</function> zamyka niestałe połączenie do serwera MySQL,
    które zostało skojarzone z podanym identyfikatorem połączenia. Jeśli
    <parameter>identyfikator_połączenia</parameter> nie został określony, zostanie użyte
    ostatnio używane połączenie.

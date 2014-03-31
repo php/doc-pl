@@ -1,130 +1,184 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: slawek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 65e697ff671608989432a6e6bf8ae8128b2be2c7 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-  <refentry xml:id="function.mysql-fetch-array" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>mysql_fetch_array</refname> 
-    <refpurpose>
-     Zapisuje wiersz wyniku w tablicy asocjacyjnej, numerycznej lub w obu
-    </refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>array</type><methodname>mysql_fetch_array</methodname>
-      <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
-      <methodparam choice="opt"><type>int</type><parameter>
-        typ_wyniku
-       </parameter></methodparam>
-     </methodsynopsis>
-    <para> 
-     Zwraca tablicę zawierającą pobrany wiersz, lub
-     &false; jeżeli nie ma więcej wierszy w <parameter>wynik</parameter>.
-    </para>
-    <para>
-     <function>mysql_fetch_array</function> jest rozszerzoną wersją
-     <function>mysql_fetch_row</function>. Oprócz zapisywania danych
-     w indeksach numerycznych, zapisuje je też w indeksach
-     przyporządkowujących (asocjacyjnych), używając nazw pól jako kluczy.
-    </para>
-    <para>
-     Jeżeli dwie lub więcej kolumn wyniku ma te same nazwy, ostatnia
-     kolumna będzie brana pod uwagę. Dostęp do innych kolumn o tej
-     samej nazwie jest możliwy jedynie przez indeksowanie numeryczne
-     lub przez stworzenie aliasa. Po stworzeniu aliasa nie można
-     już odwoływać się do danej kolumny używając jej prawdziwej nazwy
-     (w tym przykładzie używając <literal>'pole'</literal>).
-     <example>
-      <title>Zapytanie z powtarzającymi się nazwami pól</title>
-      <programlisting role="sql">
+<refentry xml:id="function.mysql-fetch-array" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>mysql_fetch_array</refname>
+  <refpurpose>Zwraca wynik jako tablicę z kluczami asocjacyjnymi, numerycznymi lub oboma.</refpurpose>
+ </refnamediv>
+
+ <refsynopsisdiv>
+  <warning>
+   &mysql.alternative.note;
+   <simplelist role="alternatives">
+    <member><function>mysqli_fetch_array</function></member>
+    <member><methodname>PDOStatement::fetch</methodname></member>
+   </simplelist>
+  </warning>
+ </refsynopsisdiv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>array</type><methodname>mysql_fetch_array</methodname>
+   <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>typ_wyniku</parameter><initializer>MYSQL_BOTH</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   Zwraca tablicę odpowiadającą pobranemu wierszowi
+   i przesuwa wewnętrzny wskaźnik danych do przodu.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    &mysql.result.description;
+    <varlistentry>
+     <term><parameter>typ_wyniku</parameter></term>
+     <listitem>
+      <para>
+       Rodzaj tablicy, która ma zostać zwrócona. Jest to stała, może ona
+	   przyjąć następujące wartości: <constant>MYSQL_ASSOC</constant>,
+	   <constant>MYSQL_NUM</constant>, i
+       <constant>MYSQL_BOTH</constant>.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca tablicę łańcuchów znaków odpowiadających poloom pobranego wiersza lub
+   &false; jeżeli nie ma już dalszych wierszy. Rodzaj zwróconej tablicy zależy
+   od parametru <parameter>typ_wyniku</parameter>. Przy użyciu <constant>MYSQL_BOTH</constant>
+   (domyślnie), otrzymasz tablicę z kluczami asocjacyjnymi i numerycznymi.
+   Używając <constant>MYSQL_ASSOC</constant> otrzymasz indeksy tylko asocjacyjne
+   (jak w funkcji <function>mysql_fetch_assoc</function>), a używając
+   <constant>MYSQL_NUM</constant> otrzymasz tylko indeksy numeryczne (jak w
+   funkcji <function>mysql_fetch_row</function>).
+  </para>
+  <para>
+   Jeżeli dwie lub więcej kolumn z wyniku mają takie same nazwy pól,
+   ostatnia kolumna nadpisze pozostałe. Aby uzyskać dostęp do innych
+   pól o tej samej nazwie, musisz użyć indeksów numerycznych lub stworzyć
+   alias dla danej kolumny. Dla pól zaliasowanych nie można użyć oryginalnej
+   nazwy danego pola.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Zapytanie ze zaliasowanymi duplikatami nazw pól</title>
+    <programlisting role="sql">
 <![CDATA[
-select table1.field as foo table2.field as bar from table1, table2
+SELECT table1.field AS foo, table2.field AS bar FROM table1, table2
 ]]>
-      </programlisting>
-     </example>
-    </para>
-    <para>
-     Godne uwagi jest to, że użycie <function>mysql_fetch_array</function>
-     <emphasis>nie jest</emphasis> znacząco wolniejsze od użycia
-     <function>mysql_fetch_row</function>, a jest bardziej funkcjonalne.
-    </para>
-    <para>
-     Opcjonalny drugi argument <parameter>result_type</parameter> w
-     funkcji <function>mysql_fetch_array</function> jest stałą i może
-     przyjmować następujące wartości: MYSQL_ASSOC, MYSQL_NUM i MYSQL_BOTH.
-     Tę funkcjonalność dodano w PHP 3.0.7. Wartością domyślną jest MYSQL_BOTH.
-    </para>
-    <para>
-     Używając MYSQL_BOTH otrzymasz tablicę indeksowaną zarówno asocjacyjnie
-     jak i numerycznie. MYSQL_ASSOC dostarczy tablicy indeksowanej tylko
-     asocjacyjnie (jak w <function>mysql_fetch_assoc</function>), natomiast
-     MYSQL_NUM indeksowanej tylko numerycznie (jak w
-     <function>mysql_fetch_row</function>).
-    </para>
-    <example>
-     <title>mysql_fetch_array z MYSQL_NUM</title>
-     <programlisting role="php">
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title><function>mysql_fetch_array</function> z <constant>MYSQL_NUM</constant></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
-mysql_connect('localhost', 'uzytkownik', 'haslo') or
-    die('Nie można się połączyć: ' . mysql_error());
-mysql_select_db('baza');
+mysql_connect("localhost", "mysql_user", "mysql_password") or
+    die("Nie można połączyć: " . mysql_error());
+mysql_select_db("mydb");
 
-$result = mysql_query("SELECT id, nazwa FROM tabela");
+$result = mysql_query("SELECT id, name FROM mytable");
 
 while ($row = mysql_fetch_array($result, MYSQL_NUM)) {
-    printf ("ID: %s  Nazwa: %s", $row[0], $row[1]);  
+    printf("ID: %s  Nazwa: %s", $row[0], $row[1]);  
 }
+
 mysql_free_result($result);
 ?>
 ]]>
-     </programlisting>
-    </example>
-    <example>
-     <title>mysql_fetch_array z MYSQL_ASSOC</title>
-     <programlisting role="php">
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title><function>mysql_fetch_array</function> z <constant>MYSQL_ASSOC</constant></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
-mysql_connect('localhost', 'uzytkownik', 'haslo') or
-    die('Nie można się połączyć: ' . mysql_error());
-mysql_select_db('baza');
+mysql_connect("localhost", "mysql_user", "mysql_password") or
+    die("Nie można połączyć: " . mysql_error());
+mysql_select_db("mydb");
 
-$result = mysql_query("SELECT id, nazwa FROM tabela");
+$result = mysql_query("SELECT id, name FROM mytable");
 
 while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
-    printf ("ID: %s  Nazwa: %s", $row["id"], $row["nazwa"]);  
+    printf("ID: %s  Nazwa: %s", $row["id"], $row["name"]);
 }
+
 mysql_free_result($result);
 ?>
 ]]>
-     </programlisting>
-    </example>
-    <example>
-     <title>mysql_fetch_array z MYSQL_BOTH</title>
-     <programlisting role="php">
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title><function>mysql_fetch_array</function> z <constant>MYSQL_BOTH</constant></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
-mysql_connect('localhost', 'uzytkownik', 'haslo') or
-    die('Nie można się połączyć: ' . mysql_error());
-mysql_select_db('baza');
+mysql_connect("localhost", "mysql_user", "mysql_password") or
+    die("Nie można połączyć: " . mysql_error());
+mysql_select_db("mydb");
 
-$result = mysql_query("SELECT id, nazwa FROM tabela");
+$result = mysql_query("SELECT id, name FROM mytable");
 
 while ($row = mysql_fetch_array($result, MYSQL_BOTH)) {
-    printf ("ID: %s  Nazwa: %s", $row[0], $row["nazwa"]);  
+    printf ("ID: %s  Nazwa: %s", $row[0], $row["name"]);
 }
+
 mysql_free_result($result);
 ?>
 ]]>
-     </programlisting>
-    </example>
-    <para>
-     Patrz także:
-     <function>mysql_fetch_row</function>,
-     <function>mysql_fetch_assoc</function>.
-    </para>
-   </refsect1>
-  </refentry>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <title>Wydajność</title>
+   <para>
+    Wartym zaznaczenia jest, że użycie
+	<function>mysql_fetch_array</function> <emphasis>nie
+	jest</emphasis> znacząco wolniejsze niż użycie
+	<function>mysql_fetch_row</function>, a udostępnia
+	znacznie czytelniejsze nazwy.
+   </para>
+  </note>
+  &database.field-case;
+  &database.fetch-null;
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>mysql_fetch_row</function></member>
+    <member><function>mysql_fetch_assoc</function></member>
+    <member><function>mysql_data_seek</function></member>
+    <member><function>mysql_query</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

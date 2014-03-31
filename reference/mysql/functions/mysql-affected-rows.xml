@@ -1,18 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: 65e697ff671608989432a6e6bf8ae8128b2be2c7 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS: slawek -->
+<!-- CREDITS: slawek, sobak -->
 <refentry xml:id="function.mysql-affected-rows" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>mysql_affected_rows</refname>
   <refpurpose>Zwraca liczbę wierszy przetworzonych w poprzedniej operacji MySQL</refpurpose>
  </refnamediv>
 
+ <refsynopsisdiv>
+  <warning>
+   &mysql.alternative.note;
+   <simplelist role="alternatives">
+    <member><function>mysqli_affected_rows</function></member>
+    <member><methodname>PDOStatement::rowCount</methodname></member>
+   </simplelist>
+  </warning>
+ </refsynopsisdiv>
+ 
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>int</type><methodname>mysql_affected_rows</methodname>
-   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter><initializer>NULL</initializer></methodparam>
   </methodsynopsis>
   <para>
    Pobiera liczbę wierszy przetworzonych w ostatnim zapytaniu INSERT, UPDATE, REPLACE
@@ -51,6 +61,11 @@
    Wyrażenie REPLACE najpierw skasuje rekord z tym samym kluczem głównym
    następnie wstawi nowy rekord. Ta funkcja zwraca liczbę 
    skasowanych rekordów plus liczbę wstawionych rekordów.
+  </para>
+  <para>
+   W wypadku zapytania "INSERT ... ON DUPLICATE KEY UPDATE" funkcja zwróci
+   <literal>1</literal> jeżeli dodano nowy wiersz lub <literal>2</literal>,
+   jeśli został zaktualizowany istniejący rekord.
   </para>
  </refsect1>
   

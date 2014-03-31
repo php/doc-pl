@@ -1,17 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- EN-Revision: 65e697ff671608989432a6e6bf8ae8128b2be2c7 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: leszek Status: ready -->
 <refentry xml:id="function.mysql-errno" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>mysql_errno</refname>
   <refpurpose>Zwraca liczbową wartość kodu błędu z poprzedniej operacji MySQL</refpurpose>
  </refnamediv>
 
+ <refsynopsisdiv>
+  <warning>
+   &mysql.alternative.note;
+   <simplelist role="alternatives">
+    <member><function>mysqli_errno</function></member>
+    <member><methodname>PDO::errorCode</methodname></member>
+   </simplelist>
+  </warning>
+ </refsynopsisdiv>
+ 
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>int</type><methodname>mysql_errno</methodname>
-   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter><initializer>NULL</initializer></methodparam>
   </methodsynopsis>
   <para>
    Zwraca numer błędu z ostatniej operacji MySQL.

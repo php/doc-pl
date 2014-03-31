@@ -1,69 +1,146 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: slawek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 65e697ff671608989432a6e6bf8ae8128b2be2c7 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-  <refentry xml:id="function.mysql-fetch-assoc" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>mysql_fetch_assoc</refname> 
-    <refpurpose>
-     Zapisuje wiersz wyniku w tablicy asocjacyjnej
-    </refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>array</type><methodname>mysql_fetch_assoc</methodname>
-      <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
-     </methodsynopsis>
-    <para> 
-     Zwraca tablicę zawierającą pobrany wiersz, lub
-     &false; jeżeli nie ma więcej wierszy w <parameter>wynik</parameter>.
-    </para>
-    <para>
-     Użycie <function>mysql_fetch_assoc</function> jest równoznaczne z
-     wywołaniem <function>mysql_fetch_array</function> podając jako
-     drugi argument MYSQL_ASSOC. Zwraca jedynie tablicę asocjacyjną.
-     Początkowo tak właśnie zachowywała się funkcja 
-     <function>mysql_fetch_array</function>. Jeśli oprócz indeksowania
-     asocjacyjnego potrzebujesz także numeryczne, użyj funkcji
-     <function>mysql_fetch_array</function>.
-    </para>
-    <para>
-     Jeżeli dwie lub więcej kolumn wyniku ma te same nazwy, ostatnia
-     kolumna będzie brana pod uwagę. Dostęp do innych kolumn o tej
-     samej nazwie jest możliwy przy użyciu funkcji
-     <function>mysql_fetch_array</function>, która wprowadzi również
-     indeksowanie numeryczne.
-    </para>
-    <para>
-     Godne uwagi jest to, że użycie <function>mysql_fetch_assoc</function>
-     <emphasis>nie</emphasis> jest znacząco wolniejsze od użycia
-     <function>mysql_fetch_row</function>, a jest bardziej funkcjonalne.
-    </para>
-    <example>
-     <title><function>mysql_fetch_assoc</function></title>
-     <programlisting role="php">
+<refentry xml:id="function.mysql-fetch-assoc" xmlns="http://docbook.org/ns/docbook" xmlns:phd="http://www.php.net/ns/phd">
+ <refnamediv>
+  <refname>mysql_fetch_assoc</refname>
+  <refpurpose>Pobiera wynikowy wiersz jako tablicę asocjacyjną</refpurpose>
+ </refnamediv>
+
+ <refsynopsisdiv>
+  <warning>
+   &mysql.alternative.note;
+   <simplelist role="alternatives">
+    <member><function>mysqli_fetch_assoc</function></member>
+    <member><methodname phd:args="PDO::FETCH_ASSOC">PDOStatement::fetch</methodname></member>
+   </simplelist>
+  </warning>
+ </refsynopsisdiv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>array</type><methodname>mysql_fetch_assoc</methodname>
+   <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Zwraca tablicę asocjacyjną bazującą na pobranym wierszu i przesuwa
+   wewnętrzny wskaźnik danych naprzód.
+   <function>mysql_fetch_assoc</function> jest odpowiednikiem
+   <function>mysql_fetch_array</function> z MYSQL_ASSOC jako
+   opcjonalny drugi parametr. Zwraca tylko tablicę asocjacyjną.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    &mysql.result.description;
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca tablicę asocjacyjną tablicę łańcuchów znaków odpowiadających polom
+   pobranego wiersza lub &false; jeżeli nie ma dalszych wierszy.
+  </para>
+  <para>
+   Jeżeli dwie lub więcej kolumn z wyniku mają takie same nazwy pól,
+   ostatnia kolumna nadpisze pozostałe. Aby uzyskać dostęp do innych
+   pól o tej samej nazwie, musisz użyć indeksów numerycznych lub stworzyć
+   alias dla danej kolumny. Zobacz przykład funkcji <function>mysql_fetch_array</function>,
+   aby poznać opis dotyczący aliasów.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Rozszerzony przykład użycia <function>mysql_fetch_assoc</function></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
-mysql_connect('localhost','uzytkownik','haslo');
-mysql_select_db('baza'); 
-$result = mysql_query('select * from tabela');
-while ($row = mysql_fetch_assoc($result)) {
-    echo $row["id_uzytkownika"];
-    echo $row["pelna_nazwa"];
+
+$conn = mysql_connect("localhost", "mysql_user", "mysql_password");
+
+if (!$conn) {
+    echo "Nie można połączyć: " . mysql_error();
+    exit;
 }
+
+if (!mysql_select_db("mydbname")) {
+    echo "Nie można wybrać bazy danych: " . mysql_error();
+    exit;
+}
+
+$sql = "SELECT id as userid, fullname, userstatus
+        FROM   sometable
+        WHERE  userstatus = 1";
+
+$result = mysql_query($sql);
+
+if (!$result) {
+    echo "Nie udało się wykonać zapytania ($sql): " . mysql_error();
+    exit;
+}
+
+if (mysql_num_rows($result) == 0) {
+    echo "Nie znaleziono rekordów, nie ma nic do wyświetlenia.";
+    exit;
+}
+
+// Jeżeli wiersz danych istnieje, umieść go w $wiersz jako tablicę asocjacyjną
+// Uwaga: jeżeli spodziewasz się tylko jednego wiersza, nie używaj pętli
+// Uwaga: Jeżeli umieścisz extract($row); wewnątrz tej pętli, otrzymasz
+//       zmienne $userid, $fullname, i $userstatus
+while ($row = mysql_fetch_assoc($result)) {
+    echo $row["userid"];
+    echo $row["fullname"];
+    echo $row["userstatus"];
+}
+
 mysql_free_result($result);
+
 ?>
 ]]>
-     </programlisting>
-    </example>
-    <para>
-     Patrz także:
-     <function>mysql_fetch_row</function>,
-     <function>mysql_fetch_array</function> i
-     <function>mysql_query</function>.
-    </para>
-   </refsect1>
-  </refentry>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <title>Wydajność</title>
+   <para>
+    Wartym zaznaczenia jest, że użycie
+	<function>mysql_fetch_array</function> <emphasis>nie
+	jest</emphasis> znacząco wolniejsze niż użycie
+	<function>mysql_fetch_row</function>, a udostępnia
+	znacznie czytelniejsze nazwy.
+   </para>
+  </note>
+  &database.field-case;
+  &database.fetch-null;
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>mysql_fetch_row</function></member>
+    <member><function>mysql_fetch_array</function></member>
+    <member><function>mysql_data_seek</function></member>
+    <member><function>mysql_query</function></member>
+    <member><function>mysql_error</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

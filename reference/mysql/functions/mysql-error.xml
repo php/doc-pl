@@ -1,72 +1,98 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: slawek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 65e697ff671608989432a6e6bf8ae8128b2be2c7 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-  <refentry xml:id="function.mysql-error" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>mysql_error</refname>
-    <refpurpose>
-     Zwraca tekst komunikatu błędu z ostatniej operacji MySQL
-    </refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>string</type><methodname>mysql_error</methodname>
-      <methodparam choice="opt"><type>resource</type><parameter>
-        identyfikator_połączenia
-       </parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     Zwraca tekst komunikatu błędu z ostatnio użytej funkcji MySQL, lub
-     <literal>''</literal> (pusty łańcuch) jeśli wystąpi błąd.
-    </para>
-    <para>
-     Błędy pochodzące z klienta bazy MySQL już nie powodują wyświetlania
-     ostrzeżeń. Zamiast tego, użyj <function>mysql_error</function>
-     by uzyskać komunikat błędu. Weź pod uwagę, że ta funkcja zwraca komunikat
-     błędu z ostatnio użytej funkcji MySQL (wyłączając
-     <function>mysql_error</function> i <function>mysql_errno</function>),
-     dlatego jeśli jej używasz, upewnij się, by zrobić to przed użyciem
-     następnej funkcji MySQL.
-     <example>
-      <title>Przykład użycia mysql_error</title>
-      <programlisting role="php">
+<refentry xml:id="function.mysql-error" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <refnamediv>
+  <refname>mysql_error</refname>
+  <refpurpose>Zwraca treść błędu z poprzedniej operacji MySQL</refpurpose>
+ </refnamediv>
+
+ <refsynopsisdiv>
+  <warning>
+   &mysql.alternative.note;
+   <simplelist role="alternatives">
+    <member><function>mysqli_error</function></member>
+    <member><methodname>PDO::errorInfo</methodname></member>
+   </simplelist>
+  </warning>
+ </refsynopsisdiv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>string</type><methodname>mysql_error</methodname>
+   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter><initializer>NULL</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   Zwraca treść błędu z ostatniej funkcji MySQL.
+   Błędy pochodzące z serwera MySQL nie powodują więcej
+   wywołania ostrzeżeń. W zamian tego użyj <function>mysql_error</function>,
+   aby uzyskać treść błędu. Zauważ, że ta funkcja zwraca błędy
+   tylko dla ostatnio wywołanej funkcji MySQL (nie licząc
+   <function>mysql_error</function> i <function>mysql_errno</function>),
+   więc jeżeli chcesz jej użyć, upewnij się, że sprawdzasz wynik
+   operacji przed wykonaniem kolejnej funkcji rozszerzenia MySQL.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    &mysql.linkid.description;
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca treść błędu z ostatnio wykonanej funkcji MySQL lub
+   <literal>''</literal> (pusty łańcuch znaków) jeżeli nie wystąpił
+   błąd.
+  </para>
+ </refsect1>
+
+  <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład użycia<function>mysql_error</function></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
-mysql_connect('localhost', 'uzytkownik', 'haslo');
+$link = mysql_connect("localhost", "mysql_user", "mysql_password");
 
-mysql_select_db('niematakiejbazy');
-echo mysql_errno() . ": " . mysql_error(). "\n";
+mysql_select_db("nonexistentdb", $link);
+echo mysql_errno($link) . ": " . mysql_error($link). "\n";
 
-mysql_select_db('takiejbazytezniema');
-mysql_query('SELECT * FROM niematakiejtabeli');
-echo mysql_errno() . ": " . mysql_error() . "\n";
+mysql_select_db("kossu", $link);
+mysql_query("SELECT * FROM nonexistenttable", $link);
+echo mysql_errno($link) . ": " . mysql_error($link) . "\n";
 ?>
 ]]>
-      </programlisting>
-      <para>
-       Powyższy przykład da następujący wynik:
-      </para>
-      <screen>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
 <![CDATA[
-1049: Unknown database 'niematakiejbazy'
-1146: Table 'takiejbazytezniema.niematakiejtabeli' doesn't exist
+1049: Unknown database 'nonexistentdb'
+1146: Table 'kossu.nonexistenttable' doesn't exist
 ]]>
-      </screen>
-     </example>
-    </para>
-    <note> 
-     <para>
-      Jeżeli jako opcjonalny argument zostanie podany identyfikator połączenia,
-      to zostanie on wykorzystany do wyciągnięcia numeru błędu. Jeśli nie,
-      wykorzystane zostanie ostatnio otwarte połączenie.
-     </para> 
-    </note> 
-    <para> 
-     Patrz także: <function>mysql_errno</function>
-    </para>
-   </refsect1>
-  </refentry>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>mysql_errno</function></member>
+    <member><link xlink:href="&url.mysql.docs.error;">Kody błędów MySQL</link></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

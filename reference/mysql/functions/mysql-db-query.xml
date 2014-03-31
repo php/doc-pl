@@ -1,20 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 654099b8c658dad8d53388144603932e252907e4 Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: 65e697ff671608989432a6e6bf8ae8128b2be2c7 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS: slawek,mroq -->
+<!-- CREDITS: slawek,mroq,sobak -->
 <refentry xml:id="function.mysql-db-query" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>mysql_db_query</refname>
   <refpurpose>Wybiera bazę danych MySQL i wykonuje na niej zapytanie</refpurpose>
  </refnamediv>
-   
+
+ <refsynopsisdiv>
+  <warning>
+   &mysql.alternative.note;
+   <simplelist role="alternatives">
+    <member><function>mysqli_select_db</function> i następnie zapytanie</member>
+    <member><methodname>PDO::__construct</methodname></member>
+   </simplelist>
+  </warning>
+ </refsynopsisdiv>
+
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>resource</type><methodname>mysql_db_query</methodname>
    <methodparam><type>string</type><parameter>baza</parameter></methodparam>
    <methodparam><type>string</type><parameter>zapytanie</parameter></methodparam>
-   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter><initializer>NULL</initializer></methodparam>
   </methodsynopsis>
   <para> 
    <function>mysql_db_query</function> wybiera bazę i wykonuje
