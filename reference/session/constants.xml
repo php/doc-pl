@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: 06dfeb81bd9241cff9a237c25ba422066968b008 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS: leszek -->
+<!-- CREDITS: leszek, sobak -->
 <appendix xml:id="session.constants" xmlns="http://docbook.org/ns/docbook">
  &reftitle.constants;
  &extension.constants;
  <variablelist>
-  <varlistentry>
+  <varlistentry xml:id="constant.sid">
    <term>
     <constant>SID</constant>
     (<type>string</type>)
@@ -17,6 +17,41 @@
      <literal>"name=ID"</literal> lub pusty ciąg tekstowy, jeśli identyfikator
      sesji został ustawiony przez prawidłowe ciasteczko sesyjne. Jest to
      ten sam ID, który zwraca funkcja <function>session_id</function>.
+    </simpara>
+   </listitem>
+  </varlistentry>
+    <varlistentry xml:id="constant.php-session-disabled">
+   <term>
+    <constant>PHP_SESSION_DISABLED</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Dostępna od PHP 5.4.0. Zwracane przez <function>session_status</function> jeśli sesje są wyłączone.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.php-session-none">
+   <term>
+    <constant>PHP_SESSION_NONE</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Dostępna od PHP 5.4.0. Zwracane przez <function>session_status</function> jeśli sesje są włączone,
+     ale żadna sesja nie istnieje.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.php-session-active">
+   <term>
+    <constant>PHP_SESSION_ACTIVE</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Dostępna od PHP 5.4.0. Zwracane przez <function>session_status</function> hjeśli sesje są włączone
+     i sesja istnieje.
     </simpara>
    </listitem>
   </varlistentry>
