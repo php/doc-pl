@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: leszek Status: ready -->
+<!-- EN-Revision: 5fba3a90ddcae79a6951c2089d59b2eced0939cf Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <appendix xml:id="array.constants" xmlns="http://docbook.org/ns/docbook">
  &reftitle.constants;
  &extension.constants.core;
  <para>
  <variablelist>
-  <varlistentry>
+  <varlistentry xml:id="constant.case-lower">
    <term>
     <constant>CASE_LOWER</constant>
     (<type>integer</type>)
@@ -20,7 +20,7 @@
     </simpara>
    </listitem>
   </varlistentry>
-  <varlistentry>
+  <varlistentry xml:id="constant.case-upper">
    <term>
     <constant>CASE_UPPER</constant>
     (<type>integer</type>)
@@ -39,7 +39,7 @@
   <para>
    Flagi kolejności sortowania:
   <variablelist> 
-    <varlistentry> 
+    <varlistentry xml:id="constant.sort-asc"> 
      <term> 
       <constant>SORT_ASC</constant> 
       (<type>integer</type>) 
@@ -51,7 +51,7 @@
       </simpara> 
      </listitem> 
     </varlistentry> 
-    <varlistentry> 
+    <varlistentry xml:id="constant.sort-desc"> 
      <term> 
       <constant>SORT_DESC</constant> 
       (<type>integer</type>) 
@@ -68,7 +68,7 @@
     
   <para> Flagi typu sortowania - używane przez różne funkcje sortujące
   <variablelist> 
-    <varlistentry> 
+    <varlistentry xml:id="constant.sort-regular"> 
      <term> 
       <constant>SORT_REGULAR</constant> 
       (<type>integer</type>) 
@@ -80,19 +80,19 @@
       </simpara> 
      </listitem> 
     </varlistentry> 
-    <varlistentry> 
+    <varlistentry xml:id="constant.sort-numeric"> 
      <term> 
       <constant>SORT_NUMERIC</constant> 
       (<type>integer</type>) 
      </term> 
-     <listitem> 
+     <listitem>
       <simpara> 
        <constant>SORT_NUMERIC</constant> używana jest do porównywania
        elementów liczbowo.
-      </simpara> 
-     </listitem> 
-    </varlistentry> 
-    <varlistentry> 
+      </simpara>
+     </listitem>
+    </varlistentry>
+    <varlistentry xml:id="constant.sort-string">
      <term> 
       <constant>SORT_STRING</constant> 
       (<type>integer</type>) 
@@ -104,7 +104,7 @@
       </simpara> 
      </listitem> 
     </varlistentry> 
-    <varlistentry> 
+    <varlistentry xml:id="constant.sort-locale-string"> 
      <term> 
       <constant>SORT_LOCALE_STRING</constant> 
       (<type>integer</type>) 
@@ -116,11 +116,37 @@
        4.4.0 i 5.0.2.
       </simpara> 
      </listitem> 
-    </varlistentry> 
+    </varlistentry>
+    <varlistentry xml:id="constant.sort-natural">
+   <term>
+    <constant>SORT_NATURAL</constant> 
+    (<type>integer</type>)
+   </term>
+   <listitem>
+    <simpara>
+    <constant>SORT_NATURAL</constant> jest używana do porównywania elementów
+    jako ciągi tekstowe, przy użyciu sortowania naturalnego, jak w <function>natsort</function>. Dodano w PHP 5.4.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.sort-flag-case">
+   <term>
+    <constant>SORT_FLAG_CASE</constant> 
+    (<type>integer</type>)
+   </term>
+   <listitem>
+    <simpara>
+    <constant>SORT_FLAG_CASE</constant> może zostać połączone
+         (bitowe OR) z
+         <constant>SORT_STRING</constant> lub
+         <constant>SORT_NATURAL</constant> aby posortować elemnenty nie zwracając uwagi na wielkość znaków. Dodano w PHP 5.4.0.
+    </simpara>
+   </listitem>
+  </varlistentry>	
   </variablelist> 
   </para> 
   <variablelist> 
-    <varlistentry> 
+    <varlistentry xml:id="constant.count-normal"> 
      <term> 
       <constant>COUNT_NORMAL</constant> 
        (<type>integer</type>) 
@@ -131,7 +157,7 @@
       </simpara> 
      </listitem> 
     </varlistentry> 
-    <varlistentry> 
+    <varlistentry xml:id="constant.count-recursive"> 
      <term> 
       <constant>COUNT_RECURSIVE</constant> 
        (<type>integer</type>) 
@@ -142,7 +168,7 @@
       </simpara> 
      </listitem> 
     </varlistentry> 
-    <varlistentry> 
+    <varlistentry xml:id="constant.extr-overwrite"> 
      <term> 
       <constant>EXTR_OVERWRITE</constant> 
        (<type>integer</type>) 
@@ -153,7 +179,7 @@
       </simpara> 
      </listitem> 
     </varlistentry> 
-    <varlistentry> 
+    <varlistentry xml:id="constant.extr-skip"> 
      <term> 
       <constant>EXTR_SKIP</constant> 
        (<type>integer</type>) 
@@ -164,7 +190,7 @@
       </simpara> 
      </listitem> 
     </varlistentry> 
-    <varlistentry> 
+    <varlistentry xml:id="constant.extr-prefix-same"> 
      <term> 
       <constant>EXTR_PREFIX_SAME</constant> 
        (<type>integer</type>) 
@@ -175,7 +201,7 @@
       </simpara> 
      </listitem> 
     </varlistentry> 
-    <varlistentry> 
+    <varlistentry xml:id="constant.extr-prefix-all"> 
      <term> 
       <constant>EXTR_PREFIX_ALL</constant> 
        (<type>integer</type>) 
@@ -186,7 +212,7 @@
       </simpara> 
      </listitem> 
     </varlistentry> 
-    <varlistentry> 
+    <varlistentry xml:id="constant.extr-prefix-invalid"> 
      <term> 
       <constant>EXTR_PREFIX_INVALID</constant> 
        (<type>integer</type>) 
@@ -197,7 +223,7 @@
       </simpara> 
      </listitem> 
     </varlistentry> 
-    <varlistentry> 
+    <varlistentry xml:id="constant.extr-prefix-if-exists"> 
      <term> 
       <constant>EXTR_PREFIX_IF_EXISTS</constant> 
        (<type>integer</type>) 
@@ -208,7 +234,7 @@
       </simpara> 
      </listitem> 
     </varlistentry> 
-    <varlistentry> 
+    <varlistentry xml:id="constant.extr-if-exists"> 
      <term> 
       <constant>EXTR_IF_EXISTS</constant> 
        (<type>integer</type>) 
@@ -219,7 +245,7 @@
       </simpara> 
      </listitem> 
     </varlistentry> 
-    <varlistentry> 
+    <varlistentry xml:id="constant.extr-refs"> 
      <term> 
       <constant>EXTR_REFS</constant> 
        (<type>integer</type>) 
@@ -253,4 +279,3 @@ vim600: syn=xml fen fdm=syntax fdl=2 si
 vim: et tw=78 syn=sgml
 vi: ts=1 sw=1
 -->
-
