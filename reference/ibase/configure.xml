@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: fa6e196973e45c0013c0801e01697757f4b98426 Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: 6ebdebb87e53a715f7f38e2278591bf0dc7b1adc Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <section xml:id="ibase.installation" xmlns="http://docbook.org/ns/docbook">
  &reftitle.install;
  <para>
   W celu uruchomienia wsparcia dla Firebird/InterBase, należy użyć opcji
   <option role="configure">--with-interbase[=DIR]</option> w czasie
-  kompilacji PHP, gdzie DIR jest katalogiem instalacji InterBase
+  kompilacji PHP, gdzie DIR jest katalogiem instalacji Firebird/InterBase
   - domyślnie <filename>/usr/interbase</filename>.
  </para>
  <note>
   <title>Informacja dla użytkowników Windows</title>
   <para>
    &ext.windows.path.dll;
-   <filename>gds32.dll</filename>
+   <filename>fbclient.dll,gds32.dll</filename>
   </para>
   <para>
    Jeśli serwer Firebird/InterBase jest zainstalowany na tej samej naszynie,
-   na której jest uruchomiony PHP, to biblioteka DLL <filename>gds32.dll</filename>
-   jest dostępna za pomocą zmiennej środowiskowej <literal>PATH</literal>.
+   na której jest uruchomiony PHP, to biblioteka DLL oraz
+   <filename>fbclient.dll,gds32.dll</filename>  (gds32.dll jest generowana przez instalator dla starszych aplikacji)
+   są dostępne za pomocą zmiennej środowiskowej <literal>PATH</literal>.
   </para>
  </note>
 </section>

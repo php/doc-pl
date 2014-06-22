@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: 99a5cc447fc5ab7c3deeeb6f7462f9891bc86852 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS: leniwiec -->
+<!-- CREDITS: leniwiec, sobak -->
 <!-- splitted from ./en/functions/dir.xml, last change in rev 1.2 -->
 <refentry xml:id="function.readdir" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
@@ -16,7 +16,7 @@
    <methodparam choice="opt"><type>zasób</type><parameter>uchwyt_katalogu</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Zwraca nazwę kolejnego pliku z katalogu. Nazwy plików
+   Zwraca nazwę kolejnego elementu z katalogu. Nazwy elementów
    są zwracane w kolejności posortowanej przez
    system plików.
   </para>
@@ -44,7 +44,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca nazwę pliku w przypadku powodzenia&return.falseforfailure;.
+   Zwraca nazwę elementu w przypadku powodzenia&return.falseforfailure;.
   </para>
   &return.falseproblem; 
  </refsect1>
@@ -53,13 +53,13 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Lista wszystkich plików w katalogu</title>
+    <title>Lista wszystkich elementów w katalogu</title>
     <para>
      Sposób w jaki zwrócona przez <function>readdir</function> wartość powinna
      być sprawdzona, obrazuje poniższy przykład. Należy sprawdzić czy zwrócona
      wartość jest równa (jest tego samego typu -- zobacz również
-     <link linkend="language.operators.comparison">Comparison
-      Operators</link>) &false;. W przeciwnym razie plik o nazwie &false; (jak
+     <link linkend="language.operators.comparison">operatory
+     porównania</link>) &false;. W przeciwnym razie plik o nazwie &false; (jak
      również "0")
      znajdujący się w czytanym katalogu zatrzymałby pętle.
     </para>
@@ -69,17 +69,17 @@
 //  !== nie istniał w wersji wcześniejszej niż 4.0.0-RC2
 
 if ($handle = opendir('/path/to/files')) {
-    echo "Directory handle: $handle\n";
-    echo "Files:\n";
+    echo "Uchwyt katalogu: $handle\n";
+    echo "Elementów:\n";
 
     /* To jest poprawna metoda  */
-    while (false !== ($file = readdir($handle))) {
-        echo "$file\n";
+    while (false !== ($entry = readdir($handle))) {
+        echo "$entry\n";
     }
 
     /* To jest ZŁA metoda */
-    while ($file = readdir($handle)) {
-        echo "$file\n";
+    while ($entry = readdir($handle)) {
+        echo "$entry\n";
     }
 
     closedir($handle);
@@ -92,16 +92,16 @@ if ($handle = opendir('/path/to/files')) {
   <para>
    <example>
     <title>
-    Lista wszystkich plików w wskazanym katalogu oprócz <literal>.</literal>
+    Lista wszystkich elementów w wskazanym katalogu oprócz <literal>.</literal>
     i <literal>..</literal>
     </title>
     <programlisting role="php">
 <![CDATA[
 <?php
 if ($handle = opendir('.')) {
-    while (false !== ($file = readdir($handle))) { 
-        if ($file != "." && $file != "..") { 
-            echo "$file\n"; 
+    while (false !== ($entry = readdir($handle))) { 
+        if ($entry != "." && $entry != "..") { 
+            echo "$entry\n"; 
         } 
     }
     closedir($handle); 
