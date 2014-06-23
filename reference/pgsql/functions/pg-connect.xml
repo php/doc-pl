@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: jarek Status: ready -->
+<!-- EN-Revision: 29fd59a70b23102ac9f09b87e509a4a68a7df81d Maintainer: sobak Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.2 -->
   <refentry xml:id="function.pg-connect" xmlns="http://docbook.org/ns/docbook">
@@ -52,13 +52,18 @@
        <para>
         Obecnie rozpoznwane parametry słów kluczowych to:
         <parameter>host</parameter>, <parameter>hostaddr</parameter>, <parameter>port</parameter>,
-        <parameter>dbname</parameter>, <parameter>user</parameter>,
+        <parameter>dbname</parameter> (domyślnie ma wartość taką jak <parameter>user</parameter>),
+		<parameter>user</parameter>,
         <parameter>password</parameter>, <parameter>connect_timeout</parameter>,
         <parameter>options</parameter>, <parameter>tty</parameter> (ignorowany), <parameter>sslmode</parameter>,
         <parameter>requiressl</parameter> (przestarzały na rzecz <parameter>sslmode</parameter>) i
         <parameter>service</parameter>.  Które z tych parametrów istnieją zależy
         od Twojej wersji PostgreSQL.
        </para>
+       <para>
+        Parametr <parameter>options</parameter> może zostać użyty do ustawienia parametrów linii komend
+		na serwerze.
+	   <para>
       </listitem>
      </varlistentry>
      <varlistentry>
@@ -102,6 +107,9 @@ $dbconn3 = pg_connect ("host=sheep port=5432 dbname=mary user=lamb password=foo"
 $conn_string = "host=sheep port=5432 dbname=test user=lamb password=bar";
 $dbconn4 = pg_connect ($conn_string);
 //Otwiera połączenie z bazą "test" na komputerze "sheep" z użyciem nazwy użytkownika i hasła
+
+$dbconn5 = pg_connect("host=localhost options='--client_encoding=UTF8'");
+//Otwiera połączenie z bazą na komputerze "localhost" i ustawia parametr linii komend mówiący o tym, że kodowaniem jest UTF-8
 ?>
 ]]>
      </programlisting>

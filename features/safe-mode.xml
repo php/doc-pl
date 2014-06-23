@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 8888c9528e2a606c1ed89cffe811499a511f1871 Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: 4f90edebfb15e0c08faa3aab702e3dbfd55e1012 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
  <chapter xml:id="features.safe-mode" xmlns="http://docbook.org/ns/docbook">
   <title>Tryb bezpieczny</title>
@@ -12,8 +12,37 @@
    zwłaszcza u usługodawców internetowych, używa się trybu bezpiecznego.
   </para>
 
-  &warn.deprecated.feature-5-3-0.removed-6-0-0;
+  &warn.deprecated.feature-5-3-0.removed-5-4-0;
 
+  <para>
+   <table>
+    <title>Rejestr zmian dla <literal>safe mode</literal></title>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>5.4.0</entry>
+       <entry>
+        Usunięto z PHP. Generuje błąd typu <constant>E_CORE_ERROR</constant>
+        jeżeli jest włączone.
+       </entry>
+      </row>
+      <row>
+       <entry>5.3.0</entry>
+       <entry>
+        Przestarzałe. Generuje błąd <constant>E_DEPRECATED</constant> jeżeli jest włączone.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </table>
+  </para>
+  
   <sect1 xml:id="ini.sect.safe-mode">
    <title>Zabezpieczenia i tryb bezpieczny</title>
    <para>
@@ -22,45 +51,45 @@
      <tgroup cols="4">
       <thead>
        <row>
-        <entry>Nazwa</entry>
-        <entry>Wartość domyślna</entry>
-        <entry>Możliwość zmian</entry>
-        <entry>Rejestr zmian</entry>
+        <entry>&Name;</entry>
+        <entry>&Default;</entry>
+        <entry>&Changeable;</entry>
+        <entry>&Changelog;</entry>
        </row>
       </thead>
       <tbody>
        <row>
-        <entry>safe_mode</entry>
+        <entry><link linkend="ini.safe-mode">safe_mode</link></entry>
         <entry>"0"</entry>
         <entry>PHP_INI_SYSTEM</entry>
         <entry>Usunięta w PHP 5.4.0.</entry>
        </row>
        <row>
-        <entry>safe_mode_gid</entry>
+        <entry><link linkend="ini.safe-mode-gid">safe_mode_gid</link></entry>
         <entry>"0"</entry>
         <entry>PHP_INI_SYSTEM</entry>
         <entry>Dostępna od PHP 4.1.0. Usunięta w PHP 5.4.0.</entry>
        </row>
        <row>
-        <entry>safe_mode_include_dir</entry>
+        <entry><link linkend="ini.safe-mode-include-dir">safe_mode_include_dir</link></entry>
         <entry>NULL</entry>
         <entry>PHP_INI_SYSTEM</entry>
         <entry>Dostępna od PHP 4.1.0. Usunięta w PHP 5.4.0.</entry>
        </row>
        <row>
-        <entry>safe_mode_exec_dir</entry>
+        <entry><link linkend="ini.safe-mode-exec-dir">safe_mode_exec_dir</link></entry>
         <entry>""</entry>
         <entry>PHP_INI_SYSTEM</entry>
         <entry>Usunięta w PHP 5.4.0.</entry>
        </row>
        <row>
-        <entry>safe_mode_allowed_env_vars</entry>
+        <entry><link linkend="ini.safe-mode-allowed-env-vars">safe_mode_allowed_env_vars</link></entry>
         <entry>"PHP_"</entry>
         <entry>PHP_INI_SYSTEM</entry>
         <entry>Usunięta w PHP 5.4.0.</entry>
        </row>
        <row>
-        <entry>safe_mode_protected_env_vars</entry>
+        <entry><link linkend="ini.safe-mode-protected-env-vars">safe_mode_protected_env_vars</link></entry>
         <entry>"LD_LIBRARY_PATH"</entry>
         <entry>PHP_INI_SYSTEM</entry>
         <entry>Usunięta w PHP 5.4.0.</entry>
@@ -86,7 +115,7 @@
         Jeśli PHP zostało skompilowane z parametrem <literal>--enable-safe-mode</literal>
         to domyślną wartością jest On. W przeciwnym przypadku domyślną wartością jest Off.
        </para>
-       &warn.deprecated.feature-5-3-0.removed-6-0-0;
+       &warn.deprecated.feature-5-3-0.removed-5-4-0;
       </listitem>
      </varlistentry>
      <varlistentry xml:id="ini.safe-mode-gid">
