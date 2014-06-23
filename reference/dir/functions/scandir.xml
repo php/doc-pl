@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: 13e47276f8279955f1b9761c10dbb18744fb5bf7 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS: leniwiec -->
+<!-- CREDITS: leniwiec, sobak -->
 <refentry xml:id="function.scandir" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>scandir</refname>
@@ -13,11 +13,11 @@
   <methodsynopsis>
    <type>array</type><methodname>scandir</methodname>
    <methodparam><type>string</type><parameter>katalog</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>sorting_order</parameter><initializer>0</initializer></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>sorting_order</parameter><initializer>SCANDIR_SORT_ASCENDING</initializer></methodparam>
    <methodparam choice="opt"><type>resource</type><parameter>context</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Zwraca <type>tablicę</type> z wszystkimi plikami i katalogami znajdującymi się w 
+   Zwraca tablicę (<type>array</type>) z wszystkimi plikami i katalogami znajdującymi się w 
    <parameter>katalog</parameter>.
   </para>
 
@@ -39,9 +39,11 @@
      <term><parameter>sorting_order</parameter></term>
      <listitem>
       <para>
-       Domyślnie, kolejność w zwróconej tablicy jest alfabetyczna w porządku rosnącym.  Jeżeli
-       opcjonalny parametr <parameter>sorting_order</parameter> jest ustawiony (nie na wartość 0),
-       wówczas kolejność jest alfabetyczna w porządku malejącym.
+       Domyślnie, kolejność w zwróconej tablicy jest alfabetyczna w porządku rosnącym. Jeżeli
+       opcjonalny parametr <parameter>sorting_order</parameter> jest ustawiony na
+	   <constant>SCANDIR_SORT_DESCENDING</constant>, wówczas kolejność jest
+	   alfabetyczna w porządku malejącym. Jeśli ustawiona jest na
+	   <constant>SCANDIR_SORT_NONE</constant>, to wynik nie jest sortowany.
       </para>
      </listitem>
     </varlistentry>
@@ -69,6 +71,35 @@
   </para> 
  </refsect1>
 
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>5.4.0</entry>
+       <entry>
+        Zostały dodane <link linkend="dir.constants">stałe </link> dla parametru
+        <parameter>sorting_order</parameter>. Dowolna wartość różna od zera powodowała
+	    sortowanie malejąe w poprzednich wersjach. W związku z tym, dla wszystkich wersji
+        PHP, użyj <literal>0</literal> dla sortowania rosnącego i <literal>1</literal>
+        dla malejącego. Opcja dla zachowania <constant>SCANDIR_SORT_NONE</constant> nie
+        istniała do czasu PHP 5.4.0.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+ 
  <refsect1 role="examples">
   &reftitle.examples;
   <para>
