@@ -1,91 +1,172 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: qrak Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 9905374cd0b37a55542a68eedac9cf59521f59c9 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-<!-- splitted from ./en/functions/math.xml, last change in rev 1.2 -->
-  <refentry xml:id="function.number-format" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>number_format</refname>
-    <refpurpose>Formatuje liczbę według szablonu</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>string</type><methodname>number_format</methodname>
-      <methodparam><type>float</type><parameter>liczba</parameter></methodparam>
-      <methodparam choice="opt"><type>int</type><parameter>miejsc_dziesiętnych</parameter></methodparam>
-      <methodparam choice="opt"><type>string</type><parameter>przecinek_dziesiętny</parameter></methodparam>
-      <methodparam><type>string</type><parameter>separator_tysięcy</parameter></methodparam>
-     </methodsynopsis>
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.number-format" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <refnamediv>
+  <refname>number_format</refname>
+  <refpurpose>Formatuje liczbę grupując tysiące</refpurpose>
+ </refnamediv>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>string</type><methodname>number_format</methodname>
+   <methodparam><type>float</type><parameter>liczba</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>miejsc_dziesiętnych</parameter><initializer>0</initializer></methodparam>
+  </methodsynopsis>
+  <methodsynopsis>
+   <type>string</type><methodname>number_format</methodname>
+   <methodparam><type>float</type><parameter>liczba</parameter></methodparam>
+   <methodparam><type>int</type><parameter>miejsc_dziesiętnych</parameter><initializer>0</initializer></methodparam>
+   <methodparam><type>string</type><parameter>separator_dziesiętnych</parameter><initializer>"."</initializer></methodparam>
+   <methodparam><type>string</type><parameter>separator_tysięcy</parameter><initializer>","</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   Ta funkcja akceptuje jeden, dwa lub cztery parametry (ale nie trzy):
+  </para>
+  <para>
+   Jeżeli podano tylko jeden parametr,
+   <parameter>number</parameter> zostanie sformatowana bez miejsc dziesiętnych,
+   ale z przecinkiem pomiędzy każdą grupą tysięcy.
+  </para>
+  <para>
+   Jeżeli podano dwa paramery, <parameter>liczba</parameter> zostanie
+   sformatowana z ilością miejsc dziesiętnych podanych w drugim argumencie,
+   poprzedzonych kropką (".") i z przecinkiem rozdzielającym każdą grupę
+   tysięcy.
+  </para>
+  <para>
+   Jeżeli podano wszystkie cztery parametry, <parameter>liczba</parameter> zostanie
+   sformatowana z ilością miejsc dziesiętnych podanych w drugim argumencie,
+   poprzedzonych kropką (".") i <parameter>separator_tysięcy</parameter> zostanie
+   użyty do rozdzielenia grup tysięcy, zamiast przecinka (",").
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>liczba</parameter></term>
+     <listitem>
+      <para>
+       Liczba do sformatowania.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>miejsc_dziesiętnych</parameter></term>
+     <listitem>
+      <para>
+       Ustawia liczbę miejsc dziesiętnych.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>separator_dziesiętnych</parameter></term>
+     <listitem>
+      <para>
+       Ustawia separator dla miejsc dziesiętnych.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>separator_tysięcy</parameter></term>
+     <listitem>
+      <para>
+       Ustawia separator dla tysięcy.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Sformatowana <parameter>liczba</parameter>.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>5.4.0</entry>
+       <entry>
+        Funkcja wspiera wiele bajtów w argumentach
+		<parameter>separator_dziesiętnych</parameter> oraz
+		<parameter>separator tysięcy</parameter>. W starszych
+		wersjach używany był tylko pierwszy bajt.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład użycia <function>number_format</function></title>
     <para>
-     Funkcja <function>number_format</function> zwraca sformatowaną liczbę
-     <parameter>liczba</parameter> według podanych argumentów. Ta funkcja
-     przyjmuje jeden, dwa lub cztery argumenty (nie trzy):
+     Przykładowo, notacja francuska zazwyczaj używa dwóch miejsc dziesiętnych,
+     przecinka (',') jako ich separatora i spacji (' ') jako
+     separatora tysięcy. Można to osiągnąć w następujący sposób:
     </para>
-    <para>
-     Jeśli podany jest tylko jeden argument, <parameter>liczba</parameter>
-     zostanie sformatowana bez miejsc dziesiętnych ale z przecinkiem (",")
-     pomiędzy każdą grupą tysięcy.
-    </para>
-    <para>
-     Jeśli podane są dwa argumenty, <parameter>liczba</parameter> będzie
-     sformatowana z <parameter>miejsc_dziesiętnych</parameter>, z kropką
-     (".") w charakterze przecinka dziesiętnego i przecinkiem (",")
-     pomiędzy każdą grupą tysięcy.
-    </para>
-    <para>
-     Kiedy wszystkie cztery parametry są podane, <parameter>liczba</parameter>
-     będzie sformatowana z <parameter>miejsc_dziesiętnych</parameter>,
-     z <parameter>przecinek_dziesiętny</parameter> zamiast kropki (".") i
-     <parameter>separator_tysięcy</parameter> pomiędzy każdą grupą tysięcy.
-    </para>
-    <note>
-     <para>
-      Tylko pierwszy znak z <parameter>separator_tysięcy</parameter> jest
-      wykorzystywany. Na przykład, jeśli użyjesz <literal>foo</literal> jako
-      separatora, to z liczby <literal>1000</literal> funkcja zwróci
-      <literal>1f000</literal>.
-     </para>
-    </note>
-    <para>
-    <example>
-     <title><function>number_format</function> - przykłady</title>
-     <para>
-      W polskiej notacji liczbowej używa się przecinka (",") jako przecinka
-      dziesiętnego i spacji (" ") jako separatora tysięcy. W PHP można
-      to zrobić tak:
-     </para>
-      <programlisting role="php">
+    <programlisting role="php">
 <![CDATA[
 <?php
 
-    $liczba = 1234.56;
+$number = 1234.56;
 
-    // notacja angielska (domyślna)
-    $notacja_angielska = number_format($liczba);
-    // 1,234.56
+// notacja angielska (domyślna)
+$english_format_number = number_format($number);
+// 1,235
 
-    // notacja polska
-    $notacja_polska = number_format($liczba, 2, ',', ' ');
-    // 1 234,56
+// notacja francuska
+$nombre_format_francais = number_format($number, 2, ',', ' ');
+// 1 234,56
 
-    $number = 1234.5678;
+$number = 1234.5678;
 
-    // notacja angielska bez separatora tysięcy
-    $notacja_angielska = number_format($liczba, 2, '.', '');
-    // 1234.57
+// notacja angielska bez separatora tysięcy
+$english_format_number = number_format($number, 2, '.', '');
+// 1234.57
 
 ?>
 ]]>
-      </programlisting>
-     </example>
-    </para>
-    <para>
-     Patrz także: <function>money_format</function>, <function>sprintf</function>,
-     <function>printf</function> i <function>sscanf</function>.
-    </para>
-   </refsect1>
-  </refentry>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
 
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>money_format</function></member>
+    <member><function>sprintf</function></member>
+    <member><function>printf</function></member>
+    <member><function>sscanf</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml
