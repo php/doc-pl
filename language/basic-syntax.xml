@@ -1,58 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 62d27014053411b67ff2c87de7e12d6a40c99dad Maintainer: adi Status: ready -->
+<!-- EN-Revision: 18be881ca249a018343919666004f66f34fc7f19 Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: sobak -->
  <chapter xml:id="language.basic-syntax" xmlns="http://docbook.org/ns/docbook">
   <title>Podstawowa składnia</title>
-  <sect1 xml:id="language.basic-syntax.phpmode">
-   <title>Wyskakiwanie z HTMLa</title>
+  <sect1 xml:id="language.basic-syntax.phptags">
+   <title>Znaczniki PHP</title>
    <para>
-    Kiedy PHP przetwarza plik, szuka otwierających i zamykających znaczników (tagów),
+    Kiedy PHP przetwarza plik, szuka otwierających i zamykających znaczników (tagów)
+	(są nimi <literal>&lt;?php</literal> i <literal>?&gt;</literal>),
     które mówią PHP o rozpoczęciu i zakończeniu interpretowania kodu pomiędzy
-    nimi. Przetwarzanie w taki sposób pozwala zagnieżdzać php w dowolnym
+    nimi. Przetwarzanie w taki sposób pozwala zagnieżdzać PHP w dowolnym
     rodzaju dokumentów, ponieważ wszystko poza parą
     znaczników, otwierającym i zamykającym jest ignorowane przez parser PHP.
-    Najczęściej zobaczysz php zagnieżdzone w dokumentach HTML,
-    tak jak w tym przykładzie.
+   </para>
+   <para>
+    PHP pozwala także na użycie krótkich tagów <literal>&lt;?</literal> i <literal>?&gt;</literal>,
+    które są niezalecane, ponieważ są dostępne tylko gdy włączone przez dyrektywę
+    <link linkend="ini.short-open-tag">short_open_tag</link> lub gdy PHP zostało skonfigurowane
+    z opcją <option>--enable-short-tags</option>.
+   </para>
+   <para>
+    Jeżeli plik zawiera jedynie kod PHP, zaleca się pominięcie zamykającego tagu PHP na końcu pliku.
+	Zapobiega to dodaniu przypadkowych białych znaków lub nowych linii dodanych po zamknięciu bloku PHP,
+	co może spowodować niechciane efekty ponieważ PHP zacznie buforowanie wyjścia, gdy nie było to intencją
+	programisty na tym etapie wykonywania skryptu.
     <informalexample>
      <programlisting role="php">
 <![CDATA[
-<p>To zostanie zignorowane.</p>
-<?php echo 'Kiedy to zostanie przetworzone.'; ?>
-<p>To również zostanie zignorowane.</p>
+<?php
+echo "Witaj, świecie!";
+
+// ... więcej kodu
+
+echo "Ostatnie wyrażenie";
+
+// skrypt kończy się w tym miejscu, bez tagu zamykającego PHP
 ]]>
      </programlisting>
     </informalexample>
    </para>
+  </sect1>
+  <sect1 xml:id="language.basic-syntax.phpmode">
+   <title>Wyskakiwanie z HTML</title>
    <para>
-    Możesz także użyć bardziej zaawansowanej struktury:
+    Wszystko na zewnątrz tagów PHP jest ignorowane przez parser, co pozwala plikom PHP
+	mieć mieszaną zawartość. To pozwala na zagnieżdżanie PHP w plikach HTML, na przykład
+	w celu stworzenia szablonu.
     <example>
-     <title>Zaawansowane wyskakiwanie</title>
      <programlisting role="php">
 <![CDATA[
 <?php
-if ($wyrazenie) { 
-    ?>
-    <strong>To jest prawda.</strong>
-    <?php 
-} else { 
-    ?>
-    <strong>To jest fałsz.</strong>
-    <?php 
-}
-?>
+<p>To zostanie zignorowane przez PHP i wyświetlone w przeglądarce.</p>
+<?php echo 'Podczas gdy to zostanie sparsowane.'; ?>
+<p>To także zostanie zignorowane przez PHP i wyświetlone w przeglądarce.</p>
 ]]>
      </programlisting>
     </example>
-    To działa jak się spodziewano, ponieważ kiedy PHP natrafi na zamykający 
+    To działa tak, jak się spodziewano, ponieważ kiedy interpreter PHP natrafi na zamykający 
     znacznik ?&gt;, poprostu zaczyna wyświetlać cokolwiek znajdzie (z wyjątkiem
     bezpośrednio następującej nowej linii - zobacz
-    <link linkend="language.basic-syntax.instruction-separation">oddzielanie instrukcji</link>
-    ) dopóki nie natrafi
-    na kolejny otwierający znacznik. Podany przykład jest oczywiście przekombinowany,
-    ale do wyświetlania dużych bloków tekstu, wychodzenie z trybu przetwarzania PHP
-    jest zasadniczo bardziej efektywne niż wysyłanie całego tekstu przez
-    funkcje <function>echo</function> lub
-    <function>print</function>.  
+    <link linkend="language.basic-syntax.instruction-separation">oddzielanie instrukcji</link>)
+	dopóki nie natrafi na kolejny otwierający znacznik - chyba, że znajdzie się to wewnątrz
+	instrukcji warunkowej; w tym wypadku interpreter najpierw sprawdzi wynik instrukcji, aby
+	zdecydować co pominąć.
+	Zobacz kolejny przykład:
+   </para>
+   <para>
+    Wykorzystanie struktur z warunkami
+    <example>
+     <title>Zaawansowane wyskakiwanie przy użyciu warunków</title>
+     <programlisting role="php">
+<![CDATA[
+<?php if ($expression == true): ?>
+  To pokaże się, jeżeli wyrażenie jest prawdziwe.
+<?php else: ?>
+  W przeciwnym wypadku pokaże się to.
+<?php endif; ?>
+]]>
+     </programlisting>
+    </example>
+    W tym przykładzie PHP pominie bloki, gdzie warunek nie jest spełniony, nawet
+    jeżeli są one wewnątrz tagów PHP. PHP pomija je odpowiednio do warunku,
+    ponieważ interpreter przeskakuje bloki zawarte w instrukcji, która nie została
+    spełniona.
+   </para>
+   <para>
+    Dla wyświetlania większych ilości tekstu, wyjście z trybu parsowania PHP
+    jest ogólnie rzecz biorąc bardziej wydajne niż wysyłanie całego tekstu przez
+    funkcje <function>echo</function> lub <function>print</function>.
    </para>
    <para>
     Mamy cztery różne pary otwierających i zamykających znaczników,
@@ -87,7 +123,7 @@ if ($wyrazenie) {
     <?= wyrazenie ?> To jest skrót dla "<? echo wyrazenie ?>"
 
 4.  <% echo 'Możesz opcjonalnie użyć znaczników w stylu ASP'; %>
-    <%= $zmienna; # To jest skrót dla "<% echo . . ." %>
+    <%= $zmienna; # To jest skrót dla "<% echo $zmienna; %>
 ]]>
      </programlisting>
     </example>
@@ -122,7 +158,8 @@ if ($wyrazenie) {
      <para>
       W PHP 5.2 i wcześniejszych, parser nie pozwalał, aby
       znacznik otwierający <literal>&lt;?php</literal> był jedynym znakiem w pliku.
-      Dozwolone jest to od PHP 5.3.
+      Dozwolone jest to od PHP 5.3, pod warunkiem, że po tagu otwierającym znajduje
+	  się jeden lub więcej białych znaków (np. spacja).
      </para>
     </note>
     <note> 

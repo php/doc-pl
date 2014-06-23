@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 4c3829fef399388b42c09e7661bf83f948baba60 Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
-<!-- EN-Revision: ca2253c01d4165ab863aaa5bd2968f1f8af67d92 Maintainer: adi Status: ready -->
-<!-- Reviewed: no -->
 
 <refentry xml:id="countable.count" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
@@ -13,7 +12,7 @@
   &reftitle.description;
   <methodsynopsis>
    <modifier>abstract</modifier> <modifier>public</modifier> <type>int</type><methodname>Countable::count</methodname>
-   <void />
+   <methodparam choice="opt"><type>int</type><parameter>tryb</parameter><initializer>COUNT_NORMAL</initializer>
   </methodsynopsis>
   <para>
    Ta metoda jest wywoływana kiedy używana jest funkcja <function>count</function> na 
@@ -23,7 +22,22 @@
 
  <refsect1 role="parameters">
   &reftitle.parameters;
-  &no.function.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>tryb</parameter></term>
+     <listitem>
+      <para>
+       Opcjonalny parametr <parameter>tryb</parameter> może być ustawiony na
+       <constant>COUNT_NORMAL</constant> lub <constant>COUNT_RECURSIVE</constant>, zależnie od 
+       wartości przekazanej jako drugi argument <function>count</function>.
+       Jest to szczególnie użyteczne przy zliczaniu wszystkich elementów
+       kombinacji tablicy wielowymiarowej i Countable.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
  </refsect1>
 
  <refsect1 role="returnvalues">
@@ -37,6 +51,30 @@
    </para>
   </note>
  </refsect1>
+ 
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>5.6.0</entry>
+       <entry>
+        Dodano opcjonalny parametr <parameter>tryb</parameter>.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1> 
 
  <refsect1 role="examples">
   &reftitle.examples;
@@ -47,9 +85,9 @@
 <![CDATA[
 <?php
 class myCounter implements Countable {
+    private $count = 0;
     public function count() {
-        static $count = 0;
-        return ++$count;
+        return ++$this->count;
     }
 }
 
