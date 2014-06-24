@@ -1,12 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: adi Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: cfe5b5214a1e70f5551f3576821ee95b5545f3a9 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-<refentry xml:id="function.ftruncate" xmlns="http://docbook.org/ns/docbook">
+<!-- splitted from ./en/functions/filesystem.xml, last change in rev 1.14 -->
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.ftruncate">
  <refnamediv>
   <refname>ftruncate</refname>
   <refpurpose>Przycina plik do podanej długości</refpurpose>
  </refnamediv>
- 
+
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
@@ -15,10 +16,11 @@
    <methodparam><type>int</type><parameter>rozmiar</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Pobiera wskaźnik pliku, <parameter>uchwyt</parameter> i przycina plik do długości,
-   <parameter>rozmiar</parameter>.
+   Przyjmuje <parameter>uchwyt</parameter> do pliku i przycina go do
+   długości <parameter>rozmiar</parameter>.
   </para>
  </refsect1>
+
  <refsect1 role="parameters">
   &reftitle.parameters;
   <para>
@@ -27,11 +29,11 @@
      <term><parameter>uchwyt</parameter></term>
      <listitem>
       <para>
-       Wskaźnik pliku
+       Uchwyt do pliku.
       </para>
       <note>
        <para>
-        <parameter>uchwyt</parameter> musi by otworzony do zapisu.
+        Podany <parameter>uchwyt</parameter> musi zostać otwarty do zapisu.
        </para>
       </note>
      </listitem>
@@ -40,16 +42,16 @@
      <term><parameter>rozmiar</parameter></term>
      <listitem>
       <para>
-       Rozmiar do którego przycinamy.
+       Rozmiar, do którego zostanie przycięty plik.
       </para>
       <note>
        <para>
-        Jeśli <parameter>rozmiar</parameter> jest większy niż rozmiar pliku to jest on rozszerzany
-        bajtami null.
+        Jeżeli <parameter>rozmiar</parameter> jest większy niż plik, to plik
+        zostanie wypełniony pustymi bajtami do podanego rozmiaru.
        </para>
        <para>
-        Jeśli <parameter>rozmiar</parameter> jest mniejszy niż rozmiar pliku to dalsze dane
-        zostaną stracone.
+        Jeżeli <parameter>rozmiar</parameter> jest mniejszy niż plik, to plik
+        jest przycinany do tej długości.
        </para>
       </note>
      </listitem>
@@ -57,12 +59,14 @@
    </variablelist>
   </para>
  </refsect1>
+
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
    &return.success;
   </para>
  </refsect1>
+
  <refsect1 role="changelog">
   &reftitle.changelog;
   <para>
@@ -76,10 +80,10 @@
      </thead>
      <tbody>
       <row>
-       <entry>PHP 4.3.3</entry>
+       <entry>4.3.3</entry>
        <entry>
-        Przed tym wydaniem <function>ftruncate</function> zwracała
-        <type>integer</type> o wartości 1 w przypadku sukcesu, zamiast
+        Przed tym wydaniem <function>ftruncate</function> zwracał
+        <type>integer</type> o wartości 1 w wypadku powodzenia, zamiast
         <type>boolean</type> &true;.
        </entry>
       </row>
@@ -88,14 +92,38 @@
    </informaltable>
   </para>
  </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład przycinania pliku</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$filename = 'lorem_ipsum.txt';
+
+$handle = fopen($filename, 'r+');
+ftruncate($handle, rand(1, filesize($filename)));
+rewind($handle);
+echo fread($handle, filesize($filename));
+fclose($handle);
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
  <refsect1 role="notes">
   &reftitle.notes;
   <note>
    <para>
-    Wskaźnik pliku jest <emphasis>nie</emphasis> modyfikowany.
+    Uchwyt do pliku <emphasis>nie</emphasis> jest modyfikowany.
    </para>
   </note>
- </refsect1> 
+ </refsect1>
+ 
  <refsect1 role="seealso">
   &reftitle.seealso;
   <para>
@@ -105,7 +133,6 @@
    </simplelist>
   </para>
  </refsect1>
-
 </refentry>
 
 <!-- Keep this comment at the end of the file

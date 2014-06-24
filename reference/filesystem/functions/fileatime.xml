@@ -1,59 +1,105 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: adi Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 44aabb8f7e3cc8760d33b0ff60ffae362b9d1ed3 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-<refentry xml:id="function.fileatime" xmlns="http://docbook.org/ns/docbook">
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.fileatime">
  <refnamediv>
   <refname>fileatime</refname>
-  <refpurpose>Pobiera ostatni czas dostępu do pliku</refpurpose>
+  <refpurpose>Zwraca czas ostatniego dostępu do pliku</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
    <type>int</type><methodname>fileatime</methodname>
    <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
   </methodsynopsis>
   <simpara>
-   Zwraca czas, kiedy nastąpił ostatni dostęp do pliku lub &false; w
-   przypadku błędu. Czas jest zwracany w postaci unix'owego znacznika
-   czasu.
+   Zwraca czas ostatniego dostępu do pliku.
   </simpara>
-  <simpara>
-   Notka: Czas dostępu do pliku przypuszczalnie zmienia się
-   zawsze kiedy bloki danych pliku są odczytywane. To może
-   kosztować utratę wydajności aplikacji, które regularnie
-   korzystają z wielu plików lub katalogów. Niektóre unix'owe
-   systemy plików mogą być montowane z wyłączonym uaktualnianiem
-   czasu dostępu, aby podnieść wydajność takich aplikacji;
-   USENETowy katalog roboczy wiadomości jest dobrym przykładem.
-   Na takich systemach plików ta funkcja będzie bezużyteczna.
-  </simpara>
-  &note.clearstatcache;
-  &tip.fopen-wrapper.stat;
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>nazwa_pliku</parameter></term>
+     <listitem>
+      <para>
+       Ścieżka do pliku.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca czas w którym nastąpił ostatni dostęp do pliku, &return.falseforfailure;.
+   Wartość jest zwracana w postaci Unixowego znacznika czau.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
    <example>
-    <title><function>fileatime</function> przykład</title>
+    <title>Przykład użycia <function>fileatime</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
 
-// przykładowy wynik: ostatni dostep do pliku: jakisplik.txt December 29 2002 22:16:23.
+// pokaże np. ostatni dostęp do plik.txt: December 29 2002 22:16:23.
 
-$filename = 'jakisplik.txt';
+$filename = 'somefile.txt';
 if (file_exists($filename)) {
-   echo "ostatni dostep do pliku: $filename " . date("F d Y H:i:s.", fileatime($filename));
+    echo "ostatni dostęp do $filename: " . date("F d Y H:i:s.", fileatime($filename));
 }
 
 ?>
 ]]>
-     </programlisting>
-    </example>
-   </para>
-  <simpara>
-   Ta funkcja nie działa <link
-   linkend="features.remote-files">na zdalnych plikach</link>; sprawdzany
-   plik musi być dostępny przez system plików serwera.
-  </simpara>
+    </programlisting>
+   </example>
+  </para>
  </refsect1>
+
+ <refsect1 role="errors">
+  &reftitle.errors;
+  &fs.emits.warning.on.failure;
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    Czas dostępu do pliku zmienia się za każdym razem kiedy dane są z niego
+    odczytywane. Może to być kosztowne pod względem wydajności, jeżeli aplikacja
+    regularnie odwołuje się do dużej ilości plików lub katalogów.
+   </para>
+   <para>
+    Niektóre systemy plików pod Unixem mogą zostać zamontowane z wyłączoną
+    opcja aktualizacji czasu ostatniego dostępu, ze względów wydajnościowych.
+    W takich systemach plików ta funkcja będzie bezużyteczna.
+   </para>
+  </note>
+  &note.filesystem-time-res;
+  &note.clearstatcache;
+  &tip.fopen-wrapper.stat;
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>filemtime</function></member>
+    <member><function>fileinode</function></member>
+    <member><function>date</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
 </refentry>
 
 <!-- Keep this comment at the end of the file
