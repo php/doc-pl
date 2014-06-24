@@ -1,39 +1,74 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.end" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>end</refname>
   <refpurpose>Ustawia wewnętrzny wskaźnik tablicy na ostatnim elemencie</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
    <type>mixed</type><methodname>end</methodname>
    <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
   </methodsynopsis>
   <para>
    <function>end</function> przesuwa wewnętrzny wskaźnik tablicy
-   <parameter>tablica</parameter> na ostatnim elemencie i zwraca jego
-   wartość.
+   <parameter>tablica</parameter> na ostatni element i zwraca jego wartość.
   </para>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>tablica</parameter></term>
+     <listitem>
+      <para>
+       Tablica. Jest przekazywana przez referencję ponieważ jest modyfikowana przez
+       funkcję. Oznacza to, że musisz przekazać prawdziwą zmienną a nie
+       funkcję zwracającą tablicę, ponieważ tylko faktyczne zmienne mogą być
+       przekazywane przez referencję.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca wartość ostatniego elementu lub &false; dla pustej tablicy.
+  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
    <example>
-    <title>Prosty przykład użycia funkcji <function>end</function></title>
+    <title>Przykład użycia <function>end</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
+
 $owoce = array('jabłko', 'banan', 'malina');
-print end($owoce); // malina
+echo end($owoce); // malina
+
 ?>
 ]]>
     </programlisting>
    </example>
   </para>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
   <para>
-   Patrz także: <function>current</function>,
-   <function>each</function>,
-   <function>next</function> i <function>reset</function>.
+   <simplelist>
+    <member><function>current</function></member>
+    <member><function>each</function></member>
+    <member><function>prev</function></member>
+    <member><function>reset</function></member>
+    <member><function>next</function></member>
+   </simplelist>
   </para>
  </refsect1>
 </refentry>
