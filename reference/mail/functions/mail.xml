@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: 2f5af7951a8132450b9106201693212f1ad2eb38 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS: qrak -->
+<!-- CREDITS: sobak, qrak -->
 <refentry xml:id="function.mail" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>mail</refname>
@@ -65,7 +65,7 @@
        Treść wiadomości.
       </para>
       <para>
-       Każdy wiersz tekstu powinien być zakończony znakiem końca linii LF (\n).
+       Każdy wiersz tekstu powinien być zakończony znakiem końca linii CRLF (\r\n).
        Wiersze nie powinny zawierać więcej niż 70 znaków.
       </para>
       <caution>
@@ -95,6 +95,9 @@ $text = str_replace("\n.", "\n..", $text);
        Parametr jest zazwyczaj wykorzystywany do wstawienia dodatkowych
        nagłówków (From, Cc, oraz Bcc). Dodatkowe nagłówki rozdziela się
        za pomocą znaku powrotu karetki i nowego wiersza - CRLF (\r\n).
+       Jeżeli do stworzenia tego nagłówka wykorzystano dane pochodzące z
+       zewnątrz, powinny być one zabezpieczone, aby żadne niechciane
+       nagłówki nie mogły być wstrzyknięte.
       </para>
       <note>
        <para>
@@ -113,11 +116,11 @@ $text = str_replace("\n.", "\n..", $text);
       </note>
       <note>
        <para>
-        Jeśli wiadomości nie są dostarczane, można spróbować używać
-        tylko znaku LF (\n). Niektóre, gorzej napisane MTA na systemy
-        Unix zamieniają automatycznie LF na CRLF (co powoduje
-        podwojenie CR jeśli zostało użyte CRLF). Powinno się to zrobić
-        w ostateczności, jako że nie jest to zgodne z dokumentem
+        Jeśli wiadomości nie są dostarczane, można spróbować używać tylko znaku LF (\n).
+        Niektóre MTA na systemy Unix (między innymi
+        <link xlink:href="&url.qmail;">qmail</link>) zamieniają automatycznie LF na CRLF
+       (co powoduje podwojenie CR jeśli zostało użyte CRLF).
+        Powinno się to zrobić w ostateczności, jako że nie jest to zgodne z dokumentem
         <link xlink:href="&url.rfc;2822">RFC 2822</link>.
        </para>
       </note>
@@ -133,6 +136,20 @@ $text = str_replace("\n.", "\n..", $text);
        jako ustawienia konfiguracyjne. Mogą one być użyte na przykład do
        wprowadzenia adresu e-mail nadawcy, tak jakbyśmy użyli polecenia
        sendmail z opcją <literal>-f</literal>.
+      </para>
+	  <para>
+       Ten parametr jest wewnętrznie przepuszczany przez <function>escapeshellcmd</function>,
+       aby zapobiec wykonaniu poleceń. <function>escapeshellcmd</function> zapobiega
+       wykonaniu komend, ale pozwala na podanie dodatkowych parametrów. Ze względów bezpieczeństwa,
+       zaleca się filtrowanie tego parametru, by uniknąć dodania niechcianych
+       parametrów do komendy shella.
+      </para>
+      <para>
+       Ponieważ <function>escapeshellcmd</function> jest stosowana automatycznie, niektóre znaki,
+       które są dozwolon w adresach e-mail przez RFC, nie mogą zostać użyte. 
+       <function>mail</function> nie może pozwolić na takie znaki, więc w programach, w których
+       użycie takich znaków jest wymagane, zaleca się użycie alternatywnych metod wysyłki e-maili
+	   (takich jak framework lub biblioteka). 
       </para>
       <para>
        Użytkownik z którego prawami jest uruchomiony serwer WWW powinien być dodany
@@ -214,10 +231,10 @@ $text = str_replace("\n.", "\n..", $text);
 <![CDATA[
 <?php
 // Wiadomość
-$message = "Linia 1\nLinia 2\nLinia 3";
+$message = "Linia 1\r\nLinia 2\r\nLinia 3";
 
 // W przypadku każdej linii dłuższej niż 70 znaków powinniśmy użyć funkcji wordwrap()
-$message = wordwrap($message, 70);
+$message = wordwrap($message, 70, "\r\n");
 
 // Wyślij
 mail('osoba@example.com', 'Temat wiadomości', $message);

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: a72b61edd5305b4bd1efc2112b9d64c6aed43987 Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: c29b97cf6e707290cdf6728d60119d38348d5f80 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.json-last-error" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
@@ -14,7 +14,7 @@
    <void />
   </methodsynopsis>
   <para>
-   Zwraca ostatni błąd, który wystąpił podaczas parsowania JSON.
+   Zwraca ostatni błąd, który wystąpił podaczas kodowania/dekodowania JSON.
   </para>
  </refsect1>
 
@@ -51,13 +51,13 @@
       <entry></entry>
      </row>
      <row>
-      <entry><constant>JSON_ERROR_CTRL_CHAR</constant></entry>
-      <entry>Błąd znaku kontrolnego. Prawdopodobnie został nieprawidłowo zakodowany</entry>
+      <entry><constant>JSON_ERROR_STATE_MISMATCH</constant></entry>
+      <entry>Niepoprawny składniowo lub zniekształcony JSON</entry>
       <entry></entry>
      </row>
      <row>
-      <entry><constant>JSON_ERROR_STATE_MISMATCH</constant></entry>
-      <entry>Niepoprawny składniowo lub zniekształcony JSON</entry>
+      <entry><constant>JSON_ERROR_CTRL_CHAR</constant></entry>
+      <entry>Błąd znaku kontrolnego. Prawdopodobnie został nieprawidłowo zakodowany</entry>
       <entry></entry>
      </row>
      <row>
@@ -69,6 +69,26 @@
       <entry><constant>JSON_ERROR_UTF8</constant></entry>
       <entry>Nieprawidłowe znaki UTF-8. Możliwe, że nieprawidłowo zakodowane</entry>
       <entry>PHP 5.3.3</entry>
+     </row>
+     <row>
+      <entry><constant>JSON_ERROR_RECURSION</constant></entry>
+      <entry>Jedna lub więcej rekurencji rekursywnych w wartości do zakodowania</entry>
+      <entry>PHP 5.5.0</entry>
+     </row>
+     <row>
+      <entry><constant>JSON_ERROR_INF_OR_NAN</constant></entry>
+      <entry>
+       Jedna lub więcej wartości
+       <link linkend="language.types.float.nan"><constant>NAN</constant></link>
+       lub <link linkend="function.is-infinite"><constant>INF</constant></link>
+       do zakodowania
+      </entry>
+      <entry>PHP 5.5.0</entry>
+     </row>
+     <row>
+      <entry><constant>JSON_ERROR_UNSUPPORTED_TYPE</constant></entry>
+      <entry>Podano wartość typu, który nie może być zakodowany</entry>
+      <entry>PHP 5.5.0</entry>
      </row>
     </tbody>
    </tgroup>
@@ -91,15 +111,19 @@ $json[] = '{"Organizacja": "PHP Documentation Team"}';
 $json[] = "{'Organizacja': 'PHP Documentation Team'}";
 
 
-foreach($json as $string)
-{
+foreach($json as $string) {
     echo 'Dekodowanie: ' . $string;
     json_decode($string);
 
-    switch(json_last_error())
-    {
+    switch(json_last_error()) {
+        case JSON_ERROR_NONE:
+            echo ' - Brak błędów';
+        break;
         case JSON_ERROR_DEPTH:
             echo ' - Przekroczono maksymalny poziom zagnieżdżania danych';
+        break;
+        case JSON_ERROR_STATE_MISMATCH:
+            echo ' - Niedopełnienie lub niezgodność trybów';
         break;
         case JSON_ERROR_CTRL_CHAR:
             echo ' - Znaleziono niespodziewany znak kontrolny';
@@ -107,8 +131,11 @@ foreach($json as $string)
         case JSON_ERROR_SYNTAX:
             echo ' - Błąd składni. Źle skonstruowany JSON';
         break;
-        case JSON_ERROR_NONE:
-            echo ' - Brak błędów';
+        case JSON_ERROR_UTF8:
+            echo ' - Źle skonstruowane znaki UTF-8, prawdopodobnie nieprawidłowo zakodowane';
+        break;
+        default:
+            echo ' - Nieznany błąd';
         break;
     }
 
@@ -126,13 +153,40 @@ Decoding: {'Organizacja': 'PHP Documentation Team'} - Błąd składni. Źle skon
     </screen>
    </example>
   </para>
+  <para>
+   <example>
+    <title>Przykład użycia <function>json_last_error</function> z <function>json_encode</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// Nieprawidłowa sekwencja UTF-8
+$text = "\xB1\x31";
+
+$json  = json_encode($text);
+$error = json_last_error();
+
+var_dump($json, $error === JSON_ERROR_UTF8);
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+string(4) "null"
+bool(true)
+]]>
+    </screen>
+   </example>
+  </para>
  </refsect1>
 
  <refsect1 role="seealso">
   &reftitle.seealso;
   <para>
    <simplelist>
+    <member><function>json_last_error_msg</function></member>
     <member><function>json_decode</function></member>
+    <member><function>json_encode</function></member>
    </simplelist>
   </para>
  </refsect1>

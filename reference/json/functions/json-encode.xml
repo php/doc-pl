@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 6557e8b9b677612e90628adefa62a8107e7f9408 Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: 01affe9d1b477a955c469540637fc187315f8021 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: sobak -->
 <refentry xml:id="function.json-encode" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>json_encode</refname>
@@ -13,6 +14,7 @@
    <type>string</type><methodname>json_encode</methodname>
    <methodparam><type>mixed</type><parameter>wartość</parameter></methodparam>
    <methodparam choice="opt"><type>int</type><parameter>opcje</parameter><initializer>0</initializer></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>zagnieżdżenie</parameter><initializer>512</initializer></methodparam>
   </methodsynopsis>
   <para>
    Zwraca łańcuch JSON reprezentujący
@@ -32,7 +34,7 @@
        wykluczając <type>zasoby</type>.
       </para>
       <para>
-       Ta funkcja działa tylko na danych zakodowanych w formacie UTF-8.
+       Wszystkie dane muszą być zakodowane w formacie UTF-8.
       </para>
      </listitem>
     </varlistentry>
@@ -44,7 +46,21 @@
        <constant>JSON_HEX_TAG</constant>,
        <constant>JSON_HEX_AMP</constant>,
        <constant>JSON_HEX_APOS</constant>,
-       <constant>JSON_FORCE_OBJECT</constant>.
+       <constant>JSON_NUMERIC_CHECK</constant>,
+       <constant>JSON_PRETTY_PRINT</constant>,
+       <constant>JSON_UNESCAPED_SLASHES</constant>,
+       <constant>JSON_FORCE_OBJECT</constant>,
+       <constant>JSON_UNESCAPED_UNICODE</constant>. Zachowanie tych
+       stałych zostało opisane na
+       <link linkend="json.constants">stronie stałych JSON</link>.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>zagnieżdżenie</parameter></term>
+     <listitem>
+      <para>
+       Określa maksymalne zagnieżdżenie. Musi być większe od zera.
       </para>
      </listitem>
     </varlistentry>
@@ -55,7 +71,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   W przypadku powodzenia zwraca zakodowany <type>string</type> JSON.
+   W przypadku powodzenia zwraca zakodowany <type>string</type> JSON &return.falseforfailure;.
   </para>
  </refsect1>
 
@@ -72,15 +88,27 @@
      </thead>
      <tbody>
       <row>
-       <entry>5.3.0</entry>
+       <entry>5.5.0</entry>
        <entry>
-        Dodano parametr <parameter>opcje</parameter>.
+        Dodano parametr <parameter>depth</parameter>.
        </entry>
       </row>
       <row>
-       <entry>5.2.1</entry>
+       <entry>5.4.0</entry>
        <entry>
-        Dodano do JSON obsługę kodowania podstawowych typów.
+        Dodano <parameter>opcje</parameter> <constant>JSON_PRETTY_PRINT</constant>, <constant>JSON_UNESCAPED_SLASHES</constant>, and <constant>JSON_UNESCAPED_UNICODE</constant>.
+       </entry>
+      </row>
+      <row>
+       <entry>5.3.3</entry>
+       <entry>
+        Dodano opcję <constant>JSON_NUMERIC_CHECK</constant>.
+       </entry>
+      </row>
+      <row>
+       <entry>5.3.0</entry>
+       <entry>
+        Dodano parametr <parameter>opcje</parameter>.
        </entry>
       </row>
      </tbody>
@@ -97,7 +125,7 @@
     <programlisting role="php">
 <![CDATA[
 <?php
-$arr = array ('a'=>1,'b'=>2,'c'=>3,'d'=>4,'e'=>5);
+$arr = array('a' => 1, 'b' => 2, 'c' => 3, 'd' => 4, 'e' => 5);
 
 echo json_encode($arr);
 ?>
@@ -112,18 +140,21 @@ echo json_encode($arr);
    </example>
 
    <example>
-    <title>Przykład <function>json_encode</function> pokazuje zastosowanie parametru: opcje</title>
+    <title>
+     Przykład <function>json_encode</function> pokazuje zastosowanie parametru: opcje
+    </title>
     <programlisting role="php">
 <![CDATA[
 <?php
-$a = array('<foo>',"'bar'",'"baz"','&blong&');
+$a = array('<foo>',"'bar'",'"baz"','&blong&', "\xc3\xa9");
 
-echo "Standardowo: ", json_encode($a), "\n";
-echo "Znaczniki: ",   json_encode($a,JSON_HEX_TAG), "\n";
-echo "Apostrofy: ",   json_encode($a,JSON_HEX_APOS), "\n";
-echo "Cudzysłowy: ",   json_encode($a,JSON_HEX_QUOT), "\n";
-echo "Znaki et (etki): ",    json_encode($a,JSON_HEX_AMP), "\n";
-echo "Wszystkie opcje: ",    json_encode($a,JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_HEX_AMP), "\n\n";
+echo "Standardowo: ",      json_encode($a), "\n";
+echo "Znaczniki: ",        json_encode($a,JSON_HEX_TAG), "\n";
+echo "Apostrofy: ",        json_encode($a,JSON_HEX_APOS), "\n";
+echo "Cudzysłowy: ",       json_encode($a,JSON_HEX_QUOT), "\n";
+echo "Znaki et (etki): ",  json_encode($a,JSON_HEX_AMP), "\n";
+echo "Unicode: ",          json_encode($a, JSON_UNESCAPED_UNICODE), "\n";
+echo "Wszystkie opcje: ",  json_encode($a,JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_HEX_AMP), "\n\n";
 
 $b = array();
 
@@ -145,12 +176,13 @@ echo "Asocjacyjna tablica zwracana zawsze jako obiekt: ", json_encode($d, JSON_F
     &example.outputs;
     <screen>
 <![CDATA[
-Standardowo: ["<foo>","'bar'","\"baz\"","&blong&"]
-Znaczniki: ["\u003Cfoo\u003E","'bar'","\"baz\"","&blong&"]
-Apostrofy: ["<foo>","\u0027bar\u0027","\"baz\"","&blong&"]
-Cudzysłowy: ["<foo>","'bar'","\u0022baz\u0022","&blong&"]
-Znaki et (etki): ["<foo>","'bar'","\"baz\"","\u0026blong\u0026"]
-Wszystkie opcje: ["\u003Cfoo\u003E","\u0027bar\u0027","\u0022baz\u0022","\u0026blong\u0026"]
+Standardowo: ["<foo>","'bar'","\"baz\"","&blong&","\u00e9"]
+Znaczniki: ["\u003Cfoo\u003E","'bar'","\"baz\"","&blong&","\u00e9"]
+Apostrofy: ["<foo>","\u0027bar\u0027","\"baz\"","&blong&","\u00e9"]
+Cudzysłowy: ["<foo>","'bar'","\u0022baz\u0022","&blong&","\u00e9"]
+Znaki et (etki): ["<foo>","'bar'","\"baz\"","\u0026blong\u0026","\u00e9"]
+Unicode: ["<foo>","'bar'","\"baz\"","&blong&","é"]
+Wszystkie opcje: ["\u003Cfoo\u003E","\u0027bar\u0027","\u0022baz\u0022","\u0026blong\u0026","é"]
 
 Pusta tablica zwracana jako tablica: []
 Pusta tablica zwracana jako obiekt: {}
@@ -160,6 +192,76 @@ Nieasocjacyjna tablica zwracana jako obiekt: {"0":{"0":1,"1":2,"2":3}}
 
 Asocjacyjna tablica zwracana zawsze jako obiekt: {"foo":"bar","baz":"long"}
 Asocjacyjna tablica zwracana zawsze jako obiekt: {"foo":"bar","baz":"long"}
+]]>
+    </screen>
+   </example>
+   <example>
+    <title>Tablica sekwencyjna vs. niesekwencyjna</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+echo "Tablica sekwencyjna".PHP_EOL;
+$sequential = array("foo", "bar", "baz", "blong");
+var_dump(
+ $sequential,
+ json_encode($sequential)
+);
+
+echo PHP_EOL."Tablica niesekwencyjna".PHP_EOL;
+$nonsequential = array(1=>"foo", 2=>"bar", 3=>"baz", 4=>"blong");
+var_dump(
+ $nonsequential,
+ json_encode($nonsequential)
+);
+
+echo PHP_EOL."Tablica sekwencyjna z usuniętym jednym kluczem".PHP_EOL;
+unset($sequential[1]);
+var_dump(
+ $sequential,
+ json_encode($sequential)
+);
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+Tablica sekwencyjna
+array(4) {
+  [0]=>
+  string(3) "foo"
+  [1]=>
+  string(3) "bar"
+  [2]=>
+  string(3) "baz"
+  [3]=>
+  string(5) "blong"
+}
+string(27) "["foo","bar","baz","blong"]"
+
+Tablica niesekwencyjna
+array(4) {
+  [1]=>
+  string(3) "foo"
+  [2]=>
+  string(3) "bar"
+  [3]=>
+  string(3) "baz"
+  [4]=>
+  string(5) "blong"
+}
+string(43) "{"1":"foo","2":"bar","3":"baz","4":"blong"}"
+
+Tablica sekwencyjna z usuniętym jednym kluczem
+array(3) {
+  [0]=>
+  string(3) "foo"
+  [2]=>
+  string(3) "baz"
+  [3]=>
+  string(5) "blong"
+}
+string(33) "{"0":"foo","2":"baz","3":"blong"}"
 ]]>
     </screen>
    </example>
@@ -174,14 +276,38 @@ Asocjacyjna tablica zwracana zawsze jako obiekt: {"foo":"bar","baz":"long"}
     może być użyta do dokładnego określenia rodzaju błędu.
    </para>
   </note>
+  <note>
+   <para>
+    W przypadku kodowania tablicy, której indeksy nie są kolejnymi liczbami
+    począwszy od zera 0, wszystkie klucze zapisywane są jako łańcuchy znaków i określone
+    dokładnie dla każdej pary klucz-wartość.
+   </para>
+  </note>
+  <note>
+   <para>
+    Jak wyjaśnia specyfikacja JSON, <function>json_encode</function> wygeneruje
+    JSON, który jest typem prostym (czyli nie jest obiektem ani
+    tablicą) jeżeli podano typy <type>string</type>, <type>integer</type>,
+    <type>float</type> lub <type>boolean</type> jako wejściową
+    <parameter>wartość</parameter>. Mimo, że większość dekoderów traktuje te wartości
+    jak poprawny JSON, niektóre mogą tego nie robić, ponieważ specyfikacja jest
+    niejednoznaczna w tej kwestii.
+   </para>
+   <para>
+    Podsumowując, zawsze sprawdzaj czy Twój dekoder JSON radzi sobie z wyjściem,
+    które generujesz przez <function>json_encode</function>.
+   </para>
+  </note>
  </refsect1>
 
  <refsect1 role="seealso">
   &reftitle.seealso;
   <para>
    <simplelist>
+    <member><interfacename>JsonSerializable</interfacename></member>
     <member><function>json_decode</function></member>
     <member><function>json_last_error</function></member>
+    <member><function>serialize</function></member>
    </simplelist>
   </para>
  </refsect1>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 79422caf1a86d08a9ab1799c450c537e8a63646f Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: 6353c52d0ee11ceb942e857b001e95d85500d690 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: sobak -->
 <refentry xml:id="function.json-decode" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>json_decode</refname>
@@ -29,11 +30,12 @@
      <term><parameter>json</parameter></term>
      <listitem>
       <para>
-       Dekodowany <parameter>json</parameter> <type>string</type>.
+       Dekodowany <type>string</type> <parameter>json</parameter>.
       </para>
       <para>
-       Ta funkcja działa tylko z danymi w kodowaniu znaków UTF-8.
+       Ta funkcja działa tylko z ciągami znaków w kodowaniu UTF-8.
       </para>
+      &json.implementation.superset;
      </listitem>
     </varlistentry>
     <varlistentry>
@@ -61,9 +63,6 @@
        jest tylko <constant>JSON_BIGINT_AS_STRING</constant>
        (domyślnie jest rzutowanie typów large integer na float)
       </para>
-      <para>
-       &version.trunk.after.53;
-      </para>
      </listitem>
     </varlistentry>
    </variablelist>
@@ -75,9 +74,9 @@
   <para>
    Zwraca wartość zakodowaną w <parameter>json</parameter> w odpowiednim
    typie PHP. Wartości <literal>true</literal>, <literal>false</literal>
-   i <literal>null</literal> (niezależnie od wielkości liter) są zwracane odpowiednio
+   i <literal>null</literal> są zwracane odpowiednio
    jako &true;, &false; i &null;. &null; jest zwracany jeśli parametr
-   <parameter>json</parameter> nie może zostać odkodowany, lub jeżeli zakodowane
+   <parameter>json</parameter> nie może zostać odkodowany lub jeżeli zakodowane
    dane znajdują się głębiej niż ustalony limit zagnieżdżania.
   </para>
  </refsect1>
@@ -120,7 +119,12 @@ array(5) {
     </screen>
    </example>
    <example>
-    <title>Inny przykład</title>
+    <title>Uzyskiwanie dostępu do właściwości nieprawidłowego obiektu</title>
+    <simpara>
+     Uzyskiwanie dostępu do elementów w obiekcie, który zawiera znaki
+     niedozwolone w konwencji nazewnictwa PHP (np. myślniki) może być
+     osiągnięte przez umieszczenie nazwy elementu wewnątrz nawiasów klamrowych lub apostrofów.
+    </simpara>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -160,7 +164,7 @@ json_decode($bad_json); // null
     </programlisting>
    </example>
    <example>
-    <title>Błędy - <parameter>poziom zagłębienia</parameter></title>
+    <title>Błędy - <parameter>poziom_zagłębienia</parameter></title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -180,19 +184,20 @@ $json = json_encode(
     )
 );
 
-// Określenie błędów.
-$json_errors = array(
-    JSON_ERROR_NONE => 'Nie wystąpił żaden błąd',
-    JSON_ERROR_DEPTH => 'Przekroczono maksymalny poziom zagłębienia',
-    JSON_ERROR_CTRL_CHAR => 'Błąd zanku sterującego, prawdopodobnie nieprawidłowo zakodowany',
-    JSON_ERROR_SYNTAX => 'Błąd składni',
-);
+// Określ błędy.
+$constants = get_defined_constants(true);
+$json_errors = array();
+foreach ($constants["json"] as $name => $value) {
+    if (!strncmp($name, "JSON_ERROR_", 11)) {
+        $json_errors[$value] = $name;
+    }
+}
 
 // Pokaż błędy na różych poziomach zagłębienia.
-foreach(range(4, 3, -1) as $depth) {
-    var_dump(json_decode($json, True, $depth));
-    echo 'Ostatni błąd : ', $json_errors[json_last_error()], PHP_EOL, PHP_EOL;
-    }
+foreach (range(4, 3, -1) as $depth) {
+    var_dump(json_decode($json, true, $depth));
+    echo 'Last error: ', $json_errors[json_last_error()], PHP_EOL, PHP_EOL;
+}
 ?>
 ]]>
     </programlisting>
@@ -218,19 +223,19 @@ array(1) {
     }
   }
 }
-Ostatni błąd : Nie wystąpił żaden błąd
+Ostatni błąd: JSON_ERROR_NONE
 
 NULL
-Ostatni błąd : Przekroczono maksymalny poziom zagłębienia
+Ostatni błąd: JSON_ERROR_DEPTH
 ]]>
     </screen>
    </example>
    <example>
-    <title>Dekodowanie <function>json_decode</function> - large integers</title>
+    <title>Dekodowanie <function>json_decode</function> - duże liczby</title>
     <programlisting role="php">
 <![CDATA[
 <?php
-$json = '12345678901234567890';
+$json = '{"number": 12345678901234567890}';
 
 var_dump(json_decode($json));
 var_dump(json_decode($json, false, 512, JSON_BIGINT_AS_STRING));
@@ -241,8 +246,14 @@ var_dump(json_decode($json, false, 512, JSON_BIGINT_AS_STRING));
     &example.outputs;
     <screen>
 <![CDATA[
-float(1.2345678901235E+19)
-string(20) "12345678901234567890"
+object(stdClass)#1 (1) {
+  ["number"]=>
+  float(1.2345678901235E+19)
+}
+object(stdClass)#1 (1) {
+  ["number"]=>
+  string(20) "12345678901234567890"
+}
 ]]>
     </screen>
    </example>
@@ -277,7 +288,15 @@ string(20) "12345678901234567890"
      </thead>
      <tbody>
       <row>
-       <entry>&version.trunk.changelog;</entry>
+       <entry>5.6.0</entry>
+       <entry>
+        Błędne (napisane innymi niż małymi znakami) warianty <literal>true</literal>,
+        <literal>false</literal> i <literal>null</literal> nie są dłużej
+        akceptowne jako prawidłowe wejście i wygenerują ostrzeżenia
+       </entry>
+      </row>
+      <row>
+       <entry>5.4.0</entry>
        <entry>
         Dodano parametr <parameter>opcje</parameter>.
        </entry>
@@ -289,6 +308,12 @@ string(20) "12345678901234567890"
       <row>
        <entry>5.2.3</entry>
        <entry>Limit zagnieżdżania danych został zwiększony z 20 do 128</entry>
+      </row>
+      <row>
+       <entry>5.2.1</entry>
+       <entry>
+        Dodano wsparcie dla dekodowania podstawowych typów z JSON.
+       </entry>
       </row>
      </tbody>
     </tgroup>
