@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: eda3b067eb85fcd307682aa8966d3c017cc29be2 Maintainer: sobak Status: ready -->
+<!-- $Revision$ -->
+<section xml:id="filesystem.configuration" xmlns="http://docbook.org/ns/docbook">
+ &reftitle.runtime;
+ &extension.runtime;
+ <para>
+  <table>
+   <title>Opcje konfiguracyjne systemu plików i strumieni</title>
+   <tgroup cols="4">
+    <thead>
+     <row>
+      <entry>&Name;</entry>
+      <entry>&Default;</entry>
+      <entry>&Changeable;</entry>
+      <entry>&Changelog;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry><link linkend="ini.allow-url-fopen">allow_url_fopen</link></entry>
+      <entry>"1"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry>PHP_INI_ALL w PHP &lt;= 4.3.4. Dostępne od PHP 4.0.4.</entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.allow-url-include">allow_url_include</link></entry>
+      <entry>"0"</entry>
+      <entry>PHP_INI_SYSTEM</entry>
+      <entry>Dostępne od PHP 5.2.0.</entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.user-agent">user_agent</link></entry>
+      <entry>NULL</entry>
+      <entry>PHP_INI_ALL</entry>
+      <entry>Dostępne od PHP 4.3.0.</entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.default-socket-timeout">default_socket_timeout</link></entry>
+      <entry>"60"</entry>
+      <entry>PHP_INI_ALL</entry>
+      <entry>Dostępne od PHP 4.3.0.</entry>
+    </row>
+     <row>
+      <entry><link linkend="ini.from">from</link></entry>
+      <entry>""</entry>
+      <entry>PHP_INI_ALL</entry>
+      <entry></entry>
+     </row>
+     <row>
+      <entry><link linkend="ini.auto-detect-line-endings">auto_detect_line_endings</link></entry>
+      <entry>"0"</entry>
+      <entry>PHP_INI_ALL</entry>
+      <entry>Dostępne od PHP 4.3.0.</entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </table>
+ </para>
+ 
+ &ini.descriptions.title;
+ 
+ <para>
+  <variablelist>
+   <varlistentry xml:id="ini.allow-url-fopen">
+    <term>
+     <parameter>allow_url_fopen</parameter>
+     <type>boolean</type>
+    </term>
+    <listitem>
+     <para>
+      Ta opcja pozwala na uzyskanie dostępu do niektórych adresów URL, 
+      tak jak to plików. Domyślne opakowania są dostarczone dla dostępu 
+      do <link linkend="features.remote-files">zdalnych plików</link>
+      używając protokołu ftp lub http, niektóre rozszerzenia jak
+      <link linkend="ref.zlib">zlib</link> mogą rejestrować
+      opakowania dla dodatkowych protokołów. 
+     </para>
+     <note>
+      <para>
+       Ta opcja została wprowadzona natychmiast po wydaniu wersji 
+       4.0.3. Dla wersji równych i wyższych od 4.0.3 jedyną drogą wyłączenia 
+       funkcjonalności jest ustawienie nastepującego przełącznika podczas kompilacji: 
+       <link linkend="configure.disable-url-fopen-wrapper"><parameter>
+       --disable-url-fopen-wrapper</parameter></link>.
+      </para>
+     </note>
+     <warning>
+      <para> 
+       W systemie Windows, przed wersją PHP 4.3.0, następujące funkcje nie
+       wspierały dostępu do zdalnych plików: <function>include</function>,
+       <function>include_once</function>, <function>require</function>,
+       <function>require_once</function> i funkcje imagecreatefromXXX
+       w rozszerzeniu <xref linkend="ref.image"/>.
+      </para>
+     </warning>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.allow-url-include">
+    <term>
+     <parameter>allow_url_include</parameter>
+     <type>boolean</type>
+    </term>
+    <listitem>
+     <para>
+      Ta opcja pozwala na użycie adresów URL w 
+      funkcjach: <function>include</function>, <function>include_once</function>, 
+      <function>require</function>, <function>require_once</function>.
+     </para>
+     <note>
+      <para>
+       To ustawienie wymaga włączonej dyrektywy allow_url_fopen. 
+      </para>
+     </note>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.user-agent">
+    <term>
+     <parameter>user_agent</parameter>
+     <type>string</type>
+    </term>
+    <listitem>
+     <para>
+      Określa nagłówek user agent, który ma wysłać PHP.
+     </para>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.default-socket-timeout">
+    <term>
+     <parameter>default_socket_timeout</parameter>
+     <type>integer</type>
+    </term>
+    <listitem>
+     <para>
+      Domyślny czas oczekiwania (w sekundach) dla operacji bazowanych na gniazdach.
+     </para>
+     <note>
+      <simpara>
+       Ta opcja konfiguracyjna została wprowadzona w PHP 4.3.0
+      </simpara>
+     </note>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.from">
+    <term>
+     <parameter>from</parameter>
+     <type>string</type>
+    </term>
+    <listitem>
+     <para>
+      Adres email używany w nieautoryzowanych połączeniach FTP i
+      jako wartość nagłówka From dla połączeń HTTP, gdy użyto odpowiednio ftp
+      protokołów ftp i http.
+     </para>
+    </listitem>
+   </varlistentry>
+
+   <varlistentry xml:id="ini.auto-detect-line-endings">
+    <term>
+     <parameter>auto_detect_line_endings</parameter>
+     <type>boolean</type>
+    </term>
+    <listitem>
+     <para>
+      Gdy włączona, PHP sprawdzi dane odczytywane przez
+      <function>fgets</function> i <function>file</function>, aby zobaczyć
+      czy plik używa zakończeń linii systemu Unix, MS-Dos czy Macintosh.
+     </para>
+     <para>To pozwala PHP na współpracę z systemem Macintosh,
+      ale domyślnie ustawione jest na Off, ponieważ występuje mały spadek wydajności
+      przy sprawdzaniu znaku EOL dla pierwszej linii, a także
+      ponieważ ludzie używający znaku powrotu karetki jako separatora elementów pod
+      Uniksem doświadczą niekompatybilnego wstecz zachowania.
+     </para>
+     <note>
+      <simpara>
+       Ta opcja konfiguracyjna została wprowadzona w PHP 4.3.0
+      </simpara>
+     </note>
+    </listitem>
+   </varlistentry>
+  </variablelist>
+ </para>
+</section>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
