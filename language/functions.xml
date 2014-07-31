@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: pirate Status: ready -->
+<!-- EN-Revision: 0e9eb8a8c76de2365decd77a46d96ddfeec2bac8 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: pirate -->
  <chapter xml:id="language.functions" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
   <title>Funkcje</title>
 
@@ -36,7 +37,7 @@ function foo($arg_1, $arg_2, /* ..., */ $arg_n)
     Nazwy funkcji obowiązują identyczne zasady, jak w przypadku wszystkich innych etykiet w PHP. 
     Poprawna nazwa funkcji zaczyna się od litery lub podkreślnika, po których następuje 
     dowolna ilość liter, cyfr i podkreślników. Jako wyrażenie regularne, określone 
-   zostałoby to następująco: 
+    zostałoby to następująco: 
     <literal>[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*</literal>.
    </para>
    &tip.userlandnaming;
@@ -170,7 +171,8 @@ function recursion($a)
  
    <simpara>
     Dane mogą być przekazywane do funkcji przez listę argumentów,
-    która jest listą oddzielonych przecinkami wyrażeń.
+    która jest listą oddzielonych przecinkami wyrażeń. Argumenty są wykonywane
+    od prawej do lewej.	
    </simpara> 
    <para>
     PHP obsługuje podawanie argumentów jako wartości (domyślnie), <link
@@ -178,10 +180,7 @@ function recursion($a)
     referencję</link>, oraz <link
     linkend="functions.arguments.default">domyślne wartości
     argumentów</link>. <link linkend="functions.variable-arg-list">Różna ilość
-    argumentów</link> także jest obsługiwana, zobacz opisy funkcji
-    <function>func_num_args</function>,
-    <function>func_get_arg</function>, i
-    <function>func_get_args</function> aby dowiedzieć się więcej.
+    argumentów</link> także jest obsługiwana.
    </para>
    <para>
     <example>
@@ -248,7 +247,7 @@ echo $str;    // wypisuje 'To jest ciąg znaków, i coś ekstra.'
 <?php
 function makecoffee($type = "cappuccino")
 {
-    return "Robię kubek $type.\n";
+    return "Robię filiżankę $type.\n";
 }
 echo makecoffee();
 echo makecoffee(null);
@@ -256,18 +255,15 @@ echo makecoffee("espresso");
 ?>
 ]]>
       </programlisting>
+      &example.outputs;
+	  <screen>
+<![CDATA[
+Robię filiżankę cappuccino.
+Robię filiżankę .
+Robię filiżankę espresso.
+]]>
+      </screen>
      </example>
-    </para>
- 
-    <para>
-     Wynikiem powyższego kodu jest:
-    </para>
-    <para>
-     <screen>
-Robię kubek cappuccino.
-Robię kubek .
-Robię kubek espresso.
-     </screen>
     </para>
     <para>
      PHP pozwala również na użycie tablic(<type>array</type>) i specjalnego typu &null;
@@ -307,27 +303,24 @@ echo makecoffee(array("cappuccino", "lavazza"), "teapot");
       <programlisting role="php">
 <![CDATA[
 <?php
-function makeyogurt($type = "acidophilus", $flavour)
+function jogurt($typ = "homogenizowany", $smak)
 {
-    return "Making a bowl of $type $flavour.\n";
+    return "Robię $typ jogurt $smak.\n";
 }
  
-echo makeyogurt("raspberry");   // nie zadziała tak, jak oczekujemy
+echo jogurt("malinowy");   // nie zadziała tak, jak oczekujemy
 ?>
 ]]>
       </programlisting>
-     </example>
-    </para>
- 
-    <para>
-     Wynik powyższego skryptu to:
-    </para>
-    <para>
-     <screen>
-Warning: Missing argument 2 in call to makeyogurt() in 
+      &example.outputs;
+      <screen>
+<![CDATA[
+Warning: Missing argument 2 in call to jogurt() in 
 /usr/local/etc/httpd/htdocs/phptest/functest.html on line 41
-Making a bowl of raspberry .
-     </screen>
+Robię malinowy jogurt .
+]]>
+      </screen>
+     </example>
     </para>
     <para>
      Porównaj go teraz z:
@@ -338,30 +331,27 @@ Making a bowl of raspberry .
       <programlisting role="php">
 <![CDATA[
 <?php
-function makeyogurt($flavour, $type = "jogurtu")
+function jogurt($smak, $typ = "homogenizowany")
 {
-    return "Robię miskę $type $flavour.\n";
+    return "Robię $typ jogurt $smak.\n";
 }
  
-echo makeyogurt("malinowego");   // działa zgodnie z naszymi oczekiwaniami
+echo makeyogurt("malinowy");   // działa zgodnie z naszymi oczekiwaniami
 ?>
 ]]>
       </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+Robię homogenizowany jogurt malinowy.
+]]>
+      </screen>
      </example>
-    </para>
- 
-    <para>
-     Wynikiem działania powyższego przykładu jest:
-    </para>
-    <para>
-     <screen>
-Robię miskę malinowego jogurtu.
-     </screen>
     </para>
     
     <note>
      <simpara>
-      Od PHP 5 domyślne wartości argumentów mogą być podawane przez referencję.
+      Od PHP 5 argumenty, które są przekazywane przez referencję, mogą mieć wartości domyślne.
      </simpara>
     </note>
 
@@ -371,18 +361,173 @@ Robię miskę malinowego jogurtu.
     <title>Podawanie różnej ilości argumentów</title>
 
     <simpara>
-     Od PHP 4 możliwe jest użycie różnej ilości argumentów dla
-     funkcji definiowanych przez użytkownika. Jest to dosyć proste przy użyciu funkcji
+     PHP wspiera użycie różnej ilości argumentów dla
+     funkcji definiowanych przez użytkownika. Jest to możliwe dzięki użyciu
+     tokena <literal>...</literal> w PHP 5.6 i nowszych lub dzięki funkcjom
      <function>func_num_args</function>,
      <function>func_get_arg</function> i
-     <function>func_get_args</function>.
+     <function>func_get_args</function> w PHP 5.5 i wcześniejszych.
     </simpara>
 
-    <simpara>
-     Nie wymaga to żadnej specjalnej składni, listy argumentów
-     w dalszym ciągu podawane są przy definiowaniu funkcji i zachowują
-     się normalnie.
-    </simpara>
+    <sect3 xml:id="functions.variable-arg-list.new">
+     <title><literal>...</literal> w PHP 5.6+</title>
+
+     <para>
+      W PHP 5.6 i nowszych lista argumentów może zawierać token
+      <literal>...</literal>, który oznacza, że funkcja akceptuje
+      zmienną ilość argumentów. Argumenty zostaną przekazane do
+      do podanej zmiennej jako tablica, na przykład:
+
+      <example>
+       <title>Użycie <literal>...</literal> do zmiennej ilości argumentów</title>
+       <programlisting role="php">
+<![CDATA[
+<?php
+function suma(...$liczby) {
+    $wynik = 0;
+    foreach ($liczby as $liczba) {
+        $wynik += $liczba;
+    }
+    return $wynik;
+}
+
+echo suma(1, 2, 3, 4);
+?>
+]]>
+       </programlisting>
+       &example.outputs;
+       <screen>
+<![CDATA[
+10
+]]>
+       </screen>
+      </example>
+     </para>
+
+     <para>
+      Możesz także użyć <literal>...</literal> podczas wywoływania funkcji, aby rozpakować
+      zmienną tablicową lub <classname>Traversable</classname>, albo literal
+      do listy argumentów:
+
+      <example>
+       <title>Użycie <literal>...</literal> do dostarczenia argumentów</title>
+       <programlisting role="php">
+<![CDATA[
+<?php
+function dodaj($a, $b) {
+    return $a + $b;
+}
+
+echo dodaj(...[1, 2])."\n";
+
+$a = [1, 2];
+echo dodaj(...$a);
+?>
+]]>
+       </programlisting>
+       &example.outputs;
+       <screen>
+<![CDATA[
+3
+3
+]]>
+       </screen>
+      </example>
+     </para>
+
+     <para>
+      Możesz określić normalne argumenty pozycyjne przed tokenem
+      <literal>...</literal>. W tym wypadku tylko końcowe argumenty,
+      które nie pasują do żadnego argumentu pozycyjnego, zostaną dodane do tablicy
+      generowanej przez <literal>...</literal>.
+     </para>
+
+     <para>
+      Jest także możliwe
+      <link linkend="language.oop5.typehinting">wskazanie typu</link> przez tokenem
+      <literal>...</literal>. Jeżeli jest to obecne, to wszystkie argumenty
+      pokrywane przez <literal>...</literal> muszą być obiektami wskazanej klasy.
+
+      <example>
+       <title>Różna ilość argumentów z określeniem typu</title>
+       <programlisting role="php">
+<![CDATA[
+<?php
+function total_intervals($unit, DateInterval ...$intervals) {
+    $time = 0;
+    foreach ($intervals as $interval) {
+        $time += $interval->$unit;
+    }
+    return $time;
+}
+
+$a = new DateInterval('P1D');
+$b = new DateInterval('P2D');
+echo total_intervals('d', $a, $b).' dni';
+
+// Jest to błędem, ponieważ null nie jest obiektem klasy DateInterval.
+echo total_intervals('d', null);
+?>
+]]>
+       </programlisting>
+       &example.outputs;
+       <screen>
+<![CDATA[
+3 dni
+Catchable fatal error: Argument 2 passed to total_intervals() must be an instance of DateInterval, null given, called in - on line 14 and defined in - on line 2
+]]>
+       </screen>
+      </example>
+     </para>
+
+     <para>
+      W końcu, możesz podać także różną ilość argumentów
+      <link linkend="functions.arguments.by-reference">przez referencję</link>
+      prefiksując <literal>...</literal> znakiem ampersand
+      (<literal>&amp;</literal>).
+     </para>
+    </sect3>
+
+    <sect3 xml:id="functions.variable-arg-list.old">
+     <title>Starsze wersje PHP</title>
+
+     <para>
+      Do określenia, że funkcja przyjmuje zmienną ilość argumentów, nie jest wymagana specjalna składnia;
+      jednak uzyskanie dostępu do argumentów funkcji wymaga użycia
+      <function>func_num_args</function>, <function>func_get_arg</function>
+      i <function>func_get_args</function>.
+     </para>
+
+     <para>
+      Pierwszy przykład podany wyżej, w wersji PHP 5.5 i starszych,
+      zostałby zapisany następująco
+
+      <example>
+       <title>Dostęp do zmiennej ilości argumentów w PHP 5.5 i starszych</title>
+       <programlisting role="php">
+<![CDATA[
+<?php
+function suma() {
+    $wynik = 0;
+    foreach (func_get_args() as $liczba) {
+        $wynik += $liczba;
+    }
+    return $wynik;
+}
+
+echo sum(1, 2, 3, 4);
+?>
+]]>
+       </programlisting>
+       &example.outputs;
+       <screen>
+<![CDATA[
+10
+]]>
+       </screen>
+      </example>
+     </para>
+    </sect3>
 
    </sect2>
 
@@ -398,17 +543,23 @@ Robię miskę malinowego jogurtu.
     funkcja została wywołana. Zobacz <function>return</function>
     aby uzyskać więcej informacji.
    </para>
+   <note>
+    <para>
+     Jeżeli <function>return</function> zostanie pominięte, zwrócona będzie
+     wartość &null;,
+    </para>
+   </note>
    <para>
     <example>
      <title>Użycie <function>return</function></title>
      <programlisting role="php">
 <![CDATA[
 <?php
-function square($num)
+function kwadrat($liczba)
 {
-    return $num * $num;
+    return $liczba * $liczba;
 }
-echo square(4);   // wypisuje '16'.
+echo kwadrat(4);   // wypisuje '16'.
 ?>
 ]]>
      </programlisting>
@@ -416,7 +567,7 @@ echo square(4);   // wypisuje '16'.
    </para>
       
    <para>
-    Funkcjia nie może zwracać wielu wartości, ale podobny efekt
+    Funkcja nie może zwracać wielu wartości, ale podobny efekt
     może zostać osiągnięty poprzez zwracanie tablicy.
    </para>
    <para>
@@ -546,7 +697,33 @@ $foo->$funcname();  // Wywołuje $foo->Zmienna()
     </example>
    </para>
    <para>
-    Zobacz także <function>call_user_func</function>,
+    Gdy wywołuje się metody statyczne, wywołanie funkcji jest mocniejsze niż operator własności statycznej:
+    <example>
+     <title>Przykład zmiennej metody z właściwościami statycznymi</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+class Foo
+{
+    static $zmienna = 'własność statyczna';
+    static function Zmienna()
+    {
+        echo 'Wywołano metodę Zmienna';
+    }
+}
+
+echo Foo::$zmienna; // Wyświetli 'własność statyczna'. Potrzebna jest $zmienna w tym zasięgu.
+$zmienna = "Zmienna";
+Foo::$variable();  // Wywoła $foo->Zmienna() odczytując $zmienna w tym zasięgu.
+
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+      
+   <para>
+    Zobacz także <function>is_callable</function>, <function>call_user_func</function>,
     <link linkend="language.variables.variable">
     zmienne zmienne</link> oraz <function>function_exists</function>.
    </para>
@@ -604,9 +781,174 @@ $foo->$funcname();  // Wywołuje $foo->Zmienna()
     <function>dl</function>.
    </para>
    
-   <!-- FIXME: Fixes build -->
-   <para xml:id="functions.anonymous"><link xlink:href="http://php.net/manual/en/functions.anonymous">Anonymous Functions</link></para>
+  </sect1>
+  
+  <sect1 xml:id="functions.anonymous">
+   <title>Funkcje anonimowe</title>
+
+   <simpara>
+    Funkcje anonimowe, znane także jako <literal>closures</literal> (pol. domknięcia), pozwalają
+    pozwalają na utworzenie funkcji, które nie mają określonej nazwy. Są najbardziej użyteczne jako
+    wartość parametru typu <link linkend="language.types.callback">callback</link>,
+    ale mają też wiele innych zastosowań.
+   </simpara>
+
+   <example>
+    <title>Przykład funkcji anonimowej</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+echo preg_replace_callback('~-([a-z])~', function ($match) {
+    return strtoupper($match[1]);
+}, 'hello-world');
+// wyświetli helloWorld
+?>
+]]>
+    </programlisting>
+   </example>
+
+   <simpara>
+    Domknięcia mogą zostać użyte także jako wartości zmiennych; PHP automatycznie 
+    konwertuje takie wyrażenia na instancje
+    wewnętrznej klasy <classname>Closure</classname>. Przypisanie domknięcia do
+    zmiennej korzysta z takiej samej składni jak każde inne przypisanie, włączając w to
+    średnik na końcu:
+   </simpara>
+
+   <example>
+    <title>Przypisanie funkcji anonimowej do zmiennej</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$greet = function($name)
+{
+    printf("Witaj %s\r\n", $name);
+};
+
+$greet('Świecie');
+$greet('PHP');
+?>
+]]>
+    </programlisting>
+   </example>
    
+   <simpara>
+    Domknięcia mogą także dziedziczyć zmienne z zasięgu nadrzędnego. 
+    Każda taka zmienna musi być przekazana za pomocą kontrukcji <literal>use</literal>. 
+    Dziedziczenie zmiennych z zasięgu nadrzędnego to <emphasis>nie</emphasis> 
+    to samo co użycie zmiennych globalnych. 
+    Zmienne globalne istnieją w zasięgu globalnym, który jest jednakowy
+    bez względu na wykonywaną funkcję. Nadrzędnym zasięgiem domknięcia jest
+    funkcja, w której domknięcie zostało zadeklarowane (niekoniecznie funkcja,
+    z której zostało wykonane). Zobacz poniższy przykład:
+   </simpara>
+
+   <example>
+    <title>Domknięcia i zasięg</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// Podstawowy koszyk sklepowy, który zawiera listę dodanych produktów
+// i ilość każdego z nich. Zawiera metodę, która
+// liczy całkowitą cenę produktów w koszyku używając
+// funkcji anonimowej jako callbacku.
+class Cart
+{
+    const PRICE_BUTTER  = 1.00;
+    const PRICE_MILK    = 3.00;
+    const PRICE_EGGS    = 6.95;
+
+    protected $products = array();
+    
+    public function add($product, $quantity)
+    {
+        $this->products[$product] = $quantity;
+    }
+    
+    public function getQuantity($product)
+    {
+        return isset($this->products[$product]) ? $this->products[$product] :
+               FALSE;
+    }
+    
+    public function getTotal($tax)
+    {
+        $total = 0.00;
+        
+        $callback =
+            function ($quantity, $product) use ($tax, &$total)
+            {
+                $pricePerItem = constant(__CLASS__ . "::PRICE_" .
+                    strtoupper($product));
+                $total += ($pricePerItem * $quantity) * ($tax + 1.0);
+            };
+        
+        array_walk($this->products, $callback);
+        return round($total, 2);
+    }
+}
+
+$my_cart = new Cart;
+
+// Dodaj produkty do koszyka
+$my_cart->add('butter', 1);
+$my_cart->add('milk', 3);
+$my_cart->add('eggs', 6);
+
+// Wyświetl całkowitą cenę z 5% podatkiem.
+print $my_cart->getTotal(0.05) . "\n";
+// Wynik to 54.29
+?>
+]]>
+    </programlisting>
+   </example>
+   
+   <simpara>
+    Funkcje anonimowe są implementowane przez klasę <link linkend="class.closure">
+    <classname>Closure</classname></link>.
+   </simpara>
+   
+   <sect2 role="changelog">
+    &reftitle.changelog;
+    <para>
+     <informaltable>
+      <tgroup cols="2">
+       <thead>
+        <row>
+         <entry>&Version;</entry>
+         <entry>&Description;</entry>
+        </row>
+       </thead>
+       <tbody>
+        <row>
+         <entry>5.4.0</entry>
+         <entry>
+          <varname>$this</varname> może zostać użyte w funkcjach anonimowych.
+         </entry>
+        </row>
+        <row>
+         <entry>5.3.0</entry>
+         <entry>
+          Funkcje anonimowe stały się dostępne.
+         </entry>
+        </row>
+       </tbody>
+      </tgroup>
+     </informaltable>
+    </para>
+   </sect2>
+
+   <sect2 role="notes">
+    &reftitle.notes;
+    <note>
+     <simpara>
+      Jest możliwe użycie <function>func_num_args</function>,
+      <function>func_get_arg</function> i <function>func_get_args</function>
+      z poziomu funkcji anonimowej.
+     </simpara>
+    </note>
+   </sect2>
+
   </sect1>
 
  </chapter>
