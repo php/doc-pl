@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: df0cee46da7c152e335488b6ee24388fa7562141 Maintainer: pirate Status: ready -->
+<!-- EN-Revision: 0ee8eea30405f9018644fea7a29dd05a4bab8c6f Maintainer: pirate Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: sobak -->
  <chapter xml:id="language.constants" xmlns="http://docbook.org/ns/docbook">
   <title>Stałe</title>
 
@@ -62,15 +63,15 @@ define("__FOO__", "something");
   <sect1 xml:id="language.constants.syntax">
    <title>Składnia</title>
    <simpara>
-    Możesz zdefiniować stałą, używając funkcji 
-    <function>define</function>. Raz zdefiniowana stała 
-    nie może byc zmieniona ani usunięta.
+    Możesz zdefiniować stałą, używając funkcji <function>define</function> lub słowa kluczowego
+	<literal>const</literal> poza klasą, od PHP 5.3.0. Raz zdefiniowana stała 
+    nie może być zmieniona ani usunięta.
    </simpara>
    <simpara>
-    Stałe mogą zawierać jedynie dane skalarne 
-    (<type>boolean</type>, <type>integer</type>, 
-    <type>float</type> oraz <type>string</type>) 
-    Stałe nie mogą być typu <type>resource</type>.
+    Do wersji PHP 5.6 stałe mogą zawierać jedynie dane skalarne (<type>boolean</type>, <type>integer</type>,
+    <type>float</type> oraz <type>string</type>). Począwszy od PHP 5.6 jest możliwe zdefiniowanie stałej <type>array</type>.
+	Można także zdefiniować stałą typu <type>resource</type>, ale powinno się tego unikać, bo może
+	spowodować nieoczekiwane rezultaty.
    </simpara>
    <simpara>
     Wartość stałej otrzymujemy, używając jej nazwy.
@@ -123,13 +124,14 @@ define("__FOO__", "something");
      </listitem>
      <listitem>
       <simpara>
-       Stałe nie mogą być zmieniane ani usuwane jeśli raz zostały ustawione
-       ; oraz
+       Stałe nie mogą być zmieniane ani usuwane jeśli raz zostały ustawione;
+       oraz
       </simpara>
      </listitem>
      <listitem>
       <simpara>
-       Stałe mogą zawierać jedynie wartości skalarne.
+       Stałe mogą zawierać jedynie wartości skalarne lub wartości skalarne bądź tablicowe
+       w PHP 5.6 i nowszych.
        </simpara>
      </listitem>
     </itemizedlist>
@@ -148,8 +150,39 @@ echo Constant; // wypisuje "Constant" i wywoułuje ostrzeżenie.
 ]]>
      </programlisting>
     </example>
-
    </para>
+   
+      <para>
+    <example>
+     <title>Definiowanie stałych używając <literal>const</literal></title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+// Działa od PHP 5.3.0
+const CONSTANT = 'Hello World';
+
+echo CONSTANT;
+
+// Działa od PHP 5.6.0
+const ANOTHER_CONST = CONSTANT.'; Goodbye World';
+
+echo ANOTHER_CONST;
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+
+   <note>
+    <para>
+     W przeciwieństwie do definiowana stałych przy pomocy <function>define</function>,
+     stałe zdefiniowane przy użyciu słowa <literal>const</literal> muszą zostać
+     zadeklarowane w zasięgu górnego poziomu, ponieważ są one definiowane w czasie kompilacji.
+     Oznacza to, że nie mogą zostać one zadeklarowane wewnątrz funkcji, pętli, wyrażeń
+     <literal>if</literal> lub bloków <literal>try</literal>/
+     <literal>catch</literal>.
+    </para>
+   </note>
 
    <simpara>
     Zobacz także <link linkend="language.oop5.constants">Stałe Klas</link>.
@@ -169,7 +202,7 @@ echo Constant; // wypisuje "Constant" i wywoułuje ostrzeżenie.
    </simpara>
    
    <para>
-    Istnieje siedem magicznych stałych, które zmieniają sie w zależności
+    Istnieje osiem magicznych stałych, które zmieniają sie w zależności
     od tego, gdzie są użyte.  Na przykład, wartość
     <constant>__LINE__</constant> zależy od linii, w której ta 
     stała została użyta. Nazwy tych magicznych stałych 
@@ -186,13 +219,13 @@ echo Constant; // wypisuje "Constant" i wywoułuje ostrzeżenie.
        </row>
       </thead>
       <tbody>
-       <row>
+       <row xml:id="constant.line">
         <entry><constant>__LINE__</constant></entry>
         <entry>
          Aktualna linia pliku.
         </entry>
        </row>
-       <row>
+       <row xml:id="constant.file">
         <entry><constant>__FILE__</constant></entry>
         <entry>
          Pełna scieżka i nazwa pliku.  Jeśli użyta wewnątrz dołączonego pliku,
@@ -202,7 +235,7 @@ echo Constant; // wypisuje "Constant" i wywoułuje ostrzeżenie.
          czasem zawierała scieżkę względną.
         </entry>
        </row>
-       <row>
+       <row xml:id="constant.dir">
         <entry><constant>__DIR__</constant></entry>
         <entry>
          Nazwa katalogu pliku.  Jeśli użyta wewnątrz dołączonego pliku,
@@ -212,7 +245,7 @@ echo Constant; // wypisuje "Constant" i wywoułuje ostrzeżenie.
          (Dodano w PHP 5.3.0.)
         </entry>
        </row>
-       <row>
+       <row xml:id="constant.function">
         <entry><constant>__FUNCTION__</constant></entry>
         <entry>
          Nazwa funkcji. (Dodano w PHP 4.3.0)  W PHP 5 ta stała 
@@ -220,30 +253,33 @@ echo Constant; // wypisuje "Constant" i wywoułuje ostrzeżenie.
          kiedy w PHP 4 zwracana wartość zawiera jedynie małe litery.
         </entry>
        </row>
-       <row>
+       <row xml:id="constant.class">
         <entry><constant>__CLASS__</constant></entry>
         <entry>
          Nazwa klasy. (Dodano w PHP 4.3.0)  W PHP 5 ta stała 
          zwraca nazwę klasy tak jak ją zadeklarowano (z uwzględnieniem wielkości liter), podczas
-         kiedy w PHP 4 zwracana wartość zawiera jedynie małe litery.
+         kiedy w PHP 4 zwracana wartość zawiera jedynie małe litery. Nazwa klasy zawiera przestrzeń nazw,
+		 w której została ona zadeklarowana (np. <literal>Foo\Bar</literal>).
+		 Zauważ, że od PHP 5.4.0 __CLASS__ działa także w traitach. Kiedy użyta w metodzie traita,
+		 __CLASS__ jest nazwą klasy, w której został użyty trait.
         </entry>
        </row>
        <row xml:id="constant.trait">
         <entry><constant>__TRAIT__</constant></entry>
         <entry>
-         The trait name. (Added in PHP 5.4.0)  As of PHP 5.4 this constant 
-         returns the trait as it was declared (case-sensitive).  The trait name includes the namespace
-         it was declared in (e.g. <literal>Foo\Bar</literal>).
+         Nazwa traita. (Dodano w PHP 5.4.0)  Od PHP 5.4 ta stała 
+         zwraca traita tak jak został zadeklarowany (z uwzględnieniem wielkości liter). Nazwa traita zawiera przestrzeń nazw,
+         w której został on zadeklarowany (np. <literal>Foo\Bar</literal>).
         </entry>
        </row>
-       <row>
+       <row xml:id="constant.method">
         <entry><constant>__METHOD__</constant></entry>
         <entry>
          Nazwa metody. (Dodano w PHP 5.0.0) Nazwa metody zwracana jest
          tak jak ją zadeklarowano (z uwzględnieniem wielkości liter).
         </entry>
        </row>
-       <row>
+       <row xml:id="constant.namespace">
         <entry><constant>__NAMESPACE__</constant></entry>
         <entry>
          Nazwa aktualnej przestrzeni nazw (z uwzględnieniem wielkości liter). Ta stała 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: d522d135a1b0ad485006dd2e8b5231cd2fb6df57 Maintainer: leszek Status: ready -->
+<!-- EN-Revision: f2b08c959ca4d54a96a66e623e576c35be3034be Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: sobak -->
 <appendix xml:id="types.comparisons" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <title>Tabele porównań typów PHP</title>
  <para>
@@ -35,6 +36,17 @@
    <constant>E_NOTICE</constant>. Zamiast tego powinna być stosowana funkcja
    <function>empty</function> lub <function>isset</function>, i/lub zmienne
    powinny być inicjalizowane.
+  </para>
+ </note>
+ <note>
+  <para>
+   Wynikiem niektórych operacji numerycznych może być wartość wyrażona stałą
+   <constant>NAN</constant>. Dowolne luźne lub ścisłe porównanie tej wartości
+   z dowolną inną wartością, wliczając ją samą, zwróci &false;
+   (np. <literal>NAN != NAN</literal> i <literal>NAN !== NAN</literal>).
+   Przykładami operacji, których rezultatem jest <constant>NAN</constant> mogą być wyrażenia
+   <literal>sqrt(-1)</literal>, <literal>asin(2)</literal> czy
+   <literal>asinh(0)</literal>.
   </para>
  </note>
  <para>

@@ -1,57 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: sobak -->
 <refentry xml:id="function.array" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>array</refname>
   <refpurpose>Stwórz tablicę</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
    <type>array</type><methodname>array</methodname>
    <methodparam choice="opt"><type>mixed</type><parameter>...</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Zwraca tablicę stworzoną z podanych parametrów. Parametry mogą być
-   indeksowane przy pomocy operatora <literal>=&gt;</literal> operator.
-   Więcej informacji o tym czym są tablice można znaleźć w rodziale o <link
-    linkend="language.types.array">typie tablicowym</link>.
+   Tworzy tablicę. Przeczytaj rozdział poświęcony
+   <link linkend="language.types.array">typowi tablicowemu</link>, żeby dowiedzieć się
+   czym jest tablica.
   </para>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
   <para>
-   <note>
-    <para>
-     <function>array</function> jest składnią języka używaną do tekstowej
-     reprezentacji tablic, a nie zwykłą funkcją.
-    </para>
-   </note>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>...</parameter></term>
+     <listitem>
+      <para>
+       Składnia "index =&gt; wartości", oddzielona przecinkami, definiuje pary
+       indeksów i wartości. Indeks może być ciągiem tekstowym lub liczbą
+       stałoprzecinkową. Jeśli indeks zostanie pominięty, automatycznie
+       wygenerowany zostanie indeks będący liczbą całkowitą, poczynając od 0.
+       Jeśli indeks jest liczbą całkowitą, następny wygenerowany indeks będzie
+       miał wartość "największy indeks + 1".  Zauważ, że jeśli pojawią się dwie
+       wartości o tym samym indeksie, ostatnia nadpisze wcześniejsze.
+      </para>
+      <para>
+       Przecinek po ostatniej podanej wartości, mimo że jest niespotykany, jest
+       poprawny składniowo.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
   </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
   <para>
-   Składnia "index =&gt; wartości", oddzielona przecinkami, definiuje pary
-   indeksów i wartości. Indeks może być ciągiem tekstowym lub liczbą
-   stałoprzecinkową. Jeśli indeks zostanie pominięty, automatycznie
-   wygenerowany zostanie indeks będący liczbą całkowitą, poczynając od 0.
-   Jeśli indeks jest liczbą całkowitą, następny wygenerowany indeks będzie
-   miał wartość "największy indeks + 1".  Zauważ, że jeśli pojawią się dwie
-   wartości o tym samym indeksie, ostatnia nadpisze wcześniejsze.
+   Zwraca tablicę parametrów. Parametrom można przypisać
+   indeks używając operatora <literal>=&gt;</literal>. Przeczytaj rozdział
+   o <link linkend="language.types.array">typie tablicowym</link>, aby dowiedzieć się
+   czym dokładnie jest tablica.
   </para>
-  <para>
-   Przecinek po ostatniej podanej wartości, mimo że jest niespotykany, jest
-   poprawny składniowo.
-  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
    Poniższy przykład demonstruje jak stworzyć wielowymiarową tablicę, jak
-   określić klucze w tablicy asocjacyjnej i jak pominąć-i-kontynuować
+   określić klucze w tablicy asocjacyjnej i jak pominąć, a następnie kontynuować
    liczbowe indeksy w normalnych tablicach.
    <example>
-    <title>Przykład użycia <function>array</function></title>
+    <title>Prosty przykład użycia <function>array</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
-$owoce = array (
-   "owoce"  => array("a"=&gt;"pomarańcza", "b"=&gt;"banan", "c"=&gt;"jabłko"),
-   "liczby" => array(1, 2, 3, 4, 5, 6),
-   "dziury" => array("pierwszy", 5 =&gt; "drugi", "trzeci")
+$fruits = array (
+    "owoce"  => array("a" => "pomarańcza", "b" => "banan", "c" => "jabłko"),
+    "liczby" => array(1, 2, 3, 4, 5, 6),
+    "dziury"   => array("pierwsza", 5 => "druga", "trzecia")
 );
 ?>
 ]]>
@@ -60,11 +76,11 @@ $owoce = array (
   </para>
   <para>
    <example>
-    <title>Automatyczne indeksowanie w funkcji <function>array</function></title>
+    <title>Indeksowanie automatyczne z <function>array</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
-$array = array( 1, 1, 1, 1,  1, 8 => 1,  4 => 1, 19, 3 => 13);
+$array = array(1, 1, 1, 1,  1, 8 => 1,  4 => 1, 19, 3 => 13);
 print_r($array);
 ?>
 ]]>
@@ -87,25 +103,24 @@ Array
    </example>
   </para>
   <para>
-   Zauważ, że indeks '3' jest zdefiniowany dwa razy i przchowuje on końcową
-   wartość 13. Indeks 4 jest zdefiniowany po indeksie 8, a następnym
-   wygenerowanym indeksem (dla wartości 19) jest 9, ponieważ największym
-   poprzednim indeksem było 8.
+   Zauważ, że indeks '3' został zdefiniowany dwukrotnie i przyjął ostateczną wartość 13.
+   Indeks 4 został zdefiniowany po kluczu 8, a następny indeks (dla wartości 19)
+   to 9, ponieważ największym dotyczczasowym indeksem był 8.
   </para>
   <para>
-   Ten przykład tworzy tablicę o początku 1.
+   Ten przykład tworzy tablicę numerowaną od 1.
    <example>
-    <title>Indeksowanie od 1 w <function>array</function></title>
+    <title>Tablica numerowana od 1</title>
     <programlisting role="php">
 <![CDATA[
 <?php
-$pierwszy_kwartal  = array(1 => 'Styczeń', 'Luty', 'Marzec');
-print_r($pierwszy_kwartal);
+$kwartal = array(1 => 'Styczeń', 'Luty', 'Marzec');
+print_r($kwartal);
 ?>
 ]]>
     </programlisting>
     &example.outputs;
-    <screen role="php">
+    <screen>
 <![CDATA[
 Array
 (
@@ -118,9 +133,8 @@ Array
    </example>
   </para>
   <para>
-   Podobnie jak w Perlu, wartość z tablicy można uzyskać wewnątrz
-   cudzysłowów. Jednakże w PHP niezbędne jest zawarcie zmiennej wewnątrz
-   nawiasów klamrowych.
+   Podobnie jak w Perlu, wartość z tablicy można uzyskać wewnątrz cudzysłowów.
+   Jednakże w PHP niezbędne jest zawarcie zmiennej wewnątrz nawiasów klamrowych.
    <example>
     <title>Odczytywanie elementu tablicy wewnątrz cudzysłowów</title>
     <programlisting role="php">
@@ -135,11 +149,29 @@ echo "Hello {$foo['bar']}!"; // Hello baz!
     </programlisting>
    </example>
   </para>
+ </refsect1>
+ <refsect1 role="notes">
+  &reftitle.notes;
   <para>
-   Patrz także: <function>array_pad</function>, <function>list</function>,
-   <function>count</function>,
-   <link linkend="control-structures.foreach">foreach</link> i
-   <function>range</function>.
+   <note>
+    <para>
+     <function>array</function> jest konstrukcją języka używaną do
+     tekstowej reprezentacji tablic, a nie zwykłą funkcją.
+    </para>
+   </note>
+  </para>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>array_pad</function></member>
+    <member><function>list</function></member>
+    <member><function>count</function></member>
+    <member><function>range</function></member>
+    <member>&foreach;</member>
+    <member>Typ <link linkend="language.types.array">array</link></member>
+   </simplelist>
   </para>
  </refsect1>
 </refentry>

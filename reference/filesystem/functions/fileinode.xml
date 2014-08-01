@@ -1,13 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: adi Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 44aabb8f7e3cc8760d33b0ff60ffae362b9d1ed3 Maintainer: winek Status: ready -->
 <!-- $Revision$ -->
-<refentry xml:id="function.fileinode" xmlns="http://docbook.org/ns/docbook">
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.fileinode">
  <refnamediv>
   <refname>fileinode</refname>
-  <refpurpose>Pobiera i-węzeł pliku</refpurpose>
+  <refpurpose>Zwraca numer i-węzła pliku</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
    <type>int</type><methodname>fileinode</methodname>
    <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
@@ -15,12 +16,71 @@
   <para>
    Zwraca numer i-węzła pliku lub &false; w przypadku błędu.
   </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>nazwa_pliku</parameter></term>
+     <listitem>
+      <para>
+       Ścieżka do pliku.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca numer i-węzła pliku, &return.falseforfailure;.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Porównywanie numeru i-węzła pliku z obecnie wykonywanym skryptem</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$filename = 'index.php';
+if (getmyinode() == fileinode($filename)) {
+    echo 'Przeglądasz stronę główną.';
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="errors">
+  &reftitle.errors;
+  &fs.emits.warning.on.failure;
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
   &note.clearstatcache;
   &tip.fopen-wrapper.stat;
-  <simpara>
-   Patrz także: <function>stat</function>.
-  </simpara>
  </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>getmyinode</function></member>
+    <member><function>stat</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
 </refentry>
 
 <!-- Keep this comment at the end of the file

@@ -1,41 +1,65 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS:  soanvig -->
 <refentry xml:id="function.array-shift" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>array_shift</refname>
-  <refpurpose>Usuń element z początku tablicy</refpurpose>
+  <refpurpose>Usuwa i zwraca element z początku tablicy</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
    <type>mixed</type><methodname>array_shift</methodname>
    <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>array_shift</function> usuwa pierwszą wartość parametru
-   <parameter>tablica</parameter> i zwraca go skracając tą tablicę o jeden
-   element przesuwając wszystkie pozostałe elementy w dół. Wszystkie klucze
-   liczbowe zostaną zmodyfikowane tak, aby ich wartości zaczynały się od
-   zera, podczas gdy klucze znakowe nie zostaną zmienione. Jeśli
-   <parameter>tablica</parameter> jest pusta (lub nie jest tablicą),
-   zwracana jest wartość &null;.
+   <function>array_shift</function> zwraca pierwszą wartość tablicy (z parametru
+   <parameter>tablica</parameter>), jednocześnie usuwając ten element z tablicy 
+   i cofając wszystkie jej indeksy o jeden. 
+   Tablice numeryczne będą tak zmodyfikowane, aby indeksy zaczynały się od zera,
+   a klucze tablic asocjacyjnych pozostaną nienaruszone.
   </para>
   &array.resetspointer;
-  <example>
-   <title>Przykład użycia <function>array_shift</function></title>
-   <programlisting role="php">
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>tablica</parameter></term>
+     <listitem>
+      <para>
+       Tablica wejściowa.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca usunięty element lub &null; jeśli <parameter>tablica</parameter> jest
+   pusta, lub jeśli w rzeczywistości nie jest tablicą.
+  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład użycia <function>array_shift</function></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
-$stos = array ("pomarańcza", "banan", "jabłko", "malina");
-$owoc = array_shift ($stos);
+$stack = array("pomarańcza", "banan", "jabłko", "malina");
+$fruit = array_shift($stack);
+print_r($stack);
 ?>
 ]]>
-   </programlisting>
-   <para>
-    Zmienna <varname>$stos</varname> będzie miała 3 elementy:
-   </para>
-   <screen>
+    </programlisting>
+    &example.outputs;
+    <screen role="php">
 <![CDATA[
 Array
 (
@@ -44,16 +68,22 @@ Array
     [2] => malina
 )
 ]]>
-   </screen>
-   <para>
-    a <literal>pomarańcza</literal> będzie przypisana do zmiennej
-    <varname>$owoc</varname>
-   </para>
-  </example>
+    </screen>
+    <para>
+     a <literal>pomarańcza</literal> zostanie przypisana do
+     <varname>$fruit</varname>.
+    </para>
+   </example>
+  </para>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
   <para>
-   Patrz także: <function>array_unshift</function>,
-   <function>array_push</function> i
-   <function>array_pop</function>.
+   <simplelist>
+    <member><function>array_unshift</function></member>
+    <member><function>array_push</function></member>
+    <member><function>array_pop</function></member>
+   </simplelist>
   </para>
  </refsect1>
 </refentry>
@@ -75,6 +105,6 @@ sgml-local-catalogs:nil
 sgml-local-ecat-files:nil
 End:
 vim600: syn=xml fen fdm=syntax fdl=2 si
-vim: et tw=78 syn=sgml encoding=iso-8859-2
+vim: et tw=78 syn=sgml
 vi: ts=1 sw=1
 -->

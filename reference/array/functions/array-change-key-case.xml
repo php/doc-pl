@@ -1,40 +1,85 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 3ce14fde5cd5f15171a7ed2b64fdc7bd652c3842 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: leszek -->
 <refentry xml:id="function.array-change-key-case" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>array_change_key_case</refname>
-  <refpurpose>Zwraca tablicę ze wszystkimi kluczami tekstowymi zamienionymi na wyłącznie małe lub wyłącznie duże litery</refpurpose>
+  <refpurpose>Zmienia wielkość znaków w kluczach tablicy</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
    <type>array</type><methodname>array_change_key_case</methodname>
-   <methodparam><type>array</type><parameter>wejście</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>wielkość</parameter></methodparam>
+   <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>wielkość</parameter><initializer>CASE_LOWER</initializer></methodparam>
   </methodsynopsis>
   <para>
-   <function>array_change_key_case</function> zmienia klucze w tablicy
-   <parameter>wejście</parameter> aby były pisane tylko dużymi lub tylko
-   małymi literami. Zmiana zależy od ostatniego opcjonalnego parametru
-   <parameter>case</parameter>. Można do niego przekazać jedną z dwóch
-   stałych: <constant>CASE_UPPER</constant> lub
-   <constant>CASE_LOWER</constant>. Domyślną wartością jest
-   <constant>CASE_LOWER</constant>. Indeksy liczbowe będą pozostawione takie
-   jakie są.
+   Zwraca tablicę bazowaną na <parameter>tablica</parameter>, ze wszystkimi indeksami z małymi
+   lub wielkimi literami. Indeksy numeryczne pozostają nienaruszone.
   </para>
-  <example>
-   <title>Przykład użycia <function>array_change_key_case</function></title>
-   <programlisting role="php">
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+
+    <varlistentry>
+     <term><parameter>tablica</parameter></term>
+     <listitem>
+      <para>
+       Tablica do przetworzenia
+      </para>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term><parameter>wielkość</parameter></term>
+     <listitem>
+      <para>
+       <constant>CASE_UPPER</constant> lub
+       <constant>CASE_LOWER</constant> (domyślnie)
+      </para>
+     </listitem>
+    </varlistentry>
+
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca tablicę z kluczami zamienionymi na małe lub duże znaki albo &false; jeżeli
+   <parameter>tablica</parameter> nie jest w rzeczywistości tablicą.
+  </para>
+ </refsect1>
+
+ <refsect1 role="errors">
+  &reftitle.errors;
+  <para>
+   Generuje błąd <constant>E_WARNING</constant> jeżeli <parameter>tablica</parameter> nie
+   jest tablicą.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example xml:id="function.array-change-key-case.example-1">
+    <title>Przykład użycia <function>array_change_key_case</function></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 $wejscie = array("PierWszy" => 1, "DruGi" => 4);
 print_r(array_change_key_case($wejscie, CASE_UPPER));
 ?>
 ]]>
-   </programlisting>
-   &example.outputs;
-   <screen>
+    </programlisting>
+    &example.outputs;
+    <screen>
 <![CDATA[
 Array
 (
@@ -42,13 +87,20 @@ Array
     [DRUGI] => 4
 )
 ]]>
-   </screen>
-  </example>
-  <para>
-   Jeśli tablica ma indeksy które będą się powtarzały po wykonaniu tej
-   funkcji (np. "klucZ" i "kLUCZ"), wartość tego elementu który jest dalej w
-   tablicy nadpisze pozostałe indeksy.
+    </screen>
+   </example>
   </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    Jeżeli tablica ma klucze, które będą takie same po przejściu przez tę
+    funkcję (np. "<literal>raZ</literal>" i "<literal>rAZ</literal>"), 
+    wartość, która jest później w tablicy, nadpisze innne indeksy.
+   </para>
+  </note>
  </refsect1>
 </refentry>
 
@@ -69,6 +121,6 @@ sgml-local-catalogs:nil
 sgml-local-ecat-files:nil
 End:
 vim600: syn=xml fen fdm=syntax fdl=2 si
-vim: et tw=78 syn=sgml encoding=iso-8859-2
+vim: et tw=78 syn=sgml
 vi: ts=1 sw=1
 -->

@@ -1,34 +1,106 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: c05c2912b17672f81b2559b07c7d837123bb5c7c Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: leszek -->
 <refentry xml:id="function.array-combine" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>array_combine</refname>
   <refpurpose>Tworzy tablicę używając wartości jednej tablicy jako kluczy a drugiej jako wartości</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
    <type>array</type><methodname>array_combine</methodname>
    <methodparam><type>array</type><parameter>klucze</parameter></methodparam>
    <methodparam><type>array</type><parameter>wartości</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Zwraca tablicę stworzoną poprzez użycie wartości z tablicy
+   Tworzy tablicę używając wartości z tablicy
    <parameter>klucze</parameter> jako kluczy i wartości z tablicy
-   <parameter>wartości</parameter> jako odpowiadających im wartości.
+   <parameter>wartości</parameter> jako ich wartości.
   </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
   <para>
-   Zwraca &false; jeśli liczba elementów tablic wejściowych nie są równe,
-   lub jeśli jedna lub obie z tablic są puste.
+   <variablelist>
+
+    <varlistentry>
+     <term><parameter>klucze</parameter></term>
+     <listitem>
+      <para>
+       Tablica kluczy do użycia. Niepoprawne wartości będą
+       konwertowane na typ <type>string</type>.
+      </para>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term><parameter>wartości</parameter></term>
+     <listitem>
+      <para>
+       Tablica wartości do użycia.
+      </para>
+     </listitem>
+    </varlistentry>
+
+   </variablelist>
   </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca wynikową tablicę lub &false; jeżeli liczba elementów z obu tablic
+   nie pasuje do siebie.
+  </para>
+ </refsect1>
+
+ <refsect1 role="errors">
+  &reftitle.errors;
+  <para>
+   Generuje błąd <constant>E_WARNING</constant> jeżeli liczba elementów w tablicach
+   <parameter>klucze</parameter> i <parameter>wartości</parameter> nie jest
+   jednakowa.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>5.4.0</entry>
+       <entry>
+        Poprzednie wersje generowały błąd <constant>E_WARNING</constant> i zwracały
+        &false; dla pustych tablic.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
    <example>
     <title>Przykład użycia <function>array_combine</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
-$a = array('zielony', 'czerwony', 'żółty');
+$a = array('zielone', 'czerwone', 'żółty');
 $b = array('awokado', 'jabłko', 'banan');
 $c = array_combine($a, $b);
 
@@ -41,20 +113,27 @@ print_r($c);
 <![CDATA[
 Array
 (
-    [zielony]  => awokado
-    [czerwony] => jabłko
-    [żółty]    => banan
+    [zielone]  => awokado
+    [czerwone]    => jabłko
+    [żółty] => banan
 )
 ]]>
     </screen>
    </example>
   </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
   <para>
-   Patrz także: <function>array_merge</function>,
-   <function>array_walk</function> i
-   <function>array_values</function>.
+   <simplelist>
+    <member><function>array_merge</function></member>
+    <member><function>array_walk</function></member>
+    <member><function>array_values</function></member>
+   </simplelist>
   </para>
  </refsect1>
+
 </refentry>
 
 <!-- Keep this comment at the end of the file

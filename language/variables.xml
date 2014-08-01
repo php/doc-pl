@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: garbus Status: ready -->
+<!-- EN-Revision: 9ec7249d5744ce41c6a3649b23d6fe524549adf7 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS: qrak -->
+<!-- CREDITS: garbus, qrak -->
  <chapter xml:id="language.variables" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
   <title>Zmienne</title>
   
@@ -18,13 +18,13 @@
     Poprawna nazwa zmiennej zaczyna się od litery lub znaku podkreślenia "_",
     po których może wystąpić dowolna ilość liter, cyfr lub znaków podkreślenia.
     Jako wyrażenie regularne, można to zapisać tak:
-    '[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*'
+    '<literal>[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*</literal>'
    </para>
    
    <note>
     <simpara>
      W naszym rozumieniu, litery to znaki a-z, A-Z i bajty od 127 do
-     255 (0x7f-0xff).
+     255 (<literal>0x7f-0xff</literal>).
     </simpara>
    </note>
 
@@ -53,7 +53,7 @@ echo "$zmienna, $Zmienna";  // wyświetla "Pan, Jan"
 
 $7dni = 'tydzień';          // niepoprawna nazwa - zaczyna się od cyfry
 $_7dni = 'tydzień';         // poprawna nazwa - zaczyna się znakiem podkreślenia
-$jaźń = 'osobowość';        // poprawna nazwa - "ń" i "ź" należą do ASCII 127-255
+$jaŹń = 'osobowość';        // poprawna nazwa - "ń" i "Ź" należą do (rozszerzonego) ASCII 228
 ?>
 ]]>
      </programlisting>
@@ -80,8 +80,8 @@ $jaźń = 'osobowość';        // poprawna nazwa - "ń" i "ź" należą do ASCI
    <para>
     Aby przypisać przez referencję, postaw znak ampersand (&amp;)
     przed nazwą zmiennej przypisywanej (zmiennej od której pobierasz
-    wartość). Na przykład poniższy kod wyświetla "To jest 
-    PHP" dwa razy:
+    wartość). Na przykład poniższy kod wyświetla "<literal>To jest 
+    PHP</literal>" dwa razy:
     
     <informalexample>
      <programlisting role="php">
@@ -248,7 +248,7 @@ var_dump($nieinicjowany_obiekt);
    
    <note>
     <para>
-     Nawet pomimo tego, że zmienne superglobalne i HTTP_*_VARS mogą istnieć w tym samym
+     Nawet pomimo tego, że zmienne superglobalne i <literal>HTTP_*_VARS</literal> mogą istnieć w tym samym
      czasie; nie są one tożsame, czyli zmiana jednej nie zmieni drugiej.
     </para>
    </note>
@@ -319,27 +319,27 @@ test();
    </simpara>
 
    <sect2 xml:id="language.variables.scope.global">
-    <title>polecenie global</title>
+    <title>Polecenie <literal>global</literal></title>
     <simpara>
      Najpierw, przykład użycia <literal>global</literal>:
     </simpara>
     <para>
      <example>
-      <title>Używanie polecenia global</title>
+      <title>Używanie polecenia <literal>global</literal></title>
       <programlisting role="php">
 <![CDATA[
 <?php
 $a = 1;
 $b = 2;
 
-function Suma()
+function suma()
 {
     global $a, $b;
 
     $b = $a + $b;
 }
 
-Suma();
+suma();
 echo $b;
 ?>
 ]]>
@@ -348,7 +348,7 @@ echo $b;
     </para>
 
    <simpara>
-    Powyższy skrypt wyświetli wynik &quot;3&quot;.  Przez zadeklarowanie
+    Powyższy skrypt wyświetli wynik <literal>3</literal>.  Przez zadeklarowanie
     wewnątrz funkcji globalności zmiennych <varname>$a</varname> i
     <varname>$b</varname>, wszystkie odwołania do tych zmiennych 
     będą odnosiły się do ich globalnych wersji. Nie ma żadnych ograniczeń
@@ -387,7 +387,7 @@ echo $b;
     w której nazwa zmiennej jest kluczem, a zawartość zmiennej
     wartością komórki tablicy.
     Zauważ, że <varname>$GLOBALS</varname> jest dostępna z każdego miejsca,
-    ponieważ $GLOBALS jest <link
+    ponieważ <varname>$GLOBALS</varname> jest <link
     linkend="language.variables.superglobals">tablicą superglobalną</link>.
     Poniżej przykład demonstrujący moc superglobali:
    </simpara>
@@ -416,6 +416,12 @@ function test_global()
      </programlisting>
     </example>
    </para>
+   <note>
+    <para>
+     Użycie <literal>global</literal> poza funkcją nie jest
+     błędem. Może on zostać użyty jeżeli plik jest dołączany z wnętrzna funkcji.
+    </para>
+   </note>
   </sect2>
  
   <sect2 xml:id="language.variables.scope.static">
@@ -447,7 +453,7 @@ function test()
    <simpara> 
     Ta funkcja jest bezużyteczna, gdyż przy każdym jej wywołaniu zmienna
     <varname>$a</varname> otrzymuje wartość <literal>0</literal>, w związku
-    z czym funkcja stale wyświetla &quot;0&quot;. Występująca potem
+    z czym funkcja stale wyświetla <literal>0</literal>. Występująca potem
     inkrementacja <varname>$a</varname>++ nie ma żadnego znaczenia, gdyż
     funkcja się kończy i zmienna <varname>$a</varname> znika. Aby powyższa
     funkcja miała jakiś sens, należy zapobiec gubieniu wartości
@@ -459,7 +465,7 @@ function test()
      <programlisting role="php">
 <![CDATA[
 <?php
-function Test()
+function test()
 {
     static $a = 0;
     echo $a;
@@ -471,8 +477,8 @@ function Test()
     </example>
    </para>
    <simpara>
-    Teraz, <varname>$a</varname> jest inicjowana tylko pry pierwszym wywołaniu funkcji
-    a, przy każdym wywołaniu funkcji test(), zostanie wyświetlona wartość
+    Teraz, <varname>$a</varname> jest inicjowana tylko przy pierwszym wywołaniu funkcji
+    a, przy każdym wywołaniu funkcji <literal>test()</literal>, zostanie wyświetlona wartość
     zmiennej <varname>$a</varname>, po czym ta zmienna zostanie inkrementowana.
    </simpara>
 
@@ -508,16 +514,16 @@ function test()
     </example>
    </para>
 
-    <note>
-     <para>
-      Zmienne statyczne mogą być deklarowane, tak jak w powyższym przykładzie.
-      Próba przypisania wartości do tego typu zmiennych, poprzez wynik
-      jakiegoś wyrażenia, spowoduje błąd składni (ang. Parse error).
-     </para>
-     <para>
-      <example>
-       <title>Deklaracja zmiennych statycznych</title>
-       <programlisting role="php">
+   <note>
+    <para>
+     Zmienne statyczne mogą być deklarowane, tak jak w powyższym przykładzie.
+     Próba przypisania wartości do tego typu zmiennych, poprzez wynik
+     jakiegoś wyrażenia, spowoduje błąd składni (ang. Parse error).
+    </para>
+    <para>
+     <example>
+      <title>Deklaracja zmiennych statycznych</title>
+      <programlisting role="php">
 <![CDATA[
 <?php
 function foo(){
@@ -532,6 +538,11 @@ function foo(){
 ]]>
       </programlisting>
      </example>
+    </para>
+   </note>
+   <note>
+    <para>
+     Deklaracje statyczne są rozwiązywane w czasie kompilacji.
     </para>
    </note>
   </sect2>
@@ -572,9 +583,7 @@ var_dump($obj);
     </programlisting>
    </informalexample>
 
-   <simpara>
-    Wykonanie tego przykładu da następujące wyniki:
-   </simpara>
+   &example.outputs;
 
    <screen>
 NULL
@@ -627,9 +636,7 @@ $still_obj2 = get_instance_noref();
     </programlisting>
    </informalexample>
 
-   <simpara>
-    Wykonanie tego przykładu da następujące wyniki:
-   </simpara>
+   &example.outputs;
 
    <screen>
 Obiekt statyczny: NULL
@@ -731,7 +738,66 @@ echo "$a $witaj";
     składnię: <varname>${$a[1]}</varname> dla pierwszego przypadku a
     <varname>${$a}[1]</varname> dla drugiego.
    </simpara>
-   
+
+  <simpara>
+    Dostęp do właściwości klas można uzyskać także za pomocą zmiennej nazwy
+    własności. Zmienna nazwa własności zostanie zinterpretowana w
+    zasięgu z którego jest wywoływana. Przykładowo, jeżeli masz
+    wyrażenie takie jak <varname>$foo->$bar</varname>, to zasięg
+    lokalny będzie przeszukany pod kątem <varname>$bar</varname> i jej wartość
+    zostanie użyta jako nazwa własności
+    of <varname>$foo</varname>. Jest to także prawdą
+    jeżeli <varname>$bar</varname> jest dostępem do tablicy.
+   </simpara>
+   <simpara>
+    Do jasnego ograniczenia nazwy własności można wykorzystać też nawiasy
+    klamrowe. Są one szczególnie użyteczne, gdy uzyskuje się dostęp do właściwości
+    zawierającej tablicę, gdy nazwa własności jest składana z wielu części
+    lub gdy nazwa własności zawiera znaki, które nie są
+    w innym wypadku prawidłowe (np. z <function>json_decode</function>
+    lub <link linkend="book.simplexml">SimpleXML</link>).
+   </simpara>
+
+   <para>
+    <example>
+     <title>Przykład zmiennej własności</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+class foo {
+    var $bar = 'I am bar.';
+    var $arr = array('I am A.', 'I am B.', 'I am C.');
+    var $r   = 'I am r.';
+}
+
+$foo = new foo();
+$bar = 'bar';
+$baz = array('foo', 'bar', 'baz', 'quux');
+echo $foo->$bar . "\n";
+echo $foo->$baz[1] . "\n";
+
+$start = 'b';
+$end   = 'ar';
+echo $foo->{$start . $end} . "\n";
+
+$arr = 'arr';
+echo $foo->$arr[1] . "\n";
+echo $foo->{$arr}[1] . "\n";
+
+?>
+]]>
+     </programlisting>
+     &example.outputs;
+     <screen>
+I am bar.
+I am bar.
+I am bar.
+I am r.
+I am B.
+     </screen>
+    </example>
+   </para> 
+
    <warning>   
     <simpara>
      Zauważ, że zmienne zmienne nie mogą być używane z
@@ -752,7 +818,7 @@ echo "$a $witaj";
     <simpara>
      Kiedy do skryptu PHP zostanie wysłany formularz, informacja
      z niego jest automatycznie dostępna w skrypcie. Istnieje
-     wiele sposobów na uzyskanie tych informacji, dla przykładu:
+     kilka sposobów na uzyskanie tych informacji, dla przykładu:
     </simpara>
 
     <para>
@@ -771,33 +837,43 @@ echo "$a $witaj";
     </para>
 
     <para>
-     W zależności od twoich szczególnych ustawień i osobistych upodobań, istnieje
-     wiele sposobów dostępu do danych z twoich formularzy HTML. Oto kilka przykładów:
+     Począwszy od PHP 5.4 istnieją tylko dwie drogi uzyskiwania dostępu do informacji z formularza.
+     Obecnie dostępne metody zostały wymienione poniżej:
     </para>
 
     <para>
      <example>
       <title>Dostęp do informacji z prostego formularza HTML (wysłanego metodą POST)</title>
-      <programlisting role="html">
+      <programlisting role="php">
 <![CDATA[
 <?php
-// Możliwe od PHP 4.1.0
-      
-   echo $_POST['imie'];
-   echo $_REQUEST['imie'];
+echo $_POST['imie'];
+echo $_REQUEST['imie'];
+?>
+]]>
+      </programlisting>
+     </example>
+    </para>
 
+    <para>
+     W starszych wersjach PHP istniało kilka innych metod uzyskiwania dostępu do danych od użytkownika. Zostały
+     one pokazane poniżej. Spójrz na wykaz zmian na dole strony, aby uzyskać więcej szczegółów.
+     <example>
+      <title>Starsze metody pobierania danych od użytkownika</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+// UWAŻAJ: te metody NIE są dłużej wspierane.
+// Poprawne zostały opisane powyżej
+
+// Używając import_request_variables() - ta funkcja została usunięta w PHP 5.4.0
    import_request_variables('p', 'p_');
    echo $p_imie;
 
-// Niedostępne od PHP 6. Od PHP 5.0.0, te długie predefiniowane
-// zmienne mogą być niedostępne z włączoną opcją register_long_arrays.
-
+// Długie zmienne predefiniowane zostały usunięte w PHP 5.4.0
    echo $HTTP_POST_VARS['imie'];
 
-// Dostępne, jeśli opcja register_globals jest włączona - "on". Począwszy od
-// PHP 4.2.0 domyślna wartość opcji register_globals to off.
-// Nie jest zalecane poleganie na tej metodzie.
-
+// Używając register_globals. Ta możliwość została usunięta w PHP 5.4.0
    echo $imie;
 ?>
 ]]>
@@ -807,41 +883,20 @@ echo "$a $witaj";
     <para>
      Przesyłanie danych z formularza metodą GET jest podobne, z takim wyjątkiem, że użyjesz
      zmienną predefiniowaną odpowiednią dla tej metody, zamiast poprzedniej. GET także
-     odnosi się do tzw. QUERY_STRING (informacje w adresie URL, po znaku '?'). Tak więc,
+     odnosi się do tzw. <literal>QUERY_STRING</literal> (informacje w adresie URL, po znaku '?'). Tak więc,
      dla przykładu, <literal>http://www.example.com/test.php?id=3</literal>
      zawiera dane dla metody GET, dostępne poprzez <varname>$_GET['id']</varname>.
-     Zobacz także <varname>$_REQUEST</varname> oraz
-     <function>import_request_variables</function>.
+     Zobacz także <varname>$_REQUEST</varname>.
     </para>
 
     <note>
      <para>
-      <link linkend="language.variables.superglobals">Tablice superglobalne</link>,
-      takie jak <varname>$_POST</varname> i <varname>$_GET</varname>, zostały
-      udostępnione w PHP 4.1.0
+      Spacje i kropki w nazwach zmiennych są konwertowane do znaków podkreślenia. Na
+      przykład <literal>&lt;input name="a.b" /&gt;</literal> staje się zmienną
+      <literal>$_REQUEST["a_b"]</literal>.
      </para>
     </note>
 
-    <para>
-     Jak widać, przed PHP 4.2.0 domyślną wartością opcji <link
-     linkend="ini.register-globals">register_globals</link>
-     było <emphasis>on</emphasis>. Społeczność PHP
-     jest całkowiie przekonana, by nie polegać na tej opcji;
-     i rzeczywiście najlepiej jest nadać jej wartość <emphasis>off</emphasis>, oraz
-     przystosować do tego kod.
-    </para>
-
-    <note>
-     <para>
-      Dyrektywa konfiguracyjna <link linkend="ini.magic-quotes-gpc">magic_quotes_gpc</link>
-      oddziałuje na zmienne z Get, Post i Cookie. Jeśli jest włączona,
-      tekst (It's "PHP!") automagicznie zmieni się w (It\'s \"PHP!\").
-      Jest to potrzebne przy wpisywaniu danych do baz danych. Zobacz także
-      <function>addslashes</function>, <function>stripslashes</function> i
-      <link linkend="ini.magic-quotes-sybase">magic_quotes_sybase</link>.
-     </para>
-    </note>
-    
     <simpara>
      PHP obsługuje także tablice w kontekście zmiennych z formularzy 
      (zajrzyj do <link linkend="faq.html">FAQ</link>). Można 
@@ -898,7 +953,7 @@ if ($_POST) {
      <simpara>
       Kiedy użytkownik kliknie gdzieś na obrazku, formularz, którego
       to dotyczy, zostanie wysłany do serwera z dwiema dodatkowymi
-      zmiennymi, sub_x i sub_y. Zawierają one współrzędne miejsca
+      zmiennymi, <varname>sub_x</varname> i <varname>sub_y</varname>. Zawierają one współrzędne miejsca
       kliknięcia na obrazek. Można przy tym zauważyć, że
       na razie w nazwach zmiennych znajduje się kropka
       zamiast podkreślnika, ale PHP konwertuje kropkę na
@@ -912,8 +967,8 @@ if ($_POST) {
     <title>Ciasteczka HTTP</title>
 
     <simpara>
-     PHP bez problemu obsługuje ciasteczka HTTP, takie jak zdefiniowano w <link
-     xlink:href="&spec.cookies;">Specyfikacji Netscape'a</link>. Ciasteczka są
+     PHP bez problemu obsługuje ciasteczka HTTP, tak jak zdefiniowano w <link
+     xlink:href="&url.rfc;6265">RFC 6265</link>. Ciasteczka są
      mechanizmem przechowywania informacji w przeglądarce klienta w celu
      śledzenia lub identyfikowania stałych bywalców strony. Ciasteczka ustawia
      się za pomocą funkcji <function>setcookie</function>. Ciasteczka są częścią
@@ -921,9 +976,8 @@ if ($_POST) {
      inna informacja zostanie wysłana do przeglądarki. Takie samo ograniczenie
      dotyczy funkcji <function>header</function>. Dane z ciasteczek 
      są wówczas dostępne w odpowiednich tablicach danych cookies, takich 
-     jak <varname>$_COOKIE</varname>, <varname>$HTTP_COOKIE_VARS</varname> 
-     jak również <varname>$_REQUEST</varname>. Zobacz także 
-     stronę dotyczącą funkcji <function>setcookie</function> aby poznać więcej 
+     jak <varname>$_COOKIE</varname>, jak również <varname>$_REQUEST</varname>. 
+     Zobacz także  stronę dotyczącą funkcji <function>setcookie</function> aby poznać więcej 
      informacji i przykładów.
     </simpara>
 
@@ -944,7 +998,7 @@ if ($_POST) {
     </informalexample>
 
     <simpara>
-     Spowoduje to stworzenie dwóch oddzielnych ciasteczek, mimo, iż MojeCiasteczko będzie teraz
+     Spowoduje to stworzenie dwóch oddzielnych ciasteczek, mimo, iż <varname>MojeCiasteczko</varname> będzie teraz
      pojedynczą tablicą w twoim skrypcie. Jeśli chcesz ustawić tylko jedno ciasteczko
      z wieloma wartościami, rozważ możliwość użycia przedtem funkcji <function>serialize</function>
      lub <function>explode</function> na wartości.
@@ -1022,8 +1076,60 @@ $varname.ext;  /* niepoprawna nazwa zmiennej */
     </para>
    </sect2>
 
+   <sect2 xml:id="language.variables.external.changelog">
+    <title>Wykaz zmian</title>
+
+    <para>
+     <informaltable>
+      <tgroup cols="2">
+       <thead>
+        <row>
+         <entry>&Version;</entry>
+         <entry>&Description;</entry>
+        </row>
+       </thead>
+       <tbody>
+        <row>
+         <entry>5.4.0</entry>
+         <entry>
+          <link linkend="security.globals">Register Globals</link>, 
+          <link linkend="security.magicquotes">Magic Quotes</link> i
+          <link linkend="ini.register-long-arrays">register_long_arrays</link>
+          zostały usunięte
+         </entry>
+        </row>
+        <row>
+         <entry>5.3.0</entry>
+         <entry>
+          <link linkend="security.globals">Register Globals</link>, 
+          <link linkend="security.magicquotes">Magic Quotes</link> i
+          <link linkend="ini.register-long-arrays">register_long_arrays</link>
+          zostały zdeprecjonowane
+         </entry>
+        </row>
+        <row>
+         <entry>4.2.0</entry>
+         <entry>
+          Dyrektywa <link linkend="ini.register-globals">register_globals</link>
+          jest domyślnie <emphasis>wyłączona</emphasis>.
+         </entry>
+        </row>
+        <row>
+         <entry>4.1.0</entry>
+         <entry>
+          <link linkend="language.variables.superglobals">Tablice superglobalne</link>, 
+          like <varname>$_POST</varname> and <varname>$_GET</varname> stały się
+          dostępne.
+         </entry>
+        </row>
+       </tbody>
+      </tgroup>
+     </informaltable>
+    </para>
+   </sect2>
+
   </sect1>
-     
+
  </chapter>
  
 <!-- Keep this comment at the end of the file
