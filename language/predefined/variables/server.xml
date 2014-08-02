@@ -1,0 +1,632 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 220e2c2d26f47e536bf3cc53ac38547a6ad86c38 Maintainer: sobak Status: ready -->
+<!-- $Revision$ -->
+
+<phpdoc:varentry xmlns:phpdoc="http://php.net/ns/phpdoc" xml:id="reserved.variables.server" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <refnamediv>
+  <refname>$_SERVER</refname>
+  <refname>$HTTP_SERVER_VARS [usunięte]</refname>
+  <refpurpose>Informacje o serwerze i środowisku uruchomieniowym</refpurpose>
+ </refnamediv>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
+  <para>
+   <varname>$_SERVER</varname> jest tablicą zawierającą informacje
+   takie jak nagłówki, ścieżki i lokalizacje skryptów. Wpisy w tej
+   tablicy są tworzone przez serwer WWWW. Nie ma gwarancji, że
+   każdy serwer ustawi wszystkie z tych zmiennych; servery mogą pominąć
+   lub udostępnić inne, nie wymienione tutaj. Pomimo tego, duża ilość
+   tych zmiennych została wymieniona w <link
+   xlink:href="&url.rfc;3875">specyfikacji CGI/1.1</link>, więc możesz
+   przypuszczać, że będą one istnieć.
+  </para>
+
+  <simpara>
+   <varname>$HTTP_SERVER_VARS</varname> zawiera pewne informacje
+   początkowe, ale nie jest zmienną <link linkend="language.variables.superglobals">superglobalną</link>
+   (zauważ, że PHP traktuje <varname>$HTTP_SERVER_VARS</varname> i <varname>$_SERVER</varname>
+   jak dwie osobne zmienne). Zauważ także, że długa nazwa tej tablicy
+   została usunięta w PHP 5.4.0, więc nie istnieje już <varname>$HTTP_SERVER_VARS</varname>.
+  </simpara>
+ </refsect1>
+
+ <refsect1 role="indices">
+  &reftitle.indices;
+
+  <simpara>
+   Możesz znaleźć lub nie znaleźć poniższych elementów w tablicy
+   <varname>$_SERVER</varname>. Zauważ że tylko kilka, jeżeli w ogóle jakiekolwiek, będą
+   dostępne (lub miały faktyczne znaczenie), jeżeli uruchamiasz PHP z
+   <link linkend="features.commandline">linii poleceń</link>.
+  </simpara>
+
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term>'<varname>PHP_SELF</varname>'</term>
+     <listitem>
+      <simpara>
+       Nazwa pliku obecnie wykonywanego skryptu, relatywna do
+       katalogu głównego (root). Przykładowo
+       <varname>$_SERVER['PHP_SELF']</varname> w skrypcie pod
+       addresem <filename>http://example.com/foo/bar.php</filename>
+       będzue ustawiona na <filename>/foo/bar.php</filename>.
+       Stała <link linkend="language.constants.predefined">__FILE__</link>
+       zawiera pełną ścieżkę i nazwę pliku aktualnego (np.
+       dołączonego) pliku.
+      </simpara>
+      <simpara>
+       Jeżeli PHP jest uruchamiany z wiersza poleceń, to ta zmienna zawiera
+       nazwę skryptu, począwszy od wersji PHP 4.3.0. Wcześniej nie była ona dostępna.
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term>'<link linkend="reserved.variables.argv">argv</link>'</term>
+     <listitem>
+      <simpara>
+       Tablica argumentów przekazanych do skryptu. Gdy skrypt jest
+       uruchamiany z wiersza poleceń, umożliwia ona dostęp do argumentów skryptu,
+       w taki sposób jak robi to C. Kiedy wywoływana metodą GET, będzie zawierać
+       łańcuch zapytania (część adresu począwszy od '?').
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term>'<link linkend="reserved.variables.argc">argc</link>'</term>
+     <listitem>
+      <simpara>
+       Zawiera liczbę parametrów przekazanych do skryptu
+       uruchamianego w wierszu poleceń.
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term>'<varname>GATEWAY_INTERFACE</varname>'</term>
+     <listitem>
+      <simpara>
+       Z jakiej wersji specyfikacji CGI korzysta serwer;
+       np. '<literal>CGI/1.1</literal>'.
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term>'<varname>SERVER_ADDR</varname>'</term>
+     <listitem>
+      <simpara>
+       Adres IP serwera uruchamiającego obecny
+       skrypt.
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term>'<varname>SERVER_NAME</varname>'</term>
+     <listitem>
+      <simpara>
+       Nazwa hosta serwera uruchamiającego obecny skrypt.
+       Jeżeli skrypt jest uruchamiany na hoście wirtualnym, to
+       będzie to wartość zdefiniowana dla tego hosta wirtualnego.
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term>'<varname>SERVER_SOFTWARE</varname>'</term>
+     <listitem>
+      <simpara>
+       Łańcuch identyfikacyjny serwera, podawany w nagłówkach
+       podczas odpowiedzi na żądanie.
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term>'<varname>SERVER_PROTOCOL</varname>'</term>
+     <listitem>
+      <simpara>
+       Nazwa i wersja protokołu informacyjnego, przez który
+       zażądano strony; np. '<literal>HTTP/1.0</literal>';
+      </simpara>
+     </listitem>
+    </varlistentry>
+    
+    <varlistentry>
+     <term>'<varname>REQUEST_METHOD</varname>'</term>
+     <listitem>
+      <simpara>
+       Która metoda żądania została użyta do pobrania strony; np. '<literal>GET</literal>',
+       '<literal>HEAD</literal>', '<literal>POST</literal>', '<literal>PUT</literal>'.
+      </simpara>
+      <note>
+       <para>
+        Wykonywanie skryptu PHP kończy się po wysłaniu nagłówków (po wyprodukowaniu
+        dowolnego wyjścia bez buforowania wyjścia) jeżeli metodą żądania
+        była <literal>HEAD</literal>.
+       </para>
+      </note>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term>'<varname>REQUEST_TIME</varname>'</term>
+     <listitem>
+      <simpara>
+       Znacznik czasu rozpoczęcia żądania. Dostępne od PHP 5.1.0.
+      </simpara>
+     </listitem>
+    </varlistentry>
+    
+    <varlistentry>
+     <term>'<varname>REQUEST_TIME_FLOAT</varname>'</term>
+     <listitem>
+      <simpara>
+       Znacznik czasu rozpoczęcia żądania, z precyzją do mikrosekund.
+       Dostępny od PHP 5.4.0.
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term>'<varname>QUERY_STRING</varname>'</term>
+     <listitem>
+      <simpara>
+       Łańcuch zapytania, i ile istnieje, który został użyty do wywołania strony.
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term>'<varname>DOCUMENT_ROOT</varname>'</term>
+     <listitem>
+      <simpara>
+       Katalog document root, z którego wykonywany jest obecny
+       skrypt, tak jak zdefiniowano w konfiguracji serwera.
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term>'<varname>HTTP_ACCEPT</varname>'</term>
+     <listitem>
+      <simpara>
+       Zawartość nagłówka <literal>Accept:</literal> podczas obecnego
+       żądania, o ile istnieje.
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term>'<varname>HTTP_ACCEPT_CHARSET</varname>'</term>
+     <listitem>
+      <simpara>
+       Zawartość nagłówka <literal>Accept-Charset:</literal> podczas obecnego
+       żądania, o ile istnieje. Przykład:
+       '<literal>iso-8859-1,*,utf-8</literal>'.
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term>'<varname>HTTP_ACCEPT_ENCODING</varname>'</term>
+     <listitem>
+      <simpara>
+       Zawartość nagłówka <literal>Accept-Encoding:</literal> podczas obecnego
+       żądania, o ile istnieje. Przykład: '<literal>gzip</literal>'.
+      </simpara>
+     </listitem>
+    </varlistentry>
+    
+    <varlistentry>
+     <term>'<varname>HTTP_ACCEPT_LANGUAGE</varname>'</term>
+     <listitem>
+      <simpara>
+       Zawartość nagłówka <literal>Accept-Language:</literal> podczas obecnego
+       żądania, o ile istnieje. Przykład: '<literal>en</literal>'.
+      </simpara>
+     </listitem>
+    </varlistentry>
+    
+    <varlistentry>
+     <term>'<varname>HTTP_CONNECTION</varname>'</term>
+     <listitem>
+      <simpara>
+       Zawartość nagłówka <literal>Connection:</literal> podczas obecnego
+       żądania, o ile istnieje. Przykład: '<literal>Keep-Alive</literal>'.
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term>'<varname>HTTP_HOST</varname>'</term>
+     <listitem>
+      <simpara>
+       Zawartość nagłówka <literal>Host:</literal> podczas obecnego
+       żadania, o ile istnieje.
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term>'<varname>HTTP_REFERER</varname>'</term>
+     <listitem>
+      <simpara>
+       Adres strony (o ile istnieje), która doprowadziła
+       użytkownika do obecnej strony. Ten nagłówek jest ustawiany przez klienta (np. przeglądarkę). Nie 
+       wszystkie programy ustawiają ten nagłówek, a niektóre pozwalają na
+       modyfikację <varname>HTTP_REFERER</varname>. Krótko mówiąc,
+       nie powinno się ufać jego zawartości.
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term>'<varname>HTTP_USER_AGENT</varname>'</term>
+     <listitem>
+      <simpara>
+       Zawartość nagłówka <literal>User-Agent:</literal> podczas obecnego
+       żądania, o ile istnieje. Jest to ciąg znaków
+       oznaczający klienta, który uzyskuje dostęp do strony. Typowym
+       przykładem jest: <computeroutput>Mozilla/4.5 [en] (X11; U;
+       Linux 2.2.9 i586)</computeroutput>. Jednym z zastosowań może
+       być użycie tej wartości z funkcją <function>get_browser</function>, aby
+       dopasować wersję strony, do możliwości przeglądarki odwiedzającego.
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term>'<varname>HTTPS</varname>'</term>
+     <listitem>
+      <simpara>
+       Ustawione na niepustą wartość, jeżeli skrypt został odpytany po protokole HTTPS.
+      </simpara>
+      <note>
+       <simpara>
+        Zauważ, że gdy używa się ISAPI z IIS, ta zmienna przyjmie wartość 
+        <literal>off</literal>, jeśli żądanie nie zostało wykonane przez protokół HTTPS.
+       </simpara>
+      </note>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term>'<varname>REMOTE_ADDR</varname>'</term>
+     <listitem>
+      <simpara>
+       Adres IP, z którego użytkownik wyświetla obecną
+       stronę.
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term>'<varname>REMOTE_HOST</varname>'</term>
+     <listitem>
+      <simpara>
+       Nazwa hosta, z którego użytkownik wyświetla obecną
+       stronę. Wsteczne szukanie DNS-a bazuje na zawartości
+       <varname>REMOTE_ADDR</varname> odwiedzającego.
+      </simpara>
+      <note>
+       <simpara>
+        Serwer WWW musi być skonfigurowany, aby tworzyć tą zmienną. Przykładowo
+        w Apache trzeba umieścić <literal>HostnameLookups On</literal>
+        wewnątrz &httpd.conf; Zobacz także
+        <function>gethostbyaddr</function>.
+       </simpara>
+      </note>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term>'<varname>REMOTE_PORT</varname>'</term>
+     <listitem>
+      <simpara>
+       Port użyty na maszynie użytkownika do komunikacji z
+       serwerem WWW.
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term>'<varname>REMOTE_USER</varname>'</term>
+     <listitem>
+      <simpara>
+        Zautoryzowany użytkownik.
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term>'<varname>REDIRECT_REMOTE_USER</varname>'</term>
+     <listitem>
+      <simpara>
+        Zautoryzowany użytkownik, jeżeli żądanie jest wewnętrznie przekierowane.
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term>'<varname>SCRIPT_FILENAME</varname>'</term>
+     <listitem>
+      <para>
+       Ścieżka absolutna do obecnie wykonywanego skryptu.
+       <note>
+        <para>
+         Jeżeli skrypt jest wykonywany przez CLI jako ścieżka relatywna,
+         taka jak <filename>file.php</filename> lub
+         <filename>../file.php</filename>, 
+         <varname>$_SERVER['SCRIPT_FILENAME']</varname> będzie
+         zawierać ścieżkę relatywną określoną przez użytkownika.
+        </para>
+       </note>
+      </para>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term>'<varname>SERVER_ADMIN</varname>'</term>
+     <listitem>
+      <simpara>
+       Wartość ustawiona dla dyrektywy SERVER_ADMIN (w Apache) w
+       pliku konfiguracyjnym serwera. Jeżeli skrypt jest uruchamiany
+       na hoście wirtualnym, to będzie to wartość skonfigurowana dla tego
+       wirtualnego hosta.
+      </simpara>
+     </listitem>
+    </varlistentry>
+    
+    <varlistentry>
+     <term>'<varname>SERVER_PORT</varname>'</term>
+     <listitem>
+      <simpara>
+       Port użyty na maszynie serwera do komunikacji.
+       Przy domyślnych ustawieniach będzie to '<literal>80</literal>';
+       użycie SSL zmieni to na wartość, na którą określono bezpieczny
+       port HTTP.
+      </simpara>
+      <note>
+       <simpara>
+        W Apache 2 musisz ustawić <literal>UseCanonicalName = On</literal>, 
+        oraz <literal>UseCanonicalPhysicalPort = On</literal>, aby
+        aby otrzymać fizyczny (prawdziwy) port, w przeciwnym wypadku ta wartość może być nadpisana
+        lub może nie zwracać wartości portu fizycznego.
+        Nie zaleca się polegania na tej zmiennej w kwestiach bezpieczeństwa.
+       </simpara>
+      </note>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term>'<varname>SERVER_SIGNATURE</varname>'</term>
+     <listitem>
+      <simpara>
+       Łańcuch znaków zawierający wersję serwera i nazwę wirtualnego hosta,
+       które są dodawane do automatycznie generowanych strony (np. błędów), o ile włączono.
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term>'<varname>PATH_TRANSLATED</varname>'</term>
+     <listitem>
+      <simpara>
+       Ścieżka do aktualnego skryptu w systemie plików (nie względem document root-),
+	   po wykonaniu mapowania przez serwer.
+      </simpara>
+      <note>
+       <simpara>
+        Od PHP 4.3.2, <envar>PATH_TRANSLATED</envar> nie jest dłużej ustawiana
+        domyślnie w <acronym>SAPI</acronym> Apache 2, w odróżnieniu
+        od sytuacji w Apache 1, gdzie jest ona ustawiana na wartosć 
+        zmiennej <envar>SCRIPT_FILENAME</envar>, o ile nie została 
+        dostarczona przez Apache. Ta zmiana została wprowadzona, aby spełnić 
+        specyfikację <acronym>CGI</acronym>, która mówi że
+        <envar>PATH_TRANSLATED</envar> powinna istnieć tylko gdy 
+        <envar>PATH_INFO</envar> została zdefiniowana.
+       </simpara>
+       <simpara>
+        Użytkownicy Apache 2 mogą użyć <literal>AcceptPathInfo = On</literal> w pliku
+        <filename>httpd.conf</filename>, aby zdefiniować <envar>PATH_INFO</envar>.
+       </simpara>
+      </note>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term>'<varname>SCRIPT_NAME</varname>'</term>
+     <listitem>
+      <simpara>
+       Zawiera ścieżkę do obecnego skryptu. Jest to użyteczne na stronach,
+       które muszą odwoływać się do samych siebie.
+       Stała <link linkend="language.constants.predefined">__FILE__</link>
+       zawiera pełną ścieżkę i nazwę pliku aktualnego (np.
+       dołączonego) pliku.
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term>'<varname>REQUEST_URI</varname>'</term>
+     <listitem>
+      <simpara>
+       Adres URI podany do pobrania tej strony; na
+       przykład '<literal>/index.html</literal>'.
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term>'<varname>PHP_AUTH_DIGEST</varname>'</term>
+     <listitem>
+      <simpara>
+       Gdy wykonywana jest autoryzacja Digest HTTP, ta zmienna jest ustawiana 
+       na wartość nagłówka 'Authorization' wysłanego przez klienta (którego 
+       powinieneś potem użyć do przeprowadzenia odpowiedniej walidacji).
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term>'<varname>PHP_AUTH_USER</varname>'</term>
+     <listitem>
+      <simpara>
+       Gdy wykonywana jest autoryzacja HTTP, ta zmienna jest ustawiana 
+       na login podany przez użytkownika.
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term>'<varname>PHP_AUTH_PW</varname>'</term>
+     <listitem>
+      <simpara>
+       Gdy wykonywana jest autoryzacja HTTP, ta zmienna jest ustawiana 
+       na hasło podane przez użytkownika.
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term>'<varname>AUTH_TYPE</varname>'</term>
+     <listitem>
+      <simpara>
+       Gdy wykonywana jest auoryzacja HTTP, ta zmienna jest ustawiana 
+       na rodzaj autoryzacji.
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term>'<varname>PATH_INFO</varname>'</term>
+     <listitem>
+      <simpara>
+       Zawiera ścieżkę podaną przez użytkownika za rzeczywistą
+       nazwą skryptu, ale poprzedzającą łańcuch zapytania (query string), o
+       ile dostępny. Na przykład, jeżeli obecny skrypt został pobrany przez adres
+       URL <filename>http://www.example.com/php/path_info.php/some/stuff?foo=bar</filename>,
+       to <varname>$_SERVER['PATH_INFO']</varname> będzie
+       zawierać <literal>/some/stuff</literal>.
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term>'<varname>ORIG_PATH_INFO</varname>'</term>
+     <listitem>
+      <simpara>
+       Oryginalna wersja '<varname>PATH_INFO</varname>' przed przetworzeniem przez
+       PHP.
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+   </variablelist>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>5.4.0</entry>
+       <entry>
+        <varname>$HTTP_SERVER_VARS</varname> nie jest więcej dostępne z powodu
+        usunięcia rejestrowania długich nazw tablic.
+       </entry>
+      </row>
+      <row>
+       <entry>5.3.0</entry>
+       <entry>
+        Dyrektywa <link linkend="ini.register-long-arrays">register_long_arrays</link>,
+        która powodowała, że zmienna <varname>$HTTP_SERVER_VARS</varname> stawałą się dostępna,
+        została zdeprecjonowana.
+       </entry>
+      </row>
+      <row>
+       <entry>4.1.0</entry>
+       <entry>
+        Wprowadzono <varname>$_SERVER</varname>; zdeprecjonowano
+        <varname>$HTTP_SERVER_VARS</varname>.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example xml:id="variable.server.basic">
+    <title>Przykład użycia <varname>$_SERVER</varname></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+echo $_SERVER['SERVER_NAME'];
+?>
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
+<![CDATA[
+www.example.com
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="notes">
+  &reftitle.notes;
+  &note.is-superglobal;
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><link linkend="book.filter">Rozszerzenie filter</link></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</phpdoc:varentry>
+ 
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
+
