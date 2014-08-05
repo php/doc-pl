@@ -1,96 +1,136 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: dombal Status: Ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: sobak Status: Ready -->
 <!-- $Revision$ -->
-  <refentry xml:id="function.get-class-methods" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>get_class_methods</refname>
-    <refpurpose>Zwraca tablicę nazw metod danej klasy</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>array</type><methodname>get_class_methods</methodname>
-      <methodparam><type>mixed</type><parameter>nazwa_klasy</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     Funkcja ta zwraca tablicę nazw metod zdefiniowanych dla klasy określonej 
-     przez parametr <parameter>nazwa_klasy</parameter>. W przypadku błędy
-     zwracana jest wartośc &null;.
-    </para>
-    <note>
-     <para>
-      Od PHP 4.0.6, możesz określić obiekt przez jego samego, zamiast przez
-      parametr <parameter>nazwa_klasy</parameter>.  Dla przykładu:
-      <informalexample>
-       <programlisting>
-<![CDATA[
-<?php
-$metody_klasy = get_class_methods($moj_obiekt); // zobacz poniższy pełny przykład
-?>
-]]>
-       </programlisting>
-      </informalexample>
-     </para>
-    </note>
-    <para>
-     <example>
-      <title>Przykład użycia <function>get_class_methods</function></title>
-      <programlisting role="php">
+<!-- CREDITS: dombal -->
+<refentry xml:id="function.get-class-methods" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>get_class_methods</refname>
+  <refpurpose>Pobiera nazwy metod klasy</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>array</type><methodname>get_class_methods</methodname>
+   <methodparam><type>mixed</type><parameter>nazwa_klasy</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Pobiera nazwy metod danej klasy.
+  </para>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>class_name</parameter></term>
+     <listitem>
+      <para>
+       Nazwa lub obiekt klasy.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca tablicę nazw metod dla klasy określonej przez
+   <parameter>nazwa_klasy</parameter>. W wypadku błędu, zwraca &null;.
+  </para>
+ </refsect1>
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>5.0.0</entry>
+       <entry>
+        Od PHP 5 ta funkcja zwraca nazwy metod, tak jak zostały
+        zadeklarowane (z uwzględnieniem wielkości liter). W PHP 4 były one zapisane małymi literami.
+       </entry>
+      </row>
+      <row>
+       <entry>4.0.6</entry>
+       <entry>
+        Możliwość podania obiektu klasy została dodana.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład użycia <function>get_class_methods</function></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 
-class mojaklasa {
+class myclass {
     // konstruktor
-    function mojaklasa() {
+    function myclass()
+    {
         return(true);
     }
 
     // metoda 1
-    function mojafun1() {
+    function myfunc1()
+    {
         return(true);
     }
 
     // metoda 2
-    function mojafun2() {
+    function myfunc2()
+    {
         return(true);
     }
 }
 
-$metody_klasy = get_class_methods('mojaklasa');
+$class_methods = get_class_methods('myclass');
 // lub
-$metody_klasy = get_class_methods(new mojaklasa());
+$class_methods = get_class_methods(new myclass());
 
-foreach ($metody_klasy as $nazwa_metody) {
-    echo "$nazwa_metody\n";
+foreach ($class_methods as $method_name) {
+    echo "$method_name\n";
 }
 
 ?>
 ]]>
-      </programlisting>
-      &example.outputs; 
-      <screen>
+    </programlisting>
+    &example.outputs;
+    <screen>
 <![CDATA[
-mojaklasa
-mojafun1
-mojafun2
+myclass
+myfunc1
+myfunc2
 ]]>
-      </screen>
-     </example>
-    </para>
-    <warning> 
-     <para>
-      Od PHP 5, funkcja zwraca nazwy metod tak jak zostały zadeklarowane
-      (z uwzględnieniem wielkości liter). W PHP 4 były one zmieniane na małe litery.
-     </para> 
-    </warning> 
-    <simpara>
-     Patrz także:
-     <function>get_class</function>,
-     <function>get_class_vars</function>,
-     <function>get_object_vars</function>.
-    </simpara>
-   </refsect1>
-  </refentry>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>get_class</function></member>
+    <member><function>get_class_vars</function></member>
+    <member><function>get_object_vars</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

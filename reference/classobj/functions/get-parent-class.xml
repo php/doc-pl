@@ -1,83 +1,146 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: dombal Status: Ready -->
-<!-- $Revision$ -->
-  <refentry xml:id="function.get-parent-class" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>get_parent_class</refname>
-    <refpurpose>Pobiera nazwę klasy przodka dla obiektu lub klasy</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>string</type><methodname>get_parent_class</methodname>
-      <methodparam choice="opt"><type>mixed</type><parameter>obiekt</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     Jeżeli <parameter>obiekt</parameter> jest obiektem, zwraca nazwę klasy 
-     przodka klasy której <parameter>obiekt</parameter> jest egzemplarzem.
-    </para>
-    <para>
-     Jeżeli <parameter>obiekt</parameter> jest ciągiem znakowym, zwraca 
-     nazwę klasy przodka klasy o tej nazwie. Ta funkcjonalność została dodana
-     w PHP 4.0.5.
-    </para>
-    <note>
-     <para>
-      Od PHP 5, argument <parameter>obiekt</parameter> jest opcjonalny, jeśli
-      funkcja została wywołana z wnętrza metody obiektu. Jeśli zostanie
-      wywołana bez argumentu spoza metody, zwrócona zostanie wartość &false;
-      (lub &null; razem z ostrzeżeniem w wersjach starszych niż PHP 5.1.0).
-     </para>
-    </note>
-    <para>
-     <example>
-      <title>Przykład użycia <function>get_parent_class</function></title>
-      <programlisting role="php">
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 9e9cd5898f8300fa96177ec255de5937a046489d Maintainer: sobak Status: ready -->
+<!-- $Revisio$ -->
+<!-- CREDITS: dombal -->
+<refentry xml:id="function.get-parent-class" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>get_parent_class</refname>
+  <refpurpose>Zwraca nazwę klasy rodzica dla obiektu lub klasy</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>string</type><methodname>get_parent_class</methodname>
+   <methodparam choice="opt"><type>mixed</type><parameter>obiekt</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Zwraca nazwę klasy rodzica dla obiektu lub klasy.
+  </para>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>obiekt</parameter></term>
+     <listitem>
+      <para>
+       Sprawdzany obiekt lub nazwa klasy.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca nazwę klasy nadrzędnej, której
+   <parameter>obiekt</parameter> jest instancją lub nazwą.
+  </para>
+  <note>
+   <para>
+    Jeżeli klasa nie ma rodzica lub podana klasa nie istnieje, zostanie zwrócone &false;.
+   </para>
+  </note>
+  <para>
+   Jeżeli funkcja została wywołana bez parametru poza obiektem, zostanie zwrócone &false;.
+  </para>
+ </refsect1>
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>5.1.0</entry>
+       <entry>
+        JEżeli została wywołana poza obiektem, bez określonego parametru, ta funkcja
+        zwracała &null; z ostrzeżeniem, ale teraz zwraca &false;.
+       </entry>
+      </row>
+      <row>
+       <entry>5.0.0</entry>
+       <entry>
+        Parametr <parameter>obiekt</parameter> jest opcjonalny, jeżeli funkcję
+        wywołano z metody obiektu.
+       </entry>
+      </row>
+      <row>
+       <entry>4.0.5</entry>
+       <entry>
+        Jeżeli <parameter>obiekt</parameter> jest łańcuchem znaków, zwracana jest nazwa klasy
+        nadrzędnej dla klasy z tą nazwą.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład użycia <function>get_parent_class</function></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 
-class tata {
-    function tata() 
+class dad {
+    function dad()
     {
-    // implementacja jakiejś logiki...
+    // implementacja jakiejś logiki
     }
 }
 
-class dziecko extends tata {
-    function dziecko() 
+class child extends dad {
+    function child()
     {
-        echo "Moim prodkiem jest " , get_parent_class($this) , "\n";
+        echo "Jestem potomkiem klasy " , get_parent_class($this) , "\n";
     }
 }
 
-class dziecko2 extends tata {
-    function dziecko2() 
+class child2 extends dad {
+    function child2()
     {
-        echo "Moim przodkiem także jest " , get_parent_class('dziecko2') , "\n";
+        echo "Także jestem potomkiem klasy " , get_parent_class('child2') , "\n";
     }
 }
 
-$foo = new dzicko();
-$bar = new dziecko2();
+$foo = new child();
+$bar = new child2();
 
 ?>
 ]]>
-      </programlisting>
-      &example.outputs;
-      <screen>
+    </programlisting>
+    &example.outputs;
+    <screen>
 <![CDATA[
-Moim przodkiem jest tata
-Moim przodkiem także jest tata
+Jestem potomkiem klasy dad
+Także jestem potomkiem klasy dad
 ]]>
-      </screen>
-     </example>
-    </para>
-    <simpara>
-     Patrz także: <function>get_class</function>,
-     <function>is_subclass_of</function>
-    </simpara>
-   </refsect1>
-  </refentry>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>get_class</function></member>
+    <member><function>is_subclass_of</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

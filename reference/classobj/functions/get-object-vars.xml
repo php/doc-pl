@@ -1,92 +1,139 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: dombal Status: Ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 42a4393f0f8537267a90ec425168d678353a8a46 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-  <refentry xml:id="function.get-object-vars" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>get_object_vars</refname>
-    <refpurpose>Zwraca tablicę asocjacyjną właściwości obiektu</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>array</type><methodname>get_object_vars</methodname>
-      <methodparam><type>object</type><parameter>obiekt</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     Funkcja ta zwraca tablicę asocjacyjną zdfiniowanych właściwości 
-     określonego obiektu <parameter>obiekt</parameter>.
-    </para>
-    <note>
-     <para>
-      W wersjach PHP wcześniejszych niż 4.2.0, jeżeli zmienne 
-      zadeklarowane w klasie której <parameter>obiekt</parameter> jest 
-      egzemplarzem, nie mają przypisanej wartości, to te nie będą zwrócone
-      w tablicy. W wersjach późniejszych tablica będzie zawierała klucz z
-      przypisaną wartością &null;.
-     </para>
-    </note>
-    <para>
-     <example>
-      <title>Przykład użycia <function>get_object_vars</function></title>
-      <programlisting role="php">
+<refentry xml:id="function.get-object-vars" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>get_object_vars</refname>
+  <refpurpose>Zwraca właściwości danego obiektu</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>array</type><methodname>get_object_vars</methodname>
+   <methodparam><type>object</type><parameter>obiektu</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Zwraca dostępne niestatyczne właściwości 
+   <parameter>obiekt</parameter>u w danym zasięgu.
+  </para>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>obiekt</parameter></term>
+     <listitem>
+      <para>
+       Instancja klasy.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca tablicę asocjacyjną zdefiniowanych właściwości niestatycznych, 
+   które posiada dany <parameter>obiekt</parameter> w danym zasięgu. Jeżeli właściwość
+   nie ma przypisanej wartości, zostanie zwrócona z &null; jako wartością.
+  </para>
+ </refsect1>
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>5.3.0</entry>
+       <entry>
+        Funkcja zwraca <type>NULL</type> jeżeli
+        <parameter>obiekt</parameter> nie jest obiektem. Poprzednio zwracane było &false;.
+       </entry>
+      </row>
+      <row>
+       <entry>4.2.0</entry>
+       <entry>
+        Właściwości zadeklarowane w klasie, której podano <parameter>obiekt</parameter>,
+        ale nie mają przypisanej wartości, teraz także są zwracane (z wartością &null;).
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład użycia <function>get_object_vars</function></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
-class Punkt2D {
-    var $x, $y;
-    var $opis;
 
-    function Punkt2D($x, $y) {
-        $this->x = $x;
-        $this->y = $y;
-    }
-
-    function ustawOpis($opis) {
-        $this->opis = $opis;
-    }
-
-    function pobierzPunkt() {
-        return array("x" => $this->x,
-                     "y" => $this->y,
-                     "opis" => $this->opis);
+class foo {
+    private $a;
+    public $b = 1;
+    public $c;
+    private $d;
+    static $e;
+   
+    public function test() {
+        var_dump(get_object_vars($this));
     }
 }
 
-// "$opis" jest zadeklarowany lecz niezdefiniowany
-$p1 = new Punkt2D(1.233, 3.445);
-print_r(get_object_vars($p1));
+$test = new foo;
+var_dump(get_object_vars($test));
 
-$p1->ustawOpis("punkt #1");
-print_r(get_object_vars($p1));
+$test->test();
 
 ?>
 ]]>
-      </programlisting>
-      &example.outputs;
-      <screen>
+    </programlisting>
+    &example.outputs;
+    <screen>
 <![CDATA[
- Array
- (
-     [x] => 1.233
-     [y] => 3.445
-     [label] =>
- )
-
- Array
- (
-     [x] => 1.233
-     [y] => 3.445
-     [opis] => punkt #1
- )
+array(2) {
+  ["b"]=>
+  int(1)
+  ["c"]=>
+  NULL
+}
+array(4) {
+  ["a"]=>
+  NULL
+  ["b"]=>
+  int(1)
+  ["c"]=>
+  NULL
+  ["d"]=>
+  NULL
+}
 ]]>
-      </screen>
-     </example>
-    </para>
-    <simpara>
-     Patrz także: <function>get_class_methods</function>,
-     <function>get_class_vars</function>.
-    </simpara>
-   </refsect1>
-  </refentry>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>get_class_methods</function></member>
+    <member><function>get_class_vars</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

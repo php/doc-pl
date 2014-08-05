@@ -1,67 +1,74 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: dombal Status: Ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-  <refentry xml:id="function.get-declared-classes" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>get_declared_classes</refname>
-    <refpurpose>Zwraca tablicę z nazwami zdefiniowanych klas</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>array</type><methodname>get_declared_classes</methodname>
-      <void/>
-     </methodsynopsis>
-    <para>
-     Funkcja ta zwraca tablicę nazw klas zdefiniowanych w bieżącym skrypcie.
-    </para>
-    <note>
-     <para>
-      W PHP 4.0.1pl2, zwracane są trzy dodatkowe klasy na początku tablicy: 
-      <classname>stdClass</classname> (zdefiniowana w
-      <filename>Zend/zend.c</filename>),
-      <classname>OverloadedTestClass</classname> (zdefiniowana w 
-      <filename>ext/standard/basic_functions.c</filename>)
-      oraz <classname>Directory</classname>
-      (zdfiniowana w <filename>ext/standard/dir.c</filename>).
-     </para>
-     <para>
-      Warto zauważyć, że zależnie od tego jakie biblioteki zostały dodane
-      do PHP, mogą pojawić się dodatkowe klasy. To znaczy, że nie będzie można
-      zdefiniować własnych klas używając tych nazw. Istnieje lista predefiniowanych
-      klas w sekcji <link linkend="reserved.classes">Predefined Classes</link> 
-      w dodatkach.
-     </para>
-    </note>
-    <para> 
-     <example> 
-      <title><function>get_declared_classes</function> przykład</title> 
-      <programlisting role="php"> 
-<![CDATA[ 
-<?php 
-print_r(get_declared_classes()); 
-?> 
-]]> 
-      </programlisting> 
-      &example.outputs.similar; 
-      <screen> 
-<![CDATA[ 
-Array 
-( 
-  [0] => stdClass 
-  [1] => __PHP_Incomplete_Class 
-  [2] => Directory 
-) 
-]]> 
-      </screen> 
-     </example> 
-    </para> 
-    <simpara>
-     Patrz także: <function>class_exists</function> i
-     <function>get_declared_interfaces</function>.
-    </simpara>
-   </refsect1>
-  </refentry>
+<refentry xml:id="function.get-declared-classes" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>get_declared_classes</refname>
+  <refpurpose>Zwraca tablicę z nazwami zadeklarowanych klas</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>array</type><methodname>get_declared_classes</methodname>
+   <void/>
+  </methodsynopsis>
+  <para>
+   Pobiera zadeklarowane klasy.
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca tablicę z nazwami klas zadeklarowanych w obecnym
+   skrypcie.
+  </para>
+  <note>
+   <para>
+    Zauważ, że zależnie od rozszerzeń wkompilowanych lub
+    załadowanych do PHP, mogą być obecne dodatkowe klasy. Oznacza to, że
+    nie będziesz w stanie zdefiniować własnych klas używających tych
+    nazw. Istnieje lista predefiniowanych klas w dodatku <link
+    linkend="reserved.classes">Predefiowane Klasy</link>.
+   </para>
+  </note>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład użycia <function>get_declared_classes</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+print_r(get_declared_classes());
+?>
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
+<![CDATA[
+Array
+(
+    [0] => stdClass
+    [1] => __PHP_Incomplete_Class
+    [2] => Directory
+)
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>class_exists</function></member>
+    <member><function>get_declared_interfaces</function></member>
+    <member><function>get_defined_functions</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
