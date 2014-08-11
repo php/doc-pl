@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 80d5ab0279ddb9dcf885cdfb0f9271cee00573f0 Maintainer: adi Status: ready -->
+<!-- EN-Revision: 33040b3b1b95210112f7b3b71f57a1c005de1a3b Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: sobak -->
 <refentry xml:id="function.pathinfo" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>pathinfo</refname>
   <refpurpose>Zwraca informacje o ścieżce do pliku</refpurpose>
  </refnamediv>
- 
+
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
@@ -15,8 +16,9 @@
    <methodparam choice="opt"><type>int</type><parameter>opcje</parameter><initializer>PATHINFO_DIRNAME | PATHINFO_BASENAME | PATHINFO_EXTENSION | PATHINFO_FILENAME</initializer></methodparam>
   </methodsynopsis>
   <para>
-   <function>pathinfo</function> zwraca asocjacyjną tablicę
-   zawierającą informacje o <parameter>ścieżce</parameter>.
+   <function>pathinfo</function> zwraca informacje o
+   ścieżce: tablicę asocjacyjną lub łańcuch znaków,
+   zależnie od paramtetru <parameter>opcje</parameter>.
   </para>
  </refsect1>
 
@@ -28,7 +30,7 @@
      <term><parameter>ścieżka</parameter></term>
      <listitem>
       <para>
-        Ścieżka która jest sprawdzana
+        Ścieżka do sparsowania
       </para>
      </listitem>
     </varlistentry>
@@ -36,13 +38,16 @@
      <term><parameter>opcje</parameter></term>
      <listitem>
       <para>
-       Możesz określić, który element zostanie zwrócony, za pomocą opcjonalnego
-       parametru <parameter>opcje</parameter>. Składajego się z
+       Jeżeli podano, określa konkretny element ścieżki do zwrócenia;
+	   jeden z:
        <constant>PATHINFO_DIRNAME</constant>,
        <constant>PATHINFO_BASENAME</constant>,
-       <constant>PATHINFO_EXTENSION</constant> i
+       <constant>PATHINFO_EXTENSION</constant> lub
        <constant>PATHINFO_FILENAME</constant>.
-       Domyślnie zwracane są wszystkie elementy. 
+      </para>
+	  <para>
+       Jeżeli <parameter>opcje</parameter> nie zostały określone,
+       funkcja zwraca wszystkie elementy.
       </para>
      </listitem>
     </varlistentry>
@@ -53,13 +58,30 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-    Zwracane są następujące elementy asocjacyjnej tablicy <type>array</type>:
+   Jeżeli nie zostały przekazane żadne <parameter>opcje</parameter>,
+   zwracana jest tablica asocjacyjna zawierająca następujące
+   elementy:
    <literal>dirname</literal>, <literal>basename</literal>,
    <literal>extension</literal> (jeśli wystąpi) i <literal>filename</literal>.
   </para>
+  <note>
+   <para>
+    Jeżeli <parameter>ścieżka</parameter> ma więcej niż jedno rozszerzenie,
+    <constant>PATHINFO_EXTENSION</constant> zwraca tylko ostatnie, a
+    <constant>PATHINFO_FILENAME</constant> ucina tylko ostatnie.
+    Spójrz na przykłady poniżej.
+   </para>
+  </note>
+  <note>
+   <para>
+    If the <parameter>path</parameter> does not have an extension, no
+    <literal>extension</literal> element will be returned
+    (see second example below).
+   </para>
+  </note>
   <para>
-   Jeśli parametr <parameter>opcje</parameter> zostanie użyty, funkcja zwróci  
-   <type>string</type> w przypadku gdy nie zarządano wszystkich elementów.
+   Jeśli parametr <parameter>opcje</parameter> jest obecny, funkcja zwróci  
+   <type>string</type> zawierający określony element.
   </para>
  </refsect1>
 
@@ -115,6 +137,31 @@ lib.inc
     </screen>
    </example>
   </para>
+  <para>
+   <example>
+    <title><function>pathinfo</function>: różnica między pustym rozszerzeniem a brakiem rozszerzenia</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$path_parts = pathinfo('/path/emptyextension.');
+var_dump($path_parts['extension']);
+
+$path_parts = pathinfo('/path/noextension');
+var_dump($path_parts['extension']);
+?>
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
+<![CDATA[
+string(0) ""
+
+Notice: Undefined index: extension in test.php on line 6
+NULL
+]]>
+    </screen>
+   </example>
+  </para>
  </refsect1>
 
  <refsect1 role="notes">
@@ -126,8 +173,15 @@ lib.inc
     predefiniowane zarezerwowane zmienne</link>.
    </para>
   </note>
+  <note>
+   <para>
+    <function>pathinfo</function> zwraca uwagę na ustawienia lokalizacji, więc aby poprawnie
+    sparsować ścieżkę zawiearającą znaki wielobajtowe, musi zostać ustawiona odpowiednia
+    lokalizacja, przy użyciu funkcji <function>setlocale</function>.
+   </para>
+  </note>
  </refsect1>
- 
+
  <refsect1 role="seealso">
   &reftitle.seealso;
   <para>
