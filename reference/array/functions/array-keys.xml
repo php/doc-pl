@@ -1,30 +1,29 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 395344c7708a4e8024f41e38ea972e5530ceca08 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: sobak -->
 <refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.array-keys">
  <refnamediv>
   <refname>array_keys</refname>
-  <refpurpose>Zwraca wszystkie klucze z tablicy</refpurpose>
+  <refpurpose>Zwraca wszystkie klucze lub podzbiór kluczy z tablicy</refpurpose>
  </refnamediv>
-
+ 
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>array</type><methodname>array_keys</methodname>
-   <methodparam><type>array</type><parameter>wejście</parameter></methodparam>
+   <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
    <methodparam choice="opt"><type>mixed</type><parameter>szukana_wartość</parameter></methodparam>
-   <methodparam choice="opt"><type>bool</type><parameter>ścisłe_porównanie</parameter></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>ścisłe_porównanie</parameter><initializer>false</initializer></methodparam>
   </methodsynopsis>
   <para>
-   <function>array_keys</function> zwraca klucze, liczbowe i tekstowe, z
-   tablicy <parameter>wejście</parameter>.
+   <function>array_keys</function> zwraca klucze, numeryczne
+   i tekstowe, z <parameter>tablicy</parameter>.
   </para>
   <para>
-   Jeśli podany został opcjonalny parameter <parameter>szukana_wartość</parameter>,
-   zwracane są tylko klucze dla danej, do których przypisana jest podana wartość.
-   W przeciwnym przypadku zwracane są wszystkie klucze z tablicy
-   <parameter>wejście</parameter>. Od PHP 5 można użyć opcjonalnego parametru
-   <parameter>ścisłe_porównanie</parameter> dla porównania z uwzględnieniem typu (===).
+   Jeżeli opcjonalny parametr <parameter>szukana_wartość</parameter> został podany,
+   to zwracane są klucze tylko dla tej wartości. W przeciwnym wypadku zwrócone
+   zostaną wszystkie klucze z podanej <parameter>tablicy</parameter>.
   </para>
  </refsect1>
 
@@ -33,10 +32,10 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>wejście</parameter></term>
+     <term><parameter>tablica</parameter></term>
      <listitem>
       <para>
-       Tablica, której klucze zostaną zwrócone.
+       Tablica zawierająca klucze do zwrócenia.
       </para>
      </listitem>
     </varlistentry>
@@ -44,8 +43,7 @@
      <term><parameter>szukana_wartość</parameter></term>
      <listitem>
       <para>
-       Jeśli jest podana, wówczas zwracane są tylko te klucze,
-       które wskazują w tablicy na szukaną wartość.
+       Jeżeli podano, to zwracane są klucze tylko dla tej wartości.
       </para>
      </listitem>
     </varlistentry>
@@ -53,8 +51,7 @@
      <term><parameter>ścisłe_porównanie</parameter></term>
      <listitem>
       <para>
-       Od PHP 5 ten parametr określa, czy porównywanie wartości powinno
-       być ścisłe (===).
+       Określa czy podczas szukania powinno być użyte ścisłe (===) porównanie.
       </para>
      </listitem>
     </varlistentry>
@@ -65,27 +62,51 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca tablicę zawierającą wszystkie klucze tablicy <parameter>wejście</parameter>.
+   Zwraca tablicę wszystkich kluczy z parametru <parameter>tablica</parameter>.
   </para>
  </refsect1>
 
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>5.0.0</entry>
+       <entry>
+        Dodano parametr <parameter>ścisłe_porównanie</parameter>.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+ 
  <refsect1 role="examples">
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład <function>array_keys</function></title>
+    <title>Przykład użycia <function>array_keys</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
-$tablica = array(0 => 100, "kolor" => "czerwony");
-print_r(array_keys($tablica));
+$array = array(0 => 100, "kolor" => "czerwony");
+print_r(array_keys($array));
 
-$tablica = array("niebieski", "czerwony", "zielony", "niebieski", "niebieski");
-print_r(array_keys($tablica, "niebieski"));
+$array = array("niebieski", "czerwony", "zielony", "niebieski", "niebieski");
+print_r(array_keys($array, "niebieski"));
 
-$tablica = array("kolor" => array("niebieski", "czerwony", "zielony"),
-                  "rozmiar" => array("mały", "średni", "duży"));
-print_r(array_keys($tablica));
+$array = array("kolor" => array("niebieski", "czerwony", "zielony"),
+               "rozmiar"  => array("mały", "średni", "duży"));
+print_r(array_keys($array));
 ?>
 ]]>
     </programlisting>
@@ -120,6 +141,7 @@ Array
    <simplelist>
     <member><function>array_values</function></member>
     <member><function>array_key_exists</function></member>
+    <member><function>array_search</function></member>
    </simplelist>
   </para>
  </refsect1>

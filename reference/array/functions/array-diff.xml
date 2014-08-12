@@ -1,80 +1,130 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: ba15ed813ede4db6505d1c387c1c2e4814a5cd55 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: sobak -->
 <refentry xml:id="function.array-diff" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>array_diff</refname>
-  <refpurpose>Zwraca różnice pomiędzy tablicami</refpurpose>
+  <refpurpose>Zwraca różnicę między tablicami</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
    <type>array</type><methodname>array_diff</methodname>
    <methodparam><type>array</type><parameter>tablica1</parameter></methodparam>
    <methodparam><type>array</type><parameter>tablica2</parameter></methodparam>
-   <methodparam choice="opt"><type>array</type><parameter> ...</parameter></methodparam>
+   <methodparam choice="opt"><type>array</type><parameter>...</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>array_diff</function> zwraca tablicę zawierającą wszystkie
-   wartości tablicy <parameter>tablica1</parameter> które nie są obecne w
-   innych tablicach-argumentach. Zauważ, że zachowywane są klucze.
+   Porównuje <parameter>tablica1</parameter> z jedną lub większą ilością tablic
+   i zwraca wartości <parameter>tablica1</parameter>, które nie są obecne w
+   żadnej z innych tablic.
   </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>tablica1</parameter></term>
+     <listitem>
+      <para>
+       Tablica którą porównujemy
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>tablica2</parameter></term>
+     <listitem>
+      <para>
+       Tablica z którą porównujemy
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>...</parameter></term>
+     <listitem>
+      <para>
+       Więcej tablic z którymi porównujemy
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca tablicę zawierającą wszystkie elementy z
+   <parameter>tablica1</parameter>, które nie są obecne w żadnej z innych tablic.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
    <example>
     <title>Przykład użycia <function>array_diff</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
-$tablica1 = array ("a" => "zielony", "czerwony", "niebieski", "czerwony");
-$tablica2 = array ("b" => "zielony", "żółty", "czerwony");
-$wynik = array_diff ($tablica1, $tablica2);
+$tablica1 = array("a" => "green", "red", "blue", "red");
+$tablica2 = array("b" => "green", "yellow", "red");
+$wynik = array_diff($tablica1, $tablica2);
 
 print_r($wynik);
 ?>
 ]]>
     </programlisting>
     <para>
-     Wielokrotne wystąpienia w $tablica1 są traktowane w ten sam sposób.
-     Powyższy przykład wyświetli:
+     Wielokrotne wystąpienia w <varname>$tablica1</varname> są
+     traktowane w ten sam sposób. Wynikiem będzie:
     </para>
     <screen>
 <![CDATA[
 Array
 (
-    [1] => niebieski
+    [1] => blue
 )
 ]]>
-
     </screen>
    </example>
   </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
   <note>
-   <simpara>
-    Dwa elementy tablicy uważane są za identyczne wtedy i tylko wtedy jeśli
-    <literal>(string) $element1 === (string) $element2</literal>. Słownie:
-    kiedy reprezentacje elementów w postaci stringów są identyczne.
-    <!-- TODO: przykład... -->
-   </simpara>
+   <para>
+    Dwa elementy są uznawane za równe tylko jeżeli
+    <literal>(string) $elem1 === (string) $elem2</literal>. Słownie:
+    gdy reprezentacja jako łańcuch znaków jest jednakowa.
+    <!-- TODO: example of it... -->
+   </para>
   </note>
   <note>
-   <simpara>
-    Zauważ, że funkcja ta sprawdza tylko jest wymiar n-wymiarowej tablicy.
-    Oczywiście można sprawdzić głębsze wymiary wywołując
+   <para>
+    Ta funkcja sprawdza tylko pierwszy wymiar tablicy wielowymiarowej.
+    Oczywiście można porównać głębsze wymiary używając
     <literal>array_diff($array1[0], $array2[0]);</literal>.
-   </simpara>
+   </para>
   </note>
-  <warning>
-   <simpara>
-    Ta funkcja była zepsuta w PHP 4.0.4!
-    <!-- TODO: kiedy dokładnie było to zepsute?... -->
-   </simpara>
-  </warning>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
   <para>
-   Patrz także: <function>array_diff_assoc</function>,
-   <function>array_intersect</function> i
-   <function>array_intersect_assoc</function>.
+   <simplelist>
+    <member><function>array_diff_assoc</function></member>
+    <member><function>array_intersect</function></member>
+    <member><function>array_intersect_assoc</function></member>
+   </simplelist>
   </para>
  </refsect1>
+
 </refentry>
 
 <!-- Keep this comment at the end of the file

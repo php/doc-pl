@@ -1,33 +1,128 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: df890faf6adb773f83861b8ae01e3e3e58b5aec8 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: sobak -->
 <refentry xml:id="function.array-diff-assoc" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>array_diff_assoc</refname>
   <refpurpose>Oblicza różnicę między tablicami z dodatkowym sprawdzaniem kluczy</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
    <type>array</type><methodname>array_diff_assoc</methodname>
    <methodparam><type>array</type><parameter>tablica1</parameter></methodparam>
    <methodparam><type>array</type><parameter>tablica2</parameter></methodparam>
-   <methodparam choice="opt"><type>array</type><parameter> ...</parameter></methodparam>
+   <methodparam choice="opt"><type>array</type><parameter>...</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>array_diff_assoc</function> zwraca tablicę zawierającą
-   wszystkie wartości z <parameter>array1</parameter>, które nie są obecne w
-   żadnym z innych argumentów. Przy porównaniu, w przeciwieństwie do funkcji
-   <function>array_diff</function>, używane są także klucze.
+   Porównuje <parameter>tablica1</parameter> z <parameter>tablica2</parameter> i
+   zwraca różnicę. W przeciwieństwie do <function>array_diff</function>, porównywane
+   są także klucze tablic.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+
+    <varlistentry>
+     <term><parameter>tablica1</parameter></term>
+     <listitem>
+      <para>
+       Tablica do porównania
+      </para>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term><parameter>tablica2</parameter></term>
+     <listitem>
+      <para>
+       Tablica, z którą porównujemy
+      </para>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term><parameter>...</parameter></term>
+     <listitem>
+      <para>
+       Więcej tablic do porównania
+      </para>
+     </listitem>
+    </varlistentry>
+
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca tablicę zawierającą wszystkie wartości z
+   <parameter>tablica1</parameter>, które nie są obecne w żadnej z innych tablic.
+  </para>
+ </refsect1>
+
+<!--
+ <refsect1 role="errors">
+  &reftitle.errors;
+  &errors.no.unusual.errors;
+ </refsect1>
+-->
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład użycia <function>array_diff_assoc</function></title>
+    <para>
+     W tym przykładzie możesz zobaczyć, że para <literal>"a" =&gt; "green"</literal>
+     jest obecna w obu tablicach i dlatego nie jest wyświetlana przez funkcję
+     W odróżnieniu od <literal>0 =&gt; "red"</literal>, które jest wyświetlane,
+     ponieważ w drugiej tablicy <literal>"red"</literal>
+     ma klucz, którym jest <literal>1</literal>.
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$tablica1 = array("a" => "green", "b" => "brown", "c" => "blue", "red");
+$tablica2 = array("a" => "green", "yellow", "red");
+$wynik = array_diff_assoc($tablica1, $tablica2);
+print_r($tablica);
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+Array
+(
+    [b] => brown
+    [c] => blue
+    [0] => red
+)
+]]>
+    </screen>
+   </example>
   </para>
   <para>
    <example>
     <title>Przykład użycia <function>array_diff_assoc</function></title>
+    <para>
+     Wartości z par <emphasis>klucz =&gt; wartość</emphasis> są uznawane za
+     jednakowe, tylko gdy <literal>(string) $elem1 === (string)
+     $elem2 </literal>. Innymi słowy, stosowane jest ścisłe porównanie, a więc
+     reprezentacja w postaci ciągu znaków musi być jednakowa.
+    </para>
     <programlisting role="php">
 <![CDATA[
 <?php
-$tablica1 = array("a" => "zielony", "b" => "brązowy", "c" => "niebieski", "czerwony");
-$tablica2 = array("a" => "zielony", "żółty", "czerwony");
+$tablica1 = array(0, 1, 2);
+$tablica2 = array("00", "01", "2");
 $wynik = array_diff_assoc($tablica1, $tablica2);
 print_r($wynik);
 ?>
@@ -38,40 +133,43 @@ print_r($wynik);
 <![CDATA[
 Array
 (
-    [b] => brązowy
-    [c] => niebieski
-    [0] => czerwony
-)
+    [0] => 0
+    [1] => 1
+    )
 ]]>
     </screen>
    </example>
   </para>
-  <simpara>
-   W powyższym przykładzie para <literal>"a" =&gt; "zielony"</literal>
-   występuje w obu tablicach, i w związku z tym nie jest dodawana do wyniku
-   działania funkcji. Para <literal>0 =&gt; "czerwony"</literal> znajduje się w
-   tablicy wynikowej, ponieważ w drugim argumencie <literal>"czerwony"</literal>
-   ma klucz <literal>1</literal>.
-  </simpara>
-  <simpara>
-   Dwie wartości z par <emphasis>klucz =&gt; wartość</emphasis> są uznawane za
-   równe tylko jeśli <literal>(string) $element1 === (string) $element2
-   </literal>. Inaczej mówiąc, zachodzi ścisłe sprawdzanie, a więc
-   reprezentacje tekstowe muszą być takie same.
-  </simpara>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
   <note>
    <simpara>
-    Funkcja ta sprawdza tylko jeden wymiar n-wymiarowej tablicy. Można
-    sprawdzać głębsze wymiary przez użycie, na przykład
-    <literal>array_diff_assoc($tablica1[0], $tablica2[0]);</literal>.
+    Ta funkcja sprawdza tylko pierwszy wymiar tablicy wielowymiarowej.
+    Oczywiście można porównać głębsze wymiary używając
+    <literal>array_diff_assoc($array1[0], $array2[0]);</literal>.
    </simpara>
   </note>
+  <note>
+   <simpara>
+    Upewnij się, że przekazujesz argumenty z odpowiedniej kolejności, gdy porównujesz
+    podobne tablice z większą ilością kluczy. Nowa tablica powinna być przekazana pierwsza.
+   </simpara>
+  </note>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
   <para>
-   Patrz także: <function>array_diff</function>,
-   <function>array_intersect</function> i
-   <function>array_intersect_assoc</function>.
+   <simplelist>
+    <member><function>array_diff</function></member>
+    <member><function>array_intersect</function></member>
+    <member><function>array_intersect_assoc</function></member>
+   </simplelist>
   </para>
  </refsect1>
+
 </refentry>
 
 <!-- Keep this comment at the end of the file

@@ -1,56 +1,87 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 3ce14fde5cd5f15171a7ed2b64fdc7bd652c3842 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
-<refentry xml:id="function.array-key-exists" xmlns="http://docbook.org/ns/docbook">
+<!-- CREDITS: sobak -->
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.array-key-exists">
  <refnamediv>
   <refname>array_key_exists</refname>
   <refpurpose>Sprawdza czy podany klucz lub indeks istnieje w tablicy</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Description</title>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>array_key_exists</methodname>
-   <methodparam><type>mixed</type><parameter>igła</parameter></methodparam>
-   <methodparam><type>array</type><parameter>stóg_siana</parameter></methodparam>
+   <methodparam><type>mixed</type><parameter>klucz</parameter></methodparam>
+   <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
   </methodsynopsis>
   <para>
    <function>array_key_exists</function> zwraca &true; jeśli
-   <parameter>igła</parameter> jest ustawiona w tablicy
-   <parameter>stóg_siana</parameter>. <parameter>igła</parameter> może być
-   dowolną wartością możliwą dla indeksu tablicy.
-   <function>array_key_exists</function> działa także na obiektach.
+   podany <parameter>klucz</parameter> jest ustawiony w tablicy.
+   <parameter>klucz</parameter> może być dowolną wartością możliwą
+   dla indeksu tablicy.
   </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>klucz</parameter></term>
+     <listitem>
+      <para>
+       Wartość do sprawdzenia.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>tablica</parameter></term>
+     <listitem>
+      <para>
+       Tablica z kluczami do sprawdzenia.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
    <example>
     <title>Przykład użycia <function>array_key_exists</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
-$stog_siana = array('pierwszy' => 1, 'drugi' => 4);
-if (array_key_exists('pierwszy', $stog_siana)) {
-    echo "'Pierwszy' element istnieje w tablicy";
+$tablica = array('pierwszy' => 1, 'drugi' => 4);
+if (array_key_exists('pierwszy', $tablica)) {
+    echo "Element 'pierwszy' istnieje w tablicy";
 }
 ?>
 ]]>
     </programlisting>
    </example>
   </para>
-  <note>
-   <simpara>
-    W PHP 4.0.6 ta funkcja nazywa się <function>key_exists</function>.
-   </simpara>
-  </note>
   <example>
-   <title><function>array_key_exists</function> a <function>isset</function></title>
+   <title><function>array_key_exists</function> vs <function>isset</function></title>
    <para>
-    <function>isset</function>, w przeciwieństwie do
-    <function>array_key_exists</function>, nie zwraca wartości &true; dla
-    kluczy tablicy, którym przypisana jest wartość &null;.
+    <function>isset</function> nie zwraca &true; dla kluczy
+    przypisanych do wartości &null;, podczas gdy
+    <function>array_key_exists</function> tak.
    </para>
    <programlisting role="php">
 <![CDATA[
 <?php
-$tablica = array('pierwszy' => null, 'drugi' => 4);
+$tablica = array('pierwszy' => 1, 'drugi' => 4);
 
 // zwraca false
 isset($tablica['pierwszy']);
@@ -61,9 +92,41 @@ array_key_exists('pierwszy', $tablica);
 ]]>
    </programlisting>
   </example>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    &info.deprecated.alias;
+    <function>key_exists</function>
+   </para>
+  </note>
+  <note>
+    <para>
+     Z powodu kompatybilności wstecznej, <function>array_key_exists</function>
+     zwróci &true; także wtedy, gdy <parameter>klucz</parameter> jest właściwością
+     zdefiniowaną w ramach <type>obiektu</type> podanego jako parametr
+     <parameter>tablica</parameter>. Nie powinno się polegać na tym zachowaniu
+     i powinno się zadbać, aby <parameter>tablica</parameter> była
+     rzeczywiście typu <type>array</type>.
+    </para>
+    <para>
+     Aby sprawdzić czy właściwość istnieje w obiekcie, użyj
+     <function>property_exists</function>.
+    </para>
+  </note>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
   <para>
-   Patrz także: <function>isset</function>, <function>array_keys</function>,
-   i <function>in_array</function>.
+   <simplelist>
+    <member><function>isset</function></member>
+    <member><function>array_keys</function></member>
+    <member><function>in_array</function></member>
+    <member><function>property_exists</function></member>
+   </simplelist>
   </para>
  </refsect1>
 </refentry>
