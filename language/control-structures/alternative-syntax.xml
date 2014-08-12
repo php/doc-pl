@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 8208b81cf1129e23e421c81b339aa8dbee653f70 Maintainer: sobak Status: ready -->
+<!-- $Revision$ -->
+
+<sect1 xml:id="control-structures.alternative-syntax"  xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title>Alternative syntax for control structures</title>
+ <?phpdoc print-version-for="control-structures.alternative-syntax"?>
+ <para>
+  PHP oferuje alternatywną składnię dla niektórych z jego
+  struktur kontrolnych; a mianowicie dla <literal>if</literal>,
+  <literal>while</literal>, <literal>for</literal>,
+  <literal>foreach</literal>, i <literal>switch</literal>.
+  W każdym wypadku podstawową formą alternatywnej składni jest zmiana
+  otwierającego nawiasu klamrowego na dwukropek (:) i zamykającego nawiasu
+  odpowiednio na <literal>endif;</literal>, <literal>endwhile;</literal>,
+  <literal>endfor;</literal>, <literal>endforeach;</literal> lub
+  <literal>endswitch;</literal>.
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php if ($a == 5): ?>
+A jest równe 5
+<?php endif; ?>
+]]>
+   </programlisting>
+  </informalexample>
+ </para>
+ <simpara>
+  W powyższym przykładzie, blok HTML "A jest równe 5" został zagnieżdżony w
+  wyrażeniu <literal>if</literal> zapisanym w alternatywnej składni. Blok
+  HTML zostanie wyświetlony tylko jeżeli <varname>$a</varname> jest równe 5.
+ </simpara>
+ <para>
+  Alternatywna składnia odnosi się także do <literal>else</literal> i
+  <literal>elseif</literal>. Następujący przykład pokazuje strukturę
+  <literal>if</literal> z użyciem <literal>elseif</literal> i
+  <literal>else</literal>, zapisaną w alternatywnym formacie:
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php
+if ($a == 5):
+    echo "a jest równe 5";
+    echo "...";
+elseif ($a == 6):
+    echo "a jest równe 6";
+    echo "!!!";
+else:
+    echo "a nie jest równe 5 ani 6";
+endif;
+?>
+]]>
+   </programlisting>
+  </informalexample>
+ </para>
+ <note>
+  <para>
+   Mieszanie rożnych składni w tym samym bloku kontrolnym nie jest możliwe.
+  </para>
+ </note>
+ <warning>
+  <para>
+   Dowolne wyjście (nawet białe znaki) pomiędzy wyrażeniem <literal>switch</literal>,
+   a pierwszym <literal>case</literal>, spowoduje powstanie błędu składniowego.
+   Poniższy przykład jest nieprawidlowy:
+  </para>
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php switch ($foo): ?>
+    <?php case 1: ?>
+    ...
+<?php endswitch ?>
+]]>
+   </programlisting>
+  </informalexample>
+  <para>
+   Z kolei ten jest poprawny, gdyż końcowa nowa linia po wyrażeniu
+   <literal>switch</literal> jest uznawana za część zamykającego
+   <literal>?&gt;</literal> i w rezultacie nic nie jest wyświetlane
+   między <literal>switch</literal> i <literal>case</literal>:
+  </para>
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php switch ($foo): ?>
+<?php case 1: ?>
+    ...
+<?php endswitch ?>
+]]>
+   </programlisting>
+  </informalexample>
+ </warning>
+ <para>
+  Zobacz także <link linkend="control-structures.while">while</link>,
+  <link linkend="control-structures.for">for</link> i <link
+  linkend="control-structures.if">if</link>, aby zobaczyć więcej przykładów.
+ </para>
+</sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

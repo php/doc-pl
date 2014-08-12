@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 676d5ed969778ce8c67b6a1d468ecb51ecd3170f Maintainer: sobak Status: ready -->
+<!-- $Revision$ -->
+
+<sect1 xml:id="function.include" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title>include</title>
+ <?phpdoc print-version-for="include"?>
+ <simpara>
+  Wyrażenie <literal>include</literal> dołącza i wykonuje
+  określony plik
+ </simpara>
+ <simpara>
+  Dokumentaja poniżej odnosi się także do <function>require</function>.
+ </simpara>
+ <simpara>
+  Pliki są dołączane bazując na podanej ścieżce lub jeśli jej nie określono, na
+  ustawieniu <link linkend="ini.include-path">include_path</link>. Jeżeli plik
+  nie zostanie znaleziony w <link linkend="ini.include-path">include_path</link>,
+  <literal>include</literal> sprawdzi jeszcze katalog aktualnie uruchamianego
+  skryptu i obecny katalog roboczy przed zwróceniem błędu. Konstrukcja
+  <literal>include</literal> wyemituje
+  <link linkend="errorfunc.constants.errorlevels.e-warning">ostrzeżenie</link> jeżeli
+  nie znajdzie pliu; jest to zachowanie odmienne od
+  <function>require</function>, który zgłosi
+  <link linkend="errorfunc.constants.errorlevels.e-error">błąd krytyczny</link>.
+ </simpara>
+ <simpara>
+  Jeżeli ścieżka jest zdefiniowana — czy to absolutna (zaczynająca się literą
+  dysku lub <literal>\</literal> na Windows, lub <literal>/</literal> w systemach
+  Unix/Linux), czy względna do obecnego katalogu (zaczynająca się znakami
+  <literal>.</literal> lub <literal>..</literal>) — 
+  <link linkend="ini.include-path">include_path</link> zostanie zignorowane.
+  Przykładowo, jeżeli nazwa pliku zaczyna się od <literal>../</literal>,
+  parser sprawdzi katalog nadrzędny w poszukiwaniu zażądanego pliku.
+ </simpara>
+ <simpara>
+  Aby dowiedzieć się więcej o tym, jak PHP obsługuje dołączanie plików i include path,
+  zobacz dokumentację dla <link linkend="ini.include-path">include_path</link>.
+ </simpara>
+ <simpara>
+  Kiedy plik jest dołączony, kod który zawiera, dziedziczy
+  <link linkend="language.variables.scope">zasięg zmiennych</link> linii,
+  w której wystąpiła instrukcja include. Wszystkie zmienne dostępne w linii,
+  która odwołuje się do pliku, będą od tego momentu dostępne w dołączonym pliku.
+  Jednakże, wszystkie funkcje i klasy zdefiniowane w dołączonym pliku będą miały
+  zasięg globalny.
+ </simpara>
+ <para>
+  <example>
+   <title>Przykład użycia <literal>include</literal></title>
+   <programlisting role="php">
+<![CDATA[
+vars.php
+<?php
+
+$kolor = 'zielone';
+$owoc = 'jabłko';
+
+?>
+
+test.php
+<?php
+
+echo "Jem $kolor $owoc"; // Jem
+
+include 'vars.php';
+
+echo "Jem $kolor $owoc"; // Jem zielone jabłko
+
+?>
+]]>
+   </programlisting>
+  </example>
+ </para>
+ <simpara>
+  Jeżeli include występuje wewnątrz funkcji, w pliku dołączającym,
+  to cały kod zawarty w dołączanym pliku będzie się zachowywał jakby
+  był zdefiniowany wewnątrz tej funkcji. Otrzyma więc zasięg zmiennych
+  tej funkcji. Wyjątkiem od tej reguły są <link
+  linkend="language.constants.predefined">stałe magiczne</link>, które są
+  wykonywane przez parser zanim plik zostanie dołączony.
+ </simpara>
+ <para>
+  <example>
+   <title>Dołączanie pliku wewnątrz funkcji</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+
+function foo()
+{
+    global $kolor;
+
+    include 'vars.php';
+
+    echo "Jem $kolor $owoc";
+}
+
+/* vars.php jest w zasięgu foo() więc      *
+* $owoc NIE jest dostępny poza jej         *
+* zasięgiem.  $kolor jest, ponieważ został *
+* zadeklarowany jako globalny              */
+
+foo();                    // Jem zielone jabłko
+echo "A $color $fruit";   // Jem zielone
+
+?>
+]]>
+   </programlisting>
+  </example>
+ </para>
+ <simpara>
+  Kiedy plik jest dołączany, parser wychodzi z trybu PHP, wchodzi
+  w tryb HTML na początku dołączanego pliku i powraca do PHP
+  na jego końcu. Z tego powodu, kod w dołączanym pliku, który
+  powinien być wykonany jako PHP, musi być otoczony
+  <link linkend="language.basic-syntax.phpmode">poprawnymi
+  tagami PHP</link>.
+ </simpara>
+ <simpara>
+  Jeżeli "<link linkend="ini.allow-url-include">nakładki dołączanych URL</link>"
+  zostały włączone w PHP,
+  możesz określik plik do dołączenia jako URL (przez HTTP lub
+  inny wspierany wrapper - zobacz <xref linkend="wrappers"/>, aby zapoznać się z
+  listą protokołów) zamiast lokalnej ścieżki. Jeżeli docelowy serwer interpretuje
+  dołączany plik jako kod PHP, można przekazać zmienne do dołączanego pliku
+  używając łańcucha zapytania URL i metody HTTP GET. Nie jest to
+  dokładnie to samo, co dołączanie pliu i dziedziczenie przez niego
+  zasięgu zmiennych pliku nadrzędnego; skrypt jest najpierw
+  wykonywany na zdalnym serwerze i jego wynik jest później
+  dołączany do skryptu lokalnego.
+ </simpara>
+ &warn.no-win32-fopen-wrapper;
+ <para>
+  <example>
+   <title><literal>include</literal> przez HTTP</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+
+/* Ten przyklad zakłada, że www.example.com parsuje pliki .php
+* i nie parsuje plików .txt. Ponadto, 'Działa' oznacza tutaj, że zmienne
+* $foo i $bar są dostępne w dołączonym pliku. */
+
+// Nie zadziała; file.txt nie został obsłużony przez www.example.com jako PHP.
+include 'http://www.example.com/file.txt?foo=1&bar=2';
+
+// Nie zadziała; szuka pliku nazwanego 'file.php?foo=1&bar=2' w
+// lokalnym systemi plików.
+include 'file.php?foo=1&bar=2';
+
+// Działa.
+include 'http://www.example.com/file.php?foo=1&bar=2';
+
+$foo = 1;
+$bar = 2;
+include 'file.txt';  // Działa.
+include 'file.php';  // Działa.
+
+?>
+]]>
+   </programlisting>
+  </example>
+ </para>
+ <warning>
+  <title>Ostrzeżenie bezpieczeństwa</title>
+  <para>
+   Zdalny plik może być przetworzony na zdalnym serwerze (zależnie od rozszerzenia
+   pliku i faktyczu czy zdalny serwer obsługuje PHP), ale musi on wciaż
+   wyprodukować poprawny skrypt PHP ponieważ będzie przetwarzany na
+   lokalnym serwerze. Jeżeli plik ze zdalnego serwera powinien być przetworzony
+   tutaj i tylko wyświetlony, <function>readfile</function> jest znacznie
+   lepszą funkcją do użycia. W przeciwnym wypadku, powinno się szczególnie zadbać o
+   bezpieczeństwo zdalnego skryptu, tak aby wyprodukował poprawny i pożądany kod.
+  </para>
+ </warning>
+ <para>
+  Zobacz także <link linkend="features.remote-files">Zdalne pliki</link>,
+  <function>fopen</function> i <function>file</function> dla powiązanych
+  informacji.
+ </para>
+ <simpara>
+  Obsługa zwracanych wartości: <literal>include</literal> zwraca
+  <literal>FALSE</literal> i generuje ostrzeżenie w wypadku błędu. Pomyślne
+  dołączenie, o ile nie zostało nadpisane przez dołączany plik, zwraca
+  <literal>1</literal>. Jest możliwe wykonanie instrukcji <function>return</function>
+  w dołączanym pliku, aby zatrzymać jego przetwarzanie i powrócić
+  do skryptu, który go dołączył. Jest także możliwe zwracanie
+  wartości z dołączanych plików. Możesz skorzystać z wartości
+  wywołania include, tak jak z wartości normalnej funkcji. Nie jest to jednakże
+  możliwe przy dołączaniu plików zdalnych, dopóki wyjście zdalnego pliku
+  zawiera <link linkend= "language.basic-syntax.phpmode">poprawne tagi
+  PHP</link> (tak jak z dowolnym lokalnym plikiem). Możesz zadeklarować
+  potrzebne zmienne w tych tagach i będą one utworzone
+  w momencie dołączenia pliku.
+ </simpara>
+ <para>
+  Ponieważ <literal>include</literal> jest specjalną konstrukcją języka,
+  nawiasy wokół argumentu nie są wymagane. Zwróć na to uwagę przy porównywaniu
+  zwracanej wartości
+  <example>
+   <title>Porównywanie wartości zwróconej przez include</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+// nie zadziała, wykonywane include(('vars.php') == 'OK'), czyli include('')
+if (include('vars.php') == 'OK') {
+    echo 'OK';
+}
+
+// działa
+if ((include 'vars.php') == 'OK') {
+    echo 'OK';
+}
+?>
+]]>
+   </programlisting>
+  </example>
+ </para>
+ <para>
+  <example>
+   <title><literal>include</literal> i instrukcja <function>return</function></title>
+   <programlisting role="php">
+<![CDATA[
+return.php
+<?php
+
+$zmienna = 'PHP';
+
+return $zmienna;
+
+?>
+
+noreturn.php
+<?php
+
+$zmienna = 'PHP';
+
+?>
+
+testreturns.php
+<?php
+
+$foo = include 'return.php';
+
+echo $foo; // wyświetla 'PHP'
+
+$bar = include 'noreturn.php';
+
+echo $bar; // wyświetla 1
+
+?>
+]]>
+   </programlisting>
+  </example>
+ </para>
+ <simpara>
+  <literal>$bar</literal> ma wartość <literal>1</literal>, ponieważ dołączenie było
+  pomyślne. Zauważ różnicę między powyższymi przykładami. Pierwszy używa
+  <function>return</function> wewnątrz dołączanego pliku, a drugi nie.
+  W wypadku gdy plik nie może być dołączany, zwracane jest &false; i
+  zgłaszany jest błąd <constant>E_WARNING</constant>.
+ </simpara>
+ <para>
+  Jeżeli w dołączanym pliku zdefiniowano funkcję, mogą one być użyte w
+  w pliku głównym, niezależnie czy znajdują się przed, czy za <function>return</function>.
+  Jeżeli plik jest dołączany dwa razy, PHP 5 zgłasza błąd krytyczny, ponieważ funkcje
+  zostały już zadeklarowane, podczas gdy PHP 4 nie zwraca uwagi na funkcje
+  zdefiniowane po instrukcji <function>return</function>.
+  Zaleca się użycie <function>include_once</function> zamiast
+  sprawdzania czy plik został już dołączony i warunkowego zwracania
+  w dołączanym pliku.
+ </para>
+ <simpara>
+  Innym sposobem "dołączenia" pliku PHP do zmiennej jest pokrycie
+  wyjścia za pomocą <link linkend="ref.outcontrol">Funkcji Kontroli
+  Wyjścia</link> użytych <literal>include</literal>. Na przykład:
+ </simpara>
+ <para>
+  <example>
+   <title>Użycie buforowania wyjścia do załączenia pliku PHP jako ciąg</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+$string = get_include_contents('somefile.php');
+
+function get_include_contents($filename) {
+    if (is_file($filename)) {
+        ob_start();
+        include $filename;
+        return ob_get_clean();
+    }
+    return false;
+}
+
+?>
+]]>
+   </programlisting>
+  </example>
+ </para>
+ <para>
+  Aby automatycznie dołączyć pliki wewnątrz skryptu, zobacz opcje
+  <link linkend="ini.auto-prepend-file">auto_prepend_file</link> i
+  <link linkend="ini.auto-append-file">auto_append_file</link>
+  w &php.ini;.
+ </para>
+
+ &note.language-construct;
+
+ <simpara>
+  Zobacz także <function>require</function>, <function>require_once</function>,
+  <function>include_once</function>, <function>get_included_files</function>,
+  <function>readfile</function>, <function>virtual</function> i
+  <link linkend="ini.include-path">include_path</link>.
+ </simpara>
+</sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

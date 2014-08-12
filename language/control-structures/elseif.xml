@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: c7aca484fd1d7eaccd03f0e011f858fa93d105b9 Maintainer: sobak Status: ready -->
+<!-- $Revision$ -->
+
+<sect1 xml:id="control-structures.elseif" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title><literal>elseif</literal>/<literal>else if</literal></title>
+ <?phpdoc print-version-for="elseif"?>
+ <para>
+  <literal>elseif</literal>, jak sama nazwa wskazuje, jest kombinacją
+  <literal>if</literal> oraz <literal>else</literal>. Tak jak
+  <literal>else</literal>, rozszerza konstrukcję <literal>if</literal>,
+  aby wykonać inne wyrażenie w wypadku gdy oryginalne wyrażenie
+  <literal>if</literal> przyjmuje wartość
+  &false;. Jednakże, w odróżnieniu od
+  <literal>else</literal>, to alternatywne wyrażenie zostanie
+  wykonane tylko jeżeli wyrażenie warunkowe <literal>elseif</literal>
+  otrzyma wartość &true;. Przykładowo, poniższy kod
+  wyświetli <computeroutput>a jest większe niż
+  b</computeroutput>, <computeroutput>a jest równe b</computeroutput>
+  or <computeroutput>a jest mniejsze niż b</computeroutput>:
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php
+if ($a > $b) {
+    echo "a jest większe niż b";
+} elseif ($a == $b) {
+    echo "a jest równe b";
+} else {
+    echo "a jest mniejsze niż b";
+}
+?>
+]]>
+   </programlisting>
+  </informalexample>
+ </para>
+ <simpara>
+  Można użyć kilku bloków <literal>elseif</literal> z jedną konstrukcją
+  <literal>if</literal>. Zostanie wykonane pierwsze wyrażenie
+  <literal>elseif</literal> (jeżeli jakiekolwiek w ogóle), które przyjmuje
+  wartość &true;. W PHP możesz także użyć zapisu
+  'else if' (dwa słowa) i zachowanie będzie identyczne
+  jak przy 'elseif' (jednym słowie). Znaczenie syntaktyczne
+  obu z nich, różni się (jeżeli znasz C, to tutaj występuje to samo
+  zachowanie), ale istotne jest to, że oba w rezultacie zachowają się
+  tak samo.
+ </simpara>
+ <simpara>
+  Wyrażenie <literal>elseif</literal> jest wykonywane tylko jeżeli
+  poprzedzający <literal>if</literal> i wszystkie poprzedzające
+  <literal>elseif</literal> przyjęły wartość
+  &false;, a obecny
+  <literal>elseif</literal> przyjął
+  &true;.
+ </simpara>
+ <note>
+  <simpara>
+   Zauważ, że <literal>elseif</literal> i <literal>else if</literal>
+   zostaną uznane za jednakowe, jeżeli zostaną użyte nawiasy klamrowe,
+   jak w powyższym przykładzie. Jeśli użyjesz dwukropka do zdefiniowana
+   warunków <literal>if</literal>/<literal>elseif</literal>, nie możesz
+   rozdzielać <literal>else if</literal> na dwa słowa albo PHP napotka
+   błąd parsowania.
+  </simpara>
+ </note>
+ <para>
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php
+
+/* Niepoprawna metoda: */
+if($a > $b):
+    echo $a." jest większe niż ".$b;
+else if($a == $b): // Nie zostanie skompilowane.
+    echo "Powyższa linia powoduje błąd parsera.";
+endif;
+
+
+/* Poprawna metoda: */
+if($a > $b):
+    echo $a." jest większe niż ".$b;
+elseif($a == $b): // Zauważ połączenie słów.
+    echo $a." jest równe ".$b;
+else:
+    echo $a." nie jest większe ani równe ".$b;
+endif;
+
+?>
+]]>
+   </programlisting>
+  </informalexample>
+ </para>
+</sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
