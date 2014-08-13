@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: sobak -->
 <refentry xml:id="function.ftp-connect" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>ftp_connect</refname>
-  <refpurpose>Opens an FTP connection</refpurpose>
+  <refpurpose>Otwiera połączenie FTP</refpurpose>
  </refnamediv>
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>resource</type><methodname>ftp_connect</methodname>
    <methodparam><type>string</type><parameter>host</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>port</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>timeout</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>port</parameter><initializer>21</initializer></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>timeout</parameter><initializer>90</initializer></methodparam>
   </methodsynopsis>
   <para>
    <function>ftp_connect</function> otwiera połączenie z serwerem FTP podanym
-   jak argument.
+   jako argument.
   </para>
  </refsect1>
  <refsect1 role="parameters">
@@ -100,7 +101,7 @@ $conn_id = ftp_connect($ftp_server) or die("Nie można nawiązać połączenia z
       <row>
        <entry>4.2.0</entry>
        <entry>
-        Dodany parametr <parameter>timeout</parameter>.
+        Dodano parametr <parameter>timeout</parameter>.
        </entry>
       </row>
      </tbody>

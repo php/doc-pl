@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: sobak -->
 <refentry xml:id="function.ftp-fget" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>ftp_fget</refname>
@@ -14,7 +15,7 @@
    <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam>
    <methodparam><type>string</type><parameter>plik_zdalny</parameter></methodparam>
    <methodparam><type>int</type><parameter>tryb</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>pozycja_wznowienia</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>pozycja_wznowienia</parameter><initializer>0</initializer></methodparam>
   </methodsynopsis>
   <para>
    <function>ftp_fget</function> pobiera <parameter>plik_zdalny</parameter> z
@@ -59,7 +60,7 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>resumepos</parameter></term>
+     <term><parameter>pozycja_wznowienia</parameter></term>
      <listitem>
       <para>
        Pozycja w pliku zdalnym, od której rozpoczęte zostanie pobieranie.
@@ -129,7 +130,7 @@ fclose($uchwyt);
       <row>
        <entry>4.3.0</entry>
        <entry>
-        Dodany argument <parameter>resumepos</parameter>.
+        Dodano argument <parameter>pozycja_wznowienia</parameter>.
        </entry>
       </row>
      </tbody>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<!-- EN-Revision: 194726d595d7e12720dedd729842a08376818cdc Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: sobak -->
 <refentry xml:id="function.ftp-rawlist" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>ftp_rawlist</refname>
@@ -9,10 +10,10 @@
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
-   <type>array</type><methodname>ftp_rawlist</methodname>
+   <type>mixed</type><methodname>ftp_rawlist</methodname>
    <methodparam><type>resource</type><parameter>strumień_ftp</parameter></methodparam>
    <methodparam><type>string</type><parameter>katalog</parameter></methodparam>
-   <methodparam choice="opt"><type>bool</type><parameter>rekurencyjnie</parameter></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>rekurencyjnie</parameter><initializer>false</initializer></methodparam>
   </methodsynopsis>
   <para>
    <function>ftp_rawlist</function> wywołuje polecenie FTP
@@ -35,7 +36,8 @@
      <term><parameter>katalog</parameter></term>
      <listitem>
       <para>
-       Ścieżka do wybranego katalogu.
+       Ścieżka do wybranego katalogu. Może zawierać argumenty dla polecenia
+	   <command>LIST</command>.
       </para>
      </listitem>
     </varlistentry>
@@ -43,7 +45,7 @@
      <term><parameter>rekurencyjnie</parameter></term>
      <listitem>
       <para>
-       Jeśli argument ten ma wartość &true;, wydane zostanie polecenie
+       Jeśli argument ten ma wartość &true;, wykonane zostanie polecenie
        <command>LIST -R</command>.
       </para>
      </listitem>

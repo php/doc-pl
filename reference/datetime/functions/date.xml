@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: garbus Status: ready -->
+<!-- EN-Revision: 088c4558a55a8443df1a8d4b0e50c32b43006a9d Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-<!-- splitted from ./en/functions/datetime.xml, last change in rev 1.2 -->
-<!-- CREDITS: qrak -->
+<!-- CREDITS: garbus, qrak -->
 <refentry xml:id="function.date" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>date</refname>
@@ -14,7 +13,7 @@
   <methodsynopsis>
    <type>string</type><methodname>date</methodname>
    <methodparam><type>string</type><parameter>format</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>znacznik_czasu</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>znacznik_czasu</parameter><initializer>time()</initializer></methodparam>
   </methodsynopsis>
   <para>
    Zwraca datę sformatowaną zgodnie z szablonem podanym w argumencie
@@ -33,7 +32,10 @@
      <listitem>
       <para>
        Format zwracanej daty <type>string</type>. Zobacz możliwe ustawienia
-       formatowania poniżej.
+       formatowania poniżej. Istnieje także kilka
+	   <link linkend="datetime.constants.types">predefiniowanych stałych daty</link>,
+       których można użyć w zamian, przykładowo <constant>DATE_RSS</constant>
+       zawiera ciąg formatujący <literal>'D, d M Y H:i:s'</literal>.
       </para>
       <para>
        <table>
@@ -98,7 +100,7 @@
            <entry><literal>0</literal> aż do <literal>365</literal></entry>
           </row>
           <row>
-           <entry align="center"><emphasis>Week</emphasis></entry>
+           <entry align="center"><emphasis>Tydzień</emphasis></entry>
            <entry>---</entry>
            <entry>---</entry>
           </row>
@@ -108,7 +110,7 @@
            <entry>Przykład: <literal>42</literal> (42. tydzień roku)</entry>
           </row>
           <row>
-           <entry align="center"><emphasis>Month</emphasis></entry>
+           <entry align="center"><emphasis>Miesiąc</emphasis></entry>
            <entry>---</entry>
            <entry>---</entry>
           </row>
@@ -125,7 +127,7 @@
           <row>
            <entry><literal>M</literal></entry>
            <entry>Krótki, angielski opis miesiąca, trzy litery</entry>
-           <entry><literal>Jan</literal> a do <literal>Dec</literal></entry>
+           <entry><literal>Jan</literal> aż do <literal>Dec</literal></entry>
           </row>
           <row>
            <entry><literal>n</literal></entry>
@@ -217,8 +219,14 @@
           </row>
           <row>
            <entry><literal>u</literal></entry>
-           <entry>Mikrosekundy (dodano w PHP 5.2.2)</entry>
-           <entry>Przykład: <literal>54321</literal></entry>
+		   <entry>
+            Mikrosekundy (dodano w PHP 5.2.2). Zauważ, że
+            <function>date</function> zawsze wygeneruje
+            <literal>000000</literal>, ponieważ przyjmuje parametr
+            typu <type>integer</type>, podczas gdy <methodname>DateTime::format</methodname>
+            obsługuje mikrosekundy.
+           </entry>
+           <entry>Przykład: <literal>654321</literal></entry>
           </row>
           <row>
            <entry align="center"><emphasis>Strefa czasowa</emphasis></entry>
@@ -287,7 +295,7 @@
       </para>
       <note>
        <para>
-        Odkąd ta funkcja przyjmuje jako znacznik czasu jedynie typ <type>integer</type>
+        Ponieważ ta funkcja przyjmuje jako znacznik czasu jedynie typ <type>integer</type>,
         znak formatujący <literal>u</literal> przydaje się jedynie, gdy używamy funkcji
         <function>date_format</function> z samodzielnie zdefiniowanymi znacznikami czasu
         stworzonymi za pomocą funkcji <function>date_create</function>.
@@ -307,7 +315,7 @@
   <para>
    Zwraca sformatowaną datę jako łańcuch. Jeśli użyto wartości parametru
    <parameter>znacznik_czasu</parameter> innej niż liczbowa, cała funkcja zwróci &false; oraz pojawi się
-   ostrzeżenie klasy <literal>E_WARNING</literal>.
+   ostrzeżenie klasy <constant>E_WARNING</constant>.
   </para>
  </refsect1>
 
@@ -368,7 +376,6 @@
 // ustawia domyślnie używaną strefę czasową. Dostępne od PHP 5.1
 date_default_timezone_set('UTC');
 
-
 // wypisuje np.: Monday
 echo date("l");
 
@@ -379,8 +386,8 @@ echo date('l jS F Y h:i:s A');
 echo "1 lipca, 2000 wypada w " . date("l", mktime(0, 0, 0, 7, 1, 2000));
 
 /* użycie stałych jako parametru format */
-// wypisuje coś jak: Mon, 15 Aug 2005 15:12:46 UTC
-echo date(DATE_RFC822);
+// wypisuje coś jak: Wed, 25 Sep 2013 15:28:57 -0700
+echo date(DATE_RFC2822);
 
 // wypisuje coś jak: 2000-07-01T00:00:00+00:00
 echo date(DATE_ATOM, mktime(0, 0, 0, 7, 1, 2000));
@@ -400,7 +407,7 @@ echo date(DATE_ATOM, mktime(0, 0, 0, 7, 1, 2000));
 <![CDATA[
 <?php
 // wypisuje coś jak: jest Wednesday, 15th
-echo date("\j\e\s\\t l, jS");
+echo date("\j\e\s\t l, jS");
 ?>
 ]]>
     </programlisting>
@@ -452,8 +459,9 @@ $dzisiaj = date("Ymd");                           // 20010310
 $dzisiaj = date('h-i-s, j-m-y, it is w Day z ');  // 05-16-18, 10-03-01, 1631 1618 6 Satpm01
 $dzisiaj = date('\t\o jS \d\z\i\e\ń');            // to 10. dzień
 $dzisiaj = date("D M j G:i:s T Y");               // Sat Mar 10 17:16:18 MST 2001
-$dzisiaj = date('H:m:s \m \t\o\ \m\i\e\s\i\ą\c'); // 17:03:18 m is month
+$dzisiaj = date('H:m:s \m \t\o\ \m\i\e\s\i\ą\c'); // 17:03:18 m to miesiąc
 $dzisiaj = date("H:i:s");                         // 17:16:18
+$dzisiaj = date("Y-m-d H:i:s");                   // 2001-03-10 17:16:18 (format MySQL DATETIME)
 ?>
 ]]>
     </programlisting>
@@ -489,11 +497,15 @@ $dzisiaj = date("H:i:s");                         // 17:16:18
   &reftitle.seealso;
   <para>
    <simplelist>
-    <member><function>getlastmod</function></member>
     <member><function>gmdate</function></member>
+    <member><function>idate</function></member>
+    <member><function>getdate</function></member>
+    <member><function>getlastmod</function></member>
     <member><function>mktime</function></member>
     <member><function>strftime</function></member>
     <member><function>time</function></member>
+    <member><function>strtotime</function></member>
+    <member><link linkend="datetime.constants.types">Predefiniowane stałe daty i czasu</link></member>
    </simplelist>
   </para>
  </refsect1>

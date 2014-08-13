@@ -1,49 +1,125 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: qrak Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 83c927f576b72abb11701326d9e33eb2fdfce8e3 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-<!-- splitted from ./en/functions/datetime.xml, last change in rev 1.2 -->
-  <refentry xml:id="function.gmdate" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>gmdate</refname>
-    <refpurpose>Formatuje datę/czas dla strefy GMT/UTC</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>string</type><methodname>gmdate</methodname>
-      <methodparam><type>string</type><parameter>format</parameter></methodparam>
-      <methodparam
-      choice="opt"><type>int</type><parameter>znacznik_czasu</parameter></methodparam>
-     </methodsynopsis>
+<!-- CREDITS: qrak -->
+<refentry xml:id="function.gmdate" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>gmdate</refname>
+  <refpurpose>Formatuje datę/czas dla strefy GMT/UTC</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>string</type><methodname>gmdate</methodname>
+   <methodparam><type>string</type><parameter>format</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>znacznik_czasu</parameter><initializer>time()</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   Identyczna do funkcji <function>date</function>, z wyjątkiem tego, że
+   zawsze podaje czas Greenwich (Greenwich Mean Time - GMT).
+  </para>
+ </refsect1> 
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>format</parameter></term>
+     <listitem>
+      <para>
+       Format wyświetlanego łańcucha daty. Spójrz na opcje
+       formatujące dla funkcji <function>date</function>.
+      </para>
+     </listitem>
+    </varlistentry>
+    
+    &date.timestamp.description;
+   
+   </variablelist>
+  </para>
+ </refsect1>   
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca sformatowany łańcuch daty. Jeżeli jako parametr 
+   <parameter>znacznik_czasu</parameter> podano wartość nienumeryczną,
+   to zwracane jest &false; i generowany jest błąd o poziomie 
+   <constant>E_WARNING</constant>.
+  </para>
+ </refsect1>   
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>5.1.0</entry>
+       <entry>
+        Poprawnym zakres znacznika czasu to zazwyczaj od Fri, 13 Dec
+        1901 20:45:54 GMT do Tue, 19 Jan 2038 03:14:07 GMT. (Są to daty
+        odpowiedające minimalnym i maksymalnym wartościom 32-bitowego integera
+        ze znakiem). Jednakże, przed PHP 5.1.0 ten zakres był ograniczony
+        od 01-01-1970 do 19-01-2038 na niektórych systemach (np. Windows).
+       </entry>
+      </row>
+      <row>
+       <entry>5.1.1</entry>
+       <entry>
+        Dodano przydatne <link linkend="datetime.constants">stałe</link> 
+        typowych formatów daty/czasu, które mogą być użyte do określenia 
+        parametru <parameter>format</parameter>.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład użycia <function>gmdate</function></title>
     <para>
-     Identyczna do funkcji <function>date</function>, z wyjątkiem tego, że
-     zawsze podaje czas Greenwich (Greenwich Mean Time - GMT). Na przykład
-     w Polsce (GMT +0100 dla czasu zimowego) pierwsza linia zwraca "Jan 01 1998
-     00:00:00", podczas gdy druga "Dec 31 1997 23:00:00".
-     <example>
-      <title>przykład <function>gmdate</function></title>
-      <programlisting role="php">
+     Kiedy skrypt uruchamiany jest w Finlandii (GMT +0200), pierwsza linia pokaże "Jan 01
+     1998 00:00:00", a druga "Dec 31 1997 22:00:00".
+    </para>
+    <programlisting role="php">
 <![CDATA[
 <?php
-echo date ("M d Y H:i:s", mktime (0,0,0,1,1,1998));
-echo gmdate ("M d Y H:i:s", mktime (0,0,0,1,1,1998));
+echo date("M d Y H:i:s", mktime(0, 0, 0, 1, 1, 1998));
+echo gmdate("M d Y H:i:s", mktime(0, 0, 0, 1, 1, 1998));
 ?>
 ]]>
-      </programlisting>
-     </example>
-    </para>
-     <note> 
-      <para>
-       Przed PHP 5.1.0, ujemne znaczniki czasu (daty z przed 1970) nie działały na
-       niektórych systemach (np. Windows). 
-     </para> 
-     </note> 
-    <para>
-     Patrz także <function>date</function>, <function>mktime</function>,
-     <function>gmmktime</function> i <function>strftime</function>.
-    </para>
-   </refsect1>
-  </refentry>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>date</function></member>
+    <member><function>mktime</function></member>
+    <member><function>gmmktime</function></member>
+    <member><function>strftime</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
