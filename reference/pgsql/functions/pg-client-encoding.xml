@@ -2,41 +2,41 @@
 <!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: jarek Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.16 -->
-  <refentry xml:id="function.pg-client-encoding" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>pg_client_encoding</refname>
-    <refpurpose>
-     Zwraca stronę kodową klienta
-    </refpurpose>
-   </refnamediv>
+<refentry xml:id="function.pg-client-encoding" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>pg_client_encoding</refname>
+  <refpurpose>
+   Zwraca stronę kodową klienta
+  </refpurpose>
+ </refnamediv>
    
-   <refsect1 role="description">
-    &reftitle.description;
-    <methodsynopsis>
-     <type>string</type><methodname>pg_client_encoding</methodname>
-     <methodparam choice="opt"><type>resource</type><parameter>połączenie</parameter></methodparam>
-    </methodsynopsis>
-    <para> 
-     PostgreSQL wspiera automatyczną konwersję zestawu znaków pomiędzy
-     serwerem, a klientem dla pewnych systemów kodowania.  
-     <function>pg_client_encoding</function> zwraca stronę kodową klienta jako
-     łańcuch. Zwracany łańcuch będzie jednym ze standardowych identyfikatorów kodowania PostgreSQL.
-    </para>
-    <note>
-     <para>
-      Ta funkcja wymaga PHP 4.0.3 lub nowszego i PostgreSQL 7.0 lub nowszego.
-      Jeśli libpq jest skompilowane bez wsparcia dla kodowania wielobajtowego,
-      <function>pg_client_encoding</function> zawsze zwraca
-      <literal>SQL_ASCII</literal>. Wspierane strony kodowe zależą od wersji PostgreSQL.
-      Sprawdź dokumentację PostgreSQL o wspieranych kodowaniach.
-     </para>
-     <para>
-      Ta funkcja była poprzednio nazywana <function>pg_clientencoding</function>.
-     </para>
-    </note>
-    </refsect1>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>string</type><methodname>pg_client_encoding</methodname>
+   <methodparam choice="opt"><type>resource</type><parameter>połączenie</parameter></methodparam>
+  </methodsynopsis>
+  <para> 
+   PostgreSQL wspiera automatyczną konwersję zestawu znaków pomiędzy
+   serwerem, a klientem dla pewnych systemów kodowania.  
+   <function>pg_client_encoding</function> zwraca stronę kodową klienta jako
+   łańcuch. Zwracany łańcuch będzie jednym ze standardowych identyfikatorów kodowania PostgreSQL.
+  </para>
+  <note>
+   <para>
+    Ta funkcja wymaga PHP 4.0.3 lub nowszego i PostgreSQL 7.0 lub nowszego.
+    Jeśli libpq jest skompilowane bez wsparcia dla kodowania wielobajtowego,
+    <function>pg_client_encoding</function> zawsze zwraca
+    <literal>SQL_ASCII</literal>. Wspierane strony kodowe zależą od wersji PostgreSQL.
+    Sprawdź dokumentację PostgreSQL o wspieranych kodowaniach.
+   </para>
+   <para>
+    Ta funkcja była poprzednio nazywana <function>pg_clientencoding</function>.
+   </para>
+  </note>
+ </refsect1>
 
-<refsect1 role="parameters">
+ <refsect1 role="parameters">
   &reftitle.parameters;
   <para>
    <variablelist>

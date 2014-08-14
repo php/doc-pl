@@ -2,97 +2,97 @@
 <!-- EN-Revision: 29fd59a70b23102ac9f09b87e509a4a68a7df81d Maintainer: sobak Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.2 -->
-  <refentry xml:id="function.pg-connect" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>pg_connect</refname>
-    <refpurpose>Otwiera tymczasowe połączenie do PostgreSQL-a</refpurpose>
-   </refnamediv>
-   
-  <refsect1 role="description">
-   &reftitle.description;
-   <methodsynopsis>
-    <type>resource</type><methodname>pg_connect</methodname>
-    <methodparam><type>string</type><parameter>łąńcuch_połączenia</parameter></methodparam>
-    <methodparam choice="opt"><type>int</type><parameter>typ_połączenia</parameter></methodparam>
-   </methodsynopsis>
-   <para>
-    <function>pg_connect</function> Otwiera tymczasowe połączenie do serwera
-    PostgreSQL określonego przez <parameter>łąńcuch_połączenia</parameter>.
-   </para>
-   <para>
-    Jeśli funkcja <function>pg_connect</function> zostanie wywołana drugi raz z 
-    tym samym <parameter>łąńcuchem_połączenia</parameter> jak istniejące połączenie,
-    zostanie zwrócony identyfikator istniejącego połączenia chyba, że podasz 
-    <constant>PGSQL_CONNECT_FORCE_NEW</constant> jako
-    <parameter>typ_połączenia</parameter>.
-   </para>
-   <para>
-    Stara składnia z wieloma parametrami
-    <command>$conn = pg_connect("host", "port", "opcje", "tty", "nazwa_bazy")
-    </command> jest przestarzała.
-   </para>
-  </refsect1>
+<refentry xml:id="function.pg-connect" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>pg_connect</refname>
+  <refpurpose>Otwiera tymczasowe połączenie do PostgreSQL-a</refpurpose>
+ </refnamediv>
 
-  <refsect1 role="parameters">
-   &reftitle.parameters;
-   <para>
-    <variablelist>
-     <varlistentry>
-      <term><parameter>łąńcuch_połączenia</parameter></term>
-      <listitem>
-       <para>
-        <parameter>łąńcuch_połączenia</parameter> może być pusty, użyte zostaą wszystkie domyślne parametry lub
-        może zawierać jeden lub więcej parametrów ustawień oddzielonych przez biały znak.
-        Każdy parametr ustawień jest w postaci <literal>słowo_kluczowe = wartość</literal>. Odstępy wokół
-        znaku równości są opcjonalne. Aby zapisać pustą wartość lub wartość
-        zawierającą spacje, należy otoczyć ją przez pojedynczy cudzysłów, np. <literal>słowo_kluczowe = 
-        'ta wartość'</literal>. Pojedyncze cudzysłowy i lewe ukośniki w wartości musza być
-        poprzedzone znakiem unikowym (lewym ukośnikiem) tj. \' i \\
-       </para>
-       <para>
-        Obecnie rozpoznwane parametry słów kluczowych to:
-        <parameter>host</parameter>, <parameter>hostaddr</parameter>, <parameter>port</parameter>,
-        <parameter>dbname</parameter> (domyślnie ma wartość taką jak <parameter>user</parameter>),
-		<parameter>user</parameter>,
-        <parameter>password</parameter>, <parameter>connect_timeout</parameter>,
-        <parameter>options</parameter>, <parameter>tty</parameter> (ignorowany), <parameter>sslmode</parameter>,
-        <parameter>requiressl</parameter> (przestarzały na rzecz <parameter>sslmode</parameter>) i
-        <parameter>service</parameter>.  Które z tych parametrów istnieją zależy
-        od Twojej wersji PostgreSQL.
-       </para>
-       <para>
-        Parametr <parameter>options</parameter> może zostać użyty do ustawienia parametrów linii komend
-		na serwerze.
-	   </para>
-      </listitem>
-     </varlistentry>
-     <varlistentry>
-      <term><parameter>typ_połączenia</parameter></term>
-      <listitem>
-       <para>
-        Jeśli jest podany <constant>PGSQL_CONNECT_FORCE_NEW</constant>, wtedy nowe połączenie
-        jest tworzone, nawet jeśli <parameter>łąńcuch_połączenia</parameter> jest identyczny z
-        istniejącym połączeniem.
-       </para>
-      </listitem>
-     </varlistentry>
-    </variablelist>
-   </para>
-  </refsect1>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>resource</type><methodname>pg_connect</methodname>
+   <methodparam><type>string</type><parameter>łąńcuch_połączenia</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>typ_połączenia</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>pg_connect</function> Otwiera tymczasowe połączenie do serwera
+   PostgreSQL określonego przez <parameter>łąńcuch_połączenia</parameter>.
+  </para>
+  <para>
+   Jeśli funkcja <function>pg_connect</function> zostanie wywołana drugi raz z 
+   tym samym <parameter>łąńcuchem_połączenia</parameter> jak istniejące połączenie,
+   zostanie zwrócony identyfikator istniejącego połączenia chyba, że podasz 
+   <constant>PGSQL_CONNECT_FORCE_NEW</constant> jako
+   <parameter>typ_połączenia</parameter>.
+  </para>
+  <para>
+   Stara składnia z wieloma parametrami
+   <command>$conn = pg_connect("host", "port", "opcje", "tty", "nazwa_bazy")
+   </command> jest przestarzała.
+  </para>
+ </refsect1>
 
-  <refsect1 role="returnvalues">
-   &reftitle.returnvalues;
-   <para>
-    Zasób, połączenie do bazy PostgreSQL w przypadku powodzenia, lub &false; gdy zawiedzie.
-   </para>
-  </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>łąńcuch_połączenia</parameter></term>
+     <listitem>
+      <para>
+       <parameter>łąńcuch_połączenia</parameter> może być pusty, użyte zostaą wszystkie domyślne parametry lub
+       może zawierać jeden lub więcej parametrów ustawień oddzielonych przez biały znak.
+       Każdy parametr ustawień jest w postaci <literal>słowo_kluczowe = wartość</literal>. Odstępy wokół
+       znaku równości są opcjonalne. Aby zapisać pustą wartość lub wartość
+       zawierającą spacje, należy otoczyć ją przez pojedynczy cudzysłów, np. <literal>słowo_kluczowe = 
+       'ta wartość'</literal>. Pojedyncze cudzysłowy i lewe ukośniki w wartości musza być
+       poprzedzone znakiem unikowym (lewym ukośnikiem) tj. \' i \\
+      </para>
+      <para>
+       Obecnie rozpoznwane parametry słów kluczowych to:
+       <parameter>host</parameter>, <parameter>hostaddr</parameter>, <parameter>port</parameter>,
+       <parameter>dbname</parameter> (domyślnie ma wartość taką jak <parameter>user</parameter>),
+       <parameter>user</parameter>,
+       <parameter>password</parameter>, <parameter>connect_timeout</parameter>,
+       <parameter>options</parameter>, <parameter>tty</parameter> (ignorowany), <parameter>sslmode</parameter>,
+       <parameter>requiressl</parameter> (przestarzały na rzecz <parameter>sslmode</parameter>) i
+       <parameter>service</parameter>.  Które z tych parametrów istnieją zależy
+       od Twojej wersji PostgreSQL.
+      </para>
+      <para>
+       Parametr <parameter>options</parameter> może zostać użyty do ustawienia parametrów linii komend
+       na serwerze.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>typ_połączenia</parameter></term>
+     <listitem>
+      <para>
+       Jeśli jest podany <constant>PGSQL_CONNECT_FORCE_NEW</constant>, wtedy nowe połączenie
+       jest tworzone, nawet jeśli <parameter>łąńcuch_połączenia</parameter> jest identyczny z
+       istniejącym połączeniem.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
 
-  <refsect1 role="examples">
-   &reftitle.examples;
-   <para>
-    <example>
-     <title>Używanie pg_connect</title>
-     <programlisting role="php">
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zasób, połączenie do bazy PostgreSQL w przypadku powodzenia, lub &false; gdy zawiedzie.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Używanie pg_connect</title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 $dbconn = pg_connect ("dbname=mary");
@@ -112,27 +112,26 @@ $dbconn5 = pg_connect("host=localhost options='--client_encoding=UTF8'");
 //Otwiera połączenie z bazą na komputerze "localhost" i ustawia parametr linii komend mówiący o tym, że kodowaniem jest UTF-8
 ?>
 ]]>
-     </programlisting>
-    </example>
-   </para>
-  </refsect1>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
 
-  <refsect1 role="seealso">
-   &reftitle.seealso;
-   <para>
-    <simplelist>
-     <member><function>pg_pconnect</function></member>
-     <member><function>pg_close</function></member>
-     <member><function>pg_host</function></member>
-     <member><function>pg_port</function></member>
-     <member><function>pg_tty</function></member>
-     <member><function>pg_options</function></member>
-     <member><function>pg_dbname</function></member>
-    </simplelist>
-   </para>
-  </refsect1>
- </refentry>
-
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>pg_pconnect</function></member>
+    <member><function>pg_close</function></member>
+    <member><function>pg_host</function></member>
+    <member><function>pg_port</function></member>
+    <member><function>pg_tty</function></member>
+    <member><function>pg_options</function></member>
+    <member><function>pg_dbname</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
