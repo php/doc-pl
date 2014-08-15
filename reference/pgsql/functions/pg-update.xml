@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: garbus Status: ready -->
+<!-- EN-Revision: 4501571c0db3a88528af1c5bcf8cb7193eec6961 Maintainer: sobak Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.80 -->
-<!-- CREDITS: jarek -->
+<!-- CREDITS: garbus, jarek -->
 <refentry xml:id='function.pg-update' xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>pg_update</refname>
@@ -19,7 +19,7 @@
    <methodparam><type>string</type><parameter>nazwa_tabeli</parameter></methodparam>
    <methodparam><type>array</type><parameter>dane</parameter></methodparam>
    <methodparam><type>array</type><parameter>warunek</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>opcje</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>opcje</parameter><initializer>PGSQL_DML_EXEC</initializer></methodparam>
   </methodsynopsis>
   <para>
    <function>pg_update</function> aktualizuje wiersze spełniające warunki zawarte w parametrze
@@ -28,7 +28,6 @@
    przekazywany do wywołania <function>pg_convert</function> z opcjami w parametrze
    <literal>dane</literal>.
   </para>
-  &warn.experimental.func;
  </refsect1>
 
  <refsect1 role="parameters">
@@ -75,9 +74,13 @@
       <para>
        Dowolna kombinacja dowolnej ilości parametrów: <constant>PGSQL_CONV_OPTS</constant>,
        <constant>PGSQL_DML_NO_CONV</constant>,
-       <constant>PGSQL_DML_EXEC</constant> oraz
+       <constant>PGSQL_DML_ESCAPE</constant>,
+       <constant>PGSQL_DML_EXEC</constant>,
+       <constant>PGSQL_DML_ASYNC</constant> lub
        <constant>PGSQL_DML_STRING</constant>. Jeśli <constant>PGSQL_DML_STRING</constant> został podany w parametrze
-       <parameter>opcje</parameter>, zostanie zwrócony łańcuch zapytania.
+       <parameter>opcje</parameter>, zostanie zwrócony łańcuch zapytania. Kiedy ustawione jest
+	   <constant>PGSQL_DML_NO_CONV</constant> lub <constant>PGSQL_DML_ESCAPE</constant>, funkcja nie wykonuje <function>pg_convert</function>
+	   wewnętrznie.
       </para>
      </listitem>
     </varlistentry>
@@ -115,6 +118,38 @@
 ]]>
     </programlisting>
    </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>5.6.0</entry>
+       <entry>
+        Funkcja nie jest dłużej eksperymentalna. Dodano stałą <constant>PGSQL_DML_ESCAPE</constant> oraz
+        wsparcie typów danych &true;/&false; i &null;.
+       </entry>
+      </row>
+      <row>
+       <entry>5.5.3/5.4.19</entry>
+       <entry>
+        Bezpośredni atak SQL injection na parametr <parameter>nazwa_tabeli</parameter> i pośredni
+        na identyfikatory został uniemożliwiony.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
   </para>
  </refsect1>
 

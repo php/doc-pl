@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: garbus Status: ready -->
+<!-- EN-Revision: 5203515e70fa823a33c74b3f8a25a8c913db7ca8 Maintainer: sobak Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.61 -->
-<!-- CREDITS: jarek -->
+<!-- CREDITS: garbus, jarek -->
 <refentry xml:id='function.pg-escape-string' xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>pg_escape_string</refname>
   <refpurpose>
-   Konwertuje łańcuch wpisywany do pola tekstowego, wstawiając sekwencje Escape
+   Dodaje znaki ucieczki do łańcucha znaków (stringa) używanego w zapytaniach
   </refpurpose>
  </refnamediv>
 
@@ -19,12 +19,15 @@
    <methodparam><type>string</type><parameter>dane</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>pg_escape_string</function> konwertuje łańcuch wstawiając 
-   sekwencje Escape przy wpisywaniu do bazy danych. Zwraca łańcuch z sekwencjami Escape
-   w formacie PostgreSQL-a. Zalecane jest używanie tej funkcji w miejsce
-   <function>addslashes</function>. Jeśli typem kolumny jest
+   <function>pg_escape_string</function> dodaje znaki ucieczki do łańcucha, którego chcemy
+   użyć w zapytaniu do bazy danych. Zwraca łańcuch z sekwencjami Escape
+   w formacie PostgreSQL-a bez cudzysłowów. <function>pg_escape_literal</function> jest
+   bardziej zalecaną drogą zabezpieczenia parametrów SQL dla PostreSQL.
+   Nie można używać funkcji <function>addslashes</function> z PostreSQL.
+   Jeśli typem kolumny jest
    bytea, trzeba użyć funkcji <function>pg_escape_bytea</function>
-   zamiast tej.
+   zamiast tej. Do zabezpieczenia identyfikatorów (np. nazw tabel i pól
+   należy użyć funkcji <function>pg_escape_identifier</function>.
   </para>
   <note>
    <para>

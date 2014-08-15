@@ -1,28 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: garbus Status: ready -->
+<!-- EN-Revision: 63283140b433618c33145891c847b21ef67279c1 Maintainer: sobak Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.2 -->
-<!-- CREDITS: jarek -->
+<!-- CREDITS: garbus, jarek -->
 <refentry xml:id="function.pg-query" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>pg_query</refname>
-  <refpurpose>Realizujezapytanie do bazy danych</refpurpose>
+  <refpurpose>Wykonuje zapytanie do bazy danych</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>resource</type><methodname>pg_query</methodname>
-   <methodparam><type>string</type><parameter>zapytanie</parameter></methodparam>
-  </methodsynopsis>
-  <methodsynopsis>
-   <type>resource</type><methodname>pg_query</methodname>
-   <methodparam><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
+   <methodparam choice="opt"><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
    <methodparam><type>string</type><parameter>zapytanie</parameter></methodparam>
   </methodsynopsis>
   <para>
    <function>pg_query</function> wykonuje <parameter>zapytanie</parameter>
    na określonej parametrem <parameter>identyfikator_połączenia</parameter> bazie danych.
+   W większości wypadków preferowane powinno być <function>pg_query_params</function>.
   </para>
   <para>
    Jeśli nadarzy się błąd, oraz zwracane jest &false;, jego szczegóły mogą
@@ -66,10 +63,24 @@
      <term><parameter>zapytanie</parameter></term>
      <listitem>
       <para>
-       Polecenie lub polecenia SQL, do wykonania. Kiedy do funkcji podane zostanie więcej jak jedno zapytanie,
+       Polecenie lub polecenia SQL, do wykonania. Kiedy do funkcji podane zostanie więcej niż jedno zapytanie,
        wykonają się one automatycznie jako jedna operacja, chyba, że komendy BEGIN/COMMIT 
        są zawarte w zapytaniu. Niemniej jednak, używanie wielu operacji w jednym wywołaniu funkcji nie jest zalecane.
       </para>
+	  <warning>
+       <para>
+        Łączenie stringu zapytania z danymi pochodzącymi od użytkownika jest bardzo
+        niebezpieczne i może prowadzić do podatności na <link linkend="security.database.sql-injection">
+		SQL injection</link>. W większości wypadków powinno być preferowane
+        użycie <function>pg_query_params</function>, a więc przekazywanie
+        wartości pochodzących od użytkownika jako parametry, a nie bezpośrednie
+        włączanie ich do łańcucha zapytania.
+       </para>
+       <para>
+        Wszystkie dane od użytkowników, wstawiane bezpośrednio do łańucha zapytania
+        powinny być <link linkend="function.pg-escape-string">odpowiednio zabezpieczone</link>.
+       </para>
+      </warning>
      </listitem>
     </varlistentry>
    </variablelist>
@@ -79,7 +90,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-    Identyfikator wyniku zapytania w przypadku sukcesu, lub &false; w przypadku niepowodzenia.
+    Identyfikator wyniku zapytania w przypadku sukcesu&return.falseforfailure;.
   </para>
  </refsect1>
 
@@ -87,7 +98,7 @@
   &reftitle.examples;
   <para>
    <example>
-    <title><function>pg_query</function> - przykład</title>
+    <title>Przykład użycia <function>pg_query</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
