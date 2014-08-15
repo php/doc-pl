@@ -1,86 +1,135 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: qrak Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: e84c1f221cc8ad527ec2e37e9dd50e0d85499668 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-<!-- splitted from ./en/functions/datetime.xml, last change in rev 1.10 -->
-  <refentry xml:id="function.localtime" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>localtime</refname>
-    <refpurpose>Pobiera czas lokalny</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>array</type><methodname>localtime</methodname>
-      <methodparam choice="opt"><type>int</type><parameter>znacznik_czasu</parameter></methodparam>
-      <methodparam choice="opt"><type>bool</type><parameter>asocjacyjna</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     Funkcja <function>localtime</function> zwraca tablicę identyczną do tej
-     ze struktury zwracanej przez wywołanie identycznej funkcji w C. Pierwszym
-     argumentem funkcji jest znacznik czasu. Jeśli żaden znacznik czasu nie
-     zostanie podany, funkcja wykorzystuje aktualny czas, taki jak zwrócony przez
-     <function>time</function>. 
-     Drugi argument, <parameter>asocjacyjna</parameter>, jeśli jest ustawiony na &false;, lub nie
-     jest podany, powoduje zwrócenie zwykłej, indeksowanej liczbowo tablicy.
-     Jeśli zaś jest ustawiony na &true;, to funkcja zwróci tablicę asocjacyjną
-     zawierającą wszystkie rozmaite elementy struktury zwracanej przez wywołanie
-     funkcji w C. Nazwy kluczy tablicy są następujące:
-     <itemizedlist>
-      <listitem>
-       <simpara>
-        "tm_sec" - sekundy
-       </simpara>
-      </listitem>
-      <listitem>
-       <simpara>
-        "tm_min" - minuty
-       </simpara>
-      </listitem>
-      <listitem>
-       <simpara>
-        "tm_hour" - godziny
-       </simpara>
-      </listitem>
-      <listitem>
-       <simpara>
-        "tm_mday" - dzień miesiąca
-       </simpara>
-      </listitem>
-      <listitem>
-       <simpara>
-        "tm_mon" - miesiąc roku, 0 to styczeń
-       </simpara>
-      </listitem>
-      <listitem>
-       <simpara>
-        "tm_year" - ilość lat od 1900
-       </simpara>
-      </listitem>
-      <listitem>
-       <simpara>
-        "tm_wday" - dzień tygodnia
-       </simpara>
-      </listitem>
-      <listitem>
-       <simpara>
-        "tm_yday" - dzień roku
-       </simpara>
-      </listitem>
-      <listitem>
-       <simpara>
-        "tm_isdst" - czy aktualnie jest czas zimowy
-       </simpara>
-      </listitem>
-     </itemizedlist>
-    </para>
- <note>
-   <simpara>
-    Miesiące rozpoczynają się od 0 (Sty) do 11 (Gru) i dni tygodnia rozpoczynają się od 0 (Nie) do 6 (Sob).
-   </simpara>
-  </note>
+<!-- CREDITS: qrak -->
+<refentry xml:id="function.localtime" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>localtime</refname>
+  <refpurpose>Pobiera czas lokalny</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>array</type><methodname>localtime</methodname>
+   <methodparam choice="opt"><type>int</type><parameter>znacznik_czasu</parameter><initializer>time()</initializer></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>asocjacyjna</parameter><initializer>false</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   Funkcja <function>localtime</function> zwraca tablicę
+   identyczną do tej zwracanej przez wywołanie identycznej
+   funkcji w C.
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    
+    &date.timestamp.description;
+   
+    <varlistentry>
+     <term><parameter>asocjacyjna</parameter></term>
+     <listitem>
+      <para>
+       Jeżeli ustawiono &false; lub nie podano, to tablica jest zwracana jako, 
+       zwykła tablica indeksowana numerycznie. Jeżeli parametr ustawiono na &true;, to
+       <function>localtime</function> zwraca tablicę wielowymiarową zawierającą
+       rozmaite elementy struktury zwracanej przez wywołanie funkcji localtime w C
+       Nazwy różnych kluczy z tej tablicy są następujące:
+      </para>
+      <para>
+       <itemizedlist>
+        <listitem>
+         <simpara>
+          "tm_sec" - sekundy <literal>0</literal> do <literal>59</literal>
+         </simpara>
+        </listitem>
+        <listitem>
+         <simpara>
+          "tm_min" - minuty, <literal>0</literal> do <literal>59</literal>
+         </simpara>
+        </listitem>
+        <listitem>
+         <simpara>
+          "tm_hour" - godziny, <literal>0</literal> do <literal>23</literal>
+         </simpara>
+        </listitem>
+        <listitem>
+         <simpara>
+          "tm_mday" - dzień miesiąca, <literal>1</literal> do <literal>31</literal>
+         </simpara>
+        </listitem>
+        <listitem>
+         <simpara>
+          "tm_mon" - miesiąc roku, <literal>0</literal> (styczeń) do <literal>11</literal> (grudzień)
+         </simpara>
+        </listitem>
+        <listitem>
+         <simpara>
+          "tm_year" - ilość lat od 1900
+         </simpara>
+        </listitem>
+        <listitem>
+         <simpara>
+          "tm_wday" - dzień tygodnia, <literal>0</literal> (niedziela) do <literal>6</literal> (sobota)
+         </simpara>
+        </listitem>
+        <listitem>
+         <simpara>
+          "tm_yday" - dzień roku, <literal>0</literal> do <literal>365</literal>
+         </simpara>
+        </listitem>
+        <listitem>
+         <simpara>
+          "tm_isdst" - czy trwa czas letni? 
+         </simpara>
+         <simpara>
+          Liczba dodatnia, jeżeli tak, <literal>0</literal> jeżeli nie, ujemna jeżeli nie wiadomo.
+         </simpara>
+        </listitem>
+       </itemizedlist>
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="errors">
+  &reftitle.errors;
+   
+   &date.timezone.errors.description;
+ 
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      
+      &date.timezone.errors.changelog;
+     
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
    <example>
-    <title><function>time</function> przykład</title>
+    <title>Przykład użycia <function>localtime</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -123,8 +172,18 @@ Array
     </screen>
    </example>
   </para>
-   </refsect1>
-  </refentry>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>getdate</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

@@ -1,59 +1,162 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: qrak Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 631b47c6b2c585cdbf666aaa464442e8b13399d1 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-<!-- splitted from ./en/functions/datetime.xml, last change in rev 1.2 -->
-  <refentry xml:id="function.microtime" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>microtime</refname>
-    <refpurpose>
-     Zwraca aktualny uniksowy znacznik czasu z mikrosekundami
-    </refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>string</type><methodname>microtime</methodname>
-      <void/>
-     </methodsynopsis>
-    <para>
-     Zwraca łańcuch znaków "msec sec", gdzie sec jest aktualnym czasem,
-     mierzonym jako liczba sekund od uniksowej Epoki (1 stycznia 1970, 0:00:00
-     GMT), natomiast msec jest aktualną liczbą mikrosekund. Funkcja ta dostępna
-     jest wyłącznie na systemach operacyjnych, które obsługują wywołanie
-     systemowe gettimeofday().
-    </para>
-    <para>
-     Obydwie części łańcucha znaków są podawane w sekundach.
-     <example>
-      <title>przykład <function>microtime</function></title>
-      <programlisting role="php">
+<!-- CREDITS: qrak -->
+<refentry xml:id="function.microtime" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>microtime</refname>
+  <refpurpose>Zwraca aktualny uniksowy znacznik czasu z mikrosekundami</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>mixed</type><methodname>microtime</methodname>
+   <methodparam choice="opt"><type>bool</type><parameter>get_as_float</parameter><initializer>false</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>microtime</function> zwraca aktualny znacznik czasu Uniksa z
+   mikrosekundami. Ta funkcja jest dostępna tylko na systemach, które
+   umożliwiają wywołanie systemowe gettimeofday().
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>get_as_float</parameter></term>
+     <listitem>
+      <para>
+       Jeżeli użyto i ustawiono na &true;, <function>microtime</function> zwróci
+       liczbę zmiennoprzecinkową (<type>float</type>) zamiast łańcucha znaków (<type>string</type>),
+	   jak opisano w sekcji "Zwracane wartości" poniżej.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Domyślnie <function>microtime</function> zwraca <type>string</type> w
+   w postaci "msek sek", gdzie <literal>sek</literal> to liczba sekund, które 
+   upłynęły od epoki Uniksa (1 stycznia 1970 00:00:00 GMT), a <literal>msek</literal>,
+   to liczba sekund, które upłynęły od <literal>sek</literal>,
+   która także wyrażona jest w sekundach.
+  </para>
+  <para>
+   Jeżeli <parameter>get_as_float</parameter> ustawiono na &true;, to
+   <function>microtime</function> zwraca <type>float</type>, który
+   reprezentuje obecny czas w sekundach do epoki Uniksa, z dokładnością
+   do najbliższej mikrosekundy.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>5.0.0</entry>
+       <entry>
+        Dodano parametr <parameter>get_as_float</parameter>.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Mierzenie czasu pracy skryptu dzięki <function>microtime</function></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
-function getmicrotime(){ 
-    list($usec, $sec) = explode(" ",microtime()); 
-    return ((float)$usec + (float)$sec); 
-    } 
+/**
+ * Prosta funkcja do odtworzenia zachowania w PHP 5
+ */
+function microtime_float()
+{
+    list($usec, $sec) = explode(" ", microtime());
+    return ((float)$usec + (float)$sec);
+}
 
-$time_start = getmicrotime();
-    
-for ($i=0; $i < 1000; $i++){
-    //nie rób nic przez 1000 iteracji
-    }
+$czas_start = microtime_float();
 
-$time_end = getmicrotime();
-$time = $time_end - $time_start;
+// Poczekaj chwilę
+usleep(100);
 
-echo "Nie robił nic przez $time sekund";
+$czas_koniec = microtime_float();
+$czas = $czas_koniec - $czas_start;
+
+echo "Nie robiłem nic przez $czas sekund\n";
 ?>
 ]]>
-      </programlisting>
-     </example>
-    </para>
-    <para>
-     Patrz także <function>time</function>.
-    </para>
-   </refsect1>
-  </refentry>
+    </programlisting>
+   </example>
+   <example>
+    <title>Mierzenie czasu pracy skryptu w PHP 5</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$czas_start = microtime(true);
+
+// Poczekaj chwilę
+usleep(100);
+
+$czas_koniec = microtime(true);
+$czas = $czas_koniec - $czas_start;
+
+echo "Nie robiłem nic przez $czas sekund\n";
+?>
+]]>
+    </programlisting>
+   </example>
+   <example>
+    <title><function>microtime</function> i <literal>REQUEST_TIME_FLOAT</literal> (od PHP 5.4.0)</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// Losowy czas uśpienia skryptu
+usleep(mt_rand(100, 10000));
+
+// Od PHP 5.4.0, w tablicy superglobalnej $_SERVER dostępny jest klucz REQUEST_TIME_FLOAT.
+// Zawiera on znacznik czasu w momencie rozpoczęcia żądania, z precyzją do mikrosekund.
+$czas = microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"];
+
+echo "Nie robiłem nic przez $czas sekund\n";
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>time</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
