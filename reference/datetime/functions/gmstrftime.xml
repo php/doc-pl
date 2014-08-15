@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: qrak Status: ready -->
+<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: qrak Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: sobak -->
   <refentry xml:id="function.gmstrftime" xmlns="http://docbook.org/ns/docbook">
    <refnamediv>
     <refname>gmstrftime</refname>
@@ -13,8 +14,7 @@
      <methodsynopsis>
       <type>string</type><methodname>gmstrftime</methodname>
       <methodparam><type>string</type><parameter>format</parameter></methodparam>
-      <methodparam
-      choice="opt"><type>int</type><parameter>znacznik_czasu</parameter></methodparam>
+      <methodparam choice="opt"><type>int</type><parameter>znacznik_czasu</parameter><initializer>time()</initializer></methodparam>
      </methodsynopsis>
     <para>
      Zachowuje się identycznie jak <function>strftime</function> z tym
@@ -24,12 +24,40 @@
      podczas gdy druga "Jan 01 1999 01:00:00".
     </para>
  </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>format</parameter></term>
+     <listitem>
+      <para>
+       Zobacz opis przy <function>strftime</function>.
+      </para>
+     </listitem>
+    </varlistentry>
+    &date.timestamp.description;
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca łańcuch sformatowany zgodnie z podanym łańcuchem formatów,
+   używając podanego <parameter>znacznika_czasu</parameter> lub obecnego
+   czasu lokalnego, jeżeli nie podano znacznika. Nazwy miesięcy, dni tygodnia i
+   innych ciągów zależnych od języka, bazują na obecnej lokalizacji ustawionej
+   funkcją <function>setlocale</function>.
+  </para>
+ </refsect1>
    
  <refsect1 role="examples">
    &reftitle.examples;
    <para>
     <example>
-     <title>przykład <function>gmstrftime</function></title>
+     <title>Przykład użycia <function>gmstrftime</function></title>
      <programlisting role="php">
 <![CDATA[
 <?php
