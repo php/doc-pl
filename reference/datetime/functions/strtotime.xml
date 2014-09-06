@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: c2cc749d26372229fe0afd177600a3b5450f343d Maintainer: sobak Status: ready -->
+<!-- EN-Revision: e41aab5ecacf449e51179886c17f1d41735b0234 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: qrak -->
 <!-- splitted from ./en/functions/datetime.xml, last change in rev 1.8 -->
@@ -134,14 +134,6 @@
         Mikrosekundy stały się dozwolone, ale są ignorowane.
        </entry>
       </row>
-      <row>
-       <entry>4.4.0</entry>
-       <entry>
-        Przed wersją PHP 4.4.0, <literal>"next"</literal> było niepoprawnie
-        obliczane jako +2. Zazwyczaj poprawnym rozwiązaniem tego problemu jest
-        użycie <literal>"+1"</literal>.
-       </entry>
-      </row>
      </tbody>
     </tgroup>
    </informaltable>
@@ -205,11 +197,12 @@ if (($timestamp = strtotime($str)) === false) {
     20:45:54 UTC do 19.01.2038 03:14:07 UTC. (Są to daty
     odpowiadające minimalnej i maksymalnej wartości dla 32-bitowej liczby
     całkowitej ze znakiem).
-    Ponadto, nie wszystkie platformy wspierają ujemne zaczniki czasu, więc
-	zakres dat może być ograniczony do początku epoki Uniksa. Oznacza to,
+   </para>
+   <para>
+    Do PHP 5.1.0, nie wszystkie platformy wspierały ujemne zaczniki czasu, więc
+	zakres dat mógł być ograniczony do początku epoki Uniksa. Oznacza to,
     że np. daty wcześniejsze niż 01.01.1970 nie będą działać na Windows,
-    niektórych dystrybucjach Linuksa i kilku innych systemach. PHP 5.1.0 i
-    nowsze pokonały jednakże to ograniczenie.
+    niektórych dystrybucjach Linuksa i kilku innych systemach.
    </para>
    <para>
     W 64-bitowych wersjach PHP, poprawny zakres znaczników czasu jest niemalże

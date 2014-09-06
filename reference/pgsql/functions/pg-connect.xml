@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 29fd59a70b23102ac9f09b87e509a4a68a7df81d Maintainer: sobak Status: ready -->
+<!-- EN-Revision: dc136f50a3dd8f7071d84b9a18628dbf79151392 Maintainer: sobak Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.2 -->
 <refentry xml:id="function.pg-connect" xmlns="http://docbook.org/ns/docbook">
@@ -38,7 +38,7 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>łąńcuch_połączenia</parameter></term>
+     <term><parameter>łańcuch_połączenia</parameter></term>
      <listitem>
       <para>
        <parameter>łąńcuch_połączenia</parameter> może być pusty, użyte zostaą wszystkie domyślne parametry lub
@@ -71,8 +71,14 @@
      <listitem>
       <para>
        Jeśli jest podany <constant>PGSQL_CONNECT_FORCE_NEW</constant>, wtedy nowe połączenie
-       jest tworzone, nawet jeśli <parameter>łąńcuch_połączenia</parameter> jest identyczny z
+       jest tworzone, nawet jeśli <parameter>łańcuch_połączenia</parameter> jest identyczny z
        istniejącym połączeniem.
+      </para>
+	  <para>
+       Jeżeli jest podany <constant>PGSQL_CONNECT_ASYNC</constant>, to połączenie
+       jest ustanawiane asynchronicznie. Stan połączenia można wtedy sprawdzić
+       funkcją <function>pg_connect_poll</function> lub
+       <function>pg_connection_status</function>.
       </para>
      </listitem>
     </varlistentry>
@@ -87,11 +93,36 @@
   </para>
  </refsect1>
 
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>5.6.0</entry>
+       <entry>
+        Można podać stałą <constant>PGSQL_CONNECT_ASYNC</constant>
+        jako <parameter>typ_połączenia</parameter>.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
  <refsect1 role="examples">
   &reftitle.examples;
   <para>
    <example>
-    <title>Używanie pg_connect</title>
+    <title>Użycie <function>pg_connect</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
