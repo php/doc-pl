@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 519e5a4320843f375873960de319468547d904d3 Maintainer: sobak Status: ready -->
+<!-- $Revision$ -->
+
+<appendix xml:id="about" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title>O podręczniku</title>
+
+ <sect1 xml:id="about.formats">
+  <title>Formaty</title>
+  <para>
+   Podręcznik PHP jest dostarczany w kilku formatach. Można je podzielić na
+   dwie grupy: dostępne online i paczki do pobrania.
+  </para>
+  <note>
+   <para>
+    Niektórzy wydawcy udostępnili drukowalne wersje tego poręcznika. Nie
+    możemy polecić żadnego z nich, jako że bardzo szybko się one deaktualizują.
+   </para>
+  </note>
+  <para>
+   Podręcznik jest dostępny online na <link xlink:href="&url.php;">stronie PHP.net</link>
+   i stronach wielu mirrorów. Dla najlepszej wydajności wybierz mirror
+   najbliżej Ciebie. Wersja online ma obecnie dwa arkusze <acronym>CSS</acronym>:
+   przystosowany do czytania na stronie i drukowania.
+  </para>
+  <para>
+   Dwie najistotniejsze zalety podręcznika online nad większością formatow offline to
+   integracja z <link linkend="about.notes">notatkami tworzonymi przez użytkowników</link>
+   oraz <link xlink:href="&url.php.urlhowto;">skróty URL</link>, które pozwalają na szybkie
+   dostanie się na pożądane strony manuala. Oczywistą wadą jest konieczność dostępu do internetu,
+   w celu czytania tej wersji podręcznika.
+  </para>
+  <para>
+   Istnieje kilka formatów offline tego podręcznika i najbardziej odpowiedni
+   format zależy od systemu operacyjnego i osobistych preferencji. Aby dowiedzieć
+   się w jaki sposób manual jest generowany w tak wielu formatach, zapoznaj się
+   z sekcją <link linkend="about.generate">"Jak są generowane formaty"</link>
+   tego dodatku.
+  </para>
+  <para>
+   Najbardziej wieloplatformową wersją podręcznika jest format HTML. Jest on
+   udostępniany jako jeden duży plik HTML oraz jako paczka osobnych plików dla
+   każdej sekcji (kilka tysięcy plików).
+   Udostępniamy te wersje w formie skompresowanej, więc wymagane jest odpowiednie
+   narzędzie, aby wypakować pliki z archiwów.
+  </para>
+  <!--
+   The PDF version of the PHP Manual is "currently" unavailable. Perhaps
+   one day it will exist.
+  <para>
+   Another popular cross-platform format, and the format most suited to
+   printing, is PDF (also known as Adobe Acrobat). But beware that the manual
+   is over 2000 pages in length, and constantly being revised.
+  </para>
+  <note>
+   <para>
+    Many programs exist to view <acronym>PDF</acronym> files, such as the
+    <link xlink:href="&url.adobe.acrobat;">Adobe Acrobat Reader</link>.
+   </para>
+  </note>
+  -->
+  <para>
+   Dla platformy Windows wersja <productname>Windows HTML Help</productname>
+   tego podręcznika ulepsza format HTML tak, aby mógł zostać użyty z aplikacją
+   <productname>Windows HTML Help</productname>. Ten format udostępnia
+   wyszukiwanie pełnotekstowe, indeks tekstowy oraz zakładki. Wiele
+   popularnych środowisk deweloperskich PHP pod Windows jest zintegrowanych
+   z tym formatem manuala. Programy do wyświetlania formatu CHM są dostęne
+   także dla Linuksa - sprawdź
+   <link xlink:href="&url.xchm;">xCHM</link> lub
+   <link xlink:href="&url.gnochm;">GnoCHM</link>.
+  </para>
+  
+  <para>
+   Dostępna jest także <link xlink:href="&url.php.echm;">wersja rozszerzona CHM</link>,
+   która jest rzadziej aktualizowana, ale zawiera wiele dodatkowych możliwości.
+   Działa ona jednak tylko na systemie <productname>Microsoft Windows</productname>,
+   z powodu technologii użytej przy tworzeniu stron dla tego formatu.
+  </para>
+ </sect1>
+ 
+ <sect1 xml:id="about.notes">
+  <title>O notatkach użytkowników</title>
+  <para>
+   Notatki tworzone przez użytkowników odgrywają ważną rolę w rozwoju tego
+   podręcznika. Dzięki pozwoleniu czytelnikom na dodawanie przykładów, informacji
+   o pułapkach i innemu wyjaśnieniu trudnych zagadnień, możemy włączyć ich
+   sugestie do właściwej treści podręcznika. Dopóki notatki nie zostaną
+   wcielone do manuala, mogą zostać wyświetlone w wersji online oraz niektórych
+   formatach offline.
+  </para>
+  <note>
+   <para>
+    Notatki tworzone przez użytkowników nie są moderowane przed pojawieniem się
+    online, więc nie możemy zagwarantować odpowiedniej ich jakości (tak samo
+    jak nie gwarantujemy dokładności samego podręcznika.
+   </para>
+  </note>
+  <note>
+   <para>
+    Ze względów licencyjnych, notatki użytkowników są uznawane za część
+    podręcznika PHP, a więc są udostępniane na tej samej licencji co manual
+    (obecnie Creative Commons Attribution). Więcej szczegółów dostępnych jest
+    na stronie <link linkend="copyright">Prawa Autorskie</link>.
+   </para>
+  </note>
+ </sect1>
+
+ <sect1 xml:id="about.prototypes">
+   <title>Jak odczytywać definicję (prototyp) funkcji</title>
+   <para>
+    Każda funkcja w podręczniku jest udokumentowana w formie skrótowej. Umiejętność
+    jej odczytywania i rozumienia sprawi, że nauka PHP będzie znacznie prostsza.
+    Zamiast kopiowaia gotowych przykładów, każdy powinien wiedzieć jak czytać
+    definicje (prototypy) funkcji. Zaczynamy:
+   </para>
+   <note>
+    <title>
+     Założenie: Podstawowe rozumienie <link linkend="language.types">typów</link>
+    </title>
+    <para>
+     Pomimo iż PHP jest luźnie typowanem językiem, ważne jest podstawowe
+     zrozumienie <link linkend="language.types">typów</link>, bo mają
+     one istotne znaczenie.
+    </para>
+   </note>
+   <para>
+    Definicja funkcji mówi nam jaki
+    typ wartości jest <link linkend="functions.returning-values">zwracany</link>.
+    Użyjmy funkcji <function>strlen</function>, jako naszego pierwszego przykładu:
+   </para>
+   <para>
+    <screen role="html">
+<![CDATA[
+strlen
+
+(PHP 4, PHP 5)
+strlen -- Określ długość ciągu tekstowego
+
+Opis
+int strlen ( string $string )
+
+Zwraca długość podanego parametru ciąg.
+]]>
+    </screen>
+   </para>
+   <para>
+    <table>
+     <title>Wyjaśnienie definicji funkcji</title>
+      <tgroup cols="2">
+       <thead>
+        <row>
+         <entry>Część</entry>
+         <entry>Opis</entry>
+        </row>
+       </thead>
+       <tbody>
+        <row>
+         <entry>
+          strlen
+         </entry>
+         <entry>
+          Nazwa funkcji.
+         </entry>
+        </row>
+        <row>
+         <entry>
+          (PHP 4, PHP 5)
+         </entry>
+         <entry>
+          strlen() jest dostępna we wszystkich wersjach PHP 4 i PHP 5
+         </entry>
+        </row>
+        <row>
+         <entry>
+          int
+         </entry>
+         <entry>
+          Typ wartości, którą zwraca funkcja. Jest nim
+          <type>integer</type> (długość ciągu jest określana jako
+          numer). 
+         </entry>
+        </row>
+        <row>
+         <entry>
+          ( string $string )
+         </entry>
+         <entry>
+          Pierwszy (i w tym wypadku jedyny) parametr/argument dla tej 
+          funkcji jest nazwany <parameter>string</parameter> i jego typ to 
+          <type>string</type>.
+         </entry>
+        </row>
+       </tbody>
+      </tgroup>
+     </table>
+    </para>
+    <para>
+     Możemy przepisać definicję powyższej funkcji w sposób ogólny:
+    </para>
+    <para>
+     <screen>
+<![CDATA[
+      zwracany typ    nazwa funkcji    ( typ argumentu   nazwa argumentu )
+]]>
+     </screen>
+    </para>
+    <para>
+     Wiele funkcji przyjmuje wiele parametrów, tak jak <function>in_array</function>.
+     Jej prototyp wygląda następująco:
+    </para>
+    <para>
+     <screen>    
+<![CDATA[
+      bool in_array ( mixed $igła, array $stóg_siana [, bool $ścisłe])
+]]>
+     </screen>
+    </para>
+    <para>
+     Co to oznaca? in_array() zwraca wartość
+     <link linkend="language.types.boolean">boolean</link>, &true; przy
+     powodzeniu (jeśli <parameter>igła</parameter> została znaleziona w parametrze
+     <parameter>stóg_siana</parameter>&return.falseforfailure; (jeśli
+     <parameter>igła</parameter> nie została znaleziona w parametrze
+     <parameter>stóg_siana</parameter>). Pierwszy argument jest nazwany
+     <parameter>igła</parameter> i może być różnych
+     <link linkend="language.types">typów</link>, więc nazywamy go
+     "<emphasis>mixed</emphasis>". Parametr <parameter>igła</parameter>
+     typu mixed (to, czego szukamy) może być typem skalarnym (string, integr
+     lub <link linkend="language.types.float">float</link>) lub
+     <link linkend="language.types.array">tablicą</link>.
+     <parameter>stóg_siana</parameter> (tablica, którą przeszukujemy) jest 
+     drugim parametrem. Trzeci, <emphasis>opcjonalny</emphasis> parametr jest 
+     nazwany <parameter>ścisłe</parameter>. Wszystkie argumenty opcjonalne umieszczono 
+     w <emphasis>[</emphasis> nawiasach klamrowych <emphasis>]</emphasis>.  Podręcznik 
+     podaje, że parametr <parameter>ścisłe</parameter> domyślnie ustawiony jest na 
+     wartość logiczną &false;. Zapoznaj się ze stroną podręcznika dla odpowiedniej funkcji,
+     aby dowiedzieć się jak działa.
+    </para>
+    <para>
+     Istnieją także funkcje z bardziej złożoną informacją o wersji PHP. Weźmy
+     <function>html_entity_decode</function> jako przykład:
+    </para>
+    <para>
+     <screen>    
+<![CDATA[
+(PHP 4 >= 4.3.0, PHP 5)
+]]>
+     </screen>
+    </para>
+    <para>
+     Oznacza to, że ta funkcja jest dostępna
+     od wydania PHP 4.3.0.
+    </para>
+ </sect1>
+ 
+ <sect1 xml:id="about.phpversions">
+  <title>Wersje PHP udokumentowane w podręczniku</title>
+  <para>
+   <!-- FIXME PHP_6 What is the latest? -->
+   Podręcznik zawiera informacje na temat przeszłych, obecnych i przyszłych
+   wersji PHP. Zmiany w zachowaniu są udokumentowane za pomocą notatek, tabel
+   zmian i informacji w tekście na stronach podręcznika.
+   Najwcześniejszą udokumentowaną wersją jest PHP 4.1.0,
+   a ostatnią PHP 5.x.x.
+  </para>
+  <para>
+   Kiedy dokumentacja występuje dla ostatniej (niewydanej) wersji deweloperskiej
+   PHP, będzie opisana ostrzeżeniem "dostępne w repozytorium" lub "wersja
+   deweloperska". I mimo iż te zmiany powinny być z góry zaplanowane, czasem
+   mogą się zmienić.
+  </para>
+  <para>
+   Cały rozwój ma miejsce w repozytorium Git. Można pobrać źródła postępując
+   zgodnie ze stroną <link xlink:href="&url.php.anongit;">anonimowy dostep
+   do Git</link>. Ten sam kod źrółowy można pobrać w postaci
+   <link xlink:href="&url.php.snapshots;">snapshotów PHP</link>, które są dostępne
+   dla każdej aktywnej gałęzi PHP.
+  </para>
+  <para>
+   Uściślając, podręcznik będzie odnosił się do wersji PHP major, minor i point.
+   Używając PHP <literal>5.3.1</literal> jako przykładu, liczba <emphasis>5</emphasis>
+   oznacza wersję major (główną), <emphasis>3</emphasis> oznacza minor, a
+   <emphasis>1</emphasis> to najmniejsze wydanie (point). Zazwyczaj PHP dodaje nowe możliwości
+   do wydań major i minor, a poprawki błędów do wydań typu point. Jednakże ta
+   konwencja nie zawsze się sprawdza.
+  </para>
+  <para>
+   Zauważ także, że podręcznik PHP jest napisany w czasie teraźniejszym, nie przyszłym,
+   nawet dla udokumentowanych możliwości, które nie są jeszcze dostepne. Powodem jest to,
+   że manua.l przechodzi próbę czasu i nie wymaga zmian form gramatycznych
+   po każdym wydaniu PHP.
+  </para>
+  <para>
+   Wiele razy podręcznik wymienia "Wartości domyślne" dla dyrektyw PHP. Wartości 
+   te oznaczają to, jak PHP zachowuje się bez pliku &php.ini;,
+   więc mogą się różnić od wartości w dostarczonych plikach
+   <filename>php.ini-development</filename> i <filename>php.ini-production</filename>.
+   Odnoszą się one także do najnowszej wersji PHP, jednak rejestry zmian
+   uwzględniają poprzednie wartości. Zobacz <link linkend="ini.list">dodatek oP 
+   dyrektywach PHP</link>, aby zobaczyć te wartości i ich zmiany.
+  </para>
+ </sect1>
+   
+ <sect1 xml:id="about.more">
+  <title>Jak znaleźć więcej informacji o PHP</title>
+  <para>
+   Ten podręcznik nie próbuje dostarczyć informacji o ogólnych
+   praktykach programistycznych. Początkujący programiści
+   mogą uznać programowanie w PHP za trudne, przy użyciu
+   wyłącznie tego manuala. Zamiast tego, poszukaj czegoś bardziej
+   ukierunkowanego na początkujących.
+  </para>
+  <para>
+   Istnieje szereg aktywnych list mailingowych do dyskusji o wszystkich aspektach
+   programowania w PHP. Jeżeli utknąłeś ze swoim problemem, rozważ skorzystanie z tych list.
+   Listę opcji wsparcia, w tym listy mailingowe, opisuje <link
+   xlink:href="&url.php.support;">strona wsparcia PHP.net</link>.
+  </para>
+ </sect1>
+
+ <sect1 xml:id="about.howtohelp">
+  <title>Jak pomóc ulepszyć dokumentację</title>
+  <para>
+   Istnieją trzy sposoby, na które każdy może pomóc ulepszyć ten podręcznik.
+  </para>
+  <para>
+   Jeżeli znalazłeś błąd w manualu, w dowolnym języku, zgłoś go proszę
+   używając systemu błędów na <link xlink:href="&url.php.bugs;">&url.php.bugs;</link>.
+   Sklasyfikuj błąd jako <literal>"Documentation Problem"</literal>. Wszystkie problemy
+   związane z dokumentacją, także te o formatach podręcznika, powinny być zgłaszane jako 
+   rapoty błędów.
+  </para>
+  <note>
+   <para>
+    Nie nadużywaj systemu błędów, wysyłając prośby o pomoc. 
+    Zamiast tego skorzystaj z jednej z wielu
+    <link xlink:href="&url.php.support;">opcji wsparcia</link>.
+   </para>
+  </note>
+  <para>
+   Współtworząc notatki, użytkownicy mogą podać dodatkowe przykłady, opisać pułapki i
+   dodać wyjaśnienia dla innych czytelników. Jednakże proszę, nie wysyłaj raportów błędów
+   używając systemu notatek. Więcej szczegółów znajdziesz w sekcji zatytułowanej <link
+   linkend="about.notes">'O notatkach użytkowników'</link>.
+  </para>
+  <para>
+   Podręcznik PHP jest tłumaczony na wiele języków. Znajomość angielskiego i
+   języka obcego otwiera kolejną drogę pomocy w ulepszaniu manuala PHP, poprzez
+   pracę w teamie tłumaczy. Aby uzyskać informacje o rozpoczynaniu nowego 
+   tłumaczenia lub pomocy w istniejącym tłumaczeniu przeczytaj
+   <link xlink:href="&url.php.dochowto;">&url.php.dochowto;</link>.
+  </para>
+  <para>
+   Projekt Dokumentacji PHP ma także kanał IRC, gdzie przesiaduje wielu autorów
+   podręcznika. Wejdź na kanał <literal>#php.doc</literal> na serwerze
+   <literal>irc.efnet.org</literal> i porozmawiaj na temat możliwych sposobów
+   ulepszenia dokumentacji PHP.
+  </para>
+ </sect1>
+ 
+ <sect1 xml:id="about.generate">
+  <title>Jak generujemy formaty</title>
+  <para>
+   Ten podręcznik jest napisany w <acronym>XML</acronym> z użyciem <link
+   xlink:href="&url.docbook.xml;">DocBook XML DTD</link> oraz <link
+   xlink:href="&url.phd;"><acronym>PhD</acronym></link> (The [PH]P based 
+   [D]ocBook renderer) dla łatwiejszego utrzymania i formatowania.
+  </para>
+  <para>
+   Użycie <acronym>XML</acronym> jako formatu źródłowego daje
+   możliwość wygenerowania wielu formatów wyjściowych z plików
+   źródłowych, przy potrzebie zarządzania tylko jednym dokumentem dla wszystkich formatów.
+   Narzędziem używanym do formatowania podręcznika online jest <link
+   xlink:href="&url.phd;">PhD</link>.
+   Używamy programu <link xlink:href="&url.winhelp;">Microsoft HTML Help
+   Workshop</link>, aby wygenerować manual w formacie <productname>Windows HTML Help</productname>,
+   no i oczywiście PHP samego w sobie aby wykonać pewne
+   dodatkowe konwersje i formatowanie.
+  </para>
+  <para>
+   Podręcznik PHP jest generowany w różnych językach i formatach, zobacz 
+   <link xlink:href="&url.php.docs;">&url.php.docs;</link>, aby poznać szczegóły.
+   Kod źródłowy <acronym>XML</acronym> może zostać pobrany z SVN lub
+   wyświetlony na <link xlink:href="&url.php.svn;">&url.php.svn;</link>. Dokumentacja
+   znajduje się w module <literal>phpdoc</literal>.
+  </para>
+ </sect1>
+
+ <sect1 xml:id="about.translations">
+  <title>Tłumaczenia</title>
+  <para>
+   Podręcznik PHP jest dostępny nie tylko w różnych formatach, ale
+   także w różnych językach. Treść podręcznika jest 
+   najpierw pisana po angielsku, następnie zespoły ludzi na całym
+   świecie zajmują się tłumaczeniem go na ich języki ojczyste.
+   Jeżeli tłumaczenie dla określonej funkcji lub rozdziału nie zostało
+   jeszcze wykonane, system budowania podręcznika zastępuje je wersją
+   angielską.
+  </para>
+  <para>
+   Ludzie zaangażowani w tłumaczenia pracują na kodzie źródłowym <acronym>XML</acronym>
+   dostępnym na <link xlink:href="&url.php.svn;">&url.php.svn;</link>
+   i tłumaczą go na ich własne języki. Tłumacze 
+   <emphasis>nie korzystają</emphasis> z wygenerowanych wersji (jak 
+   <acronym>HTML</acronym> lub czysty tekst), ponieważ to system budowania 
+   podręcznika zajmuje się konwersją z <acronym>XML</acronym> na formaty czytelne 
+   dla człowieka.
+  </para>
+  <note>
+   <para>
+    Aby pomóc w tłumaczeniu dokumentacji, 
+    nawiąż kontakt z grupą tłumaczy/autorów dokumentacji subskrybując
+    listę mailingową phpdoc: wyślij pusty email na adres <link
+    xlink:href="mailto:&email.php.doc.subscribe;">&email.php.doc.subscribe;</link>.
+    Adresem listy mailingowej jest <literal>&email.php.doc;</literal>. W wiadomości
+    wyraź zainteresowanie tłumaczeniem podręcznika, a ktoś udzieli wskazówek,
+    pomagając rozpocząć tłumaczenie w nowym języku lub 
+    kontaktując się z grupą zajmującą się tłumaczeniem na pożądany język.
+   </para>
+  </note>
+  <para>
+   W tym momencie podręcznik jest dostępny, częściowo lub nie, w ponad 10 językach.
+  </para>
+  <para>
+   Wszystkie z nich mogą zostać pobrane tutaj: <link xlink:href="&url.php.docs;">&url.php.docs;</link>.
+  </para>
+ </sect1>
+
+</appendix>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
