@@ -1,48 +1,109 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: dombal Status: Ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: fead37cf3b37fa12c0462767dd3ed106e9c6eb0d Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-  <refentry xml:id="function.method-exists" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>method_exists</refname>
-    <refpurpose>Sprawdza czy metoda klasy istnieje</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>bool</type><methodname>method_exists</methodname>
-      <methodparam><type>object</type><parameter>obiekt</parameter></methodparam>
-      <methodparam><type>string</type><parameter>nazwa_metody</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     Funkcja ta zwraca &true; jeżeli metoda określona przez parametr
-     <parameter>nazwa_metody</parameter> została zdefiniowany dla obiektu
-     <parameter>object</parameter>, &false; w przeciwnym przypadku.
-    </para> 
-    <para> 
-     <example> 
-      <title><function>method_exists</function> przykład</title> 
-      <programlisting role="php"> 
-  <![CDATA[ 
-  <?php 
-  $directory = new Directory('.'); 
-  var_dump(method_exists($directory,'read')); 
-  ?> 
-  ]]> 
-      </programlisting> 
-      &example.outputs; 
-      <screen> 
-  <![CDATA[ 
-  bool(true) 
-  ]]> 
-      </screen> 
-     </example> 
-    </para>
-    <para>
-     Patrz także: <function>function_exists</function> i
-     <function>is_callable</function>.
-    </para>
-   </refsect1>
-  </refentry>
+<refentry xml:id="function.method-exists" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>method_exists</refname>
+  <refpurpose>Sprawdza czy istnieje metoda klasy</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>bool</type><methodname>method_exists</methodname>
+   <methodparam><type>mixed</type><parameter>obiekt</parameter></methodparam>
+   <methodparam><type>string</type><parameter>nazwa_metody</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Sprawdza czy metoda klasy istnieje w ramach podanego
+   <parameter>obiekt</parameter>u.
+  </para>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>obiekt</parameter></term>
+     <listitem>
+      <para>
+       Instancja obiektu lub nazwa klasy
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>nazwa_metody</parameter></term>
+     <listitem>
+      <para>
+       Nazwa metody
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca &true; jeżeli metoda podana jako <parameter>nazwa_metody</parameter>
+   została zdefiniowana dla podanego <parameter>obiekt</parameter>u, &false; 
+   w przeciwnym wypadku.
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  &note.uses-autoload;
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład użycia <function>method_exists</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$directory = new Directory('.');
+var_dump(method_exists($directory,'read'));
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+bool(true)
+]]>
+    </screen>
+   </example>
+   <example>
+    <title>Przykład statycznego użycia <function>method_exists</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+var_dump(method_exists('Directory','read'));
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+bool(true)
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>function_exists</function></member>
+    <member><function>is_callable</function></member>
+    <member><function>class_exists</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

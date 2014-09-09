@@ -1,47 +1,88 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: sMeRFx Status: ready -->
-<!-- splitted from ./en/functions/strings.xml, last change in rev 1.2 -->
-  <refentry xml:id="function.strtoupper" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>strtoupper</refname>
-    <refpurpose>Zmienia wszystkie litery w łańcuchu na duże</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>string</type><methodname>strtoupper</methodname>
-      <methodparam><type>string</type><parameter>string</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     Zwraca <parameter>string</parameter> z wszystkimi literami
-     alfabetu przekonwertowanymi na duże.
-    </para>
-    <para>
-     Zauważ, że  'alfabet' jest określany przez obecny język lokalny. Na
-     przykład, w domyślnym, lokalnym "C"  takie znaki jak umlaut-a
-     (ä) nie będą konwertowane.
-    </para>
-    <example>
-     <title><function>strtoupper</function> przykład</title>
-     <programlisting role="php">
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 14af302c9c0e561fa6f9cdd956268758ba9a89c5 Maintainer: sobak Status: ready -->
+<!-- $Revision$ -->
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.strtoupper">
+ <refnamediv>
+  <refname>strtoupper</refname>
+  <refpurpose>Zmienia wszystkie litery w stringu na duże</refpurpose>
+ </refnamediv>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>string</type><methodname>strtoupper</methodname>
+   <methodparam><type>string</type><parameter>string</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Zwraca <parameter>string</parameter> ze wszystkimi znakami alfabetu
+   zamienionymi na duże.
+  </para>
+  <para>
+   Zauważ, że 'alfabet' jest określany przez obecny język lokalny. To
+   znaczy, że w domyślnej lokalizacji "C", znaki takie jak
+   A umlaut (Ä) nie będą konwertowane.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>string</parameter></term>
+     <listitem>
+      <para>
+       Łańcuch wejściowy.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca string zapisany dużymi literami.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład użycia <function>strtoupper</function></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
-$str = "Marysia Ma Małego Baranka , Którego Bardzo KOCHA";
+$str = "Marysia Ma BARANKA";
 $str = strtoupper($str);
-echo $str; // Wyświetli MARYSIA MA MAŁEGO BARANKA, KTÓREGO BARDZO KOCHA
+echo $str; // Wyświetli MARYSIA MA BARANKA
 ?>
 ]]>
-     </programlisting>
-    </example>
+    </programlisting>
+   </example>   
+  </para>
+ </refsect1>
 
-    &note.bin-safe;
+ <refsect1 role="notes">
+  &reftitle.notes;
+  &note.bin-safe;
+ </refsect1>
 
-    <para>
-     Patrz również <function>strtolower</function>, <function>ucfirst</function>,
-     <function>ucwords</function> and <function>mb_strtoupper</function>.
-    </para>
-   </refsect1>
-  </refentry>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>strtolower</function></member>
+    <member><function>ucfirst</function></member>
+    <member><function>ucwords</function></member>
+    <member><function>mb_strtoupper</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

@@ -1,93 +1,228 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: dombal Status: Ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 59b4b899d357f48b91c9a729be4cfee8aeec3205 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-  <refentry xml:id="function.is-subclass-of" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>is_subclass_of</refname>
-    <refpurpose>
-     Zwraca &true; jeżeli klasa jest jednym z przodków obiektu
-    </refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>bool</type><methodname>is_subclass_of</methodname>
-      <methodparam><type>mixed</type><parameter>obiekt</parameter></methodparam>
-      <methodparam><type>string</type><parameter>nazwa_klasy</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     Funkcja ta zwraca &true; jeżeli obiekt <parameter>obiekt</parameter>
-     należy do klasy która jest podklasą klasy <parameter>nazwa_klasy</parameter>,
-     &false; w przeciwnym przypadku.
-    </para>
-    <note>
-     <para>
-      Od PHP 5.0.3 możesz określić parametr <parameter>object</parameter>
-      także jako łańcuch znaków (nazwę klasy). 
-     </para>
-    </note>
-    <para>
-      <example>
-        <title><function>is_subclass_of</function> przykład</title>
-        <programlisting role="php">
+<refentry xml:id="function.is-subclass-of" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>is_subclass_of</refname>
+  <refpurpose>Sprawdza czy klasa jest jednym z rodziców obiektu</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>bool</type><methodname>is_subclass_of</methodname>
+   <methodparam><type>mixed</type><parameter>obiekt</parameter></methodparam>
+   <methodparam><type>string</type><parameter>nazwa_klasy</parameter></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>allow_string</parameter><initializer>&true;</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   Checks if the given <parameter>object</parameter> has the class
+   <parameter>class_name</parameter> as one of its parents.
+  </para>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>obiekt</parameter></term>
+     <listitem>
+      <para>
+       Nazwa klasy lub instancja obiektu. Nie jest generowany błąd jeśli klasa nie istnieje.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>nazwa_klasy</parameter></term>
+     <listitem>
+      <para>
+       Nazwa klasy
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>allow_string</parameter></term>
+     <listitem>
+      <para>
+       Jeżeli ten parametr jest ustawiony na false, <parameter>object</parameter> będący nazwą klasy
+       jest niedozwolony. Zapobiega to także wywołaniu autoloadera jeżeli klasa nie istnieje.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Funkcja zwraca &true; jeżeli podany <parameter>obiekt</parameter>,
+   należy do klasy, która jest podklasą tej podanej jako
+   <parameter>nazwa_klasy</parameter>, w przeciwnym wypadku zwraca &false;.
+  </para>
+ </refsect1>
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>5.3.9</entry>
+       <entry>
+        Dodano parametr <parameter>allow_string</parameter>
+       </entry>
+      </row>
+      <row>
+       <entry>5.3.7</entry>
+       <entry>
+        Parametr <parameter>nazwa_klasy</parameter> działa z
+        interfejsami
+       </entry>
+      </row>
+      <row>
+       <entry>5.0.3</entry>
+       <entry>
+        Możesz określić argument <parameter>obiekt</parameter> jako string
+        (nazwę klasy)
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład użycia <function>is_subclass_of</function></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
-// definicja klasy
+// zdefiniuj klasę
 class WidgetFactory
 {
   var $oink = 'moo';
 }
 
-// definicja klasy potomnej
+// zdefiniuj klasę potomną
 class WidgetFactory_Child extends WidgetFactory
 {
   var $oink = 'oink';
 }
 
-// tworzenie nowego obiektu
+// stwórz obiekty
 $WF = new WidgetFactory();
 $WFC = new WidgetFactory_Child();
 
 if (is_subclass_of($WFC, 'WidgetFactory')) {
-  echo "tak, \$WFC jest pod klasą WidgetFactory\n";
+  echo "tak, \$WFC jest klasą potomną WidgetFactory\n";
 } else {
-  echo "nie, \$WFC nie jest pod klasą WidgetFactory\n";
+  echo "nie, \$WFC nie jest klasą potomną WidgetFactory\n";
 }
 
 
 if (is_subclass_of($WF, 'WidgetFactory')) {
-  echo "tak, \$WF jest pod klasą WidgetFactory\n";
+  echo "tak, \$WF jest klasą potomną WidgetFactory\n";
 } else {
-  echo "nie, \$WF nie jest pod klasą WidgetFactory\n";
+  echo "no, \$WF nie jest klasą potomną WidgetFactory\n";
 }
 
 
-// użyteczne dopiero od PHP 5.0.3
+// działa dopiero od PHP 5.0.3
 if (is_subclass_of('WidgetFactory_Child', 'WidgetFactory')) {
-  echo "tak, WidgetFactory_Child jest pod klasą WidgetFactory\n";
+  echo "tak, WidgetFactory_Child jest klasą potomną WidgetFactory\n";
 } else {
-  echo "nie, WidgetFactory_Child nie jest pod klasą WidgetFactory\n";
+  echo "nie, WidgetFactory_Child nie jest klasą potomną WidgetFactory\n";
 }
 ?>
 ]]>
-        </programlisting>
-        &example.outputs;
-        <screen>
+    </programlisting>
+    &example.outputs;
+    <screen>
 <![CDATA[
-tak, $WFC jest pod klasą WidgetFactory
-nie, $WF nie jest pod klasą WidgetFactory
-tak, WidgetFactory_Child jest pod klasą WidgetFactory
+tak, $WFC jest klasą potomną WidgetFactory
+nie, $WF nie jest klasą potomną WidgetFactory
+tak, WidgetFactory_Child jest klasą potomną WidgetFactory
 ]]>
-      </screen>
-     </example>
-    </para>
-    <simpara>
-     Patrz także: <function>get_class</function>,
-     <function>get_parent_class</function>,
-     <function>is_a</function>.
-    </simpara>
-   </refsect1>
-  </refentry>
+    </screen>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Przykład użycia interfejsu i <function>is_subclass_of</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// Zdefiniuj interfejs
+interface MyInterface
+{
+  public function MyFunction();
+}
+
+// Zdefiniuj klasę implementującą interfejs
+class MyClass implements MyInterface
+{
+  public function MyFunction()
+  {
+    return "MyClass implementje MyInterface!";
+  }
+}
+
+// Utwórz obiekt
+$my_object = new MyClass;
+
+// Działa od PHP 5.3.7
+
+// Sprawdź używając instancji obieku klasy
+if (is_subclass_of($my_object, 'MyInterface')) {
+  echo "Tak, \$my_object jest klasą potomną MyInterface\n";
+} else {
+  echo "Nie, \$my_object nie jest klasą potomną MyInterface\n";
+}
+
+// Sprawdź używając nazwy klasy
+if (is_subclass_of('MyClass', 'MyInterface')) {
+  echo "Tak, MyClass jest klasą potomną MyInterface\n";
+} else {
+  echo "Nie, MyClass nie jest klasą potomną MyInterface\n";
+}
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+Tak, $my_object jest klasą potomną MyInterface
+Tak, MyClass jest klasą potomną MyInterface
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  &note.uses-autoload;
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>get_class</function></member>
+    <member><function>get_parent_class</function></member>
+    <member><function>is_a</function></member>
+    <member><function>class_parents</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

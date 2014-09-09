@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 230af446aeada3cc862356fc15f3796035295e21 Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: 2bb07c8c43f028c665a33bfc08a22639e9e35dc6 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS: slawek -->
+<!-- CREDITS: slawek, sobak -->
  <chapter xml:id="features.http-auth" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
   <title>Uwierzytelnianie HTTP w PHP</title>
 
@@ -148,7 +148,7 @@ function http_digest_parse($txt)
   </para>
 
   <simpara>
-   Od PHP 4.3.0, aby zapobiec sytuacji w której ktoś napisze skrypt
+   Aby zapobiec sytuacji w której ktoś napisze skrypt
    wykradający hasło wysłane tradycyjnym zewnętrznym mechanizmem,
    zmienne PHP_AUTH nie będą ustawiane, jeśli dla danej strony
    aktywna jest autoryzacja zewnętrzna
@@ -218,20 +218,11 @@ if (!isset($_SERVER['PHP_AUTH_USER']) ||
    użyć klawisza <literal>'_'</literal> by usunąc dane o autoryzacji.
   </simpara>
   <simpara>
-   Zwóć uwagę, że do wersji PHP 4.3.3, Autoryzacja HTTP nie działała
-   na serwerze Microsoft IIS z PHP w wersji CGI z powodu
-   ograniczeń IIS. Aby zmusić go do działania w PHP 4.3.3+
-   musisz wyedytować "<literal>Bezpieczeństwo katalogów</literal>" w konfiguracji IIS. Kliknij
-   na "<literal>Edytuj</literal>" i zaznacz wyłącznie
+   Aby autoryzacja HTTP działała na serwerze Microsoft IIS z PHP w wersji
+   CGI musisz wyedytować "<literal>Bezpieczeństwo katalogów</literal>" w konfiguracji IIS.
+   Kliknij na "<literal>Edytuj</literal>" i zaznacz wyłącznie
    "<literal>Anonimowy Dostęp</literal>", wszystkie inne pola
    powinny pozostać nie zaznaczone.
-  </simpara>
-  <simpara>
-   Inne ogranicznie jest jeśli używasz modułu IIS (ISAPI) i PHP 4, nie możesz
-   wtedy użyć zmiennych <literal>PHP_AUTH_*</literal> ale zamiast nich,
-   dostępna jest zmienna <literal>HTTP_AUTHORIZATION</literal>. Na przykład
-   rozważ następujący kod: <literal>list($user, $pw) = explode(':',
-   base64_decode(substr($_SERVER['HTTP_AUTHORIZATION'], 6)));</literal>
   </simpara>
   <note>
    <title>Notatka IIS:</title>
