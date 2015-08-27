@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 9975952091ad4d3c93b7faf6ea721597dfc067f5 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: e121a3a894a377685208abd6f0fd2731e432dc87 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 
 <appendix xml:id="about" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -237,6 +237,22 @@ Zwraca długość podanego parametru ciąg.
      wartość logiczną &false;. Zapoznaj się ze stroną podręcznika dla odpowiedniej funkcji,
      aby dowiedzieć się jak działa.
     </para>
+	<para> 
+     Ponadto, znak &amp; (ampersand) poprzedzający argument funkcji 
+     pozwala na podanie parametru przez <link linkend="language.references.pass">referencję</link>, jak pokazano poniżej: 
+    </para>
+    <para>
+     <screen> 
+<![CDATA[ 
+       int preg_match ( string $pattern , string $subject [, array &$matches 
+      [, int $flags = 0 [, int $offset = 0 ]]] )
+]]>
+     </screen>
+    </para>
+    <para>
+     W tym wypadku widzimy, że trzeci, opcjonalny parametr <parameter>&amp;$matches</parameter> będzie
+     przekazany przez referencję.
+    </para>
     <para>
      Istnieją także funkcje z bardziej złożoną informacją o wersji PHP. Weźmy
      <function>html_entity_decode</function> jako przykład:
@@ -271,9 +287,7 @@ Zwraca długość podanego parametru ciąg.
   <para>
    Cały rozwój ma miejsce w repozytorium Git. Można pobrać źródła postępując
    zgodnie ze stroną <link xlink:href="&url.php.anongit;">anonimowy dostep
-   do Git</link>. Ten sam kod źrółowy można pobrać w postaci
-   <link xlink:href="&url.php.snapshots;">snapshotów PHP</link>, które są dostępne
-   dla każdej aktywnej gałęzi PHP.
+   do Git</link>.
   </para>
   <para>
    Uściślając, podręcznik będzie odnosił się do wersji PHP major, minor i point.

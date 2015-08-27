@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: a83125993078861d891efc2e84b7aa9874160caa Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: 48222f41b7d658ebbe305dd6c026a5ea0da351df Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS: dombal -->
+<!-- CREDITS: dombal, sobak -->
 <refentry xml:id="function.call-user-method" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>call_user_method</refname>
-  <refpurpose>Wywołuje metodę użytkownika na zadanym obiekcie [przestarzałe]</refpurpose>
+  <refpurpose>Wywołuje metodę użytkownika na zadanym obiekcie</refpurpose>
  </refnamediv>
  <refsect1 role="description">
   &reftitle.description;
@@ -16,12 +16,7 @@
    <methodparam choice="opt"><type>mixed</type><parameter>parametr</parameter></methodparam>
    <methodparam choice="opt"><type>mixed</type><parameter>...</parameter></methodparam>
   </methodsynopsis>
-  <warning>
-   <para>
-    Funkcja <function>call_user_method</function> jest od PHP 4.1.0
-    przestarzała.
-   </para>
-  </warning>
+  &warn.deprecated.function-4-1-0.removed-7-0-0;
  </refsect1>
 
  <refsect1 role="parameters"><!-- {{{ -->
@@ -70,7 +65,6 @@
 <![CDATA[
 <?php
 call_user_func(array($obiekt, $nazwa_metody), $parametr /* , ... */);
-call_user_func(array(&$obiekt, $nazwa_metody), $parametr /* , ... */); // PHP 4
 ?>
 ]]>
     </programlisting>
