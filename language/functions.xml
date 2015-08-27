@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 0e9eb8a8c76de2365decd77a46d96ddfeec2bac8 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 8243002f324f1d66e5414d7da0b52c86ee8d06f3 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: pirate -->
  <chapter xml:id="language.functions" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -143,9 +143,7 @@ bar();
    </simpara>
    
    <para>
-    W PHP jest możliwe wykonywanie rekurencyjnych funkcji. Unikaj jednak wywoływania
-    rekurencyjnych funkcji/metod które osiągają poziom rekurencji większy niż 100-200,
-    ponieważ może to spowodować przepełnienie stosu i zakończenie wykonywania skryptu.
+    W PHP jest możliwe wykonywanie rekurencyjnych funkcji.
     <example>
      <title>Funkcje rekurencyjne</title>
      <programlisting role="php">
@@ -162,6 +160,13 @@ function recursion($a)
 ]]>
      </programlisting>
     </example>
+   <note>
+    <simpara>
+     Rekurencyjne wywoływanie funkcji/metod z ponad 100-200 poziomami rekurencji
+     może spowodować przepełnienie stosu i zakończenie wykonywania skryptu. W
+     szczególności nieskończona rekurencja jest uznawana za błąd programistyczny.
+    </simpara>
+   </note>
    </para>
 
   </sect1>
@@ -173,7 +178,8 @@ function recursion($a)
     Dane mogą być przekazywane do funkcji przez listę argumentów,
     która jest listą oddzielonych przecinkami wyrażeń. Argumenty są wykonywane
     od prawej do lewej.
-   </simpara> 
+   </simpara>
+
    <para>
     PHP obsługuje podawanie argumentów jako wartości (domyślnie), <link
     linkend="functions.arguments.by-reference">przez
@@ -229,9 +235,7 @@ echo $str;    // wypisuje 'To jest ciąg znaków, i coś ekstra.'
       </programlisting>
      </example>
     </para>
- 
    </sect2>
- 
    <sect2 xml:id="functions.arguments.default">
     <title>Domyślne wartości argumentów</title>
  
@@ -354,9 +358,330 @@ Robię homogenizowany jogurt malinowy.
       Od PHP 5 argumenty, które są przekazywane przez referencję, mogą mieć wartości domyślne.
      </simpara>
     </note>
-
    </sect2>
 
+   <sect2 xml:id="functions.arguments.type-declaration">
+    <title>Deklaracje typów</title>
+
+    <note>
+     <para>
+      Deklaracje typów w PHP 5 były znane jako <literal>type hinting</literal>.
+     </para>
+    </note>
+
+    <para>
+     Dekleracje typów pozwalają funkcjom na wymaganie argumentów określonego
+     typu podczas ich wywoływania. Jeżeli dana wartość nie jest oczekiwanego
+     typu, generowany jest błąd: w PHP 5 był to recoverable fatal error,
+     a PHP 7 rzuci wyjątek <classname>TypeError</classname>.
+    </para>
+
+    <para>
+     Aby określić deklarację typu, nazwa typu musi być podana przed nazwą
+     parametru. Można zadeklarować parametr tak, aby przyjmował wartości
+     typu &null;, jeżeli jego wartość domyślną ustawimy na &null;
+    </para>
+
+    <sect3 xml:id="functions.arguments.type-declaration.types">
+     <title>Prawidłowe typy</title>
+     <informaltable>
+      <tgroup cols="3">
+       <thead>
+        <row>
+         <entry>Typ</entry>
+         <entry>Opis</entry>
+         <entry>Minimalna wersja PHP</entry>
+        </row>
+       </thead>
+       <tbody>
+        <row>
+         <entry>Nazwa klasy/interfejsu</entry>
+         <entry>
+          Argument musi być instancją klasy o danej nazwie lub implementującą
+          podany interfejs.
+         </entry>
+         <entry>PHP 5.0.0</entry>
+        </row>
+        <row>
+         <entry><type>array</type></entry>
+         <entry>
+          Argument musi być tablicą (<type>array</type>).
+         </entry>
+         <entry>PHP 5.1.0</entry>
+        </row>
+        <row>
+         <entry><type>callable</type></entry>
+         <entry>
+          Argument musi być typu <type>callable</type>.
+         </entry>
+         <entry>PHP 5.4.0</entry>
+        </row>
+        <row>
+         <entry><type>bool</type></entry>
+         <entry>
+          Argument musi być typu logicznego (<type>boolean</type>).
+         </entry>
+         <entry>PHP 7.0.0</entry>
+        </row>
+        <row>
+         <entry><type>float</type></entry>
+         <entry>
+          Argument musi być liczbą zmiennoprzecinkową (<type>float</type>).
+         </entry>
+         <entry>PHP 7.0.0</entry>
+        </row>
+        <row>
+         <entry><type>int</type></entry>
+         <entry>
+          Argument musi być liczbą całkowitą (<type>integer</type>).
+         </entry>
+         <entry>PHP 7.0.0</entry>
+        </row>
+        <row>
+         <entry><type>string</type></entry>
+         <entry>
+          Argument musi być łańcuchem znaków (<type>string</type>).
+         </entry>
+         <entry>PHP 7.0.0</entry>
+        </row>
+       </tbody>
+      </tgroup>
+     </informaltable>
+    </sect3>
+
+    <sect3 xml:id="functions.arguments.type-declaration.examples">
+     &reftitle.examples;
+     <example>
+      <title>Podstawowe deklaracje typu klasy</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+class C {}
+class D extends C {}
+
+// Ta klasa nie rozszerza C.
+class E {}
+
+function f(C $c) {
+    echo get_class($c)."\n";
+}
+
+f(new C);
+f(new D);
+f(new E);
+?>
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+C
+D
+
+Fatal error: Uncaught TypeError: Argument 1 passed to f() must be an instance of C, instance of E given, called in - on line 14 and defined in -:8
+Stack trace:
+#0 -(14): f(Object(E))
+#1 {main}
+  thrown in - on line 8
+]]>
+      </screen>
+     </example>
+
+     <example>
+      <title>Podstawowa dekleracja typu interfejsu</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+interface I { public function f(); }
+class C implements I { public function f() {} }
+
+// Ta klasa nie implementuje interfejsu I.
+class E {}
+
+function f(I $i) {
+    echo get_class($i)."\n";
+}
+
+f(new C);
+f(new E);
+?>
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+C
+
+Fatal error: Uncaught TypeError: Argument 1 passed to f() must implement interface I, instance of E given, called in - on line 13 and defined in -:8
+Stack trace:
+#0 -(13): f(Object(E))
+#1 {main}
+  thrown in - on line 8
+]]>
+      </screen>
+     </example>
+
+     <example>
+      <title>Typy deklaracji akceptujące &null;</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+class C {}
+
+function f(C $c = null) {
+    var_dump($c);
+}
+
+f(new C);
+f(null);
+?>
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+object(C)#1 (0) {
+}
+NULL
+]]>
+      </screen>
+     </example>
+    </sect3>
+
+    <sect3 xml:id="functions.arguments.type-declaration.strict">
+     <title>Typowanie ścisłe</title>
+
+     <para>
+      Domyślnie PHP wymusi zmianę nieprawidłowego typu na poprawny, o ile jest
+      to możliwe. Przykładowo, funkcja, ktora otrzymała argument typu
+      <type>integer</type>, mimo iż oczekiwała łańcucha znaków, ostatecznie
+      otrzyma zmienną typu <type>string</type>.
+     </para>
+
+     <para>
+      Dla danego pliku można włączyć tryb ścisły. W trybie ścisłym zaakeptowana
+      będzie tylko zmienna dokładnie takiego typu, w przeciwnym wypadku zostanie
+      rzucony wyjątek <classname>TypeError</classname>. Jedynym odstępstwem od
+      reguły jest przekazanie <type>integer</type>a do funkcji oczekującej typu
+      <type>float</type>.
+     </para>
+
+     <para>
+      Do włączenia trybu ścisłego używana jest konstrukcja &declare; połączona z
+      deklaracją <literal>strict_types</literal>:
+     </para>
+
+     <caution>
+      <para>
+       Włączenie trybu ścisłego ma także wpływ na
+       <link linkend="functions.returning-values.type-declaration">deklaracje typu zwracanych wartości</link>.
+      </para>
+     </caution>
+
+     <note>
+      <para>
+       Ścisłe typowanie odnosi się do wywołań funkcji
+       <emphasis>wewnątrz</emphasis> pliku z włączonym ścisłym typowaniem, nie do
+       funkcji zadeklarowanych w tym pliku. Jeżeli plik bez włączonego ścisłego
+       typowania wykonuje funkcję zadeklarowaną w pliku z włączonym ścisłym
+       typowaniem, to pod uwagę wzięte zostanie ustawienie z pliku wywołującego
+       (brak ścisłego typowania), a więc wartość będzie miała dopasowany typ.
+      </para>
+     </note>
+
+     <note>
+      <para>
+       Ścisłe typowanie działa tylko dla deklaracji typów skalarnych (scalar
+       type declarations), a więc wymaga PHP 7.0.0 lub nowszego, ponieważ
+       dopiero tam zostały one dodane.
+      </para>
+     </note>
+
+     <example>
+      <title>Ścisłe typowanie</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+declare(strict_types=1);
+
+function sum(int $a, int $b) {
+    return $a + $b;
+}
+
+var_dump(sum(1, 2));
+var_dump(sum(1.5, 2.5));
+?>
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+int(3)
+
+Fatal error: Uncaught TypeError: Argument 1 passed to sum() must be of the type integer, float given, called in - on line 9 and defined in -:4
+Stack trace:
+#0 -(9): sum(1.5, 2.5)
+#1 {main}
+  thrown in - on line 4
+]]>
+      </screen>
+     </example>
+
+     <example>
+      <title>Słabe typowanie</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+function sum(int $a, int $b) {
+    return $a + $b;
+}
+
+var_dump(sum(1, 2));
+
+// Te wartości zostaną przekształcone na liczby całkowite: zwróć uwagę na wynik działania!
+var_dump(sum(1.5, 2.5));
+?>
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+int(3)
+int(3)
+]]>
+      </screen>
+     </example>
+
+     <example>
+      <title>Łapanie wyjątku <classname>TypeError</classname></title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+declare(strict_types=1);
+
+function sum(int $a, int $b) {
+    return $a + $b;
+}
+
+try {
+    var_dump(sum(1, 2));
+    var_dump(sum(1.5, 2.5));
+} catch (TypeError $e) {
+    echo 'Błąd: '.$e->getMessage();
+}
+?>
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+int(3)
+Error: Argument 1 passed to sum() must be of the type integer, float given, called in - on line 10
+]]>
+      </screen>
+     </example>
+    </sect3>
+   </sect2>
    <sect2 xml:id="functions.variable-arg-list">
     <title>Podawanie różnej ilości argumentów</title>
 
@@ -543,12 +868,16 @@ echo sum(1, 2, 3, 4);
     funkcja została wywołana. Zobacz <function>return</function>
     aby uzyskać więcej informacji.
    </para>
+
    <note>
     <para>
      Jeżeli <function>return</function> zostanie pominięte, zwrócona będzie
      wartość &null;,
     </para>
    </note>
+
+   <sect2>
+    <title>Użycie return</title>
    <para>
     <example>
      <title>Użycie <function>return</function></title>
@@ -612,6 +941,116 @@ $newref =& returns_reference();
     Aby uzyskać więcej informacji o referencjach, przejdź do <link
     linkend="language.references">Wyjaśnienie Referencji</link>.
    </simpara>
+   </sect2>
+   
+  <sect2 xml:id="functions.returning-values.type-declaration">
+   <title>Deklaracje typu zwracaej wartości</title>
+
+   <para>
+    PHP 7 dodaje wsparcie dla deklaracji zwracanych typów. Podobnie do
+    <link linkend="functions.arguments.type-declaration">deklaracji typów argumentów</link>,
+    deklaracje zwracanych typów określają typ wartości, który zostanie zwrócony
+    Przez funkcję. Dostępne są te same
+    <link linkend="functions.arguments.type-declaration.types">typy</link>
+    deklaracji, jak dla deklaracji typu argumetów.
+   </para>
+
+   <para>
+    <link linkend="functions.arguments.type-declaration.strict">Ścisłe typowanie</link>
+    wpływa także na deklaracje zwracanego typu. W domyślnym, słabym (luźnym) trybie,
+    zwracana wartość może być przekształcona do oczekiwanego typu. W trybie
+    ścisłym zwracana wartość musi być dokładnie oczekiwanego typu, w przeciwnym
+    wypadku zostanie rzucony wyjątek <classname>TypeError</classname>.
+   </para>
+
+   <note>
+    <para>
+     Podczas nadpisywania metody nadrzędnej, metoda potomka musi mieć zwracany typ
+     zgodny ze swoim rodzicem. Jeżeli rodzic nie określa zwracanego typu, to metoda
+     potomna może to zrobić.
+    </para>
+   </note>
+
+   <sect3 xml:id="functions.returning-values.type-declaration.examples">
+    &reftitle.examples;
+
+    <example>
+     <title>Podstawowa deklaracja zwracanego typu</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+function sum($a, $b): float {
+    return $a + $b;
+}
+
+// Zwauważ że zwrócona będzie wartość typu float.
+var_dump(sum(1, 2));
+?>
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+float(3)
+]]>
+      </screen>
+     </example>
+
+     <example>
+      <title>Tryb ścisły w akcji</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+declare(strict_types=1);
+
+function sum($a, $b): int {
+    return $a + $b;
+}
+
+var_dump(sum(1, 2));
+var_dump(sum(1, 2.5));
+?>
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+int(3)
+
+Fatal error: Uncaught TypeError: Return value of sum() must be of the type integer, float returned in - on line 5 in -:5
+Stack trace:
+#0 -(9): sum(1, 2.5)
+#1 {main}
+  thrown in - on line 5
+]]>
+      </screen>
+     </example>
+
+     <example>
+      <title>Zwracanie obiektu</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+class C {}
+
+function getC(): C {
+    return new C;
+}
+
+var_dump(getC());
+?>
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+object(C)#1 (0) {
+}
+]]>
+      </screen>
+     </example>
+    </sect3>
+   </sect2>
   </sect1>
  
   <sect1 xml:id="functions.variable-functions">
@@ -721,12 +1160,70 @@ Foo::$variable();  // Wywoła $foo->Zmienna() odczytując $zmienna w tym zasięg
      </programlisting>
     </example>
    </para>
+   <para>
+     Od PHP 5.4.0 możesz wywołać dowolną wartość typu <type>callable</type> trzymaną w zmiennej.
+    <example>
+     <title>Complex callables</title>
+     <programlisting role="php">
+<![CDATA[
+class Foo
+{
+    static function bar()
+    {
+        echo "bar\n";
+    }
+    function baz()
+    {
+        echo "baz\n";
+    }
+}
+
+$func = array("Foo", "bar");
+$func(); // wyświetli "bar"
+$f = array(new Foo, "baz");
+$func(); // wyświetli "baz"
+$f = "Foo::bar";
+$func(); // wyświetli "bar" od PHP 7.0.0; wcześniej wygeneruje fatal error
+]]>
+     </programlisting>
+    </example>
+   </para>
       
    <para>
     Zobacz także <function>is_callable</function>, <function>call_user_func</function>,
     <link linkend="language.variables.variable">
     zmienne zmienne</link> oraz <function>function_exists</function>.
    </para>
+
+   <sect2 role="changelog">
+    &reftitle.changelog;
+    <para>
+     <informaltable>
+      <tgroup cols="2">
+       <thead>
+        <row>
+         <entry>&Version;</entry>
+         <entry>&Description;</entry>
+        </row>
+       </thead>
+       <tbody>
+        <row>
+         <entry>7.0.0</entry>
+         <entry>
+          'NazwaKlasy::nazwaMetody' jest dozwoloną fukcją zmienną.
+         </entry>
+        </row>
+        <row>
+         <entry>5.4.0</entry>
+         <entry>
+          Arrays, which are valid callables, are allowed as variable functions.
+         </entry>
+        </row>
+       </tbody>
+      </tgroup>
+     </informaltable>
+    </para>
+   </sect2>
   </sect1>
   
   <sect1 xml:id="functions.internal">
@@ -834,7 +1331,70 @@ $greet('PHP');
    
    <simpara>
     Domknięcia mogą także dziedziczyć zmienne z zasięgu nadrzędnego. 
-    Każda taka zmienna musi być przekazana za pomocą kontrukcji <literal>use</literal>. 
+    Każda taka zmienna musi być przekazana za pomocą kontrukcji <literal>use</literal>.
+   </simpara>
+
+   <example>
+    <title>Dziedziczenie zmiennych z nadrzędnego zakresu</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$message = 'hello';
+
+// Brak "use"
+$example = function () {
+    var_dump($message);
+};
+echo $example();
+
+// Odziedzicz $message
+$example = function () use ($message) {
+    var_dump($message);
+};
+echo $example();
+
+// Wartość jest dziedziczona podczas definiowania funkcji,
+// a nie jej wykonywania
+$message = 'world';
+echo $example();
+
+// Zresetuj wiadomosć
+$message = 'hello';
+
+// Odziedzicz przez referencje
+$example = function () use (&$message) {
+    var_dump($message);
+};
+echo $example();
+
+// Zmieniona wartość w zasięgu nadrzędnym jest
+// brana pod uwagę wewnątrz wywołania funkcji
+$message = 'world';
+echo $example();
+
+// Domknięcia mogą także przyjmować normalne argumenty
+$example = function ($arg) use ($message) {
+    var_dump($arg . ' ' . $message);
+};
+$example("hello");
+?>
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
+<![CDATA[
+Notice: Undefined variable: message in /example.php on line 6
+NULL
+string(5) "hello"
+string(5) "hello"
+string(5) "hello"
+string(5) "world"
+string(11) "hello world"
+]]>
+    </screen>
+   </example>
+
+   <simpara>
     Dziedziczenie zmiennych z zasięgu nadrzędnego to <emphasis>nie</emphasis> 
     to samo co użycie zmiennych globalnych. 
     Zmienne globalne istnieją w zasięgu globalnym, który jest jednakowy
