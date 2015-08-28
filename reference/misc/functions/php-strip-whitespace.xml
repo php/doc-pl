@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 14af302c9c0e561fa6f9cdd956268758ba9a89c5 Maintainer: sobak Status: ready -->
+<!-- $Revision$ -->
+<refentry xml:id="function.php-strip-whitespace" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <refnamediv>
+  <refname>php_strip_whitespace</refname>
+  <refpurpose>Zwraca źródło z wyciętymi komentarzami i białymi znakami</refpurpose>
+ </refnamediv>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>string</type><methodname>php_strip_whitespace</methodname>
+   <methodparam><type>string</type><parameter>filename</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Zwraca kod źródłowy PHP z pliku podanego jako <parameter>filename</parameter>,
+   z usuniętymi białymi znakami i komentarzami PHP. Może być to użyteczne
+   do określenia rzeczywistej ilości kodu w Twoich skryptach,  porównaniu
+   z kodem zawierającym komentarze. Jest to podobne do użycia
+   <command>php -w</command> z poziomu
+   <link linkend="features.commandline">linii komend</link>.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>filename</parameter></term>
+     <listitem>
+      <para>
+       Ścieżka do pliku PHP.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Przefiltrowany kod źródłowy w wypadku powodzenia lub pusty string w wypadku
+   błędu.
+  </para>
+  <note>
+   <para>
+    Ta funkcja działa, tak jak opisano, od PHP 5.0.1. Wcześniej zwracała
+    tylko pusty łańcuch znaków. Aby dowiedzieć się więcej o tym błędzie
+    i wcześniejszym zachowaniu, zobacz raport
+    <link xlink:href="&url.php.bugs;29606">#29606</link>.
+   </para>
+  </note>
+ </refsect1>
+ 
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład użycia <function>php_strip_whitespace</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// Komentarz PHP
+
+/*
+ * Kolejny komentarz PHP
+ */
+
+echo        php_strip_whitespace(__FILE__);
+// Nowe linie są uznawane za białe znaki i także usuwane:
+do_nothing();
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+<?php
+ echo php_strip_whitespace(__FILE__); do_nothing(); ?>
+]]>
+    </screen>
+    <para>
+     Zauważ że zniknęły komentarze PHP, tak jak białe znaki i nowa linia
+     po pierwszym wyrażeniu echo.
+    </para>
+   </example>
+  </para>
+ </refsect1>
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

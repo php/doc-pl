@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: b7a780f8e762e290552b9f79d346f2bcbc272e0c Maintainer: sobak Status: ready -->
+<!-- $Revision$ -->
+
+<sect1 xml:id="language.errors.basics" xmlns="http://docbook.org/ns/docbook">
+ <title>Podstawy</title>
+
+ <para>
+  PHP zgłasza błędy w odpowiedzi na różne wewnętrzne warunki błędów.
+  Mogą być one użyte do zasygnalizowania różnych błędnych sytuacji i
+  można je wyświetlić lub zapisać do logów, zależnie od potrzeb.
+ </para>
+
+ <para>
+  Każdy błąd generowany przez PHP jest określonego typu. Dostępna jest
+  <link linkend="errorfunc.constants">lista tych typów</link> wraz z
+  krótkim opisem ich zachowania i tego, przez co mogą być wywołane.
+ </para>
+
+ <sect2 xml:id="language.errors.basics.handling">
+  <title>Obsługa błędów w PHP</title>
+
+  <para>
+   Jeżeli nie ustawiono handlera - funkcji obsługującej błędy, PHP obsłuży
+   każdy występujący błąd zgodnie ze swoją konfiguracją. To, które błędy są
+   raportowane, a które ignorowane zależy od dyrektywy
+   <link linkend="ini.error-reporting"><parameter>error_reporting</parameter></link>
+   w pliku php.ini lub od wywołania funkcji <function>error_reporting</function>
+   w trakcie działania skryptu. Wysoce zalecane jest ustawienie dyrektywy
+   konfigurcacyjnej, ponieważ niekóre błędy mogą wystąpić jeszcze przed
+   rozpoczęciem wykonywania Twojego skryptu.
+  </para>
+
+  <para>
+   W środowisku deweloperskim powinieneś mieć zawsze ustawiony
+   <link linkend="ini.error-reporting"><parameter>error_reporting</parameter></link>
+   na <constant>E_ALL</constant>, ponieważ musisz wiedzieć o problemach zgłaszanych
+   przez PHP i naprawić je. Na produkcji prawdopodobnie będziesz chciał ustawić to
+   na poziom dający mniej informacji, taki jak
+   <code>E_ALL &amp; ~E_NOTICE &amp; ~E_STRICT &amp; ~E_DEPRECATED</code>, ale
+   w wielu wypadkach <constant>E_ALL</constant> także jest odpowiednie, gdyż może
+   zagwarantować wczesne ostrzeżenie o potencjalnych problemach.
+  </para>
+
+  <para>
+   To, co PHP robi z tymi błędami zależy od dwóch kolejnych ustawień php.ini.
+   <link linkend="ini.display-errors"><parameter>display_errors</parameter></link>
+   określa czy błędy są pokazywane jako część wyniku działania skryptu. Ta opcja
+   powinna zawsze być wyłączona w środowisku produkcyjnym, ponieważ może zawierać
+   poufne informacje, takie jak hasła do bazy danych, jednak zazwyczaj jest dobrze
+   włączyć ją w śodowisku deweloperskim, gdyż gwarantuje natychmiastowe powiadomienie
+   o problemach.
+  </para>
+
+  <para>
+   Poza wyświetlaniem błędów, PHP może również zapisywać je do logów, gdy
+   <link linkend="ini.log-errors"><parameter>log_errors</parameter></link>
+   jest włączone. To zapisze błędy do logu systemowego lub pliku określonego
+   przez opcję
+   <link linkend="ini.error-log"><parameter>error_log</parameter></link>. Jest
+   to szczgólnie użyteczne w środowisku produkcyjnym, bo możesz zapisać wszystkie
+   błędy jakie wystąpią i później generować raporty na ich podstawie.
+  </para>
+ </sect2>
+
+ <sect2 xml:id="language.errors.basics.user">
+  <title>Obsługa błędów przez użytkownika</title>
+
+  <para>
+   Jeżeli domyślna obsługa błędów przez PHP jest niewystarczająca, możesz
+   także obsłużyć wiele typów błędów przez swój własny handler, który
+   ustawia się używając funkcji <function>set_error_handler</function>.
+   Mimo iż niektóre typy błędów nie mogą być obsłużone w ten sposób, reszta
+   może być obsłużona w sposób, który odpowiada potrzebom skryptu: na przykład
+   pokazując specjalną stronę błędu użytkownikowi, a bardziej szczegółowe
+   informacje zapisując do logu lub wysyłając emailem.
+  </para>
+ </sect2>
+</sect1>
+ 
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
+
