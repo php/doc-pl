@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 1bdcb1b9fdcaf92904fc4fdb0d89e1a37159665e Maintainer: sobak Status: ready -->
+<!-- EN-Revision: b455daa1c77ecf415cb55be7a594b5ba4603db00 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.array-fill" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
@@ -49,7 +49,7 @@
      <listitem>
       <para>
        Ilość elementów do wstawienia.
-       Musi być większa od zera.
+       Musi być większa lub równa zero.
       </para>
      </listitem>
     </varlistentry>
@@ -78,7 +78,32 @@
   &reftitle.errors;
   <para>
    Wyemituje błąd <constant>E_WARNING</constant> jeżeli <parameter>ilość</parameter> jest
-   mniejsza niż jeden.
+   mniejsza niż zero.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>5.6.0</entry>
+       <entry>
+        <parameter>ilość</parameter> może być teraz równa zero. Poprzednio
+        <parameter>ilość</parameter> musiała być większa od zera.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
   </para>
  </refsect1>
 
