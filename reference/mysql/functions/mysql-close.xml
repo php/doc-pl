@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 65e697ff671608989432a6e6bf8ae8128b2be2c7 Maintainer: adi Status: ready -->
+<!-- EN-Revision: 5dd7ff3e72db8436523e5eaeba2e44b8a7daa8bf Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.mysql-close" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
@@ -29,13 +29,7 @@
    <parameter>identyfikator_połączenia</parameter> nie został określony, zostanie użyte
    ostatnio używane połączenie.
   </para>
-  <para>
-   Używanie <function>mysql_close</function> nie jest zwykle konieczne,
-   ponieważ nie stałe linki są automatycznie zamykane na końcu
-   wykonywania skryptu. Patrz także
-   <link linkend="language.types.resource.self-destruct">zwalnianie
-   zasobów</link>.
-  </para>
+  &mysql.close.connections.result.sets;
  </refsect1>
 
  <refsect1 role="parameters">
@@ -87,6 +81,8 @@ Połączono poprawnie
    <para>
     <function>mysql_close</function> nie zamknie stałych połączeń
     stworzonych przez <function>mysql_pconnect</function>.
+	Aby uzyskać więcej informacji, zobacz stronę podręcznika poświęconą
+	<link linkend="features.persistent-connections">połączeniom stałym</link>.
    </para>
   </note>
  </refsect1>

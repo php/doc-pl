@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: f68a84be2a7c67c1bfdc59f2e4719af3c62e1f53 Maintainer: coder Status: ready -->
+<!-- EN-Revision: bd2fef3d934eaa9f994586bbcd36e377f478839e Maintainer: coder Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: sobak -->
 <refentry xml:id="function.bzopen" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>bzopen</refname>
@@ -10,7 +11,7 @@
   &reftitle.description;
   <methodsynopsis>
    <type>resource</type><methodname>bzopen</methodname>
-   <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
+   <methodparam><type>mixed</type><parameter>plik</parameter></methodparam>
    <methodparam><type>string</type><parameter>tryb</parameter></methodparam>
   </methodsynopsis>
   <para>
@@ -22,7 +23,7 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>nazwa_pliku</parameter></term>
+     <term><parameter>plik</parameter></term>
      <listitem>
       <para>
        Nazwa otwieranego pliku lub istniejący zasób strumienia.
@@ -33,8 +34,8 @@
      <term><parameter>Tryb</parameter></term>
      <listitem>
       <para>
-       Podobnie do funkcji <function>fopen</function> obsługiwane są tylko 'r' (odczyt)
-       i 'w' (zapis). Wszystko inne spowoduje, że bzopen zwróci &false;.
+       Obsługiwane są tryby 'r' (odczyt) i 'w' (zapis).
+       Wszystko inne spowoduje, że <function>bzopen</function> zwróci &false;.
       </para>
      </listitem>
     </varlistentry>
