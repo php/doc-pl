@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: d5e05486ba5c0ccfb45e9a92fc95adf2762ab289 Maintainer: pirate Status: ready -->
+<!-- EN-Revision: 5e9fde393a7bfdba759d9c295f6c04de0205ae45 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS: sobak -->
+<!-- CREDITS: pirate -->
  <chapter xml:id="language.constants" xmlns="http://docbook.org/ns/docbook">
   <title>Stałe</title>
 
@@ -69,7 +69,8 @@ define("__FOO__", "something");
    </simpara>
    <simpara>
     Do wersji PHP 5.6 stałe mogą zawierać jedynie dane skalarne (<type>boolean</type>, <type>integer</type>,
-    <type>float</type> oraz <type>string</type>). Począwszy od PHP 5.6 jest możliwe zdefiniowanie stałej <type>array</type>.
+    <type>float</type> oraz <type>string</type>). Począwszy od PHP 5.6 jest możliwe zdefiniowanie
+	stałej jako wyrażenie skalarne, jest także możliwe  zdefiniowanie stałej typu <type>array</type>.
     Można także zdefiniować stałą typu <type>resource</type>, ale powinno się tego unikać, bo może
     spowodować nieoczekiwane rezultaty.
    </simpara>
@@ -98,7 +99,9 @@ define("__FOO__", "something");
     kiedy to się stanie.  Przeczytaj także, dlaczego 
     <link linkend="language.types.array.foo-bar">$foo[bar]</link> jest
     niepoprawne (jeśli nie zdefiniujesz
-    <literal>bar</literal> jako stałej).  Chcąc sprawdzić,
+    <literal>bar</literal> jako stałej). Nie odnosi się to do <link
+    linkend="language.namespaces.rules">(w pełni) wykwalifikowanych stałych</link>,
+    które spowodują błąd krytyczny, jeśli nie będą zdefiniowane. Jeśli chcesz sprawdzić
     czy dana stała istnieje, użyj funkcji <function>defined</function>.
    </simpara>
    <para>
@@ -112,7 +115,7 @@ define("__FOO__", "something");
      </listitem>
      <listitem>
       <simpara>
-       Stałe mogą zostać zdefiniowane jedynie przy użyciu funkcji
+       Przed PHP 5.3 stałe mogły zostać zdefiniowane jedynie przy użyciu funkcji
        <function>define</function> a nie poprzez zwykłe przypisanie;
       </simpara>
      </listitem>
@@ -130,10 +133,12 @@ define("__FOO__", "something");
      </listitem>
      <listitem>
       <simpara>
-       Stałe mogą zawierać jedynie wartości skalarne lub wartości skalarne bądź tablicowe
-       w PHP 5.6 i nowszych. Możesz także użyć tablic w wyrażeniach skalarnych stałych
+       Stałe mogą zawierać jedynie wartości skalarne. Od PHP 5.6 jest możliwe
+       zdefiniowanie stałej zawierającej tablicę przy użyciu słowa kluczowego <literal>const</literal>
+       a od PHP 7 stałe tablicowe mogą zostać zdefiniowane także przez <function>define</function>
+       Możesz także użyć tablic w wyrażeniach skalarnych stałych
        (na przykład <literal>const FOO = array(1,2,3)[0];</literal>), ale końcowym wynikiem
-       musi być wartość skalarna.
+       musi być wartość dozwolonego typu.
        </simpara>
      </listitem>
     </itemizedlist>
@@ -167,8 +172,18 @@ echo CONSTANT;
 
 // Działa od PHP 5.6.0
 const ANOTHER_CONST = CONSTANT.'; Goodbye World';
-
 echo ANOTHER_CONST;
+
+const ZWIERZETA = array('pies', 'kot', 'krowa');
+echo ZWIERZETA[1]; // wyświetla "kot"
+
+// Działa od PHP 7
+define('ZWIERZETA', array(
+    'pies',
+    'kot',
+    'krowa'
+));
+echo ZWIERZETA[1]; // wyświetla "cat"
 ?>
 ]]>
      </programlisting>

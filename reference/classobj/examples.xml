@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: be3aad3abb156fccbcde31ba5188b77f19d6842b Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: 24f1c77edb908f0c73d7fb66410b86b18ecd84db Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: dombal, sobak -->
 
@@ -26,16 +26,19 @@ class Warzywo {
     var $jadalne;
     var $kolor;
 
-    function Warzywo($jadalne, $kolor="zielony") {
+    function Warzywo($jadalne, $kolor="zielony")
+	{
         $this->jadalne = $jadalne;
         $this->kolor = $kolor;
     }
 
-    function czy_jadalne() {
+    function czy_jadalne()
+	{
         return $this->jadalne;
     }
 
-    function jaki_kolor() {
+    function jaki_kolor()
+	{
         return $this->kolor;
     }
 
@@ -46,15 +49,18 @@ class Szpinak extends Warzywo {
 
     var $ugotowane = false;
 
-    function Szpinak() {
+    function Szpinak()
+	{
         $this->Warzywo(true, "zielone");
     }
 
-    function ugotuj() {
+    function ugotuj()
+	{
         $this->ugotowane = true;
     }
 
-    function czy_ugotowane() {
+    function czy_ugotowane()
+	{
         return $this->ugotowane;
     }
 
@@ -83,20 +89,23 @@ include "classes.inc";
 
 // funkcje użytkowe
 
-function drukuj_wlasciwosci($obj) {
+function drukuj_wlasciwosci($obj)
+{
     foreach (get_object_vars($obj) as $wlasc => $wart) {
         echo "\t$wlasc = $wart\n";
     }
 }
 
-function drukuj_metody($obj) {
+function drukuj_metody($obj)
+{
     $tab = get_class_methods(get_class($obj));
     foreach ($tab as $metoda) {
         echo "\tfunkcja $metoda()\n";
     }
 }
 
-function przodkowie_klasy($obj, $klasa) {
+function przodkowie_klasy($obj, $klasa)
+{
     global $$obj;
     if (is_subclass_of($GLOBALS[$obj], $klasa)) {
         echo "Obiekt $obj należy do klasy ".get_class($GLOBALS[$obj]);

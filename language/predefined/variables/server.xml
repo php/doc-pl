@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 24e5510d907b3be789bd773c5c8c01b29e22af47 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 2b5b055e52b81d01a19d7c868f4cc0662633b6ed Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 
 <phpdoc:varentry xmlns:phpdoc="http://php.net/ns/phpdoc" xml:id="reserved.variables.server" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -21,14 +21,14 @@
    xlink:href="&url.rfc;3875">specyfikacji CGI/1.1</link>, więc możesz
    przypuszczać, że będą one istnieć.
   </para>
-
-  <simpara>
-   <varname>$HTTP_SERVER_VARS</varname> zawiera pewne informacje
-   początkowe, ale nie jest zmienną <link linkend="language.variables.superglobals">superglobalną</link>
-   (zauważ, że PHP traktuje <varname>$HTTP_SERVER_VARS</varname> i <varname>$_SERVER</varname>
-   jak dwie osobne zmienne). Zauważ także, że długa nazwa tej tablicy
-   została usunięta w PHP 5.4.0, więc nie istnieje już <varname>$HTTP_SERVER_VARS</varname>.
-  </simpara>
+  <note>
+   <simpara>
+     Przed PHP 5.4.0, <varname>$HTTP_SERVER_VARS</varname> zawierała te same informacje początkowe,
+     ale nie była zmienną <link linkend="language.variables.superglobals">superglobalną</link>.
+     (<varname>$HTTP_SERVER_VARS</varname> i <varname>$_SERVER</varname>
+     były rożnymi zmiennymi i PHP traktowało je jak dwie osobne zmienne).
+   </simpara>
+  </note>
  </refsect1>
 
  <refsect1 role="indices">
@@ -113,6 +113,14 @@
        Jeżeli skrypt jest uruchamiany na hoście wirtualnym, to
        będzie to wartość zdefiniowana dla tego hosta wirtualnego.
       </simpara>
+	  <note>
+       <simpara>
+        W Apache 2 musisz ustawić opcje <literal>UseCanonicalName = On</literal>
+        i <literal>ServerName</literal>. W przeciwnym wypadku ta wartość odzwierciedla
+        nazwę hosta dostarczoną przez klienta, która może być podmieniona.
+        Nie powinno się polegać na wartości tej zmiennej, w kwestiach bezpieczeństwa.
+       </simpara>
+      </note>
      </listitem>
     </varlistentry>
 
