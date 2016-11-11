@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 631ffcb3980bd1060436612fe67baee0f8b4e5da Maintainer: adi Status: ready -->
+<!-- EN-Revision: 7e4167f3f2e202ba4463fbc3851e56067f085326 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: adi -->
 <refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.basename">
  <refnamediv>
   <refname>basename</refname>
@@ -18,6 +19,20 @@
    Z podanego łańcucha zawierającego ścieżkę do pliku, funkcja
    zwraca samą nazwę pliku.
   </para>
+  <note>
+   <para>
+    <function>basename</function> działa naiwnie na wejściowym łańcuchu znaków
+    i nie ma informacji o faktycznym systemie plików lub składnikach ścieżki takich
+    jak "<literal>..</literal>".
+   </para>
+  </note>
+  <note>
+   <para>
+    <function>basename</function> bierze pod uwagę obecnią lokalizację systemu, więc aby widzieć
+    prawidłowe basename ze ścieżek zawierających znaki spoza alfabetu łacińskiego, musi zostać
+    ustawiona odpowiednia lokalizacja przy pomocy funkcji <function>setlocale</function>.
+   </para>
+  </note>
  </refsect1>
 
  <refsect1 role="parameters">
@@ -87,24 +102,6 @@ echo "6) ".basename("/");
     </screen>
    </example>
   </para>
- </refsect1>
-
- <refsect1 role="notes">
-  &reftitle.notes;
-  <note>
-   <para>
-    <function>basename</function> działa naiwnie na wejściowym łańcuchu znaków
-    i nie jest świadoma bieżącego systemu plików lub składników ścieżki takich
-    jak "<literal>..</literal>".
-   </para>
-  </note>
-  <note>
-   <para>
-    <function>basename</function> jest świadoma locale, aby widzieć
-     prawidłowe basename ze ścieżek z wielobajtowymi znakami, musi zostać
-     ustawione pasujące locale za pomocą funkcji <function>setlocale</function>.
-   </para>
-  </note>
  </refsect1>
 
  <refsect1 role="seealso">
