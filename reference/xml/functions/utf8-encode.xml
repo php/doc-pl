@@ -1,66 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: f5ba33b597ca2fc1360071d42cc3e8ae9fe14078 Maintainer: cyb0org Status: ready -->
+<!-- EN-Revision: 2634ea3b40031e1ec09c45be17413f86b968627e Maintainer: cyb0org Status: ready -->
 <!-- $Revision$ -->
 <refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.utf8-encode">
  <refnamediv>
   <refname>utf8_encode</refname>
-  <refpurpose>Koduje ciąg znaków w ISO-8859-1 do UTF-8</refpurpose>
+  <refpurpose>Koduje ciąg znaków z ISO-8859-1 do UTF-8</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>string</type><methodname>utf8_encode</methodname>
-   <methodparam><type>string</type><parameter>dane</parameter></methodparam>
+   <methodparam><type>string</type><parameter>data</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Ta funkcja koduje <parameter>dane</parameter> do
-   <literal>UTF-8</literal>, po czym zwraca je zakodowane.
-   <literal>UTF-8</literal> jest standardowym mechanizmem używanym przez
-   <acronym>Unicode</acronym> do kodowania wartości <glossterm>rozszerzonych
-   znaków</glossterm> w ciąg bajtów.
-   <literal>UTF-8</literal> jest przeźroczyste dla znaków w czystym <abbrev>ASCII</abbrev>,
-   samozsynchronizowane (w znaczeniu posiadania możliwości aby program mógł znaleźć
-   gdzie w ciągu bajtów zaczynają się znaki) jak również może być używane
-   w normalnym porównywaniu znaków na potrzeby sortowania itp. PHP koduje znaki
-   <literal>UTF-8</literal> do maksymalnie czterech bajtów, w podany poniżej sposób:
-   <table>
-    <title>Kodowanie UTF-8</title>
-    <tgroup cols="3">
-     <thead>
-      <row>
-       <entry>bajty</entry>
-       <entry>bity</entry>
-       <entry>reprezentacja</entry>
-      </row>
-     </thead>
-     <tbody>
-      <row>
-       <entry>1</entry>
-       <entry>7</entry>
-       <entry>0bbbbbbb</entry>
-      </row>
-      <row>
-       <entry>2</entry>
-       <entry>11</entry>
-       <entry>110bbbbb 10bbbbbb</entry>
-      </row>
-      <row>
-       <entry>3</entry>
-       <entry>16</entry>
-       <entry>1110bbbb 10bbbbbb 10bbbbbb</entry>
-      </row>
-      <row>
-       <entry>4</entry>
-       <entry>21</entry>
-       <entry>11110bbb 10bbbbbb 10bbbbbb 10bbbbbb</entry>
-      </row>
-     </tbody>
-    </tgroup>
-   </table>
-   Każde <replaceable>b</replaceable> reprezentuje bit, który może
-   być używany do przechowywanie danych znakowych.
+   Ta funkcja konwertuje łańcuch znaków <parameter>data</parameter> z kodowania
+   <literal>ISO-8859-1</literal> do <literal>UTF-8</literal>.
   </para>
+  <note>
+   <para>
+    Wiele stron www oznaczonych jako używające kodowania znaków
+    <literal>ISO-8859-1</literal> tak naprawdę używa podobnego kodowania
+    <literal>Windows-1252</literal> i przeglądarka zinterpretuje strony w
+    <literal>ISO-8859-1</literal> jako <literal>Windows-1252</literal>.
+    <literal>Windows-1252</literal> posiada dodatkowe znaki drukowalne takie jak
+    znak Euro (<literal>€</literal>) i zakrzywione cudzysłowy (<literal>“</literal>
+    <literal>”</literal>) zamiast pewnych znaków sterujących z
+    <literal>ISO-8859-1</literal>. Ta funkcja nie skonwertuje takich znaków w
+    kodowaniu <literal>Windows-1252</literal> poprawnie. Użyj innej funkcji jeśli
+    wymagana jest konwersja z <literal>Windows-1252</literal>.
+   </para>
+  </note>
  </refsect1>
 
  <refsect1 role="parameters">
@@ -68,10 +38,10 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>dane</parameter></term>
+     <term><parameter>data</parameter></term>
      <listitem>
       <para>
-       Łańcuch znaków zakodowany w ISO-8859-1.
+       Łańcuch znaków w ISO-8859-1.
       </para>
      </listitem>
     </varlistentry>
@@ -82,15 +52,18 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca <parameter>dane</parameter> przekorwentowane do UTF-8 .
+   Zwraca <parameter>data</parameter> przekonwertowane do UTF-8.
   </para>
  </refsect1>
- 
+
  <refsect1 role="seealso">
   &reftitle.seealso;
   <para>
    <simplelist>
-    <member><function>utf8_decode</function></member>
+    <member><function>utf8_decode</function> - Przeprowadza odwrotną konwersję</member>
+    <member><function>mb_convert_encoding</function> - Konwertuje pomiędzy różnymi kodowaniami znaków włączając w to UTF-8, ISO-8859-1 oraz Windows-1252</member>
+    <member><function>iconv</function> - Konwertuje pomiędzy różnymi kodowaniami znaków</member>
+    <member><function>recode_string</function> - Konwertuje pomiędzy różnymi kodowaniami znaków</member>
    </simplelist>
   </para>
  </refsect1>
