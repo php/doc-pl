@@ -1,58 +1,108 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: jarek Status: ready -->
-<!-- $Revision$-->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 8b5940cadeb4f1c8492f4a7f70743a2be807cf39 Maintainer: sobak Status: ready -->
+<!-- $Revision$ -->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.82 -->
-  <refentry xml:id="function.pg-last-notice" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>pg_last_notice</refname> 
-    <refpurpose>
-     Zwraca komunikaty informacyjne serwera PostgreSQL
-    </refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>string</type><methodname>pg_last_notice</methodname>
-      <methodparam><type>resource</type><parameter>connection</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     <function>pg_last_notice</function> zwraca ostatni komunikat informacyjny
-     serwera PostgreSQL związanego z połączeniem <parameter>connection</parameter>. 
-     Serwer PostgreSQL wysyła komunikaty informacyjne w pewnych przypadkach,
-     np. gdy trasakcja nie może być kontynuowana. Przy użyciu 
-     <function>pg_last_notice</function>, możesz uniknąć wywoływania bezużytecznych
-     zapytań, sprawdzając czy komunikat jest związany z transakcją czy nie.
-    </para>
-    <warning>
-     <para>
-      Ta funkcja jest EKSPERYMENTALNA i nie jest jeszcze w pełni zaimplementowana.
-      <function>pg_last_notice</function> została dodana w PHP 4.0.6. 
-      Niestety PHP 4.0.6 ma błąd w obsłudze tych komunikatów. Używanie
-      modułu PostgreSQL z PHP 4.0.6 nie jest zalecane, nawet jeśli nie używasz
-      funkcji <function>pg_last_notice</function>.
-     </para>
-     <para>
-      Ta funkcja jest w pełni zaimplementowana w PHP 4.3.0. Wcześniejsze niż 4.3.0 
-      wersje PHP ignorują parametr <parameter>connection</parameter>.
-     </para>
-    </warning>
-    <para>
-     Śledzenie komunikatów informacyjnych może być ustawtione jako opcjonalne
-     przez ustawienie parametru ini <literal>pgsql.ignore_notice</literal> na 1
-     od wersji PHP 4.3.0.
-    </para>
-    <para>
-     Logowanie komunikatów informacyjnych może być ustawtione jako opcjonalne
-     przez ustawienie parametru ini <literal>pgsql.log_notice</literal> na 0
-     od wersji PHP 4.3.0. Dopuki <literal>pgsql.ignore_notice</literal> jest
-     ustawione na 0, komunikaty informacyjne nie mogą być logowane.
-    </para>
-    <para>
-     Zobacz także <function>pg_query</function> i
-     <function>pg_last_error</function>.
-    </para>
-   </refsect1>
-  </refentry>
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.pg-last-notice">
+ <refnamediv>
+  <refname>pg_last_notice</refname> 
+  <refpurpose>
+   Zwraca ostatni komunikat typu notice zwrócony przez serwer PostgreSQL
+  </refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>string</type><methodname>pg_last_notice</methodname>
+   <methodparam><type>resource</type><parameter>connection</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>pg_last_notice</function> zwraca ostatni komunikat typu notice
+   zwrócony z serwera PostgreSQL dla połączenia określonego parametrem
+   <parameter>connection</parameter>. Serwer PostgreSQL zwraca komunikaty typu
+   notice w kilku przypadkach, na przykład przy tworzeniu kolumny typu <literal>SERIAL</literal>.
+  </para>
+  <para>
+   Z pomocą <function>pg_last_notice</function> można uniknąć dodatkowych zapytań,
+   sprawdzając czy komunikat jest lub nie jest związany z Twoją transakcją.
+  </para>
+  <para>
+   Śledzenie komunikatów typu notice może być ustawione na opcjonalne
+   dzięki ustawieniu wartości 1 dla
+   <literal>pgsql.ignore_notice</literal> w &php.ini;.
+  </para>
+  <para>
+   Logowanie komunikatów typu notice może być ustawione na opcjonalne
+   dzięki ustawieniu wartości 0 dla
+   <literal>pgsql.log_notice</literal> w &php.ini;.
+   Jeżeli <literal>pgsql.ignore_notice</literal> nie jest ustawione
+   na 0, komunikaty takie nie mogą być logowane.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>connection</parameter></term>
+     <listitem>
+      <para>
+       Zasób połączenia z bazą PostgreSQL.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+  Zwracany jest <type>string</type> zawierający ostatni notice dla połączenia
+  określonego parametrem <parameter>connection</parameter> lub &false; w razie błędu.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład użycia <function>pg_last_notice</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+  $pgsql_conn = pg_connect("dbname=mark host=localhost");
+  
+  $res = pg_query("CREATE TABLE test (id SERIAL)");
+  
+  $notice = pg_last_notice($pgsql_conn);
+  
+  echo $notice;
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+CREATE TABLE will create implicit sequence "test_id_seq" for "serial" column "test.id"
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>pg_query</function></member>
+    <member><function>pg_last_error</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

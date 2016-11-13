@@ -1,40 +1,91 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: jarek Status: ready -->
-<!-- $Revision$-->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: sobak Status: ready -->
+<!-- $Revision$ -->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.2 -->
-  <refentry xml:id="function.pg-num-rows" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>pg_num_rows</refname> 
-    <refpurpose>Zwraca liczbę wierszy</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>int</type><methodname>pg_num_rows</methodname>
-      <methodparam><type>resource</type><parameter>result</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     <function>pg_num_rows</function> zwraca liczbę wierszy w wyniku 
-     <parameter>result</parameter> zwróconym przez <function>pg_query</function>.
-     Funkcja zwraca -1 w razie błędu.
-    </para>
-    <note>
-     <para>
-      Użyj <function>pg_affected_rows</function> aby otrzymać liczbę wierszy
-      zmodyfikowanych przez INSERT, UPDATE lub DELETE.
-     </para>
-    </note>
-    <note>
-     <para>
-      Ta funkcja była poprzednio nazwana <literal>pg_numrows()</literal>.
-     </para>
-    </note>
-    <para>
-     Zobacz także <function>pg_num_fields</function> i
-     <function>pg_affected_rows</function>.
-    </para>
-   </refsect1>
-  </refentry>
+<refentry xml:id="function.pg-num-rows" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>pg_num_rows</refname> 
+  <refpurpose>Zwraca ilość wierszy w wyniku</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>int</type><methodname>pg_num_rows</methodname>
+   <methodparam><type>resource</type><parameter>result</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>pg_num_rows</function> zwróci ilość wierszy w
+   zasobie wyniku PostgreSQL.
+  </para>
+  <note>
+   <para>
+    Ta funkcja nazywała się kiedyś <function>pg_numrows</function>.
+   </para>
+  </note>
+ </refsect1>
+
+<refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>result</parameter></term>
+     <listitem>
+      <para>
+       Zasób wyniku zapytania PostgreSQL zwrócony przez <function>pg_query</function>,
+       <function>pg_query_params</function> lub <function>pg_execute</function>
+       (między innymi).
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Ilość wierszy w wyniku. W razie błędu zwracane jest -1.
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład użycia <function>pg_num_rows</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$result = pg_query($conn, "SELECT 1");
+
+$rows = pg_num_rows($result);
+
+echo "Zwróconych wierszy: " . $rows . "\n";
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+Zwróconych wierszy: 1
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>pg_num_fields</function></member>
+    <member><function>pg_affected_rows</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

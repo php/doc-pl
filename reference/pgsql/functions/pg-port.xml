@@ -1,26 +1,78 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: jarek Status: ready -->
-<!-- $Revision$-->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: sobak Status: ready -->
+<!-- $Revision$ -->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.20 -->
-  <refentry xml:id="function.pg-port" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>pg_port</refname>
-    <refpurpose>
-     Zwraca numer portu związany z połączeniem
-    </refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>int</type><methodname>pg_port</methodname>
-      <methodparam><type>resource</type><parameter>connection</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     <function>pg_port</function> zwraca numer portu dla połączenia wskazanego przez 
-     <parameter>connection</parameter>.
-    </para>
-   </refsect1>
-  </refentry>
+<refentry xml:id="function.pg-port" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>pg_port</refname>
+  <refpurpose>
+   Zwraca numer portu skojarzony z połączeniem
+  </refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>int</type><methodname>pg_port</methodname>
+   <methodparam choice="opt"><type>resource</type><parameter>connection</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>pg_port</function> zwraca numer portu do którego
+   jest połączony podany zasób połączenia, określony w parametrze
+   <parameter>połączenie</parameter>.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>connection</parameter></term>
+     <listitem>
+      <para>
+       Zasób połączenia z bazą PostgreSQL. Kiedy parametr 
+       <parameter>connection</parameter> jest pominięty, używane jest domyślne 
+       połączenie. Domyślne połączenie to ostatnie wykonane przez funkcje 
+       <function>pg_connect</function> lub <function>pg_pconnect</function>.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca liczbę (<type>int</type>) zawierającą numer portu lub
+   &false; w wypadku błędu.
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład użycia <function>pg_port</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$pgsql_conn = pg_connect("dbname=mark host=localhost");
+
+if ($pgsql_conn) {
+   print "Pomyślnie podłączono do portu: " . pg_port($pgsql_conn) . "<br/>\n";
+} else {
+   print pg_last_error($pgsql_conn);
+   exit;
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1> 
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
