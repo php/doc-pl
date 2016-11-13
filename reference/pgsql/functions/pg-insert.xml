@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 4501571c0db3a88528af1c5bcf8cb7193eec6961 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: b18e6c19c91fd4ba162fd08913e120258238a7f2 Maintainer: sobak Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.80 -->
 <!-- CREDITS: garbus, jarek -->
@@ -82,7 +82,8 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   &return.success;  Zwraca łańcuch (ang. <type>string</type>) jeśli <constant>PGSQL_DML_STRING</constant> zostało wprowadzone
+   Zwraca zasób połączenia w razie powodzenia, &return.falseforfailure;. Zwraca łańcuch (ang. <type>string</type>)
+   jeśli <constant>PGSQL_DML_STRING</constant> zostało wprowadzone
    poprzez parametr <parameter>opcje</parameter>.
   </para>
  </refsect1>
@@ -122,6 +123,13 @@
       </row>
      </thead>
      <tbody>
+      <row>
+       <entry>5.6.0</entry>
+       <entry>
+        Dopóki nie jest przekazana stała <constant>PGSQL_DML_STRING</constant> funkcja
+        zwraca teraz zasób połączenia zamiast &true; w wypadku powodzenia.
+       </entry>
+      </row>
       <row>
        <entry>5.6.0</entry>
        <entry>

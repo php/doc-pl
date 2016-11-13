@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: afc3f34c682418a582b0f9199db0bac4a087821f Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: 7856efea3e24f1be05dbde203941df91dc3a3f4f Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: sobak, qrak -->
 <refentry xml:id="function.mail" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -99,6 +99,14 @@ $text = str_replace("\n.", "\n..", $text);
        zewnątrz, powinny być one zabezpieczone, aby żadne niechciane
        nagłówki nie mogły być wstrzyknięte.
       </para>
+	  <note>
+       <para>
+        Parametr <parameter>dodatkowe_nagłówki</parameter> nie jest zabezpieczony
+        przed wstrzyknięciem nagłówków emaila. W związku z tym, użytkownik musi upewnić
+        się że określone nagłówki są bezpieczne i zawierają wyłącznie nagłówki. Między
+        innymi nigdy nie rozpoczynaj ciała wiadomości od kilku pustych linii.
+       </para>
+      </note>
       <note>
        <para>
         Każdy e-mail <emphasis>musi</emphasis> zawierać nagłówek

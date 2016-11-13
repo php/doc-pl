@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 65e697ff671608989432a6e6bf8ae8128b2be2c7 Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: 4aac5d83bda58b18c6a577bcf1599a9afca2d022 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: slawek, mroq, sobak -->
 <refentry xml:id="function.mysql-real-escape-string" xmlns="http://docbook.org/ns/docbook">
@@ -78,6 +78,15 @@
   </para>
  </refsect1>
 
+ <refsect1 role="errors">
+  &reftitle.errors;
+  <para>
+   Wywołanie tej funkcji bez ustanowionego połączenia MySQL spowoduje
+   wyemitowanie błędu o poziomie <constant>E_WARNING</constant>. Używaj
+   tej funkcji tylko przy ustanowionym poprawnym połączeniu MySQL.
+  </para>
+ </refsect1>
+
  <refsect1 role="examples">
   &reftitle.examples;
   <para>
@@ -86,7 +95,7 @@
     <programlisting role="php">
 <![CDATA[
 <?php
-// Connect
+// Połączenie
 $link = mysql_connect('host', 'uzytkownik', 'haslo')
     OR die(mysql_error());
 
@@ -97,6 +106,40 @@ $query = sprintf("SELECT * FROM uzytkownicy WHERE uzytkownik='%s' AND haslo='%s'
 ?>
 ]]>
     </programlisting>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title><function>mysql_real_escape_string</function> wymaga połączenia</title>
+    <para>
+     Ten przykład przedstawia co dzieje się gdy nie ma ustanowionego połączenia
+     MySQL przy wywoływaniu tej funkcji.
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// Nie jesteśmy połączeni z MySQL
+
+$nazwisko  = "O'Reilly";
+$_nazwisko = mysql_real_escape_string($nazwisko);
+
+$zapytanie = "SELECT * FROM aktorzy WHERE nazwisko = '$_nazwisko'";
+
+var_dump($_nazwisko);
+var_dump($zapytanie);
+?>
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
+<![CDATA[
+Warning: mysql_real_escape_string(): No such file or directory in /this/test/script.php on line 5
+Warning: mysql_real_escape_string(): A link to the server could not be established in /this/test/script.php on line 5
+
+bool(false)
+string(41) "SELECT * FROM aktorzy WHERE nazwisko = ''"
+]]>
+    </screen>
    </example>
   </para>
   <para>
