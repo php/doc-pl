@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 8243002f324f1d66e5414d7da0b52c86ee8d06f3 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 82d79c66531b3a08b781ac8c89c0c2f2fe4efb8f Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: pirate -->
  <chapter xml:id="language.functions" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -370,9 +370,9 @@ Robię homogenizowany jogurt malinowy.
     </note>
 
     <para>
-     Dekleracje typów pozwalają funkcjom na wymaganie argumentów określonego
-     typu podczas ich wywoływania. Jeżeli dana wartość nie jest oczekiwanego
-     typu, generowany jest błąd: w PHP 5 był to recoverable fatal error,
+     Dekleracje typów pozwalają funkcjom na wymaganie argumentów określonego typu podczas ich wywoływania.
+     Jeżeli dana wartość nie jest oczekiwanego typu,
+     generowany jest błąd: w PHP 5 był to recoverable fatal error,
      a PHP 7 rzuci wyjątek <classname>TypeError</classname>.
     </para>
 
@@ -399,6 +399,14 @@ Robię homogenizowany jogurt malinowy.
          <entry>
           Argument musi być instancją klasy o danej nazwie lub implementującą
           podany interfejs.
+         </entry>
+         <entry>PHP 5.0.0</entry>
+        </row>
+        <row>
+         <entry><literal>self</literal></entry>
+         <entry>
+          Parametr musi być instancją tej samej klasy, w której zdefiniowano
+          metodę. Tego typu można użyć tylko w metodach klasy lub instancji.
          </entry>
          <entry>PHP 5.0.0</entry>
         </row>
@@ -447,6 +455,34 @@ Robię homogenizowany jogurt malinowy.
        </tbody>
       </tgroup>
      </informaltable>
+
+	 <warning>
+      <para>
+	   Aliasy powyższych typów skalarnych nie są obsługiwane. Zostaną one w
+       natomiast potraktowane jak nazwy klas lub interfejsów. Przykładowo,
+       użycie <literal>boolean</literal> jako zwracanego typu lub typu argumentu
+       będzie wymagało, aby argument lub zwracana wartość były instancją klasy
+       lub interfejsu o nazwie <literal>boolean</literal> a nie typu <type>bool</type>:
+      </para>
+      <para>
+       <example>
+        <programlisting role="php">
+ <![CDATA[
+ <?php
+ function test(boolean $param) {}
+ test(true);
+ ?>
+ ]]>
+        </programlisting>
+        &example.outputs;
+        <screen>
+ <![CDATA[
+ Fatal error: Uncaught TypeError: Argument 1 passed to test() must be an instance of boolean, boolean given, called in - on line 1 and defined in -:1
+ ]]>
+        </screen>
+       </example>
+      </para>
+     </warning>
     </sect3>
 
     <sect3 xml:id="functions.arguments.type-declaration.examples">
@@ -563,7 +599,8 @@ NULL
       będzie tylko zmienna dokładnie takiego typu, w przeciwnym wypadku zostanie
       rzucony wyjątek <classname>TypeError</classname>. Jedynym odstępstwem od
       reguły jest przekazanie <type>integer</type>a do funkcji oczekującej typu
-      <type>float</type>.
+      <type>float</type>. Wywołania funkcji z wewnątrz wbudowanych funkcji nie są
+      dotknięte deklaracją <literal>strict_types</literal>.
      </para>
 
      <para>
@@ -944,7 +981,7 @@ $newref =& returns_reference();
    </sect2>
    
   <sect2 xml:id="functions.returning-values.type-declaration">
-   <title>Deklaracje typu zwracaej wartości</title>
+   <title>Deklaracje typu zwracanej wartości</title>
 
    <para>
     PHP 7 dodaje wsparcie dla deklaracji zwracanych typów. Podobnie do
@@ -1163,9 +1200,10 @@ Foo::$variable();  // Wywoła $foo->Zmienna() odczytując $zmienna w tym zasięg
    <para>
      Od PHP 5.4.0 możesz wywołać dowolną wartość typu <type>callable</type> trzymaną w zmiennej.
     <example>
-     <title>Complex callables</title>
+     <title>Kompleksowy przykład callables</title>
      <programlisting role="php">
 <![CDATA[
+<?php
 class Foo
 {
     static function bar()
@@ -1180,10 +1218,11 @@ class Foo
 
 $func = array("Foo", "bar");
 $func(); // wyświetli "bar"
-$f = array(new Foo, "baz");
+$func = array(new Foo, "baz");
 $func(); // wyświetli "baz"
-$f = "Foo::bar";
+$func = "Foo::bar";
 $func(); // wyświetli "bar" od PHP 7.0.0; wcześniej wygeneruje fatal error
+?>
 ]]>
      </programlisting>
     </example>
@@ -1216,7 +1255,7 @@ $func(); // wyświetli "bar" od PHP 7.0.0; wcześniej wygeneruje fatal error
         <row>
          <entry>5.4.0</entry>
          <entry>
-          Arrays, which are valid callables, are allowed as variable functions.
+          Tablice, które są poprawnymi callables, są dozwolone jako zmienne funkcje.
          </entry>
         </row>
        </tbody>
@@ -1289,6 +1328,9 @@ $func(); // wyświetli "bar" od PHP 7.0.0; wcześniej wygeneruje fatal error
     wartość parametru typu <link linkend="language.types.callback">callback</link>,
     ale mają też wiele innych zastosowań.
    </simpara>
+   <simpara>
+    Funkcje anonimowe są zaimplementowane przy użyciu klasy <link linkend="class.closure">Closure</link>.
+   </simpara>
 
    <example>
     <title>Przykład funkcji anonimowej</title>
@@ -1345,18 +1387,18 @@ $message = 'hello';
 $example = function () {
     var_dump($message);
 };
-echo $example();
+$example();
 
 // Odziedzicz $message
 $example = function () use ($message) {
     var_dump($message);
 };
-echo $example();
+$example();
 
 // Wartość jest dziedziczona podczas definiowania funkcji,
 // a nie jej wykonywania
 $message = 'world';
-echo $example();
+$example();
 
 // Zresetuj wiadomosć
 $message = 'hello';
@@ -1365,12 +1407,12 @@ $message = 'hello';
 $example = function () use (&$message) {
     var_dump($message);
 };
-echo $example();
+$example();
 
 // Zmieniona wartość w zasięgu nadrzędnym jest
 // brana pod uwagę wewnątrz wywołania funkcji
 $message = 'world';
-echo $example();
+$example();
 
 // Domknięcia mogą także przyjmować normalne argumenty
 $example = function ($arg) use ($message) {
@@ -1463,11 +1505,111 @@ print $my_cart->getTotal(0.05) . "\n";
     </programlisting>
    </example>
    
-   <simpara>
-    Funkcje anonimowe są implementowane przez klasę <link linkend="class.closure">
-    <classname>Closure</classname></link>.
-   </simpara>
-   
+   <example>
+    <title>Automatyczne przypisanie <literal>$this</literal></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+class Test
+{
+    public function testing()
+    {
+        return function() {
+            var_dump($this);
+        };
+    }
+}
+
+$object = new Test;
+$function = $object->testing();
+$function();
+    
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+object(Test)#1 (0) {
+}
+]]>
+    </screen>
+    &example.outputs.53;
+    <screen>
+<![CDATA[
+Notice: Undefined variable: this in script.php on line 8
+NULL]]>
+    </screen>
+   </example>
+
+   <para>
+    Od PHP 5.4.0, gdy funkcja anonimowa jest zadeklarowana w kontekście klasy,
+    obecna klasa jest automatycznie do niej przypisywana, sprawiając że w zakresie
+    funkcji jest dostępna zmienna <literal>$this</literal>. Jeśli to automatyczne
+    powiązywanie jest niepożądane, można w zamian użyć
+    <link linkend="functions.anonymous-functions.static">statycznych funkcji
+    anonimowych</link>.
+   </para>
+
+   <sect2 xml:id="functions.anonymous-functions.static">
+    <title>Statyczne funkcje anonimowe</title>
+    <para>
+     Od PHP 5.4 funkcje anonimowe mogą być zadeklarowane jako statyczne.
+     Zapobiega to przed automatycznym przypisaniem do nich obecnej klasy.
+     Nie można też przypisać do nich obiektów w czasie wykonywania skryptu.
+    </para>
+    <para>
+     <example>
+      <title>Próba użycia <literal>$this</literal> wewnątrz statycznej funkcji anonimowej</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+
+new class {
+    function __construct()
+    {
+        (static function() {
+            var_dump($this);
+        })();
+    }
+};
+?>
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+Notice: Undefined variable: this in %s on line %d
+NULL
+]]>
+      </screen>
+     </example>
+    </para>
+
+    <para>
+     <example>
+      <title>Próba przypisania obiektu do statycznej funkcji anonimowej</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+
+(static function() {
+    // ciało funkcji
+})->call(new StdClass);
+?>
+]]>
+      </programlisting>
+      &example.outputs;
+      <screen>
+<![CDATA[
+Warning: Cannot bind an instance to a static closure in /in/sLLS9 on line 5
+]]>
+      </screen>
+     </example>
+    </para>
+   </sect2>
+
    <sect2 role="changelog">
     &reftitle.changelog;
     <para>
@@ -1483,7 +1625,8 @@ print $my_cart->getTotal(0.05) . "\n";
         <row>
          <entry>5.4.0</entry>
          <entry>
-          <varname>$this</varname> może zostać użyte w funkcjach anonimowych.
+          Funkcje anonimowe mogą używać <varname>$this</varname> i być zadeklarowane
+          statycznie.
          </entry>
         </row>
         <row>

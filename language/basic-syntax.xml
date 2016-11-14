@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 6b24e8069b857871c4ec3968b2c79c7be8244160 Maintainer: adi Status: ready -->
+<!-- EN-Revision: aab798badad7eb20ab21897fc80f8c1bfaa18a4e Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: sobak -->
  <chapter xml:id="language.basic-syntax" xmlns="http://docbook.org/ns/docbook">
@@ -15,8 +15,8 @@
     znaczników, otwierającym i zamykającym jest ignorowane przez parser PHP.
    </para>
    <para>
-    PHP pozwala także na użycie krótkich tagów <literal>&lt;?</literal> i <literal>?&gt;</literal>,
-    które są niezalecane, ponieważ są dostępne tylko gdy włączone przez dyrektywę
+    PHP pozwala także na użycie krótkiego tagu otwierającego <literal>&lt;?</literal>,
+    który jest niezalecane, ponieważ jest dostępne tylko gdy włączono go przez dyrektywę
     <link linkend="ini.short-open-tag">short_open_tag</link> lub gdy PHP zostało skonfigurowane
     z opcją <option>--enable-short-tags</option>.
    </para>
@@ -39,6 +39,35 @@ echo "Ostatnie wyrażenie";
 ]]>
      </programlisting>
     </informalexample>
+   </para>
+   <para>
+    <table>
+     &reftitle.changelog;
+     <tgroup cols="2">
+      <thead>
+       <row>
+        <entry>&Version;</entry>
+        <entry>&Description;</entry>
+       </row>
+      </thead>
+      <tbody>
+       <row>
+        <entry>7.0.0</entry>
+         <entry>
+          Tagi ASP <code>&lt;%</code>, <code>%&gt;</code>,
+          <code>&lt;%=</code> i tag skryptu
+          <code>&lt;script language="php"&gt;</code> zostały usunięte z PHP.
+         </entry>
+       </row>
+       <row>
+        <entry>5.4.0</entry>
+         <entry>
+          Tag &lt;?= jest zawsze dostępny, niezależnie od dyrektywy short_open_tag.
+         </entry>
+       </row>
+      </tbody>
+     </tgroup>
+    </table>
    </para>
   </sect1>
   <sect1 xml:id="language.basic-syntax.phpmode">
@@ -81,7 +110,7 @@ echo "Ostatnie wyrażenie";
      </programlisting>
     </example>
     W tym przykładzie PHP pominie bloki, gdzie warunek nie jest spełniony, nawet
-    jeżeli są one wewnątrz tagów PHP. PHP pomija je odpowiednio do warunku,
+    jeżeli są one poza tagami PHP. PHP pomija je odpowiednio do warunku,
     ponieważ interpreter przeskakuje bloki zawarte w instrukcji, która nie została
     spełniona.
    </para>
@@ -91,14 +120,15 @@ echo "Ostatnie wyrażenie";
     funkcje <function>echo</function> lub <function>print</function>.
    </para>
    <para>
-    Mamy cztery różne pary otwierających i zamykających znaczników,
-    które mogą być użyte w php. Dwie z nich, &lt;?php ?&gt; i
-    &lt;script language="php"&gt; &lt;/script&gt; są zawsze dostępne.
-    Dwie następne to krótkie znaczniki i znaczniki w stylu
-    <productname>ASP</productname>, mogą być włączane i wyłączane
-    w pliku konfiguracyjnym &php.ini;. Część osób postrzega krótkie znaczniki
-    i znaczniki w stylu <productname>ASP</productname> jako wygodne, jednakże
-    są one mniej przenośne, i zasadniczo nie polecane.
+    W PHP 5 mamy do pięciu różnych par znaczników otwierających i zamykających,
+    dostępnych w PHP, w zależności od tego jak skonfigurowano PHP. Dwie z nich, &lt;?php ?&gt; i
+    &lt;script language="php"&gt; &lt;/script&gt; są zawsze dostępne. Istnieje też krótkich
+    znacznik echo <code>&lt;?= ?&gt;</code>, który jest zawsze dostępny w PHP 5.4.0 i nowszych.
+   </para>
+   <para>
+    Pozostałe dwa to krótkie znaczniki i znaczniki w stylu <productname>ASP</productname>.
+    Część osób postrzega krótkie znaczniki i znaczniki w stylu <productname>ASP</productname>
+    jako wygodne, jednakże są one mniej przenośne, i zasadniczo nie polecane.
     <note>
      <para>
       Zauważ również, że jeśli zagnieżdzasz PHP w XML lub XHTML
@@ -108,30 +138,38 @@ echo "Ostatnie wyrażenie";
     </note> 
    </para>
    <para>
+    PHP 7 wycofało wsparcie dla tagów <productname>ASP</productname> i
+    znaczników <code>&lt;script language="php"&gt;</code>. W związku z tym zalecamy
+    używać wyłącznie tagów <code>&lt;?php ?&gt;</code> and <code>&lt;?= ?&gt;</code>,
+    aby maksymalnie zwiększyć kompatybilność kodu PHP.
+   </para>
+   <para>
     <example>
      <title>Znaczniki otwierające i zamykające PHP</title>
      <programlisting role="php">
 <![CDATA[
-1.  <?php echo 'jeśli chcesz obsługiwać dokumenty XHTML lub XML, zrób to tak'; ?>
+1.  <?php echo 'jeśli chcesz obsługiwać dokumenty XHTML lub XML,
+                użyj tych tagów'; ?>
 
-2.  <script language="php">
+2.  Możesz użyć krótkiego znacznika echo do <?= 'wyświetlenia tego tekstu' ?>.
+    Jest on zawsze dostępny w PHP 5.4.0 i nowszych i jest odpowiednikiem
+    <?php echo 'wyświetlenia tego tekstu' ?>.
+
+3.  <? echo 'this code is within short tags, but will only work '.
+            'if short_open_tag is enabled'; ?>
+				
+4.  <script language="php">
         echo 'niektóre edytory (jak FrontPage) nie lubią
               instrukcji przetwarzania';
     </script>
+	Ta składnia została usunięta w PHP 7.0.0.
 
-3.  <? echo 'to jest najprostsza instrukcja przetwarzania SGML'; ?>
-    <?= wyrazenie ?> To jest skrót dla "<? echo wyrazenie ?>"
-
-4.  <% echo 'Możesz opcjonalnie użyć znaczników w stylu ASP'; %>
-    <%= $zmienna; # To jest skrót dla "<% echo $zmienna; %>
+5.  <% echo 'Możesz opcjonalnie użyć znaczników w stylu ASP'; %>
+    Kod w znacznikach <%= $zmienna; jest skrótem dla kodu <% echo $zmienna; %>
+    Obie te składnie zostały usunięte w PHP 7.0.0.
 ]]>
      </programlisting>
     </example>
-   </para>
-   <para>
-    Z pokazanych znaczników, pierwszy i drugi przykład są zawsze
-    dostępne, pierwszy przykład jest najbardziej powszechny i 
-    rekomendowany. 
    </para>
    <para>
     Krótkie znaczniki (trzeci przykład) są dostepne jedynie, kiedy są
@@ -140,9 +178,9 @@ echo "Ostatnie wyrażenie";
     z opcją <option>--enable-short-tags</option>.
    </para>    
    <para>
-    Znaczniki w stylu <productname>ASP</productname> (czwarty przykład) są dostępne jedynie gdy 
-    zostaną włączone poprzez dyrektywę konfiguracyjną
-    <link linkend="ini.asp-tags">asp_tags</link> w &php.ini;
+    Znaczniki w stylu <productname>ASP</productname> (piąty przykład) są dostępne
+    jedynie gdy  zostaną włączone poprzez dyrektywę konfiguracyjną
+    <link linkend="ini.asp-tags">asp_tags</link> w &php.ini; i zostały usunięte w PHP 7.0.0.
    </para>
    <para>
     <note>

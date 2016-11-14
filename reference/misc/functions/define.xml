@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: ef362e88b393422e1962c48c825aa1c6e65b380b Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.define" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
@@ -36,12 +36,16 @@
      <term><parameter>wartość</parameter></term>
      <listitem>
       <para>
-       Wartość stałej; dozwolone są tylko wartości skalarne i <type>null</type>. 
-       Wartości skalarne to <type>integer</type>, 
-       <type>float</type>, <type>string</type> lub <type>boolean</type>. Jest możliwe 
-       zdefiniowanie stałej zawierającej <type>resource</type>, jednakże jest to niezalecane
-       i może wywołać nieprzewidziane zachowanie.
+       Wartość stałej. W PHP <parameter>wartość</parameter> musi być typu skalarnego
+       (<type>integer</type>, <type>float</type>, <type>string</type>, <type>boolean</type> lub &null;).
+       W PHP 7 dozwolone są także tablice (typ <type>array</type>).
       </para>
+	  <warning>
+       <para>
+        Mimo iż jest możliwe zdefiniowanie stałych zawierających zasób (<type>resource</type>),
+        jest to niezalecane i może spowodować nieprzewidziane zachowanie.
+       </para>
+      </warning>
      </listitem>
     </varlistentry>
     <varlistentry>
@@ -71,6 +75,30 @@
   </para>
  </refsect1>
 
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>7.0.0</entry>
+       <entry>
+        Dozwolone są wartości tablicowe (<type>array</type>).
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+ 
  <refsect1 role="examples">
   &reftitle.examples;
   <para>
@@ -87,6 +115,14 @@ define("POZDROWIENIE", "Cześć.", true);
 echo POZDROWIENIE; // wyświetli "Cześć."
 echo Pozdrowienie; // wyświetli "Cześć."
 
+
+// Działa od PHP 7
+define('ZWIERZETA', array(
+    'pies',
+    'kot',
+    'ptak'
+));
+echo ZWIERZETA[1]; // wyświetli "kot"
 ?>
 ]]>
     </programlisting>

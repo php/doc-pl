@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: leniwiec Status: ready -->
+<!-- EN-Revision: 7cddcd7156b9f5735d8ad7014302e9527fc79d84 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: leniwiec -->
 <!-- splitted from ./en/functions/crack.xml, last change in rev 1.1 -->
 <refentry xml:id="function.crack-check" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
@@ -17,9 +18,13 @@
   <methodsynopsis>
    <type>bool</type><methodname>crack_check</methodname>
    <methodparam><type>string</type><parameter>password</parameter></methodparam>
+   <methodparam><type>string</type><parameter>username</parameter><initializer>""</initializer></methodparam>
+   <methodparam><type>string</type><parameter>gecos</parameter><initializer>""</initializer></methodparam>
+   <methodparam><type>resource</type><parameter>dictionary</parameter><initializer>&null;</initializer></methodparam>
   </methodsynopsis>
   <para> 
-   Rozpoczyna sprawdzanie podanego hasła według zadanego słownika.
+   Rozpoczyna sprawdzanie podanego hasła według zadanego słownika. Alternatywna sygnatura funkcji
+   bierze też pod uwagę nazwę użytkownika i informacje GECOS.
   </para>
   &warn.experimental.func;
  </refsect1>
@@ -40,7 +45,23 @@
      <term><parameter>password</parameter></term>
      <listitem>
       <para>
-       Sprawdzane hasło.
+       Hasło do sprawdzenia.
+      </para>
+     </listitem>
+    </varlistentry>
+	<varlistentry>
+     <term><parameter>username</parameter></term>
+     <listitem>
+      <para>
+       Nazwa użytkownika dla konta z podanym hasłem.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>gecos</parameter></term>
+     <listitem>
+      <para>
+       Informacje GECOS powiązane z kontem użytkownika.
       </para>
      </listitem>
     </varlistentry>
@@ -54,6 +75,33 @@
    &false; w przypadku 'słabego' hasła.
   </para>
  </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>0.3</entry>
+       <entry>
+        Parametry <parameter>username</parameter>, <parameter>gecos</parameter> oraz
+        <parameter>dictionary</parameter> zostały dodane do alternatywnej
+        sygnatury funkcji.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
 </refentry>
 
 <!-- Keep this comment at the end of the file

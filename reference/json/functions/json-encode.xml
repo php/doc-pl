@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 01affe9d1b477a955c469540637fc187315f8021 Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: c047c527e660478e8705b64c82b19870fec760c0 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: sobak -->
 <refentry xml:id="function.json-encode" xmlns="http://docbook.org/ns/docbook">
@@ -50,7 +50,9 @@
        <constant>JSON_PRETTY_PRINT</constant>,
        <constant>JSON_UNESCAPED_SLASHES</constant>,
        <constant>JSON_FORCE_OBJECT</constant>,
-       <constant>JSON_UNESCAPED_UNICODE</constant>. Zachowanie tych
+       <constant>JSON_PRESERVE_ZERO_FRACTION</constant>,
+       <constant>JSON_UNESCAPED_UNICODE</constant>,
+       <constant>JSON_PARTIAL_OUTPUT_ON_ERROR</constant>. Zachowanie tych
        stałych zostało opisane na
        <link linkend="json.constants">stronie stałych JSON</link>.
       </para>
@@ -87,16 +89,30 @@
       </row>
      </thead>
      <tbody>
+	  <row>
+       <entry>7.1.0</entry>
+       <entry>
+        Przy dekodowaniu wartości zmiennoprzecinkowych używana jest wartość
+        <link linkend="ini.serialize-precision">serialize_precision</link>
+        zamiast <link linkend="ini.precision">precision</link>.
+       </entry>
+      </row>
+      <row>
+       <entry>5.6.6</entry>
+       <entry>
+        Dodano <parameter>opcję</parameter> <constant>JSON_PRESERVE_ZERO_FRACTION</constant>.
+       </entry>
+      </row>
       <row>
        <entry>5.5.0</entry>
        <entry>
-        Dodano parametr <parameter>depth</parameter>.
+        Dodano parametr <parameter>zagnieżdżenie</parameter>.
        </entry>
       </row>
       <row>
        <entry>5.4.0</entry>
        <entry>
-        Dodano <parameter>opcje</parameter> <constant>JSON_PRETTY_PRINT</constant>, <constant>JSON_UNESCAPED_SLASHES</constant>, and <constant>JSON_UNESCAPED_UNICODE</constant>.
+        Dodano <parameter>opcje</parameter> <constant>JSON_PRETTY_PRINT</constant>, <constant>JSON_UNESCAPED_SLASHES</constant> i <constant>JSON_UNESCAPED_UNICODE</constant>.
        </entry>
       </row>
       <row>
@@ -196,6 +212,52 @@ Asocjacyjna tablica zwracana zawsze jako obiekt: {"foo":"bar","baz":"long"}
     </screen>
    </example>
    <example>
+    <title>Przykład użycia opcji JSON_NUMERIC_CHECK</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+echo "Łańcuchy znaków reprezentujące liczby są automatycznie zmieniane na liczby".PHP_EOL;
+$numbers = array('+123123', '-123123', '1.2e3', '0.00001');
+var_dump(
+ $numbers,
+ json_encode($numbers, JSON_NUMERIC_CHECK)
+);
+echo "Łańcuchy znaków zawierające niepoprawnie sformatowane liczby".PHP_EOL;
+$strings = array('+a33123456789', 'a123');
+var_dump(
+ $strings,
+ json_encode($strings, JSON_NUMERIC_CHECK)
+);
+?>
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
+<![CDATA[
+Łańcuchy znaków reprezentujące liczby są automatycznie zmieniane na liczby
+array(4) {
+  [0]=>
+  string(7) "+123123"
+  [1]=>
+  string(7) "-123123"
+  [2]=>
+  string(5) "1.2e3"
+  [3]=>
+  string(7) "0.00001"
+}
+string(28) "[123123,-123123,1200,1.0e-5]"
+Łańcuchy znaków zawierające niepoprawnie sformatowane liczby
+array(2) {
+  [0]=>
+  string(13) "+a33123456789"
+  [1]=>
+  string(4) "a123"
+}
+string(24) "["+a33123456789","a123"]"
+]]>
+    </screen>
+   </example>
+   <example>
     <title>Tablica sekwencyjna vs. niesekwencyjna</title>
     <programlisting role="php">
 <![CDATA[
@@ -262,6 +324,24 @@ array(3) {
   string(5) "blong"
 }
 string(33) "{"0":"foo","2":"baz","3":"blong"}"
+]]>
+    </screen>
+   </example>
+   <example>
+    <title>Przykład użycia opcji <constant>JSON_PRESERVE_ZERO_FRACTION</constant></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+var_dump(json_encode(12.0, JSON_PRESERVE_ZERO_FRACTION));
+var_dump(json_encode(12.0));
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+string(4) "12.0"
+string(2) "12"
 ]]>
     </screen>
    </example>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 14af302c9c0e561fa6f9cdd956268758ba9a89c5 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 9884bb84dd0d63fbc19312349f75f31b229e3190 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: garbus, qrak -->
  <chapter xml:id="language.variables" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -517,8 +517,8 @@ function test()
    <note>
     <para>
      Zmienne statyczne mogą być deklarowane, tak jak w powyższym przykładzie.
-     Próba przypisania wartości do tego typu zmiennych, poprzez wynik
-     jakiegoś wyrażenia, spowoduje błąd składni (ang. Parse error).
+     Od PHP 5.6 można przypisać wartości do tego typu zmiennych, poprzez wynik
+     jakiegoś wyrażenia, ale nie można użyć w nim żadnej funkcji, bo spowoduje to błąd składni.
     </para>
     <para>
      <example>
@@ -528,8 +528,8 @@ function test()
 <?php
 function foo(){
     static $int = 0;          // prawidłowo
-    static $int = 1+2;        // błąd  (w rzeczywistości to jest wyrażenie)
-    static $int = sqrt(121);  // błąd  (to również jest wyrażenie)
+    static $int = 1+2;        // prawidłowo  (od PHP 5.6)
+    static $int = sqrt(121);  // błąd  (ponieważ jest to funkcja)
 
     $int++;
     echo $int;
@@ -739,7 +739,7 @@ echo "$a $witaj";
     <varname>${$a}[1]</varname> dla drugiego.
    </simpara>
 
-  <simpara>
+   <simpara>
     Dostęp do właściwości klas można uzyskać także za pomocą zmiennej nazwy
     własności. Zmienna nazwa własności zostanie zinterpretowana w
     zasięgu z którego jest wywoływana. Przykładowo, jeżeli masz
@@ -749,6 +749,17 @@ echo "$a $witaj";
     of <varname>$foo</varname>. Jest to także prawdą
     jeżeli <varname>$bar</varname> jest dostępem do tablicy.
    </simpara>
+
+   <caution>
+    <simpara>
+     Dalsza dereferencja zmiennej nazwy własności, która jest tablicą różni się
+     semantyką w PHP 5 i PHP 7. Poradnik
+     <link linkend="migration70.incompatible.variable-handling.indirect">Migracji do PHP 7.0</link>
+     zawiera więcej szczegółów o rodzajach wyrażeń, które uległy zmianie i
+     tym jak używać nawiasów klamrowych, aby uniknąć niejednoznaczności.
+    </simpara>
+   </caution>
+   
    <simpara>
     Do jasnego ograniczenia nazwy własności można wykorzystać też nawiasy
     klamrowe. Są one szczególnie użyteczne, gdy uzyskuje się dostęp do właściwości
@@ -774,15 +785,14 @@ $foo = new foo();
 $bar = 'bar';
 $baz = array('foo', 'bar', 'baz', 'quux');
 echo $foo->$bar . "\n";
-echo $foo->$baz[1] . "\n";
+echo $foo->{$baz[1]} . "\n";
 
 $start = 'b';
 $end   = 'ar';
 echo $foo->{$start . $end} . "\n";
 
 $arr = 'arr';
-echo $foo->$arr[1] . "\n";
-echo $foo->{$arr}[1] . "\n";
+echo $foo->{$arr[1]} . "\n";
 
 ?>
 ]]>
@@ -793,7 +803,6 @@ I am bar.
 I am bar.
 I am bar.
 I am r.
-I am B.
      </screen>
     </example>
    </para> 
