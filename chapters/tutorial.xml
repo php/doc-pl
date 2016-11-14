@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: ca7fbbaddcf091178e666a6586f4181d6e429b4d Maintainer: sobak Status: ready -->
+<!-- $Revision$ -->
+ <chapter xml:id="tutorial" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <info><title>Prosty tutorial</title></info>
+
+  <para>
+   Chcielibyśmy przedstawić tu absolutne podstawy PHP w krótkim, prostym
+   tutorialu. Ten tekst przedstawia jedynie tworzenie dynamicznej strony
+   za pomocą PHP, jednakże PHP może tworzyć nie tylko strony
+   internetowe. Zobacz rozdział zatytułowany <link linkend="intro-whatcando">Co potrafi
+   PHP?</link> aby dowiedzieć się więcej.
+  </para>
+  <para>
+   Strony internetowe korzystające z PHP są traktowane dokładnie jak normalne
+   strony HTML i możesz je tworzyć oraz edytować w taki sam sposób jak normalnie
+   tworzysz zwyczajne strony HTML.
+  </para>
+
+  <section xml:id="tutorial.requirements">
+   <info><title>Czego potrzebuję?</title></info>
+   <para>
+    W tym tutorialu zakładamy że Twój serwer ma włączoną obsługę PHP
+    i że wszystkie pliki z zakończeniem <filename>.php</filename>
+    są parsowane przez PHP. Na większości serwerów jest to domyślne
+    rozszerzenie dla plików PHP, ale zapytaj swojego administratora, aby
+    się upewnić. Jeśli Twój serwer obsługuje PHP, nie musisz nic robić.
+    Po prostu stwórz swoje pliki <filename>.php</filename>, umieść je
+    w katalogu swojej strony a serwer automatycznie sparsuje je dla Ciebie.
+    Nie musisz nic kompilować ani instalować dodatkowych narzędzi. Pomyśl
+    o stronach korzystających z PHP jak o zwykłych plikach HTML    z dodatkową
+    grupą magicznych tagów, które pozwolą Ci na różne rzeczy.
+   </para>
+   <para>
+    Powiedzmy że chcesz zaoszczędzić cenny transfer i tworzyć skrypty lokalnie.
+    W tym wypadku musisz zainstalować serwer stron WWW, taki jak 
+    <link xlink:href="&url.apache;">Apache</link> i oczywiście 
+    <link xlink:href="&url.php.downloads;">PHP</link>. Prawdopodobnie będziesz 
+    też chciał zainstalować serwer baz danych, na przykład 
+    <link xlink:href="&url.mysql.docs;">MySQL</link>.
+   </para>
+   <para>
+    Możesz zainstalować je indywidualnie lub wybrać prostszy sposób. Nasz
+    podręcznik ma <link linkend="install">instrukcje instalacji dla
+    PHP</link> (zakładając że masz już zainstalowany jakiś serwer). Jeśli
+    masz problemy z samodzielnym zainstalowaniem PHP, sugerujemy żebyś zadał
+    pytania na naszej <link xlink:href="&url.php.mailing-lists;">licie mailingowej
+    poświęconej instalacji</link>. Jeśli wybierasz pójście prostszą drogą
+    <link xlink:href="&url.installkits;">znajdź prekonfigurowaną paczkę</link>
+    dla Twojego systemu operacyjnego, która automatycznie zainstaluje wszystkie
+    te rzeczy za pomocą paru kliknięć myszy. Instalacja serwera z obsługą PHP
+    jest prosta na dowolnym systemie operacyjnym, wliczając MacOSX, Linux i Windows.
+    Na Linuksie pomocne w znajdowaniu pakietów mogą okazać się <link xlink:href="&url.rpmfind;">rpmfind</link> i
+    <link xlink:href="&url.rpmfind.pbone;">PBone</link>.
+    Możesz też odwiedzić <link
+     xlink:href="&url.apt-get;">apt-get</link>, aby znaleźć paczki dla Debiana.
+   </para>
+  </section>
+
+  <section xml:id="tutorial.firstpage">
+   <info><title>Twoja pierwsza strona korzystające z PHP</title></info>
+   <para>
+    Stwórz plik nazwany <filename>hello.php</filename> i umieść go
+    w katalogu root swojego serwera (<varname>DOCUMENT_ROOT</varname>),
+    wpisując następującą zawartość:
+   </para>
+   <para>
+    <example>
+     <info><title>Nasz pierwszy skrypt PHP: <filename>hello.php</filename></title></info>
+     <programlisting role="php">
+<![CDATA[
+<html>
+ <head>
+  <title>Test PHP</title>
+ </head>
+ <body>
+ <?php echo '<p>Hello World</p>'; ?> 
+ </body>
+</html>
+]]>
+     </programlisting>
+     <simpara>
+      Użyj przeglądarki internetowej do otwarcia adresu URL Twojego serwera
+      zakończonego odniesieniem do pliku <literal>/hello.php</literal>. Przy serwerze lokalnym
+      adres będzie podobny do <literal>http://localhost/hello.php</literal> 
+      lub <literal>http://127.0.0.1/hello.php</literal>, zależnie od konfiguracji
+      serwera. Jeśli wszystko zostało skonfigurowane poprawnie, ten plik zostanie
+      sparsowany przez PHP i do Twojej przeglądarki zostanie wysłany następujący
+      wynik:
+     </simpara>
+     <screen role="html">
+<![CDATA[
+<html>
+ <head>
+  <title>Test PHP</title>
+ </head>
+ <body>
+ <p>Hello World</p>
+ </body>
+</html>
+]]>
+     </screen>
+    </example>
+   </para>
+   <para>
+    To przykład ekstremalnie prostego programu i tak naprawdę nie potrzebujesz
+    PHP by stworzyć stronę jak tę. Wszystko co robi to wyświetlenie tekstu
+    <literal>Hello World</literal> używając wyrażenia <function>echo</function>
+    z PHP. Zauważ że plik <emphasis>nie musi być wykonywalny</emphasis>
+    lub szczególny w żaden sposób. Serwer wie, że ten plik musi być przetworzony
+    przez PHP ponieważ użyłeś rozszerzenia ".php", a konfiguracja serwera przekazuje
+    je do PHP. Pomyśl o tym jak o normalnym pliku HTML, który ma dostępny zestaw
+    specjalnych tagów, umożliwiających robienie wielu interesujących rzeczy.
+   </para>
+   <para>
+    Jeśli po wypróbowaniu tego przykładu, nic nie zostało wyświetlone,
+    przeglądarka próbowała pobrać plik lub widzisz cały plik jako tekst,
+    istnieje szansa że nie masz włączonego PHP lub konfiguracja jest zła.
+    Poproś administratora aby włączył go dla Ciebie używając rozdziału
+    <link linkend="install">Instalacja</link>. Jeśli programujesz lokalnie, także przeczytaj
+    rozdział o instalacji, aby upewnić się że wszystko zostało skonfigurowane
+    poprawnie. Upewnij się że otwierasz plik przez protokół http i poprzez
+    serwer. Jeśli po prostu wywołasz plik ze swojego systemu plików, nie będzie
+    on sparsowany przez PHP. Jeśli problem nadal występuje, nie bój się
+    skorzystać z jednego z wielu kanałów
+    <link xlink:href="&url.php.support;">wsparcia PHP</link>.
+   </para>
+   <para>
+    Sednem tego przykładu jest pokazanie specjalnego formatu tagu PHP.
+    W tym przykładzie użyliśmy <literal>&lt;?php</literal> by zaznaczyć
+    początek tagu PHP. Później umieściliśmy wyrażenie PHP i opuściliśmy tryb PHP
+    dodając końcowy tag <literal>?&gt;</literal>. Możesz w ten sposób wskakiwać
+    i wyskakiwać z trybu PHP w pliku HTML, gdzie tylko chcesz. Aby dowiedzieć się więcej,
+    przeczytaj sekcję manuala poświęconą <link linkend="language.basic-syntax">
+    podstawowej składni PHP</link>.
+   </para>
+  
+   <note>
+    <info><title>O przełamaniach linii</title></info>
+    <para>
+     Zakończenia linii mają niewielkie znaczenie w HTML, jednak wciąż jest dobrym
+     pomysłem jest ich umieszczenie aby Twój HTML był czytelny. Przełamanie linii
+     wstawione zaraz za zamykającym znacznikiem
+     <literal>?&gt;</literal> zostanie usunięte przez PHP.  Może to być niezwykle
+     przydatne kiedy umieszczasz wiele bloków PHP lub dołączasz pliki zawierające
+     PHP, które nie powinny nic wyświetlać. Jednocześnie, może to być także nieco
+     mylące. Możesz umieścić spację za zamykającym
+     <literal>?&gt;</literal> aby wymusić pojawienie się spacji i przełamania linii
+     lub ręcznie umieścić przełamanie linii w ostatnim wyrażeniu echo/print wewnątrz
+     bloku PHP.
+    </para> 
+   </note> 
+
+   <note>
+    <info><title>O edytorach tekstu</title></info>
+    <para>
+     Istnieje wiele edytorów tekstu i zintegrowanych środowisk deweloperskich (IDE),
+     których możesz użyć do tworzenia, edycji i zarządzania plikami PHP. Częściowa
+     lista takich narzędzi jest obecna w postaci <link xlink:href="&url.phpeditorlist;">Listy
+     Edytorów PHP</link>. Jeśli chcesz zarekomendować edytor, odwiedź powyższą
+     stronę i poproś jej zarządcę o dodanie edytora do listy. Posiadanie edytora
+     z podświetlaniem składni może być pomocne.
+    </para>
+   </note>
+   
+   <note>
+    <info><title>O procesorach tekstu</title></info>
+    <para>
+     Procesory tekstu takie jak StarOffice Writer, Microsoft Word lub Abiword nie
+     są dobrym rozwiązaniem do edycji plików PHP. Jeśli chcesz użyć jednego z nich
+     do przetestowanias skryptu, musisz upewnić się że zapisujesz plik jako <emphasis>czysty
+     tekst</emphasis>, w przeciwnym wypadku PHP nie będzie w stanie odczytać i wykonać skryptu.
+    </para>
+   </note>
+   
+   <note>
+    <info><title>O Notatniku Windows</title></info>
+    <para>
+     Jeśli piszesz skrypty PHP używając Notatnika w systemie Windows musisz upewnić
+     się że Twoje pliki są zapisywane z roszerzeniem <filename>.php</filename>.
+     (Notatnik automatycznie dodaje do plików roszerzenie <filename>.txt</filename>,
+     dopóki nie podejmiesz jednego z następujących kroków, aby temu zapobieg).
+     Gdy zapisujesz plik i jesteś proszony o podanie jego nazwy, umieść nazwę
+     pliku w cudzysłowach (np. "<filename>hello.php</filename>"). Możesz też
+     kliknąć na rozwijanym menu "Dokumenty tekstowe" w oknie dialogowym "Zapisz"
+     i zmienić ustawienie na "Wszystkie pliki". Wtedy możesz wpisać nazwę pliku
+     bez cudzysłowów.
+    </para>
+   </note>
+  
+   <para>
+    Teraz, kiedy stworzyłeś działający skrypt PHP, nadszedł czas aby utworzyć
+    najbardziej popularny skrypt PHP. Wywołaj funkcję
+    <function>phpinfo</function> a zobaczysz wiele użytecznych
+    informacji o Twoim systemie i ustawieniach, takich jak dostępne
+    <link linkend="language.variables.predefined">predefiniowane zmienne</link>, 
+    załadowane moduły PHP i <link linkend="configuration">konfigurację</link>.
+    Poświęć trochę czasu i przejrzyj te ważne informacje.
+   </para>
+   <para>
+    <example>
+     <info><title>Pobierz informacje o systemie od PHP</title></info>
+     <programlisting role="php">
+<![CDATA[
+<?php phpinfo(); ?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+  </section>
+
+  <section xml:id="tutorial.useful">
+   <info><title>Coś użytecznego</title></info>
+   <para>
+    Zróbmy teraz coś bardziej przydatnego. Sprawdzimy jakiego
+    rodzaju przeglądarki używa odwiedzający.
+    W tym celu sprawdzimy łańcuch znaków nazywany user agentem,
+    który przeglądarka wysyła jako część zapytania HTTP. Ta informacja jest
+    trzymana w <link
+    linkend="language.variables">zmiennej</link>. Zmienne w PHP zawsze zaczynają
+    się od znaku dolara. Zmienna która interesuje nas w tej chwili 
+    to <varname>$_SERVER['HTTP_USER_AGENT']</varname>.
+   </para>
+   <note>
+    <para>
+     <varname>$_SERVER</varname> to specjalna zastrzeżona
+     zmienna PHP, która zawiera wszystkie informacje o serwerze WWW.
+     Jest znana jako superglobalna. Zobacz powiązaną stronę manuala o
+     <link linkend="language.variables.superglobals">superglobalnych</link>,
+     aby dowiedzieć się więcej. Te specjalne zmienne zostały wprowadzone w PHP
+     <link xlink:href="&url.php.release4.1.0;">4.1.0</link>.  Wcześniej używano
+     starszych tablic <varname>$HTTP_*_VARS</varname>,
+     na przykład <varname>$HTTP_SERVER_VARS</varname>.  Od PHP 5.4.0 
+     zostały one usunięte.  (Zobacz też notatkę poświęconą
+     <link linkend="tutorial.oldcode">staremu kodowi</link>.)
+    </para>
+   </note>
+   <para>
+    Aby wyświetlić tę zmienną możesz po prostu napisać:
+   </para>
+   <para>
+    <example>
+     <info><title>Wyświetlanie zmiennej (elementu tablicy)</title></info>
+    <programlisting role="php">
+<![CDATA[
+<?php
+echo $_SERVER['HTTP_USER_AGENT'];
+?>
+]]>
+    </programlisting>
+    <para>
+     Przykładowym wynikiem działania tego skryptu może być:
+    </para>
+    <screen role="html">
+Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)
+    </screen>
+   </example>
+   </para>
+   <para>
+    Istnieje wiele <link linkend="language.types">typów</link>
+    zmiennych dostępnych w PHP.  W powyższym przykładzie wypisaliśmy
+    element <link linkend="language.types.array">tablicy</link>.
+    Tablice mogą być bardzo przydatne.
+   </para>
+   <para>
+    <varname>$_SERVER</varname> jest tylko jedną z tablic, które PHP 
+    udostępnia Ci automatycznie. Lista jest dostępna w rozdziale
+    <link linkend="reserved.variables">Zastrzeżone Zmienne</link>,
+    możesz też zobaczyć ich pełną listę patrząc na wynik działania
+    funkcji <function>phpinfo</function> użytej w przykładzie w poprzedniej
+    sekcji.
+   </para>
+   <para>
+    Możesz umieszczać wiele wyrażeń PHP wewnątrz tagu PHP i stworzyć
+    małe bloki kodu, które robią więcej niż pojedyncze wyświetlenie.
+    Jeśli na przykład chcesz sprawdzić czy przeglądarka to Internet
+    Explorer, możesz napisać:
+   </para>
+   <para>
+    <example>
+     <info><title>Przykład użycia <link linkend="language.control-structures">struktur 
+     kontrolnych</link> i <link linkend="language.functions">funkcji</link></title></info>
+     <programlisting role="php">
+<![CDATA[
+<?php
+if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== FALSE) {
+    echo 'Używasz przeglądarki Internet Explorer.<br />';
+}
+?>
+]]>
+     </programlisting>
+     <para>
+      Przykładowym wynikiem działania tego skryptu może być:
+     </para>
+     <screen role="html">
+<![CDATA[
+Używasz przeglądarki Internet Explorer.<br />
+]]>
+     </screen>
+    </example>
+   </para>
+   <para>
+    Wprowadzamy tu kilka nowych zagadnień. Mamy wyrażenie 
+    <link linkend="control-structures.if">if</link>.
+    Jeśli znasz podstawową składnię używaną w C, powinno być
+    to dla Ciebie logiczne. W przeciwnym wypadku powinieneś
+    prawdopodobnie znaleźć książkę wprowadzającą do PHP i przeczytać
+    kilka pierwszych rozdziałów lub zapoznać się z częścią manuala
+    poświęconą <link linkend="langref">opisowi języka</link>.
+   </para>
+   <para>
+    Drugim zagadnieniem, które wprowadziliśmy jest wywołanie funkcji
+    <function>strpos</function>. <function>strpos</function> jest funkcją
+    wbudowaną w PHP, która szuka łańcucha znakow w innym łańcuchu. W tym
+    wypadku szukamy <literal>'MSIE'</literal> (tak zwanej igły) w łańcuchu
+    <varname>$_SERVER['HTTP_USER_AGENT']</varname> (tak zwanym stogu siana).  Jeśli
+    igła zostanie znaleziona w stogu siana, funkcja zwróci pozycję igły względem
+    początku stogu siana. W przeciwnym wypadku zwróci &false;. Jeśli nie zwróci
+    &false;, wyrażenie  <link
+    linkend="control-structures.if">if</link> otrzyma wartość true &true;
+    a kod w ramach jego {klamr} się wykona. W Przeciwnym wypadku kod nie
+    będzie uruchomiony. Nie bój się tworzyć podobnych przykładów
+    używając <link linkend="control-structures.if">if</link>, 
+    <link linkend="control-structures.else">else</link> i innych funkcji
+    takich jak <function>strtoupper</function> lub 
+    <function>strlen</function>.  Każda powiązana strona tego podręcznika również 
+    zawiera przykłady. Jeśli nie jesteś pewien jak używać funkcji, będziesz chciał
+    przeczytać stronę podręcznika o <link linkend="about.prototypes">czytaniu definicji
+    funkcji</link> i sekcję poświęconą  
+    <link linkend="language.functions">funkcjom w PHP</link>.
+   </para>
+   <para>
+    Możemy pójść krok dalej i pokazać jak możesz wskoczyć i wyskoczyć z trybu
+    PHP nawet w środku bloku PHP:
+   </para>
+   <para>
+    <example>
+     <info><title>Mieszanie trybów HTML i PHP</title></info>
+     <programlisting role="php">
+<![CDATA[
+<?php
+if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== FALSE) {
+?>
+<h3>strpos() zwróciło wartość różną od false</h3>
+<p>Używasz przeglądarki Internet Explorer</p>
+<?php
+} else {
+?>
+<h3>strpos() zwróciło false</h3>
+<p>Nie używasz przeglądarki Internet Explorer</p>
+<?php
+}
+?>
+]]>
+     </programlisting>
+     <para>
+      Przykładowym wynikiem działania tego skryptu może być:
+     </para>
+     <screen role="html">
+<![CDATA[
+<h3>strpos() zwróciło wartość różną od false</h3>
+<p>Używasz przeglądarki Internet Explorer</p>
+]]>
+     </screen>
+    </example>
+   </para>
+   <para>
+    Zamiast używać wyrażenia echo z PHP, aby coś wyświetlić, wyskoczyliśmy z
+    trybu PHP i wprost wysłaliśmy kod HTML. Ważną i potężną rzeczą jest fakt,
+    że przepływ logiczny skryptu zostaje nietknięty. Tylko jeden z bloków HTML
+    zostanie wysłany do odwiedzającego, zależnie od tego czy łańch
+    <literal>MSIE</literal> zostanie znaleziony czy nie.
+   </para>
+  </section>
+   
+  <section xml:id="tutorial.forms">
+   <info><title>Obsługa formularzy</title></info>
+   <para>
+    Jedną z najpotężniejszych możliwości PHP jest sposób, w jaki obsługuje
+    formularze. Podstawową rzecza, którą trzeba zrozumieć jest fakt że każdy
+    element formularza będzie automatycznie dostępny dla Twoich skryptów
+    PHP. Przeczytaj rozdział
+    <link linkend="language.variables.external">Zmienne z zewnętrznych
+    źródeł</link> zawierający więcej informacji i przykładów użycia formularzy 
+    z PHP.  Mamy tutaj przykładowy formularz HTML:
+   </para>
+   <para>
+    <example>
+     <info><title>Prosty formularz PHP</title></info>
+     <programlisting role="html">
+<![CDATA[
+<form action="action.php" method="post">
+ <p>Imię: <input type="text" name="imie" /></p>
+ <p>Wiek: <input type="text" name="wiek" /></p>
+ <p><input type="submit" /></p>
+</form>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   <para>
+    Nie ma w nim nic szczególnego. To zwyczajny formularz HTML bez żadnych
+    specjalnych tagów. Kiedy użytkownik wypełni ten formularz i naciśnie
+    przycisk wysyłający, zostanie wywołana strona <filename>action.php</filename>.
+    W tym pliku będziesz musiał napisać coś w tym stylu::
+   </para>
+   <para>
+    <example>
+     <info><title>Wyświetlanie danych z naszego formularza</title></info>
+     <programlisting role="php">
+<![CDATA[
+HCześć<?php echo htmlspecialchars($_POST['nazwa']); ?>.
+Masz <?php echo (int)$_POST['wiek']; ?> lat.
+]]>
+     </programlisting>
+     <para>
+      Przykładowym wynikiem działania tego skryptu może być:
+     </para>
+     <screen role="html">
+<![CDATA[
+Cześć Robert. Masz 25 lat.
+]]>
+     </screen>
+    </example>
+   </para>
+   <para>
+    Pomijając <function>htmlspecialchars</function> i <literal>(int)</literal>,
+    wszystko powinno być jasne. <function>htmlspecialchars</function> zapewnia,
+    że wszystkie znaki, które mają specjalne znaczenie w HTML zostaną poprawnie
+    zakodowane, więc użytkownicy nie będą mogli wstrzyknąć tagów HTML  lub
+    JavaScriptu na Twoją stronę. Pole wiek, ponieważ wiemy że jest to liczba,
+    możemy <link linkend="language.types.typecasting">przekonwertować</link> je
+    na typ <type>integer</type>, co również zaowocuje pozbyciem się wszystkich
+    niepotrzebnych znaków. Możesz też zadbać aby PHP robiło to automatycznie
+    używając rozszerzenia <link linkend="ref.filter">filter</link>.
+    Zmienne <varname>$_POST['imie']</varname> i <varname>$_POST['wiek']</varname>
+    są automatycznie tworzone przez PHP. Wcześniej używaliśmy superglobalnej
+    <varname>$_SERVER</varname>; powyżej właśnie wprowadziliśmy <varname>$_POST</varname>,
+    która zawiera wszystkie dane wysłane żądaniem POST. Zauważ że <emphasis>method</emphasis>
+    naszego formularza została ustawiona na POST. Jeśli użylibysmy metody
+    <emphasis>GET</emphasis> to informacje z formularza znalazłyby się w
+    superglobalnej <varname>$_GET</varname>.
+    Możesz też użyć superglobalnej <varname>$_REQUEST</varname>,
+    jeśli nie zwracasz uwagi na źródło pochodzenia danych. Zawiera ona
+    polączone informacje na temat danych GET, POST i COOKIE.  
+   </para>
+   <para>
+    W PHP możesz też obsługiwać formularze XForms, aczkolwiek za jakiś czas
+    poczujesz się komfortowo pracując z ogólnie wspieranymi formularzami HTML.
+    Mimo iż praca z formularzami XForms nie jest dla początkujących, możesz być
+    tym zainteresowany. Mamy też <link linkend="features.xforms">krótkie wprowadzenie
+    do obsługi danych z XForms</link> w sekcji poświęconej możliwościom PHP. 
+   </para>
+  </section>
+
+  <section xml:id="tutorial.oldcode">
+   <info><title>Używanie starego kodu z nowymi wersjami PHP</title></info>
+   <para>
+    Obecnie, gdy PHP urósł do rangi popularnego języka skryptowego, istnieje
+    wiele publicznych repozytoriów i bibliotek zawierających kod, który
+    możesz ponownie użyć. Twórcy PHP dołożyli wielu starań o zapewnienie
+    kompatybilności wstecznej, więc skrypt napisany dla starszej wersji uruchomi
+    się (w idealnym wypadku) bez żadnych znian w nowszej wersji PHP. W praktyce,
+    zazwyczaj będą wymagane pewne zmiany.
+   </para>
+   <para>
+    Dwie z najważniejszych ostatnich zmian, które dotykają starego kodu, są następujące:
+    <itemizedlist>
+     <listitem>
+      <simpara>
+       Dawne tablice <varname>$HTTP_*_VARS</varname> nie są dostępne od PHP 5.4.0.
+       Następujące
+       <link linkend="language.variables.superglobals">tablice superglobalne</link>
+       zostały wprowadzone w PHP <link xlink:href="&url.php.release4.1.0;">4.1.0</link>. 
+       Są to: <varname>$_GET</varname>, <varname>$_POST</varname>, 
+       <varname>$_COOKIE</varname>, <varname>$_SERVER</varname>, 
+       <varname>$_FILES</varname>, <varname>$_ENV</varname>,
+       <varname>$_REQUEST</varname> i <varname>$_SESSION</varname>.  
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       Zewnętrzne zmienne nie są dłużej domyślnie rejestrowane w zakresie
+       globalnym. Innymi słowy, od PHP
+       <link xlink:href="&url.php.release4.2.0;">4.2.0</link> dyrektywa 
+       <link linkend="ini.register-globals">register_globals</link> jest 
+       domyślnie ustawiona na <emphasis>off</emphasis> w &php.ini;. Preferowaną
+       metodą dostępu do tych wartości są tablice superglobalne wspomniane wyżej.
+       Starsze skrypty, książki i poradniki mogą zakładać że dyrektywa ta wciąż
+       jest ustawiona na <literal>on</literal>. Gdyby tak było, moglibyśmy
+       przykładowo, użyć zmiennej <varname>$id</varname> z adresu URL
+       <literal>http://www.example.com/foo.php?id=42</literal>. Niezależnie
+       od tego czy dyrektywa jest włączona czy nie, dostępna jest zmienna
+       <varname>$_GET['id']</varname>.
+      </simpara>
+     </listitem>
+    </itemizedlist>
+    Aby uzyskać więcej szczegółów dotyczących tych zmian, zapoznaj się z
+    rozdziałem 
+    <link linkend="language.variables.predefined">zmienne predefiniowane</link>
+    i linkami w nim zawartymi.
+   </para>
+  </section>
+  
+  <section xml:id="tutorial.whatsnext">
+   <info><title>Co dalej?</title></info>
+   <para>
+    Z nowonabytą wiedzą powinieneś być w stanie zrozumieć większość
+    podręcznika i różne przykładowe skrypty dostępne w archiwach
+    przykładów. 
+   </para>
+   <para>
+    Aby zobaczyć różne prezentacje pokazujące więcej rzeczy, które potrafi PHP
+    odwiedź stronę
+    <link xlink:href="&url.php.talks;">&url.php.talks;</link>
+   </para>
+  </section>
+ </chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
