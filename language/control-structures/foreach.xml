@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 4b824fda65773b3a907176feda258f278f6afac0 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 239e96a218079d1211bbf7f1d73947039a00ab5e Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 
 <sect1 xml:id="control-structures.foreach" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -40,19 +40,22 @@ foreach (wyrażenie_tablicy as $klucz => $wartość)
  <para>
   <note>
    <para>
-    Kiedy rozpoczyna się wykonywanie <literal>foreach</literal>,
+    W PHP 5, kiedy rozpoczyna się wykonywanie <literal>foreach</literal>,
     wewnętrzny wskaźnik tablicy jest automatycznie resetowany do pierwszego elementu
     tablicy. Oznacza to, że nie musisz wykonywać funkcji
     <function>reset</function> przed pętlą <literal>foreach</literal>.
    </para>
    <para>
-    Ponieważ <literal>foreach</literal> korzysta z wewnętrznego wskaźnika tablicy, jego
-    zmiana w trakcie pętli może prowadzić do nieoczekiwanych efektów.
+    Jako że w PHP 5 <literal>foreach</literal> korzysta z wewnętrznego wskaźnika tablicy, jego
+    zmiana wewnątrz pętli może prowadzić do nieoczekiwanych wyników.
+   </para>
+   <para>
+    W PHP 7 <literal>foreach</literal> nie korzysta z wewnętrznego wskaźnika tablicy.
    </para>
   </note>
  </para>
  <para>
- Aby być w stanie bezpośrednio modyfikować elementy tablicy w pęli, poprzedź
+  Aby być w stanie bezpośrednio modyfikować elementy tablicy w pęli, poprzedź
  <literal>$wartość</literal> znakiem &amp;. W tym wypadku wartość zostanie przypisana
  <link linkend="language.references">przez referencję</link>.
   <informalexample>
@@ -70,8 +73,45 @@ unset($value); // usuwa referencję do ostatniego elementu
    </programlisting>
   </informalexample>
  </para>
+
+ <warning>
+  <para>
+   Referencja zmiennej <literal>$value</literal> do ostatniego elementu tablicy
+   jest obecna nawet po zakończeniu pętli <literal>foreach</literal>. Zaleca się
+   jej usunięcie przy użyciu <function>unset</function>.
+   W przeciwnym wypadku napotka się na następujące zachowanie:
+  </para>
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php
+$arr = array(1, 2, 3, 4);
+foreach ($arr as &$value) {
+    $value = $value * 2;
+}
+// $arr to teraz array(2, 4, 6, 8)
+
+// bez wywołania unset($value), $value wciąż odwołuje się do ostatniego elementu: $arr[3]
+
+foreach ($arr as $key => $value) {
+    // $arr[3] zostanie zaktualizowane z każdą wartością z $arr...
+    echo "{$key} => {$value} ";
+    print_r($arr);
+}
+// ...do momentu gdy wartość druga do ostatniej będzie skopiowana na ostatnią wartość
+
+// wynik:
+// 0 => 2 Array ( [0] => 2, [1] => 4, [2] => 6, [3] => 2 )
+// 1 => 4 Array ( [0] => 2, [1] => 4, [2] => 6, [3] => 4 )
+// 2 => 6 Array ( [0] => 2, [1] => 4, [2] => 6, [3] => 6 )
+// 3 => 6 Array ( [0] => 2, [1] => 4, [2] => 6, [3] => 6 )
+?>
+]]>
+   </programlisting>
+  </informalexample>
+ </warning>
  <para>
-  Referencja zmiennej <literal>$wartość</literal> jest możliwa tylko jeśli iterowana tablica 
+  Przed wersją PHP 5.5.0 referencja zmiennej <literal>$wartość</literal> jest możliwa tylko jeśli iterowana tablica 
   może być zreferencjonowana (np. jeżeli jest zmienną). Poniższy kod nie zadziała:
   <informalexample>
    <programlisting role="php">
@@ -85,13 +125,6 @@ foreach (array(1, 2, 3, 4) as &$value) {
    </programlisting>
   </informalexample>
  </para>
- <warning>
-  <para>
-   Referencja zmiennej <literal>$wartość</literal> i ostatniego elementu tablicy
-   pozostaje nawet po zakończeniu pętli <literal>foreach</literal>. Zaleca się
-   usunąć ją przez <function>unset</function>.
-  </para>
- </warning>
  <para>
   <note>
    <para>
@@ -307,6 +340,44 @@ A: 3; B: 4; C:
    </informalexample>
   </para>
  </sect2>
+
+ <sect2 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>7.0.0</entry>
+       <entry>
+        <literal>foreach</literal> nie korzysta więcej z wewnętrznego wskaźnika tablicy.
+       </entry>
+      </row>
+      <row>
+       <entry>5.5.0</entry>
+       <entry>
+        Wspierana jest referencja <literal>$wartości</literal> dla wyrażeń.
+        Wcześniej były wspierane tylko zmienne.
+       </entry>
+      </row>
+      <row>
+       <entry>5.5.0</entry>
+       <entry>
+        Wspierane jest rozpakowywanie zagnieżdżonych tablic przy użyciu <function>list</function>.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </sect2>
+
 </sect1>
 
 <!-- Keep this comment at the end of the file

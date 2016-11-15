@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: e41aab5ecacf449e51179886c17f1d41735b0234 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 028c8b7bc80eabcb172511fcb5392e595e1eb324 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.realpath">
  <refnamediv>
@@ -47,7 +47,8 @@
   &reftitle.returnvalues;
   <para>
    Zwraca kanoniczną ścieżkę absolutną w wypadku powodzenia. Wynikowa ścieżka 
-   nie będzie miała symbolicznych linków ani znaków '/./' lub '/../'.
+   nie będzie miała symbolicznych linków ani znaków '/./' lub '/../'. Końcowe
+   ograniczniki, takie jak \ czy /, też są usuwane.
   </para>
   <para>
    <function>realpath</function> zwraca &false; w wypadku błędu, np. gdy
@@ -58,6 +59,12 @@
     Uruchamiany skrypt musi mieć prawa do uruchamiania we wszystkich katalogach w
     hierarchii, inaczej <function>realpath</function> zwróci
     &false;.
+   </para>
+  </note>
+  <note>
+   <para>
+    W systemach plików niewrażliwych na wielkość znaków <function>realpath</function>
+    może lecz nie musi normalizować wielkości znaków.
    </para>
   </note>
   &fs.file.32bit;
@@ -83,6 +90,13 @@
         systemach *BSD. <function>realpath</function> od teraz zwraca błąd w takim wypadku.
        </entry>
       </row>
+	  <row>
+       <entry>5.2.1</entry>
+       <entry>
+        Przed tą wersją funkcja <function>realpath</function> zwracała &false;
+        jeśli <parameter>ścieżka</parameter> była pustym stringiem lub &null;.
+       </entry>
+      </row>
      </tbody>
     </tgroup>
    </informaltable>
@@ -99,7 +113,8 @@
 <![CDATA[
 <?php
 chdir('/var/www/');
-echo realpath('./../../etc/passwd');
+echo realpath('./../../etc/passwd') . PHP_EOL;
+echo realpath('/tmp/') . PHP_EOL;
 ?>
 ]]>
     </programlisting>
@@ -107,6 +122,7 @@ echo realpath('./../../etc/passwd');
     <screen>
 <![CDATA[
 /etc/passwd
+/tmp
 ]]>
     </screen>
    </example>
@@ -120,6 +136,8 @@ echo realpath('./../../etc/passwd');
 <![CDATA[
 <?php
 echo realpath('/windows/system32');
+
+echo realpath('C:\Program Files\\');
 ?>
 ]]>
     </programlisting>
@@ -127,6 +145,7 @@ echo realpath('/windows/system32');
     <screen>
 <![CDATA[
 C:\WINDOWS\System32
+C:\Program Files
 ]]>
     </screen>
    </example>

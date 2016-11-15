@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 33040b3b1b95210112f7b3b71f57a1c005de1a3b Maintainer: adi Status: ready -->
+<!-- EN-Revision: 3e831d6e6f935aa2518e31c459b25c14df8e553a Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: sobak -->
 <refentry xml:id="function.pathinfo" xmlns="http://docbook.org/ns/docbook">
@@ -74,9 +74,17 @@
   </note>
   <note>
    <para>
-    If the <parameter>path</parameter> does not have an extension, no
-    <literal>extension</literal> element will be returned
-    (see second example below).
+    Jeśli <parameter>ścieżka</parameter> nie zawiera rozszerzenia,
+    element <literal>extension</literal> nie będzie zwrócony
+    (zobacz drugi przykład poniżej).
+   </para>
+  </note>
+  <note>
+   <para>
+    Jeśli nazwa bazowa <parameter>ścieżki</parameter> zaczyna się
+    od kropki, to kolejne znaki zostaną potraktowane jako rozszerzenie
+    (<literal>extension</literal>) a nazwa pliku (element <literal>filename</literal>)
+    będzie pusta (zobacz trzeci przykład ponżej).
    </para>
   </note>
   <para>
@@ -162,6 +170,30 @@ NULL
     </screen>
    </example>
   </para>
+  <para>
+   <example>
+    <title><function>pathinfo</function>: przykład działania dla pliku rozpoczynającego się od kropki</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+print_r(pathinfo('/some/path/.test'));
+?>
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
+<![CDATA[
+Array
+(
+    [dirname] => /some/path
+    [basename] => .test
+    [extension] => test
+    [filename] => 
+)
+]]>
+    </screen>
+   </example>
+  </para>
  </refsect1>
 
  <refsect1 role="notes">
@@ -170,7 +202,7 @@ NULL
    <para>
     W celu uzyskania informacji jak pobrać bieżącą ścieżkę, przeczytaj 
     rozdział <link linkend="language.variables.predefined">
-    predefiniowane zarezerwowane zmienne</link>.
+    zastrzeżone zmienne predefiniowane</link>.
    </para>
   </note>
   <note>
