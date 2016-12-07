@@ -1,47 +1,82 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: qrak Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-  <refentry xml:id="function.bcmod" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>bcmod</refname>
-    <refpurpose>
-     Dzieli w module liczbę o dużej precyzji
-    </refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>string</type><methodname>bcmod</methodname>
-      <methodparam><type>string</type><parameter>lewy_operand</parameter></methodparam>
-      <methodparam><type>string</type><parameter>moduł</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     Zwraca moduł (resztę z dzielenia) z liczby
-     <parameter>lewy_operand</parameter> dzielonej przez 
-     <parameter>moduł</parameter>.
-    </para>
-   </refsect1> 
-     <refsect1> 
-      &reftitle.examples; 
-      <example> 
-       <title><function>bcmod</function> przykład</title> 
-       <programlisting role="php"> 
-<![CDATA[ 
-<?php 
-echo bcmod('4', '2'); // 0 
-echo bcmod('2', '4'); // 2 
-?> 
-]]> 
-       </programlisting> 
-      </example> 
-     </refsect1> 
-     <refsect1> 
-      &reftitle.seealso; 
-    <para>
-     <function>bcdiv</function>.
-    </para>
-   </refsect1>
-  </refentry>
+<!-- CREDITS: qrak -->
+<refentry xml:id="function.bcmod" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>bcmod</refname>
+  <refpurpose>Wykonuje dzielenie modulo liczby o dużej precyzji</refpurpose>
+ </refnamediv>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>string</type><methodname>bcmod</methodname>
+   <methodparam><type>string</type><parameter>lewy_operand</parameter></methodparam>
+   <methodparam><type>string</type><parameter>modulo</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Zwraca modulo argumentu <parameter>lewy_operand</parameter> używając
+   <parameter>modulo</parameter>.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>lewy_operand</parameter></term>
+     <listitem>
+      <para>
+       Lewy operand, jako łańcuch znaków.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>modulo</parameter></term>
+     <listitem>
+      <para>
+       Modulo, jako łańcuch znaków.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca modulo jako łańcuch znaków lub &null; jeśli 
+   <parameter>modulo</parameter> wynosi 0.
+  </para>
+ </refsect1>
+ 
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <example>
+   <title>Przykład użycia <function>bcmod</function></title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+echo bcmod('4', '2'); // 0
+echo bcmod('2', '4'); // 2
+?>
+]]>
+   </programlisting>
+  </example>
+ </refsect1>
+ 
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>bcdiv</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:
