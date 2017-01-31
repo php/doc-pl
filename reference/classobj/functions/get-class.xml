@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: e41aab5ecacf449e51179886c17f1d41735b0234 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 91e0557e2fc9b15e985d3372a080663fd7d0aeb0 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: dombal -->
 <refentry xml:id="function.get-class" xmlns="http://docbook.org/ns/docbook">
@@ -42,6 +42,10 @@
   <para>
    Jeżeli <parameter>obiekt</parameter> nie został podany podczas wywołania wewnątrz klasy,
    zwracana jest nazwa tej klasy.
+  </para>
+  <para>
+   Jeżeli <parameter>obiekt</parameter> jest instancją klasy, która istnieje w przestrzeni nazw,
+   zwracana jest kwalifikowana nazwa tej klasy.
   </para>
  </refsect1>
  <refsect1 role="errors">
@@ -139,6 +143,34 @@ new foo;
 <![CDATA[
 string(3) "foo"
 string(3) "bar"
+]]>
+    </screen>
+   </example>
+   <example>
+    <title>Użycie <function>get_class</function> z klasami w przestrzeniach nazw</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+namespace Foo\Bar;
+
+class Baz {
+    public function __construct()
+    {
+
+    }
+}
+
+$baz = new \Foo\Bar\Baz;
+
+var_dump(get_class($baz));
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+string(11) "Foo\Bar\Baz"
 ]]>
     </screen>
    </example>

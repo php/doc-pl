@@ -1,43 +1,92 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 9caf16a8ba22366befab30e1d4d5759a4cd406f3 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-<refentry xml:id="function.array-map" xmlns="http://docbook.org/ns/docbook">
+<!-- CREDITS: leszek -->
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.array-map">
  <refnamediv>
   <refname>array_map</refname>
-  <refpurpose>Wykonuje funkcję zwrotną na elementach podanej tablicy</refpurpose>
+  <refpurpose>Stosuje podany callback do elementów podanych tablic</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
    <type>array</type><methodname>array_map</methodname>
-   <methodparam><type>callback</type><parameter>funkcja_zwrotna</parameter></methodparam>
-   <methodparam><type>array</type><parameter>tbl1</parameter></methodparam>
-   <methodparam choice="opt"><type>array</type><parameter>tbl2...</parameter></methodparam>
+   <methodparam><type>callable</type><parameter>callback</parameter></methodparam>
+   <methodparam><type>array</type><parameter>array1</parameter></methodparam>
+   <methodparam choice="opt"><type>array</type><parameter>...</parameter></methodparam>
   </methodsynopsis>
   <para>
    <function>array_map</function> zwraca tablicę zawierającą wszystkie
-   elementy tablicy <parameter>tbl1</parameter> po użyciu na każdej z nich
-   funkcji zwrotnej. Liczba parametrów funkcji zwrotnej powinna być równa
-   liczbie tablic przekazanych do funkcji <function>array_map</function>.
+   elementy <parameter>array1</parameter> po wykonaniu funkcji
+   <parameter>callback</parameter> na każdym z nich.
+   Liczba parametrów przyjmowanych przez <parameter>callback</parameter>
+   powinna wynosić tyle, ile tablic przekazano do <function>array_map</function>
   </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>callback</parameter></term>
+     <listitem>
+      <para>
+       Funkcja zwrotna do wykonania na każdym elemencie każdej tablicy.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>array1</parameter></term>
+     <listitem>
+      <para>
+       Tablica do przepuszczenia przez podany <parameter>callback</parameter>.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>...</parameter></term>
+     <listitem>
+      <para>
+       Dalsza lista tablic do przepuszczenia przez funkcję podaną
+       w argumencie <parameter>callback</parameter>.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca tablicę zawierającą wszystkie elementy <parameter>array1</parameter>
+   po wykonaniu funkcji <parameter>callback</parameter> na każdym z nich.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
    <example>
     <title>Przykład użycia <function>array_map</function></title>
     <programlisting role="php">
 <![CDATA[
-function szescian($n)
+<?php
+function cube($n)
 {
-    return $n*$n*$n;
+    return($n * $n * $n);
 }
 
 $a = array(1, 2, 3, 4, 5);
-$b = array_map("szescian", $a);
+$b = array_map("cube", $a);
 print_r($b);
 ?>
 ]]>
     </programlisting>
     <para>
-     Zmienna <varname>$b</varname> będzie zawierała:
+     Zmienna b <varname>$b</varname> otrzyma:
     </para>
     <screen>
 <![CDATA[
@@ -55,28 +104,55 @@ Array
   </para>
   <para>
    <example>
-    <title>
-     <function>array_map</function> - używanie większej ilości tablic
-    </title>
+    <title><function>array_map</function> z użyciem funkcji anonimowej (od PHP 5.3.0)</title>
     <programlisting role="php">
 <![CDATA[
-function pokaz_po_Hiszpansku($n, $m)
+<?php
+$func = function($value) {
+    return $value * 2;
+};
+
+print_r(array_map($func, range(1, 5)));
+?>
+]]>
+    </programlisting>
+    <screen>
+<![CDATA[
+Array
+(
+    [0] => 2
+    [1] => 4
+    [2] => 6
+    [3] => 8
+    [4] => 10
+)
+]]>
+    </screen>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title><function>array_map</function> - większa ilość tablic</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+function show_Spanish($n, $m)
 {
-    return "Po Hiszpańsku liczba $n to $m";
+    return("Cyfra $n to po hiszpańsku $m");
 }
 
-function mapuj_na_Hiszpanski($n, $m)
+function map_Spanish($n, $m)
 {
-    return array ($n => $m);
+    return(array($n => $m));
 }
 
 $a = array(1, 2, 3, 4, 5);
 $b = array("uno", "dos", "tres", "cuatro", "cinco");
 
-$c = array_map("pokaz_po_Hiszpansku", $a, $b);
+$c = array_map("show_Spanish", $a, $b);
 print_r($c);
 
-$d = array_map("mapuj_po_Hiszpansku", $a , $b);
+$d = array_map("map_Spanish", $a , $b);
 print_r($d);
 ?>
 ]]>
@@ -84,17 +160,17 @@ print_r($d);
     &example.outputs;
     <screen>
 <![CDATA[
-// Zmienna $c
+// printout of $c
 Array
 (
-    [0] => Po Hiszpańsku liczba 1 to uno
-    [1] => Po Hiszpańsku liczba 2 to dos
-    [2] => Po Hiszpańsku liczba 3 to tres
-    [3] => Po Hiszpańsku liczba 4 to cuatro
-    [4] => Po Hiszpańsku liczba 5 to cinco
+    [0] => Cyfra 1 to po hiszpańsku uno
+    [1] => Cyfra 2 to po hiszpańsku dos
+    [2] => Cyfra 3 to po hiszpańsku tres
+    [3] => Cyfra 4 to po hiszpańsku cuatro
+    [4] => Cyfra 5 to po hiszpańsku cinco
 )
 
-// Zmienna $d
+// wypis zmiennej $d
 Array
 (
     [0] => Array
@@ -128,16 +204,16 @@ Array
    </example>
   </para>
   <para>
-   Zazwyczaj używając dwóch lub więcej tablic, powinny one być równej
-   długości, ponieważ funkcja zwrotna jest wykonywana na odpowiadających
-   sobie elementach tablic.
-   Jeśli tablice są różnych długości, krótsze będą rozszerzane używając
-   pustych elementów.
+   Zazwyczaj, gdy używa się dwóch lub więcej tablic, powinny one mieć
+   jednakową długość, ponieważ funkcja zwrotna jest stosowana równolegle
+   do odpowiadających elementów.
+   Jeśli tablice nie są równej długości, krótsze zostaną rozszerzone używając
+   pustych elementów, tak aby ich długość zgadzała się z najdłuższą z tablic.
   </para>
   <para>
-   Interesującym sposobem użycia tej funkcji jest kontruowanie tablicy
-   tablic, co może być łatwo przeprowadzone przez podanie &null; jako nazwy
-   funkcji zwrotnej.
+   Ciekawym zastosowaniem tej funkcji może być kontrurowanie tablicy tablic,
+   które może zostać łatwo osiągnięte dzięki użyciu &null; jako nazwy funkcji
+   zwrotnej
   </para>
   <para>
    <example>
@@ -148,10 +224,9 @@ Array
 $a = array(1, 2, 3, 4, 5);
 $b = array("one", "two", "three", "four", "five");
 $c = array("uno", "dos", "tres", "cuatro", "cinco");
-$d = array("jeden", "dwa", "trzy", "cztery", "pięć");
 
-$e = array_map(null, $a, $b, $c, $d);
-print_r($e);
+$d = array_map(null, $a, $b, $c);
+print_r($d);
 ?>
 ]]>
     </programlisting>
@@ -165,7 +240,6 @@ Array
             [0] => 1
             [1] => one
             [2] => uno
-            [3] => jeden
         )
 
     [1] => Array
@@ -173,7 +247,6 @@ Array
             [0] => 2
             [1] => two
             [2] => dos
-            [3] => dwa
         )
 
     [2] => Array
@@ -181,7 +254,6 @@ Array
             [0] => 3
             [1] => three
             [2] => tres
-            [3] => trzy
         )
 
     [3] => Array
@@ -189,7 +261,6 @@ Array
             [0] => 4
             [1] => four
             [2] => cuatro
-            [3] => cztery
         )
 
     [4] => Array
@@ -197,7 +268,6 @@ Array
             [0] => 5
             [1] => five
             [2] => cinco
-            [3] => pięć
         )
 
 )
@@ -206,9 +276,77 @@ Array
    </example>
   </para>
   <para>
-   Patrz także: <function>array_filter</function>,
-   <function>array_reduce</function>, <function>array_walk</function>,
-   <function>create_function</function> i &seealso.callback;.
+   Zwracana tablica zachowa klucze tablicy podanej jako argument jeśli i tylko
+   jeśli przekazany zostanie dokładnie jedna tablica. Jeśli zostanie przekazana
+   więcej niż jedna tablica, zwrócona tablica otrzyma kolejne klucze numeryczne.
+  </para>
+  <para>
+   <example>
+    <title><function>array_map</function> - z kluczami tekstowymi</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$arr = array("nazwa" => "wartość");
+function cb1($a) {
+    return array ($a);
+}
+function cb2($a, $b) {
+    return array ($a, $b);
+}
+var_dump(array_map("cb1", $arr));
+var_dump(array_map("cb2", $arr, $arr));
+var_dump(array_map(null,  $arr));
+var_dump(array_map(null, $arr, $arr));
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+array(1) {
+  ["nazwa"]=>
+  array(1) {
+    [0]=>
+    string(5) "wartość"
+  }
+}
+array(1) {
+  [0]=>
+  array(2) {
+    [0]=>
+    string(5) "wartość"
+    [1]=>
+    string(5) "wartość"
+  }
+}
+array(1) {
+  ["nazwa"]=>
+  string(5) "wartość"
+}
+array(1) {
+  [0]=>
+  array(2) {
+    [0]=>
+    string(5) "wartość"
+    [1]=>
+    string(5) "wartość"
+  }
+}
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>array_filter</function></member>
+    <member><function>array_reduce</function></member>
+    <member><function>array_walk</function></member>
+    <member>&seealso.callback;</member>
+   </simplelist>
   </para>
  </refsect1>
 </refentry>

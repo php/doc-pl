@@ -1,79 +1,123 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: f1bced78de8c66071a9fdec0972bcff570a38a12 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-<refentry xml:id="function.array-flip" xmlns="http://docbook.org/ns/docbook">
+<!-- CREDITS: leszek -->
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.array-flip">
  <refnamediv>
   <refname>array_flip</refname>
-  <refpurpose>Wymienia wszystkie klucze z przypisanymi do nich wartościami w
-   tablicy</refpurpose>
+  <refpurpose>Zamienia wszystkie klucze z przypisanymi do nich wartościami w tablicy</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
    <type>array</type><methodname>array_flip</methodname>
-   <methodparam><type>array</type><parameter>trans</parameter></methodparam>
+   <methodparam><type>array</type><parameter>array</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>array_flip</function> zwraca tablicę w odwróconym porządku,
-   tzn. klucze z tablicy <parameter>trans</parameter> stają się wartościami a
-   wartości <parameter>trans</parameter> stają się kluczami.
+   <function>array_flip</function> zwraca tablicę (<type>array</type>) w odwróconej
+   kolejności, np. klucze <parameter>array</parameter> stają się wartościami, a wartości
+   z <parameter>array</parameter> stają się kluczami.
   </para>
   <para>
-   Zauważ, że wszystkie wartości tablicy <parameter>trans</parameter> muszą
-   mieć poprawne klucze, tzn. muszą być albo typu <type>integer</type> lub
-   <type>string</type>. Jeśli wartość nie ma prawidłego typu, wyświetlone
-   zostanie ostrzeżenie, a para klucz/wartość <emphasis>nie będzie
-   odwrócona</emphasis>.
+   Zauważ że wartości w tablicy <parameter>array</parameter> muszą być poprawnymi
+   kluczami, np. muszą być typu <type>integer</type> lub
+   <type>string</type>. Zostanie wyemitowane ostrzeżenie jeśli wartość ma zły
+   typ, a taka para klucza i wartości <emphasis>nie znajdzie się w
+   wyniku działania funkcji</emphasis>.
   </para>
   <para>
-   Jeśli wartość występuje wielokrotnie, ostatni klucz będzie użyty jako jej
-   wartość po odwróceniu, a wszystkie inne zostaną stracone.
+   Jeśli wartość występuje kilka razy, ostatni klucz zostanie
+   użyty jako jej wartość a reszta zostanie utracona.
   </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
   <para>
-   <function>array_flip</function> zwraca &false; jeśli nie powiedzie się
-   odwracanie tablicy.
+   <variablelist>
+    <varlistentry>
+     <term><parameter>array</parameter></term>
+     <listitem>
+      <para>
+       Tablica kluczy i wartości do odwrócenia.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
   </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca odwróconą tablicę w wypadku powodzenia lub &null; w razie
+   błędu.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
    <example>
     <title>Przykład użycia <function>array_flip</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
-$trans = array_flip ($trans);
-$original = strtr ($str, $trans);
+$input = array("oranges", "apples", "pears");
+$flipped = array_flip($input);
+
+print_r($flipped);
 ?>
 ]]>
     </programlisting>
-   </example>
-  </para>
-  <para>
-   <example>
-    <title>Przykład użycia <function>array_flip</function> : kolizja</title>
-    <programlisting role="php">
-<![CDATA[
-<?php
-$trans = array ("a" => 1, "b" => 1, "c" => 2);
-$trans = array_flip ($trans);
-print_r($trans);
-?>
-]]>
-    </programlisting>
-    <para>
-     Powyższy przykład wyświetli:
-    </para>
+    &example.outputs;
     <screen>
 <![CDATA[
 Array
-   [1] => b
-   [2] => c
+(
+    [oranges] => 0
+    [apples] => 1
+    [pears] => 2
+)
 ]]>
     </screen>
    </example>
   </para>
   <para>
-   Patrz także: <function>array_values</function>,
-   <function>array_keys</function> i
-   <function>array_reverse</function>.
+   <example>
+    <title>Przykład użycia <function>array_flip</function>: kolizja</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$input = array("a" => 1, "b" => 1, "c" => 2);
+$flipped = array_flip($input);
+
+print_r($flipped);
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+Array
+(
+    [1] => b
+    [2] => c
+)
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>array_values</function></member>
+    <member><function>array_keys</function></member>
+    <member><function>array_reverse</function></member>
+   </simplelist>
   </para>
  </refsect1>
 </refentry>

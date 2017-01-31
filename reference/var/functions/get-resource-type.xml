@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 7c20e7b4b6164cb7b98430466270dcce34e8640c Maintainer: sobak Status: ready -->
+<!-- EN-Revision: b5de5957f5f7e4dcbeb2f3abba30830cdba17315 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <!-- splitted from ./en/functions/var.xml, last change in rev 1.75 -->
 <refentry xml:id="function.get-resource-type" xmlns="http://docbook.org/ns/docbook">
@@ -46,9 +46,32 @@
    <literal>Unknown</literal>.
   </para>
   <para>
-   Ta funkcja zwróci &false; i wygeneruje błąd jeżeli podany 
+   Ta funkcja zwróci &null; i wygeneruje błąd jeżeli podany 
    <parameter>handle</parameter> nie jest typu <type>resource</type>.
   </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>PHP 5.3.0</entry>
+      <entry>
+       Jeśli <parameter>handle</parameter> nie ma typu <type>resource</type> ta
+       funkcja zwraca &null;. Wcześniej zwracane było &false;.
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </informaltable>
  </refsect1>
 
  <refsect1 role="examples">

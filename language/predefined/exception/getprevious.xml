@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 4eefb1e936f416333e05635b0ca2ac10166fdcec Maintainer: sobak Status: ready -->
+<!-- EN-Revision: efdc9e6334e88031f3d3539f9271e69b60088cbc Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 
 <refentry xml:id="exception.getprevious" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>Exception::getPrevious</refname>
-  <refpurpose>Returns previous Exception</refpurpose>
+  <refpurpose>Zwraca poprzedni wyjątek</refpurpose>
  </refnamediv>
  
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
-   <modifier>final</modifier> <modifier>public</modifier> <type>Exception</type><methodname>Exception::getPrevious</methodname>
+   <modifier>final</modifier> <modifier>public</modifier> <type>Throwable</type><methodname>Exception::getPrevious</methodname>
    <void />
   </methodsynopsis>
   <para>
-   Zwraca poprzedni obiekt klasy Exception (trzeci parametr <methodname>Exception::__construct</methodname>).
+   Zwraca poprzedni wyjątek (trzeci parametr <methodname>Exception::__construct</methodname>).
   </para>
  </refsect1>
  
@@ -27,8 +27,32 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca poprzedni wyjątek (<classname>Exception</classname>) lub &null; 
+   Zwraca poprzedni <classname>Throwable</classname> lub &null; 
    jeśli nie jest dostępny.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>7.0.0</entry>
+       <entry>
+        Deklaracja zwracanego typu została zmieniona na <classname>Throwable</classname>.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
   </para>
  </refsect1>
 
