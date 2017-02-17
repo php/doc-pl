@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 82d79c66531b3a08b781ac8c89c0c2f2fe4efb8f Maintainer: sobak Status: ready -->
+<!-- EN-Revision: e9f72c4399dc23a74f080645a860ca5ca39881fd Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: pirate -->
  <chapter xml:id="language.functions" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -1372,8 +1372,10 @@ $greet('PHP');
    </example>
    
    <simpara>
-    Domknięcia mogą także dziedziczyć zmienne z zasięgu nadrzędnego. 
-    Każda taka zmienna musi być przekazana za pomocą kontrukcji <literal>use</literal>.
+    Domknięcia mogą także dziedziczyć zmienne z zasięgu nadrzędnego. Każda taka
+    musi być przekazana za pomocą kontrukcji <literal>use</literal>.
+    Od PHP 7.1 jako takie zmienne nie mogą zostać użyte &link.superglobals;,
+    <varname>$this</varname> oraz zmienne o nazwach takich jak parametry.
    </simpara>
 
    <example>
@@ -1622,6 +1624,14 @@ Warning: Cannot bind an instance to a static closure in /in/sLLS9 on line 5
         </row>
        </thead>
        <tbody>
+        <row>
+         <entry>7.1.0</entry>
+         <entry>
+          Funkcje anonimowe nie mogą używać &link.superglobals;,
+          <varname>$this</varname> oraz zmiennych o nazwach takich
+          jak parametry.
+         </entry>
+        </row>
         <row>
          <entry>5.4.0</entry>
          <entry>

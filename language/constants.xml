@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 6145544e0148b1d6829887453052c84fd429e63d Maintainer: sobak Status: ready -->
+<!-- EN-Revision: d790375863dca4df7aa449786bb110c9cd80abdf Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: pirate -->
  <chapter xml:id="language.constants" xmlns="http://docbook.org/ns/docbook">
@@ -223,11 +223,14 @@ echo ZWIERZETA[1]; // wyświetla "cat"
    </simpara>
    
    <para>
-    Istnieje osiem magicznych stałych, które zmieniają sie w zależności
+    Istnieje dziewięć magicznych stałych, które zmieniają sie w zależności
     od tego, gdzie są użyte.  Na przykład, wartość
     <constant>__LINE__</constant> zależy od linii, w której ta 
-    stała została użyta. Nazwy tych magicznych stałych 
-    są niezależne od wielkości liter:
+    stała została użyta w skrypcie. Wartość wszystkich "magicznych" stałych
+    jest określana w trakcie kompilacji, w przeciwieństwie do normalnych stałych,
+    które są ustalane w trakcie uruchamiania skryptu.
+    All these "magical" constants are resolved 
+    Nazwy owych magicznych stałych są niezależne od wielkości liter:
    </para>
    <para>
     <table>
@@ -296,6 +299,13 @@ echo ZWIERZETA[1]; // wyświetla "cat"
          Nazwa aktualnej przestrzeni nazw.
         </entry>
        </row>
+       <row xml:id="constant.coloncolonclass">
+        <entry><constant>NazwaKlasy::class</constant></entry>
+        <entry>
+         W pełni wykwalifikowana nazwa klasy. Zobacz także 
+         <link linkend="language.oop5.basic.class.class">::class</link>.
+        </entry>
+       </row>
       </tbody>
      </tgroup>
     </table>
@@ -321,6 +331,12 @@ echo ZWIERZETA[1]; // wyświetla "cat"
         </row>
        </thead>
        <tbody>
+        <row>
+         <entry>5.5.0</entry>
+         <entry>
+          Dodano magiczną stałą <constant>::class</constant>
+         </entry>
+        </row>
         <row>
          <entry>5.4.0</entry>
          <entry>
