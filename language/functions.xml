@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: e9f72c4399dc23a74f080645a860ca5ca39881fd Maintainer: sobak Status: ready -->
+<!-- EN-Revision: b7db81dd3f683e16ae6b461df91c54d85313a3df Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: pirate -->
  <chapter xml:id="language.functions" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -1568,14 +1568,18 @@ NULL]]>
 <![CDATA[
 <?php
 
-new class {
+class Foo {
+{
     function __construct()
     {
-        (static function() {
+        $func = static function() {
             var_dump($this);
-        })();
+        };
+        $func();
     }
 };
+new Foo();
+
 ?>
 ]]>
       </programlisting>
@@ -1596,16 +1600,19 @@ NULL
 <![CDATA[
 <?php
 
-(static function() {
+$func = static function() {
     // ciało funkcji
-})->call(new StdClass);
+};
+$func = $func->bindTo(new StdClass);
+$func();
+
 ?>
 ]]>
       </programlisting>
       &example.outputs;
       <screen>
 <![CDATA[
-Warning: Cannot bind an instance to a static closure in /in/sLLS9 on line 5
+Warning: Cannot bind an instance to a static closure in %s on line %d
 ]]>
       </screen>
      </example>

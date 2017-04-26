@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: adi Status: ready -->
+<!-- EN-Revision: fabcfdd3e2cbf87eef7ccdffd82045a61e0c05d6 Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS: dombal -->
+<!-- CREDITS: sobak -->
 <refentry xml:id="function.token-get-all" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>token_get_all</refname>
@@ -12,6 +12,7 @@
   <methodsynopsis>
    <type>array</type><methodname>token_get_all</methodname>
    <methodparam><type>string</type><parameter>źródło</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>flagi</parameter><initializer>0</initializer></methodparam>
   </methodsynopsis>
   <para>
    <function>token_get_all</function> parsuje zadane
@@ -38,6 +39,22 @@
       </para>
      </listitem>
     </varlistentry>
+    <varlistentry>
+     <term><parameter>flagi</parameter></term>
+     <listitem>
+      <para>
+       Poprawne flagi:
+       <itemizedlist>
+        <listitem>
+         <simpara>
+          <constant>TOKEN_PARSE</constant> - rozpoznaje możliwość użycia
+          zarezerwowanych słów kluczowych w pewnych kontekstach.
+         </simpara>
+        </listitem>
+       </itemizedlist>
+      </para>
+     </listitem>
+    </varlistentry>
    </variablelist>
   </para>
  </refsect1>
@@ -49,32 +66,6 @@
    <literal>&gt;</literal>, <literal>!</literal>, etc...),
    lub trójelementową tablicę zawierającą indeks tokenu w elemencie 0 i
    łańcuch znaków zawierający oryginalny token w elemencie 1 i numer linii w elemencie 2.
-  </para>
- </refsect1>
- <refsect1 role="examples">
-  &reftitle.examples;
-  <para>
-    <example>
-     <title>Przykłady użycia <function>token_get_all</function></title>
-      <programlisting role="php">
-<![CDATA[
-<?php
-  $tokeny = token_get_all('<?php echo; ?>'); /* => array(
-                                                    array(T_OPEN_TAG, '<?php'), 
-                                                    array(T_ECHO, 'echo'),
-                                                    ';',
-                                                    array(T_CLOSE_TAG, '?>') ); */
-.
-/* W następnym przykładzie zwróć uwagę na fakt, iż ciąg znaków jest parsowany
-   jako T_INLINE_HTML, inaczej niż oczekiwane T_COMMENT (T_ML_COMMENT w PHP
-   <5). Jest tak z powodu braku w "kodzie" otwierających/zamykających tagów
-   PHP. Jest to jednoznaczne z komentarzem znajdującym się poza tagami <?php
-   ?> w normalnym pliku. */
-  $tokeny = token_get_all('/* koment. */'); // => array(array(T_INLINE_HTML, '/* koment. */'));
-?>
-]]>
-    </programlisting>
-   </example>
   </para>
  </refsect1>
  <refsect1 role="changelog">
@@ -90,13 +81,136 @@
      </thead>
      <tbody>
       <row>
+       <entry>7.0.0</entry>
+       <entry>
+        Dodano opcjonalny parameter <parameter>flagi</parameter> oraz flagę
+        <constant>TOKEN_PARSE</constant>.
+       </entry>
+      </row>
+      <row>
        <entry>5.2.2</entry>
-       <entry>Numer linii jest zwracany w elemencie 2
+       <entry>
+        Numer linii jest zwracany w elemencie 2
        </entry>
       </row>
      </tbody>
     </tgroup>
    </informaltable>
+  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład użycia funkcji <function>token_get_all</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$tokens = token_get_all('<?php echo; ?>');
+
+foreach ($tokens as $token) {
+    if (is_array($token)) {
+        echo "Linia {$token[2]}: ", token_name($token[0]), " ('{$token[1]}')", PHP_EOL;
+    }
+}
+?>
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
+<![CDATA[
+Linia 1: T_OPEN_TAG ('<?php ')
+Linia 1: T_ECHO ('echo')
+Linia 1: T_WHITESPACE (' ')
+Linia 1: T_CLOSE_TAG ('?>')
+]]>
+    </screen>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Przykład niepoprawnego użycia funkcji <function>token_get_all</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$tokens = token_get_all('/* comment */');
+
+foreach ($tokens as $token) {
+    if (is_array($token)) {
+        echo "Linia {$token[2]}: ", token_name($token[0]), " ('{$token[1]}')", PHP_EOL;
+    }
+}
+?>
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
+<![CDATA[
+Linia 1: T_INLINE_HTML ('/* comment */')
+]]>
+    </screen>
+   </example>
+   Zauważ że ciąg znaków jest parsowany jako
+   <constant>T_INLINE_HTML</constant> zamiast oczekiwanego
+   <constant>T_COMMENT</constant>. Dzieje się tak, ponieważ w przekazanym kodzie
+   nie użyto tagu otwierającego. Odpowiada to umieszczeniu komentarza poza tagami
+   PHP w normalnym pliku.
+  </para>
+  <para>
+   <example>
+    <title>
+     Przykład użycia <function>token_get_all</function> na klasie używającej zarezerwowanego słowa
+    </title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+$source = <<<'code'
+<?php
+
+class A
+{
+    const PUBLIC = 1;
+}
+code;
+
+$tokens = token_get_all($source, TOKEN_PARSE);
+
+foreach ($tokens as $token) {
+    if (is_array($token)) {
+        echo token_name($token[0]) , PHP_EOL;
+    }
+}
+?>
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
+<![CDATA[
+T_OPEN_TAG
+T_WHITESPACE
+T_CLASS
+T_WHITESPACE
+T_STRING
+T_CONST
+T_WHITESPACE
+T_STRING
+T_LNUMBER
+]]>
+    </screen>
+   </example>
+   Bez flagi <constant>TOKEN_PARSE</constant> przedostatni
+   token (<constant>T_STRING</constant>) byłby odczytany
+   jako <constant>T_PUBLIC</constant>.
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>token_name</function></member>
+   </simplelist>
   </para>
  </refsect1>
 </refentry>
