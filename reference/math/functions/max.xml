@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: aa742af0b78990a4e431dc3ba2452c2d75c99968 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 6c604e6e40ef6ccb4f09056fc277fd38fd3cb91e Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: qrak -->
 <refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.max">
@@ -27,17 +27,19 @@
   </para>
   <note>
    <para>
-    PHP potraktuje nienumeryczny <type>string</type> jako
-    <literal>0</literal> jeżeli porównywany on będzie do
-    liczb. Funkcja wciąż może zwrócić jednak ciąg typu
-    <type>string</type> jeżeli zostanie on uznany za
-    największą wartość liczbową. Jeżeli wiele parametrów
-    zostanie uznanych za wartość <literal>0</literal>,
-    <function>max</function> zwróci numeryczne <literal>0</literal>,
-    w przeciwnym wypadku zwróci najwyższą wartość przy
-    sortowaniu alfabetycznym.
+    Wartości różnych typów zostaną porównane z użyciem <link linkend="language.operators.comparison">
+    standardowych reguł porównań</link>. Przykładowo, nienumeryczny <type>string</type> będzie porównany
+    do typu <type>integer</type> jak gdyby był on zerem (<literal>0</literal>), ale kilka nienumerycznych
+    łańcuchów znaków będzie porównanych alfanumerycznie. Wartość zwrócona przez funkcję będzie oryginalnego
+    typu, bez aplikowania żadnych konwersji.
    </para>
   </note>
+  <caution>
+   <simpara>
+    Uważaj przy przekazywaniu argumentów o różnych typach, ponieważ
+    funkcja <function>max</function> może zwrócić nieprzewidywalne wyniki.
+   </simpara>
+  </caution>
  </refsect1>
  <refsect1 role="parameters">
   &reftitle.parameters;
@@ -84,19 +86,14 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   <function>max</function> zwraca najwyższą liczbę z podanych wartości.
-   Jeżeli wiele elementów zostanie uznanych za takie same, zostanie zwróćony
-   ten, który został podany jako pierwszy.
+   <function>max</function> zwraca wartość uznawaną za "największą" według standardowych
+   reguł porównań. Jeżeli wiele wartości różnych typów zostanie uznanych za takie same (np.
+   <literal>0</literal> i <literal>'abc'</literal>, zostanie zwrócona ta, która została podana
+   do funkcji jako pierwsza.
   </para>
   <para>
-   Kiedy do <function>max</function> zostanie przekazane wiele tablic, funkcja
-   zwróci najdłuższą z nich. Jeżeli wszystkie tablice mają taką samą długość,
-   <function>max</function> użyje sortowania leksograficznego, aby znaleźć
-   odpowiednią wartość.
-  </para>
-  <para>
-   Podane ciągi znaków zostaną potraktowane jak liczby (<type>integer</type>)
-   przy porównywaniu.
+   Przy przekazaniu pustej tablicy zostanie zwrócone &false; i zostanie wywołany błąd
+   <constant>E_WARNING</constant>.
   </para>
  </refsect1>
  <refsect1 role="examples">
@@ -107,29 +104,35 @@
     <programlisting role="php">
 <![CDATA[
 <?php
-echo max(1, 3, 5, 6, 7);  // 7
+echo max(2, 3, 1, 6, 7);  // 7
 echo max(array(2, 4, 5)); // 5
 
-// 'hello' potraktowane jak liczba będzie równe 0. Oba parametry są
-// tak samo długie, więc wynik zależy od kolejności w tablicy wejściowej
+// Kiedy 'hello' jest rzutowany na liczbę, jest równy 0
+// Ponieważ obie wartości są równe, wynik zależy od kolejności ich podania
 echo max(0, 'hello');     // 0
 echo max('hello', 0);     // hello
 
-echo max('42', 3); // '42'
-
-// Tutaj 0 > -1, więc zwróconą wartością jest 'hello'
-echo max(-1, 'hello');    // hello
+// W tym wypadku porównujemy -1 < 0, więc największą wartością jest 'hello'
+echo max('hello', -1);    // hello
 
 // Jeżeli podano kilka tablic o różnych długościach, max zwraca najdłuższą
 $val = max(array(2, 2, 2), array(1, 1, 1, 1)); // array(1, 1, 1, 1)
 
-// W wypadku tablic tej samej długości, max porównuje od lewej do prawej
-// używając sortowania leksograficznego, więc w naszym wypadku: 2 == 2, ale 4 < 5
-$val = max(array(2, 4, 8), array(2, 5, 7)); // array(2, 5, 7)
+// Kilka tablic tej samej długości jest porównywanych od lewej do prawej
+// więc w naszym wypadku: 2 == 2, ale 5 > 4
+$val = max(array(2, 4, 8), array(2, 5, 1)); // array(2, 5, 1)
 
-// Jeżeli podano tablicę i nie-tablicę, zawsze zostanie
-// zwrócona tablica, gdyż uznawana jest za wiekszą
+// Jeżeli podano tablicę i nie-tablicę, zostanie zwrócona tablica,
+// gdyż porównania traktują tablice jako większe niż inne wartości
 $val = max('string', array(2, 5, 7), 42);   // array(2, 5, 7)
+
+// Jeśli jednym parametrem jest NULL lub wartość logiczna, zostanie ona porównana
+// do innych wartości według zasady FALSE < TRUE niezależnie od użycia innych typów
+// W poniższym przykładzie -10 jest traktowane jako TRUE przy porównaniu
+$val = max(-10, FALSE); // -10
+
+// Z kolei 0 jest traktowane jako 0, więc jest "mniejsze" niż TRUE
+$val = max(0, TRUE); // TRUE
 ?>
 ]]>
     </programlisting>

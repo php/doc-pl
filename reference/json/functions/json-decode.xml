@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 6353c52d0ee11ceb942e857b001e95d85500d690 Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: ed0816f0b0e500f668eb8e89e28cb034afb52c81 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: sobak -->
 <refentry xml:id="function.json-decode" xmlns="http://docbook.org/ns/docbook">
@@ -59,9 +59,12 @@
      <term><parameter>opcje</parameter></term>
      <listitem>
       <para>
-       Maska bitowa - opcje dekodowania JSON.  Obecnie obsługiwana
-       jest tylko <constant>JSON_BIGINT_AS_STRING</constant>
-       (domyślnie jest rzutowanie typów large integer na float)
+       Maska bitowa opcji dekodowania JSON. Obecnie są wspierane dwie
+       opcje. Pierwsza to <constant>JSON_BIGINT_AS_STRING</constant>, która
+       umożliwia rzutowanie dużych liczb na tekst zamiast na wartość zmiennoprzecinkową,
+       jak domyślnie. Drugą opcją jest <constant>JSON_OBJECT_AS_ARRAY</constant>,
+       która ma taki sam efekt jak ustawienie parametru <parameter>asocjacyjnie</parameter>
+       na &true;.
       </para>
      </listitem>
     </varlistentry>
@@ -288,6 +291,28 @@ object(stdClass)#1 (1) {
      </thead>
      <tbody>
       <row>
+       <entry>7.1.0</entry>
+       <entry>
+        Pusty klucz JSON ("") może być prawidłowo zdekodowany do pustego
+        obiektu, zamiast używania klucza z wartością <literal>_empty_</literal>.
+       </entry>
+      </row>
+      <row>
+       <entry>7.0.0</entry>
+       <entry>
+        Odrzucono niezgodne z RFC 7159 formaty liczb - głównego poziomu
+        (07, 0xff, .1, -.1) i wszystkich poziomów ([1.], [1.e1])
+       </entry>
+      </row>
+      <row>
+       <entry>7.0.0</entry>
+       <entry>
+        Pusty string PHP lub wartość, która po rzutowaniu na string jest pusta
+        (<literal>NULL</literal>, <literal>FALSE</literal>) skutkuje
+        błędem składniowym JSON.
+       </entry>
+      </row>
+      <row>
        <entry>5.6.0</entry>
        <entry>
         Błędne (napisane innymi niż małymi znakami) warianty <literal>true</literal>,
@@ -303,11 +328,16 @@ object(stdClass)#1 (1) {
       </row>
       <row>
        <entry>5.3.0</entry>
-       <entry>Dodano opcjonalny parametr <parameter>poziom_zagłębienia</parameter>. Domyślny limit zagnieżdżania danych został zwiększony z 128 do 512</entry>
+       <entry>
+        Dodano opcjonalny parametr <parameter>poziom_zagłębienia</parameter>.
+        Domyślny limit zagnieżdżania danych został zwiększony z 128 do 512
+       </entry>
       </row>
       <row>
        <entry>5.2.3</entry>
-       <entry>Limit zagnieżdżania danych został zwiększony z 20 do 128</entry>
+       <entry>
+        Limit zagnieżdżania danych został zwiększony z 20 do 128
+       </entry>
       </row>
       <row>
        <entry>5.2.1</entry>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: d6d7fb6e14f6a32d25e0a654d11e2890f28e208d Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: 24e4bc70a6881013f0a2b066d2dfa420f39e2501 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: leszek, sobak -->
 
@@ -79,7 +79,7 @@
    <listitem>
     <simpara>
      Niepoprawne znaki UTF-8, być może nieprawidłowo zakodowane.
-     Ta stała jest dostępna od PHP 5.3.3.
+     Dostępne od PHP 5.3.3.
     </simpara>
    </listitem>
   </varlistentry>
@@ -89,15 +89,13 @@
      (<type>integer</type>)
    </term>
    <listitem>
-    <para>
+    <simpara>
      Obiekt lub tablica przekazana do <function>json_encode</function> zawiera
      odniesienia rekursywne, które nie mogą być zakodowane.
      Jeśli podano opcję <constant>JSON_PARTIAL_OUTPUT_ON_ERROR</constant>, w miejsce
      rekursywnego odniesienia umieszczony zostanie &null;.
-    </para>
-    <para>
-     Ta stała dostępna jest od PHP 5.5.0.
-    </para>
+     Dostępne od PHP 5.5.0.
+    </simpara>
    </listitem>
   </varlistentry>
   <varlistentry xml:id="constant.json-error-inf-or-nan">
@@ -106,16 +104,14 @@
      (<type>integer</type>)
    </term>
    <listitem>
-    <para>
+    <simpara>
      Wartość przekazana do <function>json_encode</function> zawiera
      <link linkend="language.types.float.nan"><constant>NAN</constant></link>
      lub <link linkend="function.is-infinite"><constant>INF</constant></link>.
      Jeśli podano opcję <constant>JSON_PARTIAL_OUTPUT_ON_ERROR</constant>, w miejsce
      tych specjalnych wartości wstawione zostanie <literal>0</literal>.
-    </para>
-    <para>
-     Ta stała dostępna jest od PHP 5.5.0.
-    </para>
+     Dostępne od PHP 5.5.0.
+    </simpara>
    </listitem>
   </varlistentry>
   <varlistentry xml:id="constant.json-error-unsupported-type">
@@ -124,15 +120,73 @@
      (<type>integer</type>)
    </term>
    <listitem>
-    <para>
+    <simpara>
      Do funkcji <function>json_encode</function> podana została nieobsługiwana
      wartość, taka jak na przykład <type>resource</type>.
      Jeśli podano opcję <constant>JSON_PARTIAL_OUTPUT_ON_ERROR</constant>, w miejsce
      nieobsługiwanych wartości umieszczony zostanie &null;.
-    </para>
-    <para>
-     Ta stała dostępna jest od PHP 5.5.0.
-    </para>
+     Dostępne od PHP 5.5.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-error-invalid-property-name">
+   <term>
+    <constant>JSON_ERROR_INVALID_PROPERTY_NAME</constant>
+    (<type>integer</type>)
+   </term>
+   <listitem>
+    <simpara>
+     W łańcuchu przekazanym do <function>json_decode</function> występuje
+     klucz rozpoczynający się od znaku \u0000, kiedy dekodowano obiekt JSON
+     do obiektu PHP.
+     Dostępne od PHP 7.0.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-error-utf16">
+   <term>
+    <constant>JSON_ERROR_INVALID_PROPERTY_NAME</constant>
+    (<type>integer</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Single unpaired UTF-16 surrogate in unicode escape contained in the
+     JSON string passed to <function>json_encode</function>.
+     Dostępne od PHP 7.0.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+ </variablelist>
+
+ <para>
+  Następujące stałe mogą być użyte jako kombinacja opcji dla
+  <function>json_decode</function>.
+ </para>
+ <variablelist>
+  <varlistentry xml:id="constant.json-bigint-as-string">
+   <term>
+    <constant>JSON_BIGINT_AS_STRING</constant>
+    (<type>integer</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Dekoduje ogromne liczby jako ich oryginalne wartości tekstowe.
+     Dostępne od PHP 5.4.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-object-as-array">
+   <term>
+    <constant>JSON_OBJECT_AS_ARRAY</constant>
+    (<type>integer</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Dekoduje obiekty JSON jako tablice PHP. Ta opcja może zostać dodana
+     automatycznie przez wywołanie <function>json_decode</function> z drugim
+     parametrem ustawionym na &true;.
+     Dostępne od PHP 5.4.0.
+    </simpara>
    </listitem>
   </varlistentry>
  </variablelist>
@@ -216,18 +270,6 @@
     </simpara>
    </listitem>
   </varlistentry>
-  <varlistentry xml:id="constant.json-bigint-as-string">
-   <term>
-    <constant>JSON_BIGINT_AS_STRING</constant>
-     (<type>integer</type>)
-   </term>
-   <listitem>
-    <simpara>
-     Koduje duże liczby stałoprzecinkowe jako reprezentację znakową.
-     Dostępne od PHP 5.4.0.
-    </simpara>
-   </listitem>
-  </varlistentry>
   <varlistentry xml:id="constant.json-pretty-print">
    <term>
     <constant>JSON_PRETTY_PRINT</constant>
@@ -259,7 +301,8 @@
    </term>
    <listitem>
     <simpara>
-     Koduj wielobajtowe znaki Unicode dosłownie (domyślnie jako \uXXXX).
+     Koduj wielobajtowe znaki Unicode dosłownie (domyślnie jako
+     \uXXXX).
      Dostępne od PHP 5.4.0.
     </simpara>
    </listitem>
@@ -283,8 +326,22 @@
    </term>
    <listitem>
     <simpara>
-     Upewnia się że wartości typu <type>float</type> zostaną zawsze zakodowane jako zmiennoprzecinkowe.
+     Upewnia się że wartości typu <type>float</type> zostaną zawsze zakodowane
+     jako zmiennoprzecinkowe.
      Dostępne od PHP 5.6.6.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-unescaped-line-terminators">
+   <term>
+    <constant>JSON_UNESCAPED_LINE_TERMINATORS</constant>
+    (<type>integer</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Ograniczniki linii nie mają dodawanych znaków ucieczki. Flaga ta oznacza
+     takie działanie, jakie było przed PHP 7.1 bez jej stosowania.
+     Dostępne od PHP 7.1.0.
     </simpara>
    </listitem>
   </varlistentry>

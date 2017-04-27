@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: 838941f6cce51f3beda16012eb497b26295a8238 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS: cyb0org -->
+<!-- CREDITS: cyb0org, sobak -->
 <refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.utf8-decode">
  <refnamediv>
   <refname>utf8_decode</refname>
@@ -18,9 +18,27 @@
    <methodparam><type>string</type><parameter>dane</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Ta funkcja dekoduje <parameter>dane</parameter>, przy założeniu że są
-   zakodowane w <literal>UTF-8</literal>, do <literal>ISO-8859-1</literal>.
+   Ta funkcja dekoduje <parameter>dane</parameter> z kodowania
+   <literal>UTF-8</literal> do <literal>ISO-8859-1</literal>. Bajty
+   w ciągu znaków, które nie są poprawnym <literal>UTF-8</literal> oraz
+   znaki <literal>UTF-8</literal>, które nie istnieją w
+   <literal>ISO-8859-1</literal> (czyli znaki powyżej
+   <literal>U+00FF</literal>) są zastępowane przez <literal>?</literal>.
   </para>
+  <note>
+   <para>
+    Wiele stron internetowych oznaczonych jako używające kodowania <literal>ISO-8859-1</literal>,
+    tak naprawdę używa podobnego kodowania <literal>Windows-1252</literal>,
+    a przeglądarki internetowe będą interpretowały strony zakodowane w <literal>ISO-8859-1</literal>
+    jako <literal>Windows-1252</literal>. <literal>Windows-1252</literal> obsługuje dodatkowe
+    drukowalne znaki, takie jak symbol Euro
+    (<literal>€</literal>) czy ozdobne apostrofy (<literal>“</literal>
+    <literal>”</literal>), zamiast niektórych znaków kontrolnych <literal>ISO-8859-1</literal>.
+    Ta funkcja nie konwertuje poprawnie takich znaków z kodowania <literal>Windows-1252</literal>.
+    Użyj innej funkcji jeżeli wymagana jest konwersja z
+    <literal>Windows-1252</literal>.
+   </para>
+  </note>
  </refsect1>
 
  <refsect1 role="parameters">
@@ -50,7 +68,10 @@
   &reftitle.seealso;
   <para>
    <simplelist>
-    <member><function>utf8_encode</function> (zawiera wyjaśnienia dotyczące kodowania UTF-8)</member>
+    <member><function>utf8_encode</function> - Przeprowadza odwrotną konwersję</member>
+    <member><function>mb_convert_encoding</function> - Konwertuje między różnymi kodowaniami, w tym UTF-8, ISO-8859-1 and Windows-1252</member>
+    <member><function>iconv</function> - Konwertuje między róznymi kodowaniami znaków</member>
+    <member><function>recode_string</function> - Konwertuje między róznymi kodowaniami znaków</member>
    </simplelist>
   </para>
  </refsect1>
