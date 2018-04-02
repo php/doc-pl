@@ -33,6 +33,10 @@ przekierowane do pliku lub innego strumienia wyjściowego. W przeciwnym
 przypadku PHP zawiesi działanie aż do zakończenia działania
 wykonywanego programu.</para></note>'>
 
+<!ENTITY note.exec-bypass-shell '<note xmlns="http://docbook.org/ns/docbook"><para>W systemie Windows <function>exec</function>
+najpierw uruchomi cmd.exe aby wykonać komendę. Jeśli chcesz wykonać zewnętrzny program bez uruchamiania cmd.exe
+użyj funkcji <function>proc_open</function> z opcją <parameter>bypass_shell</parameter>.</para></note>'>
+
 <!ENTITY note.func-callback '<note xmlns="http://docbook.org/ns/docbook"><simpara xmlns="http://docbook.org/ns/docbook">Zamiast nazwy funkcji może zostać
 przekazana tablica zawierająca referencję do obiektu i nazwę metody
 </simpara></note>'>
@@ -108,15 +112,6 @@ o czasie dostępu może się różnić w zależności od systemu plików.</para>
     Nagłówki będą dostępne i zwracane tylko jeśli stosowane jest SAPI które je obsługuje.
    </para>
   </note>
-'>
-
-<!ENTITY note.passwordhashing '<note xmlns="http://docbook.org/ns/docbook">
- <title>Bezpieczne skróty haseł</title>
- <para>
-     Nie jest zalecanestosowanie tej funkcji do zabezpieczania haseł ze względu na wysoką wydajność algorytmu skrótu.
-     Zobacz <link linkend="faq.passwords.fasthash">tutaj</link> aby uzyskać więcej informacji.
- </para>
-</note>
 '>
 
 <!ENTITY note.sigchild '<note xmlns="http://docbook.org/ns/docbook">
@@ -207,6 +202,18 @@ xmlns="http://docbook.org/ns/docbook"><simpara>Ta opcja jest
 xmlns="http://docbook.org/ns/docbook"><simpara>Ta opcja jest
 <emphasis>PRZESTARZAŁA</emphasis> od PHP 7.0.0. Używanie tej opcji nie jest zalecane.</simpara></warning>'>
 
+<!ENTITY warn.deprecated.function-7-1-0 '<warning
+xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja jest
+<emphasis>PRZESTARZAŁA</emphasis> od PHP 7.1.0. Używanie tej funkcji nie jest zalecane.</simpara></warning>'>
+
+<!ENTITY warn.deprecated.feature-7-2-0 '<warning
+xmlns="http://docbook.org/ns/docbook"><simpara>Ta opcja jest
+<emphasis>PRZESTARZAŁA</emphasis> od PHP 7.2.0. Używanie tej opcji nie jest zalecane.</simpara></warning>'>
+
+<!ENTITY warn.deprecated.function-7-2-0 '<warning
+xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja jest
+<emphasis>PRZESTARZAŁA</emphasis> od PHP 7.2.0. Używanie tej funkcji nie jest zalecane.</simpara></warning>'>
+
 <!ENTITY removed.php.future 'Ta przestarzała funkcja <emphasis xmlns="http://docbook.org/ns/docbook">zostanie</emphasis>
 na pewno w przyszłości <emphasis xmlns="http://docbook.org/ns/docbook">usunięta</emphasis>.'>
 
@@ -288,6 +295,17 @@ linkend="security.cgi-bin">bezpieczeństwie instalacji CGI</link>.
 Powoduje ona wykonywanie funkcji <function xmlns="http://docbook.org/ns/docbook">addslashes</function> na wszystkich
 danych GET,  POST i COOKIE. Można użyć funkcji <function xmlns="http://docbook.org/ns/docbook">stripslashes</function>
 aby usunąć dodane znaki slash.</para></note>'> 
+
+<!ENTITY warn.passwordhashing '<warning xmlns="http://docbook.org/ns/docbook">
+ <title>Bezpieczne skróty haseł</title>
+ <para>
+  Nie jest zalecane stosowanie tej funkcji do zabezpieczania haseł
+  ze względu na wysoką wydajność algorytmu skrótu. Zobacz
+  <link linkend="faq.passwords.fasthash">FAQ o hashowaniu haseł</link>
+  aby poznać szczegóły i najlepsze praktyki.
+ </para>
+</warning>
+'>
 
 <!ENTITY warn.ssl-non-standard '<warning xmlns="http://docbook.org/ns/docbook"><para xmlns="http://docbook.org/ns/docbook">Nawiązując połączenie przez SSL, serwer
 Microsoft IIS narusza reguły protokołu przez zamknięcie połączenia bez
@@ -404,6 +422,10 @@ prawdopodobnie istniała w nowszych wersjach niż PHP 5.3.</emphasis>'>
 
 <!ENTITY example.outputs.7 '<para xmlns="http://docbook.org/ns/docbook">Powyższy przykład w PHP 7 wyświetli:</para>'>
 
+<!ENTITY example.outputs.70 '<para xmlns="http://docbook.org/ns/docbook">Powyższy przykład w PHP 7.0 wyświetli:</para>'>
+
+<!ENTITY example.outputs.71 '<para xmlns="http://docbook.org/ns/docbook">Powyższy przykład w PHP 7.1 wyświetli:</para>'>
+
 <!ENTITY example.outputs.32bit '<para xmlns="http://docbook.org/ns/docbook">Wyświetla następujący przykład na systemach 32 bitowych:</para>'>
 
 <!ENTITY example.outputs.64bit '<para xmlns="http://docbook.org/ns/docbook">Wyświetla następujący przykład na systemach 64 bitowych:</para>'>
@@ -486,7 +508,9 @@ przypadku błędu.'>
 
 <!ENTITY return.void 'Nie jest zwracana żadna wartość.'>
 
-<!ENTITY return.callbacksort 'Funkcja porównująca musi zwrócić liczbę całkowitą mniejszą, równą lub większą od zera jeśli pierwszy argument jest uważany za odpowiednio mniejszy, równy lub większy od drugiego.'>
+<!ENTITY return.callbacksort 'Funkcja porównująca musi zwrócić liczbę całkowitą mniejszą, równą lub większą
+od zera jeśli pierwszy argument jest uważany za odpowiednio mniejszy, równy lub większy od drugiego.
+Przed PHP 7.0.0 ta liczba musiała być z zakresu -2147483648 do 2147483647.'>
 
 <!ENTITY return.falseproblem '<warning xmlns="http://docbook.org/ns/docbook"><simpara xmlns="http://docbook.org/ns/docbook">Ta funkcja może
 zwrócić Boolean &false;, ale może też zwrócić wartość innego typu niż Boolean, która oznacza
@@ -506,29 +530,36 @@ funkcję.</simpara></warning>'>
  </listitem>
 </varlistentry>'>
 
+<!ENTITY openssl.param.csr '<varlistentry xmlns="http://docbook.org/ns/docbook">
+ <term><parameter>csr</parameter></term>
+ <listitem>
+  <para>
+   Zobacz <link linkend="openssl.certparams">parametry CSR</link> aby poznać listę poprawnych wartości.
+  </para>
+ </listitem>
+</varlistentry>'>
+
+<!ENTITY openssl.param.key '<varlistentry xmlns="http://docbook.org/ns/docbook">
+ <term><parameter>key</parameter></term>
+ <listitem>
+  <para>
+   Zobacz <link linkend="openssl.certparams">parametry Klucza Publicznego/Prywatnego</link> aby poznać listę poprawnych wartości.
+  </para>
+ </listitem>
+</varlistentry>'>
+
 <!-- Image (GD) Notes -->
 <!ENTITY note.config.t1lib '<note xmlns="http://docbook.org/ns/docbook"><simpara xmlns="http://docbook.org/ns/docbook">Ta funkcja jest dostępna tylko jeśli
 PHP zostało skompilowane z dyrektywą <option
 role="configure">--enable-t1lib</option>.</simpara></note>'>
 
-<!ENTITY note.config.jpeg '<note xmlns="http://docbook.org/ns/docbook"><simpara xmlns="http://docbook.org/ns/docbook">Obsługa JPEG jest dostępna tylko
-jeśli PHP zostało skompilowane z GD-1.8 lub nowszym.</simpara></note>'>
-
-<!ENTITY note.config.wbmp '<note xmlns="http://docbook.org/ns/docbook"><simpara xmlns="http://docbook.org/ns/docbook">Obsługa WBMP jest dostępna tylko
-jeśli PHP zostało skompilowane z GD-1.8 lub nowszym.</simpara></note>'>
-
-<!ENTITY note.bundled.gd '<note xmlns="http://docbook.org/ns/docbook"><simpara xmlns="http://docbook.org/ns/docbook">Ta funkcja jest dostępna tylko jeśli
-PHP zostało skompilowane z dołączoną wersją biblioteki GD.</simpara></note>'>
-
 <!ENTITY note.freetype '<note xmlns="http://docbook.org/ns/docbook"><simpara xmlns="http://docbook.org/ns/docbook">Ta funkcja jest dostępna tylko jeśli
 PHP zostało skompilowane z obsługą FreeType (<option role="configure">--with-freetype-dir=DIR</option>)
 </simpara></note>'>
 
-<!ENTITY note.gd.2 '<note xmlns="http://docbook.org/ns/docbook"><simpara xmlns="http://docbook.org/ns/docbook">Ta funkcja wymaga GD 2.0.1 lub nowszej (2.0.28 lub nowsza jest zalecana).</simpara></note>'>
-
 <!ENTITY note.gd.notrequired '<note xmlns="http://docbook.org/ns/docbook"><para xmlns="http://docbook.org/ns/docbook">Ta funkcja nie wymaga dostępu do biblioteki GD.</para></note>'>
 
- <!ENTITY note.gd.interpolation '<note xmlns="http://docbook.org/ns/docbook"><para>Na działanie tej funkcji wpływa metoda interpolacji ustawiana przez  <function>imagesetinterpolation</function>.</para></note>'>
+<!ENTITY note.gd.interpolation '<note xmlns="http://docbook.org/ns/docbook"><para>Na działanie tej funkcji wpływa metoda interpolacji ustawiana przez  <function>imagesetinterpolation</function>.</para></note>'>
 
 <!ENTITY gd.image.description '<varlistentry xmlns="http://docbook.org/ns/docbook"><term xmlns="http://docbook.org/ns/docbook"><parameter xmlns="http://docbook.org/ns/docbook">
 obraz</parameter></term><listitem xmlns="http://docbook.org/ns/docbook"><para xmlns="http://docbook.org/ns/docbook">Zasób obrazu, zwrócony przez jedną z funkcji tworzących obrazy, 
@@ -539,6 +570,53 @@ czcionka</parameter></term><listitem xmlns="http://docbook.org/ns/docbook"><para
 czcionek w kodowaniu latin2 (gdzie większy numer odpowiada większej czcionce) lub własny dowolny
 identyfikator czcionki zarejestrowany przez <function xmlns="http://docbook.org/ns/docbook">imageloadfont</function>.
 </para></listitem></varlistentry>'>
+
+<!ENTITY gd.ttf.fontfile "
+    <varlistentry xmlns='http://docbook.org/ns/docbook'>
+     <term><parameter>fontfile</parameter></term>
+     <listitem>
+      <para>
+       Ścieżka do fonta TrueType, którego chcesz użyć.
+      </para>
+      <para>
+       W zależności od tego której wersji biblioteki GD używa PHP, <emphasis>gdy
+       <parameter>fontfile</parameter> nie zaczyna się od znaku <literal>/</literal>,
+       wtedy do nazwy pliku zostanie dodane rozszerzenie <literal>.ttf</literal></emphasis>
+       a biblioteka GD będzie szukać pliku o tej nazwie w swojej globalnej ścieżce dla fontów.
+      </para>
+      <para>
+       Gdy używana jest biblioteka GD w wersji niższej niż 2.0.18 znak <literal>spacji</literal>,
+       a nie średnik 
+       When using versions of the GD library lower than 2.0.18, a <literal>space</literal> character,
+       rather than a semicolon, was used as the 'path separator' for different font files.
+       Unintentional use of this feature will result in the warning message:
+       <literal>Warning: Could not find/open font</literal>. For these affected versions, the
+       only solution is moving the font to a path which does not contain spaces.
+      </para>
+      <para>
+       In many cases where a font resides in the same directory as the script using it
+       the following trick will alleviate any include problems.
+       <programlisting role='php'>
+<![CDATA[
+<?php
+// Set the enviroment variable for GD
+putenv('GDFONTPATH=' . realpath('.'));
+
+// Name the font to be used (note the lack of the .ttf extension)
+$font = 'SomeFont';
+?>
+]]>
+       </programlisting>
+      </para>
+      <note>
+       <para>
+        Note that <link linkend='ini.open-basedir'>open_basedir</link> does
+        <emphasis>not</emphasis> apply to <parameter>fontfile</parameter>.
+       </para>
+      </note>
+     </listitem>
+    </varlistentry>
+">
 
 <!ENTITY gd.return.identifier 'Zwraca identyfikator zasobu obrazu w przypadku powodzenia lub &false; w przypadku błędów.'>
 
