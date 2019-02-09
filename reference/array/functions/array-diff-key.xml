@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: a9b5252986b66600d55a52252f09dabfec218e6d Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: sobak Status: ready -->
 <!-- CREDITS: leszek -->
 <refentry xml:id="function.array-diff-key" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
@@ -88,13 +88,37 @@
      wykonywane jest ścisłe sprawdzenie typu, więc reprezentacja tekstowa
      musi być identyczna.
     </para>
+        <programlisting role="php">
+<![CDATA[
+<?php
+$array1 = array('blue' => 1, 'red' => 2, 'green' => 3, 'purple' => 4);
+$array2 = array('green' => 5, 'yellow' => 7, 'cyan' => 8);
+
+var_dump(array_diff_key($array1, $array2));
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+array(3) {
+  ["blue"]=>
+  int(1)
+  ["red"]=>
+  int(2)
+  ["purple"]=>
+  int(4)
+}
+]]>
+    </screen>
     <programlisting role="php">
 <![CDATA[
 <?php
-$array1 = array('blue'  => 1, 'red'  => 2, 'green'  => 3, 'purple' => 4);
-$array2 = array('green' => 5, 'blue' => 6, 'yellow' => 7, 'cyan'   => 8);
+$array1 = array('blue' => 1, 'red'  => 2, 'green' => 3, 'purple' => 4);
+$array2 = array('green' => 5, 'yellow' => 7, 'cyan' => 8);
+$array3 = array('blue' => 6, 'yellow' => 7, 'mauve' => 8);
 
-var_dump(array_diff_key($array1, $array2));
+var_dump(array_diff_key($array1, $array2, $array3));
 ?>
 ]]>
     </programlisting>

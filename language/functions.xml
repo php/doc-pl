@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: b7db81dd3f683e16ae6b461df91c54d85313a3df Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 1403073198add91894c48f7db92a97bb9018bb3b Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: pirate -->
  <chapter xml:id="language.functions" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -38,7 +38,7 @@ function foo($arg_1, $arg_2, /* ..., */ $arg_n)
     Poprawna nazwa funkcji zaczyna się od litery lub podkreślnika, po których następuje 
     dowolna ilość liter, cyfr i podkreślników. Jako wyrażenie regularne, określone 
     zostałoby to następująco: 
-    <literal>[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*</literal>.
+    <code>[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*</code>.
    </para>
    &tip.userlandnaming;
    <simpara>
@@ -452,6 +452,20 @@ Robię homogenizowany jogurt malinowy.
          </entry>
          <entry>PHP 7.0.0</entry>
         </row>
+        <row>
+         <entry><literal>iterable</literal></entry>
+         <entry>
+          Argument musi być tablicą (<type>array</type>) lub &instanceof; <classname>Traversable</classname>.
+         </entry>
+         <entry>PHP 7.1.0</entry>
+        </row>
+        <row>
+         <entry><literal>object</literal></entry>
+         <entry>
+          Argument musi być obiektem (<type>object</type>).
+         </entry>
+         <entry>PHP 7.2.0</entry>
+        </row>
        </tbody>
       </tgroup>
      </informaltable>
@@ -558,7 +572,37 @@ Stack trace:
      </example>
 
      <example>
-      <title>Typy deklaracji akceptujące &null;</title>
+      <title>Typowanie argumentów przekazywanych przez referencję</title>
+      <simpara>
+       Zadeklarowane typy argumentów przekazywanych przez referencję są sprawdzane
+       na wejściu do funkcji, ale nie gdy funkcja zwraca, więc typ argumentu może
+       się zmienić po tym gdy funkcja zwróciła.
+      </simpara>
+      <programlisting role="php">
+<![CDATA[
+<?php
+function array_baz(array &$param)
+{
+    $param = 1;
+}
+$var = [];
+array_baz($var);
+var_dump($var);
+array_baz($var);
+?>
+]]>
+      </programlisting>
+      &example.outputs.similar;
+      <screen>
+<![CDATA[
+int(1)
+
+Fatal error: Uncaught TypeError: Argument 1 passed to array_baz() must be of the type array, int given, called in %s on line %d
+]]>
+      </screen>
+     </example>
+     <example>
+      <title>Deklaracje typu akceptujące &null;</title>
       <programlisting role="php">
 <![CDATA[
 <?php
@@ -1000,6 +1044,12 @@ $newref =& returns_reference();
     wypadku zostanie rzucony wyjątek <classname>TypeError</classname>.
    </para>
 
+   <para>
+    Od PHP 7.1.0 zwracane wartości mogą być oznaczone jako nullowalne poprzez
+    poprzedzenie nazwy typu znakiem zapytania (<literal>?</literal>). Oznacza to,
+    że funkcja zwraca podany typ lub &null;.
+   </para>
+
    <note>
     <para>
      Podczas nadpisywania metody nadrzędnej, metoda potomka musi mieć zwracany typ
@@ -1085,6 +1135,22 @@ object(C)#1 (0) {
 }
 ]]>
       </screen>
+     </example>
+     <example>
+      <title>Deklaracja zwracanego typu akceptująca &null; (od PHP 7.1.0)</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+function get_item(): ?string {
+    if (isset($_GET['item'])) {
+        return $_GET['item'];
+    } else {
+        return null;
+    }
+}
+?>
+]]>
+      </programlisting>
      </example>
     </sect3>
    </sect2>
@@ -1275,8 +1341,8 @@ $func(); // wyświetli "bar" od PHP 7.0.0; wcześniej wygeneruje fatal error
     <link linkend="ref.image">obrazków</link> takich jak
     <function>imagecreatetruecolor</function>, PHP musi być skompilowane z obsługą
     <productname>GD</productname>. Aby użyć
-    <function>mysql_connect</function>, PHP musi być skompilowane z obsługą
-    <link linkend="ref.mysql">MySQL</link>. Jest wiele funkcji wbudowanych
+    <function>mysqli_connect</function>, PHP musi być skompilowane z obsługą
+    <link linkend="ref.mysqli">MySQLi</link>. Jest wiele funkcji wbudowanych
     w rdzeń każdej wersji PHP, takich jak funkcje
     <link linkend="ref.strings">typu string</link> oraz 
     <link linkend="ref.var">zmiennych</link>. Wywołanie

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 92d94d9c11538fb9f6d79ec7c51dd1e8c2cfd54e Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 6398de67edc88a4f296fbcc2103a7565a043492e Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
  <chapter xml:id="language.exceptions" xmlns="http://docbook.org/ns/docbook">
   <title>Wyjątki</title>
@@ -16,7 +16,7 @@
     <programlisting role="php">
 <![CDATA[
 <?php
-class Exception
+class Exception extends Throwable
 {
     protected $message = 'Unknown exception';   // wiadomość wyjątku
     private   $string;                          // metoda __toString
@@ -46,12 +46,12 @@ class Exception
     </programlisting>
    </example>
    <para>
-    Jeżeli rozszerzana jest wbudowan klasa Exception i redefiniowny jest <link
+    Jeżeli rozszerzana jest wbudowana klasa Exception i nadpisywany jest <link
     linkend="language.oop5.decon">konstruktor</link>, to zdecydowanie zaleca się
     aby wywoływał on również <link
     linkend="language.oop5.paamayim-nekudotayim">parent::__construct()</link>,
     aby mieć pewność że wszystkie dostępne dane zostały prawidłowo przypisane. Metoda <link
-    linkend="language.oop5.magic">__toString()</link> może być nadpisana, aby
+    linkend="language.oop5.magic">__toString()</link> może zostać nadpisana, aby
     określić własny format wyjścia, gdy obiekt jest prezentowany jako string.
    </para>
    <note>
@@ -218,7 +218,7 @@ class MyException extends Exception
 
   <simplesect xml:id="language.exceptions.introduction">
    <para>
-    Model wyjątków w PHP 5 jest podobny do tego z innych języków programowania.
+    Model wyjątków w PHP jest podobny do tego z innych języków programowania.
     W PHP wyjątek może być rzucony (&throw;) i złapany (&catch;).
     Kod może zostać otoczony blokiem &try;, aby ułatwić łapanie potencjalnych
     wyjątków. Każdy &try; musi mieć przynajmniej jeden odpowiadający mu
@@ -247,6 +247,12 @@ class MyException extends Exception
     Jeżeli wyjątek nie zostanie złapany, zostanie wygenerowany PHP Fatal Error
     z wiadomością "<literal>Uncaught Exception ...</literal>", o ile nie zdefiniowano
     własnej obsługi przez <function>set_exception_handler</function>.
+   </para>
+   <para>
+    W PHP 7.1 i późniejszych blok &catch; może opisywać kilka wyjątków,
+    używając znaku poziomej kreski (<literal>|</literal>). Jest to przydatne
+    gdy różne wyjątki, z róznych hierarchii klas, są obsługiwane w ten sam
+    sposób.
    </para>
   </simplesect>
 
@@ -394,6 +400,39 @@ $foo->testing();
     <screen>
 <![CDATA[
 string(4) "foo!"
+]]>
+    </screen>
+   </example>
+   <example>
+    <title>Obsługa wielu wyjątków w catch</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+class MyException extends Exception { }
+
+class MyOtherException extends Exception { }
+
+class Test {
+    public function testing() {
+        try {
+            throw new MyException();
+        } catch (MyException | MyOtherException $e) {
+            var_dump(get_class($e));
+        }
+    }
+}
+
+$foo = new Test;
+$foo->testing();
+
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+string(11) "MyException"
 ]]>
     </screen>
    </example>

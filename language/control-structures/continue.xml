@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 142e1a0eb7e1ece31b225808f21369cc7c36fb10 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: ac33a4e7912f908119fa171248c917b25651c778 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 
 <sect1 xml:id="control-structures.continue" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -32,7 +32,7 @@
    <programlisting role="php">
 <![CDATA[
 <?php
-while (list($key, $value) = each($arr)) {
+foreach ($arr as $key => $value) {
     if (!($key % 2)) { // pomiń klucze parzyste
         continue;
     }
@@ -119,6 +119,14 @@ for ($i = 0; $i < 5; ++$i) {
      </row>
     </thead>
     <tbody>
+     <row>
+      <entry>7.0.0</entry>
+      <entry>
+       <literal>continue</literal> poza pętlą lub strukturą <literal>switch</literal>
+       jest teraz wykrywany podczas kompilacji, a nie uruchamiania, jak wcześniej
+       i wywołuje błąd typu <constant>E_COMPILE_ERROR</constant>.
+      </entry>
+     </row>
      <row>
       <entry>5.4.0</entry>
       <entry>

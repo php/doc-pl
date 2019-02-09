@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 9884bb84dd0d63fbc19312349f75f31b229e3190 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 5c58791fed00a9d3b835b6dd80283255fc3004a3 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: garbus, qrak -->
  <chapter xml:id="language.variables" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -18,7 +18,7 @@
     Poprawna nazwa zmiennej zaczyna się od litery lub znaku podkreślenia "_",
     po których może wystąpić dowolna ilość liter, cyfr lub znaków podkreślenia.
     Jako wyrażenie regularne, można to zapisać tak:
-    '<literal>[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*</literal>'
+    <code>[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*</code>
    </para>
    
    <note>
@@ -943,6 +943,14 @@ if ($_POST) {
      </example>
     </para>
 
+    <note>
+     <simpara>
+      Jeżeli zewnętrzna nazwa zmiennej zaczyna się od poprawnej składni tablicy, końcowe
+      znaki są po cichu ignorowane. Przykładowo <literal>&lt;input name="foo[bar]baz"&gt;</literal>
+      staje się <literal>$_REQUEST['foo']['bar']</literal>.
+     </simpara>
+    </note>
+
     <sect3 xml:id="language.variables.external.form.submit">
      <title>Nazwy zmiennych dla SUBMIT w postaci obrazka</title>
 
@@ -1082,6 +1090,20 @@ $varname.ext;  /* niepoprawna nazwa zmiennej */
      <function>is_object</function> i
      <function>is_string</function>. Zobacz także rozdział
      o <link linkend="language.types">Typach</link>.
+    </para>
+    <para>
+     Ponieważ HTTP jest protokołem tekstowym większość, jeśli nie całość,
+     zawartości która przychodzi w
+     <link linkend="language.variables.superglobals">tablicach superglobalnych</link>, 
+     jak <varname>$_POST</varname> czy <varname>$_GET</varname> pozostanie
+     łańcuchami znaków. PHP nie będzie próbował konwertować wartości do określonego typu.
+     W przykładzie poniżej <varname>$_GET["var1"]</varname> będzie zawierać łańcuch
+     znaków "null" a <varname>$_GET["var2"]</varname> łańcuch znaków "123".
+     <programlisting>
+<![CDATA[
+/index.php?var1=null&var2=123
+]]>
+      </programlisting>
     </para>
    </sect2>
 
