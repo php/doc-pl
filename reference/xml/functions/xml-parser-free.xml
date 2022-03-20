@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: cyb0org Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 52dc204a77076e1404257cf39f179882b90b5780 Maintainer: cyb0org Status: ready -->
 <!-- $Revision$ -->
-<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.xml-parser-free">
+<refentry xml:id="function.xml-parser-free" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>xml_parser_free</refname>
   <refpurpose>Zwalnia parser XML</refpurpose>
@@ -11,11 +11,20 @@
   &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>xml_parser_free</methodname>
-   <methodparam><type>resource</type><parameter>parser</parameter></methodparam>
+   <methodparam><type>XMLParser</type><parameter>parser</parameter></methodparam>
   </methodsynopsis>
+  &note.resource-migration-8.0-dead-function;
   <para>
    Zwalnia podany <parameter>parser</parameter> XML.
   </para>
+  <caution>
+   <para>
+    Przed PHP 8.0.0 oprócz wywołania <function>xml_parser_free</function> po
+    zakończeniu parsowania koniecznie należało również usunąć
+    referencję do <parameter>parser</parameter> aby uniknąć wycieku pamięci
+    jeśli do zasobów parsera były odniesienia z jakiegoś obiektu.
+   </para>
+  </caution>
  </refsect1>
 
  <refsect1 role="parameters">
@@ -37,9 +46,25 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Ta funkcja zwraca &false; jeśli <parameter>parser</parameter> nie odnosi się
-   do prawidłowego parsera, lub zwalnia parser i zwraca &true;.
+   &return.success;
   </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+      &xml.changelog.parser-param;
+    </tbody>
+   </tgroup>
+  </informaltable>
  </refsect1>
 
 </refentry>

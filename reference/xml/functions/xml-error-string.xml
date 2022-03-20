@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: cyb0org Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 4754397753fd79f1c846868b66a2448babab1c54 Maintainer: cyb0org Status: ready -->
 <!-- $Revision$ -->
-<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.xml-error-string">
+<refentry xml:id="function.xml-error-string" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>xml_error_string</refname>
   <refpurpose>Pobiera łańcuch znaków zawierający błąd parsera XML</refpurpose>
@@ -10,12 +10,12 @@
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
-   <type>string</type><methodname>xml_error_string</methodname>
-   <methodparam><type>int</type><parameter>code</parameter></methodparam>
+   <type class="union"><type>string</type><type>null</type></type><methodname>xml_error_string</methodname>
+   <methodparam><type>int</type><parameter>error_code</parameter></methodparam>
   </methodsynopsis>
   <para>
    Pobiera łańcuch znaków zawierający błąd parsera XML skojarzony z podanym
-   w parametrze <parameter>code</parameter> kodem błędu.
+   w parametrze <parameter>error_code</parameter> kodem błędu.
   </para>
  </refsect1>
 
@@ -24,7 +24,7 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>code</parameter></term>
+     <term><parameter>error_code</parameter></term>
      <listitem>
       <para>
        Kod błędu z funkcji <function>xml_get_error_code</function>.
@@ -39,7 +39,7 @@
   &reftitle.returnvalues;
   <para>
    Zwraca ciąg znaków z tekstowym opisem kodu błędu podanego w parametrze
-   <parameter>code</parameter> lub &false;, jeśli opis nie został znaleziony.
+   <parameter>error_code</parameter> lub &false;, jeśli opis nie został znaleziony.
   </para>
  </refsect1>
 
@@ -47,7 +47,7 @@
   &reftitle.seealso;
   <para>
    <simplelist>
-    <member><function>xml_get_error_kod</function></member>
+    <member><function>xml_get_error_code</function></member>
    </simplelist>
   </para>
  </refsect1>

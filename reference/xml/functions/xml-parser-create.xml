@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: cyb0org Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 8cdc6621f9826d04abc3e50438c010804d7e8683 Maintainer: cyb0org Status: ready -->
 <!-- $Revision$ -->
-<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.xml-parser-create">
+<refentry xml:id="function.xml-parser-create" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>xml_parser_create</refname>
   <refpurpose>Tworzy parser XML</refpurpose>
@@ -10,13 +10,16 @@
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
-   <type>resource</type><methodname>xml_parser_create</methodname>
-   <methodparam choice="opt"><type>string</type><parameter>encoding</parameter></methodparam>
+   <type>XMLParser</type><methodname>xml_parser_create</methodname>
+   <methodparam choice="opt"><type class="union"><type>string</type><type>null</type></type><parameter>encoding</parameter><initializer>&null;</initializer></methodparam>
   </methodsynopsis>
   <para>
    <function>xml_parser_create</function> tworzy nowy parser XML
-   i zwraca uchwyt zasobów umożliwiający użycie go przez
+   i zwraca instancję <classname>XMLParser</classname> na potrzeby użycia jej przez
    inne funkcje XML.
+   <function>xml_parser_create</function> creates a new XML parser
+   and returns a <classname>XMLParser</classname> instance to be used by the
+   other XML functions.
   </para>
  </refsect1>
  
@@ -28,15 +31,12 @@
      <term><parameter>encoding</parameter></term>
      <listitem>
       <para>
-       Opcjonalny parametr <parameter>encoding</parameter> określa w PHP 4
-       kodowanie znaków wejścia/wyjścia. Od PHP 5 kodowanie danych wejściowych
+       Kodowanie danych wejściowych
        jest automatycznie wykrywane, więc parametr
        <parameter>encoding</parameter> określa tylko kodowanie na wyjściu.
-       W PHP 4 domyślne kodowanie wyjściowe jest takie same jak i wejściowe.
        Jeśli podany został pusty ciąg znaków, wówczas parser próbuje
        zidentyfikować kodowanie znaków dokumentu sprawdzając jego pierwsze 3
-       lub 4 bajty. W PHP 5.0.0 oraz 5.0.1 domyślnym kodowaniem znaków na wyjściu
-       jest ISO-8859-1, podczas gdy w PHP 5.0.2 i wyżej domyślnym jest
+       lub 4 bajty. Domyślnym kodowaniem znaków na wyjściu jest
        UTF-8. Obsługiwanymi kodowaniami są <literal>ISO-8859-1</literal>,
        <literal>UTF-8</literal> oraz <literal>US-ASCII</literal>.
       </para>
@@ -49,10 +49,39 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca uchwyt zasobów dla nowego parsera XML.
+   Zwraca nową instancję <classname>XMLParser</classname>.
   </para>
  </refsect1>
  
+  <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>8.0.0</entry>
+      <entry>
+      Ta funkcja zwraca obecnie instancję <classname>XMLParser</classname>;
+      wcześniej zwracany był uchwyt zasobów <type>resource</type> &return.falseforfailure;.
+      </entry>
+     </row>
+     <row>
+      <entry>8.0.0</entry>
+      <entry>
+       <parameter>encoding</parameter> może obecnie przyjmować wartość &null;.
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </informaltable>
+ </refsect1>
+
  <refsect1 role="seealso">
   &reftitle.seealso;
   <para>

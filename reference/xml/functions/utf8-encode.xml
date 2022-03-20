@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 2634ea3b40031e1ec09c45be17413f86b968627e Maintainer: cyb0org Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 0c9c2dd669fe9395eaa73d487fbd160f9057429a Maintainer: cyb0org Status: ready -->
 <!-- $Revision$ -->
 <refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.utf8-encode">
  <refnamediv>
@@ -11,17 +11,17 @@
   &reftitle.description;
   <methodsynopsis>
    <type>string</type><methodname>utf8_encode</methodname>
-   <methodparam><type>string</type><parameter>data</parameter></methodparam>
+   <methodparam><type>string</type><parameter>string</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Ta funkcja konwertuje łańcuch znaków <parameter>data</parameter> z kodowania
+   Ta funkcja konwertuje łańcuch znaków <parameter>string</parameter> z kodowania
    <literal>ISO-8859-1</literal> do <literal>UTF-8</literal>.
   </para>
   <note>
    <para>
     Wiele stron www oznaczonych jako używające kodowania znaków
     <literal>ISO-8859-1</literal> tak naprawdę używa podobnego kodowania
-    <literal>Windows-1252</literal> i przeglądarka zinterpretuje strony w
+    <literal>Windows-1252</literal> i przeglądarki zinterpretują strony w
     <literal>ISO-8859-1</literal> jako <literal>Windows-1252</literal>.
     <literal>Windows-1252</literal> posiada dodatkowe znaki drukowalne takie jak
     znak Euro (<literal>€</literal>) i zakrzywione cudzysłowy (<literal>“</literal>
@@ -38,7 +38,7 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>data</parameter></term>
+     <term><parameter>string</parameter></term>
      <listitem>
       <para>
        Łańcuch znaków w ISO-8859-1.
@@ -52,7 +52,32 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca <parameter>data</parameter> przekonwertowane do UTF-8.
+   Zwraca ciąg znaków <parameter>string</parameter> przekonwertowany do UTF-8.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>7.2.0</entry>
+       <entry>
+        Ta funkcja została przeniesiona do rdzenia PHP, więc wymogi
+        dotyczące rozszerzenia XML są dla niej spełnione.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
   </para>
  </refsect1>
 
