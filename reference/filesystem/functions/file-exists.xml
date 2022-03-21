@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 71895e9afbfad9767d53f4f37b8573744aedaf96 Maintainer: adi Status: ready -->
+<!-- EN-Revision: 871a231f4a1caa5fb258ae53b1bb7d1fb2a0f949 Maintainer: cyb0org Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: adi -->
 <refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.file-exists">
  <refnamediv>
   <refname>file_exists</refname>
@@ -51,21 +52,17 @@
     pliki.
    </para>
   </note>
-  <warning>
-   <para>
-    Funkcja zwraca &false; dla plików niedostępnych z powodu restrykcji <link
-    linkend="features.safe-mode">trybu bezpiecznego</link>. Jednak te pliki
-    ciągle mogą być <link linkend="function.include">inkludowane</link> jeśli
-    znajdują się w <link
-    linkend="ini.safe-mode-include-dir">safe_mode_include_dir</link>.
-   </para>
-  </warning>
   <note>
    <para>
     Sprawdzanie dokonywane jest na prawdziwych UID/GID, a nie efektywnych.
    </para>
   </note>
   &fs.file.32bit;
+ </refsect1>
+
+ <refsect1 role="errors">
+  &reftitle.errors;
+  &fs.emits.warning.on.failure;
  </refsect1>
 
  <refsect1 role="examples">
@@ -90,11 +87,6 @@ if (file_exists($nazwa_pliku)) {
   </para>
  </refsect1>
 
- <refsect1 role="errors">
-  &reftitle.errors;
-  &fs.emits.warning.on.failure;
- </refsect1>
-
  <refsect1 role="notes">
   &reftitle.notes;
   &note.clearstatcache;
@@ -109,6 +101,7 @@ if (file_exists($nazwa_pliku)) {
     <member><function>is_writable</function></member>
     <member><function>is_file</function></member>
     <member><function>file</function></member>
+    <member><classname>SplFileInfo</classname></member>
    </simplelist>
   </para>
  </refsect1>

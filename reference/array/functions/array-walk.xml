@@ -1,101 +1,163 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<!-- EN-Revision: 41f8ef55405db33f5b63d2a7856dddcab0fbf135 Maintainer: cyb0org Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: leszek -->
 <refentry xml:id="function.array-walk" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>array_walk</refname>
   <refpurpose>Zastosuj funkcję użytkownika do każdego elementu tablicy</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>array_walk</methodname>
-   <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
-   <methodparam><type>callback</type><parameter>nazwa_funkcji</parameter></methodparam>
-   <methodparam choice="opt"><type>mixed</type><parameter>dane</parameter></methodparam>
+   <methodparam><type class="union"><type>array</type><type>object</type></type><parameter role="reference">tablica</parameter></methodparam>
+   <methodparam><type>callable</type><parameter>nazwa_funkcji</parameter></methodparam>
+   <methodparam choice="opt"><type>mixed</type><parameter>dane</parameter><initializer>&null;</initializer></methodparam>
   </methodsynopsis>
   <simpara>
-   &return.success;
+   Wykonuje zdefiniowaną przez użytkownika funkcję <parameter>nazwa_funkcji</parameter> na każdym
+   elemencie tablicy <parameter>tablica</parameter>.
   </simpara>
-  <simpara>
-   Wykonuje zdefiniowaną przez użytkownika funkcję
-   <parameter>nazwa_funkcji</parameter> na każdym elemencie tablicy
-   <parameter>tablica</parameter>. Zazwyczaj <parameter>nazwa_funkcji</parameter>
-   przyjmuje dwa argumenty. Pierwszym jest element tablicy
-   <parameter>tablica</parameter>, natomiast drugim klucz lub numer indeksu
-   tego elementu. Jeśli do funkcji <function>array_walk</function> podany
-   zostanie trzeci element, <parameter>dane</parameter>, będzie on
-   przekazany do <parameter>nazwa_funkcji</parameter> jako jej trzeci
-   argument.
-  </simpara>
-  <simpara>
-   Jeśli <parameter>nazwa_funkcji</parameter> wymaga więcej parametrów niż zostało
-   jej przekazanych, wygenerowany zostanie błąd poziomu <link
-    linkend="errorfunc.constants">E_WARNING</link> dla każdego wywołania
-   funkcji podanej jako parametr. Ostrzeżenia te mogą być wyciszone poprzez
-   skorzystanie z operatora kontroli błędów <link
-    linkend="language.operators.errorcontrol">@</link> przed wywołaniem
-   <function>array_walk</function>, lub też poprzez użycie funkcji
-   <function>error_reporting</function>.
-  </simpara>
-  <note>
-   <para>
-    Jeśli <parameter>nazwa_funkcji</parameter> ma zmieniać wartości tablicy,
-    należy określić pierwszy argument <parameter>nazwa_funkcji</parameter>
-    jako <link linkend="language.references">referencję</link>. W tym
-    przypadku wszystkie zmiany dokonane przez tą funkcję będą dokonywane
-    bezpośrednio na oryginalnej tablicy.
-   </para>
-  </note>
-  <note>
-   <para>
-    Przekazywanie klucza i danych użytkownika do <parameter>nazwa_funkcji</parameter>
-    zostało dodane w PHP 4.0.0.
-   </para>
-  </note>
   <para>
-   Na działanie <function>array_walk</function> nie wpływa pozycja
-   wewnętrznego wskaźnika tablicy. <function>array_walk</function>
-   przetworzy wszystkie elementy argumentu <parameter>tablica</parameter>,
-   niezależnie odpozycji jej wewnętrznego wskaźnika.
+   Na działanie <function>array_walk</function> nie wpływa pozycja wewnętrznego wskaźnika
+   parametru <parameter>array</parameter>. <function>array_walk</function>
+   przetworzy wszystkie elementy tablicy niezależnie od pozycji tego wskaźnika.
   </para>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
   <para>
-   Użytkownicy nie mogą zmieniać samej tablicy z wnętrza funkcji zwrotnej,
-   to jest dodawać/usuwać elementy, usuwać elementy tablicy na której jest
-   wywoływana funkcja <function>array_walk</function>. Jeśli ta tablica
-   zostanie zmieniona, funkcja może się zachowywać w sposób nieokreślony i
-   nieprzewidywalny..
+   <variablelist>
+    <varlistentry>
+     <term><parameter>tablica</parameter></term>
+     <listitem>
+      <para>
+       Tablica wejściowa.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>nazwa_funkcji</parameter></term>
+     <listitem>
+      <para>
+       Zazwyczaj <parameter>nazwa_funkcji</parameter> przyjmuje dwa parametry.
+       Pierwszym jest element tablicy <parameter>tablica</parameter>,
+       natomiast drugim klucz lub numer indeksu tego elementu.
+      </para>
+      <note>
+       <para>
+        Jeśli <parameter>nazwa_funkcji</parameter> ma zmieniać wartości tablicy,
+        należy określić pierwszy argument <parameter>nazwa_funkcji</parameter>
+        jako <link linkend="language.references">referencję</link>. W tym
+        przypadku wszystkie zmiany dokonane przez tą funkcję będą dokonywane
+        bezpośrednio na oryginalnej tablicy.
+       </para>
+      </note>
+      <note>
+        <para>
+          Wiele wewnętrznych funkcji (na przykład <function>strtolower</function>)
+          wygeneruje ostrzeżenie jeśli przekazanych zostanie więcej argumentów
+          niż oczekiwano i nie nadają się do użycia bezpośrednio jako
+          <parameter>callback</parameter>.
+        </para>
+      </note>
+      <para>
+       Tylko wartości tablicy <parameter>tablica</parameter> mogą być
+       zmieniane; jej struktura nie może modyfikowana, czyli np. programista nie może
+       dodać, usunąć lub zmieniać kolejności elementów. Jeśli funkcja zwrotna nie
+       respektuje tych wymogów, to jej zachowanie będzie nieokreślone
+       i nieprzewidywalne.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>dane</parameter></term>
+     <listitem>
+      <para>
+       Jeśli podany zostanie opcjonalny parametr <parameter>dane</parameter>,
+       to zostanie on przekazany jako trzeci parametr do
+       <parameter>nazwa_funkcji</parameter>.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
   </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca &true;.
+  </para>
+ </refsect1>
+
+ <refsect1 role="errors">
+  &reftitle.errors;
+  <para>
+   Od PHP 7.1.0 wygenerowany zostanie <classname>ArgumentCountError</classname> jeśli funkcja <parameter>nazwa_funkcji</parameter>
+   wymaga więcej niż 2 parametry (wartość i klucz tablicy)
+   lub więcej niż 3 parametry jeśli zostały przekazane również <parameter>dane</parameter>.
+   Poprzednio w tym wypadku
+   zostałby wygenerowany błąd poziomu <link linkend="errorfunc.constants">E_WARNING</link> za każdym razem kiedy
+   <function>array_walk</function> wywoływałby <parameter>nazwa_funkcji</parameter>.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>8.0.0</entry>
+      <entry>
+       Jeśli <parameter>nazwa_funkcji</parameter> oczekuje drugiego lub trzeciego parametru przekazanego
+       przez referencję, wówczas ta funkcja wyemituje <constant>E_WARNING</constant>.
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </informaltable>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
    <example>
     <title>Przykład użycia <function>array_walk</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
-$owoce = array ("d"=>"cytryna", "a"=>"pomarańcza", "b"=>"banan", "c"=>"jabłko");
+$owoce = array ("d" => "cytryna", "a" => "pomarańcza", "b" => "banan", "c" => "jabłko");
 
-function test_zmiana (&$element1, $klucz, $prefiks)
+function testowa_zmiana(&$element1, $klucz, $prefiks)
 {
     $element1 = "$prefiks: $element1";
 }
 
-function test_wyswietlanie ($element2, $klucz)
+function testowe_wyswietlenie($element2, $klucz)
 {
-    echo "$klucz. $element2<br />\n";
+    echo "$klucz. $element2\n";
 }
 
 echo "Przed ...:\n";
-array_walk ($owoce, 'test_wyswietlanie');
+array_walk ($owoce, 'testowe_wyswietlenie');
 
-array_walk ($owoce, 'test_zmiana', 'owoc');
+array_walk ($owoce, 'testowa_zmiana', 'owoc');
 echo "... i po:\n";
 
-array_walk ($owoce, 'test_wyswietlanie');
+array_walk ($owoce, 'testowe_wyswietlenie');
 ?>
 ]]>
     </programlisting>
     &example.outputs;
-    <screen>
+    <screen role="php">
 <![CDATA[
 Przed ...:
 d. cytryna
@@ -111,17 +173,20 @@ c. owoc: jabłko
     </screen>
    </example>
   </para>
-  <simpara>
-   Patrz także:
-   <function>array_walk_recursive</function>,
-   <function>create_function</function>,
-   <function>list</function>,
-   <link linkend="control-structures.foreach">foreach</link>,
-   <function>each</function>,
-   <function>call_user_func_array</function>, and
-   <function>array_map</function> i
-   &seealso.callback;.
-  </simpara>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>array_walk_recursive</function></member>
+    <member><function>iterator_apply</function></member>
+    <member><function>list</function></member>
+    <member><function>each</function></member>
+    <member><function>call_user_func_array</function></member>
+    <member><function>array_map</function></member>
+    <member>&foreach;</member>
+   </simplelist>
+  </para>
  </refsect1>
 </refentry>
 
