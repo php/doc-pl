@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 2fd5de559f683e55b33367e74c5b7a4d7072ceb7 Maintainer: adi Status: ready -->
+<!-- EN-Revision: 6b09bb638aa64d1fad5f4a630a8da9a2692ce733 Maintainer: cyb0org Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS: sobak -->
+<!-- CREDITS: adi, sobak -->
  <chapter xml:id="language.basic-syntax" xmlns="http://docbook.org/ns/docbook">
   <title>Podstawowa składnia</title>
   <sect1 xml:id="language.basic-syntax.phptags">
@@ -15,11 +15,44 @@
     znaczników, otwierającym i zamykającym jest ignorowane przez parser PHP.
    </para>
    <para>
-    PHP pozwala także na użycie krótkiego tagu otwierającego <literal>&lt;?</literal>,
-    który jest niezalecane, ponieważ jest dostępne tylko gdy włączono go przez dyrektywę
-    <link linkend="ini.short-open-tag">short_open_tag</link> lub gdy PHP zostało skonfigurowane
-    z opcją <option>--enable-short-tags</option>.
+    PHP pozwala także na użycie krótkiego tagu drukującego <literal>&lt;?=</literal>,
+    który jest skrótem dla dłuższego <code>&lt;?php echo</code>.
    </para>
+
+   <para>
+    <example>
+     <title>PHP Opening and Closing Tags</title>
+     <programlisting role="php">
+<![CDATA[
+1.  <?php echo 'jeśli chcesz umieścić kod PHP w dokumentach XHTML lub XML,
+                wtedy użyj tych tagów'; ?>
+
+2.  Możesz użyć krótkich tagów drukujących aby <?= 'wydrukować ten ciąg znaków' ?>.
+    Jest to równoważne z <?php echo 'drukowanie tego ciągu znaków' ?>.
+
+3.  <? echo 'ten kod jest pomiędzy krótkimi tagami, ale zadziała tylko wtedy'.
+            'kiedy włączone jest short_open_tag'; ?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+
+   <para>
+    Krótkie tagi (przykład trzeci) są domyślnie dostępne, ale mogą zostać wyłączone
+    przez dyrektywę <link linkend="ini.short-open-tag">short_open_tag</link>
+    &php.ini; w pliku konfiguracyjnym, lub być domyślnie wyłączone jeżeli
+    PHP jest zbudowane z konfiguracją <option>--disable-short-tags</option>.
+   </para>
+   <para>
+    <note>
+     <para>
+      Ponieważ krótkie tagi mogą być wyłączone zaleca się używanie jedynie normalnych
+      tagów (<code>&lt;?php ?&gt;</code> and <code>&lt;?= ?&gt;</code>) aby
+      maksymalnie zwiększyć kompatybilność.
+     </para>
+    </note>
+   </para>
+
    <para>
     Jeżeli plik zawiera jedynie kod PHP, zaleca się pominięcie zamykającego tagu PHP na końcu pliku.
     Zapobiega to dodaniu przypadkowych białych znaków lub nowych linii dodanych po zamknięciu bloku PHP,
@@ -40,46 +73,17 @@ echo "Ostatnie wyrażenie";
      </programlisting>
     </informalexample>
    </para>
-   <para>
-    <table>
-     &reftitle.changelog;
-     <tgroup cols="2">
-      <thead>
-       <row>
-        <entry>&Version;</entry>
-        <entry>&Description;</entry>
-       </row>
-      </thead>
-      <tbody>
-       <row>
-        <entry>7.0.0</entry>
-         <entry>
-          Tagi ASP <code>&lt;%</code>, <code>%&gt;</code>,
-          <code>&lt;%=</code> i tag skryptu
-          <code>&lt;script language="php"&gt;</code> zostały usunięte z PHP.
-         </entry>
-       </row>
-       <row>
-        <entry>5.4.0</entry>
-         <entry>
-          Tag &lt;?= jest zawsze dostępny, niezależnie od dyrektywy short_open_tag.
-         </entry>
-       </row>
-      </tbody>
-     </tgroup>
-    </table>
-   </para>
   </sect1>
+
   <sect1 xml:id="language.basic-syntax.phpmode">
    <title>Wyskakiwanie z HTML</title>
    <para>
     Wszystko na zewnątrz tagów PHP jest ignorowane przez parser, co pozwala plikom PHP
     mieć mieszaną zawartość. To pozwala na zagnieżdżanie PHP w plikach HTML, na przykład
-    w celu stworzenia szablonu.
+    w celu stworzenia szablonów.
     <informalexample>
      <programlisting role="php">
 <![CDATA[
-<?php
 <p>To zostanie zignorowane przez PHP i wyświetlone w przeglądarce.</p>
 <?php echo 'Podczas gdy to zostanie sparsowane.'; ?>
 <p>To także zostanie zignorowane przez PHP i wyświetlone w przeglądarce.</p>
@@ -120,15 +124,6 @@ echo "Ostatnie wyrażenie";
     funkcje <function>echo</function> lub <function>print</function>.
    </para>
    <para>
-    W PHP 5 mamy do pięciu różnych par znaczników otwierających i zamykających,
-    dostępnych w PHP, w zależności od tego jak skonfigurowano PHP. Dwie z nich, &lt;?php ?&gt; i
-    &lt;script language="php"&gt; &lt;/script&gt; są zawsze dostępne. Istnieje też krótkich
-    znacznik echo <code>&lt;?= ?&gt;</code>, który jest zawsze dostępny w PHP 5.4.0 i nowszych.
-   </para>
-   <para>
-    Pozostałe dwa to krótkie znaczniki i znaczniki w stylu <productname>ASP</productname>.
-    Część osób postrzega krótkie znaczniki i znaczniki w stylu <productname>ASP</productname>
-    jako wygodne, jednakże są one mniej przenośne, i zasadniczo nie polecane.
     <note>
      <para>
       Zauważ również, że jeśli zagnieżdzasz PHP w XML lub XHTML
@@ -137,77 +132,8 @@ echo "Ostatnie wyrażenie";
      </para>
     </note> 
    </para>
-   <para>
-    PHP 7 wycofało wsparcie dla tagów <productname>ASP</productname> i
-    znaczników <code>&lt;script language="php"&gt;</code>. W związku z tym zalecamy
-    używać wyłącznie tagów <code>&lt;?php ?&gt;</code> and <code>&lt;?= ?&gt;</code>,
-    aby maksymalnie zwiększyć kompatybilność kodu PHP.
-   </para>
-   <para>
-    <example>
-     <title>Znaczniki otwierające i zamykające PHP</title>
-     <programlisting role="php">
-<![CDATA[
-1.  <?php echo 'jeśli chcesz obsługiwać dokumenty XHTML lub XML,
-                użyj tych tagów'; ?>
+   </sect1>
 
-2.  Możesz użyć krótkiego znacznika echo do <?= 'wyświetlenia tego tekstu' ?>.
-    Jest on zawsze dostępny w PHP 5.4.0 i nowszych i jest odpowiednikiem
-    <?php echo 'wyświetlenia tego tekstu' ?>.
-
-3.  <? echo 'this code is within short tags, but will only work '.
-            'if short_open_tag is enabled'; ?>
-				
-4.  <script language="php">
-        echo 'niektóre edytory (jak FrontPage) nie lubią
-              instrukcji przetwarzania';
-    </script>
-	Ta składnia została usunięta w PHP 7.0.0.
-
-5.  <% echo 'Możesz opcjonalnie użyć znaczników w stylu ASP'; %>
-    Kod w znacznikach <%= $zmienna; jest skrótem dla kodu <% echo $zmienna; %>
-    Obie te składnie zostały usunięte w PHP 7.0.0.
-]]>
-     </programlisting>
-    </example>
-   </para>
-   <para>
-    Krótkie znaczniki (trzeci przykład) są dostepne jedynie, kiedy są
-    włączone za pomocą dyrektywy konfiguracyjnej <link linkend="ini.short-open-tag">short_open_tag</link>
-    w &php.ini; lub jeśli php zostało skonfigurowane 
-    z opcją <option>--enable-short-tags</option>.
-   </para>    
-   <para>
-    Znaczniki w stylu <productname>ASP</productname> (piąty przykład) są dostępne
-    jedynie gdy  zostaną włączone poprzez dyrektywę konfiguracyjną
-    <link linkend="ini.asp-tags">asp_tags</link> w &php.ini; i zostały usunięte w PHP 7.0.0.
-   </para>
-   <para>
-    <note>
-     <para>
-      Powinieneś unikać używania krótkich znaczników, kiedy rozwijasz aplikacje
-      lub biblioteki, które są nastawione na rozpowszechnianie lub pracujesz
-      na serwerach PHP, nad którymi nie masz kontroli, ponieważ krótkie znaczniki
-      mogą nie być obsługiwane na docelowym serwerze. Dla przenośnego,
-      rozpowszechnialnego kodu, miej pewność, aby nie użyć krotkich znaczników.
-     </para>
-    </note>
-    <note>
-     <para>
-      W PHP 5.2 i wcześniejszych, parser nie pozwalał, aby
-      znacznik otwierający <literal>&lt;?php</literal> był jedynym znakiem w pliku.
-      Dozwolone jest to od PHP 5.3, pod warunkiem, że po tagu otwierającym znajduje
-      się jeden lub więcej białych znaków (np. spacja).
-     </para>
-    </note>
-    <note> 
-     <para> 
-       Począwszy od PHP 5.4, krótkie znaczniki <literal>&lt;?=</literal> są zawsze rozpoznawane i
-       ważne, niezależnie od ustawień <link linkend="ini.short-open-tag">short_open_tag</link>.
-     </para> 
-    </note> 
-   </para>
-  </sect1>
   <sect1 xml:id="language.basic-syntax.instruction-separation">
    <title>Oddzielanie instrukcji</title>
    <para>
@@ -215,8 +141,33 @@ echo "Ostatnie wyrażenie";
     średnikiem, na końcu każdego wyrażenia. Zamykający znacznik bloku
     kodu PHP automatycznie implikuje średnik; nie musisz mieć
     średnika zamykającego ostatnią linię z bloku PHP. Zamykający znacznik
-    dla bloku będzie zawierać bezpośrednio następującą nową linie jeśli
-    taka istnieje.
+    dla bloku będzie zawierać bezpośrednio następujący
+    końcowy znak nowej linii jeśli ten znacznik istnieje.
+   </para>
+
+   <para>
+    <example>
+     <title>Przykład pokazujący zamykający znacznik, który obejmuje końcowy znak nowej linii</title>
+     <programlisting role="php">
+<![CDATA[
+<?php echo "Jakiś tekst"; ?>
+Brak znaku nowej linii
+<?= "Ale teraz już z nową linią" ?>
+]]>
+     </programlisting>
+     &example.outputs;
+     <screen>
+<![CDATA[
+Jakiś tekstBrak znaku nowej linii
+Ale teraz już z nową linią
+]]>
+     </screen>
+    </example>
+   </para>
+
+   <para>
+    Przykłady wejścia i wyjścia z parsera PHP:
+
     <informalexample>
      <programlisting role="php">
 <![CDATA[
@@ -226,7 +177,7 @@ echo "Ostatnie wyrażenie";
 
 <?php echo 'To jest test' ?>
 
-<?php echo 'Pomineliśmy ostatni zamykający znacznik';
+<?php echo 'Pominęliśmy ostatni zamykający znacznik';
 ]]>
      </programlisting>
     </informalexample>
@@ -234,17 +185,17 @@ echo "Ostatnie wyrażenie";
      <para>
       Zamykający znacznik bloku PHP na końcu pliku jest opcjonalny,
       i w niektórych przypadkach pominięcie jego jest pomocne kiedy używamy
-      <function>include</function> lub <function>require</function>, tak więc
-      niechciane białe znaki nie będą znajdować się na końcu pliku, i ciągle
-      będzie możliwe dodanie nagłówków do odpowiedzi. To jest także poręczne jeśli używasz
-      buferowania wyjścia, i nie chciałbyś zobaczyć dodanych niechcianych białych znaków
-      na końcu cześci generowanej przez includowany plik.
+      <function>include</function> lub <function>require</function>, aby
+      niechciane białe znaki nie znajdowały się na końcu pliku, i ciągle
+      było możliwe późniejsze dodanie nagłówków do odpowiedzi. To jest także poręczne jeśli używane jest
+      buferowania wyjścia, i nie chcemy zobaczyć dodanych niechcianych białych znaków
+      na końcu cześci generowanej przez załączony plik.
      </para>
     </note>
    </para> 
   </sect1>
   <sect1 xml:id="language.basic-syntax.comments">
-   <title>Komentarze</title>   
+   <title>Komentarze</title>
    <para>
     PHP obsługuje komentarze w stylu 'C', 'C++' i powłoki Unix (styl Perl\'a). Na przykład:
 
@@ -254,9 +205,9 @@ echo "Ostatnie wyrażenie";
 <?php
     echo 'To jest test'; // To jest jednoliniowy komentarz w stylu c++
     /* To jest wieloliniowy komentarz
-       jeszcze inna linia komentarza */
+       jeszcze jedna linia komentarza */
     echo 'To jest jeszcze jeden test';
-    echo 'Ostatni test'; # To jest jednoliniowy komentarz w stylu powłoki
+    echo 'Ostatni Test'; # To jest jednoliniowy komentarz w stylu powłoki
 ?>
 ]]>
      </programlisting>
@@ -267,13 +218,8 @@ echo "Ostatnie wyrażenie";
     linii lub bieżącego bloku kodu PHP, cokolwiek wystąpi pierwsze.
     Co oznacza, że kod HTML za <literal>// ... ?&gt;</literal>
     lub  <literal># ...  ?&gt;</literal> ZOSTANIE wyświetlony:
-    ?&gt; przerywa tryb PHP i wraca do trybu HTML, i  
-    <literal>//</literal> lub <literal>#</literal> nie może wpłynąć na to.
-    Jeśli, dyrektywa konfiguracyjna <link linkend="ini.asp-tags">asp_tags</link>
-    jest włączona, to działa tak samo z <literal>// %&gt;</literal> i
-    <literal># %&gt;</literal>.
-    Jednakże, znacznik <literal>&lt;/script&gt;</literal> nie przerywa trybu PHP w
-    jednolinijkowym komentarzu.
+    ?&gt; przerywa tryb PHP i wraca do trybu HTML, i
+    <literal>//</literal> lub <literal>#</literal> nie może na to wpłynąć.
    </simpara>
    <para>
     <informalexample>
