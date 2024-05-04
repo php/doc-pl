@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: d316f465df3ecaf4fe09440a05c261553c27d12d Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 14767af0f05dffa6fdb9b49e1a1f4e9ca7022a60 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-<phpdoc:classref xmlns:phpdoc="http://php.net/ns/phpdoc" xml:id="class.mysqli-driver" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude">
+<phpdoc:classref xml:id="class.mysqli-driver" xmlns:phpdoc="http://php.net/ns/phpdoc" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude">
  <title>Klasa mysqli_driver</title>
  <titleabbrev>mysqli_driver</titleabbrev>
  
@@ -11,26 +11,23 @@
   <section xml:id="mysqli-driver.intro">
    &reftitle.intro;
    <para>
-    MySQLi Driver.
+    Klasa <classname>mysqli_driver</classname> implementuje wzorzec monostanu, tj.
+    istnieje tylko jeden sterownik, do którego można uzyskać dostęp niezależnie od
+    ilości instancji <classname>mysqli_driver</classname>.
    </para>
   </section>
 <!-- }}} -->
  
   <section xml:id="mysqli-driver.synopsis">
    &reftitle.classsynopsis;
- 
-<!-- {{{ Synopsis -->
-   <classsynopsis>
-    <ooclass><classname>mysqli_driver</classname></ooclass>
- 
-<!-- {{{ Class synopsis -->
-    <classsynopsisinfo>
-     <ooclass>
-      <classname>mysqli_driver</classname>
-     </ooclass>
-    </classsynopsisinfo>
-<!-- }}} -->
- 
+
+   <!-- {{{ Synopsis -->
+   <classsynopsis class="class">
+    <ooclass>
+     <modifier>final</modifier>
+     <classname>mysqli_driver</classname>
+    </ooclass>
+
     <classsynopsisinfo role="comment">&Properties;</classsynopsisinfo>
     <fieldsynopsis>
      <modifier>public</modifier>
@@ -41,36 +38,22 @@
     <fieldsynopsis>
      <modifier>public</modifier>
      <modifier>readonly</modifier>
-     <type>string</type>
+     <type>int</type>
      <varname linkend="mysqli-driver.props.client-version">client_version</varname>
     </fieldsynopsis>
     <fieldsynopsis>
      <modifier>public</modifier>
      <modifier>readonly</modifier>
-     <type>string</type>
+     <type>int</type>
      <varname linkend="mysqli-driver.props.driver-version">driver_version</varname>
-    </fieldsynopsis>
-    <fieldsynopsis>
-     <modifier>public</modifier>
-     <modifier>readonly</modifier>
-     <type>string</type>
-     <varname linkend="mysqli-driver.props.embedded">embedded</varname>
-    </fieldsynopsis>
-    <fieldsynopsis>
-     <modifier>public</modifier>
-     <type>bool</type>
-     <varname linkend="mysqli-driver.props.reconnect">reconnect</varname>
     </fieldsynopsis>
     <fieldsynopsis>
      <modifier>public</modifier>
      <type>int</type>
      <varname linkend="mysqli-driver.props.report-mode">report_mode</varname>
     </fieldsynopsis>
- 
-    <classsynopsisinfo role="comment">&Methods;</classsynopsisinfo>
-    <xi:include xpointer="xmlns(db=http://docbook.org/ns/docbook) xpointer(id('class.mysqli-driver')/db:refentry/db:refsect1[@role='description']/descendant::db:methodsynopsis[@role='oop'])" />
    </classsynopsis>
-<!-- }}} -->
+   <!-- }}} -->
  
   </section>
 <!-- {{{ mysqli_driver properties -->
@@ -93,18 +76,28 @@
      <term><varname>driver_version</varname></term>
      <listitem>
       <para>Wersja sterownika MySQLi</para>
+      <warning><simpara>Ta właściwość jest uznana za
+      za <emphasis>przestarzałą</emphasis> od PHP 8.1.0. Jej dalsze użycie
+      jest zdecydowanie odradzane.</simpara></warning>
      </listitem>
     </varlistentry>
     <varlistentry xml:id="mysqli-driver.props.embedded">
      <term><varname>embedded</varname></term>
      <listitem>
       <para>Czy włączona jest obsługa MySQLi Embedded</para>
+      <warning><simpara>Te właściwość została
+      <emphasis>usunięta</emphasis> w PHP 8.0.0.</simpara></warning>
      </listitem>
     </varlistentry>
     <varlistentry xml:id="mysqli-driver.props.reconnect">
      <term><varname>reconnect</varname></term>
      <listitem>
-      <para>Zabroń lub pozwól na ponowne połączenie (zobacz ustawienie mysqli.reconnect w INI)</para>
+      <para>Zabroń lub pozwól na ponowne połączenie (zobacz ustawienie INI <link linkend="ini.mysqli.reconnect">mysqli.reconnect</link>)</para>
+      <warning>
+       <simpara>Ta właściwość została <emphasis>usunięta</emphasis>
+        wraz z dyrektywą INI <link linkend="ini.mysqli.reconnect">mysqli.reconnect</link> w PHP 8.2.0.
+       </simpara>
+      </warning>
      </listitem>
     </varlistentry>
     <varlistentry xml:id="mysqli-driver.props.report-mode">
@@ -123,6 +116,47 @@
    </variablelist>
   </section>
 <!-- }}} -->
+
+  <section role="changelog">
+   &reftitle.changelog;
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>8.2.0</entry>
+       <entry>
+        Właściwość <property>mysqli_driver::$reconnect</property> została usunięta.
+       </entry>
+      </row>
+      <row>
+       <entry>8.1.0</entry>
+       <entry>
+        Właściwość <property>mysqli_driver::$driver_version</property> została uznana za przestarzałą.
+       </entry>
+      </row>
+      <row>
+       <entry>8.0.0</entry>
+       <entry>
+        Właściwość <property>mysqli_driver::$embedded</property> została usunięta.
+       </entry>
+      </row>
+      <row>
+       <entry>7.4.0</entry>
+       <entry>
+        Właściwości <methodname>mysqli_driver::embedded_server_start</methodname> oraz
+        <methodname>mysqli_driver:embedded_server_end</methodname> zostały usunięte.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </section>
   
  </partintro>
  
