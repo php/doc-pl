@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 5c58791fed00a9d3b835b6dd80283255fc3004a3 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 5700871f9d037a59d137be318f89deb7e146bbf6 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: garbus, qrak -->
  <chapter xml:id="language.variables" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -18,20 +18,22 @@
     Poprawna nazwa zmiennej zaczyna się od litery lub znaku podkreślenia "_",
     po których może wystąpić dowolna ilość liter, cyfr lub znaków podkreślenia.
     Jako wyrażenie regularne, można to zapisać tak:
-    <code>[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*</code>
+    <code>^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$</code>
    </para>
    
    <note>
     <simpara>
-     W naszym rozumieniu, litery to znaki a-z, A-Z i bajty od 127 do
-     255 (<literal>0x7f-0xff</literal>).
+     W naszym rozumieniu, litery to znaki a-z, A-Z i bajty
+     od 127 do 255 (<literal>0x7f-0xff</literal>).
     </simpara>
    </note>
 
    <note>
     <simpara>
-     <literal>$this</literal> to specialna zmienna, której nie można
+     <literal>$this</literal> to specjalna zmienna, której nie można
      definiować.
+     Przed PHP 7.1.0, było możliwe niebezpośrednie przypisanie (np. używając
+     <link linkend="language.variables.variable">zmiennych zmiennych</link>).
     </simpara>
    </note>
 
@@ -137,7 +139,7 @@ $bar = &test();    // Niepoprawne.
 var_dump($zmienna_bez_kontekstu_uzycia);
 
 // Używanie zmiennej logicznej typu boolean; zwróci 'false' (Zobacz informacje o operatorach trójparametrowych, by poznać tę składnię)
-echo($nieinicjowana_zmiena_bool ? "true\n" : "false\n");
+echo $nieinicjowana_zmiena_bool ? "true\n" : "false\n";
 
 // Używanie łańcuchów; zwróci 'string(3) "abc"'
 $nieinicjowany_lancuch .= 'abc';
@@ -147,7 +149,7 @@ var_dump($nieinicjowany_lancuch);
 $nieinicjowana_zmienna_int += 25; // 0 + 25 => 25
 var_dump($nieinicjowana_zmienna_int);
 
-// Używanie zmiennych typu float/double; zwróci 'float(1.25)'
+// Używanie zmiennych typu float; zwróci 'float(1.25)'
 $nieinicjowana_zmienna_float += 1.25;
 var_dump($nieinicjowana_zmienna_float);
 
@@ -167,12 +169,11 @@ var_dump($nieinicjowany_obiekt);
    <para>
     Poleganie na domyślnej wartości niezainicjowanej zmiennej jest problematyczne,
     w razie zawarcia jednego pliku wewnątrz innego, posiadającego tak samo
-    nazwane zmienne. Jest to również poważne <link
-    linkend="security.globals">zagrożenie dla bezpieczeństwa</link> przy włączonej opcji <link
-    linkend="ini.register-globals">register_globals</link>. Ostrzeżenie klasy
-    <constant>E_NOTICE</constant> pojawi się podczas
-    pracy z niezainicjowanymi zmiennymi, jednak w przypadku przypisywania
-    elentów do niezainicjowanych tablic - już nie. Funkcja <function>isset</function> 
+    nazwane zmienne.
+    Błąd o poziomie <constant>E_WARNING</constant> (a przed PHP 8.0.0 <constant>E_NOTICE</constant>)
+    pojawi się przy próbie
+    użycia niezainicjowanych zmiennych, choć nie w wypadku przypisywania
+    elementów do niezainicjowanych tablic. Funkcja <function>isset</function>
     może zostać użyta w celu wykrycia, czy zmienna została już zainicjowana.
    </para>
   </sect1>
@@ -180,76 +181,36 @@ var_dump($nieinicjowany_obiekt);
   <sect1 xml:id="language.variables.predefined">
    <title>Zmienne Predefiniowane</title>
 
-   <simpara>
+   <para>
     PHP udostępnia dla każdego pracującego skryptu dużą ilość predefiniowanych
     zmiennych. Jednakże wiele spośród tych zmiennych nie może być w pełni
     objaśnionych, gdyż są zależne od rodzaju serwera, jego wersji, ustawień
     i innych czynników. Niektóre z tych zmiennych nie będą dostępne dla
     skryptów PHP uruchomionych z 
-    <link linkend="features.commandline">Linii Poleceń</link>. 
-    Lista tych zmiennych znajduje się w rozdziale 
-    <link linkend="reserved.variables">Predefiniowane Zmienne</link>. 
-   </simpara>
-
-   <warning>
-    <simpara>
-     W PHP 4.2.0 i późniejszych, domyślne ustawienie dla instrukcji PHP <link
-     linkend="ini.register-globals">register_globals</link> jest 
-     <emphasis>wyłączone</emphasis>. Jest to bardzo istotna zmiana w PHP. Mając opcję
-     register_globals <emphasis>wyłączoną</emphasis> wpływamy na ustawienie zmiennych
-     predefiniowanych, dostępnych globalnie. Na przykład, aby poznać wartość
-     <varname>DOCUMENT_ROOT</varname> użyjesz
-     <varname>$_SERVER['DOCUMENT_ROOT']</varname> zamiast
-     <varname>$DOCUMENT_ROOT</varname>, lub <varname>$_GET['id']</varname>
-     z adresu URL <literal>http://www.example.com/test.php?id=3</literal> zamiast
-     <varname>$id</varname>, albo <varname>$_ENV['HOME']</varname> a nie
-     <varname>$HOME</varname>.
-    </simpara>
-    <simpara> 
-     Aby uzyskać informacje powiązane z tą zmianą, przeczytaj część o konfiguracji
-     <link linkend="ini.register-globals">register_globals</link>, rozdziału
-     o bezpieczeństwie <link linkend="security.globals">Używanie Register Globals
-     </link>, oraz w informacjach o wydaniu (ang. Release Announcements) PHP <link xlink:href="&url.php.release4.1.0;">
-     4.1.0</link> jak i <link xlink:href="&url.php.release4.2.0;">
-     4.2.0</link>
-    </simpara>
-    <simpara>
-     Używanie dostępnych zmiennych predefiniowanych, jak 
-     <link linkend="language.variables.superglobals">tablice superglobalne</link>, 
-     jest zalecane.
-    </simpara>
-   </warning>
+    <link linkend="features.commandline">linii poleceń</link>.
+    Możesz zobaczyć
+    <link linkend="reserved.variables">listę predefiniowanych zmiennych</link>,
+    aby dowiedzieć się więcej.
+   </para>
    
-   <simpara>
-    Począwszy od wersji 4.1.0, PHP udostępnia dodatkowo zestaw predefiniowanych tablic,
+   <para>
+    PHP udostępnia dodatkowo zestaw predefiniowanych tablic,
     które zawierają zmienne serwera, zmienne środowiskowe oraz zmienne
     użytkownika. Tablice te są dość specyficzne, gdyż
     są one automatycznie globalne, tzn. automatycznie
     dostępne w każdym miejscu. Dlatego nazywa się
-    je "superglobalami". (W PHP nie ma mechanizmu pozwalającego użytkownikowi na definiowanie
-    własnych superglobali.) Superglobale PHP wymienione są poniżej;
-    jednakże wykaz ich zawartości i głębsze omówienie
-    prefiniowanych zmiennych PHP oraz ich natury znajduje się w rozdziale
-    <link linkend="reserved.variables">predefiniowane zmienne</link>.
-    Zauważ także, że starsze zmienne predefiniowane 
-    (<varname>$HTTP_*_VARS</varname>) wciąż funkcjonują.
-
-    &avail.register-long-arrays;
-   </simpara>
+    je "superglobalami" lub "zmiennymi superglobalnymi" (w PHP nie ma mechanizmu pozwalającego użytkownikowi na definiowanie
+    własnych superglobali). Możesz zobaczyć
+    <link linkend="language.variables.superglobals">listę zmiennych superglobalnych</link>
+    aby dowiedzieć się więcej.
+   </para>
 
    <note>
     <title>Zmienne zmienne</title>
     <para>
-     Zmienne superglobale nie mogą być użyte jako
+     Zmienne superglobalne nie mogą być użyte jako
      <link linkend="language.variables.variable">zmienne zmienne</link>
      wewnątrz funkcji, ani jako metody klasy.
-    </para>
-   </note>
-   
-   <note>
-    <para>
-     Nawet pomimo tego, że zmienne superglobalne i <literal>HTTP_*_VARS</literal> mogą istnieć w tym samym
-     czasie; nie są one tożsame, czyli zmiana jednej nie zmieni drugiej.
     </para>
    </note>
    
@@ -267,8 +228,8 @@ var_dump($nieinicjowany_obiekt);
    <simpara>
     Zasięg zmiennej zależy od miejsca, w jakim ją zdefiniowano.
     Najczęściej zmienne PHP widoczne są tylko w jednym zasięgu.
-    Taki zasięg obejmuje również pliki dołączone funkcjami include i require.  Na
-    przykład:
+    Taki zasięg obejmuje również pliki dołączone za pomocą <function>include</function>
+    i <function>require</function>.  Na przykład:
    </simpara>
    <informalexample>
     <programlisting role="php">
@@ -306,7 +267,11 @@ test();
    </informalexample>
 
    <simpara>
-    Ten skrypt nie wyświetli niczego, ponieważ instrukcja echo
+    Ten skrypt wygeneruje błąd <constant>E_WARNING</constant>
+    (bądź <constant>E_NOTICE</constant> przed PHP 8.0.0) ze względu na użycie nieistniejącej zmiennej.
+    Jeśli jednak ustawienie INI <link linkend="ini.display-errors">display_errors</link> zostało ustawione tak,
+    aby nie pokazywać tego typu informacji diagnostycznych, to ten skrypt nie wyświetli zupełnie niczego.
+    Dzieje się tak, ponieważ instrukcja echo
     odwołuje się do zmiennej lokalnej <varname>$a</varname>,
     której jak dotąd nie została przypisana żadna wartość. Można
     tu zauważyć różnicę w stosunku do języka C, gdzie
@@ -393,22 +358,12 @@ echo $b;
    </simpara>
    <para>
     <example>
-     <title>Przykład demonstrujący superglobale i zasięg zmiennych</title>
+     <title>Przykład demonstrujący zmienne superglobalne i zasięg zmiennych</title>
      <programlisting role="php">
 <![CDATA[
 <?php
-function test_global()
+function test_superglobal()
 {
-    // Większość predefiniowanych zmiennych nie jest "super i wymaga
-    // 'global', by być dostępnymi w zasięgu lokalnym funkcji.
-    global $HTTP_POST_VARS;
-    
-    echo $HTTP_POST_VARS['name'];
-    
-    // Superglobale są dostępne z każdego miejsca 
-    // i nie wymagają 'global'. Superglobale udostępniono
-    // wraz z PHP 4.1.0, a HTTP_POST_VARS jest 
-    // uważane za przestarzałe.
     echo $_POST['name'];
 }
 ?>
@@ -514,21 +469,21 @@ function test()
     </example>
    </para>
 
-   <note>
-    <para>
-     Zmienne statyczne mogą być deklarowane, tak jak w powyższym przykładzie.
-     Od PHP 5.6 można przypisać wartości do tego typu zmiennych, poprzez wynik
-     jakiegoś wyrażenia, ale nie można użyć w nim żadnej funkcji, bo spowoduje to błąd składni.
-    </para>
-    <para>
-     <example>
-      <title>Deklaracja zmiennych statycznych</title>
-      <programlisting role="php">
+   <para>
+    Do statycznych zmiennych można przypisać wartości które są
+    wynikiem stałych wyrażeń, ale wyrażenia dynamiczne (takie jak wywołania
+    funkcji) spowodują błąd parsowania.
+   </para>
+
+   <para>
+    <example>
+     <title>Deklarowanie zmiennych statycznych</title>
+     <programlisting role="php">
 <![CDATA[
 <?php
 function foo(){
-    static $int = 0;          // prawidłowo
-    static $int = 1+2;        // prawidłowo  (od PHP 5.6)
+    static $int = 0;          // poprawne
+    static $int = 1+2;        // ppoprawne
     static $int = sqrt(121);  // błąd  (ponieważ jest to funkcja)
 
     $int++;
@@ -536,10 +491,38 @@ function foo(){
 }
 ?>
 ]]>
-      </programlisting>
-     </example>
-    </para>
-   </note>
+     </programlisting>
+    </example>
+   </para>
+
+   <para>
+    Od PHP 8.1.0, kiedy metoda używająca zmiennych statycznych jest dziedziczona (ale nie nadpisywana),
+    odziedziczona metoda będzie współdzielić zmienne statyczne z metodą rodzica.
+    To oznacza, że zmienne statyczne w metodach zachowują się teraz w taki sam sposób jak własności statyczne.
+   </para>
+
+   <example>
+    <title>Użycie zmiennych statycznych w dziedziczonych metodach</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+class Foo {
+    public static function counter() {
+        static $counter = 0;
+        $counter++;
+        return $counter;
+    }
+}
+class Bar extends Foo {}
+var_dump(Foo::counter()); // int(1)
+var_dump(Foo::counter()); // int(2)
+var_dump(Bar::counter()); // int(3), przed PHP 8.1.0 int(1)
+var_dump(Bar::counter()); // int(4), przed PHP 8.1.0 int(2)
+?>
+]]>
+    </programlisting>
+   </example>
+
    <note>
     <para>
      Deklaracje statyczne są rozwiązywane w czasie kompilacji.
@@ -550,7 +533,7 @@ function foo(){
   <sect2 xml:id="language.variables.scope.references">
    <title>Referencje do zmiennych statycznych i globalnych</title>
    <simpara>
-    Silnik Zend 1 (ang. Zend Engine 1) napędzający PHP4, implementuje modyfikatory
+    PHP implementuje modyfikatory
     <link linkend="language.variables.scope.static">statyczny</link> oraz
     <link linkend="language.variables.scope.global">globalny</link>
     dla zmiennych, pod względem <link linkend="language.references">
@@ -566,12 +549,14 @@ function foo(){
 <?php
 function test_global_ref() {
     global $obj;
-    $obj = &new stdclass;
+    $new = new stdClass;
+    $obj = &$new;
 }
 
 function test_global_noref() {
     global $obj;
-    $obj = new stdclass;
+    $new = new stdClass;
+    $obj = $new;
 }
 
 test_global_ref();
@@ -586,9 +571,11 @@ var_dump($obj);
    &example.outputs;
 
    <screen>
+<![CDATA[
 NULL
-object(stdClass)(0) {
+object(stdClass)#1 (0) {
 }
+]]>
    </screen>
 
    <simpara>
@@ -606,10 +593,15 @@ function &get_instance_ref() {
     echo 'Obiekt statyczny: ';
     var_dump($obj);
     if (!isset($obj)) {
+        $new = new stdClass;
         // Przypisanie referencji do zmiennej statycznej.
-    $obj = &new stdclass;
+        $obj = &$new;
     }
-    $obj->property++;
+    if (!isset($obj->property)) {
+        $obj->property = 1;
+    } else {
+        $obj->property++;
+    }
     return $obj;
 }
 
@@ -619,10 +611,15 @@ function &get_instance_noref() {
     echo 'Obiekt statyczny: ';
     var_dump($obj);
     if (!isset($obj)) {
+        $new = new stdClass;
         // Przypisanie do obiektu zmiennej statycznej
-        $obj = new stdclass;
+        $obj = $new;
     }
-    $obj->property++;
+    if (!isset($obj->property)) {
+        $obj->property = 1;
+    } else {
+        $obj->property++;
+    }
     return $obj;
 }
 
@@ -639,14 +636,16 @@ $still_obj2 = get_instance_noref();
    &example.outputs;
 
    <screen>
+<![CDATA[
 Obiekt statyczny: NULL
 Obiekt statyczny: NULL
 
 Obiekt statyczny: NULL
-Obiekt statyczny: object(stdClass)(1) {
+Obiekt statyczny: object(stdClass)#3 (1) {
   ["property"]=>
   int(1)
 }
+]]>
    </screen>
           
    <simpara>
@@ -704,7 +703,7 @@ $$a = "świecie";
     <programlisting role="php">
 <![CDATA[
 <?php
-echo "$a ${$a}";
+echo "$a {$$a}";
 ?>
 ]]>
     </programlisting>
@@ -749,16 +748,6 @@ echo "$a $witaj";
     of <varname>$foo</varname>. Jest to także prawdą
     jeżeli <varname>$bar</varname> jest dostępem do tablicy.
    </simpara>
-
-   <caution>
-    <simpara>
-     Dalsza dereferencja zmiennej nazwy własności, która jest tablicą różni się
-     semantyką w PHP 5 i PHP 7. Poradnik
-     <link linkend="migration70.incompatible.variable-handling.indirect">Migracji do PHP 7.0</link>
-     zawiera więcej szczegółów o rodzajach wyrażeń, które uległy zmianie i
-     tym jak używać nawiasów klamrowych, aby uniknąć niejednoznaczności.
-    </simpara>
-   </caution>
    
    <simpara>
     Do jasnego ograniczenia nazwy własności można wykorzystać też nawiasy
@@ -846,7 +835,7 @@ I am r.
     </para>
 
     <para>
-     Począwszy od PHP 5.4 istnieją tylko dwie drogi uzyskiwania dostępu do informacji z formularza.
+     Istnieją tylko dwie drogi uzyskiwania dostępu do informacji z formularza.
      Obecnie dostępne metody zostały wymienione poniżej:
     </para>
 
@@ -865,34 +854,9 @@ echo $_REQUEST['imie'];
     </para>
 
     <para>
-     W starszych wersjach PHP istniało kilka innych metod uzyskiwania dostępu do danych od użytkownika. Zostały
-     one pokazane poniżej. Spójrz na wykaz zmian na dole strony, aby uzyskać więcej szczegółów.
-     <example>
-      <title>Starsze metody pobierania danych od użytkownika</title>
-      <programlisting role="php">
-<![CDATA[
-<?php
-// UWAŻAJ: te metody NIE są dłużej wspierane.
-// Poprawne zostały opisane powyżej
-
-// Używając import_request_variables() - ta funkcja została usunięta w PHP 5.4.0
-   import_request_variables('p', 'p_');
-   echo $p_imie;
-
-// Długie zmienne predefiniowane zostały usunięte w PHP 5.4.0
-   echo $HTTP_POST_VARS['imie'];
-
-// Używając register_globals. Ta możliwość została usunięta w PHP 5.4.0
-   echo $imie;
-?>
-]]>
-      </programlisting>
-     </example>
-    </para>
-    <para>
      Przesyłanie danych z formularza metodą GET jest podobne, z takim wyjątkiem, że użyjesz
-     zmienną predefiniowaną odpowiednią dla tej metody, zamiast poprzedniej. GET także
-     odnosi się do tzw. <literal>QUERY_STRING</literal> (informacje w adresie URL, po znaku '?'). Tak więc,
+     zmiennej predefiniowanej odpowiedniej dla tej metody, zamiast poprzedniej. GET odnosi
+     się także do tzw. <literal>QUERY_STRING</literal> (informacje w adresie URL, po znaku '?'). Tak więc,
      dla przykładu, <literal>http://www.example.com/test.php?id=3</literal>
      zawiera dane dla metody GET, dostępne poprzez <varname>$_GET['id']</varname>.
      Zobacz także <varname>$_REQUEST</varname>.
@@ -994,9 +958,17 @@ if ($_POST) {
      dotyczy funkcji <function>header</function>. Dane z ciasteczek 
      są wówczas dostępne w odpowiednich tablicach danych cookies, takich 
      jak <varname>$_COOKIE</varname>, jak również <varname>$_REQUEST</varname>. 
-     Zobacz także  stronę dotyczącą funkcji <function>setcookie</function> aby poznać więcej 
+     Zobacz także stronę dotyczącą funkcji <function>setcookie</function> aby poznać więcej
      informacji i przykładów.
     </simpara>
+
+    <note>
+     <simpara>
+      Począwszy od PHP 7.2.34, 7.3.23 oraz 7.4.11, <emphasis>nazwy</emphasis>
+      odbieranych przez PHP ciasteczek nie są już dłużej dekodowane jak adresy URL ze względów
+      bezpieczeństwa.
+     </simpara>
+    </note>
 
     <simpara>
      Jeśli chcesz przypisać wiele wartości do jednego ciasteczka, możesz
@@ -1121,36 +1093,10 @@ $varname.ext;  /* niepoprawna nazwa zmiennej */
        </thead>
        <tbody>
         <row>
-         <entry>5.4.0</entry>
+         <entry>7.2.34, 7.3.23, 7.4.11</entry>
          <entry>
-          <link linkend="security.globals">Register Globals</link>, 
-          <link linkend="security.magicquotes">Magic Quotes</link> i
-          <link linkend="ini.register-long-arrays">register_long_arrays</link>
-          zostały usunięte
-         </entry>
-        </row>
-        <row>
-         <entry>5.3.0</entry>
-         <entry>
-          <link linkend="security.globals">Register Globals</link>, 
-          <link linkend="security.magicquotes">Magic Quotes</link> i
-          <link linkend="ini.register-long-arrays">register_long_arrays</link>
-          zostały zdeprecjonowane
-         </entry>
-        </row>
-        <row>
-         <entry>4.2.0</entry>
-         <entry>
-          Dyrektywa <link linkend="ini.register-globals">register_globals</link>
-          jest domyślnie <emphasis>wyłączona</emphasis>.
-         </entry>
-        </row>
-        <row>
-         <entry>4.1.0</entry>
-         <entry>
-          <link linkend="language.variables.superglobals">Tablice superglobalne</link>, 
-          like <varname>$_POST</varname> and <varname>$_GET</varname> stały się
-          dostępne.
+          <emphasis>Nazwy</emphasis> ciasteczek odbieranych przez PHP nie są już dłużej dekodowane jak adresy URL
+          ze względów bezpieczeństwa.
          </entry>
         </row>
        </tbody>
