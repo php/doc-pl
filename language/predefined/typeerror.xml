@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 10bf01015f2da241855e15b40677eb8f9ffc892e Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 14767af0f05dffa6fdb9b49e1a1f4e9ca7022a60 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-
-<phpdoc:exceptionref xml:id="class.typeerror"
- xmlns="http://docbook.org/ns/docbook"
- xmlns:xlink="http://www.w3.org/1999/xlink"
- xmlns:xi="http://www.w3.org/2001/XInclude"
- xmlns:phpdoc="http://php.net/ns/phpdoc">
+<phpdoc:exceptionref xml:id="class.typeerror" xmlns:phpdoc="http://php.net/ns/phpdoc" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude">
  <title>TypeError</title>
  <titleabbrev>TypeError</titleabbrev>
  
@@ -23,45 +18,85 @@
     przez funkcję nie pasuje do zadeklarowanego typu zwracanego przez
     funkcję. Trzecia możliwość to przekazanie nieprawidłowej liczby
     argumentów do wbudowanej funkcji PHP (tylko w trybie ścisłym).
+
+    <classname>TypeError</classname> może zostać rzucony gdy:
+    <simplelist>
+     <member>
+      Wartość ustawiana dla własności klasy nie zgadza się z typem danych
+      zadeklarowanym dla tej własności
+     </member>
+     <member>
+      Wartość ustawiana dla argumentu funkcji nie zgadza się z typem danych
+      zadeklarowanym dla tego argumentu.
+     </member>
+     <member>
+      Wartość zwracana przez funkcję nie zgadza się z zadeklarowanym typem
+      zwracanym przez tę funkcję.
+     </member>
+    </simplelist>
   </para>
   </section>
 <!-- }}} -->
  
   <section xml:id="typeerror.synopsis">
    &reftitle.classsynopsis;
- 
-<!-- {{{ Synopsis -->
-   <classsynopsis>
-    <ooclass><classname>TypeError</classname></ooclass>
- 
-<!-- {{{ Class synopsis -->
-    <classsynopsisinfo>
-     <ooclass>
-      <classname>TypeError</classname>
-     </ooclass>
 
-     <ooclass>
-      <modifier>extends</modifier>
-      <classname>Error</classname>
-     </ooclass>
-    </classsynopsisinfo>
-<!-- }}} -->
+   <!-- {{{ Synopsis -->
+   <classsynopsis class="class">
+    <ooexception>
+     <exceptionname>TypeError</exceptionname>
+    </ooexception>
+
+    <ooclass>
+     <modifier>extends</modifier>
+     <classname>Error</classname>
+    </ooclass>
 
     <classsynopsisinfo role="comment">&InheritedProperties;</classsynopsisinfo>
     <xi:include xpointer="xmlns(db=http://docbook.org/ns/docbook) xpointer(id('class.error')/db:partintro/db:section/db:classsynopsis/db:fieldsynopsis[preceding-sibling::db:classsynopsisinfo[1][@role='comment' and text()='&Properties;']]))">
-     <xi:fallback />
+     <xi:fallback/>
     </xi:include>
 
     <classsynopsisinfo role="comment">&InheritedMethods;</classsynopsisinfo>
-    <xi:include xpointer="xmlns(db=http://docbook.org/ns/docbook) xpointer(id('class.error')/db:refentry/db:refsect1[@role='description']/descendant::db:methodsynopsis[1])" />
+    <xi:include xpointer="xmlns(db=http://docbook.org/ns/docbook) xpointer(id('class.error')/db:refentry/db:refsect1[@role='description']/descendant::db:constructorsynopsis[@role='Error'])">
+     <xi:fallback/>
+    </xi:include>
+    <xi:include xpointer="xmlns(db=http://docbook.org/ns/docbook) xpointer(id('class.error')/db:refentry/db:refsect1[@role='description']/descendant::db:methodsynopsis[@role='Error'])">
+     <xi:fallback/>
+    </xi:include>
    </classsynopsis>
- 
-<!-- }}} -->
+
+   <!-- }}} -->
  
   </section>
+
+  <section xml:id="typeerror.changelog" role="changelog">
+   &reftitle.changelog;
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>7.1.0</entry>
+       <entry>
+        <classname>TypeError</classname> nie jest już rzucany gdy zostanie przekazana
+        niepoprawna ilość argumentów do funkcji wbudowanej w PHP, a program operuje
+        w trybie ścisłym (strict mode).
+        W takim wypadku rzucany jest <classname>ArgumentCountError</classname>.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </section>
+
  </partintro>
 </phpdoc:exceptionref>
- 
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

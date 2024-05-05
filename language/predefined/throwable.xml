@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 9a4e00c8f075b1fc66a4dcf5b6b35c3a81f1a6c0 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 09caff9ea664f7154a7d37e92b2c332c28462404 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-
 <phpdoc:classref xml:id="class.throwable" xmlns:phpdoc="http://php.net/ns/phpdoc" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude">
 
  <title>Throwable</title>
@@ -14,7 +13,7 @@
    &reftitle.intro;
    <para>
     <classname>Throwable</classname> jest bazowym interfejsem dla każdego obiektu,
-    który może być rzucony poprzez &throw; w PHP 7, w tym
+    który może być rzucony poprzez &throw;, w tym
     <classname>Error</classname> oraz <classname>Exception</classname>.
    </para>
    <note>
@@ -30,28 +29,56 @@
   <section xml:id="throwable.synopsis">
    &reftitle.interfacesynopsis;
 
-<!-- {{{ Synopsis -->
-   <classsynopsis>
-    <ooclass><classname>Throwable</classname></ooclass>
+   <!-- {{{ Synopsis -->
+   <classsynopsis class="interface">
+    <oointerface>
+     <interfacename>Throwable</interfacename>
+    </oointerface>
 
-<!-- {{{ Class synopsis -->
-    <classsynopsisinfo>
-     <ooclass>
-      <classname>Throwable</classname>
-     </ooclass>
-    </classsynopsisinfo>
-<!-- }}} -->
-    
+    <oointerface>
+     <modifier>extends</modifier>
+     <interfacename>Stringable</interfacename>
+    </oointerface>
+
     <classsynopsisinfo role="comment">&Methods;</classsynopsisinfo>
-    <xi:include xpointer="xmlns(db=http://docbook.org/ns/docbook) xpointer(id('class.throwable')/db:refentry/db:refsect1[@role='description']/descendant::db:methodsynopsis[1])" />
-   </classsynopsis>
-<!-- }}} -->
+    <xi:include xpointer="xmlns(db=http://docbook.org/ns/docbook) xpointer(id('class.throwable')/db:refentry/db:refsect1[@role='description']/descendant::db:methodsynopsis[@role='Throwable'])">
+     <xi:fallback/>
+    </xi:include>
 
+    <classsynopsisinfo role="comment">&InheritedMethods;</classsynopsisinfo>
+    <xi:include xpointer="xmlns(db=http://docbook.org/ns/docbook) xpointer(id('class.stringable')/db:refentry/db:refsect1[@role='description']/descendant::db:methodsynopsis[@role='Stringable'])">
+     <xi:fallback/>
+    </xi:include>
+   </classsynopsis>
+   <!-- }}} -->
+
+  </section>
+
+  <section role="changelog">
+   &reftitle.changelog;
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>8.0.0</entry>
+       <entry>
+        <classname>Throwable</classname> implementuje od teraz interfejs
+        <interfacename>Stringable</interfacename>
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
   </section>
 
 
  </partintro>
-
  &language.predefined.throwable.getmessage;
  &language.predefined.throwable.getcode;
  &language.predefined.throwable.getfile;

@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 1e17b3d07ce099720fe608c5eaaddc2625b7804c Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 14767af0f05dffa6fdb9b49e1a1f4e9ca7022a60 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 
-<phpdoc:classref xml:id="class.error"
- xmlns="http://docbook.org/ns/docbook"
- xmlns:xlink="http://www.w3.org/1999/xlink"
- xmlns:xi="http://www.w3.org/2001/XInclude"
- xmlns:phpdoc="http://php.net/ns/phpdoc">
+<phpdoc:classref xml:id="class.error" xmlns:phpdoc="http://php.net/ns/phpdoc" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude">
  <title>Error</title>
  <titleabbrev>Error</titleabbrev>
  
@@ -24,29 +20,30 @@
  
   <section xml:id="error.synopsis">
    &reftitle.classsynopsis;
- 
-<!-- {{{ Synopsis -->
-   <classsynopsis>
-    <ooclass><classname>Error</classname></ooclass>
- 
-<!-- {{{ Class synopsis -->
-    <classsynopsisinfo>
-     <ooclass>
-      <classname>Error</classname>
-     </ooclass>
 
-     <ooclass>
-      <modifier>implements</modifier>
-      <classname>Throwable</classname>
-     </ooclass>
-    </classsynopsisinfo>
-<!-- }}} -->
+   <!-- {{{ Synopsis -->
+   <classsynopsis class="class">
+    <ooexception>
+     <exceptionname>Error</exceptionname>
+    </ooexception>
+
+    <oointerface>
+     <modifier>implements</modifier>
+     <interfacename>Throwable</interfacename>
+    </oointerface>
 
     <classsynopsisinfo role="comment">&Properties;</classsynopsisinfo>
     <fieldsynopsis>
      <modifier>protected</modifier>
      <type>string</type>
      <varname linkend="error.props.message">message</varname>
+     <initializer>""</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>private</modifier>
+     <type>string</type>
+     <varname linkend="error.props.string">string</varname>
+     <initializer>""</initializer>
     </fieldsynopsis>
     <fieldsynopsis>
      <modifier>protected</modifier>
@@ -57,19 +54,36 @@
      <modifier>protected</modifier>
      <type>string</type>
      <varname linkend="error.props.file">file</varname>
+     <initializer>""</initializer>
     </fieldsynopsis>
     <fieldsynopsis>
      <modifier>protected</modifier>
      <type>int</type>
      <varname linkend="error.props.line">line</varname>
     </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>private</modifier>
+     <type>array</type>
+     <varname linkend="error.props.trace">trace</varname>
+     <initializer>[]</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>private</modifier>
+     <type class="union"><type>Throwable</type><type>null</type></type>
+     <varname linkend="error.props.previous">previous</varname>
+     <initializer>null</initializer>
+    </fieldsynopsis>
 
     <classsynopsisinfo role="comment">&Methods;</classsynopsisinfo>
-    <xi:include xpointer="xmlns(db=http://docbook.org/ns/docbook) xpointer(id('class.error')/db:refentry/db:refsect1[@role='description']/descendant::db:constructorsynopsis[1])" />
-    <xi:include xpointer="xmlns(db=http://docbook.org/ns/docbook) xpointer(id('class.error')/db:refentry/db:refsect1[@role='description']/descendant::db:methodsynopsis[1])" />
+    <xi:include xpointer="xmlns(db=http://docbook.org/ns/docbook) xpointer(id('class.error')/db:refentry/db:refsect1[@role='description']/descendant::db:constructorsynopsis[@role='Error'])">
+     <xi:fallback/>
+    </xi:include>
+    <xi:include xpointer="xmlns(db=http://docbook.org/ns/docbook) xpointer(id('class.error')/db:refentry/db:refsect1[@role='description']/descendant::db:methodsynopsis[@role='Error'])">
+     <xi:fallback/>
+    </xi:include>
    </classsynopsis>
- 
-<!-- }}} -->
+
+   <!-- }}} -->
  
   </section>
   <!-- {{{ Error properties -->
@@ -98,6 +112,24 @@
        <term><varname>line</varname></term>
        <listitem>
         <para>Linia, w której wystąpił błąd</para>
+       </listitem>
+      </varlistentry>
+      <varlistentry xml:id="error.props.previous">
+       <term><varname>previous</varname></term>
+       <listitem>
+        <para>Poprzednio rzucony wyjątek</para>
+       </listitem>
+      </varlistentry>
+      <varlistentry xml:id="error.props.string">
+       <term><varname>string</varname></term>
+       <listitem>
+        <para>Tekstowa reprezentacja stosu wywołań</para>
+       </listitem>
+      </varlistentry>
+      <varlistentry xml:id="error.props.trace">
+       <term><varname>trace</varname></term>
+       <listitem>
+        <para>Stos wywołań jako tablica</para>
        </listitem>
       </varlistentry>
      </variablelist>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: af4410a7e15898c3dbe83d6ea38246745ed9c6fb Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 35c16b1543e292fa6913f02598daa435e58d997c Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-
 <refentry xml:id="exception.clone" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>Exception::__clone</refname>
@@ -10,12 +9,13 @@
  
  <refsect1 role="description">
   &reftitle.description;
-  <methodsynopsis>
-   <modifier>final</modifier> <modifier>private</modifier> <type>void</type><methodname>Exception::__clone</methodname>
-   <void />
+  <methodsynopsis role="Exception">
+   <modifier>private</modifier> <type>void</type><methodname>Exception::__clone</methodname>
+   <void/>
   </methodsynopsis>
   <para>
-   Wyjątek nie może zostać sklonowany, więc ta metoda wywołuje błąd krytyczny.
+   Obiekt wyjątku nie może zostać sklonowany, więc zostanie wywołany błąd krytyczny,
+   jeśli spróbujemy to zrobić.
   </para>
  </refsect1>
  
@@ -37,8 +37,29 @@
    Wyjątki <emphasis>nie</emphasis> mogą być klonowane.
   </para>
  </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>8.1.0</entry>
+      <entry>
+       Metoda <methodname>Exception::__clone</methodname> nie jest już finalna.
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </informaltable>
+ </refsect1>
 </refentry>
- 
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml
@@ -59,4 +80,3 @@ vim600: syn=xml fen fdm=syntax fdl=2 si
 vim: et tw=78 syn=sgml
 vi: ts=1 sw=1
 -->
-
