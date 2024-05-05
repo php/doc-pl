@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 067b3bca396fb1c28544fc6c48028119a99ea54f Maintainer: sobak Status: ready -->
+<!-- EN-Revision: a6d209f4ff71ccba3f1255902827f5df3e092ff9 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 
 <refentry role="variable" xml:id="reserved.variables.server" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>$_SERVER</refname>
-  <refname>$HTTP_SERVER_VARS [usunięte]</refname>
   <refpurpose>Informacje o serwerze i środowisku uruchomieniowym</refpurpose>
  </refnamediv>
  
@@ -15,31 +14,30 @@
    <varname>$_SERVER</varname> jest tablicą zawierającą informacje
    takie jak nagłówki, ścieżki i lokalizacje skryptów. Wpisy w tej
    tablicy są tworzone przez serwer WWWW. Nie ma gwarancji, że
-   każdy serwer ustawi wszystkie z tych zmiennych; servery mogą pominąć
-   lub udostępnić inne, nie wymienione tutaj. Pomimo tego, duża ilość
+   każdy serwer ustawi wszystkie z tych zmiennych; serwery mogą pominąć
+   lub udostępnić inne, niewymienione tutaj. Pomimo tego, duża ilość
    tych zmiennych została wymieniona w <link
    xlink:href="&url.rfc;3875">specyfikacji CGI/1.1</link>, więc możesz
    przypuszczać, że będą one istnieć.
   </para>
   <note>
    <simpara>
-     Przed PHP 5.4.0, <varname>$HTTP_SERVER_VARS</varname> zawierała te same informacje początkowe,
-     ale nie była zmienną <link linkend="language.variables.superglobals">superglobalną</link>.
-     (<varname>$HTTP_SERVER_VARS</varname> i <varname>$_SERVER</varname>
-     były rożnymi zmiennymi i PHP traktowało je jak dwie osobne zmienne).
+    Gdy PHP jest uruchomione z <link linkend="features.commandline">linii poleceń</link>
+    większość tych wpisów nie będzie dostępna lub ich znaczenie będzie nieistotne.
    </simpara>
   </note>
+  <para>
+   Poza elementami wymienionymi poniżej, PHP utworzy też dodatkowe elementy
+   z wartościami pochodzącymi z nagłówków zapytania. Te wpisy będą miały
+   nazwy formacie <literal>HTTP_</literal> z doklejoną nazwą nagłówka,
+   zapisaną wielkimi literami i używającą podkreślinków zamiast myślników.
+   Przykładowo, nagłówek <literal>Accept-Language</literal> będzie dostępny
+   jako <code>$_SERVER['HTTP_ACCEPT_LANGUAGE']</code>.
+  </para>
  </refsect1>
 
  <refsect1 role="indices">
   &reftitle.indices;
-
-  <simpara>
-   Możesz znaleźć lub nie znaleźć poniższych elementów w tablicy
-   <varname>$_SERVER</varname>. Zauważ że tylko kilka, jeżeli w ogóle jakiekolwiek, będą
-   dostępne (lub miały faktyczne znaczenie), jeżeli uruchamiasz PHP z
-   <link linkend="features.commandline">linii poleceń</link>.
-  </simpara>
 
   <para>
    <variablelist>
@@ -58,7 +56,7 @@
       </simpara>
       <simpara>
        Jeżeli PHP jest uruchamiany z wiersza poleceń, to ta zmienna zawiera
-       nazwę skryptu, począwszy od wersji PHP 4.3.0. Wcześniej nie była ona dostępna.
+       nazwę skryptu.
       </simpara>
      </listitem>
     </varlistentry>
@@ -90,7 +88,7 @@
      <listitem>
       <simpara>
        Z jakiej wersji specyfikacji CGI korzysta serwer;
-       np. '<literal>CGI/1.1</literal>'.
+       np. <literal>'CGI/1.1'</literal>.
       </simpara>
      </listitem>
     </varlistentry>
@@ -115,9 +113,9 @@
       </simpara>
 	  <note>
        <simpara>
-        W Apache 2 musisz ustawić opcje <literal>UseCanonicalName = On</literal>
-        i <literal>ServerName</literal>. W przeciwnym wypadku ta wartość odzwierciedla
-        nazwę hosta dostarczoną przez klienta, która może być podmieniona.
+        W Apache 2 opcje <literal>UseCanonicalName = On</literal>
+        i <literal>ServerName</literal> muszą być ustawione. W przeciwnym wypadku ta wartość
+        odzwierciedla nazwę hosta dostarczoną przez klienta, która może być podmieniona.
         Nie powinno się polegać na wartości tej zmiennej, w kwestiach bezpieczeństwa.
        </simpara>
       </note>
@@ -139,7 +137,7 @@
      <listitem>
       <simpara>
        Nazwa i wersja protokołu informacyjnego, przez który
-       zażądano strony; np. '<literal>HTTP/1.0</literal>';
+       zażądano strony; np. <literal>'HTTP/1.0'</literal>;
       </simpara>
      </listitem>
     </varlistentry>
@@ -148,8 +146,8 @@
      <term>'<varname>REQUEST_METHOD</varname>'</term>
      <listitem>
       <simpara>
-       Która metoda żądania została użyta do pobrania strony; np. '<literal>GET</literal>',
-       '<literal>HEAD</literal>', '<literal>POST</literal>', '<literal>PUT</literal>'.
+       Która metoda żądania została użyta do pobrania strony; np. <literal>'GET'</literal>,
+       <literal>'HEAD'</literal>, <literal>'POST'</literal>, <literal>'PUT'</literal>.
       </simpara>
       <note>
        <para>
@@ -165,7 +163,7 @@
      <term>'<varname>REQUEST_TIME</varname>'</term>
      <listitem>
       <simpara>
-       Znacznik czasu rozpoczęcia żądania. Dostępne od PHP 5.1.0.
+       Znacznik czasu rozpoczęcia żądania.
       </simpara>
      </listitem>
     </varlistentry>
@@ -175,7 +173,6 @@
      <listitem>
       <simpara>
        Znacznik czasu rozpoczęcia żądania, z precyzją do mikrosekund.
-       Dostępny od PHP 5.4.0.
       </simpara>
      </listitem>
     </varlistentry>
@@ -200,106 +197,11 @@
     </varlistentry>
 
     <varlistentry>
-     <term>'<varname>HTTP_ACCEPT</varname>'</term>
-     <listitem>
-      <simpara>
-       Zawartość nagłówka <literal>Accept:</literal> podczas obecnego
-       żądania, o ile istnieje.
-      </simpara>
-     </listitem>
-    </varlistentry>
-
-    <varlistentry>
-     <term>'<varname>HTTP_ACCEPT_CHARSET</varname>'</term>
-     <listitem>
-      <simpara>
-       Zawartość nagłówka <literal>Accept-Charset:</literal> podczas obecnego
-       żądania, o ile istnieje. Przykład:
-       '<literal>iso-8859-1,*,utf-8</literal>'.
-      </simpara>
-     </listitem>
-    </varlistentry>
-
-    <varlistentry>
-     <term>'<varname>HTTP_ACCEPT_ENCODING</varname>'</term>
-     <listitem>
-      <simpara>
-       Zawartość nagłówka <literal>Accept-Encoding:</literal> podczas obecnego
-       żądania, o ile istnieje. Przykład: '<literal>gzip</literal>'.
-      </simpara>
-     </listitem>
-    </varlistentry>
-    
-    <varlistentry>
-     <term>'<varname>HTTP_ACCEPT_LANGUAGE</varname>'</term>
-     <listitem>
-      <simpara>
-       Zawartość nagłówka <literal>Accept-Language:</literal> podczas obecnego
-       żądania, o ile istnieje. Przykład: '<literal>en</literal>'.
-      </simpara>
-     </listitem>
-    </varlistentry>
-    
-    <varlistentry>
-     <term>'<varname>HTTP_CONNECTION</varname>'</term>
-     <listitem>
-      <simpara>
-       Zawartość nagłówka <literal>Connection:</literal> podczas obecnego
-       żądania, o ile istnieje. Przykład: '<literal>Keep-Alive</literal>'.
-      </simpara>
-     </listitem>
-    </varlistentry>
-
-    <varlistentry>
-     <term>'<varname>HTTP_HOST</varname>'</term>
-     <listitem>
-      <simpara>
-       Zawartość nagłówka <literal>Host:</literal> podczas obecnego
-       żadania, o ile istnieje.
-      </simpara>
-     </listitem>
-    </varlistentry>
-
-    <varlistentry>
-     <term>'<varname>HTTP_REFERER</varname>'</term>
-     <listitem>
-      <simpara>
-       Adres strony (o ile istnieje), która doprowadziła
-       użytkownika do obecnej strony. Ten nagłówek jest ustawiany przez klienta (np. przeglądarkę). Nie 
-       wszystkie programy ustawiają ten nagłówek, a niektóre pozwalają na
-       modyfikację <varname>HTTP_REFERER</varname>. Krótko mówiąc,
-       nie powinno się ufać jego zawartości.
-      </simpara>
-     </listitem>
-    </varlistentry>
-
-    <varlistentry>
-     <term>'<varname>HTTP_USER_AGENT</varname>'</term>
-     <listitem>
-      <simpara>
-       Zawartość nagłówka <literal>User-Agent:</literal> podczas obecnego
-       żądania, o ile istnieje. Jest to ciąg znaków
-       oznaczający klienta, który uzyskuje dostęp do strony. Typowym
-       przykładem jest: <computeroutput>Mozilla/4.5 [en] (X11; U;
-       Linux 2.2.9 i586)</computeroutput>. Jednym z zastosowań może
-       być użycie tej wartości z funkcją <function>get_browser</function>, aby
-       dopasować wersję strony, do możliwości przeglądarki odwiedzającego.
-      </simpara>
-     </listitem>
-    </varlistentry>
-
-    <varlistentry>
      <term>'<varname>HTTPS</varname>'</term>
      <listitem>
       <simpara>
        Ustawione na niepustą wartość, jeżeli skrypt został odpytany po protokole HTTPS.
       </simpara>
-      <note>
-       <simpara>
-        Zauważ, że gdy używa się ISAPI z IIS, ta zmienna przyjmie wartość 
-        <literal>off</literal>, jeśli żądanie nie zostało wykonane przez protokół HTTPS.
-       </simpara>
-      </note>
      </listitem>
     </varlistentry>
 
@@ -323,8 +225,8 @@
       </simpara>
       <note>
        <simpara>
-        Serwer WWW musi być skonfigurowany, aby tworzyć tą zmienną. Przykładowo
-        w Apache trzeba umieścić <literal>HostnameLookups On</literal>
+        Serwer WWW musi być skonfigurowany, aby tworzyć tą zmienną.
+        Przykładowo w Apache trzeba umieścić <literal>HostnameLookups On</literal>
         wewnątrz &httpd.conf; Zobacz także
         <function>gethostbyaddr</function>.
        </simpara>
@@ -395,14 +297,14 @@
      <listitem>
       <simpara>
        Port użyty na maszynie serwera do komunikacji.
-       Przy domyślnych ustawieniach będzie to '<literal>80</literal>';
+       Przy domyślnych ustawieniach będzie to <literal>'80'</literal>;
        użycie SSL zmieni to na wartość, na którą określono bezpieczny
        port HTTP.
       </simpara>
       <note>
        <simpara>
-        W Apache 2 musisz ustawić <literal>UseCanonicalName = On</literal>, 
-        oraz <literal>UseCanonicalPhysicalPort = On</literal>, aby
+        W Apache 2 <literal>UseCanonicalName = On</literal>,
+        oraz <literal>UseCanonicalPhysicalPort = On</literal> muszą być ustawione,
         aby otrzymać fizyczny (prawdziwy) port, w przeciwnym wypadku ta wartość może być nadpisana
         lub może nie zwracać wartości portu fizycznego.
         Nie zaleca się polegania na tej zmiennej w kwestiach bezpieczeństwa.
@@ -429,16 +331,6 @@
        po wykonaniu mapowania przez serwer.
       </simpara>
       <note>
-       <simpara>
-        Od PHP 4.3.2, <envar>PATH_TRANSLATED</envar> nie jest dłużej ustawiana
-        domyślnie w <acronym>SAPI</acronym> Apache 2, w odróżnieniu
-        od sytuacji w Apache 1, gdzie jest ona ustawiana na wartosć 
-        zmiennej <envar>SCRIPT_FILENAME</envar>, o ile nie została 
-        dostarczona przez Apache. Ta zmiana została wprowadzona, aby spełnić 
-        specyfikację <acronym>CGI</acronym>, która mówi że
-        <envar>PATH_TRANSLATED</envar> powinna istnieć tylko gdy 
-        <envar>PATH_INFO</envar> została zdefiniowana.
-       </simpara>
        <simpara>
         Użytkownicy Apache 2 mogą użyć <literal>AcceptPathInfo = On</literal> w pliku
         <filename>httpd.conf</filename>, aby zdefiniować <envar>PATH_INFO</envar>.
@@ -516,9 +408,9 @@
      <listitem>
       <simpara>
        Zawiera ścieżkę podaną przez użytkownika za rzeczywistą
-       nazwą skryptu, ale poprzedzającą łańcuch zapytania (query string), o
-       ile dostępny. Na przykład, jeżeli obecny skrypt został pobrany przez adres
-       URL <filename>http://www.example.com/php/path_info.php/some/stuff?foo=bar</filename>,
+       nazwą skryptu, ale poprzedzającą łańcuch zapytania (query string), o ile jest on dostępny.
+       Na przykład, jeżeli obecny skrypt został pobrany przez adres URL
+       <filename>http://www.example.com/php/path_info.php/some/stuff?foo=bar</filename>,
        to <varname>$_SERVER['PATH_INFO']</varname> będzie
        zawierać <literal>/some/stuff</literal>.
       </simpara>
@@ -536,46 +428,6 @@
     </varlistentry>
 
    </variablelist>
-  </para>
- </refsect1>
- 
- <refsect1 role="changelog">
-  &reftitle.changelog;
-  <para>
-   <informaltable>
-    <tgroup cols="2">
-     <thead>
-      <row>
-       <entry>&Version;</entry>
-       <entry>&Description;</entry>
-      </row>
-     </thead>
-     <tbody>
-      <row>
-       <entry>5.4.0</entry>
-       <entry>
-        <varname>$HTTP_SERVER_VARS</varname> nie jest więcej dostępne z powodu
-        usunięcia rejestrowania długich nazw tablic.
-       </entry>
-      </row>
-      <row>
-       <entry>5.3.0</entry>
-       <entry>
-        Dyrektywa <link linkend="ini.register-long-arrays">register_long_arrays</link>,
-        która powodowała, że zmienna <varname>$HTTP_SERVER_VARS</varname> stawałą się dostępna,
-        została zdeprecjonowana.
-       </entry>
-      </row>
-      <row>
-       <entry>4.1.0</entry>
-       <entry>
-        Wprowadzono <varname>$_SERVER</varname>; zdeprecjonowano
-        <varname>$HTTP_SERVER_VARS</varname>.
-       </entry>
-      </row>
-     </tbody>
-    </tgroup>
-   </informaltable>
   </para>
  </refsect1>
  
