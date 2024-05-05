@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 744111cf061120a5e82033a50ca0031902e102d4 Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: 2d1981cc3003cd94f5fb88e0473eed2c5b26efde Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: slawek, sobak -->
  <chapter xml:id="features.http-auth" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -15,8 +15,8 @@
    <varname>PHP_AUTH_USER</varname>, <varname>PHP_AUTH_PW</varname> i
    <varname>AUTH_TYPE</varname> zawierającymi odpowiednio
    nazwę użytkownika, hasło i typ autoryzacji. Zmienne te będą dostępne w
-   tablicy <varname>$_SERVER</varname> Obecnie obsługiwane są autoryzacje
-   typu "Basic" i "Digest" (od PHP 5.1.0). Więcej informacji można znaleć w opisie funkcji
+   tablicy <varname>$_SERVER</varname> Obsługiwane są <emphasis>tylko</emphasis> autoryzacje
+   typu "Basic" i "Digest". Więcej informacji można znaleźć w opisie funkcji
    <function>header</function>.
   </simpara>
 
@@ -137,17 +137,6 @@ function http_digest_parse($txt)
    <literal>HTTP/1.0 401</literal> powinno rozwiązać problem.
   </para>
 
-  <simpara>
-   Aby zapobiec sytuacji w której ktoś napisze skrypt
-   wykradający hasło wysłane tradycyjnym zewnętrznym mechanizmem,
-   zmienne PHP_AUTH nie będą ustawiane, jeśli dla danej strony
-   aktywna jest autoryzacja zewnętrzna
-   i &safemode; jest włączony.  Bez względu na to,
-   <varname>REMOTE_USER</varname> może zostać użyte do zidentyfikowania
-   użytkownika autoryzowanego zewnętrznie  Zatem, możesz użyć
-   <varname>$_SERVER['REMOTE_USER']</varname>.
-  </simpara>
-
   <note>
    <title>Konfiguracja</title>
    <para>
@@ -221,13 +210,6 @@ if (!isset($_SERVER['PHP_AUTH_USER']) ||
     <link linkend="ini.cgi.rfc2616-headers">cgi.rfc2616_headers</link> musi
     być ustawiona na <literal>0</literal> (domyślna wartość).
    </simpara>
-  </note>
-  <note>
-   <para>
-    Jeśli włączony jest <link linkend="ini.safe-mode">tryb bezpieczny</link>,
-    uid skryptu jest doklejany do pola <literal>realm</literal> nagłówka
-    <literal>WWW-Authenticate</literal>.
-   </para>
   </note>
 
  </chapter>

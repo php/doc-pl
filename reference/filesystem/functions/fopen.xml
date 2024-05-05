@@ -1,6 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: adi Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: ea62fb83196997032641b50fe44420305466195e Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: adi -->
 <refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.fopen">
  <refnamediv>
   <refname>fopen</refname>
@@ -10,15 +11,15 @@
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
-   <type>resource</type><methodname>fopen</methodname>
-   <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
-   <methodparam><type>string</type><parameter>tryb</parameter></methodparam>
-   <methodparam choice="opt"><type>bool</type><parameter>użyj_include_path</parameter></methodparam>
-   <methodparam choice="opt"><type>resource</type><parameter>kontekst</parameter></methodparam>
+   <type class="union"><type>resource</type><type>false</type></type><methodname>fopen</methodname>
+   <methodparam><type>string</type><parameter>filename</parameter></methodparam>
+   <methodparam><type>string</type><parameter>mode</parameter></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>use_include_path</parameter><initializer>&false;</initializer></methodparam>
+   <methodparam choice="opt"><type class="union"><type>resource</type><type>null</type></type><parameter>context</parameter><initializer>&null;</initializer></methodparam>
   </methodsynopsis>
   <para>
    <function>fopen</function> wiąże nazwany zasób, określony przez
-   <parameter>nazwa_pliku</parameter>, do strumienia. 
+   <parameter>filename</parameter>, do strumienia.
   </para>
  </refsect1>
 
@@ -27,51 +28,52 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>nazwa_pliku</parameter></term>
+     <term><parameter>filename</parameter></term>
      <listitem>
       <para>
-       Jeśli <parameter>nazwa_pliku</parameter> jest w postaci "schemat://...", to
+       Jeśli <parameter>filename</parameter> jest w postaci "schemat://...", to
        przypuszczalnie jest to URL i PHP szuka protokołu obsługi
-       (także zwanego wrapper'em) dla tego schematu. Jeśli nie zarejestrowano
-       żadnego wrapper'a dla tego protokołu, PHP wyemituje notatkę, aby pomóc Tobie
-       w wyśledzeniu potencajalnego problemu w Twoim skrypcie następnie będzie
-       kontynuować z podanym <parameter>nazwa_pliku</parameter> traktując go
+       (także zwanego wrapperem) dla tego schematu. Jeśli nie zarejestrowano
+       żadnego wrapperaa dla tego protokołu, PHP wyemituje notatkę, aby pomóc Ci
+       w wyśledzeniu potencjalnego problemu w Twoim skrypcie następnie będzie
+       kontynuować z podanym <parameter>filename</parameter> traktując go
        jako zwykły plik.
       </para>
       <para>
-       Jeśli PHP zdecyduje, że <parameter>nazwa_pliku</parameter> określa
+       Jeśli PHP zdecyduje, że <parameter>filenae</parameter> określa
        lokalny plik, wtedy spróbuje otworzyć strumień na tym pliku.
        Plik musi być dostępny dla PHP, więc musisz zapewnić prawa
        dostępu do pliku pozwalające na taką operację.
-       Jeśli masz włączone  &safemode; lub  <link linkend="ini.open-basedir">open_basedir</link>
+       Jeśli masz włączone <link linkend="ini.open-basedir">open_basedir</link>
        mogą mieć zastosowanie dodatkowe restrykcje.
       </para>
       <para>
-       Jeśli PHP zdecyduje, że <parameter>nazwa_pliku</parameter> określa
-       zarejestrowany protokół i ten protokół jest zarejestowany jako
-       sieciowy URL, PHP sprawdzi <link linkend="ini.allow-url-fopen">allow_url_fopen</link>
-       czy jest włączone. Jeśli jest wyłączone (off), PHP wyświetli ostrzeżenie
-       i wywołanie fopen zakończy się niepowodzeniem.
+       Jeśli PHP zdecyduje, że <parameter>filename</parameter> określa
+       zarejestrowany protokół i ten protokół jest zarejestrowany jako
+       sieciowy URL, PHP sprawdzi czy
+       <link linkend="ini.allow-url-fopen">allow_url_fopen</link> jest
+       włączone. Jeśli jest wyłączone, PHP wyświetli ostrzeżenie,
+       a wywołanie fopen zakończy się niepowodzeniem.
       </para>
       <note>
        <para>
         Listę obsługiwanych protokołów możesz znaleźć w <xref linkend="wrappers"/>.
-        Niektóre protokoły (również określane przez <literal>wrappery</literal> obsługują
+        Niektóre protokoły (również określane przez <literal>wrappery</literal>) obsługują
         <literal>kontekst</literal> lub/i opcje &php.ini;.
-        Odwołaj się do konkretnej strony protokołu aby uzyskać listę opcji jakie
+        Odwołaj się do konkretnej strony protokołu, aby uzyskać listę opcji jakie
         mogą zostać ustawione (np. &php.ini; wartość
         <literal>user_agent</literal> używana przez wrapper <literal>http</literal>).
        </para>
       </note>
       <para>
-       Na platformie Windows, dbaj aby wstawiać znaki ucieczki (escape)
+       Na platformie Windows, zwróć uwagę aby wstawiać znaki ucieczki (escape)
        przed wszystkimi lewymi ukośnikami (backslash) użytymi w ścieżce do
        pliku lub używać ukośników (slash).
        <informalexample>
         <programlisting role="php">
-<![CDATA[
+         <![CDATA[
 <?php
-$handle = fopen("c:\\data\\info.txt", "r");
+$handle = fopen("c:\\folder\\resource.txt", "r");
 ?>
 ]]>
         </programlisting>
@@ -80,158 +82,195 @@ $handle = fopen("c:\\data\\info.txt", "r");
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>tryb</parameter></term>
-     <listitem>  
-      <para>
-       Parametr <parameter>tryb</parameter> określa rodzaj dostępu jaki
-       wymagasz do strumienia. Może być dowolny z następujących:
-      <table>
-       <title>
-        Lista możliwych trybów dla <function>fopen</function>
-        używając <parameter>tryb</parameter>
-       </title>
-       <tgroup cols="2">
-        <thead>
-         <row>
-          <entry><parameter>tryb</parameter></entry>
-          <entry>Opis</entry>
-         </row>
-        </thead>
-        <tbody>
-         <row>
-          <entry><literal>'r'</literal></entry>
-          <entry>
-           Otwiera tylko do odczytu; umieszcza wskaźnik pliku na jego początku.
-          </entry>
-         </row>
-         <row>
-          <entry><literal>'r+'</literal></entry>
-          <entry>
-           Otwiera do odczytu i zapisu; umieszcza wskaźnik pliku na jego początku.
-          </entry>
-         </row>
-         <row>
-          <entry><literal>'w'</literal></entry>
-          <entry>
-           Otwiera tylko do zapisu; umieszcza wskaźnik pliku na jego początku
-           i obcina plik do zerowej długości. Jeśli plik nie istnieje to
-           próbuje go utworzyć.
-          </entry>
-         </row>
-         <row>
-          <entry><literal>'w+'</literal></entry>
-          <entry>
-           Otwiera do odczytu i zapisu; umieszcza wskaźnik pliku na jego początku
-           i obcina plik do zerowej długości. Jeśli plik nie istnieje to
-           próbuje go utworzyć.
-          </entry>
-         </row>
-         <row>
-          <entry><literal>'a'</literal></entry>
-          <entry>
-           Otwiera tylko do zapisu; umieszcza wskaźnik pliku na jego końcu.
-           Jeśli plik nie istnieje to próbuje go utworzyć.
-          </entry>
-         </row>
-         <row>
-          <entry><literal>'a+'</literal></entry>
-          <entry>
-           Otwiera do odczytu i zapisu; umieszcza wskaźnik pliku na jego końcu.
-           Jeśli plik nie istnieje to próbuje go utworzyć.
-          </entry>
-         </row>
-         <row>
-          <entry><literal>'x'</literal></entry>
-          <entry>
-           Tworzy i otwiera plik tylko do zapisu; umieszcza wskaźnik pliku na
-           jego początku. Jeśli plik juz istnieje, wywołanie <function>fopen</function>
-           nie powiedzie się, zwróci &false; i wygeneruje błąd na poziomie
-           <constant>E_WARNING</constant>. Jeśli plik nie istnieje, spróbuje go
-           utworzyć. To jest równoważne z określeniem flag <literal>O_EXCL|O_CREAT</literal>
-           stosowanym w wywołaniu systemowym <literal>open(2)</literal>.
-          </entry>
-         </row>
-         <row>
-          <entry><literal>'x+'</literal></entry>
-          <entry>
-           Tworzy i otwiera plik odczytu i zapisu; umieszcza wskaźnik pliku na
-           jego początku. Jeśli plik juz istnieje, wywołanie <function>fopen</function>
-           nie powiedzie się, zwróci &false; i wygeneruje błąd na poziomie
-           <constant>E_WARNING</constant>. Jeśli plik nie istnieje, spróbuje go
-           utworzyć. To jest równoważne z okresleniem flag <literal>O_EXCL|O_CREAT</literal>
-           stosowanym w wywołaniu systemowym <literal>open(2)</literal>.
-          </entry>
-         </row>
-        </tbody>
-       </tgroup>
-      </table>
-     </para>
-     <note> 
-      <para>
-       Różne rodziny systemów operacyjnych stosuja rózne konwencje końca lini.
-       Kiedy zapisujesz plik tekstowy i chcesz wstawić łamanie lini, musisz
-       użyć poprawnych dla twojego systemu operacyjnego znak(ów) końca lini.
-       Systemy bazujące na Uniksie używają <literal>\n</literal> jako
-       znaku końca lini, systemy bazujące na Windowsie używają <literal>\r\n</literal>
-       jako znaków końca lini, a systemy Macintosh używają <literal>\r</literal>
-       jako znak końca lini.
-      </para>
-      <para>
-       Jeśli użyjesz nieprawidłowego końca lini do zapisu pliku, możesz
-       zaobserwować, w innych aplikacjach otwierając ten plik, że "wygląda on
-       zabawnie".
-      </para>
-      <para>
-       Windows oferuje flagę (<literal>'t'</literal>) konwertującą tryb tekstowy,
-       która przezroczyście przekłada <literal>\n</literal> na
-       <literal>\r\n</literal> kiedy pracujesz z plikiem. Dla kontrastu, możesz
-       także uzyć <literal>'b'</literal> aby wymusić tryb binarny, wtedy
-       nie będzie konwertować twoich danych. Aby użyć tych flag, wstaw
-       <literal>'b'</literal> lub <literal>'t'</literal> jako ostatni
-       znak w parametrze <parameter>tryb</parameter>.
-      </para>
-      <para>
-       Domyślnie tryb konwersji zależy od SAPI i wersji PHP jakiej używasz,
-       więc namawiamy aby zawsze podawać stosowną flage w celu przenośności.
-       Powinieneś użyć trybu <literal>'t'</literal> jeśli pracujesz ze
-       zwykłymi plikami tekstowymi (plain-text)i używasz  <literal>\n</literal>
-       do ograniczenia konców lini w twoim skrypcie, ale wymagasz aby twój
-       plik był czytelny w aplikacjach takich jak notatnik. Powinieneś uzyć
-       <literal>'b'</literal> w każdym innym przypadku.
-      </para>
-      <para>
-       Jeśli nie podasz flagi 'b' kiedy pracujesz na binarnych plikach, możesz
-       doświadczyć dziwnych problemów z twoimi danymi, włączając uszkodzone pliki
-       graficzne i dziwne problemy ze znakami <literal>\r\n</literal>.
-      </para>
-     </note>
-     <note>
-      <para>
-       Dla przenośności, bardzo zalecane jest użycie zawsze flagi 'b'
-       kiedy otwierasz pliki za pomocą <function>fopen</function>.
-      </para>
-     </note>
-     <note>
-      <para>
-       Ponownie, dla przenośności, jest również bardzo zalecane abyś,
-       przepisał swój kod, który używa lub polega na trybie <literal>'t'</literal>
-       tak aby używał poprawnego końca lini oraz trybu <literal>'b'</literal>.
-      </para>
-     </note>
-    </listitem>
-   </varlistentry>
-   <varlistentry>
-    <term><parameter>użyj_include_path</parameter></term>
+     <term><parameter>mode</parameter></term>
      <listitem>
       <para>
-       Opcjonalny trzeci parametr <parameter>użyj_include_path</parameter>
-       może być ustawiony na '1' lub &true; jeśli chcesz szukać pliku także w 
+       Parametr <parameter>mode</parameter> określa rodzaj dostępu, jaki
+       wymagasz do strumienia. Może być dowolny z następujących:
+       <table>
+        <title>
+         Lista możliwych trybów dla <function>fopen</function>
+         używając <parameter>mode</parameter>
+        </title>
+        <tgroup cols="2">
+         <thead>
+          <row>
+           <entry><parameter>tryb</parameter></entry>
+           <entry>Opis</entry>
+          </row>
+         </thead>
+         <tbody>
+          <row>
+           <entry><literal>'r'</literal></entry>
+           <entry>
+            Otwiera tylko do odczytu; umieszcza
+            wskaźnik pliku na jego początku.
+           </entry>
+          </row>
+          <row>
+           <entry><literal>'r+'</literal></entry>
+           <entry>
+            Otwiera do odczytu i zapisu; umieszcza wskaźnik
+            pliku na jego początku.
+           </entry>
+          </row>
+          <row>
+           <entry><literal>'w'</literal></entry>
+           <entry>
+            Otwiera tylko do zapisu; umieszcza wskaźnik pliku na jego początku
+            i obcina plik do zerowej długości. Jeśli plik nie istnieje to
+            próbuje go utworzyć.
+           </entry>
+          </row>
+          <row>
+           <entry><literal>'w+'</literal></entry>
+           <entry>
+            Otwiera plik do odczytu i zapisu, poza tym zachowuje się
+            tak samo jak <literal>'w'</literal>.
+           </entry>
+          </row>
+          <row>
+           <entry><literal>'a'</literal></entry>
+           <entry>
+            Otwiera tylko do zapisu; umieszcza wskaźnik pliku na jego końcu.
+            Jeśli plik nie istnieje, to próbuje go utworzyć.
+            W tym trybie, <function>fseek</function> nie ma żadnego wpływu, zapisy zawsze odbywają się na końcu pliku.
+           </entry>
+          </row>
+          <row>
+           <entry><literal>'a+'</literal></entry>
+           <entry>
+            Otwiera do odczytu i zapisu; umieszcza wskaźnik pliku na jego końcu.
+            Jeśli plik nie istnieje, to próbuje go utworzyć. W tym trybie <function>fseek</function>
+            nie ma żadnego wpływu, zapisy zawsze odbywają się na końcu pliku.
+           </entry>
+          </row>
+          <row>
+           <entry><literal>'x'</literal></entry>
+           <entry>
+            Tworzy i otwiera plik tylko do zapisu; umieszcza wskaźnik pliku na
+            jego początku. Jeśli plik już istnieje, wywołanie <function>fopen</function>
+            nie powiedzie się, zwróci &false; i wygeneruje błąd na poziomie
+            <constant>E_WARNING</constant>. Jeśli plik nie istnieje, spróbuje go
+            utworzyć. To jest równoważne z określeniem flag <literal>O_EXCL|O_CREAT</literal>
+            stosowanym w wywołaniu systemowym <literal>open(2)</literal>.
+           </entry>
+          </row>
+          <row>
+           <entry><literal>'x+'</literal></entry>
+           <entry>
+            Otwiera plik do odczytu i zapisu, poza tym zachowuje się
+            tak samo jak <literal>'x'</literal>.
+           </entry>
+          </row>
+          <row>
+           <entry><literal>'c'</literal></entry>
+           <entry>
+            Otwiera plik tylko do zapisu. Jeśli plik nie istnieje, jest
+            tworzony. Jeśli istnieje, nie jest obcinany do zerowej długości (w przeciwieństwie do
+            <literal>'w'</literal>) ani też wywołanie tej funkcji nie kończy się niepowodzeniem (jak
+            w wypadku <literal>'x'</literal>). Wskaźnik pliku jak umieszczany na początku pliku. To może
+            być użyteczne, jeśli chcemy uzyskać advisory lock (patrz <function>flock</function>)
+            przed próbą zmodyfikowania pliku, gdyż użycie
+            <literal>'w'</literal> może obciąć zawartość pliku, zanim uda się
+            zdobyć locka (jeżeli obcinanie zawartości pliku jest pożądane,
+            można użyć <function>ftruncate</function> po wystąpieniu o locka).
+           </entry>
+          </row>
+          <row>
+           <entry><literal>'c+'</literal></entry>
+           <entry>
+            Otwiera plik do odczytu i zapisu, poza tym zachowuje się
+            tak samo jak <literal>'c'</literal>.
+           </entry>
+          </row>
+          <row>
+           <entry><literal>'e'</literal></entry>
+           <entry>
+            Ustawia flagę close-on-exec na otwartym deskryptorze pliku. Dostępne
+            tylko w PHP skompilowanym na systemach zgodnych z POSIX.1-2008.
+           </entry>
+          </row>
+         </tbody>
+        </tgroup>
+       </table>
+      </para>
+      <note>
+       <para>
+        Różne rodziny systemów operacyjnych stosują różne konwencje końca linii.
+        Kiedy zapisujesz plik tekstowy i chcesz wstawić znak przełamania linii, musisz
+        użyć znaku/znaków poprawnych dla twojego systemu operacyjnego.
+        Systemy bazujące na Uniksie używają <literal>\n</literal> jako
+        znaku końca linii, systemy bazujące na Windowsie używają <literal>\r\n</literal>
+        jako znaków końca linii, a systemy Macintosh (Mac OS Classic) używają <literal>\r</literal>
+        jako znak końca linii.
+       </para>
+       <para>
+        Jeśli użyjesz nieprawidłowego końca linii do zapisu pliku, możesz
+        zaobserwować, w innych aplikacjach otwierając ten plik, że "wygląda on
+        dziwnie".
+       </para>
+       <para>
+        Windows oferuje flagę (<literal>'t'</literal>) konwertującą tryb tekstowy,
+        która po cichu przekłada <literal>\n</literal> na
+        <literal>\r\n</literal> kiedy pracujesz z plikiem. Z drugiej strony możesz
+        także użyć <literal>'b'</literal> aby wymusić tryb binarny, który
+        nie będzie konwertować twoich danych. Aby użyć tych flag, wstaw
+        <literal>'b'</literal> lub <literal>'t'</literal> jako ostatni
+        znak w parametrze <parameter>mode</parameter>.
+       </para>
+       <para>
+        Domyślnie tryb konwersji zależy od SAPI i wersji PHP jakiej używasz,
+        więc namawiamy aby zawsze podawać stosowną flage w celu przenośności.
+        Powinieneś użyć trybu <literal>'t'</literal> jeśli pracujesz ze
+        zwykłymi plikami tekstowymi (plain-text)i używasz  <literal>\n</literal>
+        do ograniczenia konców lini w twoim skrypcie, ale wymagasz aby twój
+        plik był czytelny w aplikacjach takich jak notatnik. Powinieneś uzyć
+        <literal>'b'</literal> w każdym innym przypadku.
+
+        Domyślny tryb konwersji to <literal>'b'</literal>.
+        Możesz użyć trybu <literal>'t'</literal>
+        jeśli pracujesz z plikami zawierającymi wyłącznie czysty tekst i używasz
+        <literal>\n</literal> jako znaku końca linii, ale
+        chciałbyś aby twoje pliki były odczytywane przez takie aplikacje jak stare wersje Notatnika.
+        W każdym innym przypadku powinieneś używać trybu <literal>'b'</literal>.
+       </para>
+       <para>
+        Jeśli podasz flagę 't' kiedy pracujesz na plikach binarnych, możesz
+        doświadczyć dziwnych problemów z twoimi danymi, wliczając w to uszkodzone pliki
+        graficzne i dziwne problemy ze znakami <literal>\r\n</literal>.
+       </para>
+      </note>
+      <note>
+       <para>
+        Ze względu na przenośność jest bardzo zalecane aby przepisać
+        kod, który używa lub zakłada użycie trybu <literal>'t'</literal>,
+        tak aby używał poprawnych znaków końca linii i trybu
+        <literal>'b'</literal>.
+       </para>
+      </note>
+      <note>
+       <simpara>
+        Parametr <parameter>mode</parameter> jest ignorowany dla wrapperów <filename>php://output</filename>,
+        <filename>php://input</filename>, <filename>php://stdin</filename>,
+        <filename>php://stdout</filename>, <filename>php://stderr</filename> oraz
+        <filename>php://fd</filename>.
+       </simpara>
+      </note>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>use_include_path</parameter></term>
+     <listitem>
+      <para>
+       Opcjonalny trzeci parametr <parameter>use_include_path</parameter>
+       może być ustawiony na '1' lub &true; jeśli chcesz szukać pliku także w
        <link linkend="ini.include-path">include_path</link>.
       </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>kontekst</parameter></term>
+     <term><parameter>context</parameter></term>
      <listitem>
       &note.context-support;
      </listitem>
@@ -243,17 +282,14 @@ $handle = fopen("c:\\data\\info.txt", "r");
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca wskaźnik pliku do zasobu w przypadku sukcesu lub &false; przy błędzie.
+   Zwraca wskaźnik pliku do zasobu w przypadku powodzenia,
+   &return.falseforfailure;
   </para>
  </refsect1>
 
  <refsect1 role="errors">
   &reftitle.errors;
-  <para>
-   Jeśli otwieranie się nie powiedzie, funkcja wygeneruje błąd na poziomie 
-   <constant>E_WARNING</constant>. Możesz użyć <link linkend="language.operators.errorcontrol">@</link> aby
-   zatuszować to ostrzeżenie.
-  </para>
+  &fs.emits.warning.on.failure;
  </refsect1>
 
  <refsect1 role="changelog">
@@ -269,19 +305,9 @@ $handle = fopen("c:\\data\\info.txt", "r");
      </thead>
      <tbody>
       <row>
-       <entry>4.3.2</entry>
+       <entry>7.0.16, 7.1.2</entry>
        <entry>
-        Od PHP 4.3.2 domyślny tryb ustawiany jest na binarny, dla wszystkich
-        platform, które rozróżniają tryby binarne i tekstowe. Jeśli masz
-        problemy ze skryptem po aktualizacji, spróbuj użyć flagi <literal>'t'</literal>
-        jako obejście dopóki nie uczynisz Twojego skryptu bardziej przenośnym
-        jak opisano niżej.
-       </entry>
-      </row>
-      <row>
-       <entry>4.3.2</entry>
-       <entry>
-        Dodano opcje <literal>'x'</literal> i <literal>'x+'</literal>
+        Dodano tryb <literal>'e'</literal>.
        </entry>
       </row>
      </tbody>
@@ -294,14 +320,14 @@ $handle = fopen("c:\\data\\info.txt", "r");
   &reftitle.examples;
   <para>
    <example>
-    <title><function>fopen</function> przykłady</title>
-     <programlisting role="php">
-<![CDATA[
+    <title>Przykłady użycia <function>fopen</function></title>
+    <programlisting role="php">
+     <![CDATA[
 <?php
 $handle = fopen("/home/rasmus/plik.txt", "r");
 $handle = fopen("/home/rasmus/plik.gif", "wb");
-$handle = fopen("http://www.przyklad.com/", "r");
-$handle = fopen("ftp://uzytkownik:haslo@przyklad.com/jakisplik.txt", "w");
+$handle = fopen("http://www.example.com/", "r");
+$handle = fopen("ftp://uzytkownik:haslo@example.com/jakisplik.txt", "w");
 ?>
 ]]>
     </programlisting>
@@ -312,12 +338,21 @@ $handle = fopen("ftp://uzytkownik:haslo@przyklad.com/jakisplik.txt", "w");
  <refsect1 role="notes">
   &reftitle.notes;
   &warn.ssl-non-standard;
-  &note.sm.uidcheck.dir;
-  <para>
-   Jeśli doświadczasz problemów z odczytem lub zapisywaniem do plików i
-   używasz PHP w postaci modułu serwera, pamiętaj, żeby się upewnić, że
-   pliki i katalogi, których używasz są dostępne dla procesu serwera.
-  </para>
+  <note>
+   <para>
+    Jeśli doświadczasz problemów z odczytem lub zapisywaniem do plików i
+    używasz PHP w postaci modułu serwera, pamiętaj upewnić się, że
+    pliki i katalogi, których używasz są dostępne dla procesu serwera.
+   </para>
+  </note>
+  <note>
+   <para>
+    Ta funkcja może także zadziałać z powodzeniem jeśli <parameter>filename</parameter>
+    jest katalogiem. Jeśli nie jesteś pewien czy <parameter>filename</parameter> jest
+    plikiem czy katalogiem, możesz musieć użyć <function>is_dir</function>
+    przed wywołaniem <function>fopen</function>.
+   </para>
+  </note>
  </refsect1>
 
  <refsect1 role="seealso">
@@ -336,6 +371,8 @@ $handle = fopen("ftp://uzytkownik:haslo@przyklad.com/jakisplik.txt", "w");
     <member><function>stream_set_timeout</function></member>
     <member><function>popen</function></member>
     <member><function>stream_context_create</function></member>
+    <member><function>umask</function></member>
+    <member><classname>SplFileObject</classname></member>
    </simplelist>
   </para>
  </refsect1>

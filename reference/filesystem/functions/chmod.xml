@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 063e19aa135491544f2e96ea47b9597282d35c60 Maintainer: adi Status: ready -->
+<!-- EN-Revision: 5eb55cda5cc4bc61e94f17468c6402d631edafa5 Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
-<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.chmod">
+<!-- CREDITS: sobak -->
+<refentry xml:id="function.chmod" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>chmod</refname>
   <refpurpose>Zmienia prawa dostępu do pliku</refpurpose>
@@ -11,12 +12,12 @@
   &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>chmod</methodname>
-   <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
-   <methodparam><type>int</type><parameter>prawa</parameter></methodparam>
+   <methodparam><type>string</type><parameter>filename</parameter></methodparam>
+   <methodparam><type>int</type><parameter>permissions</parameter></methodparam>
   </methodsynopsis>
   <para>
    Próbuje dokonać zmiany praw pliku na podane w
-   <parameter>prawa</parameter>.
+   <parameter>permissions</parameter>.
   </para>
  </refsect1>
 
@@ -25,7 +26,7 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>nazwa_pliku</parameter></term>
+     <term><parameter>filename</parameter></term>
      <listitem>
       <para>
        Ścieżka do pliku.
@@ -33,12 +34,12 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>prawa</parameter></term>
+     <term><parameter>permissions</parameter></term>
      <listitem>
       <para>
-       Pamiętaj, że parametr <parameter>prawa</parameter> nie jest
-       automatycznie uznawany za wartość oktalną (ósemkową), więc aby upewnić się w oczekiwanej operacji
-       musisz poprzedzić <parameter>prawa</parameter> zerem (0). Łańcuchy
+       Pamiętaj, że parametr <parameter>permissions</parameter> nie jest
+       automatycznie uznawany za wartość oktalną (ósemkową), więc aby mieć pewność wykonanej operacji,
+       musisz poprzedzić <parameter>permissions</parameter> zerem (0). Ciagi znaków
        takie jak "g+w" nie będą poprawnie interpretowane.
       </para>
       <para>
@@ -55,12 +56,12 @@ chmod("/somedir/somefile", 0755);  // ósemkowo; poprawna wartość dla praw
        </informalexample>
       </para>
       <para>
-       Parametr <parameter>prawa</parameter> zawiera trzy cyfry w systemie ósemkowym
-       określające prawa dostępu dla właściciela, grupy do której on należy
+       Parametr <parameter>permissions</parameter> składa się z trzech cyfr w systemie ósemkowym
+       określające prawa dostępu dla właściciela, grupy, do której on należy
        oraz wszystkich innych. Jedna cyfra może zostać obliczona poprzez
        dodanie do siebie potrzebnych uprawnień. Cyfra 1 oznacza nadanie
        praw do wykonania, cyfra 2 oznacza, że plik będzie zapisywalny, cyfra
-       4 oznacza, że plik będzie można odczytać. Dodając te cyfry
+       4 oznacza, że plik będzie można odczytać. Dodając te cyfry,
        określamy potrzebne uprawnienia. Więcej o prawach w systemie Unix
        można przeczytać w '<command>man 1 chmod</command>'
        i '<command>man 2 chmod</command>'.
@@ -99,23 +100,23 @@ chmod("/katalog/plik", 0750);
   </para>
  </refsect1>
 
+ <refsect1 role="errors">
+  &reftitle.errors;
+  <para>
+   W wypadku niepowodzenia, zwracany jest komunikat o poziomie <constant>E_WARNING</constant>.
+  </para>
+ </refsect1>
+
  <refsect1 role="notes">
   &reftitle.notes;
   <note>
    <para>
-    Bieżący użytkownik to użytkownik pod którym działa PHP. Prawdpodobnie nie jest to 
-    ten sam użytkownik, którego używasz normalnie przy dostępie do shell'a lub FTP.
-    W większości systemów, prawa mogą być zmienione jedynie przez właściciela pliku.
+    Bieżący użytkownik to użytkownik, pod którym działa PHP. Prawdopodobnie nie jest to
+    ten sam użytkownik, którego używasz normalnie przy dostępie do shella lub FTP.
+    W większości systemów uprawnienia mogą być zmienione jedynie przez właściciela pliku.
    </para>
   </note>
   &note.no-remote;
-  <note>
-   <para>
-    Kiedy włączony jest &safemode;, PHP sprawdza czy pliki lub katalogi na których mają
-    zostać wykonane operacje posiadają taki sam UID (właściciela) jak skrypt, który jest
-    wykonywany. W dodatku, nie możesz ustawić SUI, SGID i bitów lepkości (sticky bits).
-   </para>
-  </note>
  </refsect1>
 
  <refsect1 role="seealso">
