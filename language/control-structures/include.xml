@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: c5c902b47755cf0c0761e90cce4cc8ee1eb9426e Maintainer: sobak Status: ready -->
+<!-- EN-Revision: ffbe6525350c91d58e1d5b7a52c46c911035c8e0 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 
 <sect1 xml:id="function.include" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -10,19 +10,25 @@
   określony plik
  </simpara>
  <simpara>
-  Dokumentaja poniżej odnosi się także do <function>require</function>.
+  Dokumentacja poniżej odnosi się także do <function>require</function>.
  </simpara>
  <simpara>
-  Pliki są dołączane bazując na podanej ścieżce lub jeśli jej nie określono, na
+  Pliki są dołączane, bazując na podanej ścieżce lub jeśli jej nie określono, na
   ustawieniu <link linkend="ini.include-path">include_path</link>. Jeżeli plik
   nie zostanie znaleziony w <link linkend="ini.include-path">include_path</link>,
   <literal>include</literal> sprawdzi jeszcze katalog aktualnie uruchamianego
   skryptu i obecny katalog roboczy przed zwróceniem błędu. Konstrukcja
   <literal>include</literal> wyemituje
-  <link linkend="constant.e-warning">ostrzeżenie</link> jeżeli
-  nie znajdzie pliu; jest to zachowanie odmienne od
+  <constant>E_WARNING</constant> jeżeli
+  nie znajdzie pliku; jest to zachowanie odmienne od
   <function>require</function>, który zgłosi
-  <link linkend="constant.e-error">błąd krytyczny</link>.
+  <constant>E_ERROR</constant>.
+ </simpara>
+ <simpara>
+  Zarówno <literal>include</literal> jak i <literal>require</literal>
+  dodatkowo zgłoszą <constant>E_WARNING</constant>, jeżeli dostęp do pliku
+  moe powiedzie się, jeszcze przed zgłoszeniem finalnego <constant>E_WARNING</constant> lub
+  <constant>E_ERROR</constant>.
  </simpara>
  <simpara>
   Jeżeli ścieżka jest zdefiniowana — czy to absolutna (zaczynająca się literą
@@ -150,12 +156,6 @@ include 'file.php?foo=1&bar=2';
 
 // Działa.
 include 'http://www.example.com/file.php?foo=1&bar=2';
-
-$foo = 1;
-$bar = 2;
-include 'file.txt';  // Działa.
-include 'file.php';  // Działa.
-
 ?>
 ]]>
    </programlisting>
@@ -202,7 +202,7 @@ include 'file.php';  // Działa.
    <programlisting role="php">
 <![CDATA[
 <?php
-// nie zadziała, wykonywane jako: include(('vars.php') == TRUE), czyli include('')
+// nie zadziała, wykonywane jako: include(('vars.php') == TRUE), czyli include('1')
 if (include('vars.php') == TRUE) {
     echo 'OK';
 }
@@ -263,11 +263,10 @@ echo $bar; // wyświetla 1
  <para>
   Jeżeli w dołączanym pliku zdefiniowano funkcję, mogą one być użyte w
   w pliku głównym, niezależnie czy znajdują się przed, czy za <function>return</function>.
-  Jeżeli plik jest dołączany dwa razy, PHP 5 zgłasza błąd krytyczny, ponieważ funkcje
-  zostały już zadeklarowane, podczas gdy PHP 4 nie zwraca uwagi na funkcje
-  zdefiniowane po instrukcji <function>return</function>.
+  Jeżeli plik jest dołączany dwa razy, PHP zgłasza błąd krytyczny, ponieważ funkcje
+  zostały już zadeklarowane.
   Zaleca się użycie <function>include_once</function> zamiast
-  sprawdzania czy plik został już dołączony i warunkowego zwracania
+  sprawdzania, czy plik został już dołączony i warunkowego zwracania
   w dołączanym pliku.
  </para>
  <simpara>
