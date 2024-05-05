@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: ad8e0151314c98ae54244ce625ed41cf14798bed Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: f3b9d85f71934d6814a493fabb367e10731e0394 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS: qrak, sobak -->
-<!-- splitted from ./en/functions/apache.xml, last change in rev 1.2 -->
+<!-- CREDITS: joeaccord, qrak -->
 <refentry xml:id="function.apache-response-headers" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>apache_response_headers</refname>
@@ -12,51 +11,24 @@
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
-   <type>array</type><methodname>apache_response_headers</methodname>
+   <type class="union"><type>array</type><type>false</type></type><methodname>apache_response_headers</methodname>
    <void/>
   </methodsynopsis>
   <para>
-   Pobiera wszystkie nagłówki HTTP odpowiedzi serwera
+   Pobiera wszystkie nagłówki HTTP odpowiedzi serwera. Działa z serwerami
+   Apache, FastCGI, CLI oraz FPM.
   </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  &no.function.parameters;
  </refsect1>
 
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
    Tablica wszystkich nagłówków odpowiedzi serwera Apache w przypadku powodzenia &return.falseforfailure;.
-  </para>
- </refsect1>
-
- <refsect1 role="changelog">
-  &reftitle.changelog;
-  <para>
-   <informaltable>
-    <tgroup cols="2">
-     <thead>
-      <row>
-       <entry>&Version;</entry>
-       <entry>&Description;</entry>
-      </row>
-     </thead>
-     <tbody>
-      <row>
-       <entry>5.5.7</entry>
-       <entry>
-        Ta funkcja stała się również dostępna w serwerze CLI.
-       </entry>
-      </row>
-      <row>
-       <entry>5.4.0</entry>
-       <entry>
-        Ta funkcja jest dostępna dla FastCGI. Wcześniej była
-        wspierana tylko gdy PHP zostało zainstalowane jako moduł Apache lub
-        przez moduł <link linkend="book.nsapi">NSAPI</link> na serwerach
-        Netscape/iPlanet/SunONE.
-       </entry>
-      </row>
-     </tbody>
-    </tgroup>
-   </informaltable>
   </para>
  </refsect1>
 
