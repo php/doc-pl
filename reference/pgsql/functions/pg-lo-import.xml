@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: e41aab5ecacf449e51179886c17f1d41735b0234 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: c2eca73ef79ebe78cebb34053e41b565af504c4f Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.6 -->
 <!-- CREDITS: garbus, jarek -->
 <refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.pg-lo-import">
  <refnamediv>
   <refname>pg_lo_import</refname>
-  <refpurpose>Importuje wielki obiekt (Large Object - LO) z pliku</refpurpose>
+  <refpurpose>Importuje wielki obiekt (Large Object, LO) z pliku</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>int</type><methodname>pg_lo_import</methodname>
-   <methodparam choice="opt"><type>resource</type><parameter>polaczenie</parameter></methodparam>
+   <methodparam choice="opt"><type>PgSql\Connection</type><parameter>connection</parameter></methodparam>
    <methodparam><type>string</type><parameter>sciezka</parameter></methodparam>
    <methodparam choice="opt"><type>mixed</type><parameter>id_obiektu</parameter></methodparam>
   </methodsynopsis>
@@ -26,7 +26,6 @@
    Użycie interfejsu wielkich obiektów (LO) wymaga zamknięcia wszystkich operacji
    z nim związanych wewnątrz transakcji.
   </para>
-  &note.sm.uidcheck;
   <note>
    <para>
     Ta funkcja była poprzednio nazwana <function>pg_loimport</function>.
@@ -39,13 +38,10 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>polaczenie</parameter></term>
+     <term><parameter>connection</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia do bazy PostgreSQL.  Gdy parametr
-       <parameter>polaczenie</parameter> nie został podany, zostanie użyte
-       domyślne połączenie. Domyślnym połączeniem jest ostatnie połączenie stworzone przez
-       <function>pg_connect</function> lub <function>pg_pconnect</function>.
+       &pgsql.parameter.connection-with-unspecified-default;
       </para>
      </listitem>
     </varlistentry>
@@ -64,8 +60,8 @@
       <para>
        Jeśli <parameter>id_obiektu</parameter> został podany, funkcja
        spróbuje stworzyć wielki obiekt o podanym unikalnym identyfikatorze, w przeciwnym razie
-       serwer przydzieli dowolne id. Parametr został
-       dodany w PHP 5.3 i jest uzależniony od mechanizmów działania, które jako pierwsze
+       serwer przydzieli dowolny identyfikator. Parametr
+       jest uzależniony od mechanizmów działania, które jako pierwsze
        pojawiły się w PostgreSQL 8.1.
       </para>
      </listitem>
@@ -77,33 +73,25 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Identyfikator <varname>OID</varname> nowo stworzonego LO, lub
-   &false; w przypadku błędów.
+   Identyfikator <varname>OID</varname> nowo stworzonego LO, &return.falseforfailure;.
   </para>
  </refsect1>
 
  <refsect1 role="changelog">
   &reftitle.changelog;
-  <para>
-   <informaltable>
-    <tgroup cols="2">
-     <thead>
-      <row>
-       <entry>&Version;</entry>
-       <entry>&Description;</entry>
-      </row>
-     </thead>
-     <tbody>
-      <row>
-       <entry>5.3.0</entry>
-       <entry><para>
-        Dodano opcjonalny parametr <parameter>id_obiektu</parameter>.
-       </para></entry>
-      </row>
-     </tbody>
-    </tgroup>
-   </informaltable>
-  </para>
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     &pgsql.changelog.connection-object;
+    </tbody>
+   </tgroup>
+  </informaltable>
  </refsect1>
 
  <refsect1 role="examples">

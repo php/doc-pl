@@ -1,37 +1,87 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: adi Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: ea62fb83196997032641b50fe44420305466195e Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-<!-- splitted from ./en/functions/filesystem.xml, last change in rev 1.2 -->
-<refentry xml:id="function.rmdir" xmlns="http://docbook.org/ns/docbook">
+<!-- CREDITS: adi -->
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.rmdir">
  <refnamediv>
   <refname>rmdir</refname>
-  <refpurpose>Usuwanie katalogów</refpurpose>
+  <refpurpose>Usuwa katalog</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>rmdir</methodname>
-   <methodparam><type>string</type><parameter>nazwa_katalogu</parameter></methodparam>
-   <methodparam choice="opt"><type>resource</type><parameter>kontekst</parameter></methodparam>
+   <methodparam><type>string</type><parameter>directory</parameter></methodparam>
+   <methodparam choice="opt"><type class="union"><type>resource</type><type>null</type></type><parameter>context</parameter><initializer>&null;</initializer></methodparam>
   </methodsynopsis>
   <para>
-   Próbuje usunąć katalog podany przez <parameter>nazwa_katalogu</parameter>.
-   Katalog musi byc pusty, i stosowne uprawnienia muszą na to pozwalać.
-   &return.success;
-  </para>
-  <note>
-   <simpara>
-    Od PHP 5.0.0 <function>rmdir</function> może być również
-    użyta z <emphasis>niektórymi</emphasis> wrapperami URL.  Odwołaj się do <xref linkend="wrappers"/>
-    listy wrapperów, które wspierają <function>rmdir</function>.
-   </simpara>
-  </note>
-  &note.context-support;
-  &note.sm.uidcheck.dir;
-  <para>
-   Patrz także <function>mkdir</function> i <function>unlink</function>.
+   Próbuje usunąć katalog podany jako <parameter>directory</parameter>.
+   Katalog musi byc pusty i stosowne uprawnienia muszą na to pozwalać.
+   W wypadku niepowodzenia zostanie wyemitowany błąd <constant>E_WARNING</constant>.
   </para>
  </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>directory</parameter></term>
+     <listitem>
+      <para>
+       Ścieżka do katalogu.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>context</parameter></term>
+     <listitem>
+      &note.context-support;
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykłady użycia <function>rmdir</function></title>
+    <programlisting role="php">
+     <![CDATA[
+<?php
+if (!is_dir('przyklady')) {
+    mkdir('przyklady');
+}
+
+rmdir('przyklady');
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>is_dir</function></member>
+    <member><function>mkdir</function></member>
+    <member><function>unlink</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
 </refentry>
 
 <!-- Keep this comment at the end of the file

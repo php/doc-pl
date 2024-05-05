@@ -1,24 +1,26 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: adi Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 0c9c2dd669fe9395eaa73d487fbd160f9057429a Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: adi -->
 <refentry xml:id="function.move-uploaded-file" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>move_uploaded_file</refname>
-  <refpurpose>Przenieś uploadowany plik do innej lokalizacji</refpurpose>
+  <refpurpose>Przenosi uploadowany plik do innej lokalizacji</refpurpose>
  </refnamediv>
+
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>move_uploaded_file</methodname>
-   <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
-   <methodparam><type>string</type><parameter>przeznaczenie</parameter></methodparam>
+   <methodparam><type>string</type><parameter>from</parameter></methodparam>
+   <methodparam><type>string</type><parameter>to</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Funkcja ta sprawdza czy na pewno plik określony przez
-   <parameter>nazwa_pliku</parameter> jest prawidło uploadowanym plikiem
-   (to znaczy, że został uploadowany przez PHPowy mechanizm uploadowania HTTP
+   Funkcja ta sprawdza, czy na pewno plik określony przez
+   <parameter>filename</parameter> jest prawidło wgranym plikiem
+   (to znaczy, że został uploadowany przez PHP-owy mechanizm uploadowania HTTP
    POST). Jeśli plik jest prawidłowy, to zostanie przeniesiony do nazwy pliku
-   wskazanej przez <parameter>przeznaczenie</parameter>.
+   wskazanej przez parametr <parameter>to</parameter>.
   </para>
   <para>
    Ten rodzaj testów jest szczególnie ważny jeśli istnieje szansa, że
@@ -33,7 +35,7 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>nazwa_pliku</parameter></term>
+     <term><parameter>from</parameter></term>
      <listitem>
       <para>
        Nazwa wgrywanego pliku.
@@ -41,7 +43,7 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>przeznaczenie</parameter></term>
+     <term><parameter>to</parameter></term>
      <listitem>
       <para>
        Miejsce docelowe przenoszonego pliku.
@@ -51,31 +53,59 @@
    </variablelist>
   </para>
  </refsect1>
- 
+
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Jeśli <parameter>nazwa_pliku</parameter> nie jest prawidło uploadowanym plikiem,
-   to żadna akcja nie zostanie wykonana i <function>move_uploaded_file</function>
-   zwróci &false;.
+   Zwraca &true; w wypadku powodzenia.
   </para>
   <para>
-   Jeśli <parameter>nazwa_pliku</parameter> jest prawidłowo uploadowanym plikiem,
-   ale nie może zostać przeniesiony z jakiś powodów, żadna akcja nie zostanie wykonana
+   Jeśli <parameter>filename</parameter> nie jest prawidło uploadowanym plikiem,
+   to żadna akcja nie zostanie wykonana i <function>move_uploaded_file</function> zwróci
+   &false;.
+  </para>
+  <para>
+   Jeśli <parameter>from</parameter> jest prawidłowo uploadowanym plikiem, ale
+   nie może zostać przeniesiony z jakichś powodów, żadna akcja nie zostanie wykonana
    i <function>move_uploaded_file</function> zwróci &false;.
-   Dodatkowo, zostanie pokazane ostrzeżenie.
+   Dodatkowo zostanie pokazane ostrzeżenie.
   </para>
  </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Wgrywanie wielu plików</title>
+    <programlisting role="php">
+     <![CDATA[
+<?php
+$uploads_dir = '/uploads';
+foreach ($_FILES["pictures"]["error"] as $key => $error) {
+    if ($error == UPLOAD_ERR_OK) {
+        $tmp_name = $_FILES["pictures"]["tmp_name"][$key];
+        // basename() may prevent filesystem traversal attacks;
+        // further validation/sanitation of the filename may be appropriate
+        $name = basename($_FILES["pictures"]["name"][$key]);
+        move_uploaded_file($tmp_name, "$uploads_dir/$name");
+    }
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
  <refsect1 role="notes">
   &reftitle.notes;
- 
   <note>
    <para>
-    Funkcja <function>move_uploaded_file</function> jest świadoma &safemode;
-    oraz <link linkend="ini.open-basedir">open_basedir</link>.
-    Jednak, ograniczenia nałożone są tylko na ścieżkę
-    <parameter>przeznaczenie</parameter>, ponieważ pozwala na przenoszenie
-    uploadowanych plików w których <parameter>nazwa_pliku</parameter> może
+    Funkcja <function>move_uploaded_file</function> jest świadoma
+    <link linkend="ini.open-basedir">open_basedir</link>.
+    Jednak ograniczenia nałożone są tylko na ścieżkę
+    <parameter>to</parameter>, ponieważ pozwala na przenoszenie
+    uploadowanych plików w których <parameter>from</parameter> może
     kolidować z takimi ograniczeniami. <function>move_uploaded_file</function> zapewnia bezpieczeństwo
     tej operacji poprzez zezwolenie na przeniesienie tylko tych plików,
     które były uploadowane przez PHP.
@@ -87,18 +117,18 @@
    </para>
   </warning>
  </refsect1>
-   
+
  <refsect1 role="seealso">
   &reftitle.seealso;
   <para>
    <simplelist>
     <member><function>is_uploaded_file</function></member>
+    <member><function>rename</function></member>
     <member>Zobacz <link linkend="features.file-upload">Obsługa uploadowanych plików</link> w celu uzyskania prostych przykładów użycia tej funkcji.</member>
    </simplelist>
   </para>
  </refsect1>
 </refentry>
-
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

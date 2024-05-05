@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: f10ab85a2947f2ebf32fd3ee05df0dbca4095188 Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: d43f29f6a628996d1b7c3be487dcff39450146bf Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: sobak, qrak -->
 <refentry xml:id="function.mail" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>mail</refname>
-  <refpurpose>Wysyłanie poczty elektronicznej</refpurpose>
+  <refpurpose>Wysyła e-mail</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
@@ -15,8 +15,8 @@
    <methodparam><type>string</type><parameter>do</parameter></methodparam>
    <methodparam><type>string</type><parameter>temat</parameter></methodparam>
    <methodparam><type>string</type><parameter>treść</parameter></methodparam>
-   <methodparam choice="opt"><type>string</type><parameter>dodatkowe_nagłówki</parameter></methodparam>
-   <methodparam choice="opt"><type>string</type><parameter>dodatkowe_parametry</parameter></methodparam>
+   <methodparam choice="opt"><type class="union"><type>array</type><type>string</type></type><parameter>additional_headers</parameter><initializer>[]</initializer></methodparam>
+   <methodparam choice="opt"><type>string</type><parameter>additional_params</parameter><initializer>""</initializer></methodparam>
   </methodsynopsis>
   <para>
    Wysyła e-mail.
@@ -86,40 +86,36 @@ $text = str_replace("\n.", "\n..", $text);
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>dodatkowe_nagłówki</parameter> (opcjonalnie)</term>
+     <term><parameter>additional_headers</parameter> (opcjonalnie)</term>
      <listitem>
       <para>
-       Łańcuchy znaków dodane na końcu nagłówka e-maila.
+       <type>String</type> lub tablica (<type>array</type>) do dołączenia końcu nagłówka e-maila.
       </para>
       <para>
-       Parametr jest zazwyczaj wykorzystywany do wstawienia dodatkowych
+       Parametr ten jest zazwyczaj wykorzystywany do wstawienia dodatkowych
        nagłówków (From, Cc, oraz Bcc). Dodatkowe nagłówki rozdziela się
        za pomocą znaku powrotu karetki i nowego wiersza - CRLF (\r\n).
        Jeżeli do stworzenia tego nagłówka wykorzystano dane pochodzące z
        zewnątrz, powinny być one zabezpieczone, aby żadne niechciane
        nagłówki nie mogły być wstrzyknięte.
       </para>
-	  <note>
-       <para>
-        Parametr <parameter>dodatkowe_nagłówki</parameter> nie jest zabezpieczony
-        przed wstrzyknięciem nagłówków emaila. W związku z tym, użytkownik musi upewnić
-        się że określone nagłówki są bezpieczne i zawierają wyłącznie nagłówki. Między
-        innymi nigdy nie rozpoczynaj ciała wiadomości od kilku pustych linii.
-       </para>
-      </note>
+      <para>
+       Jeżeli przekazano tablicę (<type>array</type>) to jej klucze reprezentują nazwy nagłówków,
+       a wartości tablicy wartości tychże nagłówków.
+      </para>
       <note>
        <para>
         Każdy e-mail <emphasis>musi</emphasis> zawierać nagłówek
         <literal>From</literal>. Można go podawać jako parametr
-        <parameter>dodatkowe_nagłówki</parameter> albo ustawić
+        <parameter>additional_headers</parameter> albo ustawić
         w pliku &php.ini;.
        </para>
        <para>
         Wynikiem pominięcia tego nagłówka będzie informacja o błędzie,
         podobna do tej: <literal>Warning: mail(): "sendmail_from" not
         set in php.ini or custom "From:" header missing</literal>.
-        W Windows nagłówek <literal>From</literal> ustawia także
-        <literal>Return-Path</literal>.
+        Nagłówek <literal>From</literal> ustawia także
+        <literal>Return-Path</literal>, jeśli wiadomość jest wysyłana bezpośrednio przez SMTP (tylko pod Windowsem).
        </para>
       </note>
       <note>
@@ -135,10 +131,10 @@ $text = str_replace("\n.", "\n..", $text);
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>dodatkowe_parametry</parameter> (opcjonalne)</term>
+     <term><parameter>additional_params</parameter> (opcjonalne)</term>
      <listitem>
       <para>
-       Parametr <parameter>dodatkowe_parametry</parameter> może być użyty
+       Parametr <parameter>additional_params</parameter> może być użyty
        do przekazania dodatkowych opcji do programu wysyłającego e-maile.
        Zostaną one użyte przy wysyłaniu e-maila w <literal>ścieżce sendmaila</literal>
        jako ustawienia konfiguracyjne. Mogą one być użyte na przykład do
@@ -197,12 +193,9 @@ $text = str_replace("\n.", "\n..", $text);
      </thead>
      <tbody>
       <row>
-       <entry>4.2.3</entry>
+       <entry>7.2.0</entry>
        <entry>
-        Parametr <parameter>dodatkowe_parametry</parameter> jest wyłączony
-        w trybie <link linkend="ini.safe-mode">safe_mode</link>, a funkcja
-        <function>mail</function> wywołuje stosowny komunikat
-        i zwraca &false; w czasie próby jego użycia.
+        Parametr <parameter>additional_headers</parameter> przyjmuje teraz także tablicę.
        </entry>
       </row>
      </tbody>
@@ -256,9 +249,32 @@ mail($to, $subject, $message, $headers);
     </programlisting>
    </example>
    <example>
+    <title>Wysyłka maila z dodatkowymi nagłówkami jako tablicą</title>
+    <para>
+     Ten przykład wysyła taki sam email jak przykład powyżej, ale przekazuje
+     dodatkowe nagłówki jako tablicę (dostępne od PHP 7.2.0).
+    </para>
+    <programlisting role="php">
+     <![CDATA[
+<?php
+$to      = 'nobody@example.com';
+$subject = 'the subject';
+$message = 'hello';
+$headers = array(
+    'From' => 'webmaster@example.com',
+    'Reply-To' => 'webmaster@example.com',
+    'X-Mailer' => 'PHP/' . phpversion()
+);
+
+mail($to, $subject, $message, $headers);
+?>
+]]>
+    </programlisting>
+   </example>
+   <example>
     <title>Wysłanie e-maila z dodatkowym parametrem wiersza poleceń.</title>
     <para>
-     Parametr <parameter>dodatkowe_parametry</parameter> może być użyty
+     Parametr <parameter>additional_params</parameter> może być użyty
      do przekazania dodatkowych opcji do programu wysyłającego e-maile.
      Zostaną one użyte przy wysyłaniu e-maila w <literal>ścieżce sendmaila</literal>.
     </para>
@@ -339,8 +355,8 @@ mail($to, $subject, $message, implode("\r\n", $headers));
   &reftitle.notes;
   <note>
    <para>
-    Implementacja funkcji <function>mail</function> w systemach Windows
-    różni się pod wieloma względami od implementacji na platformach Unix.
+    Implementacja funkcji <function>mail</function> dla SMTP (tylko Windows)
+    różni się pod wieloma względami od implementacji sendmail.
     Po pierwsze, do tworzenia wiadomości funkcja nie używa lokalnych poleceń
     systemowych, tylko operuje bezpośrednio na gniazdach. To oznacza, że
     wymagana jest dodatkowa usługa <literal>MTA</literal>, nasłuchująca na
@@ -394,6 +410,7 @@ mail($to, $subject, $message, implode("\r\n", $headers));
   &reftitle.seealso;
   <para>
    <simplelist>
+    <member><function>mb_send_mail</function></member>
     <member><function>imap_mail</function></member>
     <member><link xlink:href="&url.pear.package;Mail">PEAR::Mail</link></member>
     <member><link xlink:href="&url.pear.package;Mail_Mime">PEAR::Mail_Mime</link></member>
@@ -401,8 +418,6 @@ mail($to, $subject, $message, implode("\r\n", $headers));
   </para>
  </refsect1>
 </refentry>
-
-
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml
