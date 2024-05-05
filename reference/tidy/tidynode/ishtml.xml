@@ -1,27 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 95bdd6883b5dde9504701777ba81b3c5f15df52b Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: 2b84fa46e30d9611e9b5d3af877a7e9ab5c7411a Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="tidynode.ishtml" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>tidyNode::isHtml</refname>
-  <refpurpose>Sprawdza, czy węzeł jest częścią dokumentu HTML</refpurpose>
+  <refpurpose>Sprawdza, czy węzeł jest węzłem elementu</refpurpose>
  </refnamediv>
  <refsect1 role="description">
   &reftitle.description;
-  <methodsynopsis>
-   <type>bool</type><methodname>tidyNode::isHtml</methodname>
+  <methodsynopsis role="tidyNode">
+   <modifier>public</modifier> <type>bool</type><methodname>tidyNode::isHtml</methodname>
    <void/>
   </methodsynopsis>
   <para>
-   Informuje, czy węzeł jest częścią dokumentu HTML.
+   Informuje, czy węzeł jest węzłem elementu, ale nie głównym węzłem dokumentu.
   </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  &no.function.parameters;
  </refsect1>
 
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca &true; jeśli węzeł jest częścią dokumentu HTML, w przeciwnym przypadku zwraca &false;.
+   Zwraca &true; jeśli węzeł jest węzłem elementu (ale nie głównym węzłem dokumentu), w przeciwnym przypadku zwraca &false;.
   </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>7.3.24, 7.4.12</entry>
+      <entry>
+       Ta funkcja została poprawiona aby jej zachowanie było sensowne. Poprzednio
+       praktycznie każdy węzeł był uznawany za węzeł HTML.
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </informaltable>
  </refsect1>
 
  <refsect1 role="examples">
@@ -118,19 +146,10 @@ Witaj świecie Poza HTML
 
 
 # węzeł HTML #3
-<?php echo '<title>tytuł</title>'; ?>
-
-# węzeł HTML #4
-<# 
-  /* kod JSTE */
-  alert('Witaj świecie'); 
-#>
-
-# węzeł HTML #5
 <title></title>
 
 
-# węzeł HTML #6
+# węzeł HTML #4
 <body>
 <?php
   // kod PHP
@@ -141,36 +160,12 @@ Witaj świecie Poza HTML
 %><!-- Komentarz -->
 Witaj świeciePoza HTML
 </body>
-
-
-# węzeł HTML #7
-<?php
-  // kod PHP
-  echo 'Witaj świecie!';
-?>
-
-# węzeł HTML #8
-<%
-  /* kod ASP */
-  response.write("Witaj świecie!")
-%>
-
-# węzeł HTML #9
-<!-- Komentarz -->
-
-
-# węzeł HTML #10
-Witaj świecie
-
-# węzeł HTML #11
-Poza HTML
 ]]>
     </screen>
    </example>
   </para>
  </refsect1>
 </refentry>
-
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

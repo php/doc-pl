@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 64642ea9c35700b3d3a584b0020d4e15a79a0a89 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: d4d5216e7a965ca194f6b1c9dee84cecab2674e5 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <section xml:id="var.configuration" xmlns="http://docbook.org/ns/docbook">
  &reftitle.runtime;
@@ -16,12 +16,18 @@
       <entry>&Changelog;</entry>
      </row>
     </thead>
-    <tbody>
+    <tbody xml:id="unserialize.configuration.list">
     <row>
      <entry><link linkend="ini.unserialize-callback-func">unserialize_callback_func</link></entry>
      <entry>NULL</entry>
      <entry><constant>INI_ALL</constant></entry>
-     <entry>Dostępne od PHP 4.2.0.</entry>
+     <entry></entry>
+    </row>
+    <row>
+     <entry><link linkend="ini.unserialize-max-depth">unserialize_max_depth</link></entry>
+     <entry>"4096"</entry>
+     <entry><constant>INI_ALL</constant></entry>
+     <entry>Dostępna od PHP 7.4.0.</entry>
     </row>
     </tbody>
    </tgroup>
@@ -46,7 +52,24 @@
       pojawia się ostrzeżenie.
      </para>
      <para>
-      Zobacz także <function>unserialize</function> oraz <link linkend="language.oop5.autoload">autoloading</link>.
+      Zobacz także <function>unserialize</function> oraz <link linkend="language.oop5.autoload">autoloading klas</link>.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry xml:id="ini.unserialize-max-depth">
+    <term xml:id="unserialize-max-depth">
+     <parameter>unserialize_max_depth</parameter>
+     <type>int</type>
+    </term>
+    <listitem>
+     <para>
+      Maksymalny poziom zagnieżdżenia struktur dozwolony podczas deserializacji
+      z użyciem <function>unserialize</function>, w celu zapobieżenia przepełnieniu
+      stosu. Może zostać wyłączone przez ustawienie
+      <literal>unserialize_max_depth=0</literal>.
+     </para>
+     <para>
+      Zobacz także <function>unserialize</function> oraz <link linkend="language.oop5.autoload">autoloading klas</link>.
      </para>
     </listitem>
    </varlistentry>
