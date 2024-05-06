@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: ca7fbbaddcf091178e666a6586f4181d6e429b4d Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 46ffb4b3fa11ea5733de780a8bcc211d8dc3d92b Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
  <chapter xml:id="tutorial" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
   <info><title>Prosty tutorial</title></info>
@@ -69,13 +69,14 @@
      <info><title>Nasz pierwszy skrypt PHP: <filename>hello.php</filename></title></info>
      <programlisting role="php">
 <![CDATA[
+<!DOCTYPE html>
 <html>
- <head>
-  <title>Test PHP</title>
- </head>
- <body>
- <?php echo '<p>Hello World</p>'; ?> 
- </body>
+    <head>
+        <title>Test PHP</title>
+     </head>
+     <body>
+         <?php echo '<p>Hello World</p>'; ?>
+     </body>
 </html>
 ]]>
      </programlisting>
@@ -172,21 +173,6 @@
      tekst</emphasis>, w przeciwnym wypadku PHP nie będzie w stanie odczytać i wykonać skryptu.
     </para>
    </note>
-   
-   <note>
-    <info><title>O Notatniku Windows</title></info>
-    <para>
-     Jeśli piszesz skrypty PHP używając Notatnika w systemie Windows musisz upewnić
-     się że Twoje pliki są zapisywane z roszerzeniem <filename>.php</filename>.
-     (Notatnik automatycznie dodaje do plików roszerzenie <filename>.txt</filename>,
-     dopóki nie podejmiesz jednego z następujących kroków, aby temu zapobieg).
-     Gdy zapisujesz plik i jesteś proszony o podanie jego nazwy, umieść nazwę
-     pliku w cudzysłowach (np. "<filename>hello.php</filename>"). Możesz też
-     kliknąć na rozwijanym menu "Dokumenty tekstowe" w oknie dialogowym "Zapisz"
-     i zmienić ustawienie na "Wszystkie pliki". Wtedy możesz wpisać nazwę pliku
-     bez cudzysłowów.
-    </para>
-   </note>
   
    <para>
     Teraz, kiedy stworzyłeś działający skrypt PHP, nadszedł czas aby utworzyć
@@ -227,12 +213,7 @@
      zmienna PHP, która zawiera wszystkie informacje o serwerze WWW.
      Jest znana jako superglobalna. Zobacz powiązaną stronę manuala o
      <link linkend="language.variables.superglobals">superglobalnych</link>,
-     aby dowiedzieć się więcej. Te specjalne zmienne zostały wprowadzone w PHP
-     <link xlink:href="&url.php.release4.1.0;">4.1.0</link>.  Wcześniej używano
-     starszych tablic <varname>$HTTP_*_VARS</varname>,
-     na przykład <varname>$HTTP_SERVER_VARS</varname>.  Od PHP 5.4.0 
-     zostały one usunięte.  (Zobacz też notatkę poświęconą
-     <link linkend="tutorial.oldcode">staremu kodowi</link>.)
+     aby dowiedzieć się więcej.
     </para>
    </note>
    <para>
@@ -252,14 +233,16 @@ echo $_SERVER['HTTP_USER_AGENT'];
      Przykładowym wynikiem działania tego skryptu może być:
     </para>
     <screen role="html">
-Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)
+<![CDATA[
+Mozilla/5.0 (Linux) Firefox/112.0
+]]>
     </screen>
    </example>
    </para>
    <para>
     Istnieje wiele <link linkend="language.types">typów</link>
-    zmiennych dostępnych w PHP.  W powyższym przykładzie wypisaliśmy
-    element <link linkend="language.types.array">tablicy</link>.
+    zmiennych dostępnych w PHP.  W powyższym przykładzie wypisaliśmy element
+    ze zmiennej będącej <link linkend="language.types.array">tablicą</link>.
     Tablice mogą być bardzo przydatne.
    </para>
    <para>
@@ -273,8 +256,8 @@ Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)
    <para>
     Możesz umieszczać wiele wyrażeń PHP wewnątrz tagu PHP i stworzyć
     małe bloki kodu, które robią więcej niż pojedyncze wyświetlenie.
-    Jeśli na przykład chcesz sprawdzić czy przeglądarka to Internet
-    Explorer, możesz napisać:
+    Jeśli na przykład chcesz sprawdzić, czy przeglądarka to Firefox,
+    możesz napisać:
    </para>
    <para>
     <example>
@@ -283,8 +266,8 @@ Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)
      <programlisting role="php">
 <![CDATA[
 <?php
-if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== FALSE) {
-    echo 'Używasz przeglądarki Internet Explorer.<br />';
+if (str_contains($_SERVER['HTTP_USER_AGENT'], 'Firefox')) {
+    echo 'Używasz przeglądarki Firefox.';
 }
 ?>
 ]]>
@@ -294,7 +277,7 @@ if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== FALSE) {
      </para>
      <screen role="html">
 <![CDATA[
-Używasz przeglądarki Internet Explorer.<br />
+Używasz przeglądarki Firefox.
 ]]>
      </screen>
     </example>
@@ -310,14 +293,13 @@ Używasz przeglądarki Internet Explorer.<br />
    </para>
    <para>
     Drugim zagadnieniem, które wprowadziliśmy jest wywołanie funkcji
-    <function>strpos</function>. <function>strpos</function> jest funkcją
-    wbudowaną w PHP, która szuka łańcucha znakow w innym łańcuchu. W tym
-    wypadku szukamy <literal>'MSIE'</literal> (tak zwanej igły) w łańcuchu
+    <function>str_contains</function>. <function>str_contains</function> jest funkcją
+    wbudowaną w PHP, która określa czy podany ciąg znaków zawiera inny ciąg znaków. W tym
+    wypadku szukamy <literal>'Firefox'</literal> (tak zwanej igły) w łańcuchu
     <varname>$_SERVER['HTTP_USER_AGENT']</varname> (tak zwanym stogu siana).  Jeśli
-    igła zostanie znaleziona w stogu siana, funkcja zwróci pozycję igły względem
-    początku stogu siana. W przeciwnym wypadku zwróci &false;. Jeśli nie zwróci
-    &false;, wyrażenie  <link
-    linkend="control-structures.if">if</link> otrzyma wartość true &true;
+    igła zostanie znaleziona w stogu siana, funkcja zwróci &true;, w przeciwnym wypadku
+    zwróci &false;. Jeśli zwróci &true;, wyrażenie  <link
+    linkend="control-structures.if">if</link> otrzyma wartość &true;
     a kod w ramach jego {klamr} się wykona. W Przeciwnym wypadku kod nie
     będzie uruchomiony. Nie bój się tworzyć podobnych przykładów
     używając <link linkend="control-structures.if">if</link>, 
@@ -339,15 +321,15 @@ Używasz przeglądarki Internet Explorer.<br />
      <programlisting role="php">
 <![CDATA[
 <?php
-if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== FALSE) {
+if (str_contains($_SERVER['HTTP_USER_AGENT'], 'Firefox')) {
 ?>
-<h3>strpos() zwróciło wartość różną od false</h3>
-<p>Używasz przeglądarki Internet Explorer</p>
+<h3>str_contains() zwróciło true</h3>
+<p>Używasz przeglądarki Firefox</p>
 <?php
 } else {
 ?>
-<h3>strpos() zwróciło false</h3>
-<p>Nie używasz przeglądarki Internet Explorer</p>
+<h3>str_contains() zwróciło false</h3>
+<p>Nie używasz przeglądarki Firefox</p>
 <?php
 }
 ?>
@@ -358,8 +340,8 @@ if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== FALSE) {
      </para>
      <screen role="html">
 <![CDATA[
-<h3>strpos() zwróciło wartość różną od false</h3>
-<p>Używasz przeglądarki Internet Explorer</p>
+<h3>str_contains() zwróciło true</h3>
+<p>Używasz przeglądarki Firefox</p>
 ]]>
      </screen>
     </example>
@@ -368,8 +350,9 @@ if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== FALSE) {
     Zamiast używać wyrażenia echo z PHP, aby coś wyświetlić, wyskoczyliśmy z
     trybu PHP i wprost wysłaliśmy kod HTML. Ważną i potężną rzeczą jest fakt,
     że przepływ logiczny skryptu zostaje nietknięty. Tylko jeden z bloków HTML
-    zostanie wysłany do odwiedzającego, zależnie od tego czy łańch
-    <literal>MSIE</literal> zostanie znaleziony czy nie.
+    zostanie wysłany do odwiedzającego, zależnie od
+    wyniku działania <function>str_contains</function>. Innymi słowy, zależy od
+    tego czy ciąg <literal>Firefox</literal> zostanie znaleziony czy nie.
    </para>
   </section>
    
@@ -377,7 +360,7 @@ if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== FALSE) {
    <info><title>Obsługa formularzy</title></info>
    <para>
     Jedną z najpotężniejszych możliwości PHP jest sposób, w jaki obsługuje
-    formularze. Podstawową rzecza, którą trzeba zrozumieć jest fakt że każdy
+    formularze. Podstawową rzeczą, którą trzeba zrozumieć, jest fakt, że każdy
     element formularza będzie automatycznie dostępny dla Twoich skryptów
     PHP. Przeczytaj rozdział
     <link linkend="language.variables.external">Zmienne z zewnętrznych
@@ -390,9 +373,13 @@ if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== FALSE) {
      <programlisting role="html">
 <![CDATA[
 <form action="action.php" method="post">
- <p>Imię: <input type="text" name="imie" /></p>
- <p>Wiek: <input type="text" name="wiek" /></p>
- <p><input type="submit" /></p>
+    <label for="name">Twoje imię:</label>
+    <input name="name" id="imie" type="text">
+
+    <label for="age">Twój wiek:</label>
+    <input name="age" id="wiek" type="number">
+
+    <button type="submit">Wyślij</button>
 </form>
 ]]>
      </programlisting>
@@ -430,7 +417,7 @@ Cześć Robert. Masz 25 lat.
     zakodowane, więc użytkownicy nie będą mogli wstrzyknąć tagów HTML  lub
     JavaScriptu na Twoją stronę. Pole wiek, ponieważ wiemy że jest to liczba,
     możemy <link linkend="language.types.typecasting">przekonwertować</link> je
-    na typ <type>integer</type>, co również zaowocuje pozbyciem się wszystkich
+    na typ <type>int</type>, co również zaowocuje pozbyciem się wszystkich
     niepotrzebnych znaków. Możesz też zadbać aby PHP robiło to automatycznie
     używając rozszerzenia <link linkend="ref.filter">filter</link>.
     Zmienne <varname>$_POST['imie']</varname> i <varname>$_POST['wiek']</varname>
@@ -450,55 +437,6 @@ Cześć Robert. Masz 25 lat.
     Mimo iż praca z formularzami XForms nie jest dla początkujących, możesz być
     tym zainteresowany. Mamy też <link linkend="features.xforms">krótkie wprowadzenie
     do obsługi danych z XForms</link> w sekcji poświęconej możliwościom PHP. 
-   </para>
-  </section>
-
-  <section xml:id="tutorial.oldcode">
-   <info><title>Używanie starego kodu z nowymi wersjami PHP</title></info>
-   <para>
-    Obecnie, gdy PHP urósł do rangi popularnego języka skryptowego, istnieje
-    wiele publicznych repozytoriów i bibliotek zawierających kod, który
-    możesz ponownie użyć. Twórcy PHP dołożyli wielu starań o zapewnienie
-    kompatybilności wstecznej, więc skrypt napisany dla starszej wersji uruchomi
-    się (w idealnym wypadku) bez żadnych znian w nowszej wersji PHP. W praktyce,
-    zazwyczaj będą wymagane pewne zmiany.
-   </para>
-   <para>
-    Dwie z najważniejszych ostatnich zmian, które dotykają starego kodu, są następujące:
-    <itemizedlist>
-     <listitem>
-      <simpara>
-       Dawne tablice <varname>$HTTP_*_VARS</varname> nie są dostępne od PHP 5.4.0.
-       Następujące
-       <link linkend="language.variables.superglobals">tablice superglobalne</link>
-       zostały wprowadzone w PHP <link xlink:href="&url.php.release4.1.0;">4.1.0</link>. 
-       Są to: <varname>$_GET</varname>, <varname>$_POST</varname>, 
-       <varname>$_COOKIE</varname>, <varname>$_SERVER</varname>, 
-       <varname>$_FILES</varname>, <varname>$_ENV</varname>,
-       <varname>$_REQUEST</varname> i <varname>$_SESSION</varname>.  
-      </simpara>
-     </listitem>
-     <listitem>
-      <simpara>
-       Zewnętrzne zmienne nie są dłużej domyślnie rejestrowane w zakresie
-       globalnym. Innymi słowy, od PHP
-       <link xlink:href="&url.php.release4.2.0;">4.2.0</link> dyrektywa 
-       <link linkend="ini.register-globals">register_globals</link> jest 
-       domyślnie ustawiona na <emphasis>off</emphasis> w &php.ini;. Preferowaną
-       metodą dostępu do tych wartości są tablice superglobalne wspomniane wyżej.
-       Starsze skrypty, książki i poradniki mogą zakładać że dyrektywa ta wciąż
-       jest ustawiona na <literal>on</literal>. Gdyby tak było, moglibyśmy
-       przykładowo, użyć zmiennej <varname>$id</varname> z adresu URL
-       <literal>http://www.example.com/foo.php?id=42</literal>. Niezależnie
-       od tego czy dyrektywa jest włączona czy nie, dostępna jest zmienna
-       <varname>$_GET['id']</varname>.
-      </simpara>
-     </listitem>
-    </itemizedlist>
-    Aby uzyskać więcej szczegółów dotyczących tych zmian, zapoznaj się z
-    rozdziałem 
-    <link linkend="language.variables.predefined">zmienne predefiniowane</link>
-    i linkami w nim zawartymi.
    </para>
   </section>
   
