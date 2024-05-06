@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 14af302c9c0e561fa6f9cdd956268758ba9a89c5 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 54ff7bf8e0f8fa90988cccf6b583517366605f6d Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.strtoupper">
  <refnamediv>
@@ -14,13 +14,18 @@
    <methodparam><type>string</type><parameter>string</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Zwraca <parameter>string</parameter> ze wszystkimi znakami alfabetu
+   Zwraca <parameter>string</parameter> ze wszystkimi znakami alfabetu ASCII
    zamienionymi na duże.
   </para>
   <para>
-   Zauważ, że 'alfabet' jest określany przez obecny język lokalny. To
-   znaczy, że w domyślnej lokalizacji "C", znaki takie jak
-   A umlaut (Ä) nie będą konwertowane.
+    Bajty w zakresie od <literal>"a"</literal> (0x61) do <literal>"z"</literal>
+   (0x7a) zostaną przekonwertowane na odpowiednią wielką literę poprzez odjęcie
+   32 od każdego bajtu.
+  </para>
+  <para>
+   Można tego użyć do konwersji znaków ASCII w łańcuchach zakodowanych w
+   UTF-8, ponieważ wielobajtowe znaki UTF-8 będą ignorowane. Aby przekonwertować wielobajtowe
+   znaki inne niż ASCII, należy użyć <function>mb_strtoupper</function>.
   </para>
  </refsect1>
 
@@ -45,6 +50,23 @@
   <para>
    Zwraca string zapisany dużymi literami.
   </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     &strings.changelog.ascii-case-conversion;
+    </tbody>
+   </tgroup>
+  </informaltable>
  </refsect1>
 
  <refsect1 role="examples">
