@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 5dba865d911a1d0aed3160abbb19be77fff560ca Maintainer: sobak Status: ready -->
+<!-- EN-Revision: de35b538453a7817a0cc839cddda0be46eed8764 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.number-format" xmlns:xlink="http://www.w3.org/1999/xlink">
+<refentry xml:id="function.number-format" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>number_format</refname>
   <refpurpose>Formatuje liczbę grupując tysiące</refpurpose>
@@ -11,35 +11,11 @@
   &reftitle.description;
   <methodsynopsis>
    <type>string</type><methodname>number_format</methodname>
-   <methodparam><type>float</type><parameter>liczba</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>miejsc_dziesiętnych</parameter><initializer>0</initializer></methodparam>
-  </methodsynopsis>
-  <methodsynopsis>
-   <type>string</type><methodname>number_format</methodname>
-   <methodparam><type>float</type><parameter>liczba</parameter></methodparam>
-   <methodparam><type>int</type><parameter>miejsc_dziesiętnych</parameter><initializer>0</initializer></methodparam>
-   <methodparam><type>string</type><parameter>separator_dziesiętnych</parameter><initializer>"."</initializer></methodparam>
-   <methodparam><type>string</type><parameter>separator_tysięcy</parameter><initializer>","</initializer></methodparam>
+   <methodparam><type>float</type><parameter>num</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>decimals</parameter><initializer>0</initializer></methodparam>
   </methodsynopsis>
   <para>
-   Ta funkcja akceptuje jeden, dwa lub cztery parametry (ale nie trzy):
-  </para>
-  <para>
-   Jeżeli podano tylko jeden parametr,
-   <parameter>number</parameter> zostanie sformatowana bez miejsc dziesiętnych,
-   ale z przecinkiem pomiędzy każdą grupą tysięcy.
-  </para>
-  <para>
-   Jeżeli podano dwa paramery, <parameter>liczba</parameter> zostanie
-   sformatowana z ilością miejsc dziesiętnych podanych w drugim argumencie,
-   poprzedzonych kropką (".") i z przecinkiem rozdzielającym każdą grupę
-   tysięcy.
-  </para>
-  <para>
-   Jeżeli podano wszystkie cztery parametry, <parameter>liczba</parameter> zostanie
-   sformatowana z ilością miejsc dziesiętnych podanych w drugim argumencie,
-   poprzedzonych kropką (".") i <parameter>separator_tysięcy</parameter> zostanie
-   użyty do rozdzielenia grup tysięcy, zamiast przecinka (",").
+   Tworzy liczbę z pogrupowanymi tysiącami i opcjonalnie cyframi dziesiętnymi przy użyciu zasady zaokrąglania o połowę w górę.
   </para>
  </refsect1>
 
@@ -48,7 +24,7 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>liczba</parameter></term>
+     <term><parameter>num</parameter></term>
      <listitem>
       <para>
        Liczba do sformatowania.
@@ -56,15 +32,17 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>miejsc_dziesiętnych</parameter></term>
+     <term><parameter>decimals</parameter></term>
      <listitem>
       <para>
-       Ustawia liczbę miejsc dziesiętnych.
+       Ustawia liczbę cyfr po przecinku.
+	   Jeśli <literal>0</literal>, <parameter>decimal_separator</parameter> jest
+       pomijany z wartości zwracanej.
       </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>separator_dziesiętnych</parameter></term>
+     <term><parameter>decimal_separator</parameter></term>
      <listitem>
       <para>
        Ustawia separator dla miejsc dziesiętnych.
@@ -72,7 +50,7 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>separator_tysięcy</parameter></term>
+     <term><parameter>thousands_separator</parameter></term>
      <listitem>
       <para>
        Ustawia separator dla tysięcy.
@@ -86,7 +64,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Sformatowana <parameter>liczba</parameter>.
+   Sformatowana <parameter>num</parameter>.
   </para>
  </refsect1>
 
@@ -103,12 +81,18 @@
      </thead>
      <tbody>
       <row>
-       <entry>5.4.0</entry>
+       <entry>8.0.0</entry>
        <entry>
-        Funkcja wspiera wiele bajtów w argumentach
-        <parameter>separator_dziesiętnych</parameter> oraz
-        <parameter>separator tysięcy</parameter>. W starszych
-        wersjach używany był tylko pierwszy bajt.
+        Przed tą wersją, <function>number_format</function> akceptowała
+        jeden, dwa, lub cztery parametry (ale nie trzy).
+       </entry>
+      </row>
+      <row>
+       <entry>7.2.0</entry>
+       <entry>
+        <function>number_format</function> zostałą zmieniona, aby nie mogła zwracać 
+        <literal>-0</literal>, wcześniej <literal>-0</literal> mogło być zwrócone 
+        dla przypadków, w których <parameter>num</parameter> byłoby <literal>-0.01</literal>.
        </entry>
       </row>
      </tbody>
@@ -125,7 +109,7 @@
     <para>
      Przykładowo, notacja francuska zazwyczaj używa dwóch miejsc dziesiętnych,
      przecinka (',') jako ich separatora i spacji (' ') jako
-     separatora tysięcy. Poniższy przykład demonstruje rózne sposoby sformatowania liczb:
+     separatora tysięcy. Poniższy przykład demonstruje rózne sposoby formatowania liczb:
     </para>
     <programlisting role="php">
 <![CDATA[
