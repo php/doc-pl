@@ -1,220 +1,247 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 4a7ddddc27271967b616ad3400cfbe2a9b48212b Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: sobak -->
 <refentry xml:id="function.extract" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>extract</refname>
-  <refpurpose>Importuj zmienne do bieżącej tablicy symboli z tablicy</refpurpose>
+  <refpurpose>Importuje podane zmienne do tablicy symboli</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
    <type>int</type><methodname>extract</methodname>
-   <methodparam><type>array</type><parameter>tablica_zmiennych</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>typ_ekstrakcji</parameter></methodparam>
-   <methodparam choice="opt"><type>string</type><parameter>prefiks</parameter></methodparam>
+   <methodparam><type>array</type><parameter role="reference">array</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>flags</parameter><initializer><constant>EXTR_OVERWRITE</constant></initializer></methodparam>
+   <methodparam choice="opt"><type>string</type><parameter>prefix</parameter><initializer>""</initializer></methodparam>
   </methodsynopsis>
   <para>
    Ta funkcja służy do importowania zmiennych z tablicy do bieżącej tablicy
-   symboli. Pobiera jako parametr tablicę asocjacyjną
-   <parameter>tablica_zmiennych</parameter> i traktuje klucze jako nazwy
-   zmiennych a wartości jako wartości tych zmiennych. Dla każdej pary
-   klucz/wartość w bieżącej tablicy symboli będzie stworzona zmienna, zależna
-   od parametrów <parameter>typ_ekstrakcji</parameter> i
-   <parameter>prefiks</parameter>.
+   symboli.
   </para>
-  <note>
-   <para>
-    Od wersji 4.0.5 ta funkcja zwraca liczbę wyekstrahowanych zmiennych.
-   </para>
-  </note>
-  <note>
-   <para>
-    Stałe <constant>EXTR_IF_EXISTS</constant> i
-    <constant>EXTR_PREFIX_IF_EXISTS</constant> zostały dodane w PHP 4.2.0.
-   </para>
-  </note>
-  <note>
-   <para>
-    Stała <constant>EXTR_REFS</constant> została dodana w PHP 4.3.0.
-   </para>
-  </note>
   <para>
-   <function>extract</function> sprawdza każdy klucz aby sprawdzić, czy
-   zawiera prawidłową nazwę zmiennej a także czy istnieją kolizje z
-   zmiennymi istniejącymi w tablicy symboli. Sposób traktowania złych nazw
-   zmiennych i kolizji jest określony przez parametr
-   <parameter>typ_ekstrakcji</parameter>. Może być jedną z poniższych
-   wartości:
+   Sprawdzany jest każdy element przekazanej tablicy <parameter>array</parameter>, żeby zobaczyć czy jest on poprawną nazwą zmiennej.
+   Funkcja sprawdza także kolizje z już istniejącymi zmiennymi
+   w tablicy symboli.
+  </para>
+  <warning>
+   <para>
+    Nie używaj <function>extract</function> na niezaufanych danych, jak dane pochodzące od użytkownika
+    (np. w <varname>$_GET</varname> lub <varname>$_FILES</varname>).
+   </para>
+  </warning>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
    <variablelist>
     <varlistentry>
-     <term><constant>EXTR_OVERWRITE</constant></term>
+     <term><parameter>array</parameter></term>
      <listitem>
-      <simpara>
-       Jeśli istnieje kolizja, nadpisz istniejącą zmienną.
-      </simpara>
+      <para>
+       Tablica asocjacyjna. Ta funkcja traktuje jej klucze jak nazwy zmiennych i
+       wartości tej tablicy jak wartości zmiennych. Dla każdej pary klucz/wartość stworzona
+       zostanie zmienna w obecnej tablicy symboli, po poddaniu
+       ich pod działanie parametrów
+       <parameter>flags</parameter> i <parameter>prefix</parameter>.
+      </para>
+      <para>
+       Musisz użyć tablicy asocjacyjnej, tablica indeksowana numerycznie
+       nie zadziała, chyba że użyjesz <constant>EXTR_PREFIX_ALL</constant> lub
+       <constant>EXTR_PREFIX_INVALID</constant>.
+      </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><constant>EXTR_SKIP</constant></term>
+     <term><parameter>flags</parameter></term>
      <listitem>
-      <simpara>
-       Jeśli istnieje kolizja, nie nadpisuj istniejącej zmiennej.
-      </simpara>
+      <para>
+       Sposób w jaki traktowane są niepoprawne klucze, klucze numeryczne i kolizje
+       jest określony przez flagi. Ten parametr może mieć jedną z następujących
+       wartości:
+       <variablelist>
+        <varlistentry>
+         <term><constant>EXTR_OVERWRITE</constant></term>
+         <listitem>
+          <simpara>
+           Jeśli istnieje kolizja, nadpisz istniejącą zmienną.
+          </simpara>
+         </listitem>
+        </varlistentry>
+        <varlistentry>
+         <term><constant>EXTR_SKIP</constant></term>
+         <listitem>
+          <simpara>
+           Jeśli istnieje kolizja, nie nadpisuj istniejącej
+           zmiennej.
+          </simpara>
+         </listitem>
+        </varlistentry>
+        <varlistentry>
+         <term><constant>EXTR_PREFIX_SAME</constant></term>
+         <listitem>
+          <simpara>Jeśli istnieje kolizja, na początek nazwy zmiennej wstaw
+           <parameter>prefix</parameter>.
+          </simpara>
+         </listitem>
+        </varlistentry>
+        <varlistentry>
+         <term><constant>EXTR_PREFIX_ALL</constant></term>
+         <listitem>
+          <simpara>
+           Na początek każdej nazwy zmiennej wstaw
+           <parameter>prefix</parameter>.
+          </simpara>
+         </listitem>
+        </varlistentry>
+        <varlistentry>
+         <term><constant>EXTR_PREFIX_INVALID</constant></term>
+         <listitem>
+          <simpara>
+           Tylko w wypadku niepoprawnych/numerycznych nazw zmiennych
+           wstaw na początek wartość argumentu <parameter>prefix</parameter>.
+          </simpara>
+         </listitem>
+        </varlistentry>
+        <varlistentry>
+         <term><constant>EXTR_IF_EXISTS</constant></term>
+         <listitem>
+          <simpara>
+           Nadpisz zmienną tylko wtedy, gdy już istnieje w
+           bieżącej tablicy symboli. Jest to przydatne
+           do definiowania listy poprawnych zmiennych i ekstrakcji
+           tylko tych zmiennych, które już wcześniej zdefiniowano,
+           na przykład z tablicy <varname>$_REQUEST</varname>.
+          </simpara>
+         </listitem>
+        </varlistentry>
+        <varlistentry>
+         <term><constant>EXTR_PREFIX_IF_EXISTS</constant></term>
+         <listitem>
+          <simpara>
+           Prefiks zostanie dodany tylko do zmiennych których odpowiedniki
+           bez przedrostka już istnieją w bieżącej tablicy symboli.
+          </simpara>
+         </listitem>
+        </varlistentry>
+        <varlistentry>
+         <term><constant>EXTR_REFS</constant></term>
+         <listitem>
+          <simpara>
+           Ekstraktuje zmienne jako referencje. Oznacza to, że wartości
+           zaimportowanych zmiennych ciągle odnoszą się do wartości parametru
+           <parameter>array</parameter>. Flaga ta może być użyta
+           sama lub w połączaniu z innymi flagami poprzez użycie operacji OR na
+           parametrze <parameter>flags</parameter>.
+          </simpara>
+         </listitem>
+        </varlistentry>
+       </variablelist>
+      </para>
+      <para>
+       Jeśli parametr <parameter>flags</parameter> nie został podany, to
+       używana jest opcja <constant>EXTR_OVERWRITE</constant>.
+      </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><constant>EXTR_PREFIX_SAME</constant></term>
+     <term><parameter>prefix</parameter></term>
      <listitem>
-      <simpara>
-       Jeśli istnieje kolizja, na początek nazwy zmiennej wstaw
-       <parameter>prefiks</parameter>.
-      </simpara>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
-     <term><constant>EXTR_PREFIX_ALL</constant></term>
-     <listitem>
-      <simpara>
-       Na początek każdej nazwy zmiennej wstaw <parameter>prefiks</parameter>.
-       Od PHP 4.0.5 dotyczy to także nazw numerycznych.
-      </simpara>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
-     <term><constant>EXTR_PREFIX_INVALID</constant></term>
-     <listitem>
-      <simpara>
-       Wstaw <parameter>prefiks</parameter> na początek złych/numerycznych
-       nazw. Ta flaga została dodana w PHP 4.0.5.
-      </simpara>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
-     <term><constant>EXTR_IF_EXISTS</constant></term>
-     <listitem>
-      <simpara>
-       Nadpisz tylko zmienną już istniejącą w bieżącej tablicy symboli. Jest
-       to przydatne do definiowania listy poprawnych zmiennych i ekstrahuj
-       tylko te zmienne które zdefiniowano na przykład w $_REQUEST. Flaga ta
-       została dodana w PHP 4.2.0.
-      </simpara>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
-     <term><constant>EXTR_PREFIX_IF_EXISTS</constant></term>
-     <listitem>
-      <simpara>
-       Przedrostek zostanie dodany tylko do zmiennych których odpowiedniki
-       bez przedrostka już istnieją w bieżącej tablicy symboli. Flaga ta
-       została dodana w PHP 4.2.0.
-      </simpara>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
-     <term><constant>EXTR_REFS</constant></term>
-     <listitem>
-      <simpara>
-       Ekstraktuje zmienne jako referencje. Oznacza to, że wartości
-       zaimportowanych zmiennych ciągle odnoszą się do wartości parametru
-       <parameter>tablica_zmiennych</parameter>. Flaga ta może być użyta
-       sama lub w połączaniu z innymi flagami poprzez użycie operacji OR na
-       parametrze <parameter>typ_ekstrakcji</parameter>. Została ona dodana
-       w PHP 4.3.0.
-      </simpara>
+      <para>
+       Zauważ, że parametr <parameter>prefix</parameter> jest wymagany tylko,
+       jeśli parametr <parameter>flags</parameter> to <constant>EXTR_PREFIX_SAME</constant>,
+       <constant>EXTR_PREFIX_ALL</constant>, <constant>EXTR_PREFIX_INVALID</constant>
+       lub <constant>EXTR_PREFIX_IF_EXISTS</constant>. Jeśli
+       nazwa zmiennej po dodaniu prefiksu nie jest prawidłową nazwą zmiennej, nie jest
+       importowana do tablicy symboli. Prefiksy są automatycznie oddzielane od
+       kluczy tablicy poprzez znak "_".
+      </para>
      </listitem>
     </varlistentry>
    </variablelist>
   </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
   <para>
-   Jeśli <parameter>typ_ekstrakcji</parameter> nie został podany, to
-   zakładana jest opcja <constant>EXTR_OVERWRITE</constant>.
+   Zwraca liczbę zmiennych pomyślnie zaimportowanych do tablicy
+   symboli.
   </para>
-  <para>
-   Zauważ, że parametr <parameter>prefiks</parameter> jest wymagany tylko
-   jeśli <parameter>typ_ekstrakcji</parameter> to
-   <constant>EXTR_PREFIX_SAME</constant>,
-   <constant>EXTR_PREFIX_ALL</constant>,
-   <constant>EXTR_PREFIX_INVALID</constant> lub
-   <constant>EXTR_PREFIX_IF_EXISTS</constant>. Jeśli nazwa zmiennej po
-   dodaniu prefiksu nie jest prawidłową nazwą zmiennej, nie jest
-   importowana do tablicy symboli. Prefiksy są automatycznie oddzielane od
-   kluczy tablicy poprzez znak "_".
-  </para>
-  <para>
-   <function>extract</function> zwraca liczbę zmiennych szczęśliwie
-   zaimportowanych do tablicy symboli.
-  </para>
-  <warning>
-   <para>
-    Nie należy używać funkcji <function>extract</function> na niepewnych
-    danych, jak na przykład danych odebranych od użytkownika ($_GET, ...).
-    Można tak zrobić na przykład w celu tymczasowego uruchomienia starych
-    skryptów, które zależne są od ustawienia <link
-     linkend="security.globals">register_globals</link>. Należy jednak użyć
-    nie nadpisującego parametru <parameter>typ_ekstrakcji</parameter>, jak
-    na przykład <constant>EXTR_SKIP</constant>. Trzeba też pamiętać aby
-    ekstrahować zmienne w kolejności określonej przez opcję <link
-     linkend="ini.variables-order">variables_order</link> pliku <link
-     linkend="ini">&php.ini;</link>.
-   </para>
-  </warning>
-  <para>
-   Możliwa jest ekstrakcja zmiennych zawartych w tablicy asocjacyjnej zwróconej
-   przez <function>wddx_deserialize</function>.
-  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
    <example>
     <title>Przykład użycia <function>extract</function></title>
+    <para>
+     Jednym z przykładów użycia <function>extract</function> może być
+     zaimportowanie zmiennych zawartych w tablicy asocjacyjnej zwróconej
+     przez <function>wddx_deserialize</function>.
+    </para>
     <programlisting role="php">
-<![CDATA[
+     <![CDATA[
 <?php
 
-/* Załóżmy, że $tablica_zmiennych jest tablicą zwróconą przez
+/* Załóżmy że $var_array jest tablicą zwróconą przez
    wddx_deserialize */
 
-$rozmiar = "duży";
-$tablica_zmiennych = array("kolor"    => "niebieski",
-                           "rozmiar"  => "średni",
-                           "ksztalt"  => "kulisty");
-extract($tablica_zmiennych, EXTR_PREFIX_SAME, "wddx");
+$size = "duży";
+$var_array = array("color" => "niebieski",
+                   "size"  => "średni",
+                   "shape" => "kwadrat");
+extract($var_array, EXTR_PREFIX_SAME, "wddx");
 
-echo "$kolor, $rozmiar, $ksztalt, $wddx_rozmiar\n";
+echo "$color, $size, $shape, $wddx_size\n";
 
 ?>
 ]]>
     </programlisting>
+    &example.outputs;
     <screen>
-<![CDATA[
-niebieski, duży, kulisty, średni
+     <![CDATA[
+niebieski, duży, kwadrat, średni
 ]]>
     </screen>
+    <para>
+     Zmienna <varname>$size</varname> nie została nadpisana, ponieważ użyliśmy flai
+     <constant>EXTR_PREFIX_SAME</constant>, co spowodowało utworzenie
+     <varname>$wddx_size</varname>. Jeśli użylibyśmy <constant>EXTR_SKIP</constant>,
+     to <varname>$wddx_size</varname> nie zostałaby stworzona.
+     <constant>EXTR_OVERWRITE</constant> spowodowałoby że <varname>$size</varname> miałoby
+     wartość "średni", a <constant>EXTR_PREFIX_ALL</constant> stworzyłoby nowe zmienne
+     nazwane <varname>$wddx_color</varname>,
+     <varname>$wddx_size</varname> i
+     <varname>$wddx_shape</varname>.
+    </para>
    </example>
   </para>
+ </refsect1>
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <warning>
+   <para>
+    Nie używaj <function>extract</function> na niezaufanych danych, jak
+    dane pochodzące od użytkownika
+    (np. <varname>$_GET</varname>, <varname>$_FILES</varname> itd).
+    Jeśli już musisz, upewnij się, że używasz jednej z wartości parametru <parameter>flags</parameter>,
+    która nie nadpisuje istniejących zmiennych takich jak
+    <constant>EXTR_SKIP</constant> i miej świadomość że powinieneś ekstrahować
+    w takiej smaej kolejności jaka określona jest w
+    <link linkend="ini.variables-order">variables_order</link> w
+    <link linkend="ini">&php.ini;</link>.
+   </para>
+  </warning>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
   <para>
-   <varname>$rozmiar</varname> nie został nadpisany, ponieważ podany został
-   parametr <constant>EXTR_PREFIX_SAME</constant>, przez co stworzona został
-   zmienna <varname>$wddx_rozmiar</varname>.  Jeśli podana by była flaga
-   <constant>EXTR_SKIP</constant>, to zmienna
-   <varname>$wddx_rozmiar</varname> nie zostałaby stworzona.  Flaga
-   <constant>EXTR_OVERWRITE</constant> spowodowałaby, że zmienna
-   <varname>$rozmiar</varname> miałaby wartość "średni", a
-   <constant>EXTR_PREFIX_ALL</constant> spowodowałaby że wszystkie nowe
-   zmienne zostałyby nazwane <varname>$wddx_kolor</varname>,
-   <varname>$wddx_rozmiar</varname>, and <varname>$wddx_ksztalt</varname>.
-  </para>
-  <para>
-   Musisz użyć tablic asocjacyjnych. Tablica indeksowana liczbowo nie da
-   żadnych efektów, chyba że zostanie użyta flaga
-   <constant>EXTR_PREFIX_ALL</constant> lub
-   <constant>EXTR_PREFIX_INVALID</constant>.
-  </para>
-  <para>
-   Patrz także: <function>compact</function>.
+   <simplelist>
+    <member><function>compact</function></member>
+    <member><function>list</function></member>
+   </simplelist>
   </para>
  </refsect1>
 </refentry>
-
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml
