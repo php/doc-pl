@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: ac397fd0da4d814b5a2f4ba49254f9b6093315e1 Maintainer: sobak Status: ready -->
+<!-- $Revision$ -->
+<!-- CREDITS: garbus, qrak -->
+<refentry xml:id="datetime.format" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <refnamediv>
+  <refname>DateTimeInterface::format</refname>
+  <refname>DateTimeImmutable::format</refname>
+  <refname>DateTime::format</refname>
+  <refname>date_format</refname>
+  <refpurpose>Zwraca datę sformatowaną według określonego formatu</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <para>&style.oop;</para>
+  <methodsynopsis role="DateTimeInterface">
+   <modifier>public</modifier> <type>string</type><methodname>DateTimeInterface::format</methodname>
+   <methodparam><type>string</type><parameter>format</parameter></methodparam>
+  </methodsynopsis>
+  <methodsynopsis role="DateTimeImmutable">
+   <modifier>public</modifier> <type>string</type><methodname>DateTimeImmutable::format</methodname>
+   <methodparam><type>string</type><parameter>format</parameter></methodparam>
+  </methodsynopsis>
+  <methodsynopsis role="DateTime">
+   <modifier>public</modifier> <type>string</type><methodname>DateTime::format</methodname>
+   <methodparam><type>string</type><parameter>format</parameter></methodparam>
+  </methodsynopsis>
+  <para>&style.procedural;</para>
+  <methodsynopsis>
+   <type>string</type><methodname>date_format</methodname>
+   <methodparam><type>DateTimeInterface</type><parameter>object</parameter></methodparam>
+   <methodparam><type>string</type><parameter>format</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Zwraca datę sformatowaną według określonego formatu.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <variablelist>
+   &date.datetime.description;
+   <varlistentry>
+    <term><parameter>format</parameter></term>
+    <listitem>
+     <para>
+      Format zwracanej daty <type>string</type>. Zobacz możliwe ustawienia
+      formatowania poniżej. Istnieje także kilka
+      <link linkend="datetimeinterface.constants.types">predefiniowanych stałych daty</link>,
+      których można użyć w zamian, przykładowo <constant>DATE_RSS</constant>
+      zawiera ciąg formatujący <literal>'D, d M Y H:i:s'</literal>.
+     </para>
+     <para>
+      <table>
+       <title>Następujące znaki są rozpoznawane
+        parametrze <parameter>format</parameter></title>
+       <tgroup cols="3">
+        <thead>
+         <row>
+          <entry>Znak formatujący</entry>
+          <entry>Opis</entry>
+          <entry>Przykłady zwracanych wartości</entry>
+         </row>
+        </thead>
+        <tbody>
+         <row>
+          <entry align="center"><emphasis>Dzień</emphasis></entry>
+          <entry>---</entry>
+          <entry>---</entry>
+         </row>
+         <row>
+          <entry><literal>d</literal></entry>
+          <entry>Dzień miesiąca, 2 cyfry z wiodącymi zerami</entry>
+          <entry><literal>01</literal> do <literal>31</literal></entry>
+         </row>
+         <row>
+          <entry><literal>D</literal></entry>
+          <entry>Tekstowy opis angielskiej nazwy dnia, trzy litery</entry>
+          <entry><literal>Mon</literal> kończąc na <literal>Sun</literal></entry>
+         </row>
+         <row>
+          <entry><literal>j</literal></entry>
+          <entry>Dzień miesiąca bez zer wiodących</entry>
+          <entry><literal>1</literal> do <literal>31</literal></entry>
+         </row>
+         <row>
+          <entry><literal>l</literal> (małe 'L')</entry>
+          <entry>Pełen angielski opis dnia tygodnia</entry>
+          <entry><literal>Sunday</literal> aż do <literal>Saturday</literal></entry>
+         </row>
+         <row>
+          <entry><literal>N</literal></entry>
+          <entry>Liczbowa forma dnia tygodnia, zgodna z normą ISO-8601</entry>
+          <entry><literal>1</literal> (dla poniedziałku) aż do <literal>7</literal> (dla niedzieli)</entry>
+         </row>
+         <row>
+          <entry><literal>S</literal></entry>
+          <entry>Angielski przyrostek porządkowy dla dnia miesiąca, 2 litery</entry>
+          <entry>
+           <literal>st</literal>, <literal>nd</literal>, <literal>rd</literal> lub
+           <literal>th</literal>.  Dobrze wygląda w połączeniu z <literal>j</literal>
+          </entry>
+         </row>
+         <row>
+          <entry><literal>w</literal></entry>
+          <entry>Liczbowa forma dnia tygodnia</entry>
+          <entry><literal>0</literal> (dla niedzieli) aż go <literal>6</literal> (dla soboty)</entry>
+         </row>
+         <row>
+          <entry><literal>z</literal></entry>
+          <entry>Dzień roku (zaczynając od 0)</entry>
+          <entry><literal>0</literal> aż do <literal>365</literal></entry>
+         </row>
+         <row>
+          <entry align="center"><emphasis>Tydzień</emphasis></entry>
+          <entry>---</entry>
+          <entry>---</entry>
+         </row>
+         <row>
+          <entry><literal>W</literal></entry>
+          <entry>Numer tygodnia w roku, zgodny z normą ISO-8601, Tygodnie rozpoczynają się od poniedziałku</entry>
+          <entry>Przykład: <literal>42</literal> (42. tydzień roku)</entry>
+         </row>
+         <row>
+          <entry align="center"><emphasis>Miesiąc</emphasis></entry>
+          <entry>---</entry>
+          <entry>---</entry>
+         </row>
+         <row>
+          <entry><literal>F</literal></entry>
+          <entry>Pełen angielski opis, dnia miesiąca, taki jak January czy March </entry>
+          <entry><literal>January</literal> aż do <literal>December</literal></entry>
+         </row>
+         <row>
+          <entry><literal>m</literal></entry>
+          <entry>Liczbowa forma miesiąca, z zerami wiodącymi</entry>
+          <entry><literal>01</literal> aż do <literal>12</literal></entry>
+         </row>
+         <row>
+          <entry><literal>M</literal></entry>
+          <entry>Krótki, angielski opis miesiąca, trzy litery</entry>
+          <entry><literal>Jan</literal> aż do <literal>Dec</literal></entry>
+         </row>
+         <row>
+          <entry><literal>n</literal></entry>
+          <entry>Liczbowa forma miesiąca, bez zer wiodących</entry>
+          <entry><literal>1</literal> aż do <literal>12</literal></entry>
+         </row>
+         <row>
+          <entry><literal>t</literal></entry>
+          <entry>Ilość dni w danym miesiącu</entry>
+          <entry><literal>28</literal> do <literal>31</literal></entry>
+         </row>
+         <row>
+          <entry align="center"><emphasis>Rok</emphasis></entry>
+          <entry>---</entry>
+          <entry>---</entry>
+         </row>
+         <row>
+          <entry><literal>L</literal></entry>
+          <entry>Informacja o tym, czy rok jest przestępnym</entry>
+          <entry><literal>1</literal> jeśli rok jest przestępny, <literal>0</literal> w przeciwnym wypadku.</entry>
+         </row>
+         <row>
+          <entry><literal>o</literal></entry>
+          <entry>ISO-8601 week-numbering year. Zwraca to taką samą wartość jak
+           <literal>Y</literal>, z tym, że jeśli numer tygodnia ISO
+           (<literal>W</literal>) należy do poprzedniego lub następnego roku, to taki
+           rok będzie użyty w zamian.</entry>
+          <entry>Przykłady: <literal>1999</literal> lub <literal>2003</literal></entry>
+         </row>
+         <row>
+          <entry><literal>X</literal></entry>
+          <entry>Rozszerzona numeryczna reprezentacja roku, minimum 4 cyfry,
+           z <literal>-</literal> dla lat p.n.e. i <literal>+</literal>
+           dla lat n.e.</entry>
+          <entry>Przykłady: <literal>-0055</literal>, <literal>+0787</literal>,
+           <literal>+1999</literal>, <literal>+10191</literal></entry>
+         </row>
+         <row>
+          <entry><literal>x</literal></entry>
+          <entry>Rozszerzona pełna numeryczna forma jeśli wymagana lub
+           standardowa pełna numeryczna forma jeśli jest to możliwe (jak
+           <literal>Y</literal>). Minimum 4 cyfry. Lata p.n.e. są poprzedzone
+           znakiem <literal>-</literal>. Lata od
+           <literal>10000</literal> włącznie są poprzedzone znakiem
+           <literal>+</literal>.</entry>
+          <entry>Przykłady: <literal>-0055</literal>, <literal>0787</literal>,
+           <literal>1999</literal>, <literal>+10191</literal></entry>
+         </row>
+         <row>
+          <entry><literal>Y</literal></entry>
+          <entry>Pełna liczbowa forma roku, 4 cyfry,
+           ze znakiem <literal>-</literal> dla lat p.n.e.</entry>
+          <entry>Przykłady: <literal>-0055</literal>, <literal>0787</literal>,
+           <literal>1999</literal>, <literal>2003</literal>,
+           <literal>10191</literal></entry>
+         </row>
+         <row>
+          <entry><literal>y</literal></entry>
+          <entry>Dwie cyfry reprezentujące rok</entry>
+          <entry>Przykłady: <literal>99</literal> lub <literal>03</literal></entry>
+         </row>
+         <row>
+          <entry align="center"><emphasis>Czas</emphasis></entry>
+          <entry>---</entry>
+          <entry>---</entry>
+         </row>
+         <row>
+          <entry><literal>a</literal></entry>
+          <entry>Pora dnia, dwie małe litery (przed/po południu) (łac. Ante/Post meridiem)</entry>
+          <entry><literal>am</literal> lub <literal>pm</literal></entry>
+         </row>
+         <row>
+          <entry><literal>A</literal></entry>
+          <entry>Pora dnia, dwie duże litery (przed/po południu) (łac. Ante/Post meridiem)</entry>
+          <entry><literal>AM</literal> or <literal>PM</literal></entry>
+         </row>
+         <row>
+          <entry><literal>B</literal></entry>
+          <entry>Swatch Internet Time</entry>
+          <entry><literal>000</literal> aż do <literal>999</literal></entry>
+         </row>
+         <row>
+          <entry><literal>g</literal></entry>
+          <entry>Godzina, w formacie 12-godzinnym, bez zer wiodących</entry>
+          <entry><literal>1</literal> aż do <literal>12</literal></entry>
+         </row>
+         <row>
+          <entry><literal>G</literal></entry>
+          <entry>Godzina, w formacie 24-godzinnym, bez zer wiodących</entry>
+          <entry><literal>0</literal> aż do <literal>23</literal></entry>
+         </row>
+         <row>
+          <entry><literal>h</literal></entry>
+          <entry>Godzina, w formacie 12-godzinnym, z zerami wiodącymi</entry>
+          <entry><literal>01</literal> aż do <literal>12</literal></entry>
+         </row>
+         <row>
+          <entry><literal>H</literal></entry>
+          <entry>Godzina, w formacie 24-godzinnym, z zerami wiodącymi</entry>
+          <entry><literal>00</literal> do <literal>23</literal></entry>
+         </row>
+         <row>
+          <entry><literal>i</literal></entry>
+          <entry>Minuty z zerami wiodącymi</entry>
+          <entry><literal>00</literal> do <literal>59</literal></entry>
+         </row>
+         <row>
+          <entry><literal>s</literal></entry>
+          <entry>Sekundy, z zerami wiodącymi</entry>
+          <entry><literal>00</literal> do <literal>59</literal></entry>
+         </row>
+         <row>
+          <entry><literal>u</literal></entry>
+          <entry>
+           Mikrosekundy. Zauważ, że
+           <function>date</function> zawsze wygeneruje
+           <literal>000000</literal>, ponieważ przyjmuje parametr
+           typu <type>integer</type>, podczas gdy <methodname>DateTime::format</methodname>
+           obsługuje mikrosekundy, jeżeli obiekt <classname>DateTime</classname> był
+           utworzony z mikrosekundami.
+          </entry>
+          <entry>Przykład: <literal>654321</literal></entry>
+         </row>
+         <row>
+          <entry><literal>v</literal></entry>
+          <entry>
+           Milisekundy. Takie same uwagi jak dla
+           <literal>u</literal>.
+          </entry>
+          <entry>Example: <literal>654</literal></entry>
+         </row>
+         <row>
+          <entry align="center"><emphasis>Strefa czasowa</emphasis></entry>
+          <entry>---</entry>
+          <entry>---</entry>
+         </row>
+         <row>
+          <entry><literal>e</literal></entry>
+          <entry>Identyfikator strefy czasowej</entry>
+          <entry>Przykłady: <literal>UTC</literal>, <literal>GMT</literal>, <literal>Europe/Zagreb</literal></entry>
+         </row>
+         <row>
+          <entry><literal>I</literal> (duże i)</entry>
+          <entry>Informacja o tym, czy data jest w czasie letnim</entry>
+          <entry><literal>1</literal> jeśli czas jest letni, <literal>0</literal> w przeciwnym razie.</entry>
+         </row>
+         <row>
+          <entry><literal>O</literal></entry>
+          <entry>Różnica z czasem Greenwich (GMT) w godzinach</entry>
+          <entry>Przykład: <literal>+0200</literal></entry>
+         </row>
+         <row>
+          <entry><literal>P</literal></entry>
+          <entry>Różnica z czasem Greenwich (GMT) z dwukropkiem pomiędzy godzinami i minutami</entry>
+          <entry>Przykład: <literal>+02:00</literal></entry>
+         </row>
+         <row>
+          <entry><literal>p</literal></entry>
+          <entry>
+           Takie samo jak <literal>P</literal>, ale zwraca <literal>Z</literal> zamiast <literal>+00:00</literal>
+           (dostępne od PHP 8.0.0)
+          </entry>
+          <entry>Przykłady: <literal>Z</literal> lub <literal>+02:00</literal></entry>
+         </row>
+         <row>
+          <entry><literal>T</literal></entry>
+          <entry>Skrót dla strefy czasowej, jeśli znany; w przeciwnym razie różnica do GMT</entry>
+          <entry>Przykłady: <literal>EST</literal>, <literal>MDT</literal>, <literal>+05</literal></entry>
+         </row>
+         <row>
+          <entry><literal>Z</literal></entry>
+          <entry>Różnica dla strefy czasowej w sekundach. Wyrównanie to jest zawsze ujemne dla stref położonych na zachód
+          od południka 0 (UTC) oraz dodatnie dla tych leżących na wschód od niego.</entry>
+          <entry><literal>-43200</literal> aż do <literal>50400</literal></entry>
+         </row>
+         <row>
+          <entry align="center"><emphasis>Pełna data/czas</emphasis></entry>
+          <entry>---</entry>
+          <entry>---</entry>
+         </row>
+         <row>
+          <entry><literal>c</literal></entry>
+          <entry>Data w standardzie ISO 8601</entry>
+          <entry>2004-02-12T15:19:21+00:00</entry>
+         </row>
+         <row>
+          <entry><literal>r</literal></entry>
+          <entry>Data zgodna z <link xlink:href="&url.rfc;2822">RFC 2822</link>/<link xlink:href="&url.rfc;5322">RFC 5322</link></entry>
+          <entry>Przykład: <literal>Thu, 21 Dec 2000 16:01:07 +0200</literal></entry>
+         </row>
+         <row>
+          <entry><literal>U</literal></entry>
+          <entry>Sekundy liczone od ery UNIX-a (January 1 1970 00:00:00 GMT)</entry>
+          <entry>Zobacz także <function>time</function></entry>
+         </row>
+        </tbody>
+       </tgroup>
+      </table>
+     </para>
+     <para>
+      Inne znaki umieszczone w łańcuchu formatującym zostaną wyświetlone
+      normalnie, bez ich zamieniania. <literal>Z</literal> zwróci zawsze
+      <literal>0</literal> podczas używania <function>gmdate</function>.
+     </para>
+     <note>
+      <para>
+       Ponieważ ta funkcja przyjmuje jako znacznik czasu jedynie typ <type>int</type>,
+       znak formatujący <literal>u</literal> przydaje się jedynie, gdy używamy funkcji
+       <function>date_format</function> z samodzielnie zdefiniowanymi znacznikami czasu
+       stworzonymi za pomocą funkcji <function>date_create</function>.
+      </para>
+     </note>
+    </listitem>
+   </varlistentry>
+  </variablelist>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca ciąg znaków ze sformatowaną datą w wypadku powodzenia.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>8.2.0</entry>
+      <entry>
+       Dodano znaki formatujące <literal>X</literal> i <literal>x</literal>.
+      </entry>
+     </row>
+     <row>
+      <entry>8.0.0</entry>
+      <entry>
+       Dodano znak formatujący <literal>p</literal>.
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </informaltable>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład użycia <function>DateTimeInterface::format</function></title>
+    <para>&style.oop;</para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$date = new DateTimeImmutable('2000-01-01');
+echo $date->format('Y-m-d H:i:s');
+?>
+]]>
+    </programlisting>
+    <para>&style.procedural;</para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$date = date_create('2000-01-01');
+echo date_format($date, 'Y-m-d H:i:s');
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+2000-01-01 00:00:00
+]]>
+    </screen>
+   </example>
+  </para>
+
+  <para>
+   <example>
+    <title>Więcej przykładów</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// ustaw domyślną strefę czasową używaną przez program
+date_default_timezone_set('UTC');
+
+// obecny czas
+$date = new DateTimeImmutable();
+
+// Wyświetli na przykład Wednesday
+echo $date->format('l'), "\n";
+
+// Wyświetli na przykład Wednesday 19th of October 2022 08:40:48 AM
+echo $date->format('l jS \o\f F Y h:i:s A'), "\n";
+
+/* można też użyć stałych jako argumentu */
+// wyświetli na przykład: Wed, 19 Oct 2022 08:40:48 +0000
+echo $date->format(DateTimeInterface::RFC2822), "\n";
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   Możesz ochronić rozpoznawalne znaki w łańcuchu formatującym przed
+   zinterpretowaniem przez poprzedzenie ich znakiem ucieczki (backslashem). Jeśli znak
+   razem z backslashem jest specjalną sekwencją, możliwe, iż będzie trzeba poprzedzić kolejnym
+   znakiem ucieczki całą sekwencję.
+   <example>
+    <title>Escape'owanie znaków podczas formatowania</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$date = new DateTimeImmutable();
+
+// prints something like: Wednesday the 19th
+echo $date->format('l \t\h\e jS');
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   Aby sformatować datę w innych językach można użyć
+   <methodname>IntlDateFormatter::format</methodname>
+   zamiast <methodname>DateTimeInterface::format</methodname>.
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <para>
+   Ta metoda nie wspiera tłumaczeń, wszystkie zwracane wartości są po angielsku.
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <simplelist>
+   <member><methodname>IntlDateFormatter::format</methodname></member>
+  </simplelist>
+ </refsect1>
+
+</refentry>
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
