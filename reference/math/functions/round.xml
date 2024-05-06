@@ -1,85 +1,327 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: qrak Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 6406cc6c50f8f66f7d55f550dc1ec2759e2eca0f Maintainer: qrak Status: ready -->
 <!-- $Revision$ -->
-  <refentry xml:id="function.round" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>round</refname>
-    <refpurpose>Zaokrągla liczbę zmiennoprzecinkową</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>float</type><methodname>round</methodname>
-      <methodparam><type>float</type><parameter>wartość</parameter></methodparam>
-      <methodparam choice="opt"><type>int</type><parameter>dokładność</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     Zwraca zaokrągloną wartość argumentu <parameter>wartość</parameter> do
-     miejsca po przecinku określonego w <parameter>dokładność</parameter>.
-     Argument <parameter>dokładność</parameter> może być także ujemny lub równy
-     zero (domyślnie).
-    </para>
-    <para>
-     <example>
-      <title>Przykłady użycia <function>round</function></title>
-      <programlisting role="php">
-<![CDATA[
+<!-- CREDITS: sobak -->
+<refentry xml:id="function.round" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>round</refname>
+  <refpurpose>Zaokrągla liczbę zmiennoprzecinkową</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>float</type><methodname>round</methodname>
+   <methodparam><type class="union"><type>int</type><type>float</type></type><parameter>num</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>precision</parameter><initializer>0</initializer></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>mode</parameter><initializer><constant>PHP_ROUND_HALF_UP</constant></initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   Zwraca zaokrągloną wartość argumentu <parameter>num</parameter> do
+   miejsca po przecinku określonego w <parameter>precision</parameter>
+   (ilość cyfr po przecinku).
+   Argument <parameter>precision</parameter> może być także ujemny lub równy
+   zero (domyślnie).
+  </para>
+  <!-- It's not true
+  <para>
+   <caution>
+    <simpara>
+     When rounding on exact halves <function>round</function> rounds down on
+     evens and up on odds.  If you want to always force it in one direction
+     on a .5 (or .05 in your case) add or subtract a tiny fuzz factor.  The
+     reason behind rounding half the values down and the other half up is to
+     avoid the classical banking problem where if you always rounded down
+     you would be stealing money from your customers, or if you always
+     rounded up you would end up over time losing money.  By averaging it
+     out through evens and odds you statistically break even.
+    </simpara>
+   </caution>
+  </para>
+  -->
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>num</parameter></term>
+     <listitem>
+      <para>
+       Wartość do zaokrąglenia.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>precision</parameter></term>
+     <listitem>
+      <para>
+       Opcjonalna ilość znaków dziesiętnych, do której zaokrąglamy.
+      </para>
+      <para>
+       Jeśli parametr <parameter>precision</parameter> jest dodatni, <parameter>num</parameter> jest
+       zaokrąglany do tylu istotnych cyfr po przecinku, ile określono w <parameter>precision</parameter>.
+      </para>
+      <para>
+       Jeśli <parameter>precision</parameter> jest ujemne, <parameter>num</parameter> będzie
+       zaokrąglony do tylu istotnych cyfr przed przecinkiem, ile określono w <parameter>precision</parameter>,
+       a więc do najbliższej wielokrotności <code>pow(10, -$precision)</code>, np. dla
+       <parameter>precision</parameter> ustawionej na -1 <parameter>num</parameter> jest zaokrąglany do dziesiątek,
+       dla <parameter>precision</parameter> równej -2 do setek itd.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>mode</parameter></term>
+     <listitem>
+      <para>
+       Użyj jednej z następujących stałych, aby określić w jaki sposób będzie działać zaokrąglanie.
+       <informaltable>
+        <tgroup cols="2">
+         <thead>
+          <row>
+           <entry>&Constants;</entry>
+           <entry>&Description;</entry>
+          </row>
+         </thead>
+         <tbody>
+          <row>
+           <entry><constant>PHP_ROUND_HALF_UP</constant></entry>
+           <entry>
+            Zaokrągla <parameter>num</parameter> oddalając się od zera, jeśli liczba wypada w połowie.
+            1.5 zostanie zaokrąglone do 2 a -1.5 do -2.
+           </entry>
+          </row>
+          <row>
+           <entry><constant>PHP_ROUND_HALF_DOWN</constant></entry>
+           <entry>
+            Zaokrągla <parameter>num</parameter> w kierunku zera, jeśli liczba wypada w połowie.
+            1.5 zostanie zaokrąglone do 1 a -1.5 do -1.
+           </entry>
+          </row>
+          <row>
+           <entry><constant>PHP_ROUND_HALF_EVEN</constant></entry>
+           <entry>
+            Zaokrągla <parameter>num</parameter> w kierunku najbliższej parzystej liczby całkowitej,
+            nawet kiedy liczba wypada w połowie, zaokrąglając 1.5 i 2.5 do 2.
+           </entry>
+          </row>
+          <row>
+           <entry><constant>PHP_ROUND_HALF_ODD</constant></entry>
+           <entry>
+            Zaokrągla <parameter>num</parameter> w kierunku najbliższej nieparzystej liczby całkowitej,
+            nawet kiedy liczba wypada w połowie, zaokrąglając 1.5 do 1, a 2.5 do 3.
+           </entry>
+          </row>
+         </tbody>
+        </tgroup>
+       </informaltable>
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Wartość zaokrąglona do ilości znaków określonej przez <parameter>precision</parameter> jako &float;.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>8.0.0</entry>
+      <entry>
+       <parameter>num</parameter> nie przyjmuje wewnętrznych obiektów, nawet jeśli te wspierają
+       konwersję na liczby.
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </informaltable>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykłady użycia <function>round</function></title>
+    <programlisting role="php">
+     <![CDATA[
 <?php
-echo round(3.4);         // 3
-echo round(3.5);         // 4
-echo round(3.6);         // 4
-echo round(3.6, 0);      // 4
-echo round(1.95583, 2);  // 1.96
-echo round(1241757, -3); // 1242000
-echo round(5.045, 2);    // 5.05
-echo round(5.055, 2);    // 5.06
+var_dump(round(3.4));
+var_dump(round(3.5));
+var_dump(round(3.6));
+var_dump(round(3.6, 0));
+var_dump(round(5.045, 2));
+var_dump(round(5.055, 2));
+var_dump(round(345, -2));
+var_dump(round(345, -3));
+var_dump(round(678, -2));
+var_dump(round(678, -3));
 ?>
 ]]>
-      </programlisting>
-     </example>
-    </para>
-    <!-- It's not true
-    <para>
-     <caution>
-      <simpara>
-       When rounding on exact halves <function>round</function> rounds down on
-       evens and up on odds.  If you want to always force it in one direction
-       on a .5 (or .05 in your case) add or substract a tiny fuzz factor.  The
-       reason behind rounding half the values down and the other half up is to
-       avoid the classical banking problem where if you always rounded down
-       you would be stealing money from your customers, or if you always
-       rounded up you would end up over time losing money.  By averaging it
-       out through evens and odds you statistically break even.
-      </simpara>
-     </caution>
-    </para>
-    -->
-    <para>
-     <note>
-      <simpara>
-       PHP domyślnie nie obsługuje poprawnie łańcuchów znaków takich jak
-       <literal>"12,300.2"</literal>. Zobacz <link 
-       linkend="language.types.string.conversion">konwersje z łańcuchów znaków
-       </link>.
-      </simpara>
-     </note>
-    </para>
-    <para>
-     <note>
-      <simpara>
-       Argument <parameter>dokładność</parameter> został dodany w PHP 4.
-      </simpara>
-     </note>
-    </para>
-    <simpara>
-     Patrz także:
-     <function>ceil</function>,
-     <function>floor</function> i
-     <function>number_format</function>.
-    </simpara>
-   </refsect1>
-  </refentry>
+    </programlisting>
+    &example.outputs;
+    <screen role="php">
+     <![CDATA[
+float(3)
+float(4)
+float(4)
+float(4)
+float(5.05)
+float(5.06)
+float(300)
+float(0)
+float(700)
+float(1000)
+]]>
+    </screen>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Jak <parameter>precision</parameter> wpływa na liczbę zmiennoprzecinkową</title>
+    <programlisting role="php">
+     <![CDATA[
+<?php
+$number = 135.79;
 
+var_dump(round($number, 3));
+var_dump(round($number, 2));
+var_dump(round($number, 1));
+var_dump(round($number, 0));
+var_dump(round($number, -1));
+var_dump(round($number, -2));
+var_dump(round($number, -3));
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen role="php">
+     <![CDATA[
+float(135.79)
+float(135.79)
+float(135.8)
+float(136)
+float(140)
+float(100)
+float(0)
+]]>
+    </screen>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Przykłady użycia różnych wartości <parameter>mode</parameter></title>
+    <programlisting role="php">
+     <![CDATA[
+<?php
+echo 'Tryby zaokrąglania z liczbą 9.5' . PHP_EOL;
+var_dump(round(9.5, 0, PHP_ROUND_HALF_UP));
+var_dump(round(9.5, 0, PHP_ROUND_HALF_DOWN));
+var_dump(round(9.5, 0, PHP_ROUND_HALF_EVEN));
+var_dump(round(9.5, 0, PHP_ROUND_HALF_ODD));
+
+echo PHP_EOL;
+echo 'Tryby zaokrąglania z liczbą 8.5' . PHP_EOL;
+var_dump(round(8.5, 0, PHP_ROUND_HALF_UP));
+var_dump(round(8.5, 0, PHP_ROUND_HALF_DOWN));
+var_dump(round(8.5, 0, PHP_ROUND_HALF_EVEN));
+var_dump(round(8.5, 0, PHP_ROUND_HALF_ODD));
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen role="php">
+     <![CDATA[
+Tryby zaokrąglania z liczbą 9.5
+float(10)
+float(9)
+float(10)
+float(9)
+
+Tryby zaokrąglania z liczbą 8.5
+float(9)
+float(8)
+float(8)
+float(9)
+]]>
+    </screen>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Użycie <parameter>mode</parameter> razem z <parameter>precision</parameter></title>
+    <programlisting role="php">
+     <![CDATA[
+<?php
+echo 'Użycie PHP_ROUND_HALF_UP z dokładnością do jednego miejsca po przecinku' . PHP_EOL;
+var_dump(round( 1.55, 1, PHP_ROUND_HALF_UP));
+var_dump(round(-1.55, 1, PHP_ROUND_HALF_UP));
+
+echo PHP_EOL;
+echo 'Użycie PHP_ROUND_HALF_DOWN z dokładnością do jednego miejsca po przecinku' . PHP_EOL;
+var_dump(round( 1.55, 1, PHP_ROUND_HALF_DOWN));
+var_dump(round(-1.55, 1, PHP_ROUND_HALF_DOWN));
+
+echo PHP_EOL;
+echo 'Użycie PHP_ROUND_HALF_EVEN z dokładnością do jednego miejsca po przecinku' . PHP_EOL;
+var_dump(round( 1.55, 1, PHP_ROUND_HALF_EVEN));
+var_dump(round(-1.55, 1, PHP_ROUND_HALF_EVEN));
+
+echo PHP_EOL;
+echo 'Użycie PHP_ROUND_HALF_ODD z dokładnością do jednego miejsca po przecinku' . PHP_EOL;
+var_dump(round( 1.55, 1, PHP_ROUND_HALF_ODD));
+var_dump(round(-1.55, 1, PHP_ROUND_HALF_ODD));
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen role="php">
+     <![CDATA[
+Użycie PHP_ROUND_HALF_UP z dokładnością do jednego miejsca po przecinku
+float(1.6)
+float(-1.6)
+
+Użycie PHP_ROUND_HALF_DOWN z dokładnością do jednego miejsca po przecinku
+float(1.5)
+float(-1.5)
+
+Użycie PHP_ROUND_HALF_EVEN z dokładnością do jednego miejsca po przecinku
+float(1.6)
+float(-1.6)
+
+Użycie PHP_ROUND_HALF_ODD z dokładnością do jednego miejsca po przecinku
+float(1.5)
+float(-1.5)
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>ceil</function></member>
+    <member><function>floor</function></member>
+    <member><function>number_format</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml
