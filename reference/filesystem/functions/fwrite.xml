@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: adi Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: bb6247b68128cab1b166b49a3a73a87f40333267 Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
-<refentry xml:id="function.fwrite" xmlns="http://docbook.org/ns/docbook">
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.fwrite">
  <refnamediv>
   <refname>fwrite</refname>
   <refpurpose>Zapis pliku binarnie bezpieczny</refpurpose>
@@ -10,15 +10,15 @@
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
-   <type>int</type><methodname>fwrite</methodname>
-   <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam>
-   <methodparam><type>string</type><parameter>łańcuch</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>długość</parameter></methodparam>
+   <type class="union"><type>int</type><type>false</type></type><methodname>fwrite</methodname>
+   <methodparam><type>resource</type><parameter>stream</parameter></methodparam>
+   <methodparam><type>string</type><parameter>data</parameter></methodparam>
+   <methodparam choice="opt"><type class="union"><type>int</type><type>null</type></type><parameter>length</parameter><initializer>&null;</initializer></methodparam>
   </methodsynopsis>
   <simpara>
-   <function>fwrite</function> zapisuje treść
-   <parameter>łańcuch</parameter> do strumienia pliku wskazanego przez
-   <parameter>uchwyt</parameter>.
+   <function>fwrite</function> zapisuje zawartość parametru
+   <parameter>data</parameter> do strumienia pliku wskazanego przez
+   <parameter>stream</parameter>.
   </simpara>
  </refsect1>
 
@@ -27,13 +27,13 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>uchwyt</parameter></term>
+     <term><parameter>stream</parameter></term>
      <listitem>
       &fs.file.pointer;
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>łańcuch</parameter></term>
+     <term><parameter>data</parameter></term>
      <listitem>
       <para>
        Łańcuch znaków, który ma być zapisany.
@@ -41,20 +41,12 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>długość</parameter></term>
+     <term><parameter>length</parameter></term>
      <listitem>
       <para>
-       Jeśli podany jest argument <parameter>długość</parameter>, zapisywanie
-       zakończy się po zapisaniu <parameter>długości</parameter> bajtów lub
-       gdy osiagnięty zostanie koniec <parameter>łańcucha</parameter>, cokolwiek zdarzy
-       się pierwsze.
-      </para>
-      <para>
-        Zauważ, że jeśli argument <parameter>długość</parameter> zosta podany,
-        to konfiguracja <link
-        linkend="ini.magic-quotes-runtime">magic_quotes_runtime</link>
-        zostaje zignorowana i żadne slashe nie zostaną usunięte z
-        <parameter>łańcucha</parameter>.
+       Jeśli argument <parameter>length</parameter> jest typu &integer;, zapisywanie
+       zakończy się po zapisaniu <parameter>length</parameter> bajtów lub
+       gdy osiągnięty zostanie koniec łańcucha <parameter>data</parameter>, cokolwiek zdarzy się pierwsze.
       </para>
      </listitem>
     </varlistentry>
@@ -65,27 +57,120 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <simpara>
-   <function>fwrite</function> zwraca liczbę zapisanych bajtów
-   lub &false; w przypadku błędu.
+   <function>fwrite</function> zwraca liczbę zapisanych
+   bajtów, &return.falseforfailure;.
   </simpara>
+ </refsect1>
+
+ <refsect1 role="errors">
+  &reftitle.errors;
+  <para>
+   <function>fwrite</function> zgłasza błąd <constant>E_WARNING</constant> w wypadku niepowodzenia.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>8.0.0</entry>
+      <entry>
+       <parameter>length</parameter> dopuszcza teraz wartość null.
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </informaltable>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Prosty przykład użycia <function>fwrite</function></title>
+    <programlisting role="php">
+     <![CDATA[
+<?php
+$plik = 'test.txt';
+$tresc = "Dodaj to do pliku\n";
+
+// Najpierw upewnijmy się, że plik istnieje i że możemy do niego zapisywać.
+if (is_writable($filename)) {
+
+    // W naszym przykładzie otwieramy $plik w trybie dopisywania.
+    // Wskaźnik pliku znajduje się na jego końcu dlatego
+    // właśnie tam znajdzie się $tresc kiedy użyjemy na niej fwrite()
+    if (!$fp = fopen($filename, 'a')) {
+         echo "Nie można otworzyć pliku ($plik)";
+         exit;
+    }
+
+    // Zapiszmy $tresc do naszego otwartego pliku.
+    if (fwrite($fp, $somecontent) === FALSE) {
+        echo "Nie można zapisać do pliku ($plik)";
+        exit;
+    }
+
+    echo "Udało się, zapisano ($tresc) do pliku ($plik)";
+
+    fclose($fp);
+
+} else {
+    echo "Plik $plik nie jest zapisywalny";
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
  </refsect1>
 
  <refsect1 role="notes">
   &reftitle.notes;
   <note>
    <para>
+    Zapisywanie do strumienia sieciowego może zakończyć się, zanim cały ciąg znaków zostanie zapisany.
+    Możemy sprawdzić wartość zwracaną przez <function>fwrite</function>:
+    <programlisting role="php">
+     <![CDATA[
+<?php
+function fwrite_stream($fp, $string) {
+    for ($zapisano = 0; $zapisano < strlen($string); $zapisano += $fwrite) {
+        $fwrite = fwrite($fp, substr($string, $zapisano));
+        if ($fwrite === false) {
+            return $zapisano;
+        }
+    }
+    return $zapisano;
+}
+?>
+]]>
+    </programlisting>
+   </para>
+  </note>
+
+  <note>
+   <para>
     W systemach, które rozróżniają pliki na binarne i tekstowe
-    (np. Windows) plik musi zostać otworzony z 'b' włączonym do
-    parametru tryb funkcji <function>fopen</function>.
+    (np. Windows) plik musi zostać otworzony z 'b' zawartym w
+    parametrze tryb funkcji <function>fopen</function>.
    </para>
   </note>
   <note>
    <para>
     Jeśli <parameter>uchwyt</parameter> został utworzony za pomocą <function>fopen</function> w
     trybie dopisywania, zapis do pliku jest niepodzielny (chyba, że rozmiar
-    <parameter>łańcuch</parameter>a przekracza blok systemu plików, na niektórych
+    łańcucha <parameter>data</parameter> przekracza blok systemu plików, na niektórych
     platformach, przy założeniu, że plik jest na lokalnym systemie plików). Jeśli tak,
-    to nie ma potrzeby <function>flock</function>owanie zasobu przed wywołaniem
+    to nie ma potrzeby blokowania zasobu przy użyciu <function>flock</function> przed wywołaniem
     <function>fwrite</function>; wszystkie dane zostaną zapisane bez
     przerywania.
    </para>
@@ -93,65 +178,21 @@
   <note>
    <para>
     Jeśli, zapiszemy dwukrotnie do wskaźnika pliku, dane zostaną dołączone na
-    koncu treści pliku, oznacza to, że poniższy przykład nie zadziała jak się
-    tego spodziewamy.
-    
-        <programlisting role="php">
-<![CDATA[
+    końcu treści pliku:
+    <programlisting role="php">
+     <![CDATA[
 <?php
 $fp = fopen('data.txt', 'w');
 fwrite($fp, '1');
 fwrite($fp, '23');
 fclose($fp);
 
-// plik 'data.txt' ma treść 123, a nie 23!
-?>
-]]>
-        </programlisting>
-   </para>
-  </note>
- </refsect1>
-
- <refsect1 role="examples">
-  &reftitle.examples;
-  <para>
-   <example>
-    <title>Prosty przykład <function>fwrite</function></title>
-    <programlisting role="php">
-<![CDATA[
-<?php
-$nazwapliku = 'test.txt';
-$trochetresci = "Dodaj to do pliku\n";
-
-// Najpierw przekonaj się czy plik istnieje i jest zapisywalny.
-if (is_writable($nazwapliku)) {
-
-// W naszym przykładzie otwieramy $nazwapliku w trybie dopisywania.
-// Wskaźnik pliku jest ustawiony na końcu pliku gdzie znajdzie
-// się zawartość $trochetresci po wykonaniu fwrite().
-if (!$uchwyt = fopen($nazwapliku, 'a')) {
-   echo "Nie mogę otworzyć pliku ($nazwapliku)";
-   exit;
- }
-
-// Zapis $trochetresci do naszego otwartego pliku.
-if (fwrite($uchwyt, $trochetresci) === FALSE) {
-   echo "Nie mogę zapisać do pliku ($nazwapliku)";
-   exit;
- }
-
-echo "Sukces, zapisano ($trochetresci) do pliku ($nazwapliku)";
-
-fclose($uchwyt);
-
-} else {
-  echo "Plik $nazwapliku nie jest zapisywalny";
-}
+// zawartość 'data.txt' to teraz 123 a nie 23!
 ?>
 ]]>
     </programlisting>
-   </example>
-  </para>
+   </para>
+  </note>
  </refsect1>
 
  <refsect1 role="seealso">
@@ -163,9 +204,11 @@ fclose($uchwyt);
     <member><function>fsockopen</function></member>
     <member><function>popen</function></member>
     <member><function>file_get_contents</function></member>
+    <member><function>pack</function></member>
    </simplelist>
   </para>
  </refsect1>
+
 </refentry>
 
 <!-- Keep this comment at the end of the file
