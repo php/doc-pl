@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 674b07e333461d4cf961bdc075da7a455c42df8c Maintainer: sobak Status: ready -->
+<!-- EN-Revision: de42b5016e8d9cbfd245d70f65354a86f4e2f031 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.func-get-arg" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
@@ -11,7 +11,7 @@
   &reftitle.description;
   <methodsynopsis>
    <type>mixed</type><methodname>func_get_arg</methodname>
-   <methodparam><type>int</type><parameter>arg_num</parameter></methodparam>
+   <methodparam><type>int</type><parameter>position</parameter></methodparam>
   </methodsynopsis>
   <para>
    Pobiera podany element z listy argumentów funkcji zdefiniowanej przez użytkownika.
@@ -29,7 +29,7 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>arg_num</parameter></term>
+     <term><parameter>position</parameter></term>
      <listitem>
       <para>
        Pozycja argumentu. Argumenty funkcji są liczone poczynając od zera.
@@ -47,44 +47,11 @@
   </para>
  </refsect1>
 
- <refsect1 role="changelog">
-  &reftitle.changelog;
-  <para>
-   <informaltable>
-    <tgroup cols="2">
-     <thead>
-      <row>
-       <entry>&Version;</entry>
-       <entry>&Description;</entry>
-      </row>
-     </thead>
-     <tbody>
-      <row>
-       <entry>5.3.0</entry>
-       <entry>
-	    Ta funkcja może być teraz użyta w listach parametrów.
-       </entry>
-      </row>
-      <row>
-       <entry>5.3.0</entry>
-       <entry>
-	    Jeśli ta funkcja jest wywoływana z najbardziej zewnętrznego zasięgu
-		pliku dołączonego przez wywołanie <function>include</function>
-		lub <function>require</function> wewnątrz funkcji w wykonującym
-		pliku, generuje teraz ostrzeżenie i zwraca &false;
-       </entry>
-      </row>
-     </tbody>
-    </tgroup>
-   </informaltable>
-  </para>
- </refsect1>
-
  <refsect1 role="errors">
   &reftitle.errors;
   <para>
-   Generuje ostrzeżenie jeżeli wywołanie nastąpiło z zewnątrz funkcji zdefiniowanej
-   przez użytkownika lub jeżeli <parameter>arg_num</parameter> jest większa od
+   Generuje ostrzeżenie, jeżeli wywołanie nastąpiło z zewnątrz funkcji zdefiniowanej
+   przez użytkownika lub jeżeli <parameter>position</parameter> jest większa od
    rzeczywistej liczby przekazanych parametrów.
   </para>
  </refsect1>
@@ -119,49 +86,6 @@ Drugi argument: 2
     </screen>
    </example>
   </para>
-  <para>
-   <example>
-    <title>Przykład <function>func_get_arg</function> przed i po PHP 5.3</title>
-    <programlisting role="php">
-<![CDATA[
-test.php
-<?php
-function foo() {
-    include './fga.inc';
-}
-
-foo('Pierwszy argument', 'Drugi argument');
-?>
-
-fga.inc
-<?php
-
-$arg = func_get_arg(1);
-var_export($arg);
-
-?>
-]]>
-    </programlisting>
-    <para>
-     Wynik przed PHP 5.3:
-    </para>
-    <screen>
-<![CDATA[
-'Drugi argument'
-]]>
-    </screen>
-    <para>
-     Wynik w PHP 5.3 i późniejszych:
-    </para>
-    <screen>
-<![CDATA[
-Warning: func_get_arg():  Called from the global scope - no function
-context in /home/torben/Desktop/code/ml/fga.inc on line 3
-false
-]]>
-    </screen>
-   </example>
-  </para>
 
   <para>
    <example>
@@ -187,17 +111,10 @@ byRef($arg);
 ?>
 ]]>
     </programlisting>
-    &example.outputs.7;
+    &example.outputs;
     <screen>
 Przekazano     : 'bar'
 Po zmianie     : 'baz'
-Przekazano     : 'bar'
-Po zmianie     : 'baz'
-    </screen>
-    &example.outputs.5;
-    <screen>
-Przekazano     : 'bar'
-Po zmianie     : 'bar'
 Przekazano     : 'bar'
 Po zmianie     : 'baz'
     </screen>
@@ -208,11 +125,11 @@ Po zmianie     : 'baz'
 
  <refsect1 role="notes">
   &reftitle.notes;
-  &note.funcnoparam;
+  &note.func-named-params;
   &note.funcbyref;
   <note>
    <simpara>
-    Ta funkcja zwraca tylko kopię przekzanyych argumentów i nie bierze pod
+    Ta funkcja zwraca tylko kopię przekazanych argumentów i nie bierze pod
     uwagę argumentów domyślnych, które nie zostały przekazane.
    </simpara>
   </note>
@@ -222,7 +139,7 @@ Po zmianie     : 'baz'
   &reftitle.seealso;
   <para>
    <simplelist>
-    <member>Operator <link linkend="functions.variable-arg-list.new"><literal>...</literal> w PHP 5.6+</link></member>
+    <member>Składnia <link linkend="functions.variable-arg-list"><literal>...</literal></link></member>
     <member><function>func_get_args</function></member>
     <member><function>func_num_args</function></member>
    </simplelist>
@@ -230,7 +147,6 @@ Po zmianie     : 'baz'
  </refsect1>
 
 </refentry>
-
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml
