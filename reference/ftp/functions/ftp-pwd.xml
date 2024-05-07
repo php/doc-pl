@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: leszek Status: ready -->
+<!-- EN-Revision: 4d1c34c9b7a30cfc3a59641122c707a2812cfed7 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: grzesiek -->
 <refentry xml:id="function.ftp-pwd" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>ftp_pwd</refname>
@@ -9,8 +10,8 @@
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
-   <type>string</type><methodname>ftp_pwd</methodname>
-   <methodparam><type>resource</type><parameter>strumień_ftp</parameter></methodparam>
+   <type class="union"><type>string</type><type>false</type></type><methodname>ftp_pwd</methodname>
+   <methodparam><type>FTP\Connection</type><parameter>ftp</parameter></methodparam>
   </methodsynopsis>
   <para>
   </para>
@@ -20,11 +21,9 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>strumień_ftp</parameter></term>
+     <term><parameter>ftp</parameter></term>
      <listitem>
-      <para>
-       Identyfikator połączenia z serwerem FTP.
-      </para>
+      &ftp.parameter.ftp;
      </listitem>
     </varlistentry>
    </variablelist>
@@ -36,6 +35,24 @@
    Zwraca nazwę bieżącego katalogu, lub &false; w przypadku napotkania błędu.
   </para>
  </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     &ftp.changelog.ftp-param;
+    </tbody>
+   </tgroup>
+  </informaltable>
+ </refsect1>
+
  <refsect1 role="examples">
   &reftitle.examples;
   <para>
@@ -46,19 +63,19 @@
 <?php
 
 // nawiązanie połączenia
-$conn_id = ftp_connect($ftp_server);
+$ftp = ftp_connect($ftp_server);
 
-// logowanie
-$login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass);
+// logowanie z użyciem nazwy użytkownika i hasła
+$login_result = ftp_login($ftp, $ftp_user_name, $ftp_user_pass);
 
 // zmiana katalogu bieżącego na public_html
-ftp_chdir($conn_id, 'public_html');
+ftp_chdir($ftp, 'public_html');
 
 // wyświetlenie katalogu bieżącego
-echo ftp_pwd($conn_id); // /public_html
+echo ftp_pwd($ftp); // /public_html
 
 // zamknięcie połączenia
-ftp_close($conn_id);
+ftp_close($ftp);
 ?>
 ]]>
     </programlisting>
@@ -75,7 +92,6 @@ ftp_close($conn_id);
   </para>
  </refsect1>
 </refentry>
-
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml
