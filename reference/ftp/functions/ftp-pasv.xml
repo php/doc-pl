@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: e1b57a19509f9b7a09d5945e601837e0211671ca Maintainer: leszek Status: ready -->
+<!-- EN-Revision: 4d1c34c9b7a30cfc3a59641122c707a2812cfed7 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: grzesiek -->
 <refentry xml:id="function.ftp-pasv" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>ftp_pasv</refname>
@@ -10,8 +11,8 @@
   &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>ftp_pasv</methodname>
-   <methodparam><type>resource</type><parameter>strumień_ftp</parameter></methodparam>
-   <methodparam><type>bool</type><parameter>pasv</parameter></methodparam>
+   <methodparam><type>FTP\Connection</type><parameter>ftp</parameter></methodparam>
+   <methodparam><type>bool</type><parameter>enable</parameter></methodparam>
   </methodsynopsis>
   <para>
    <function>ftp_pasv</function> włącza lub wyłącza tryb pasywny, w którym
@@ -28,15 +29,13 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>strumień_ftp</parameter></term>
+     <term><parameter>ftp</parameter></term>
      <listitem>
-      <para>
-       Identyfikator połączenia z serwerem FTP.
-      </para>
+      &ftp.parameter.ftp;
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>pasv</parameter></term>
+     <term><parameter>enable</parameter></term>
      <listitem>
       <para>
        Jeśli argument ten ma wartośc &true;, tryb pasywny jest włączany. Jeśli
@@ -53,6 +52,24 @@
    &return.success;
   </para>
  </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     &ftp.changelog.ftp-param;
+    </tbody>
+   </tgroup>
+  </informaltable>
+ </refsect1>
+
  <refsect1 role="examples">
   &reftitle.examples;
   <para>
@@ -61,27 +78,27 @@
     <programlisting role="php">
 <![CDATA[
 <?php
-$plik = 'plik.txt';
-$plik_zdalny = 'readme.txt';
+$file = 'somefile.txt';
+$remote_file = 'readme.txt';
 
 // nawiązanie połączenia
-$conn_id = ftp_connect($ftp_server);
+$ftp = ftp_connect($ftp_server);
 
-// logowanie
-$login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass);
+// logowanie z użyciem nazwy użytkownika i hasła
+$login_result = ftp_login($ftp, $ftp_user_name, $ftp_user_pass);
 
 // włączenie trybu pasywnego
-ftp_pasv($conn_id, true);
+ftp_pasv($ftp, true);
 
 // przesłanie pliku
-if (ftp_put($conn_id, $plik_zdalny, $plik, FTP_ASCII)) {
- echo "Plik $plik został pomyślnie przesłany\n";
+if (ftp_put($ftp, $remote_file, $file, FTP_ASCII)) {
+ echo "Plik $file został pomyślnie przesłany\n";
 } else {
- echo "Napotkano problemy w czasie przesyłania pliku $plik\n";
+ echo "Napotkano problemy w czasie przesyłania pliku $file\n";
 }
 
 // zamknięcie połączenia
-ftp_close($conn_id);
+ftp_close($ftp);
 ?>
 ]]>
     </programlisting>
@@ -89,7 +106,6 @@ ftp_close($conn_id);
   </para>
  </refsect1>
 </refentry>
-
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

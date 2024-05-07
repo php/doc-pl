@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 8b5940cadeb4f1c8492f4a7f70743a2be807cf39 Maintainer: leszek Status: ready -->
+<!-- EN-Revision: 4d1c34c9b7a30cfc3a59641122c707a2812cfed7 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS: sobak -->
+<!-- CREDITS: sobak, grzesiek -->
 <refentry xml:id="function.ftp-get" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>ftp_get</refname>
@@ -11,11 +11,11 @@
   &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>ftp_get</methodname>
-   <methodparam><type>resource</type><parameter>strumień_ftp</parameter></methodparam>
-   <methodparam><type>string</type><parameter>plik_lokalny</parameter></methodparam>
-   <methodparam><type>string</type><parameter>plik_zdalny</parameter></methodparam>
-   <methodparam><type>int</type><parameter>tryb</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>pozycja_wznowienia</parameter><initializer>0</initializer></methodparam>
+   <methodparam><type>FTP\Connection</type><parameter>ftp</parameter></methodparam>
+   <methodparam><type>string</type><parameter>local_filename</parameter></methodparam>
+   <methodparam><type>string</type><parameter>remote_filename</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>mode</parameter><initializer><constant>FTP_BINARY</constant></initializer></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>offset</parameter><initializer>0</initializer></methodparam>
   </methodsynopsis>
   <para>
    <function>ftp_get</function> pobiera zdalny plik z serwera FTP i zapisuje
@@ -27,15 +27,13 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>strumień_ftp</parameter></term>
+     <term><parameter>ftp</parameter></term>
      <listitem>
-      <para>
-       Identyfikator połączenia z serwerem FTP.
-      </para>
+      &ftp.parameter.ftp;
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>plik_lokalny</parameter></term>
+     <term><parameter>local_filename</parameter></term>
      <listitem>
       <para>
        Ścieżka do pliku lokalnego (zostanie on nadpisany, jeśli plik taki już
@@ -44,7 +42,7 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>plik_zdalny</parameter></term>
+     <term><parameter>remote_filename</parameter></term>
      <listitem>
       <para>
        Ścieżka do pliku zdalnego.
@@ -52,7 +50,7 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>tryb</parameter></term>
+     <term><parameter>mode</parameter></term>
      <listitem>
       <para>
        Tryb transferu. Musi to być <constant>FTP_ASCII</constant> lub
@@ -61,7 +59,7 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>pozycja_wznowienia</parameter></term>
+     <term><parameter>offset</parameter></term>
      <listitem>
       <para>
        Pozycja w pliku zdalnym, od której rozpoczęte zostanie pobieranie.
@@ -77,7 +75,32 @@
    &return.success;
   </para>
  </refsect1>
- <refsect1 role="examples">
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     &ftp.changelog.ftp-param;
+     <row>
+      <entry>7.3.0</entry>
+      <entry>
+       Parametr <parameter>mode</parameter> jest teraz opcjonalny. Wcześniej był
+       on obowiązkowy.
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </informaltable>
+ </refsect1>
+
+<refsect1 role="examples">
   &reftitle.examples;
   <para>
    <example>
@@ -87,24 +110,24 @@
 <?php
 
 // definicja zmiennych
-$plik_lokalny = 'local.zip';
-$plik_zdalny = 'server.zip';
+$local_file = 'local.zip';
+$server_file = 'server.zip';
 
 // ustanowienie połączenia
-$conn_id = ftp_connect($ftp_server);
+$ftp = ftp_connect($ftp_server);
 
-// logowanie
-$login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass);
+// logowanie z użyciem nazwy użytkownika i hasła
+$login_result = ftp_login($ftp, $ftp_user_name, $ftp_user_pass);
 
-// próba pobrania $plik_zdalny i zapisania go do $plik_lokalny
-if (ftp_get($conn_id, $plik_lokalny, $plik_zdalny, FTP_BINARY)) {
-    echo "Pomyślnie zapisano $plik_lokalny\n";
+// próba pobrania $server_file i zapisania go do $local_file
+if (ftp_get($ftp, $local_file, $server_file, FTP_BINARY)) {
+    echo "Pomyślnie zapisano $local_file\n";
 } else {
     echo "Problem.\n";
 }
 
 // zamknięcie połączenia
-ftp_close($conn_id);
+ftp_close($ftp);
 
 ?>
 ]]>
@@ -124,7 +147,6 @@ ftp_close($conn_id);
   </para>
  </refsect1>
 </refentry>
-
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 309ccd7aa4b2409c1b60d5ed5d910ee5dcfea982 Maintainer: leszek Status: ready -->
+<!-- EN-Revision: 6ce59dacb46cddfc09b3a44f25632db264ab786a Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: grzesiek -->
 <refentry xml:id="function.ftp-rename" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>ftp_rename</refname>
@@ -10,9 +11,9 @@
   &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>ftp_rename</methodname>
-   <methodparam><type>resource</type><parameter>strumień_ftp</parameter></methodparam>
-   <methodparam><type>string</type><parameter>stara_nazwa</parameter></methodparam>
-   <methodparam><type>string</type><parameter>nowa_nazwa</parameter></methodparam>
+   <methodparam><type>FTP\Connection</type><parameter>ftp</parameter></methodparam>
+   <methodparam><type>string</type><parameter>from</parameter></methodparam>
+   <methodparam><type>string</type><parameter>to</parameter></methodparam>
   </methodsynopsis>
   <para>
    <function>ftp_rename</function> zmienia nazwę pliku lub katalogu
@@ -24,15 +25,13 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>strumień_ftp</parameter></term>
+     <term><parameter>ftp</parameter></term>
      <listitem>
-      <para>
-       Identyfikator połączenia z serwerem FTP.
-      </para>
+      &ftp.parameter.ftp;
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>stara_nazwa</parameter></term>
+     <term><parameter>from</parameter></term>
      <listitem>
       <para>
        Stara nazwa pliku lub katalogu.
@@ -40,7 +39,7 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>nowa_nazwa</parameter></term>
+     <term><parameter>to</parameter></term>
      <listitem>
       <para>
        Nowa nazwa.
@@ -54,9 +53,27 @@
   &reftitle.returnvalues;
   <para>
    &return.success; W wypadku błędu (jak próba zmiany nazwy nieistniejącego
-   pliku), wyemitowany zostanie błąd o poziomie <literal>E_WARNING</literal>.
+   pliku), wyemitowany zostanie błąd o poziomie <constant>E_WARNING</constant>.
   </para>
  </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     &ftp.changelog.ftp-param;
+    </tbody>
+   </tgroup>
+  </informaltable>
+ </refsect1>
+
  <refsect1 role="examples">
   &reftitle.examples;
   <para>
@@ -65,24 +82,24 @@
     <programlisting role="php">
 <![CDATA[
 <?php
-$stary_plik = 'plik.txt.bak';
-$nowy_plik  = 'plik.txt';
+$old_file = 'somefile.txt.bak';
+$new_file  = 'somefile.txt';
 
 // nawiązanie połączenia
-$conn_id = ftp_connect($ftp_server);
+$ftp = ftp_connect($ftp_server);
 
-// logowanie
-$login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass);
+// logowanie z użyciem nazwy użytkownika i hasła
+$login_result = ftp_login($ftp, $ftp_user_name, $ftp_user_pass);
 
-// próba zmiany nazwy $stary_plik na $nowy_plik
-if (ftp_rename($conn_id, $stary_plik, $nowy_plik)) {
- echo "Pomyślnie zmieniono nazwę pliku $stary_plik na $nowy_plik\n";
+// próba zmiany nazwy $old_file na $new_file
+if (ftp_rename($ftp, $old_file, $new_file)) {
+ echo "Pomyślnie zmieniono nazwę pliku $old_file na $new_file\n";
 } else {
- echo "Wystąpił problem przy zmianie nazwy $stary_plik na $nowy_plik\n";
+ echo "Wystąpił problem przy zmianie nazwy $old_file na $new_file\n";
 }
 
 // zamknięcie połączenia
-ftp_close($conn_id);
+ftp_close($ftp);
 ?>
 ]]>
     </programlisting>
@@ -90,7 +107,6 @@ ftp_close($conn_id);
   </para>
  </refsect1>
 </refentry>
-
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

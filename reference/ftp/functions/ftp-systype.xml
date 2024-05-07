@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: leszek Status: ready -->
+<!-- EN-Revision: 4d1c34c9b7a30cfc3a59641122c707a2812cfed7 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: grzesiek -->
 <refentry xml:id="function.ftp-systype" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>ftp_systype</refname>
@@ -9,8 +10,8 @@
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
-   <type>string</type><methodname>ftp_systype</methodname>
-   <methodparam><type>resource</type><parameter>strumień_ftp</parameter></methodparam>
+   <type class="union"><type>string</type><type>false</type></type><methodname>ftp_systype</methodname>
+   <methodparam><type>FTP\Connection</type><parameter>ftp</parameter></methodparam>
   </methodsynopsis>
   <para>
    Zwraca identyfikator typu systemu dla zdalnego serwera FTP.
@@ -21,11 +22,9 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>strumień_ftp</parameter></term>
+     <term><parameter>ftp</parameter></term>
      <listitem>
-      <para>
-       Identyfikator połączenia z serwerem FTP.
-      </para>
+      &ftp.parameter.ftp;
      </listitem>
     </varlistentry>
    </variablelist>
@@ -37,6 +36,24 @@
    Zwraca typ zdalnego systemu lub &false; w przypadku napotkania błędu.
   </para>
  </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     &ftp.changelog.ftp-param;
+    </tbody>
+   </tgroup>
+  </informaltable>
+ </refsect1>
+
  <refsect1 role="examples">
   &reftitle.examples;
   <para>
@@ -54,7 +71,7 @@ ftp_login($ftp, 'użytkownik', 'hasło');
 if ($type = ftp_systype($ftp)) {
     echo "Example.com pracuje na $type\n";
 } else {
-    echo "Nie można pobrać tytpu systemu";
+    echo "Nie można pobrać typu systemu";
 }
 
 ?>
@@ -70,7 +87,6 @@ Example.com pracuje na UNIX
   </para>
  </refsect1>
 </refentry>
-
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml
