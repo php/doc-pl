@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 84b8fca68fc762fefe85acde180a38b2e77a28b9 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: c44475e1fafcbee203ed4935a6d5d7a01379fcdc Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.function-exists" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
@@ -11,12 +11,12 @@
   &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>function_exists</methodname>
-   <methodparam><type>string</type><parameter>function_name</parameter></methodparam>
+   <methodparam><type>string</type><parameter>function</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Sprawdza listę zdefiniowanych funkcji, zarówno wbudownych i
+   Sprawdza listę zdefiniowanych funkcji, zarówno wbudowanych i
    zdefiniowanych przez użytkownika dla nazwy podanej jako
-   <parameter>function_name</parameter>. 
+   <parameter>function</parameter>. 
   </para>
  </refsect1>
 
@@ -25,7 +25,7 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>function_name</parameter></term>
+     <term><parameter>function</parameter></term>
      <listitem>
       <para>
        Nazwa funkcji, jako łańcuch znaków.
@@ -39,7 +39,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca &true; jeżeli funkcja <parameter>function_name</parameter> istnieje i jest
+   Zwraca &true; jeżeli funkcja <parameter>function</parameter> istnieje i jest
    funkcją, &false; w przeciwnym wypadku.
   </para>
   <note>
@@ -74,9 +74,8 @@ if (function_exists('imap_open')) {
   &reftitle.notes;
   <note>
    <para>
-    Nazwa funkcji może istnieć nawet jeżeli sama funkcja jest nieużywalna przez
-	konfiguracji lub opcje użyte przy kompilacji (przykładem mogą być funkcje <link
-    linkend="ref.image">image</link>).
+    Nazwa funkcji może istnieć, nawet jeżeli sama funkcja jest nieużywalna ze względu na
+    konfigurację lub opcje użyte przy kompilacji (przykładem mogą być funkcje <link linkend="ref.image">image</link>).
    </para>
   </note>
  </refsect1>
