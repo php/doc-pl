@@ -34,7 +34,7 @@
        Jeśli <parameter>filename</parameter> jest w postaci "schemat://...", to
        przypuszczalnie jest to URL i PHP szuka protokołu obsługi
        (także zwanego wrapperem) dla tego schematu. Jeśli nie zarejestrowano
-       żadnego wrapperaa dla tego protokołu, PHP wyemituje notatkę, aby pomóc Ci
+       żadnego wrapperaa dla tego protokołu, PHP wyemituje komunikat <constant>E_NOTICE</constant>, aby pomóc Ci
        w wyśledzeniu potencjalnego problemu w Twoim skrypcie następnie będzie
        kontynuować z podanym <parameter>filename</parameter> traktując go
        jako zwykły plik.
@@ -60,9 +60,9 @@
         Listę obsługiwanych protokołów możesz znaleźć w <xref linkend="wrappers"/>.
         Niektóre protokoły (określane też jako <literal>wrappery</literal>) obsługują
         <literal>kontekst</literal> lub/i opcje &php.ini;.
-        Odwołaj się do konkretnej strony protokołu, aby uzyskać listę opcji jakie
-        mogą zostać ustawione (np. &php.ini; wartość
-        <literal>user_agent</literal> używana przez wrapper <literal>http</literal>).
+        Zapoznaj się z podstroną poświęconą konkretnemu protokołowi, aby poznać listę opcji, które
+        mogą zostać ustawione (np. wartość
+        <literal>user_agent</literal> ustawiana w &php.ini; używana przez wrapper <literal>http</literal>).
        </para>
       </note>
       <para>
@@ -71,7 +71,7 @@
        pliku lub używać ukośników (slash).
        <informalexample>
         <programlisting role="php">
-         <![CDATA[
+<![CDATA[
 <?php
 $handle = fopen("c:\\folder\\resource.txt", "r");
 ?>
@@ -85,7 +85,7 @@ $handle = fopen("c:\\folder\\resource.txt", "r");
      <term><parameter>mode</parameter></term>
      <listitem>
       <para>
-       Parametr <parameter>mode</parameter> określa rodzaj dostępu, jaki
+       Parametr <parameter>mode</parameter> określa rodzaj dostępu, jakiego
        wymagasz do strumienia. Może być on jednym z:
        <table>
         <title>
@@ -220,19 +220,11 @@ $handle = fopen("c:\\folder\\resource.txt", "r");
         znak w parametrze <parameter>mode</parameter>.
        </para>
        <para>
-        Domyślnie tryb konwersji zależy od SAPI i wersji PHP jakiej używasz,
-        więc namawiamy aby zawsze podawać stosowną flage w celu przenośności.
-        Powinieneś użyć trybu <literal>'t'</literal> jeśli pracujesz ze
-        zwykłymi plikami tekstowymi (plain-text)i używasz  <literal>\n</literal>
-        do ograniczenia konców lini w twoim skrypcie, ale wymagasz aby twój
-        plik był czytelny w aplikacjach takich jak notatnik. Powinieneś uzyć
-        <literal>'b'</literal> w każdym innym przypadku.
-
         Domyślny tryb konwersji to <literal>'b'</literal>.
         Możesz użyć trybu <literal>'t'</literal>
         jeśli pracujesz z plikami zawierającymi wyłącznie czysty tekst i używasz
         <literal>\n</literal> jako znaku końca linii, ale
-        chciałbyś aby twoje pliki były odczytywane przez takie aplikacje jak stare wersje Notatnika.
+        chciałbyś, aby Twoje pliki były możliwe do odczytu przez takie aplikacje jak stare wersje Notatnika.
         W każdym innym przypadku powinieneś używać trybu <literal>'b'</literal>.
        </para>
        <para>
@@ -322,7 +314,7 @@ $handle = fopen("c:\\folder\\resource.txt", "r");
    <example>
     <title>Przykłady użycia <function>fopen</function></title>
     <programlisting role="php">
-     <![CDATA[
+<![CDATA[
 <?php
 $handle = fopen("/home/rasmus/plik.txt", "r");
 $handle = fopen("/home/rasmus/plik.gif", "wb");
