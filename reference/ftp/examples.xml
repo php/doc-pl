@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 79dcbe011fb254dcd92c597064571fe313362a09 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 4d1c34c9b7a30cfc3a59641122c707a2812cfed7 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 
 <chapter xml:id="ftp.examples" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -13,13 +13,13 @@
 <![CDATA[
 <?php
 // nawiąż podstawowe połączenie
-$conn_id = ftp_connect($ftp_server); 
+$ftp = ftp_connect($ftp_server);
 
 // zaloguj przy użyciu nazwy użytkownika i hasła
-$login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass); 
+$login_result = ftp_login($ftp, $ftp_user_name, $ftp_user_pass);
 
 // sprawdź połączenie
-if ((!$conn_id) || (!$login_result)) { 
+if ((!$ftp) || (!$login_result)) {
     echo "Połączenie FTP nie udało się!";
     echo "Próbowano połączyć się z serwerem $ftp_server jako użytkownik $ftp_user_name"; 
     exit; 
@@ -28,7 +28,7 @@ if ((!$conn_id) || (!$login_result)) {
 }
 
 // załaduj plik
-$upload = ftp_put($conn_id, $destination_file, $source_file, FTP_BINARY); 
+$upload = ftp_put($ftp, $destination_file, $source_file, FTP_BINARY);
 
 // sprawdź status wysyłania pliku
 if (!$upload) { 
@@ -37,8 +37,8 @@ if (!$upload) {
     echo "Wysłano $source_file na serwer $ftp_server jako $destination_file";
 }
 
-// zamknij strumień FTP
-ftp_close($conn_id); 
+// zamknij połączenie FTP
+ftp_close($ftp);
 ?>
 ]]>
     </programlisting>

@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 5dba865d911a1d0aed3160abbb19be77fff560ca Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: 4decb44c7141a97e348a1235bbb20d930d2baac0 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: leszek, sobak -->
  <chapter xml:id="language.expressions" xmlns="http://docbook.org/ns/docbook">
    <title>Wyrażenia</title>
 
    <simpara>
-    Wyrażenia są naważniejszymi elementami składowymi PHP. W PHP prawie
-    wszystko co napiszesz jest wyrażeniem. Najprostszą i najdokładniejszą
-    definicją wyrażenia jest "wszystko co ma wartość".
+    Wyrażenia są najważniejszymi elementami składowymi PHP. W PHP prawie
+    wszystko, co napiszesz, jest wyrażeniem. Najprostszą i najdokładniejszą
+    definicją wyrażenia jest "wszystko, co ma wartość".
    </simpara>
 
    <simpara>
-    Najbardziej podstawową formą wyrażeń są stałe i zmienna. Jeśli napiszesz
-    "<varname>$a</varname> = 5" przypisujesz '5' do <varname>$a</varname>. '5' ma oczywiście wartość 5, lub innymi
-    słowy '5' jest wyrażeniem o wartości 5 (w tym przypadku, '5' jest stałą
-    liczbą całkowitą).
+    Najbardziej podstawową formą wyrażeń są stałe i zmienna. 
+    Jeśli napiszesz <code>$a</code> = 5 przypisujesz <code>5</code> do 
+    <varname>$a</varname>. <code>5</code> ma oczywiście 
+    wartość 5, lub innymi słowy <code>5</code> jest wyrażeniem 
+    o wartości 5 (w tym przypadku, <code>5</code> jest stałą liczbą całkowitą).
    </simpara>
 
    <simpara>
-    Po tym przypisaniu możesz się spodziwać, że wartością <varname>$a</varname> jest także 5, więc
-    jeśli napiszesz "<varname>$b</varname> = <varname>$a</varname>" możesz się spodziewać, że będzie to równoznaczne
-    z napisaniem "<varname>$b</varname> = 5". Innymi słowy, <varname>$a</varname> jest wyrażeniem o wartości 5.
-    Jeśli wszystko działa prawidłowo, wszystko będzie się dziać tak jak
+    Po tym przypisaniu możesz się spodziewać, że wartością <varname>$a</varname> jest także 5, 
+    więc jeśli napiszesz <code>$b = $a</code>, to możesz się spodziewać, że będzie to równoznaczne
+    z napisaniem <code>$b = 5</code>. Innymi słowy, <varname>$a</varname> jest wyrażeniem 
+    o wartości 5. Jeśli wszystko działa prawidłowo, wszystko będzie się dziać tak jak
     napisano wyżej.
    </simpara>
 
@@ -46,55 +47,55 @@ function foo ()
    <simpara>
     Zakładając, że zapoznałeś się z koncepcją funkcji (jeśli nie, przejrzyj
     najpierw rozdział o <link linkend="language.functions">funkcjach</link>),
-    możesz założyć, że napisanie <literal>$c = foo()</literal> jest
-    równoznaczne z napisaniem <literal>$c = 5</literal>, i masz racię. Funkcje
-    są wyrażeniami o wartości którą zwracają. Ponieważ <literal>foo()</literal> zwraca 5,
-    wartością wyrażenia '<literal>foo()</literal>' jest 5. Zazwyczaj funkcje nie zwracają
+    możesz założyć, że napisanie <code>$c = foo()</code> jest
+    równoznaczne z napisaniem <code>$c = 5</code>, i masz racię. Funkcje
+    są wyrażeniami o wartości, którą zwracają. Ponieważ <code>foo()</code> zwraca 5,
+    wartością wyrażenia '<code>foo()</code>' jest 5. Zazwyczaj funkcje nie zwracają
     statycznej wartości, ale coś obliczają.
    </simpara>
 
    <simpara>
     Oczywiście wartości w PHP nie muszą być liczbami całkowitymi, i bardzo
-    często nie są nimi. PHP obsługuje 3 skalarne warotści danych: wartości
-    całkowite (<type>integer</type>), wartości rzeczywiste (<type>float</type>
-    i ciągi znaków (<type>string</type>) (wartości skalarne
+    często nie są nimi. PHP obsługuje 3 skalarne typy danych: liczby całkowite (<type>int</type>), 
+    liczby zmiennoprzecinkowe (<type>float</type>), ciągi znaków (<type>string</type>)
+    oraz wartości logiczne (<type>bool</type>). Wartości skalarne
     to takie, których nie możesz 'rozbić' na mniejsze kawałki, w
-    przeciwieństwie do np. tablic). PHP obsługuje także dwa złożone
+    przeciwieństwie do np. tablic. PHP obsługuje także dwa złożone
     (nieskalarne) typy danych: tablice i obiekty. Każdą z tych wartości można
     przypisać do zmiennych lub może być zwrócona przez funkcję.
    </simpara>
 
    <simpara>
     PHP rozwija wyrażenia prawdopodobnie znacznie bardziej, niż wiele innych języków
-    programowania.  PHP jest językiem wyrażeń, co oznacza
+    programowania.  PHP jest językiem wyrażeń, co oznacza,
     że prawie wszystko w nim jest wyrażeniem. Przyjrzyj się przykładowi, który już
-    analizowaliśmy, '<varname>$a</varname> = 5'. Łatwo jest zauważyć, że są tu dwie wartości.
-    Wartość stałej całkowitej '5' oraz wartość <varname>$a</varname>, która zostanie
+    analizowaliśmy: <code>$a = 5</code>. Łatwo jest zauważyć, że są tu dwie wartości.
+    Wartość liczby całkowitej <code>5</code> oraz wartość <varname>$a</varname>, która zostanie
     zamieniona na 5. Ale tak naprawdę jest tu jeszcze jedna wartość, którą
     jest wartość operacji przypisania. Przypisanie przyjmuje wartość
-    przypisywanej wartości, w tym przypadku 5. W praktyce oznacza to, że '<varname>$a</varname> =
-    5', niezależnie co to robi, jest wyrażeniem o wartości 5. Wynika z tego,
-    że napisanie '<varname>$b</varname> = (<varname>$a</varname> = 5)' jest
-    równoznaczne napisaniu '<varname>$a</varname> = 5; <varname>$b</varname> = 5;'
-    (średnik oznacza koniec instrukcji). Ponieważ przypisania są przetwarzane
-    od prawej do lewej, możesz także napisać '<varname>$b</varname> = <varname>$a</varname> = 5'.
+    przypisywanej wartości, w tym przypadku 5. W praktyce oznacza to, że <code>$a = 5</code>, niezależnie co to robi,
+    jest wyrażeniem o wartości 5. Wynika z tego, że napisanie
+    <code>$b = ($a = 5)</code> jest równoznaczne napisaniu
+    <code>$a = 5; $b = 5;</code> (średnik
+    oznacza koniec instrukcji). Ponieważ przypisania są przetwarzane
+    od prawej do lewej, możesz także napisać <code>$b = $a = 5</code>.
    </simpara>
 
    <simpara>
     Kolejnym dobrym przykładem korzystania z wyrażeń jest pre- i
     postinkrementacja, a także dekrementacja. Użytkownicy PHP i wielu innych
-    języków mogą być już zaznajomieni z notacją <literal>zmienna++</literal> i <literal>zmienna--</literal>. Są to
-    <link linkend="language.operators.increment">operatory inkrementacji i
-     dekrementacji</link>. W PHP, tak jak w C, sa dwa typy
+    języków mogą być już zaznajomieni z notacją <code>variable++</code> i
+    <code>variable--</code>. Są to <link linkend="language.operators.increment">
+    operatory inkrementacji i dekrementacji</link>. W PHP, tak jak w C, są dwa typy
     inkrementacji: preinkrementacja i postinkrementacja. I pre- i
-    postinkrementacja zwiększają wartość zmiannej, więc efekt w stosunku do
+    postinkrementacja zwiększają wartość zmiennej, więc efekt w stosunku do
     zmiennej jest taki sam. Różnica jest w wartości wyrażenia inkrementacji.
-    Preinkrementacja, która jest oznaczana jako '++<varname>$zmienna</varname>', zwraca
+    Preinkrementacja, która jest zapisywana jako <code>++$variable</code>, zwraca
     zwiększoną wartość (PHP zwiększa zmienną przed odczytaniem wartości,
     dlatego nazywa się to 'pre-inkrementacją'). Postinkrementacja, która jest
-    oznaczana jako '<varname>$zmienna</varname>++', zwraca orginalną wartość $zmienna przed
-    zwiększeniem jej wartości (PHP zwiększa wartość po odczytaniu jej
-    wartości, stąd nazwa 'post-inkrementacja').
+    oznaczana jako <code>$variable++</code>, zwraca oryginalną wartość 
+    <varname>$zmienna</varname> przed zwiększeniem jej wartości (PHP zwiększa wartość
+    po odczytaniu jej wartości, stąd nazwa 'post-inkrementacja').
    </simpara>
 
    <simpara>
@@ -106,37 +107,39 @@ function foo ()
     także zbiór operatorów ścisłego porównania: === (równy i tego samego typu)
     i !== (nie równy lub różnego typu).  Wyrażenia te są powszechnie używane
     przy sprawdzaniu warunków, jak na przykład instrukcje
-    <literal>if</literal>.
+    <code>if</code>.
    </simpara>
 
    <simpara>
-    Ostatnim przykładem, którym będziemy się tu zajmować są połączone
+    Ostatnim przykładem, którym będziemy się tu zajmować, są połączone
     wyrażenia operacji i przypisania. Już wiesz, że jeśli chcesz zwiększyć
     wartość zmiennej <varname>$a</varname> o 1, możesz po prostu napisać
-	'<varname>$a</varname>++' lub '++<varname>$a</varname>'. Ale
-    co jeśli chcesz dodać do niej więcej niż jeden, na przykład 3? Mógłbyś
-    napisać wielokrotnie '<varname>$a</varname>++', ale nie jest to sposób ani efektywny ani
-    wygodny. Częściej spotykane jest używanie instrukcji '<varname>$a</varname> =
-    <varname>$a</varname> + 3'. '<varname>$a</varname> +
-    4' zwraca wartość zmiennej <varname>$a</varname> plus 3, która jest przypisywana z powrotem do
-    <varname>$a</varname>, co oznacza zwiększenie wartości zmiennej <varname>$a</varname> o 3. W PHP, tak jak kilku
-    innych językach jak na przykład C, możesz napisać to krócej, co z czasem
-    stanie się także bardziej przejrzyste i łatwiejsze do zrozumienia. Dodanie
-    4 do bieżącej wartości <varname>$a</varname> może być zapisane jako
-    '<varname>$a</varname> += 4'. Oznacza to
-    dokładnie "weź wartość <varname>$a</varname>, dodaj do niej 3 i przypisz ją z powrotem do <varname>$a</varname>".
-    Oprócz bycia krótszą i bardziej przejrzystą, instrukcja ta jest także
-    szybsza w wykonaniu. Wartość '<varname>$a</varname> += 5', tak jak wartość zwykłego
-    przypisania, jest przypisywaną wartością. Zauważ, że NIE jest to 4, ale
-    połączona warotść <varname>$a</varname> i 4 (jest to wartość która jest przypisywana do <varname>$a</varname>).
-    Dowolne dwuoperandowe operatory mogą być użyte w trybie
-    operacji-przypisania, na przykład '<varname>$a</varname> -= 5' (odejmij 5 od wartości <varname>$a</varname>),
-    '<varname>$b</varname> *= 7' (pomnóż wartość <varname>$b</varname> przez 7), itp.
+    <code>$a++</code> lub <code>++$a</code>. 
+    Ale co jeśli chcesz dodać do niej więcej niż jeden, na przykład 3? Mógłbyś
+    napisać wielokrotnie <code>$a++</code>, ale nie jest to sposób ani efektywny ani
+    wygodny. Częściej spotykane jest używanie instrukcji <code>$a =
+    $a + 3</code>. <code>$a + 3</code> zwraca 
+    wartość zmiennej <varname>$a</varname> plus 3, która jest przypisywana z powrotem do
+    <varname>$a</varname>, co oznacza zwiększenie wartości zmiennej <varname>$a</varname> 
+    o 3. W PHP, tak jak kilku innych językach (jak na przykład C), możesz napisać to 
+    krócej, co z czasem stanie się także bardziej przejrzyste i łatwiejsze 
+    do zrozumienia. Dodanie 3 do bieżącej wartości <varname>$a</varname>
+    może być zapisane jako <code>$a += 3</code>. Oznacza to
+    dokładnie "weź wartość <varname>$a</varname>, dodaj do niej 3 
+    i przypisz ją z powrotem do <varname>$a</varname>". Oprócz bycia krótszą 
+    i bardziej przejrzystą, instrukcja ta jest także szybsza w wykonaniu. Wartość
+    <code>$a += 3</code>, tak jak wartość zwykłego przypisania, jest 
+    przypisywaną wartością. Zauważ, że NIE jest to 3, ale połączona wartość 
+    <varname>$a</varname> i 3 (jest to wartość, która 
+    jest przypisywana do <varname>$a</varname>). Dowolne dwuoperandowe operatory mogą być użyte 
+    w trybie operacji-przypisania, na przykład <code>$a -= 5</code> 
+    (odejmij 5 od wartości <varname>$a</varname>), <code>$b *= 7</code>
+    (pomnóż wartość <varname>$b</varname> przez 7), itp.
    </simpara>
 
    <para>
-    Jest jeszcze jedno wyrażenie, które może się wydać dziwne jeśli nie
-    widziałeś go w innych językac, trójoperandowy operator warunkowy:
+    Jest jeszcze jedno wyrażenie, które może się wydać dziwne, jeśli nie
+    widziałeś go w innych językach, trójoperandowy operator warunkowy:
    </para>
    <para>
     <informalexample>
@@ -193,16 +196,16 @@ $h = $g += 10;      /* na początku $g jest zwiększane o 10 i przyjmuje
     instrukcji, i tak jak obiecywaliśmy, wyrażenia mogą być instrukcjami.
     Jednakże nie każde wyrażenie jest instrukcją. 
 
-    Niektóre wyrażenia mogą być instrukcjami. Ten przypadek ma postać
-    '<literal>wyrażenie ;</literal>', czyli wyrażenie a po nim średnik. W <literal>'$b = $a = 5;'</literal>,
-    <literal>'$a = 5'</literal> jest poprawnym wyrażeniem, ale nie jest instrukcją.
-    Jednakże <literal>'$b = $a = $b;'</literal> jest poprawną intrukcją.
+    Niektóre wyrażenia mogą być instrukcjami. Ten przypadek ma postać '<code>wyrażenie ;</code>', czyli 
+    wyrażenie a po nim średnik. W <code>$b = $a = 5;</code>,
+    <code>$a = 5</code> jest poprawnym wyrażeniem, ale nie jest instrukcją samą w sobie.
+    Jednakże <code>$b = $a = 5;</code> jest poprawną instrukcją.
    </simpara>
 
    <simpara>
     Ostatnią rzeczą wartą uwagi jest wartość prawdy wyrażeń. W wielu
-    przypadkach, głównie przy sprawdzaniu warunkow i w pętlach, nie interesuje
-    cię wartość wyrażenia, ale tylko czy oznacza &true; czy &false;.
+    przypadkach, głównie przy sprawdzaniu warunków i w pętlach, nie interesuje
+    Cię wartość wyrażenia, ale tylko czy oznacza &true; czy &false;.
     
     <!-- (PHP nie mam dedykowanego typu boolean) : ŹLE, ma -->
     

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: dombal Status: ready -->
+<!-- EN-Revision: 23fef04c872071ca5665fd75e8f4270ca960fb78 Maintainer: dombal Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: joeaccord -->
 
@@ -15,19 +15,6 @@
   <programlisting role="php">
 <![CDATA[
 <?php
-  /* T_ML_COMMENT nie istnieje w PHP 5.
-   * Następujące trzy linie definiują tę stałą, by zachować kompatybilność
-   * wsteczną.
-   *
-   * Kolejne dwie linie definiują istniejącą tylko w PHP 5 stałą
-   * T_DOC_COMMENT, którą w PHP 4 podmienimy jako T_ML_COMMENT.
-   */
-  if (!defined('T_ML_COMMENT')) {
-    define('T_ML_COMMENT', T_COMMENT);
-  } else {
-    define('T_DOC_COMMENT', T_ML_COMMENT);
-  }
-
   $kod = file_get_contents("jakisplik.php");
   $tokeny = token_get_all($kod);
 
@@ -41,8 +28,7 @@
 
       switch ($id) {
         case T_COMMENT:
-        case T_ML_COMMENT: // to zdefiniowaliśmy
-        case T_DOC_COMMENT: // to też
+        case T_DOC_COMMENT:
           // brak akcji dla komentarzy
           break;
         default:

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 589ebcb6d54e699c3eed82b1f72c9d70a83dcfcd Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 0a09554f3dd39c61b21ea7319ac7f93f781f9376 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-
 <refentry xml:id="jsonserializable.jsonserialize" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>JsonSerializable::jsonSerialize</refname>
@@ -10,9 +9,9 @@
 
  <refsect1 role="description">
   &reftitle.description;
-  <methodsynopsis>
-   <modifier>abstract</modifier> <modifier>public</modifier> <type>mixed</type><methodname>JsonSerializable::jsonSerialize</methodname>
-   <void />
+  <methodsynopsis role="JsonSerializable">
+   <modifier>public</modifier> <type>mixed</type><methodname>JsonSerializable::jsonSerialize</methodname>
+   <void/>
   </methodsynopsis>
   <para>
    Serializuje do wartości, która może być zserializowana natywnie przez
@@ -29,7 +28,7 @@
   &reftitle.returnvalues;
   <para>
    Zwraca dane, które mogą być zserializowane przez <function>json_encode</function>,
-   które są wartością dowolnego typu innego niż <type>resource</type>.
+   które są wartością dowolnego typu innego niż &resource;.
   </para>
  </refsect1>
 
@@ -39,17 +38,18 @@
    <example>
     <title>
      <methodname>JsonSerializable::jsonSerialize</methodname> zwracający
-     tablicę (<type>array</type>)
+     tablicę (&array;)
     </title>
     <programlisting role="php">
 <![CDATA[
 <?php
 class ArrayValue implements JsonSerializable {
+    private $array;
     public function __construct(array $array) {
         $this->array = $array;
     }
 
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         return $this->array;
     }
 }
@@ -72,18 +72,19 @@ echo json_encode(new ArrayValue($array), JSON_PRETTY_PRINT);
    </example>
    <example>
     <title>
-     <methodname>JsonSerializable::jsonSerialize</methodname> zwrający
-     tablicę asocjacyjną
+     <methodname>JsonSerializable::jsonSerialize</methodname> zwracający
+     tablicę asocjacyjną (&array;)
     </title>
     <programlisting role="php">
 <![CDATA[
 <?php
 class ArrayValue implements JsonSerializable {
+    private $array;
     public function __construct(array $array) {
         $this->array = $array;
     }
 
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         return $this->array;
     }
 }
@@ -106,14 +107,15 @@ echo json_encode(new ArrayValue($array), JSON_PRETTY_PRINT);
    <example>
     <title>
      <methodname>JsonSerializable::jsonSerialize</methodname> zwracający
-     liczbę całkowitą
+     liczbę całkowitą (&integer;)
     </title>
     <programlisting role="php">
 <![CDATA[
 <?php
 class IntegerValue implements JsonSerializable {
+    private $number;
     public function __construct($number) {
-        $this->number = (integer) $number;
+        $this->number = (int) $number;
     }
 
     public function jsonSerialize() {
@@ -135,12 +137,13 @@ echo json_encode(new IntegerValue(1), JSON_PRETTY_PRINT);
    <example>
     <title>
      <methodname>JsonSerializable::jsonSerialize</methodname> zwracający
-     <type>string</type>
+     &string;
     </title>
     <programlisting role="php">
 <![CDATA[
 <?php
 class StringValue implements JsonSerializable {
+    private $string;
     public function __construct($string) {
         $this->string = (string) $string;
     }
@@ -164,7 +167,6 @@ echo json_encode(new StringValue('Hello!'), JSON_PRETTY_PRINT);
   </para>
  </refsect1>
 </refentry>
-
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml
