@@ -1,67 +1,108 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 3ef3e56c80f7ae6b6a7291b7eb57dc6250b50801 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
+
 <refentry xml:id="function.count" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>count</refname>
-  <refpurpose>Zlicza ilość elementów w tablicy lub pól obiektu</refpurpose>
+  <refpurpose>Zwraca ilość elementów tablicy lub obiektu implementującego <interfacename>Countable</interfacename></refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
    <type>int</type><methodname>count</methodname>
-   <methodparam><type>mixed</type><parameter>zmienna</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>tryb</parameter></methodparam>
+   <methodparam><type class="union"><type>Countable</type><type>array</type></type><parameter>value</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>mode</parameter><initializer><constant>COUNT_NORMAL</constant></initializer></methodparam>
   </methodsynopsis>
   <para>
-   Zwraca ilość elementów w parametrze <parameter>zmienna</parameter>,
-   która zazwyczaj będzie tablicą, jako że wszystko inne będzie miało
-   jeden element.
+   Jeśli użyta z tablicą, zlicza wszystkie elementy tablicy. Jeśli użyta z
+   obiektem, który implementuje interfejs <interfacename>Countable</interfacename>, zwraca
+   wartość zwróconą przez metodę <methodname>Countable::count</methodname>.
   </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
   <para>
-   Dla obiektów, jeśli zainstalowane zostało rozszerzenie <link
-    linkend="ref.spl">SPL</link>, możliwe jest podłączenie do
-   <function>count</function> poprzez zaimplementowanie interfejsu
-   <literal>Countable</literal>. Interfejs ten posiada dokładnie jedną
-   metodę, <function>count</function>, która zwraca wartość, którą ma
-   zwrócić funkcja <function>count</function>.
+   <variablelist>
+    <varlistentry>
+     <term><parameter>value</parameter></term>
+     <listitem>
+      <para>
+       Tablica lub obiekt implementujący <interfacename>Countable</interfacename>.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>mode</parameter></term>
+     <listitem>
+      <para>
+       Jeśli opcjonalny parametr <parameter>mode</parameter> jest ustawiony na
+       <constant>COUNT_RECURSIVE</constant> (lub 1) to <function>count</function>
+       policzy tablicę rekurencyjnie.  Jest to szczególnie przydatne do
+       policzenia wszystkich elementów tablic wielowymiarowych.
+      </para>
+      <caution>
+       <para>
+        <function>count</function> może wykryć rekurencję aby zapobiec nieskończonej
+        pętli, ale wyemituje ostrzeżenie <constant>E_WARNING</constant> w każdym takim wypadku
+        (czyli gdy tablica zawiera się w samej sobie więcej niż raz) i może zwrócić
+        wynik wyższy niż oczekiwano.
+       </para>
+      </caution>
+     </listitem>
+    </varlistentry>
+   </variablelist>
   </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
   <para>
-   Jeśli <parameter>zmienna</parameter> nie jest tablicą ani obiektem z
-   zaimplementowanym interfejsem <literal>Countable</literal>, to zwracana
-   będzie wartość <literal>1</literal>. Istnieje jeden wyjątek - jeśli
-   <parameter>zmienna</parameter> będzie miała wartość &null;, zwrócona
-   zostanie wartość <literal>0</literal>.
+   Zwraca ilość elementów w <parameter>value</parameter>.
+   Przed PHP 8.0.0, jeżeli parametr nie był ani typu &array;, ani nie był obiektem
+   implementującym interfejs <interfacename>Countable</interfacename>,
+   funkcja zwracała <literal>1</literal>,
+   chyba że jako <parameter>value</parameter> przekazano &null;. W takim razie
+   funkcja zwracała <literal>0</literal>.
   </para>
-  <note>
-   <simpara>
-    Opcjonalny argument <parameter>tryb</parameter> dostępny jest od wersji
-    PHP 4.2.0.
-   </simpara>
-  </note>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>8.0.0</entry>
+      <entry>
+       <function>count</function> rzuca teraz błąd <classname>TypeError</classname>, jeśli
+       jako wartość przekazaną do <parameter>value</parameter> podano typ, który nie jest policzalny.
+      </entry>
+     </row>
+     <row>
+      <entry>7.2.0</entry>
+      <entry>
+       <function>count</function> generuje teraz ostrzeżenie, jeśli jako wartość
+       przekazaną do <parameter>value</parameter> podano typ, który nie jest policzalny.
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </informaltable>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
-   Jeśli opcjonalny argument <parameter>tryb</parameter> ustawiony jest na
-   <constant>COUNT_RECURSIVE</constant> (lub 1), <function>count</function>
-   będzie zliczał elementy rekurencyjnie. Jest to przydatne przy zliczaniu
-   ilości wszystkich elementów tablicy wielowymiarowej. Domyślna wartość
-   argumentu <parameter>tryb</parameter> to <literal>0</literal>.
-   <function>count</function> nie wykrywa nieskończonej rekurencji.
-  </para>
-  <caution>
-   <para>
-    <function>count</function> może zwrócić 0 dla zmiennej, która nie
-    została zainicjalizowana, ale możę zwrócić także 0 dla zmiennej która
-    została zainicjalizowana pustą tablicą. Użyj
-    <function>isset</function> aby sprawdzić czy zmienna została
-    ustawiona.
-   </para>
-  </caution>
-  <para>
-   Więcej informacji na temat sposobu implementacji tablic w PHP można
-   znaleźć w rozdziale <link linkend="language.types.array">Tablice</link>.
-  </para>
-  <para>
-   <example>
+   <example xml:id="count.example.basic">
     <title>Przykład użycia <function>count</function></title>
     <programlisting role="php">
 <![CDATA[
@@ -69,31 +110,74 @@
 $a[0] = 1;
 $a[1] = 3;
 $a[2] = 5;
-$wynik = count ($a);
-// $wynik == 3
+var_dump(count($a));
 
-$b[0] = 7;
-$b[5] = 9;
+$b[0]  = 7;
+$b[5]  = 9;
 $b[10] = 11;
-$wynik = count ($b);
-// $wynik == 3
-
-$wynik = count(null);
-// $wynik == 0
-
-$wynik = count(false);
-// $wynik = 1
-
+var_dump(count($b));
 ?>
 ]]>
     </programlisting>
+    &example.outputs;
+    <screen role="php">
+<![CDATA[
+int(3)
+int(3)
+]]>
+    </screen>
    </example>
   </para>
   <para>
-   <example>
-    <title>
-     Przykład rekurencyjnego przetwarzania przez <function>count</function> (PHP &gt;= 4.2.0)
-    </title>
+   <example xml:id="count.example.badexample">
+    <title>Przykład użycia <function>count</function> z elementami inne niż tablica lub Countable (zły, nie rób tak)</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$b[0]  = 7;
+$b[5]  = 9;
+$b[10] = 11;
+var_dump(count($b));
+
+var_dump(count(null));
+
+var_dump(count(false));
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen role="php">
+<![CDATA[
+int(3)
+int(0)
+int(1)
+]]>
+    </screen>
+    &example.outputs.72;
+    <screen role="php">
+<![CDATA[
+int(3)
+
+Warning: count(): Parameter must be an array or an object that implements Countable in … on line 12
+int(0)
+
+Warning: count(): Parameter must be an array or an object that implements Countable in … on line 14
+int(1)
+]]>
+    </screen>
+    &example.outputs.8;
+    <screen role="php">
+<![CDATA[
+int(3)
+
+Fatal error: Uncaught TypeError: count(): Argument #1 ($var) must be of type Countable .. on line 12
+]]>
+    </screen>
+   </example>
+  </para>
+  <para>
+   <example xml:id="count.example.recursive">
+    <title>Przykład rekurencyjnego przetwarzania przez <function>count</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -103,20 +187,70 @@ $jedzenie = array('owoce' => array('pomarańcza', 'banan', 'jabłko'),
 // zliczanie rekurencyjne
 echo count($jedzenie, COUNT_RECURSIVE); // wyświetli 8
 
-// normal count
+// nnormalne zliczanie
 echo count($jedzenie); // wyświetli 2
+
+?>
 
 ?>
 ]]>
     </programlisting>
+    &example.outputs;
+    <screen role="php">
+<![CDATA[
+int(8)
+int(2)
+]]>
+    </screen>
    </example>
   </para>
   <para>
-   Patrz także: <function>is_array</function>,
-   <function>isset</function> i
-   <function>strlen</function>.
+   <example xml:id="count.example.countable">
+    <title>Obiekt implementujący <interfacename>Countable</interfacename></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+class CountOfMethods implements Countable
+{
+    private function someMethod()
+    {
+    }
+
+    public function count(): int
+    {
+        return count(get_class_methods($this));
+    }
+}
+
+$obj = new CountOfMethods();
+var_dump(count($obj));
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen role="php">
+ <![CDATA[
+int(2)
+]]>
+    </screen>
+   </example>
   </para>
  </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>is_array</function></member>
+    <member><function>isset</function></member>
+    <member><function>empty</function></member>
+    <member><function>strlen</function></member>
+    <member><function>is_countable</function></member>
+    <member><link linkend="language.types.array">Arrays</link></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
 </refentry>
 
 <!-- Keep this comment at the end of the file

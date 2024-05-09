@@ -1,67 +1,150 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 31cacb6f262f455c616094cfe6d09bc0d1df2748 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.array-reduce" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>array_reduce</refname>
-  <refpurpose>Iteracyjnie zredukuj tablicę do pojedyńczej wartości używając funkcji zwrotnej</refpurpose>
+  <refpurpose>Iteracyjnie redukuje tablicę do pojedynczej wartości używając funkcji zwrotnej</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
    <type>mixed</type><methodname>array_reduce</methodname>
-   <methodparam><type>array</type><parameter>wejście</parameter></methodparam>
-   <methodparam><type>callback</type><parameter>funkcja_zwrotna</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>początek</parameter></methodparam>
+   <methodparam><type>array</type><parameter>array</parameter></methodparam>
+   <methodparam><type>callable</type><parameter>callback</parameter></methodparam>
+   <methodparam choice="opt"><type>mixed</type><parameter>initial</parameter><initializer>&null;</initializer></methodparam>
   </methodsynopsis>
   <para>
-   <function>array_reduce</function> iteracyjnie stosuje funkcję
-   <parameter>funkcja_zwrotna</parameter> na każdym elemencie tablicy
-   <parameter>wejście</parameter> aby zredukować tablicę to pojedyńczej
-   wartości. Jeśli podany został opcjonalny parametr <parameter>początek
-   </parameter>, będzie on użyty na początku procesu, lub jako zwracana
-   wartość jeśli tablica jest pusta.
-   Jeśli tablica jest pusta, a parametr <parameter>początek</parameter> nie
-   zostanie przekazany, <function>array_reduce</function> zwraca &null;.
+   <function>array_reduce</function> iteracyjnie stosuje przekazaną funkcję
+   <parameter>callback</parameter> do elementów tablicy
+   <parameter>array</parameter>, tak długo aż tablica zostanie zredukowana
+   do pojedynczej wartości.
   </para>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>array</parameter></term>
+     <listitem>
+      <para>
+       Tablica wejściowa.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>callback</parameter></term>
+     <listitem>
+      <methodsynopsis>
+       <type>mixed</type><methodname><replaceable>callback</replaceable></methodname>
+       <methodparam><type>mixed</type><parameter>carry</parameter></methodparam>
+       <methodparam><type>mixed</type><parameter>item</parameter></methodparam>
+      </methodsynopsis>
+      <variablelist>
+       <varlistentry>
+        <term><parameter>carry</parameter></term>
+        <listitem>
+         <para>
+          Przechowuje wartość zwróconą przez poprzednią iterację; w wypadku
+          pierwszej iteracji zamiast tego przechowuje wartość
+          <parameter>initial</parameter>.
+         </para>
+        </listitem>
+       </varlistentry>
+       <varlistentry>
+        <term><parameter>item</parameter></term>
+        <listitem>
+         <para>
+          Przechowuje wartość obecnej iteracji.
+         </para>
+        </listitem>
+       </varlistentry>
+      </variablelist>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>initial</parameter></term>
+     <listitem>
+      <para>
+       Jeżeli podano opcjonalny parametr <parameter>initial</parameter>, będzie
+       on użyty na początku procesu lub jako ostateczny rezultat w wypadku,
+       gdy tablica jest pusta.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca wynikową wartość.
+  </para>
+  <para>
+   Jeśli tablica jest pusta, a parametr <parameter>initial</parameter> nie został przekazany,
+   <function>array_reduce</function> zwraca &null;.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     &array.changelog.by-ref;
+    </tbody>
+   </tgroup>
+  </informaltable>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
    <example>
     <title>Przykład użycia <function>array_reduce</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
-function rsum($v, $w)
+function sum($carry, $item)
 {
-    $v += $w;
-    return $v;
+    $carry += $item;
+    return $carry;
 }
 
-function rmul($v, $w)
+function product($carry, $item)
 {
-    $v *= $w;
-    return $v;
+    $carry *= $item;
+    return $carry;
 }
 
 $a = array(1, 2, 3, 4, 5);
 $x = array();
-$b = array_reduce($a, "rsum");
-$c = array_reduce($a, "rmul", 10);
-$d = array_reduce($x, "rsum", 1);
+
+var_dump(array_reduce($a, "sum")); // int(15)
+var_dump(array_reduce($a, "product", 10)); // int(1200), ponieważ: 10*1*2*3*4*5
+var_dump(array_reduce($x, "sum", "Brak danych do zredukowania")); // string(17) "Brak danych do zredukowania"
 ?>
 ]]>
     </programlisting>
    </example>
   </para>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
   <para>
-   Po wykonaniu powyższego kodu zmienna <varname>$b</varname> będzie
-   zawierała <literal>15</literal>, <varname>$c</varname>
-   <literal>1200</literal> (= 10*1*2*3*4*5) a
-   <varname>$d</varname> containing <literal>1</literal>.
-  </para>
-  <para>
-   Patrz także: <function>array_filter</function>,
-   <function>array_map</function>, <function>array_unique</function> i
-   <function>array_count_values</function>.
+   <simplelist>
+    <member><function>array_filter</function></member>
+    <member><function>array_map</function></member>
+    <member><function>array_unique</function></member>
+    <member><function>array_count_values</function></member>
+   </simplelist>
   </para>
  </refsect1>
 </refentry>

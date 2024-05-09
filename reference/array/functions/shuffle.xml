@@ -1,48 +1,103 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: f781803449007bb0e3a96c693e0eee067f7eb466 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
-<refentry xml:id="function.shuffle" xmlns="http://docbook.org/ns/docbook">
+<refentry xml:id="function.shuffle" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>shuffle</refname>
-  <refpurpose>Przetasuj tablicę</refpurpose>
+  <refpurpose>Tasuje tablicę</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
-   <type>bool</type><methodname>shuffle</methodname>
-   <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
+   <type>true</type><methodname>shuffle</methodname>
+   <methodparam><type>array</type><parameter role="reference">array</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Ta funkcja tasuje tablicę (losuje kolejność elementów w niej).
+   Ta funkcja tasuje tablicę (ustawia w niej losową kolejność elementów).
   </para>
-  &note.no-key-association;
+  &caution.cryptographically-insecure;
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>array</parameter></term>
+     <listitem>
+      <para>
+       Tablica.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.true.always;
+  </para>
+ </refsect1>
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>7.1.0</entry>
+       <entry>
+        Wewnętrzny algorytm losowości <link linkend="migration71.incompatible.rand-srand-aliases">został zmieniony</link> na <link xlink:href="&url.mersenne;">Mersenne Twister</link> Random Number Generator zamiast funkcji rand z libc.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
    <example>
     <title>Przykład użycia <function>shuffle</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
-$liczby = range(1,20);
-srand((float)microtime()*1000000);
-shuffle($liczby);
+$numbers = range(1, 20);
+shuffle($numbers);
 foreach ($numbers as $number) {
-while (list(, $liczba) = each($liczby)) {
-    echo "$liczba ";
+    echo "$number ";
 }
 ?>
 ]]>
     </programlisting>
    </example>
   </para>
-  &note.randomseed;
+ </refsect1>
+ <refsect1 role="notes">
+  &reftitle.notes;
+  &note.no-key-association;
+  &note.reset-index;
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
   <para>
-   Patrz także: <function>arsort</function>, <function>asort</function>,
-   <function>ksort</function>, <function>rsort</function>,
-   <function>sort</function> i <function>usort</function>.
+   <simplelist>
+    <member><function>Random\Randomizer::shuffleArray</function></member>
+    <member><function>Random\Randomizer::shuffleBytes</function></member>
+    <member><function>Random\Randomizer::pickArrayKeys</function></member>
+    <member>&seealso.array.sorting;</member>
+   </simplelist>
   </para>
  </refsect1>
 </refentry>
-
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

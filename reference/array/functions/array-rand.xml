@@ -1,54 +1,136 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 4a1dedc24b1e085f298ab1d5dadefe306373691b Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
-<refentry xml:id="function.array-rand" xmlns="http://docbook.org/ns/docbook">
+<refentry xml:id="function.array-rand" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>array_rand</refname>
-  <refpurpose>Wybierz jeden lub więcej losowych elementów z tablicy</refpurpose>
+  <refpurpose>Wybiera jeden lub więcej losowych elementów z tablicy</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
-   <type>mixed</type><methodname>array_rand</methodname>
-   <methodparam><type>array</type><parameter>wejście</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>ilość</parameter></methodparam>
+   <type class="union"><type>int</type><type>string</type><type>array</type></type><methodname>array_rand</methodname>
+   <methodparam><type>array</type><parameter>array</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>num</parameter><initializer>1</initializer></methodparam>
   </methodsynopsis>
   <para>
-   Funkcja <function>array_rand</function> jest przydatna jeśli chcesz
-   wyciągnąć jeden lub więcej losowych elementów z tablicy. Jako parametry
-   pobiera tablicę <parameter>wejście</parameter> i opcjonalny parameter
-   <parameter>ilość</parameter> który określa ile elementów tablicy chcesz
-   wyciągnąć - jeśli nie podano, przymowana jest domyślna wartość 1.
+   Wybiera jeden lub więcej losowych elementów z tablicy i zwraca
+   klucz (lub klucze) tych losowych elementów.
   </para>
+  &caution.cryptographically-insecure;
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>array</parameter></term>
+     <listitem>
+      <para>
+       Tablica wejściowa.
+       Nie może być pusta.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>num</parameter></term>
+     <listitem>
+      <para>
+       Określa jak wiele elementów powinno być wybranych.
+       Musi być większe od zera i mniejsze lub równe liczbie elementów w tablicy <parameter>array</parameter>
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
   <para>
    Jeśli wyciągasz tylko jeden element, <function>array_rand</function>
    zwraca klucz losowego wpisu. W przeciwnym przypadku zwracana jest tablica
    zawierająca klucze losowych wpisów. Dzieje się tak, żeby można było
    wyciągnąć jednocześnie klucze i wartości losowych elementów tablicy.
+   Jeśli zwracane jest wiele kluczy, to są one zwrócone w kolejności,
+   w której występowały w oryginalnej tablicy.
   </para>
-  &note.randomseed;
+ </refsect1>
+
+ <refsect1 role="errors">
+  &reftitle.errors;
+  <para>
+   Rzuca błąd <classname>ValueError</classname> jeśli tablica <parameter>array</parameter> jest pusta
+   lub jeśli <parameter>num</parameter> jest poza dozwolonym zakresem.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>8.0.0</entry>
+       <entry>
+        <function>array_rand</function> rzuca teraz błąd <classname>ValueError</classname>,
+        jeśli <parameter>num</parameter> jest poza dozwolonym zakresem; wcześniej generowane było ostrzeżenie
+        <constant>E_WARNING</constant> a funkcja zwracała &null;.
+       </entry>
+      </row>
+      <row>
+       <entry>8.0.0</entry>
+       <entry>
+        <function>array_rand</function> rzuca teraz błąd <classname>ValueError</classname>,
+        jeśli tablica <parameter>array</parameter> jest pusta; wcześniej generowane było ostrzeżenie
+        <constant>E_WARNING</constant> a funkcja zwracała &null;.
+       </entry>
+      </row>
+      <row>
+       <entry>7.1.0</entry>
+       <entry>
+        Wewnętrzny algorytm losowości <link linkend="migration71.incompatible.rand-srand-aliases">został zmieniony</link> na <link xlink:href="&url.mersenne;">Mersenne Twister</link> Random Number Generator zamiast funkcji rand z libc.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
    <example>
     <title>Przykład użycia <function>array_rand</function></title>
     <programlisting role="php">
-<![CDATA[
+     <![CDATA[
 <?php
-srand((float) microtime() * 10000000);
-$wejscie = array ("Neo", "Morpheus", "Trinity", "Cypher", "Tank");
-$losowe_klucze = array_rand ($wejscie, 2);
-echo $wejscie[$losowe_klucze[0]] . "\n";
-echo $wejscie[$losowe_klucze[1]] . "\n";
+$input = array("Neo", "Morpheus", "Trinity", "Cypher", "Tank");
+$rand_keys = array_rand($input, 2);
+echo $input[$rand_keys[0]] . "\n";
+echo $input[$rand_keys[1]] . "\n";
 ?>
 ]]>
     </programlisting>
    </example>
   </para>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
   <para>
-   Patrz także: <function>shuffle</function>.
+   <simplelist>
+    <member><function>Random\Randomizer::pickArrayKeys</function></member>
+    <member><function>Random\Randomizer::shuffleArray</function></member>
+   </simplelist>
   </para>
  </refsect1>
 </refentry>
-
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

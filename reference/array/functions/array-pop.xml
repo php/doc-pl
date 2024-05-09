@@ -1,22 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: d93972fb2d8855d7953d1f09aba48f53c870b135 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
-<refentry xml:id="function.array-pop" xmlns="http://docbook.org/ns/docbook">
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.array-pop">
  <refnamediv>
   <refname>array_pop</refname>
-  <refpurpose>Zdejmij element z końca tablicy</refpurpose>
+  <refpurpose>Zdejmuje element z końca tablicy</refpurpose>
  </refnamediv>
+
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>mixed</type><methodname>array_pop</methodname>
-   <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
+   <methodparam><type>array</type><parameter role="reference">array</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>array_pop</function> zdejmuje i zwraca ostatnią wartość tablicy
-   <parameter>tablica</parameter>, skracając tą tablicę o jeden element.
-   Jeśli <parameter>tablica</parameter> jest pusta (lub nie jest tablicą),
-   zwracana jest wartość &null;.
+   <function>array_pop</function> usuwa z tablicy <parameter>array</parameter>
+   a następnie zwraca jej ostatni element, skracając tym samym tablicę
+   <parameter>array</parameter> o jeden element.
   </para>
   &array.resetspointer;
  </refsect1>
@@ -29,7 +29,7 @@
      <term><parameter>array</parameter></term>
      <listitem>
       <para>
-       Tablica, z której będą pobierane wartości.
+       Tablica, z której chcemy pobrać wartość.
       </para>
      </listitem>
     </varlistentry>
@@ -40,9 +40,8 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca ostatnią wartość z <parameter>tablica</parameter>. Jeśli
-   <parameter>tablica</parameter> jest pusta (lub nie jest tablicą), zwracana
-   jest wartość &null;.
+   Zwraca ostatnią wartość z tablicy <parameter>array</parameter>. Jeśli
+   tablica jest pusta, zwracana jest wartość &null;.
   </para>
  </refsect1>
 
@@ -52,20 +51,18 @@
    <example>
     <title>Przykład użycia <function>array_pop</function></title>
     <programlisting role="php">
-<![CDATA[
+<![CDATA[ 
 <?php
-$stos = array("pomarańcza", "banan", "jabłko", "malina");
-$owoc = array_pop($stos);
-print_r($stos);
+$stack = array("pomarańcza", "banan", "jabłko", "malina");
+$fruit = array_pop($stack);
+print_r($stack);
 ?>
 ]]>
     </programlisting>
-   </example>
-  </para>
-  <para>
-   Po wykonaniu powyższego kodu <varname>$stos</varname> będzie miał tylko
-   trzy elementy:
-   <screen role="php">
+    <para>
+     Po wykonaniu powyższego kodu <varname>$stack</varname> będzie miał tylko trzy elementy:
+    </para>
+    <screen role="php">
 <![CDATA[
 Array
 (
@@ -74,14 +71,23 @@ Array
     [2] => jabłko
 )
 ]]>
-   </screen>
-   a <literal>malina</literal> będzie przypisana do zmiennej
-   <varname>$owoc</varname>.
+    </screen>
+    <para>
+     a <literal>malina</literal> będzie przypisana do zmiennej
+     <varname>$fruit</varname>.
+    </para>
+   </example>
   </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
   <para>
-   Patrz także: <function>array_push</function>,
-   <function>array_shift</function> i
-   <function>array_unshift</function>.
+   <simplelist>
+    <member><function>array_push</function></member>
+    <member><function>array_shift</function></member>
+    <member><function>array_unshift</function></member>
+   </simplelist>
   </para>
  </refsect1>
 </refentry>

@@ -1,44 +1,85 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: b8758b0605e80c4e3610137b7502a6abeea5c69b Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.array-reverse" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>array_reverse</refname>
-  <refpurpose>Zwraca tablicę z elementami ustawionymi w porządku odwrotnym</refpurpose>
+  <refpurpose>Zwraca tablicę z elementami ustawionymi w odwrotnej kolejności</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
    <type>array</type><methodname>array_reverse</methodname>
-   <methodparam><type>array</type><parameter>wejście</parameter></methodparam>
-   <methodparam choice="opt"><type>bool</type><parameter>zachowaj_klucze</parameter></methodparam>
+   <methodparam><type>array</type><parameter>array</parameter></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>preserve_keys</parameter><initializer>&false;</initializer></methodparam>
   </methodsynopsis>
   <para>
-   <function>array_reverse</function> pobiera tablicę
-   <parameter>wejście</parameter> i zwraca nową tablicę z odwróconym
-   porządkiem występowania elementów, zachowując klucze tylko jeśli wartość
-   parametru <parameter>zachowaj_klucze</parameter> to &true;.
+   Przyjmuje tablicę <parameter>array</parameter> i zwraca nową tablicę
+   z elementami w odwrotnej kolejności.
   </para>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>array</parameter></term>
+     <listitem>
+      <para>
+       Tablica wejściowa.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>preserve_keys</parameter></term>
+     <listitem>
+      <para>
+       Jeżeli parametr jest ustawiony na &true; to klucze numeryczne są zachowywane.
+       To ustawienie nie ma wpływu na klucze nienumeryczne i takie klucze są zawsze zachowywane.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca odwróconą tablicę.
+  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
    <example>
     <title>Przykład użycia <function>array_reverse</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
-$wejscie = array("php", 4.0, array ("zielony", "czerwony"));
-$wynik   = array_reverse($wejscie);
-$wynik_kluczowany = array_reverse($input, true);
+$input  = array("php", 4.0, array("zielony", "czerwony"));
+$reversed = array_reverse($input);
+$preserved = array_reverse($input, true);
+
+print_r($input);
+print_r($reversed);
+print_r($preserved);
 ?>
 ]]>
     </programlisting>
-    <para>
-     W tym przykładzie i <varname>$wynik</varname> i
-     <varname>$wynik_kluczowny</varname> będą zawierały te same elementy,
-     ale trzeba zauważyć różnicę w kluczach. Tablice te będą wyglądały
-     następująco:
-    </para>
+    &example.outputs;
     <screen role="php">
 <![CDATA[
+Array
+(
+    [0] => php
+    [1] => 4
+    [2] => Array
+        (
+            [0] => zielony
+            [1] => czerwony
+        )
+
+)
 Array
 (
     [0] => Array
@@ -65,13 +106,13 @@ Array
     </screen>
    </example>
   </para>
-  <note>
-   <para>
-    Drugi parametr został dodany w PHP 4.0.3.
-   </para>
-  </note>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
   <para>
-   Patrz także: <function>array_flip</function>.
+   <simplelist>
+    <member><function>array_flip</function></member>
+   </simplelist>
   </para>
  </refsect1>
 </refentry>

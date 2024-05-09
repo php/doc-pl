@@ -1,75 +1,110 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 768876982f97b3c710c1774511094e259aea297d Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.array-search" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>array_search</refname>
-  <refpurpose>Przeszukuje tablicę pod kątem podanej wartości i w przypadku sukcesu zwraca odpowiedni klucz</refpurpose>
+  <refpurpose>Przeszukuje tablicę pod kątem podanej wartości i zwraca odpowiedni klucz, jeśli ją znaleziono</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
-   <type>mixed</type><methodname>array_search</methodname>
-   <methodparam><type>mixed</type><parameter>igła</parameter></methodparam>
-   <methodparam><type>array</type><parameter>stóg_siana</parameter></methodparam>
-   <methodparam choice="opt"><type>bool</type><parameter>ścisły</parameter></methodparam>
+   <type class="union"><type>int</type><type>string</type><type>false</type></type><methodname>array_search</methodname>
+   <methodparam><type>mixed</type><parameter>needle</parameter></methodparam>
+   <methodparam><type>array</type><parameter>haystack</parameter></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>strict</parameter><initializer>&false;</initializer></methodparam>
   </methodsynopsis>
   <para>
-   Przeszukuje <parameter>stóg_siana</parameter> w poszukiwaniu parametru
-   <parameter>igła</parameter> i zwraca odpowiedni klucz jeśli został on
-   znaleziony lub &false; w przeciwnym przypadku.
+   Szuka wartości <parameter>needle</parameter> w podanej tablicy <parameter>haystack</parameter>.
   </para>
-  <note>
-   <para>
-    Jeśli <parameter>igła</parameter> jest ciągiem tekstowym, to porówywanie
-    jest dokonywane z uwzględnieniem wielkości znaków.
-   </para>
-  </note>
-  <note>
-   <para>
-    Do wersji PHP 4.2.0, zamiast &false;,
-    <function>array_search</function> zwracała <constant>NULL</constant> w
-    przypadku niepowodzenia.
-   </para>
-  </note>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
   <para>
-   Jeśli trzeci parametr <parameter>ścisły</parameter> jest ustawiony na
-   &true; to <function>array_search</function> porówna także typy
-   parametru <parameter>igła</parameter> z tymi z parametru
-   <parameter>stóg_siana</parameter>.
+   <variablelist>
+    <varlistentry>
+     <term><parameter>needle</parameter></term>
+     <listitem>
+      <para>
+       Szukana wartość.
+      </para>
+      <note>
+       <para>
+        Jeśli jako parametr <parameter>needle</parameter> przekazano ciąg znaków, to porównanie jest dokonywane
+        z uwzględnieniem wielkości liter.
+       </para>
+      </note>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>haystack</parameter></term>
+     <listitem>
+      <para>
+       Tablica.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>strict</parameter></term>
+     <listitem>
+      <para>
+       Jeśli trzeci parametr <parameter>strict</parameter> jest ustawiony na &true; 
+       to <function>array_search</function> będzie szukała
+       <emphasis>identycznych</emphasis> elementów w tablicy 
+       <parameter>haystack</parameter>. Oznacza to, że funkcja dokona
+       <link linkend="language.types">ścisłego porównania typów</link> między parametrem
+       <parameter>needle</parameter> w elementami tablicy <parameter>haystack</parameter>,
+       a obiekty muszą być tą samą instancją.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca klucz elementu <parameter>needle</parameter> jeśli znaleziono go w
+   tablicy, w przeciwnym razie zwraca &false;.
   </para>
   <para>
-   Jeśli <parameter>igła</parameter> zostanie znaleziona w
-   <parameter>stóg_siana</parameter>więcej niż raz, to zwracany zostanie
-   klucz pierwszego pasującego elementu. Aby uzyskać klucze wszystkich
-   pasujących wartości należy zastosować funkcję
-   <function>array_keys</function> z opcjonalnym parametrem
-   <parameter>szukana_wartość</parameter>.
+   Jeśli parametr <parameter>needle</parameter> zostanie znaleziona w tablicy <parameter>haystack</parameter>
+   więcej niż raz, to zwracany zostanie klucz pierwszego pasującego elementu. Aby uzyskać klucze
+   wszystkich pasujących wartości, należy zastosować funkcję <function>array_keys</function> z opcjonalnym
+   parametrem <parameter>filter_value</parameter>.
   </para>
+  &return.falseproblem;
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
    <example>
     <title>Przykład użycia <function>array_search</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
-$tablica = array(0 => 'niebieski', 1 => 'czerwony', 2 => 'zielony', 3 => 'czerwony');
+$array = array(0 => 'blue', 1 => 'red', 2 => 'green', 3 => 'red');
 
-$klucz = array_search('zielony',  $tablica); // $klucz = 2;
-$klucz = array_search('czerwony', $tablica); // $klucz = 1;
+$key = array_search('green', $array); // $key = 2;
+$key = array_search('red', $array);   // $key = 1;
 ?>
 ]]>
     </programlisting>
    </example>
   </para>
-  &return.falseproblem;
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
   <para>
-   Patrz także: <function>array_keys</function>,
-   <function>array_values</function>, <function>array_key_exists</function>
-   i <function>in_array</function>.
+   <simplelist>
+    <member><function>array_keys</function></member>
+    <member><function>array_values</function></member>
+    <member><function>array_key_exists</function></member>
+    <member><function>in_array</function></member>
+   </simplelist>
   </para>
  </refsect1>
 </refentry>
-
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml
