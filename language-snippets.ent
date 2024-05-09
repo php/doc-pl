@@ -447,6 +447,91 @@ wykonaniu.</simpara></note>'>
 
 <!ENTITY seealso.array.sorting '<link xmlns="http://docbook.org/ns/docbook" linkend="array.sorting">porównanie funkcji sortujących tablice</link>'>
 
+<!ENTITY sort.flags.parameter '<varlistentry xmlns="http://docbook.org/ns/docbook">
+  <term><parameter>flags</parameter></term>
+  <listitem>
+   <para>
+    Opcjonalny drugi parametr <parameter>flags</parameter> może być użyty do
+    zmiany zachowania sortowania przy pomocy tych wartości:
+   </para>
+   <para>
+    Flagi typu sortowania:
+    <itemizedlist>
+     <listitem>
+      <simpara><constant>SORT_REGULAR</constant> - porównuj elementy normalnie;
+      szczegóły zostały opisane w sekcji <link linkend="language.operators.comparison">operatory porównania</link></simpara>
+     </listitem>
+     <listitem>
+      <simpara><constant>SORT_NUMERIC</constant> - porównuj elementy jako liczby</simpara>
+     </listitem>
+     <listitem>
+      <simpara><constant>SORT_STRING</constant> - porównuj elementy jako ciągi tekstowe</simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       <constant>SORT_LOCALE_STRING</constant> - porównuj elementy jako ciągi
+       tekstowe, uwzględniając ustawienia Locale. Ustawienia locale
+       mogą być zmienione przy użyciu <function>setlocale</function>
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       <constant>SORT_NATURAL</constant> - porównuj elementy jako ciągi tekstowe
+       przy użyciu "sortowania naturalnego", tak jak <function>natsort</function>
+      </simpara>
+     </listitem>
+     <listitem>
+      <simpara>
+       <constant>SORT_FLAG_CASE</constant> - może być połączona
+       (operacja bitowa OR) z
+       <constant>SORT_STRING</constant> lub
+       <constant>SORT_NATURAL</constant> aby posortować ciągi znaków bez uwzględnienia wielkości znaków
+      </simpara>
+     </listitem>
+    </itemizedlist>
+   </para>
+  </listitem>
+ </varlistentry>
+'>
+
+<!ENTITY sort.callback.description '<para xmlns="http://docbook.org/ns/docbook">
+ &return.callbacksort;
+</para>
+&callback.cmp;
+<caution xmlns="http://docbook.org/ns/docbook">
+ <para>
+  Zwrócenie wartości <emphasis>innej niż liczba całkowita</emphasis> z funkcji
+  porównującej, na przykład <type>float</type>, będzie skutkowało wewnętrznym zrzutowaniem
+  wartości zwróconej przez funkcję na <type>int</type>. Wartości takie jak
+  <literal>0.99</literal> i <literal>0.1</literal> będą więc obie zrzutowane
+  na liczbę całkowitą <literal>0</literal>, przez co w porównaniu będą uznane za identyczne.
+ </para>
+</caution>'>
+
+<!ENTITY sort.callback.description.presort '<caution xmlns="http://docbook.org/ns/docbook">
+ <para>
+  Funkcja sortująca musi być w stanie obsłużyć każdą z wartości tablicy, w dowolnej kolejności,
+  niezależnie w jakiej kolejności elementy były zdefiniowane oryginalnie.
+  Wynika to z faktu że każda z tablic jest najpierw sortowana przed ich porównaniem do reszty tablic.
+
+  Na przykład:
+  <programlisting role="php">
+<![CDATA[
+<?php
+$arrayA = ["string", 1];
+$arrayB = [["value" => 1]];
+// $item1 oraz $item2 mogą mieć zawartość "string", 1 lub ["value" => 1]
+$compareFunc = static function ($item1, $item2) {
+    $value1 = is_string($item1) ? strlen($item1) : (is_array($item1) ? $item1["value"] : $item1);
+    $value2 = is_string($item2) ? strlen($item2) : (is_array($item2) ? $item2["value"] : $item2);
+    return $value1 <=> $value2;
+};
+?>
+]]>
+  </programlisting>
+ </para>
+</caution>'>
+
 <!ENTITY avail.register-long-arrays 'Od PHP 5.0.0, długie tablice
 <link xmlns="http://docbook.org/ns/docbook" linkend="language.variables.predefined">zmiennych predefiniowanych</link> 
 mogą być wyłączone dyrektywą konfiguracji
