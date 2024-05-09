@@ -1,36 +1,78 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: f781803449007bb0e3a96c693e0eee067f7eb466 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.natcasesort" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>natcasesort</refname>
-  <refpurpose>Sortuj tablicę używając algorytmu "porządek naturalny" ignorującego wielkość znaków</refpurpose>
+  <refpurpose>Sortuje tablicę używając "sortowania naturalnego" ignorującego wielkość znaków</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
-   <type>bool</type><methodname>natcasesort</methodname>
-   <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
+   <type>true</type><methodname>natcasesort</methodname>
+   <methodparam><type>array</type><parameter role="reference">array</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Ta funkcja implementuje algorytm sortowania który porządkuje stringi
+   <function>natcasesort</function> is a case insensitive version of
+   <function>natsort</function>.
+  </para>
+  <para>
+   Ta funkcja implementuje algorytm sortowania, który porządkuje stringi
    alfanumeryczne tak, jak zrobiłby to człowiek, zachowując przypisanie
    kluczy do wartości. Jest on określany jako "porządkowanie naturalne".
   </para>
+  &note.sort-unstable;
+  &note.reset-index;
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
   <para>
-   &return.success;
+   <variablelist>
+    <varlistentry>
+     <term><parameter>array</parameter></term>
+     <listitem>
+      <para>
+       Tablica wejściowa.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
   </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
   <para>
-   <function>natcasesort</function> jest wersją funkcji
-   <function>natsort</function> ignorującą wielkość znaków. Zobacz
-   <function>natsort</function> aby zobaczyć różnicę między tym algorytmem a
-   zwykłymi komputerowymi algorytmami sortowania stringów.
+   &return.true.always;
   </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      &return.type.true;
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
    <example>
-    <title><function>natcasesort</function> example</title>
+    <title>Przykład użycia <function>natcasesort</function></title>
     <programlisting role="php">
-<![CDATA[
+     <![CDATA[
 <?php
 $array1 = $array2 = array('IMG0.png', 'img12.png', 'img10.png', 'img2.png', 'img1.png', 'IMG3.png');
 
@@ -39,15 +81,15 @@ echo "Standardowe sortowanie\n";
 print_r($array1);
 
 natcasesort($array2);
-echo "\nPorządkowanie naturalne (ignorowana wielkośc znaków)\n";
+echo "\nSortowanie naturalne (ignorowana wielkość znaków)\n";
 print_r($array2);
 ?>
 ]]>
     </programlisting>
     &example.outputs;
     <screen>
-<![CDATA[
-Standarowe sortowanie
+     <![CDATA[
+Standardowe sortowanie
 Array
 (
     [0] => IMG0.png
@@ -58,7 +100,7 @@ Array
     [5] => img2.png
 )
 
-Porządkowanie naturalne (ignorowana wielkośc znaków)
+Sortowanie naturalne (ignorowana wielkość znaków)
 Array
 (
     [0] => IMG0.png
@@ -76,15 +118,19 @@ Array
     </para>
    </example>
   </para>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
   <para>
-   Patrz także: <function>sort</function>,
-   <function>natsort</function>,
-   <function>strnatcmp</function> i
-   <function>strnatcasecmp</function>.
+   <simplelist>
+    <member><function>natsort</function></member>
+    <member>&seealso.array.sorting;</member>
+    <member><function>strnatcmp</function></member>
+    <member><function>strnatcasecmp</function></member>
+   </simplelist>
   </para>
  </refsect1>
 </refentry>
-
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

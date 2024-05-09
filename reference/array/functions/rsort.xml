@@ -1,35 +1,81 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 2ca090342977839edca2f7f4e52305a1b5da6095 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.rsort" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>rsort</refname>
-  <refpurpose>Sortuj tablicę w porządku odwrotnym</refpurpose>
+  <refpurpose>Sortuje tablicę malejąco</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
-   <type>void</type><methodname>rsort</methodname>
-   <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>flagi</parameter></methodparam>
+   <type>true</type><methodname>rsort</methodname>
+   <methodparam><type>array</type><parameter role="reference">array</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>flags</parameter><initializer><constant>SORT_REGULAR</constant></initializer></methodparam>
   </methodsynopsis>
   <para>
-   Ta funkcja sortuje tablicę w porządku odwrotnym (od największego do
-   najmniejszego).
+   Sortuje wartości w tablicy przekazanej jako <parameter>array</parameter>
+   w porządku malejącym.
   </para>
+  &note.sort-unstable;
   &note.no-key-association;
+  &note.reset-index;
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
   <para>
-   &return.success;
+   <variablelist>
+    <varlistentry>
+     <term><parameter>array</parameter></term>
+     <listitem>
+      <para>
+       Tablica wejściowa.
+      </para>
+     </listitem>
+    </varlistentry>
+    &sort.flags.parameter;
+   </variablelist>
   </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.true.always;
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      &return.type.true;
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
    <example>
-    <title>Przykład użycia <function>rsort</function></title>
+    <title><function>rsort</function> example</title>
     <programlisting role="php">
 <![CDATA[
 <?php
-$owoce = array("cytryna", "pomarańcza", "banan", "jabłko");
-rsort($owoce);
-foreach ($owoce as $key => $val) {
+$fruits = array("cytryna", "pomarańcza", "banan", "jabłko");
+rsort($fruits);
+foreach ($fruits as $key => $val) {
     echo "$key = $val\n";
 }
 ?>
@@ -44,25 +90,24 @@ foreach ($owoce as $key => $val) {
 3 = banan
 ]]>
     </screen>
+    <para>
+     Owoce zostały posortowane w odwróconym porządku alfabetycznym.
+    </para>
    </example>
   </para>
-  <para>
-   Owoce zostały posortowane w odwrotnym porządku alfabetycznym.
-  </para>
-  <para>
-   Możesz zmodyfikować zachowanie sortowania przez użycie opcjonalnego
-   parametru <parameter>flagi</parameter>. Aby uzyskać szczegóły zobacz
-   <function>sort</function>.
-  </para>
-  <para>
-   Patrz także: <function>arsort</function>,
-   <function>asort</function>, <function>ksort</function>,
-   <function>krsort</function>, <function>sort</function> i
-   <function>usort</function>.
-  </para>
  </refsect1>
-</refentry>
 
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <simplelist>
+   <member><function>sort</function></member>
+   <member><function>arsort</function></member>
+   <member><function>krsort</function></member>
+   <member>&seealso.array.sorting;</member>
+  </simplelist>
+ </refsect1>
+
+</refentry>
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

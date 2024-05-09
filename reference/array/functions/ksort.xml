@@ -1,34 +1,80 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 2ca090342977839edca2f7f4e52305a1b5da6095 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.ksort" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>ksort</refname>
-  <refpurpose>Sortuj tablicę według klucza</refpurpose>
+  <refpurpose>Sortuje tablicę rosnąco po jej kluczach</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
-   <type>bool</type><methodname>ksort</methodname>
-   <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>flagi</parameter></methodparam>
+   <type>true</type><methodname>ksort</methodname>
+   <methodparam><type>array</type><parameter role="reference">array</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>flags</parameter><initializer><constant>SORT_REGULAR</constant></initializer></methodparam>
   </methodsynopsis>
   <para>
-   Sortuje tablicę według klucza zachowując skojarzenia kluczy z danymi.
-   Jest to przydatne głównie w przypadku tablic asocjacyjnych.
+   Sortuje tablicę przekazaną jako <parameter>array</parameter> rosnąco
+   po jej kluczach.
   </para>
+  &note.sort-unstable;
+  &note.reset-index;
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
   <para>
-   &return.success;
+   <variablelist>
+    <varlistentry>
+     <term><parameter>array</parameter></term>
+     <listitem>
+      <para>
+       Tablica wejściowa.
+      </para>
+     </listitem>
+    </varlistentry>
+    &sort.flags.parameter;
+   </variablelist>
   </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.true.always;
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      &return.type.true;
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
    <example>
     <title>Przykład użycia <function>ksort</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
-$owoce = array("d"=>"cytryna", "a"=>"pomarańcza", "b"=>"banan", "c"=>"jabłko");
-ksort($owoce);
-foreach ($owoce as $key => $val) {
+$fruits = array("d"=>"cytryna", "a"=>"pomarańcza", "b"=>"banan", "c"=>"jabłko");
+ksort($fruits);
+foreach ($fruits as $key => $val) {
     echo "$key = $val\n";
 }
 ?>
@@ -45,25 +91,55 @@ d = cytryna
     </screen>
    </example>
   </para>
-  <para>
-   Możesz zmodyfikować zachowanie sortowania przez użycie opcjonalnego
-   parametru <parameter>flagi</parameter>. Aby uzyskać szczegóły zobacz
-   <function>sort</function>.
-  </para>
-  <simpara>
-   Patrz także: <function>asort</function>, <function>arsort</function>,
-   <function>krsort</function>, <function>uksort</function>,
-   <function>sort</function>, <function>natsort</function> i
-   <function>rsort</function>.
-  </simpara>
-  <note>
-   <para>
-    Drugi parametr został dodany w PHP 4.
-   </para>
-  </note>
- </refsect1>
-</refentry>
 
+  <para>
+   <example>
+    <title>Przykład użycia <function>ksort</function> z kluczami typu <type>int</type></title>
+    <programlisting role="php">
+     <![CDATA[
+<?php
+$a = [0 => 'Pierwszy', 2 => 'Ostatni', 1 => 'Środkowy'];
+var_dump($a);
+ksort($a);
+var_dump($a);
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+     <![CDATA[
+array(3) {
+  [0]=>
+  string(5) "Pierwszy"
+  [2]=>
+  string(4) "Ostatni"
+  [1]=>
+  string(6) "Środkowy"
+}
+array(3) {
+  [0]=>
+  string(5) "Pierwszy"
+  [1]=>
+  string(6) "Środkowy"
+  [2]=>
+  string(4) "Ostatni"
+}
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <simplelist>
+   <member><function>sort</function></member>
+   <member><function>krsort</function></member>
+   <member>&seealso.array.sorting;</member>
+  </simplelist>
+ </refsect1>
+
+</refentry>
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

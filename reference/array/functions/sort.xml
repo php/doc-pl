@@ -1,26 +1,72 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 2ca090342977839edca2f7f4e52305a1b5da6095 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
-<refentry xml:id="function.sort" xmlns="http://docbook.org/ns/docbook">
+<refentry xml:id="function.sort" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>sort</refname>
-  <refpurpose>Sortuje tablicę</refpurpose>
+  <refpurpose>Sortuje tablicę rosnąco</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
-   <type>bool</type><methodname>sort</methodname>
-   <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>flagi</parameter></methodparam>
+   <type>true</type><methodname>sort</methodname>
+   <methodparam><type>array</type><parameter role="reference">array</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>flags</parameter><initializer><constant>SORT_REGULAR</constant></initializer></methodparam>
   </methodsynopsis>
   <para>
-   Funkcja ta sortuje tablicę. Po zakończeniu działania funkcji
-   elementy będą ułożone od najmniejszego do najwiekszego.
+   Sortuje wartości w tablicy przekazanej jako <parameter>array</parameter> 
+   w porządku rosnącym.
   </para>
+  &note.sort-unstable;
   &note.no-key-association;
+  &note.reset-index;
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
   <para>
-   &return.success;
+   <variablelist>
+    <varlistentry>
+     <term><parameter>array</parameter></term>
+     <listitem>
+      <para>
+       Tablica wejściowa.
+      </para>
+     </listitem>
+    </varlistentry>
+    &sort.flags.parameter;
+   </variablelist>
   </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.true.always;
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      &return.type.true;
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
    <example>
     <title>Przykład użycia <function>sort</function></title>
@@ -28,13 +74,14 @@
 <![CDATA[
 <?php
 
-$owoce = array("cytryna", "pomarańcza", "banan", "jabłko");
-sort($owoce);
-foreach ($owoce as $key => $val) {
-    echo "owoce[" . $key . "] = " . $val . "\n";
+$fruits = array("cytryna", "pomarańcza", "banan", "jabłko");
+sort($fruits);
+foreach ($fruits as $key => $val) {
+    echo "fruits[" . $key . "] = " . $val . "\n";
 }
-]]>
+
 ?>
+]]>
     </programlisting>
     &example.outputs;
     <screen>
@@ -51,64 +98,70 @@ owoce[3] = pomarańcza
    Owoce zostały posortowane w porządku alfabetycznym.
   </para>
   <para>
-   Opcjonalny drugi parametr <parameter>flagi</parameter> może być użyty do
-   zmiany zachowania sortowania przy pomocy tych wartości:
+   <example>
+    <title>Przykład użycia <function>sort</function> do sortowania naturalnego z ignorowaniem
+     wielkości znaków</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+$fruits = array(
+    "Pomarańcza1", "pomarańcza2", "Pomarańcza3", "pomarańcza20"
+);
+sort($fruits, SORT_NATURAL | SORT_FLAG_CASE);
+foreach ($fruits as $key => $val) {
+    echo "fruits[" . $key . "] = " . $val . "\n";
+}
+
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+     <![CDATA[
+fruits[0] = Pomarańcza1
+fruits[1] = pomarańcza2
+fruits[2] = Pomarańcza3
+fruits[3] = pomarańcza20
+]]>
+    </screen>
+   </example>
   </para>
   <para>
-   Flagi typu sortowania:
-   <itemizedlist>
-    <listitem>
-     <simpara>
-      <constant>SORT_REGULAR</constant> - porównuj elementy normalnie (nie zmienia typów)
-     </simpara>
-    </listitem>
-    <listitem>
-     <simpara>
-      <constant>SORT_NUMERIC</constant> - porównuj elementy jako liczby
-     </simpara>
-    </listitem>
-    <listitem>
-     <simpara>
-      <constant>SORT_STRING</constant> - porównuj elementy jako ciągi
-      tekstowe
-     </simpara>
-    </listitem>
-    <listitem>
-     <simpara>
-      <constant>SORT_LOCALE_STRING</constant> - porównuj elementy jako ciągi
-      tekstowe, uwzględniając ustawienia Locale. Dodane w PHP 4.4.0 i PHP 5.0.2.
-      W wersjach wcześniejszych niż PHP 6, używane jest locale systemowe,
-      które może być zmienione poprzez zastosowanie funkcji
-      <function>setlocale</function>. Od PHP w wersji 6 niezbędne jest
-      użycie funkcji <function>i18n_loc_set_default</function>.
-     </simpara>
-    </listitem>
-   </itemizedlist>
+   Owoce zostały posortowane jak przy użyciu <function>natcasesort</function>.
   </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
   <note>
-   <para>
-    Drugi parametr został dodany w PHP 4.
-   </para>
+   <simpara>
+    Tak jak większość funkcji sortujących w PHP <function>sort</function> używa
+    implementacji <link
+    xlink:href="&url.wiki.quicksort;">Quicksort</link>.
+    Element rozdzielający przypada w środku zbioru danych, co zapewnia dobrą
+    wydajność dla już posortowanych tablic. Jest to jednak detal implementacyjny,
+    na którym nie powinno się polegać.
+   </simpara>
   </note>
   <warning>
    <simpara>
-    Należy zachować ostrożność przy sortowaniu funkcją
-    <function>sort</function> tablic o różnych typach elementów, ponieważ
-    może to doprowadzić do nieprzewidzianych wyników.
+    Uważaj na sortowanie tablic z mieszanymi typami danych ponieważ
+    <function>sort</function> może zwrócić nieoczekiwane wyniki, jeśli
+    w argumencie <parameter>flags</parameter> użyto <constant>SORT_REGULAR</constant>.
    </simpara>
   </warning>
-  <para>
-   Patrz także: <function>arsort</function>,
-   <function>asort</function>, <function>ksort</function>,
-   <function>krsort</function>,
-   <function>natsort</function>, <function>natcasesort</function>,
-   <function>rsort</function>, <function>usort</function>,
-   <function>array_multisort</function> i
-   <function>uksort</function>.
-  </para>
  </refsect1>
-</refentry>
 
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <simplelist>
+   <member><function>rsort</function></member>
+   <member>&seealso.array.sorting;</member>
+  </simplelist>
+ </refsect1>
+
+</refentry>
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

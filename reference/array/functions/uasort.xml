@@ -1,43 +1,146 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 2226ad08fd93e3979efbba47c5ae3545eec97d25 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.uasort" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>uasort</refname>
-  <refpurpose>Sortuj tablicę korzystając ze zdefiniowanej przez użytkownika funkcji porównującej i zachowując skojarzenia kluczy</refpurpose>
+  <refpurpose>Sortuje tablicę używając zdefiniowanej przez użytkownika funkcji porównującej i zachowując przypisania kluczy</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
-   <type>void</type><methodname>uasort</methodname>
-   <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
-   <methodparam><type>callback</type><parameter>funkcja</parameter></methodparam>
+   <type>true</type><methodname>uasort</methodname>
+   <methodparam><type>array</type><parameter role="reference">array</parameter></methodparam>
+   <methodparam><type>callable</type><parameter>callback</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Funkcja ta sortuje tablicę w taki sposób, że klucze zachowują przypisanie
-   do odpowiednich wartości. Jest to używane głównie przy sortowaniu tablic
-   asocjacyjnych, gdzie znacząca jest kolejność elementów. Funkcja
-   porównująca jest zdefiniowana przez użytkownika.
+   Funkcja ta sortuje tablicę <parameter>array</parameter>, w taki sposób, że klucze
+   zachowują przypisanie do odpowiednich wartości, przy użyciu funkcji porównującej
+   zdefiniowanej przez użytkownika.
   </para>
   <para>
-   &return.success;
+   Jest to używane głównie przy sortowaniu tablic asocjacyjnych, gdzie 
+   istotna jest kolejność elementów.
   </para>
-  <note>
-   <para>
-    Zobacz <function>usort</function> i <function>uksort</function> aby
-    zobaczyć przykłady zdefiniowanych przez użytkownika funkcji
-    porównujących.
-   </para>
-  </note>
+  &note.sort-unstable;
+  &note.reset-index;
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
   <para>
-   Patrz także: <function>usort</function>, <function>uksort</function>,
-   <function>sort</function>, <function>asort</function>,
-   <function>arsort</function>, <function>ksort</function> i
-   <function>rsort</function>.
+   <variablelist>
+    <varlistentry>
+     <term><parameter>array</parameter></term>
+     <listitem>
+      <para>
+       Tablica wejściowa.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>callback</parameter></term>
+     <listitem>
+      &sort.callback.description;
+     </listitem>
+    </varlistentry>
+   </variablelist>
   </para>
  </refsect1>
-</refentry>
 
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.true.always;
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     &return.type.true;
+     &array.changelog.by-ref;
+    </tbody>
+   </tgroup>
+  </informaltable>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład użycia <function>uasort</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// Funkcja porównująca
+function cmp($a, $b) {
+    if ($a == $b) {
+        return 0;
+    }
+    return ($a < $b) ? -1 : 1;
+}
+
+// Tablica do posortowania
+$array = array('a' => 4, 'b' => 8, 'c' => -1, 'd' => -9, 'e' => 2, 'f' => 5, 'g' => 3, 'h' => -4);
+print_r($array);
+
+// Posortuj i wyświetl wynikową tablicę
+uasort($array, 'cmp');
+print_r($array);
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+Array
+(
+    [a] => 4
+    [b] => 8
+    [c] => -1
+    [d] => -9
+    [e] => 2
+    [f] => 5
+    [g] => 3
+    [h] => -4
+)
+Array
+(
+    [d] => -9
+    [h] => -4
+    [c] => -1
+    [e] => 2
+    [g] => 3
+    [a] => 4
+    [f] => 5
+    [b] => 8
+)
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <simplelist>
+   <member><function>usort</function></member>
+   <member><function>uksort</function></member>
+   <member>&seealso.array.sorting;</member>
+  </simplelist>
+ </refsect1>
+
+</refentry>
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml
