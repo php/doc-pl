@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 12ccdb90a13179977809887611fdca0e5aa5b4eb Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 71e3c74047f04b26aa1be51215d7129e15dc2993 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS: leszek -->
+<!-- CREDITS: leszek, grzesiek -->
 <refentry xml:id="function.array-combine" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>array_combine</refname>
   <refpurpose>Tworzy tablicę używając wartości jednej tablicy jako kluczy a drugiej jako wartości</refpurpose>
  </refnamediv>
- 
+
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>array</type><methodname>array_combine</methodname>
-   <methodparam><type>array</type><parameter>klucze</parameter></methodparam>
-   <methodparam><type>array</type><parameter>wartości</parameter></methodparam>
+   <methodparam><type>array</type><parameter>keys</parameter></methodparam>
+   <methodparam><type>array</type><parameter>values</parameter></methodparam>
   </methodsynopsis>
   <para>
    Tworzy tablicę używając wartości z tablicy
-   <parameter>klucze</parameter> jako kluczy i wartości z tablicy
-   <parameter>wartości</parameter> jako ich wartości.
+   <parameter>keys</parameter> jako kluczy i wartości z tablicy
+   <parameter>values</parameter> jako ich wartości.
   </para>
  </refsect1>
 
@@ -28,7 +28,7 @@
    <variablelist>
 
     <varlistentry>
-     <term><parameter>klucze</parameter></term>
+     <term><parameter>keys</parameter></term>
      <listitem>
       <para>
        Tablica kluczy do użycia. Niepoprawne wartości będą
@@ -38,7 +38,7 @@
     </varlistentry>
 
     <varlistentry>
-     <term><parameter>wartości</parameter></term>
+     <term><parameter>values</parameter></term>
      <listitem>
       <para>
        Tablica wartości do użycia.
@@ -53,45 +53,45 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca wynikową tablicę lub &false; jeżeli liczba elementów z obu tablic
-   nie pasuje do siebie.
+   Zwraca połączoną <type>array</type>.
   </para>
  </refsect1>
 
  <refsect1 role="errors">
   &reftitle.errors;
   <para>
-   Generuje błąd <constant>E_WARNING</constant> jeżeli liczba elementów w tablicach
-   <parameter>klucze</parameter> i <parameter>wartości</parameter> nie jest
+   Od PHP 8.0.0, błąd <classname>ValueError</classname> jest zgłoszony, jeśli liczba elementów w
+   <parameter>keys</parameter> i <parameter>values</parameter> nie jest
    jednakowa.
+   Przed PHP 8.0.0, zamiast tego emitowany był błąd <constant>E_WARNING</constant>.
   </para>
  </refsect1>
 
  <refsect1 role="changelog">
   &reftitle.changelog;
-  <para>
-   <informaltable>
-    <tgroup cols="2">
-     <thead>
-      <row>
-       <entry>&Version;</entry>
-       <entry>&Description;</entry>
-      </row>
-     </thead>
-     <tbody>
-      <row>
-       <entry>5.4.0</entry>
-       <entry>
-        Poprzednie wersje generowały błąd <constant>E_WARNING</constant> i zwracały
-        &false; dla pustych tablic.
-       </entry>
-      </row>
-     </tbody>
-    </tgroup>
-   </informaltable>
-  </para>
+    <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>8.0.0</entry>
+      <entry>
+       <function>array_combine</function> zgłasza teraz błąd
+       <classname>ValueError</classname> jeśli liczba elementów
+       dla każdej z tablic nie jest równa;
+       poprzednio funkcja ta zwracała &false; zamiast tego.
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </informaltable>
  </refsect1>
- 
+
  <refsect1 role="examples">
   &reftitle.examples;
   <para>
@@ -130,6 +130,7 @@ Array
     <member><function>array_merge</function></member>
     <member><function>array_walk</function></member>
     <member><function>array_values</function></member>
+    <member><function>array_map</function></member>
    </simplelist>
   </para>
  </refsect1>

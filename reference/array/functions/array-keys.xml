@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 05e4c11653efce0a9eaf1dadda67fa42fe58c23d Maintainer: leszek Status: ready -->
+<!-- EN-Revision: 5414f72979796d241b9c0b5dc1a9943e707699f2 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS: sobak -->
+<!-- CREDITS: sobak, grzesiek -->
 <refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.array-keys">
  <refnamediv>
   <refname>array_keys</refname>
   <refpurpose>Zwraca wszystkie klucze lub podzbiór kluczy z tablicy</refpurpose>
  </refnamediv>
- 
+
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis role="procedural">
    <type>array</type><methodname>array_keys</methodname>
-   <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
+   <methodparam><type>array</type><parameter>array</parameter></methodparam>
   </methodsynopsis>
   <methodsynopsis role="procedural">
    <type>array</type><methodname>array_keys</methodname>
-   <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
-   <methodparam><type>mixed</type><parameter>szukana_wartość</parameter></methodparam>
-   <methodparam choice="opt"><type>bool</type><parameter>ścisłe_porównanie</parameter><initializer>&false;</initializer></methodparam>
+   <methodparam><type>array</type><parameter>array</parameter></methodparam>
+   <methodparam><type>mixed</type><parameter>filter_value</parameter></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>strict</parameter><initializer>&false;</initializer></methodparam>
   </methodsynopsis>
   <para>
    <function>array_keys</function> zwraca klucze, numeryczne
-   i tekstowe, z <parameter>tablicy</parameter>.
+   i tekstowe, z <parameter>array</parameter>.
   </para>
   <para>
-   Jeżeli parametr <parameter>szukana_wartość</parameter> został podany,
+   Jeżeli parametr <parameter>filter_value</parameter> został podany,
    to zwracane są klucze tylko dla tej wartości. W przeciwnym wypadku zwrócone
    zostaną wszystkie klucze z podanej <parameter>tablicy</parameter>.
   </para>
@@ -36,7 +36,7 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>tablica</parameter></term>
+     <term><parameter>array</parameter></term>
      <listitem>
       <para>
        Tablica zawierająca klucze do zwrócenia.
@@ -44,15 +44,15 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>szukana_wartość</parameter></term>
+     <term><parameter>filter_value</parameter></term>
      <listitem>
       <para>
-       Jeżeli podano, to zwracane są klucze tylko dla tej wartości.
+       Jeżeli podano, to zwracane są klucze zawierające tą wartość.
       </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>ścisłe_porównanie</parameter></term>
+     <term><parameter>strict</parameter></term>
      <listitem>
       <para>
        Określa czy podczas szukania powinno być użyte ścisłe (===) porównanie.
@@ -66,7 +66,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca tablicę wszystkich kluczy z parametru <parameter>tablica</parameter>.
+   Zwraca tablicę wszystkich kluczy z parametru <parameter>array</parameter>.
   </para>
  </refsect1>
 

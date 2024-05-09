@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 52ae7dd55e62b1e7b6920499ed7448892e09bb48 Maintainer: leszek Status: ready -->
+<!-- EN-Revision: c84024092aee02b51dd18b909af0f2ccbdd24f98 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS: sobak -->
+<!-- CREDITS: sobak, grzesiek -->
 <refentry xml:id="function.array-diff" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>array_diff</refname>
@@ -12,13 +12,12 @@
   &reftitle.description;
   <methodsynopsis>
    <type>array</type><methodname>array_diff</methodname>
-   <methodparam><type>array</type><parameter>tablica1</parameter></methodparam>
-   <methodparam><type>array</type><parameter>tablica2</parameter></methodparam>
-   <methodparam choice="opt"><type>array</type><parameter>...</parameter></methodparam>
+   <methodparam><type>array</type><parameter>array</parameter></methodparam>
+   <methodparam rep="repeat"><type>array</type><parameter>arrays</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Porównuje <parameter>tablica1</parameter> z jedną lub większą ilością tablic
-   i zwraca wartości <parameter>tablica1</parameter>, które nie są obecne w
+   Porównuje <parameter>array</parameter> z jedną lub większą ilością tablic
+   i zwraca wartości <parameter>array</parameter>, które nie są obecne w
    żadnej z innych tablic.
   </para>
  </refsect1>
@@ -28,7 +27,7 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>tablica1</parameter></term>
+     <term><parameter>array</parameter></term>
      <listitem>
       <para>
        Tablica którą porównujemy
@@ -36,18 +35,10 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>tablica2</parameter></term>
+     <term><parameter>arrays</parameter></term>
      <listitem>
       <para>
-       Tablica z którą porównujemy
-      </para>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
-     <term><parameter>...</parameter></term>
-     <listitem>
-      <para>
-       Więcej tablic z którymi porównujemy
+       Tablice do porównania
       </para>
      </listitem>
     </varlistentry>
@@ -59,7 +50,27 @@
   &reftitle.returnvalues;
   <para>
    Zwraca tablicę zawierającą wszystkie elementy z
-   <parameter>tablica1</parameter>, które nie są obecne w żadnej z innych tablic.
+   <parameter>array</parameter> które nie są obecne w żadnej z pozostałych tablic.
+   Klucze w <parameter>array</parameter> są zachowywane.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      &array.changelog.require-only-one;
+     </tbody>
+    </tgroup>
+   </informaltable>
   </para>
  </refsect1>
 
@@ -93,18 +104,54 @@ Array
     </screen>
    </example>
   </para>
+
+  <para>
+   <example>
+    <title><function>array_diff</function> przykład z niepasującymi typami</title>
+    <para>
+     Dwa elementy są uznawane za równe wtedy i tylko wtedy, gdy
+     <literal>(string) $elem1 === (string) $elem2</literal>. To jest,
+     kiedy <link linkend="language.types.string.casting">reprezentacja łańcuchowa</link> jest taka sama.
+    </para>
+    <programlisting role="php">
+     <![CDATA[
+<?php
+// Spowoduje to wygenerowanie Powiadomienia, że tablica nie może zostać rzutowana na ciąg znaków.
+$source = [1, 2, 3, 4];
+$filter = [3, 4, [5], 6];
+$result = array_diff($source, $filter);
+
+// Jest to w porządku, ponieważ obiekty mogą rzutować na ciąg znaków.
+class S {
+  private $v;
+
+  public function __construct(string $v) {
+    $this->v = $v;
+  }
+
+  public function __toString() {
+    return $this->v;
+  }
+}
+
+$source = [new S('a'), new S('b'), new S('c')];
+$filter = [new S('b'), new S('c'), new S('d')];
+
+$result = array_diff($source, $filter);
+
+// $result zawiera teraz jedną instancję S('a');
+?>
+]]>
+    </programlisting>
+    <para>
+     Aby użyć alternatywnej funkcji porównania, zobacz <function>array_udiff</function>.
+    </para>
+   </example>
+  </para>
  </refsect1>
 
  <refsect1 role="notes">
   &reftitle.notes;
-  <note>
-   <para>
-    Dwa elementy są uznawane za równe tylko jeżeli
-    <literal>(string) $elem1 === (string) $elem2</literal>. Innymi słowy:
-    gdy reprezentacja jako łańcuch znaków jest jednakowa.
-    <!-- TODO: example of it... -->
-   </para>
-  </note>
   <note>
    <para>
     Ta funkcja sprawdza tylko pierwszy wymiar tablicy wielowymiarowej.
@@ -119,6 +166,7 @@ Array
   <para>
    <simplelist>
     <member><function>array_diff_assoc</function></member>
+    <member><function>array_udiff</function></member>
     <member><function>array_intersect</function></member>
     <member><function>array_intersect_assoc</function></member>
    </simplelist>

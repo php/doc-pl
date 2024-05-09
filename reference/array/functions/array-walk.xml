@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 41f8ef55405db33f5b63d2a7856dddcab0fbf135 Maintainer: cyb0org Status: ready -->
+<!-- EN-Revision: d45ff7a3e78243470d1b7e5141d7ded022286d7f Maintainer: cyb0org Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS: leszek -->
+<!-- CREDITS: leszek, grzesiek -->
 <refentry xml:id="function.array-walk" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>array_walk</refname>
@@ -11,13 +11,13 @@
   &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>array_walk</methodname>
-   <methodparam><type class="union"><type>array</type><type>object</type></type><parameter role="reference">tablica</parameter></methodparam>
-   <methodparam><type>callable</type><parameter>nazwa_funkcji</parameter></methodparam>
-   <methodparam choice="opt"><type>mixed</type><parameter>dane</parameter><initializer>&null;</initializer></methodparam>
+   <methodparam><type class="union"><type>array</type><type>object</type></type><parameter role="reference">array</parameter></methodparam>
+   <methodparam><type>callable</type><parameter>callback</parameter></methodparam>
+   <methodparam choice="opt"><type>mixed</type><parameter>arg</parameter><initializer>&null;</initializer></methodparam>
   </methodsynopsis>
   <simpara>
-   Wykonuje zdefiniowaną przez użytkownika funkcję <parameter>nazwa_funkcji</parameter> na każdym
-   elemencie tablicy <parameter>tablica</parameter>.
+   Wykonuje zdefiniowaną przez użytkownika funkcję <parameter>callback</parameter> na każdym
+   elemencie tablicy <parameter>array</parameter>.
   </simpara>
   <para>
    Na działanie <function>array_walk</function> nie wpływa pozycja wewnętrznego wskaźnika
@@ -30,7 +30,7 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>tablica</parameter></term>
+     <term><parameter>array</parameter></term>
      <listitem>
       <para>
        Tablica wejściowa.
@@ -38,17 +38,17 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>nazwa_funkcji</parameter></term>
+     <term><parameter>callback</parameter></term>
      <listitem>
       <para>
-       Zazwyczaj <parameter>nazwa_funkcji</parameter> przyjmuje dwa parametry.
-       Pierwszym jest element tablicy <parameter>tablica</parameter>,
+       Zazwyczaj <parameter>callback</parameter> przyjmuje dwa parametry.
+       Pierwszym jest element tablicy <parameter>array</parameter>,
        natomiast drugim klucz lub numer indeksu tego elementu.
       </para>
       <note>
        <para>
-        Jeśli <parameter>nazwa_funkcji</parameter> ma zmieniać wartości tablicy,
-        należy określić pierwszy argument <parameter>nazwa_funkcji</parameter>
+        Jeśli <parameter>callback</parameter> ma zmieniać wartości tablicy,
+        należy określić pierwszy argument <parameter>callback</parameter>
         jako <link linkend="language.references">referencję</link>. W tym
         przypadku wszystkie zmiany dokonane przez tą funkcję będą dokonywane
         bezpośrednio na oryginalnej tablicy.
@@ -63,7 +63,7 @@
         </para>
       </note>
       <para>
-       Tylko wartości tablicy <parameter>tablica</parameter> mogą być
+       Tylko wartości tablicy <parameter>array</parameter> mogą być
        zmieniane; jej struktura nie może modyfikowana, czyli np. programista nie może
        dodać, usunąć lub zmieniać kolejności elementów. Jeśli funkcja zwrotna nie
        respektuje tych wymogów, to jej zachowanie będzie nieokreślone
@@ -72,12 +72,12 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>dane</parameter></term>
+     <term><parameter>arg</parameter></term>
      <listitem>
       <para>
-       Jeśli podany zostanie opcjonalny parametr <parameter>dane</parameter>,
+       Jeśli podany zostanie opcjonalny parametr <parameter>arg</parameter>,
        to zostanie on przekazany jako trzeci parametr do
-       <parameter>nazwa_funkcji</parameter>.
+       <parameter>callback</parameter>.
       </para>
      </listitem>
     </varlistentry>
@@ -94,12 +94,12 @@
  <refsect1 role="errors">
   &reftitle.errors;
   <para>
-   Od PHP 7.1.0 wygenerowany zostanie <classname>ArgumentCountError</classname> jeśli funkcja <parameter>nazwa_funkcji</parameter>
+   Od PHP 7.1.0 wygenerowany zostanie <classname>ArgumentCountError</classname> jeśli funkcja <parameter>callback</parameter>
    wymaga więcej niż 2 parametry (wartość i klucz tablicy)
-   lub więcej niż 3 parametry jeśli zostały przekazane również <parameter>dane</parameter>.
+   lub więcej niż 3 parametry jeśli zostały przekazane również <parameter>arg</parameter>.
    Poprzednio w tym wypadku
    zostałby wygenerowany błąd poziomu <link linkend="errorfunc.constants">E_WARNING</link> za każdym razem kiedy
-   <function>array_walk</function> wywoływałby <parameter>nazwa_funkcji</parameter>.
+   <function>array_walk</function> wywoływałby <parameter>callback</parameter>.
   </para>
  </refsect1>
 
@@ -117,7 +117,7 @@
      <row>
       <entry>8.0.0</entry>
       <entry>
-       Jeśli <parameter>nazwa_funkcji</parameter> oczekuje drugiego lub trzeciego parametru przekazanego
+       Jeśli <parameter>callback</parameter> oczekuje drugiego lub trzeciego parametru przekazanego
        przez referencję, wówczas ta funkcja wyemituje <constant>E_WARNING</constant>.
       </entry>
      </row>
@@ -169,6 +169,31 @@ d. owoc: cytryna
 a. owoc: pomarańcza
 b. owoc: banan
 c. owoc: jabłko
+]]>
+    </screen>
+   </example>
+  </para>
+<para>
+   <example>
+    <title><function>array_walk</function> przykład z użyciem funkcji anonimowej</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$elements = ['a', 'b', 'c'];
+
+array_walk($elements, function ($value, $key) {
+  echo "{$key} => {$value}\n";
+});
+
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen role="php">
+<![CDATA[
+0 => a
+1 => b
+2 => c
 ]]>
     </screen>
    </example>
