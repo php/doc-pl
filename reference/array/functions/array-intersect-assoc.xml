@@ -1,36 +1,90 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: c84024092aee02b51dd18b909af0f2ccbdd24f98 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
-<refentry xml:id="function.array-intersect-assoc" xmlns="http://docbook.org/ns/docbook">
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.array-intersect-assoc">
  <refnamediv>
   <refname>array_intersect_assoc</refname>
   <refpurpose>Wylicza przecięcie tablic z dodatkowym sprawdzaniem indeksów</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
    <type>array</type><methodname>array_intersect_assoc</methodname>
-   <methodparam><type>array</type><parameter>tablica1</parameter></methodparam>
-   <methodparam><type>array</type><parameter>tablica2</parameter></methodparam>
-   <methodparam choice="opt"><type>array</type><parameter> ...</parameter></methodparam>
+   <methodparam><type>array</type><parameter>array</parameter></methodparam>
+   <methodparam rep="repeat"><type>array</type><parameter>arrays</parameter></methodparam>
   </methodsynopsis>
   <simpara>
-   <function>array_intersect_assoc</function> zwraca tablicę zawierającą
-   wszystkie wartości z <parameter>tablica1</parameter>, które są obecne
-   także we wszystkich pozostałych argumentach. Należy pamiętać, że w
-   przeciwieństwie do funkcji <function>array_intersect</function>, tutaj w
-   brane są pod uwagę także klucze.
+   <function>array_intersect</function> zwraca tablicę
+   zawierającą wszystkie wartości tablicy <parameter>array</parameter>,
+   które istnieją we wszystkich argumentach. Zauważ, że w przeciwieństwie
+   do <function>array_intersect</function>, w porównaniu brane są uwagę też klucze.
   </simpara>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>array</parameter></term>
+     <listitem>
+      <para>
+       Główna tablica z wartościami do sprawdzenia.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>arrays</parameter></term>
+     <listitem>
+      <para>
+       Tablice, które porównujemy.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca tablicę zawierającą wszystkie wartości
+   tablicy <parameter>array</parameter>, które istnieją we wszystkich przekazanych do funkcji tablicach.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      &array.changelog.require-only-one;
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
    <example>
     <title>Przykład użycia <function>array_intersect_assoc</function></title>
     <programlisting role="php">
-<![CDATA[
+     <![CDATA[
 <?php
-$tablica1 = array("a" => "zielony", "b" => "brązowy", "c" => "niebieski", "czerwony");
-$tablica2 = array("a" => "zielony", "żółty", "czerwony");
-$tablica_wynikowa = array_intersect_assoc($tablica1, $tablica2);
-print_r($tablica_wynikowa);
+$array1 = array("a" => "zielony", "b" => "brązowy", "c" => "niebieski", "czerwony");
+$array2 = array("a" => "zielony", "b" => "żółty", "niebieski", "czerwony");
+$result_array = array_intersect_assoc($array1, $array2);
+print_r($result_array);
 ?>
 ]]>
     </programlisting>
@@ -46,28 +100,34 @@ Array
    </example>
   </para>
   <simpara>
-   W powyższym przykładzie, tylko jedna para, <literal>"a" =&gt;
-    "zielony</literal>, jest obecna w obu tablicach wejściowych, a więc
-   tylko ta zostanie zwrócona. Wartość <literal>"red"</literal> nie jest
-   zwracana, ponieważ w tablicy <varname>$tablica1</varname> jej klucz to
-   <literal>0</literal>, a w <varname>$tablica2</varname> -
-   <literal>1</literal>.
+   W naszym przykładzie widzimy, że tylko para <literal>"a" =&gt;
+   "zielony"</literal> występuje w obu tablicach, a więc jest zwracana.
+   Element <literal>"czerwony"</literal> nie jest zwracany, gdyż w tablicy
+   <varname>$array1</varname> jego klucz to <literal>0</literal>, a
+   kluczem elementu "czerwony" w tablicy <varname>$array2</varname> jest
+   <literal>1</literal>. Z kolei klucz <literal>"b"</literal> nie jest zwracany,
+   ponieważ jego wartośi są różne w obu tablicach.
   </simpara>
   <simpara>
-   Dwie wartości z pary <literal>klucz =&gt; wartość</literal> są uważane za
-   równe tylko jeśli <literal>(string) $element1 === (string)
-    $element2</literal>. Innymi słowy, dokonywane jest ścisłe porównywanie
-   typów, tak więc reprezentacje znakowe muszą być takie same.
+   Dwie wartości z par <literal>klucz =&gt; wartość</literal> są
+   uznawane za równe wtedy i tylko wtedy, gdy
+   <literal>(string) $elem1 === (string) $elem2 </literal>. Innymi słowy,
+   wykonywane jest ścisłe sprawdzenie typów, więc ich reprezentacje jako
+   tekst muszą być identyczne.
    <!-- TODO: example of it... -->
   </simpara>
-  <simpara>
-   Patrz także: <function>array_intersect</function>,
-   <function>array_uintersect_assoc</function>,
-   <function>array_intersect_uassoc</function>,
-   <function>array_uintersect_uassoc</function>,
-   <function>array_diff</function> i
-   <function>array_diff_assoc</function>.
-  </simpara>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <simplelist>
+   <member><function>array_intersect</function></member>
+   <member><function>array_uintersect_assoc</function></member>
+   <member><function>array_intersect_uassoc</function></member>
+   <member><function>array_uintersect_uassoc</function></member>
+   <member><function>array_diff</function></member>
+   <member><function>array_diff_assoc</function></member>
+  </simplelist>
  </refsect1>
 </refentry>
 

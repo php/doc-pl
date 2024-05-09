@@ -1,44 +1,76 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: d1b2cfcca48d0be3e19cc4569dc92b7c0170b444 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.array-values" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>array_values</refname>
   <refpurpose>Zwraca wszystkie wartości z tablicy</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
    <type>array</type><methodname>array_values</methodname>
-   <methodparam><type>array</type><parameter>wejście</parameter></methodparam>
+   <methodparam><type>array</type><parameter>array</parameter></methodparam>
   </methodsynopsis>
   <para>
    <function>array_values</function> zwraca wszystkie wartości z tablicy
-   <parameter>wejście</parameter> i indeksuje tablicę liczbowo.
+   <parameter>array</parameter> i nadaje im indeksy numeryczne.
   </para>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>array</parameter></term>
+     <listitem>
+      <para>
+       Tablica.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca indeksowaną tablicę wartości.
+  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
    <example>
     <title>Przykład użycia <function>array_values</function></title>
     <programlisting role="php">
 <![CDATA[
-$tablica = array ("rozmiar" => "XL", "kolor" => "złoty");
-print_r(array_values ($tablica));
+<?php
+$array = array("size" => "XL", "color" => "gold");
+print_r(array_values($array));
+?>
 ]]>
     </programlisting>
     &example.outputs;
-     <screen>
+    <screen role="php">
 <![CDATA[
-+Array
+Array
 (
     [0] => XL
-    [1] => złoty
+    [1] => gold
 )
 ]]>
-     </screen>
-    </example>
-   </para>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
   <para>
-   Patrz także: <function>array_keys</function>.
+   <simplelist>
+    <member><function>array_keys</function></member>
+    <member><function>array_combine</function></member>
+   </simplelist>
   </para>
  </refsect1>
 </refentry>

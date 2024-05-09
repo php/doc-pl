@@ -1,40 +1,96 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: c84024092aee02b51dd18b909af0f2ccbdd24f98 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
-<refentry xml:id="function.array-intersect" xmlns="http://docbook.org/ns/docbook">
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.array-intersect">
  <refnamediv>
   <refname>array_intersect</refname>
-  <refpurpose>Zwraca przecięcie tablic</refpurpose>
+  <refpurpose>Wylicza przecięcie tablic</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
    <type>array</type><methodname>array_intersect</methodname>
-   <methodparam><type>array</type><parameter>tablica1</parameter></methodparam>
-   <methodparam><type>array</type><parameter>tablica2</parameter></methodparam>
-   <methodparam choice="opt"><type>array</type><parameter> ...</parameter></methodparam>
+   <methodparam><type>array</type><parameter>array</parameter></methodparam>
+   <methodparam rep="repeat"><type>array</type><parameter>arrays</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>array_intersect</function> zwraca tablicę zawierającą wszystkie
-   wartości tablicy <parameter>tablica1</parameter> które istnieją we
-   wszystkich argumentach. Zauważ, ża zachowywane są przypisania kluczy.
+   <function>array_intersect</function> zwraca tablicę
+   zawierającą wszystkie wartości tablicy <parameter>array</parameter>,
+   które istnieją we wszystkich argumentach. 
+   Zauważ, ża zachowywane są przypisania kluczy.
   </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>array</parameter></term>
+     <listitem>
+      <para>
+       Główna tablica z wartościami do sprawdzenia.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>arrays</parameter></term>
+     <listitem>
+      <para>
+       Tablice, których wartości będą porównywane.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca tablicę zawierającą wszystkie wartości
+   tablicy <parameter>array</parameter>, które istnieją we wszystkich przekazanych do funkcji tablicach.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      &array.changelog.require-only-one;
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
    <example>
     <title>Przykład użycia <function>array_intersect</function></title>
     <programlisting role="php">
-<![CDATA[
+     <![CDATA[
 <?php
-$tablica1 = array ("a" => "zielony", "czerwony", "niebieski");
-$tablica2 = array ("b" => "zielony", "żółty", "czerwony");
-$wynik = array_intersect ($tablica1, $tablica2);
-print_r($wynik);
+$array1 = array("a" => "zielony", "czerwony", "niebieski");
+$array2 = array("b" => "zielony", "żółty", "czerwony");
+$result = array_intersect($array1, $array2);
+print_r($result);
 ?>
 ]]>
     </programlisting>
     &example.outputs;
-    <screen>
-<![CDATA[
+    <screen role="php">
+     <![CDATA[
 Array
 (
     [a] => zielony
@@ -44,17 +100,28 @@ Array
     </screen>
    </example>
   </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
   <note>
    <simpara>
-    Dwa elementy tablicy uważane są za identyczne wtedy i tylko wtedy jeśli
-    <literal>(string) $element1 === (string) $element2</literal>. Słownie:
-    kiedy reprezentacje elementów w postaci stringów są identyczne.
-    <!-- TODO: przykład... -->
+    Dwa elementy są uznawane za równe wtedy i tylko wtedy gdy
+    <literal>(string) $elem1 === (string) $elem2</literal>. Czyli:
+    gdy ich reprezentacja jako tekst jest identyczna.
+    <!-- TODO: example of it... -->
    </simpara>
   </note>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
   <para>
-   Patrz także: <function>array_intersect_assoc</function>,
-   <function>array_diff</function> i <function>array_diff_assoc</function>.
+   <simplelist>
+    <member><function>array_intersect_assoc</function></member>
+    <member><function>array_diff</function></member>
+    <member><function>array_diff_assoc</function></member>
+   </simplelist>
   </para>
  </refsect1>
 </refentry>

@@ -1,43 +1,81 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 8cd7c0d8c574903e149c1da0689a8728cdf909d4 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.in-array" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>in_array</refname>
   <refpurpose>Sprawdza czy wartość istnieje w tablicy</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>in_array</methodname>
-   <methodparam><type>mixed</type><parameter>igła</parameter></methodparam>
-   <methodparam><type>array</type><parameter>stóg_siana</parameter></methodparam>
-   <methodparam choice="opt"><type>bool</type><parameter>ścisłe</parameter></methodparam>
+   <methodparam><type>mixed</type><parameter>needle</parameter></methodparam>
+   <methodparam><type>array</type><parameter>haystack</parameter></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>strict</parameter><initializer>&false;</initializer></methodparam>
   </methodsynopsis>
   <para>
-   Przeszukuje <parameter>stóg_siana</parameter> w poszukiwaniu parametru
-   <parameter>igła</parameter> i zwraca &true; jeśli wartość została
-   znaleziona lub &false; w przeciwnym przypadku.
+   Szuka wartości <parameter>needle</parameter> w tablicy <parameter>haystack</parameter> używając luźnego porównania typów,
+   chyba że ustawiono parametr <parameter>strict</parameter>.
   </para>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
   <para>
-   Jeśli trzeci parametr <parameter>ścisły</parameter> jest ustawiony na
-   &true; to <function>in_array</function> porówna także
-   <link linkend="language.types">typy</link>
-   parametru <parameter>igła</parameter> z tymi z parametru
-   <parameter>stóg_siana</parameter>.
+   <variablelist>
+    <varlistentry>
+     <term><parameter>needle</parameter></term>
+     <listitem>
+      <para>
+       Szukana wartość.
+      </para>
+      <note>
+       <para>
+        Jeśli <parameter>needle</parameter> jest ciągiem tekstowym, to porównanie
+        uwzględnia wielkość znaków.
+       </para>
+      </note>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>haystack</parameter></term>
+     <listitem>
+      <para>
+       Tablica.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>strict</parameter></term>
+     <listitem>
+      <para>
+       Jeśli trzeci parametr <parameter>strict</parameter> ustawiono na &true;
+       to funkcja <function>in_array</function> będzie sprawdzać też
+       <link linkend="language.types">typy</link> przy szukaniu wartości
+       <parameter>needle</parameter> w tablicy <parameter>haystack</parameter>.
+      </para>
+      <note>
+       <para>
+        Przed PHP 8.0.0 wartość <parameter>needle</parameter> typu <literal>string</literal> będzie pasowała do wartości
+        <literal>0</literal> w tablicy w luźnym trybie porównywania (i vice versa). Może to przynieść niepożądane
+        rezultaty.  Podobne przypadki brzegowe istnieją też dla innych typów.  Jeśli nie jesteś absolutnie pewien
+        typów wartości, na których operujesz, zawsze używaj flagi <parameter>strict</parameter>, aby uniknąc nieoczekiwanego zachowania funkcji.
+       </para>
+      </note>
+     </listitem>
+    </varlistentry>
+   </variablelist>
   </para>
-  <note>
-   <para>
-    Jeśli <parameter>igła</parameter> jest ciągiem to porównywanie jest
-    dokonywane z uwzględnieniem wielkości znaków.
-   </para>
-  </note>
-  <note>
-   <para>
-    W wersjach PHP starszych niż 4.2.0 <parameter>igła</parameter> nie mogła
-    być tablicą.
-   </para>
-  </note>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca &true; jeśli wartość <parameter>needle</parameter> została odnaleziona w tablicy,
+   W przeciwnym razie zwraca &false;.
+  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
    <example>
     <title>Przykład użycia <function>in_array</function></title>
@@ -51,12 +89,12 @@ if (in_array("Irix", $os)) {
 if (in_array("mac", $os)) {
     echo "Znaleziono mac";
 }
+?>
 ]]>
     </programlisting>
     <para>
-     Drugi warunek nie zostaje spełniony ponieważ funkcja
-     <function>in_array</function> uwzględnia wielkość znaków, tak więc
-     powyższy przykład wyświetli:
+     Drugi warunek nie jest spełniony poniewż <function>in_array</function>
+     zwraca uwagę na wielkość znaków, więc powyższy skrypt wyświetli:
     </para>
     <screen>
 <![CDATA[
@@ -67,9 +105,7 @@ Znaleziono Irix
   </para>
   <para>
    <example>
-    <title>
-     Przykład użycia <function>in_array</function> z parametrem strict
-    </title>
+    <title>Przykład użycia <function>in_array</function> z flagą strict</title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -95,13 +131,13 @@ if (in_array(1.13, $a, true)) {
   </para>
   <para>
    <example>
-    <title><function>in_array</function> z tablicą jako igła</title>
+    <title>Przykład użycia <function>in_array</function> z tablicą jako parametrem needle</title>
     <programlisting role="php">
 <![CDATA[
 <?php
 $a = array(array('p', 'h'), array('p', 'r'), 'o');
 
-if (in_array(array ('p', 'h'), $a)) {
+if (in_array(array('p', 'h'), $a)) {
     echo "znaleziono 'ph'\n";
 }
 
@@ -124,9 +160,16 @@ znaleziono 'o'
     </screen>
    </example>
   </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
   <para>
-   Patrz także: <function>array_search</function>,
-   <function>array_key_exists</function> i <function>isset</function>.
+   <simplelist>
+    <member><function>array_search</function></member>
+    <member><function>isset</function></member>
+    <member><function>array_key_exists</function></member>
+   </simplelist>
   </para>
  </refsect1>
 </refentry>
