@@ -1,40 +1,97 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: caf779183ee9860b48c74c8994fb944039b6b56f Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.array-unshift" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>array_unshift</refname>
-  <refpurpose>Wstaw jeden lub więcej elementów na początek tablicy</refpurpose>
+  <refpurpose>Wstawia jeden lub więcej elementów na początek tablicy</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
    <type>int</type><methodname>array_unshift</methodname>
-   <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
-   <methodparam><type>mixed</type><parameter>wartość</parameter></methodparam>
-   <methodparam choice="opt"><type>mixed</type><parameter>...</parameter></methodparam>
+   <methodparam><type>array</type><parameter role="reference">array</parameter></methodparam>
+   <methodparam rep="repeat"><type>mixed</type><parameter>values</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>array_unshift</function> wstawia jeden lub więcej przekazanych
-   jako parametry elementów na początek tablicy
-   <parameter>tablica</parameter>. Zauważ, że lista elementów wstawiana jako
-   całość, więc elementy zostają w takim samym porządku. Wszystkie klucze
-   liczbowe zostaną zmodyfikowane tak, aby ich wartości zaczynały się od
+   <function>array_unshift</function> wstawia podane argumenty na początek
+   tablicy <parameter>array</parameter>. Zauważ, że lista elementów jest
+   wstawiana jako całość, więc elementy zostają w takim samym 
+   porządku. Wszystkie klucze liczbowe zostaną zmodyfikowane tak, aby ich wartości zaczynały się od
    zera, podczas gdy klucze znakowe nie zostaną zmienione.
   </para>
+  &note.reset-index;
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
   <para>
-   Funkcja zwraca nową liczbę elementów w tablicy
-   <parameter>tablica</parameter>.
+   <variablelist>
+    <varlistentry>
+     <term><parameter>array</parameter></term>
+     <listitem>
+      <para>
+       Tablica wejściowa.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>values</parameter></term>
+     <listitem>
+      <para>
+       Wartości do dodania.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
   </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca nową ilość elementów w tablicy <parameter>array</parameter>.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>7.3.0</entry>
+       <entry>
+        Ta funkcja może teraz zostać wywołana tylko z jednym parametrem. Wcześniej
+        były wymagane przynajmniej dwa parametry.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
    <example>
     <title>Przykład użycia <function>array_unshift</function></title>
     <programlisting role="php">
-<![CDATA[
+     <![CDATA[
 <?php
-$kolejka = array ("pomarańcza", "banan");
-array_unshift ($kolejka, "jabłko", "malina");
-print_r($kolejka);
+$queue = [
+    "pomarańcza",
+    "banan"
+];
+
+array_unshift($queue, "jabłko", "malina");
+var_dump($queue);
 ?>
 ]]>
     </programlisting>
@@ -53,9 +110,101 @@ Array
    </example>
   </para>
   <para>
-   Patrz także: <function>array_shift</function>,
-   <function>array_push</function> i
-   <function>array_pop</function>.
+   <example>
+    <title>Użycie z tablicami asocjacyjnymi</title>
+    <para>
+     Jeżeli wstawiamy tablicę asocjacyjną na początek innej tablicy asocjacyjnej,
+     to wstawiana tablica będzie ponumerowana tak aby pasowała do wcześniej istniejącej tablicy.
+    </para>
+    <programlisting role="php">
+     <![CDATA[
+<?php
+$foods = [
+    'apples' => [
+        'McIntosh' => 'red',
+        'Granny Smith' => 'green',
+    ],
+    'oranges' => [
+        'Navel' => 'orange',
+        'Valencia' => 'orange',
+    ],
+];
+$vegetables = [
+    'lettuce' => [
+        'Iceberg' => 'green',
+        'Butterhead' => 'green',
+    ],
+    'carrots' => [
+        'Deep Purple Hybrid' => 'purple',
+        'Imperator' => 'orange',
+    ],
+    'cucumber' => [
+        'Kirby' => 'green',
+        'Gherkin' => 'green',
+    ],
+];
+
+array_unshift($foods, $vegetables);
+var_dump($foods);
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen role="php">
+     <![CDATA[
+array(3) {
+  [0] =>
+  array(3) {
+    'lettuce' =>
+    array(2) {
+      'Iceberg' =>
+      string(5) "green"
+      'Butterhead' =>
+      string(5) "green"
+    }
+    'carrots' =>
+    array(2) {
+      'Deep Purple Hybrid' =>
+      string(6) "purple"
+      'Imperator' =>
+      string(6) "orange"
+    }
+    'cucumber' =>
+    array(2) {
+      'Kirby' =>
+      string(5) "green"
+      'Gherkin' =>
+      string(5) "green"
+    }
+  }
+  'apples' =>
+  array(2) {
+    'McIntosh' =>
+    string(3) "red"
+    'Granny Smith' =>
+    string(5) "green"
+  }
+  'oranges' =>
+  array(2) {
+    'Navel' =>
+    string(6) "orange"
+    'Valencia' =>
+    string(6) "orange"
+  }
+}
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>array_merge</function></member>
+    <member><function>array_shift</function></member>
+    <member><function>array_push</function></member>
+    <member><function>array_pop</function></member>
+   </simplelist>
   </para>
  </refsect1>
 </refentry>
