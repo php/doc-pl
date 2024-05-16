@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 95bdd6883b5dde9504701777ba81b3c5f15df52b Maintainer: leszek Status: ready -->
+<!-- EN-Revision: 682510e91d1f19fb59d2f7aef6ab370e8af842a1 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: sobak, grzesiek -->
 <refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.session-unset">
  <refnamediv>
   <refname>session_unset</refname>
   <refpurpose>Zwalnia wszystkie zmienne sesyjne</refpurpose>
  </refnamediv>
- 
+
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
-   <type>void</type><methodname>session_unset</methodname>
+   <type>bool</type><methodname>session_unset</methodname>
    <void/>
   </methodsynopsis>
   <para>
@@ -19,12 +20,41 @@
   </para>
  </refsect1>
 
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  &no.function.parameters;
+ </refsect1>
+
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   &return.void;
+   &return.success;
   </para>
  </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>7.2.0</entry>
+      <entry>
+       Zwracanym typem tej funkcji jest teraz wartość logiczna <type>bool</type>
+       Wcześniej był to typ <type>void</type>.
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </informaltable>
+ </refsect1>
+
 
  <refsect1 role="notes">
   &reftitle.notes;
@@ -32,14 +62,27 @@
    <para>
     Jeśli użyta została tablica <varname>$_SESSION</varname>, to aby
     wyrejestrować zmienną z sesji należy użyć <function>unset</function>, na
-    przykład <literal>unset ($_SESSION['varname']);</literal>..
+    przykład <code>unset($_SESSION['varname']);</code>.
    </para>
   </note>
   <caution>
    <para>
     NIE należy usuwać całej zmiennej <varname>$_SESSION</varname> poprzez
-    wywołanie <literal>unset($_SESSION)</literal>, ponieważ uniemożliwi to
+    wywołanie <code>unset($_SESSION)</code>, ponieważ uniemożliwi to
     rejestrację zmiennych sesyjnych poprzez zmienną superglobalną <varname>$_SESSION</varname>.
+   </para>
+  </caution>
+  <note>
+   <para>
+    Użycie funkcji <function>session_unset</function> jest identyczne z <code>$_SESSION = []</code>.
+   </para>
+  </note>
+  <caution>
+   <para>
+    Ta funkcja działa tylko wtedy, gdy sesja jest aktywna. Nie wyczyści tablicy
+    <varname>$_SESSION</varname>, jeśli sesja nie została jeszcze rozpoczęta lub
+    została już zniszczona. Użyj <code>$_SESSION = []</code> aby usunąć
+    wszystkie zmienne sesji, nawet jeśli sesja nie jest aktywna.
    </para>
   </caution>
  </refsect1>

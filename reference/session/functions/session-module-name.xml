@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: leszek Status: ready -->
+<!-- EN-Revision: 151e61773c016edcae8fd4989ad9a86ffd03c283 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
-<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.session-module-name">
+<!-- CREDITS: grzesiek -->
+<refentry xml:id="function.session-module-name" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>session_module_name</refname>
   <refpurpose>Pobierz i/lub ustaw moduł bieżącej sesji</refpurpose>
  </refnamediv>
- 
+
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
-   <type>string</type><methodname>session_module_name</methodname>
-   <methodparam choice="opt"><type>string</type><parameter>moduł</parameter></methodparam>
+   <type class="union"><type>string</type><type>false</type></type>
+   <methodname>session_module_name</methodname>
+   <methodparam choice="opt"><type class="union"><type>string</type><type>null</type></type>
+   <parameter>module</parameter><initializer>&null;</initializer></methodparam>
   </methodsynopsis>
   <para>
    <function>session_module_name</function> pobiera nazwę obecnego
-   modułu sesji.
+   modułu sesji, który jest również znany jako
+   <link linkend="ini.session.save-handler">session.save_handler</link>.
   </para>
  </refsect1>
 
@@ -24,11 +28,14 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>moduł</parameter></term>
+     <term><parameter>module</parameter></term>
      <listitem>
       <para>
-       Jeżel <parameter>moduł</parameter> jest określony, to zostanie on
+       Jeżel parametr <parameter>module</parameter> jest określony i nie ma wartości &null;, to zostanie on
        użyty w zamian obecnego.
+       Przekazanie wartości <literal>"user"</literal> do tego paramteru jest zabronione. Zamiast tego
+       należy wywołać funkcję <function>session_set_save_handler</function> w celu ustawienia obsługi
+       sesji zdefniowanego przez użytkownika.
       </para>
      </listitem>
     </varlistentry>
@@ -39,12 +46,40 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca nazwę obecnego modułu sesji.
+   Zwraca nazwę obecnego modułu sesji, &return.falseforfailure;.
   </para>
  </refsect1>
 
-</refentry>
+< <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>8.0.0</entry>
+      <entry>
+       Parametr <parameter>module</parameter> przyjmuję teraz wartość null.
+      </entry>
+     </row>
+     <row>
+      <entry>7.2.0</entry>
+      <entry>
+       Obecnie jest wyraźnie zabronione ustawianie nazwy modułu na
+       <literal>"user"</literal>. Wcześniej było to po cichu ignorowane.
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </informaltable>
+ </refsect1>
 
+</refentry>
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml
