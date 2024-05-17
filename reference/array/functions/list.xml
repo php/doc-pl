@@ -1,29 +1,96 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 43ac336818cb3a18011d9b6ba91514f3332eb46d Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: sobak -->
 <refentry xml:id="function.list" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>list</refname>
-  <refpurpose>Przypisz zmienne tak jakby były tablicą</refpurpose>
+  <refpurpose>Przypisuje zmienne tak jakby były tablicą</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
-   <type>void</type><methodname>list</methodname>
-   <methodparam><type>mixed</type><parameter>zmienna</parameter></methodparam>
-   <methodparam rep="repeat"><type>mixed</type><parameter>...</parameter></methodparam>
+   <type>array</type><methodname>list</methodname>
+   <methodparam><type>mixed</type><parameter>var</parameter></methodparam>
+   <methodparam rep="repeat" choice="opt"><type>mixed</type><parameter>vars</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Podobnie jak <function>array</function>, nie jest na prawdę funkcją,
-   ale elementem składni języka. Instrukcja <function>list</function>
-   jest używana do przypisywania listy zmiennych w jednej operacji.
+   Podobnie jak <function>array</function>, nie jest tak naprawdę funkcją,
+   ale elementem składni języka. Instrukcja <function>list</function> jest używana do 
+   przypisywania listy zmiennych w jednej operacji.
+   Nie da się odpakować ciągów znaków, a wyrażenia <function>list</function>
+   nie mogą być zupełnie puste.
   </para>
   <note>
    <para>
-    <function>list</function> działa tylko z tablicami o indeksach
-    liczbowych zakładając że indeksy zaczynają się od 0.
+    Przed wersją PHP 7.1.0 <function>list</function> działała tylko z tablicami indeksowanymi numerycznie i zakładała
+    że indeksy numeryczne zaczynają się od 0.
    </para>
   </note>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>var</parameter></term>
+     <listitem>
+      <para>
+       Zmienna.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>vars</parameter></term>
+     <listitem>
+      <para>
+       Kolejne zmienne.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca przypisaną tablicę.
+  </para>
+ </refsect1>
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>7.3.0</entry>
+       <entry>
+        Dodano wsparcie dla przypisać przez referencję przy destrukcji tablic.
+       </entry>
+      </row>
+      <row>
+       <entry>7.1.0</entry>
+       <entry>
+        Od teraz możliwe jest określenie kluczy w <function>list</function>. Pozwala
+        to na destrukcję tablic z kluczami nienumerycznymi lub niesekwencyjnymi.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
    <example>
     <title>Przykłady użycia <function>list</function></title>
@@ -31,24 +98,23 @@
 <![CDATA[
 <?php
 
-$info = array('kawa', 'brązowa', 'kofeina');
+$info = array('coffee', 'brown', 'caffeine');
 
 // Listowanie wszystkich zmiennych
-list($napój, $kolor, $składnik) = $info;
-echo "$napój jest $kolor a $składnik czyni ją wyjątkową.\n";
+list($drink, $color, $power) = $info;
+echo "$drink is $color and $power makes it special.\n";
 
 // Listowanie niektórych elementów
-list($napój, , $składnik) = $info;
-echo "$napój zawiera $składnik.\n";
+list($drink, , $power) = $info;
+echo "$drink has $power.\n";
 
 // Albo przeskoczmy od razu do trzeciego
-list( , , $składnik) = $info;
-echo "Potrzebna jest mi $składnik!\n";
+list( , , $power) = $info;
+echo "I need $power!\n";
 
-// list() nie działa z łańcuchami znaków 
-list($bar) = "abcde"; 
-var_dump($bar); // NULL 
- 
+// list() nie działa z łańcuchami znaków
+list($bar) = "abcde";
+var_dump($bar); // NULL
 ?>
 ]]>
     </programlisting>
@@ -56,76 +122,126 @@ var_dump($bar); // NULL
   </para>
   <para>
    <example>
-    <title>Przykład użycia <function>list</function></title>
+    <title>Przykładowe użycie <function>list</function></title>
     <programlisting role="php">
 <![CDATA[
-<table>
- <tr>
-  <th>Nazwisko pracownika</th>
-  <th>Pensja</th>
- </tr>
-
 <?php
-
-$wynik = mysql_query("SELECT id, nazwisko, pensja FROM pracownicy", $conn);
-while (list($id, $nazwisko, $pensja) = mysql_fetch_row($wynik)) {
-   echo " <tr>\n" .
-        "  <td><a href=\"info.php?id=$id\">$nazwisko</a></td>\n" .
-        "  <td>$pensja</td>\n" .
-        " </tr>\n";
+$result = $pdo->query("SELECT id, name FROM employees");
+while (list($id, $name) = $result->fetch(PDO::FETCH_NUM)) {
+    echo "id: $id, imię: $name\n";
 }
 ?>
-
-</table>
 ]]>
     </programlisting>
    </example>
   </para>
-  <warning>
-   <para>
-    <function>list</function> Przypisuje wartości zaczynając parametru
-    znajdującego się po prawej. Przy używaniu zwykłych zmiennych nie ma
-    się o co martwić. Ale używając tablic z indeksami, zazwyczaj
-    oczekuje się, że kolejność indeksów w tablicy będzie taka sama jak zapis
-    wywołania <function>list</function>, od lewej do prawej. Otóż tak nie
-    jest. Zmienne są przypisywane w odwrotnej kolejności.
-   </para>
-  </warning>
-  <example>
-   <title>Przykład użycia <function>list</function> z indeksowaną
-    tablicą</title>
-   <programlisting role="php">
+  <para>
+   <example>
+    <title>Użycie zagnieżdżonego <function>list</function></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 
-$info = array('kawa', 'brązowa', 'kofeina');
+list($a, list($b, $c)) = array(1, array(2, 3));
 
-list($a[0], $a[1], $a[2]) = $info;
-
-var_dump($a);
+var_dump($a, $b, $c);
 
 ?>
 ]]>
-   </programlisting>
-  </example>
-  <para>
-    Przykład ten wyświetli co następuje (zauważ kolejność elementów
-    porównując ją do tej, w której były one zapisane w wywołaniu funkcji
-    <function>list</function>):
+    </programlisting>
+    <screen>
+<![CDATA[
+int(1)
+int(2)
+int(3)
+]]>
+    </screen>
+   </example>
   </para>
-  <screen>
-array(3) {
-  [2]=>
-  string(8) "kofeina"
-  [1]=>
-  string(5) "brązowa"
-  [0]=>
-  string(6) "kawa"
-}
-  </screen>
   <para>
-   Patrz także: <function>each</function> <function>array</function> i
-   <function>extract</function>.
+   <example>
+    <title><function>list</function> i kolejność definicji indeksu</title>
+    <simpara>
+     Kolejność w której zdefiniowano indeksy tablicy przyjmowanej
+     przez <function>list</function> jest bez znaczenia.
+    </simpara>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$foo = array(2 => 'a', 'foo' => 'b', 0 => 'c');
+$foo[1] = 'd';
+list($x, $y, $z) = $foo;
+var_dump($foo, $x, $y, $z);
+]]>
+    </programlisting>
+    <para>
+     Przykład ten wyświetli, co następuje (zwróć uwagę na kolejność elementów, porównując ją
+     do tej, w której były one zapisane w wywołaniu instrukcji <function>list</function>):
+    </para>
+    <screen>
+<![CDATA[
+array(4) {
+  [2]=>
+  string(1) "a"
+  ["foo"]=>
+  string(1) "b"
+  [0]=>
+  string(1) "c"
+  [1]=>
+  string(1) "d"
+}
+string(1) "c"
+string(1) "d"
+string(1) "a"
+]]>
+    </screen>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title><function>list</function> z kluczami</title>
+    <simpara>
+     Od PHP 7.1.0 <function>list</function> może teraz zawierać
+     podane jawnie klucze, które mogą być przekazane jako dowolne wyrażenie.
+     Można mieszać klucze numeryczne i tekstowe, ale nie można mieszać elementów
+     z kluczami i bez kluczy.
+    </simpara>
+    <programlisting role="php">
+     <![CDATA[
+<?php
+$data = [
+    ["id" => 1, "name" => 'Tom'],
+    ["id" => 2, "name" => 'Fred'],
+];
+foreach ($data as ["id" => $id, "name" => $name]) {
+    echo "id: $id, imię: $name\n";
+}
+echo PHP_EOL;
+list(1 => $second, 3 => $fourth) = [1, 2, 3, 4];
+echo "$second, $fourth\n";
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+     <![CDATA[
+id: 1, imię: Tom
+id: 2, imię: Fred
+
+2, 4
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>each</function></member>
+    <member><function>array</function></member>
+    <member><function>extract</function></member>
+   </simplelist>
   </para>
  </refsect1>
 </refentry>
