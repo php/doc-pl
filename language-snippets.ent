@@ -1,18 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 1ad5dfe5e0fc836e239d03de25a91336c409cd30 Maintainer: leszek Status: ready -->
+<!-- EN-Revision: 2a72c95c0a3773a6404d10602005dc453b024843 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS: adi, cyb0org, joeaccord, sobak -->
+<!-- CREDITS: leszek, adi, cyb0org, joeaccord -->
 
+<!ENTITY installation.enabled.disable 'To rozszerzenie jest domyślnie włączone. Można je wyłączyć używając następującej opcji
+podczas kompilacji: '>
+
+<!-- Not used in EN anymore -->
 <!ENTITY changelog.randomseed '<row xmlns="http://docbook.org/ns/docbook"><entry>4.2.0</entry><entry>Generator liczb losowych
 jest inicjowany automatycznie.</entry></row>'>
 
-<!ENTITY installation.enabled.disable 'To rozszerzenie jest domyślnie włączone. Może być ono wyłączone za pomocą następującej opcji w czasie kompilacji: '>
+<!ENTITY warn.deprecated.feature-5-3-0.removed-6-0-0 '<warning
+xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja została
+<emphasis>ZDEPRECJONOWANA</emphasis> w PHP 5.3.0. Używanie tej funkcji
+jest stanowczo odradzane.</simpara></warning>'>
+
+<!ENTITY warn.deprecated.function-5-3-0.removed-6-0-0 '<warning
+xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja
+<emphasis>ZDEPRECJONOWANA</emphasis> w PHP 5.3.0. Używanie tej funkcji
+jest stanowczo odradzane.</simpara></warning>'>
 
 <!-- Cautions -->
-<!ENTITY caution.cryptographically-insecure '<caution xmlns="http://docbook.org/ns/docbook"><para>Ta funkcja nie
-generuje wartości bezpiecznych kryptograficznie, i w związku z tym nie powinna być używana w celach kryptograficznych.
-Jeśli potrzebujesz wartości bezpiecznych kryptograficznie, rozważ zastosowanie funkcji
-<function>random_int</function>, <function>random_bytes</function> or <function>openssl_random_pseudo_bytes</function>.</para></caution>'>
+<!ENTITY caution.cryptographically-insecure '<caution xmlns="http://docbook.org/ns/docbook">
+ <para>
+  Ta funkcja nie generuje wartości bezpiecznych kryptograficznie, w związku z tym <emphasis>nie powinna</emphasis>
+  być używana w celach kryptograficznych, ani w innych celach które wymagają aby zwrócona wartość była niemożliwa do odgadnięcia.
+ </para>
+ <para>
+  Jeśli potrzebujesz wartości bezpiecznych kryptograficznie, możesz skorzystać z klasy <classname>Random\Randomizer</classname>
+  z silnikiem <classname>Random\Engine\Secure</classname>. Dla prostszych przypadków funkcje <function>random_int</function>
+  oraz <function>random_bytes</function> dostarczają wygodne i bezpieczne <acronym>API</acronym>, które wykorzystuje
+  <acronym>CSPRNG</acronym> systemu operacyjnego.
+ </para>
+</caution>'>
+
+<!ENTITY caution.mt19937-tiny-seed '<caution xmlns="http://docbook.org/ns/docbook">
+ <para>
+  Jako iż silnik Mt19937 (“Mersenne Twister”) wspiera tylko pojedynczą 32-bitową liczbę całkowitą jako
+  ziarno (seed), to liczba możliwych losowych sekwencji jest ograniczona do raptem 2<superscript>32</superscript>
+  (tj. 4,294,967,296), pomimo iż Mt19937 teoretycznie gwarantuje ich 2<superscript>19937</superscript>-1.
+ </para>
+ <para>
+  Niezależnie czy ziarno zostanie podane wprost lub wygenerowane niejawnie, duplikaty pojawią się
+  znacznie wcześniej. Zduplikowane ziarna spodziewane są z prawdopodobieństwem 50&#37; po mniej niż
+  80,000 losowo wygenerowanych ziarnach, zgodnie z paradoksem dni urodzin. Prawdopodobieństwo 10&#37;
+  na zduplikowane ziarno zdarza się już losowym wygenerowaniu około 30,000 ziaren.
+ </para>
+ <para>
+  To wszystko powoduje, że Mt19937 nie nadaje się do aplikacji, w których zduplikowane sekwencje nie powinny się zdarzać
+  z więcej niż pomijalnym prawdopodobieństwem. Jeśli potrzebujesz reprodukowalnego seedowania, to zarówno
+  silniki <classname>Random\Engine\Xoshiro256StarStar</classname> jak i <classname>Random\Engine\PcgOneseq128XslRr64</classname>
+  wspierają dużo większe ziarna, które nie powinny tak łatwo mieć kolizji. Jeśli reprodukowalność
+  nie jest wymagana, to silnik <classname>Random\Engine\Secure</classname> zapewnia losowość
+  bezpieczną kryptograficznie.
+ </para>
+</caution>'>
 
 <!-- Notes -->
 
@@ -22,9 +64,8 @@ Jeśli potrzebujesz wartości bezpiecznych kryptograficznie, rozważ zastosowani
 buforowane. Zobacz opis funkcji <function xmlns="http://docbook.org/ns/docbook">clearstatcache</function> aby uzyskać
 więcej informacji.</simpara></note>'>
 
-<!ENTITY note.context-support '<note xmlns="http://docbook.org/ns/docbook"><simpara xmlns="http://docbook.org/ns/docbook">Obsługa kontekstów została
-dodana w <literal xmlns="http://docbook.org/ns/docbook">PHP 5.0.0</literal>. Opis <literal xmlns="http://docbook.org/ns/docbook">kontekstów</literal>
-znajduje się w rozdziale <xref xmlns="http://docbook.org/ns/docbook" linkend="book.stream"/>.</simpara></note>'>
+<!ENTITY note.context-support '<para xmlns="http://docbook.org/ns/docbook">Zasób (<type>resource</type>) dla
+<link linkend="stream.contexts">kontekstu</link>.</para>'>
 
 <!ENTITY note.exec-bg '<note xmlns="http://docbook.org/ns/docbook"><para xmlns="http://docbook.org/ns/docbook">Jeśli za pomocą
 tej funkcji uruchamiany jest program mający działać w tle, należy upewnić się, że standardowe wyjście tego programu jest
@@ -35,6 +76,11 @@ wykonywanego programu.</para></note>'>
 <!ENTITY note.exec-bypass-shell '<note xmlns="http://docbook.org/ns/docbook"><para>W systemie Windows <function>exec</function>
 najpierw uruchomi cmd.exe aby wykonać komendę. Jeśli chcesz wykonać zewnętrzny program bez uruchamiania cmd.exe
 użyj funkcji <function>proc_open</function> z opcją <parameter>bypass_shell</parameter>.</para></note>'>
+
+<!ENTITY note.extractto-windows '<note xmlns="http://docbook.org/ns/docbook"><para>System plików NTFS z Windowsa
+nie wspiera niektórych znaków w nazwach plików, dokładniej <literal>&lt;|&gt;*?":</literal>. Nie są też wspierane nazwy plików
+kończące się kropką. W przeciwieństwie do niektórych programów rozpakowujących, ta metoda nie zamienia tych znaków
+na podkreślniki, lecz kończy się niepowodzeniem przy próbie wypakowania takich plików.</para></note>'>
 
 <!ENTITY note.func-callback '<note xmlns="http://docbook.org/ns/docbook"><simpara xmlns="http://docbook.org/ns/docbook">Zamiast nazwy funkcji może zostać
 przekazana tablica zawierająca referencję do obiektu i nazwę metody
@@ -52,6 +98,12 @@ aktualne wartości zostaną zwrócone także jeśli argumenty są przekazane pop
 aktualnego zasięgu, nie może ona być użyta jako parametr funkcji w wersjach przed PHP 5.3.0.
 Jeśli konieczne jest przekazanie tej wartości, należy przypisać wynik działania tej
 funkcji do zmiennej, a następnie przekazać tę zmienną jako parametr.</para></note>'>
+
+<!ENTITY note.func-named-params '<note xmlns="http://docbook.org/ns/docbook"><para>Począwszy od PHP 8.0.0 rodzina funkcji func_*()
+zakłada, że argumenty zostały przekazane pozycyjnie,
+a brakujące argumenty są zamieniane na ich wartości domyślne.
+Ta funkcja ignoruje zbieranie nieznanych nazwanych argumentów wariadycznych.
+Nieznane nazwane argumenty, które są zbierane mogą być odczytane tylko przez parametr wariadyczny.</para></note>'>
 
 <!ENTITY note.line-endings '<note xmlns="http://docbook.org/ns/docbook"><simpara xmlns="http://docbook.org/ns/docbook">Jeśli PHP niewłaściwie
 rozpoznaje znaki końca linii podczas odczytu plików stworzonych
@@ -78,16 +130,13 @@ platformie Windows.</simpara></note>'>
 <!ENTITY note.no-windows.extension '<note xmlns="http://docbook.org/ns/docbook"><simpara xmlns="http://docbook.org/ns/docbook">To rozszerzenie nie jest
 dostępne na platformie Windows.</simpara></note>'>
 
+<!ENTITY note.no-zts '<note xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja jest
+niedostępna w interpreterach PHP skompilowanych z włączonym ZTS (Zend Thread Safety). Aby sprawdzić czy Twoja kopia została skompilowana z włączonym ZTS enabled, użyj <command>php -i</command> lub sprawdź wbudowaną stałą <constant>PHP_ZTS</constant>.</simpara></note>'>
+
 <!ENTITY note.randomseed '<note xmlns="http://docbook.org/ns/docbook"><simpara xmlns="http://docbook.org/ns/docbook">Nie ma potrzeby
 inicjalizować generatora liczb losowych funkcją <function xmlns="http://docbook.org/ns/docbook">srand</function> lub
 <function xmlns="http://docbook.org/ns/docbook">mt_srand</function>, ponieważ dzieje się to automatycznie.
-</simpara></note>'> 
-
-<!ENTITY note.registerglobals '<note xmlns="http://docbook.org/ns/docbook"><title>register_globals: ważna uwaga
-</title><para xmlns="http://docbook.org/ns/docbook">Od PHP 4.2.0 domyślną wartością dyrektywy
-<link xmlns="http://docbook.org/ns/docbook" linkend="ini.register-globals">register_globals</link> jest <emphasis xmlns="http://docbook.org/ns/docbook">
-off</emphasis>. Społeczność PHP zaleca programistom, aby nie stosowali tej dyrektywy, i zamiast niej używali
-innych sposobów, takich jak &link.superglobals;.</para></note>'>
+</simpara></note>'>
 
 <!ENTITY note.is-superglobal '<note xmlns="http://docbook.org/ns/docbook"><para xmlns="http://docbook.org/ns/docbook">To jest zmienna "superglobalna" lub
 automatycznie ustawiona na globalną. To po prostu oznacza, że jest dostępna
@@ -98,6 +147,10 @@ w każdym miejscu skryptu. Nie jest konieczne użycie
 <!ENTITY note.uses-ob '<note xmlns="http://docbook.org/ns/docbook"><para>Stosując parametr <parameter>return</parameter>, ta funkcja używa wewnętrznie buforowania
 wyjścia, więc nie może być użyta wewnątrz funkcji callback podanej w wywołaniu
 <function xmlns="http://docbook.org/ns/docbook">ob_start</function>.</para></note>'>
+
+<!ENTITY note.uses-ob-php70 '<note xmlns="http://docbook.org/ns/docbook"><para>Gdy użyty jest parametr <parameter>return</parameter>,
+ta funkcja używała wewnętrznie buforowania wyjścia przed PHP 7.1.0, więc nie mogła być użyta wewnątrz funkcji callback podanej w wywołaniu
+<function>ob_start</function> callback function.</para></note>'>
 
 <!ENTITY note.filesystem-time-res '<note xmlns="http://docbook.org/ns/docbook"><para xmlns="http://docbook.org/ns/docbook">Proszę zauważyć, że informacja
 o czasie dostępu może się różnić w zależności od systemu plików.</para></note>'>
@@ -122,7 +175,22 @@ o czasie dostępu może się różnić w zależności od systemu plików.</para>
 
 <!ENTITY note.sort-unstable '<note xmlns="http://docbook.org/ns/docbook">
  <para>
-  Jeśli dwa elementy zostaną uznane za identyczne ich kolejność względem siebie w posortowanej tablicy jest nieokreślona.
+  Jeśli dwa elementy zostaną uznane za identyczne, zachowują one swoją oryginalną kolejność.
+  Przed PHP 8.0.0 ich kolejność względem siebie w posortowanej tablicy była nieokreślona.
+ </para>
+</note>
+'>
+
+<!ENTITY note.reset-index "<note xmlns='http://docbook.org/ns/docbook'>
+ <para>
+    Resetuje wewnętrzny wskaźnik tablicy do pierwszego elementu.
+ </para>
+</note>
+">
+
+<!ENTITY note.resource-migration-8.0-dead-function '<note xmlns="http://docbook.org/ns/docbook">
+ <para>
+  Ta funkcja nic nie robi. Przed PHP 8.0.0 ta funkcja była używana do zamykania zasobu.
  </para>
 </note>
 '>
@@ -169,16 +237,6 @@ xmlns="http://docbook.org/ns/docbook"><simpara xmlns="http://docbook.org/ns/docb
 <emphasis xmlns="http://docbook.org/ns/docbook">PRZESTARZAŁA</emphasis> od PHP 5.3.0. Używanie tej opcji
 nie jest zalecane.</simpara></warning>'>
 
-<!ENTITY warn.deprecated.feature-5-3-0.removed-6-0-0 '<warning 
-xmlns="http://docbook.org/ns/docbook"><simpara xmlns="http://docbook.org/ns/docbook">Ta opcja jest
-<emphasis xmlns="http://docbook.org/ns/docbook">PRZESTARZAŁA</emphasis> od PHP 5.3.0.
-Używanie tej opcji nie jest zalecane.</simpara></warning>'>
-
-<!ENTITY warn.deprecated.function-5-3-0.removed-6-0-0 '<warning
-xmlns="http://docbook.org/ns/docbook"><simpara xmlns="http://docbook.org/ns/docbook">Ta funkcja jest
-<emphasis xmlns="http://docbook.org/ns/docbook">PRZESTARZAŁA</emphasis> od PHP 5.3.0.
-Używanie tej funkcji nie jest zalecane.</simpara></warning>'>
-
 <!ENTITY warn.deprecated.feature-5-3-0.removed-5-4-0 '<warning
 xmlns="http://docbook.org/ns/docbook"><simpara>Ta opcja jest
 <emphasis>PRZESTARZAŁA</emphasis> od PHP 5.3.0 i została <emphasis>USUNIĘTA</emphasis>
@@ -201,17 +259,106 @@ xmlns="http://docbook.org/ns/docbook"><simpara>Ta opcja jest
 xmlns="http://docbook.org/ns/docbook"><simpara>Ta opcja jest
 <emphasis>PRZESTARZAŁA</emphasis> od PHP 7.0.0. Używanie tej opcji nie jest zalecane.</simpara></warning>'>
 
+<!ENTITY warn.deprecated.feature-7-1-0 '<warning
+xmlns="http://docbook.org/ns/docbook"><simpara>Ta opcja jest
+<emphasis>PRZESTARZAŁA</emphasis> od PHP 7.1.0. Używanie tej opcji
+jest niezalecane.</simpara></warning>'>
+
 <!ENTITY warn.deprecated.function-7-1-0 '<warning
 xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja jest
-<emphasis>PRZESTARZAŁA</emphasis> od PHP 7.1.0. Używanie tej funkcji nie jest zalecane.</simpara></warning>'>
+<emphasis>PRZESTARZAŁA</emphasis> od PHP 7.1.0. Używanie tej funkcji
+jest niezalecane.</simpara></warning>'>
+
+<!ENTITY warn.deprecated.function-7-0-0.removed-8-0-0 '<warning
+xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja jest
+<emphasis>PRZESTARZAŁA</emphasis> od PHP 7.0.0 i
+<emphasis>USUNIĘTA</emphasis> od PHP 8.0.0. Używanie tej funkcji
+jest niezalecane.</simpara></warning>'>
+
+<!ENTITY warn.deprecated.function-7-1-0.removed-7-2-0 '<warning
+xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja jest
+<emphasis>PRZESTARZAŁA</emphasis> od PHP 7.1.0 i
+<emphasis>USUNIĘTA</emphasis> od PHP 7.2.0. Używanie tej funkcji
+jest niezalecane.</simpara></warning>'>
 
 <!ENTITY warn.deprecated.feature-7-2-0 '<warning
 xmlns="http://docbook.org/ns/docbook"><simpara>Ta opcja jest
-<emphasis>PRZESTARZAŁA</emphasis> od PHP 7.2.0. Używanie tej opcji nie jest zalecane.</simpara></warning>'>
+<emphasis>PRZESTARZAŁA</emphasis> od PHP 7.2.0. Używanie tej opcji
+nie jest zalecane.</simpara></warning>'>
+
+<!ENTITY warn.deprecated.feature-7-2-0.removed-8-0-0 '<warning
+xmlns="http://docbook.org/ns/docbook"><simpara>Ta opcja jest
+<emphasis>PRZESTARZAŁA</emphasis> od PHP 7.2.0 i <emphasis>USUNIĘTA</emphasis> od PHP 8.0.0. Używanie tej opcji
+jest niezalecane.</simpara></warning>'>
 
 <!ENTITY warn.deprecated.function-7-2-0 '<warning
 xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja jest
-<emphasis>PRZESTARZAŁA</emphasis> od PHP 7.2.0. Używanie tej funkcji nie jest zalecane.</simpara></warning>'>
+<emphasis>PRZESTARZAŁA</emphasis> od PHP 7.2.0. Używanie tej funkcji
+nie jest zalecane.</simpara></warning>'>
+
+<!ENTITY warn.deprecated.function-7-2-0.removed-8-0-0 '<warning
+xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja jest
+<emphasis>PRZESTARZAŁA</emphasis> od PHP 7.2.0 i <emphasis>USUNIĘTA</emphasis> od PHP 8.0.0. Używanie tej funkcji
+jest niezalecane.</simpara></warning>'>
+
+<!ENTITY warn.deprecated.feature-7-3-0 '<warning
+xmlns="http://docbook.org/ns/docbook"><simpara>Ta opcja jest
+<emphasis>PRZESTARZAŁA</emphasis> od PHP 7.3.0. Używanie tej opcji
+jest niezalecane.</simpara></warning>'>
+
+<!ENTITY warn.deprecated.function-7-3-0 '<warning
+xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja jest
+<emphasis>PRZESTARZAŁA</emphasis> od PHP 7.3.0. Używanie tej funkcji
+jest niezalecane.</simpara></warning>'>
+
+<!ENTITY warn.deprecated.function-7-3-0.removed-8-0-0 '<warning
+xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja jest
+<emphasis>PRZESTARZAŁA</emphasis> od PHP 7.3.0 i <emphasis>USUNIĘTA</emphasis> od PHP 8.0.0. Używanie tej funkcji
+jest niezalecane.</simpara></warning>'>
+
+<!ENTITY warn.deprecated.feature-7-4-0 '<warning
+xmlns="http://docbook.org/ns/docbook"><simpara>Ta opcja jest
+<emphasis>PRZESTARZAŁA</emphasis> od PHP 7.4.0. Używanie tej opcji
+jest niezalecane.</simpara></warning>'>
+
+<!ENTITY warn.deprecated.function-7-4-0 '<warning
+xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja jest
+<emphasis>PRZESTARZAŁA</emphasis> od PHP 7.4.0. Używanie tej funkcji
+jest niezalecane.</simpara></warning>'>
+
+<!ENTITY warn.deprecated.function-7-4-0.removed-8-0-0 '<warning
+xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja jest
+<emphasis>PRZESTARZAŁA</emphasis> od PHP 7.4.0 i <emphasis>USUNIĘTA</emphasis> od PHP 8.0.0. Używanie tej funkcji
+jest niezalecane.</simpara></warning>'>
+
+<!ENTITY warn.feature.removed-8-0-0 '<warning xmlns="http://docbook.org/ns/docbook">
+<simpara>Ta opcja została <emphasis>USUNIĘTA</emphasis> w PHP 8.0.0.</simpara>
+</warning>'>
+
+<!ENTITY warn.deprecated.function-8-0-0 '<warning
+xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja jest
+<emphasis>PRZESTARZAŁA</emphasis> od PHP 8.0.0. Używanie tej funkcji
+jest niezalecane.</simpara></warning>'>
+
+<!ENTITY warn.deprecated.function-8-1-0 '<warning
+xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja jest
+<emphasis>PRZESTARZAŁA</emphasis> od PHP 8.1.0. Używanie tej funkcji
+jest niezalecane.</simpara></warning>'>
+
+<!ENTITY warn.deprecated.function-8-2-0 '<warning
+xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja jest
+<emphasis>PRZESTARZAŁA</emphasis> od PHP 8.2.0. Używanie tej funkcji
+jest niezalecane.</simpara></warning>'>
+
+<!ENTITY warn.deprecated.feature-8-3-0 '<warning
+xmlns="http://docbook.org/ns/docbook"><simpara>Ta opcja jest
+<emphasis>PRZESTARZAŁA</emphasis> od PHP 8.3.0. Używanie tej opcji
+jest niezalecane.</simpara></warning>'>
+
+<!ENTITY warn.deprecated.function-8-3-0 '<warning
+xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja jest
+<emphasis>PRZESTARZAŁA</emphasis> od PHP 8.3.0. Używanie tej funkcji
+jest niezalecane.</simpara></warning>'>
 
 <!ENTITY removed.php.future 'Ta przestarzała funkcja <emphasis xmlns="http://docbook.org/ns/docbook">zostanie</emphasis>
 na pewno w przyszłości <emphasis xmlns="http://docbook.org/ns/docbook">usunięta</emphasis>.'>
@@ -269,6 +416,22 @@ xmlns="http://docbook.org/ns/docbook"><simpara>Ta opcja została uznana za
 xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja została
 <emphasis>USUNIĘTA</emphasis> w PHP 7.0.0.</simpara></warning>'>
 
+<!ENTITY warn.removed.function-7-4-0 '<warning
+xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja jest
+<emphasis>USUNIĘTA</emphasis> od PHP 7.4.0.</simpara></warning>'>
+
+<!ENTITY warn.deprecated.alias-7-2-0.removed-8-0-0 '<warning xmlns="http://docbook.org/ns/docbook"><simpara>Ten alias jest
+<emphasis>PRZESTARZAŁY</emphasis> od PHP 7.2.0 i <emphasis>USUNIĘTY</emphasis> od PHP 8.0.0.</simpara></warning>'>
+
+<!ENTITY warn.deprecated.alias-7-4-0.removed-8-0-0 '<warning xmlns="http://docbook.org/ns/docbook"><simpara>Ten alias jest
+<emphasis>PRZESTARZAŁY</emphasis> od PHP 7.4.0 i <emphasis>USUNIĘTY</emphasis> od PHP 8.0.0.</simpara></warning>'>
+
+<!ENTITY warn.deprecated.alias-8-0-0 '<warning xmlns="http://docbook.org/ns/docbook"><simpara>Ten alias jest
+<emphasis>PRZESTARZAŁY</emphasis> od PHP 8.0.0.</simpara></warning>'>
+
+<!ENTITY warn.removed.alias-8-0-0 '<warning xmlns="http://docbook.org/ns/docbook"><simpara>Ten alias jest
+<emphasis>USUNIĘTY</emphasis> od PHP 8.0.0.</simpara></warning>'>
+
 <!ENTITY warn.experimental.func '<warning 
 xmlns="http://docbook.org/ns/docbook"><simpara xmlns="http://docbook.org/ns/docbook">Ta funkcja jest w stadium
 <emphasis xmlns="http://docbook.org/ns/docbook">EKSPERYMENTALNYM</emphasis>. Oznacza to, że zachowanie funkcji, jej
@@ -288,15 +451,7 @@ Sposoby obrony przed nimi zostały opisane w rozdziale o <link xmlns="http://doc
 linkend="security.cgi-bin">bezpieczeństwie instalacji CGI</link>.
 </para></warning>'>
 
-<!ENTITY note.magicquotes.gpc '<note xmlns="http://docbook.org/ns/docbook"><title>uwaga na temat dyrektywy: magic_quotes_gpc
-</title><para xmlns="http://docbook.org/ns/docbook">Domyślną wartością dyrektywy konfiguracji PHP 
-<link xmlns="http://docbook.org/ns/docbook" linkend="ini.magic-quotes-gpc">magic_quotes_gpc</link> jest <literal xmlns="http://docbook.org/ns/docbook">on</literal>.
-Powoduje ona wykonywanie funkcji <function xmlns="http://docbook.org/ns/docbook">addslashes</function> na wszystkich
-danych GET,  POST i COOKIE. Można użyć funkcji <function xmlns="http://docbook.org/ns/docbook">stripslashes</function>
-aby usunąć dodane znaki slash.</para></note>'> 
-
 <!ENTITY warn.passwordhashing '<warning xmlns="http://docbook.org/ns/docbook">
- <title>Bezpieczne skróty haseł</title>
  <para>
   Nie jest zalecane stosowanie tej funkcji do zabezpieczania haseł
   ze względu na wysoką wydajność algorytmu skrótu. Zobacz
