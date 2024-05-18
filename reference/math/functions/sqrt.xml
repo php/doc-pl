@@ -1,37 +1,74 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: qrak Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 61374bbe228e8e9c55a24aba59a1e2bb2a871148 Maintainer: qrak Status: ready -->
 <!-- $Revision$ -->
-  <refentry xml:id="function.sqrt" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>sqrt</refname>
-    <refpurpose>Pierwiastek kwadratowy</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>float</type><methodname>sqrt</methodname>
-      <methodparam><type>float</type><parameter>argument</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     Zwraca pierwiastek kwadratowy z <parameter>argumentu</parameter>.
-    </para>
-    <para> 
-     <example>
-      <title>Przykład użycia <function>sqrt</function></title>
-      <programlisting role="php"> 
-<![CDATA[ 
-<?php 
-// Precyzja jest zależna od aktualnych dyrektyw konfiguracyjnych 
-echo sqrt(9); // 3 
-echo sqrt(10); // 3.16227766 ... 
-?> 
-]]> 
-      </programlisting>
-     </example>
-    </para>
-   </refsect1>
-  </refentry>
-
+<refentry xml:id="function.sqrt" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>sqrt</refname>
+  <refpurpose>Oblicza pierwiastek kwadratowy</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>float</type><methodname>sqrt</methodname>
+   <methodparam><type>float</type><parameter>num</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Zwraca pierwiastek kwadratowy z <parameter>num</parameter>.
+  </para>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>num</parameter></term>
+     <listitem>
+      <para>
+       Argument do przetworzenia
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Pierwiastek kwadratowy z <parameter>num</parameter>
+   lub specjalna wartość <constant>NAN</constant> dla liczb ujemnych.
+  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład użycia <function>sqrt</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// Precyzja jest zależna od aktualnych dyrektyw konfiguracyjnych
+echo sqrt(9); // 3
+echo sqrt(10); // 3.16227766 ...
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>pow</function></member>
+    <member><constant>M_SQRTPI</constant> - <code>sqrt(pi)</code></member>
+    <member><constant>M_2_SQRTPI</constant> - <code>2/sqrt(pi)</code></member>
+    <member><constant>M_SQRT2</constant> - <code>sqrt(2)</code></member>
+    <member><constant>M_SQRT3</constant> - <code>sqrt(3)</code></member>
+    <member><constant>M_SQRT1_2</constant> - <code>1/sqrt(2)</code></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

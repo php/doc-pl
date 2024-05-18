@@ -1,41 +1,69 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: qrak Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 26ce97891946b6ce1d7e79c171802a447e1eea34 Maintainer: qrak Status: ready -->
 <!-- $Revision$ -->
-  <refentry xml:id="function.log" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>log</refname>
-    <refpurpose>Logarytm naturalny</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>float</type><methodname>log</methodname>
-      <methodparam><type>float</type><parameter>argument</parameter></methodparam>
-      <methodparam choice="opt"><type>float</type><parameter>podstawa</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     Jeśli opcjonalny argument <parameter>podstawa</parameter> został podany, 
-     <function>log</function> zwraca log<subscript>podstawa</subscript>
-     <parameter>argument</parameter>, w przeciwnym przypadku <function>log</function> 
-     zwraca logarytm naturalny z <parameter>argument</parameter>.
-    </para>
-    <note>
-     <para>
-      Argument <parameter>podstawa</parameter> został dodany w PHP 4.3.0
-     </para>
-     <para>
-      Zawsze logarytm o podstawie <literal>b</literal> z liczby
-      <literal>n</literal> można policzyć korzystając z wzoru
-      log<subscript>b</subscript>(n) = log(n)/log(b), gdzie log jest
-      logarytmem naturalnym.
-     </para>
-    </note>
-    <para>
-     Patrz także: <function>exp</function>.
-    </para>
-   </refsect1>
-  </refentry>
-
+<refentry xml:id="function.log" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>log</refname>
+  <refpurpose>Oblicza logarytm naturalny</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>float</type><methodname>log</methodname>
+   <methodparam><type>float</type><parameter>num</parameter></methodparam>
+   <methodparam choice="opt"><type>float</type><parameter>base</parameter><initializer><constant>M_E</constant></initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   Jeśli opcjonalny argument <parameter>base</parameter> został podany,
+   <function>log</function> zwraca log<subscript>base</subscript>
+   <parameter>num</parameter>, w przeciwnym przypadku <function>log</function>
+   zwraca logarytm naturalny z <parameter>num</parameter>.
+  </para>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>num</parameter></term>
+     <listitem>
+      <para>
+       Wartość, dla której obliczyć logarytm
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>base</parameter></term>
+     <listitem>
+      <para>
+       Opcjonalna podstawa logarytmu
+       (domyślna wartość to 'e', a więc logarytm naturalny)
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Logarytm z <parameter>num</parameter> o
+   podstawie <parameter>base</parameter>, jeśli podano. W przeciwnym razie
+   logarytm naturalny.
+  </para>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>log10</function></member>
+    <member><function>exp</function></member>
+    <member><function>pow</function></member>
+    <member><function>error_log</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml
