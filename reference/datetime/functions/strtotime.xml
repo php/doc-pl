@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 866b749d19ee0b4df802cc6751855311364521ed Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 5c951013ca04161992efed8b86fb40f55669958e Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: qrak -->
 <!-- splitted from ./en/functions/datetime.xml, last change in rev 1.8 -->
@@ -11,17 +11,26 @@
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
-   <type>int</type><methodname>strtotime</methodname>
-   <methodparam><type>string</type><parameter>czas</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>teraz</parameter><initializer>time()</initializer></methodparam>
+   <type class="union"><type>int</type><type>false</type></type><methodname>strtotime</methodname>
+   <methodparam><type>string</type><parameter>datetime</parameter></methodparam>
+   <methodparam choice="opt"><type class="union"><type>int</type><type>null</type></type><parameter>baseTimestamp</parameter><initializer>&null;</initializer></methodparam>
   </methodsynopsis>
   <simpara>
    Funkcja oczekuje tekstu zawierającego datę w formacie angielskim
    i stara się przeliczyć ją na uniksowy znacznik czasu (liczbę sekund od
    01.01.1970 00:00:00 UTC), relatywnie do znacznika czasu podanego w
-   <parameter>teraz</parameter>, lub aktualnego czasu,
-   jeśli znacznik nie zostanie podany.
+   <parameter>baseTimestamp</parameter> lub aktualnego czasu,
+   jeśli znacznik nie zostanie podany. Parsowanie łańcucha daty
+   zostało opisane w sekcji <link linkend="datetime.formats">formaty daty i czasu</link> i
+   ma kilka drobnych niuansów. Stanowczo zalecamy przejrzenie szczegółów na ten temat.
   </simpara>
+  <warning>
+   <para>
+    Znacznik czasu Uniksa zwracany przez tę funkcję nie zawiera informacji
+    na temat stref czasowych. W celu dokonywania obliczeń na dacie/czasie
+    powinieneś użyć <classname>DateTimeImmutable</classname>.
+   </para>
+  </warning>
   <para>
    Każdy z parametrów tej funkcji korzysta z domyślnej strefy czasowej
    dopóki nie określono jej w tym parametrze. Uważaj, żeby nie użyć
@@ -36,13 +45,13 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>czas</parameter></term>
+     <term><parameter>datetime</parameter></term>
      <listitem>
       <para>&date.formats.parameter;</para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>teraz</parameter></term>
+     <term><parameter>baseTimestamp</parameter></term>
      <listitem>
       <para>
        Znacznik czasu używany jako podstawa do wyliczania dat
@@ -57,8 +66,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca znacznik czasu, gdy operacja się powiedzie, &false; w przeciwnym wypadku. Przed wersją PHP 5.1.0,
-   ta funkcja zwracała <literal>-1</literal> w wypadku błędu.
+   Zwraca znacznik czasu, gdy operacja się powiedzie, &false; w przeciwnym wypadku.
   </para>
  </refsect1>
 
@@ -82,56 +90,9 @@
      </thead>
      <tbody>
       <row>
-       <entry>5.3.0</entry>
+       <entry>8.0.0</entry>
        <entry>
-        Przed wersją PHP 5.3.0, względne formaty czasu przekazane do parametru
-        <parameter>czas</parameter> funkcji <function>strtotime</function>,
-        takie jak <literal>this week</literal>, <literal>previous week</literal>,
-        <literal>last week</literal> i <literal>next week</literal> były
-        interpretowane jako siedmiodniowy okres relatywny do obecnej chwili, a nie
-        okres tygodnia od poniedziałku do niedzieli.
-       </entry>
-      </row>
-      <row>
-       <entry>5.3.0</entry>
-       <entry>
-        Przed wersją PHP 5.3.0, <literal>24:00</literal> nie była poprawnym formatem i
-        <function>strtotime</function> zwracała &false;.
-       </entry>
-      </row>
-      <row>
-       <entry>5.2.7</entry>
-       <entry>
-        Przed wersją PHP 5.2.7, żądanie danego wystąpienia danego
-        dnia tygodnia w miesiącu, gdy ten dzień tygodnia był pierwszym
-        dniem miesiąca, powodowało niepoprawne dodanie jednego tygodnia do
-        zwracanego znacznika. Zostało to poprawione w wersji 5.2.7 i
-        późniejszych.
-       </entry>
-      </row>
-      <row>
-       <entry>5.1.0</entry>
-       <entry>
-        Funkcja zwraca &false; w wypadku błędu, zamiast
-        <literal>-1</literal>.
-       </entry>
-      </row>
-
-      &date.timezone.errors.changelog;
-
-      <row>
-       <entry>5.0.2</entry>
-       <entry>
-        Do wersji PHP 5.0.2, <literal>"now"</literal> i inne
-        czasy relatywne były źle obliczane względem północy obecnego
-        dnia. W innych wersjach jest już to obliczane poprawnie
-        względem obecnego czasu.
-       </entry>
-      </row>
-      <row>
-       <entry>5.0.0</entry>
-       <entry>
-        Mikrosekundy stały się dozwolone, ale są ignorowane.
+        Parametr <parameter>baseTimestamp</parameter> akceptuje teraz &null;.
        </entry>
       </row>
      </tbody>
@@ -168,7 +129,6 @@ echo strtotime("last Monday"), "\n";
 <?php
 $str = 'Zły tekst';
 
-// przed wersją PHP 5.1.0 należało porównywać z wartością -1, zamiast false
 if (($timestamp = strtotime($str)) === false) {
     echo "Tekst ($str) jest niepoprawny";
 } else {
@@ -185,6 +145,18 @@ if (($timestamp = strtotime($str)) === false) {
   &reftitle.notes;
   <note>
    <para>
+    Data "relatywna" w wypadku tej funkcji oznacza, że jeśli określony komponent
+    daty/czasu nie został podany, to będzie on wyliczony względem wartości parametru
+    <parameter>baseTimestamp</parameter>. To znaczy że wywołanie <code>strtotime('February')</code>,
+    dnia 31. maja 2022 zostanie zinterpretowane jako <literal>31 February 2022</literal>,
+    które przepełni zakres dla lutego, a więc zwróci <literal>3 March</literal>.
+    (w roku przestępnym zwrócone zostałoby <literal>2 March</literal>). Użycie
+    <code>strtotime('1 February')</code> lub <code>strtotime('first day of February')</code>
+    pozwala uniknąć tego problemu.
+   </para>
+  </note>
+  <note>
+   <para>
     Jeżeli rok określono w formacie dwucyfrowym, wartości pomiędzy
     00-69 są mapowane do 2000-2069, a 70-99 do 1970-1999. Zobacz notatki poniżej,
     aby poznać możliwe różnice na systemach 32-bitowych (możliwe daty mogą skończyć się na 
@@ -199,12 +171,6 @@ if (($timestamp = strtotime($str)) === false) {
     całkowitej ze znakiem).
    </para>
    <para>
-    Do PHP 5.1.0, nie wszystkie platformy wspierały ujemne zaczniki czasu, więc
-    zakres dat mógł być ograniczony do początku epoki Uniksa. Oznacza to,
-    że np. daty wcześniejsze niż 01.01.1970 nie będą działać na Windows,
-    niektórych dystrybucjach Linuksa i kilku innych systemach.
-   </para>
-   <para>
     W 64-bitowych wersjach PHP, poprawny zakres znaczników czasu jest niemalże
     nieskończony, gdyż 64 bity mogą przedstawiać około 293 miliardy lat w obu
     kierunkach.
@@ -212,28 +178,9 @@ if (($timestamp = strtotime($str)) === false) {
   </note>
   <note>
    <para>
-    Daty w formatach <literal>m/d/y</literal> i <literal>d-m-y</literal>
-    są rozróżniane poprzez sprawdzanie separatora pomiędzy ich
-    komponentami: jeżeli separatorem jest ukośnik (<literal>/</literal>), to
-    przyjmowany jest format amerykański <literal>m/d/y</literal>, a gdy separatorem
-    jest myślnik (<literal>-</literal>) lub kropka (<literal>.</literal>), to
-    przyjmowany jest format europejski <literal>d-m-y</literal>.
-	Jeśli jednak rok jest podany w formacie dwucyfrowym a separatorem jest
-    myślnik (<literal>-</literal>), łańcuch daty jest parsowany jako
-    <literal>y-m-d</literal>.
-   </para>
-   <para>
-    Aby uniknąć możliwych niejednoznaczności, najlepiej jest użyć dat ISO 8601
-    (<literal>YYYY-MM-DD</literal>) lub
-    <methodname>DateTime::createFromFormat</methodname>, gdy jest to możliwe.
-   </para>
-  </note>
-  <note>
-   <para>
     Użycie tej funkcji dla operacji matematycznych jest niezalecane.
     Lepiej użyć <methodname>DateTime::add</methodname> oraz
-    <methodname>DateTime::sub</methodname> w PHP 5.3 i późniejszych lub
-    <methodname>DateTime::modify</methodname> w PHP 5.2.
+    <methodname>DateTime::sub</methodname>.
    </para>
   </note>
  </refsect1>
@@ -242,15 +189,15 @@ if (($timestamp = strtotime($str)) === false) {
   &reftitle.seealso;
   <para>
    <simplelist>
+    <member><classname>DateTimeImmutable</classname></member>
+    <member><methodname>DateTimeImmutable::createFromFormat</methodname></member>
     <member><link linkend="datetime.formats">Formaty daty i czasu</link></member>
-    <member><methodname>DateTime::createFromFormat</methodname></member>
     <member><function>checkdate</function></member>
     <member><function>strptime</function></member>
    </simplelist>
   </para>
  </refsect1>
 </refentry>
-
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 9cc4767b2ddf65c4ed592c9deb818cbb2c9def7b Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 5c951013ca04161992efed8b86fb40f55669958e Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: qrak -->
 <refentry xml:id="function.strftime" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -8,29 +8,39 @@
   <refpurpose>Formatuje lokalną datę/czas zgodnie z lokalizacją</refpurpose>
  </refnamediv>
 
+ <refsynopsisdiv>
+  &warn.deprecated.function-8-1-0.alternatives;
+  <simplelist role="alternatives">
+   <member><function>date</function></member>
+   <member><methodname>IntlDateFormatter::format</methodname></member>
+  </simplelist>
+ </refsynopsisdiv>
+
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
-   <type>string</type><methodname>strftime</methodname>
+   <type class="union"><type>string</type><type>false</type></type><methodname>strftime</methodname>
    <methodparam><type>string</type><parameter>format</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>znacznik_czasu</parameter><initializer>time()</initializer></methodparam>
+   <methodparam choice="opt"><type class="union"><type>int</type><type>null</type></type><parameter>timestamp</parameter><initializer>&null;</initializer></methodparam>
   </methodsynopsis>
   <para>
    Formatuje datę i lub/czas zgodnie z ustawieniami lokalizacji. Nazwy miesięcy i
    i dni tygodnia oraz inne ciągi zależne od języka, przestrzegają obecnej lokalizacji
    ustawionej przez <function>setlocale</function>.
   </para>
-  <para>
-   Nie wszystkie symbole konwersji mogą być wspierane przez Twoją bibliotekę C i w takim
-   wypadku nie będą wspierane przez funkcję <function>strftime</function> z PHP.
-   Ponadto, nie wszystkie platformy wspierają ujemne zaczniki czasu, więc zakres
-   dat może być ograniczony do początku epoki Uniksa. Oznacza to, że
-   %e, %T, %R i %D (oraz możliwe, że inne) - tak samo jak daty przed
-   <literal>01.01.1970</literal> - to wszystko nie zadziała na Windows, niektórych
-   dystrybucjach Linuksa i kilku innych systemach operacyjnych. Przegląd symboli
-   konwersji wspieranych przez system Windows można znaleźć na
-   <link xlink:href="&url.strftime.win32;"><acronym>MSDN</acronym></link>.
-  </para>
+  <warning>
+   <para>
+    Nie wszystkie symbole konwersji mogą być wspierane przez Twoją bibliotekę C i w takim
+    wypadku nie będą wspierane przez funkcję <function>strftime</function> z PHP.
+    Ponadto, nie wszystkie platformy wspierają ujemne zaczniki czasu, więc zakres
+    dat może być ograniczony do początku epoki Uniksa. Oznacza to, że
+    %e, %T, %R i %D (oraz możliwe, że inne) - tak samo jak daty przed
+    <literal>01.01.1970</literal> - to wszystko nie zadziała na Windows, niektórych
+    dystrybucjach Linuksa i kilku innych systemach operacyjnych. Przegląd symboli
+    konwersji wspieranych przez system Windows można znaleźć na
+    <link xlink:href="&url.strftime.win32;"><acronym>MSDN</acronym></link>.
+   </para> 
+  </warning>
  </refsect1>
 
  <refsect1 role="parameters">
@@ -211,12 +221,17 @@
           <row>
            <entry><literal>%p</literal></entry>
            <entry>'AM' lub 'PM' zapisane wielkimi literami, zależnie od podanego czasu</entry>
-           <entry>Przykład: <literal>AM</literal> dla 00:31, <literal>PM</literal> dla 22:23</entry>
+           <entry>Przykład: <literal>AM</literal> dla 00:31,
+           <literal>PM</literal> dla 22:23. Dokładny wynik zależy od
+           systemu operacyjnego, może zostać zwrócony zapis małymi literami lub
+           zapis z kropkami (tj. <literal>a.m.</literal>)</entry>
           </row>
           <row>
            <entry><literal>%P</literal></entry>
            <entry>'am' lub 'pm' zapisane malymi literami, zależnie od podanego czasu</entry>
-           <entry>Przykład: <literal>am</literal> dla 00:31, <literal>pm</literal> dla 22:23</entry>
+           <entry>Przykład: <literal>am</literal> dla 00:31,
+           <literal>pm</literal> dla 22:23. Nie jest wspierane przez wszystkie systemy
+           operacyjne.</entry>
           </row>
           <row>
            <entry><literal>%r</literal></entry>
@@ -310,9 +325,6 @@
         </tgroup>
        </table>
       </para>
-      <para>
-       Maksymalna długość tego parametru to 1023 znaki.
-      </para>
       <warning>
        <simpara>
         W przeciwieństwie do ISO-9899:1999, system Sun Solaris podaje niedzielę jako 1. W wyniku
@@ -337,7 +349,7 @@
       </warning>
       <warning>
        <simpara>
-        <emphasis>Tylko dla macOS:</emphasis> Modyfikator <literal>%P</literal> nie jest 
+        <emphasis>Tylko dla macOS i musl:</emphasis> Modyfikator <literal>%P</literal> nie jest 
         wspierany w implementacji tej funkcji dla macOS.
        </simpara>
       </warning>
@@ -356,8 +368,11 @@
    Zwraca łańcuch znaków sformatowany zgodnie z argumentem <parameter>format</parameter>
    używając czasu podanego jako <parameter>znacznik_czasu</parameter> lub obecnego
    czasu lokalnego, jeśli nie podano tego argumentu. Nazwy miesięcy i dni tygodnia oraz
-   inne łańcuch zależne od języka uwzględniają obecną lokalizację ustawioną
+   inne ciągi znaków zależne od języka uwzględniają obecną lokalizację ustawioną
    przez <function>setlocale</function>.
+   Funkcja zwraca &false; jeśli <parameter>format</parameter> jest pusty, zawiera niewspierane
+   modyfikatory konwersji lub jeśli zwrócony ciąg znaków byłby dłuższy niż
+   <literal>4095</literal> znaków.
   </para>
  </refsect1>
 
@@ -386,9 +401,12 @@
       </row>
      </thead>
      <tbody>
-
-      &date.timezone.errors.changelog;
-
+      <row>
+       <entry>8.0.0</entry>
+       <entry>
+        Parametr <parameter>timestamp</parameter> akceptuje teraz &null;.
+       </entry>
+      </row>
      </tbody>
     </tgroup>
    </informaltable>
@@ -660,6 +678,8 @@ Unknown format : 'v'
   &reftitle.seealso;
   <para>
    <simplelist>
+    <member><methodname>IntlDateFormatter::format</methodname></member>
+    <member><methodname>DateTimeInterface::format</methodname></member>
     <member><link xlink:href="&url.strftime.format.designer;">Narzędzie online do tworzenia formatów strftime()</link></member>
     <member><function>setlocale</function></member>
     <member><function>mktime</function></member>
@@ -670,7 +690,6 @@ Unknown format : 'v'
   </para>
  </refsect1>
 </refentry>
-
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

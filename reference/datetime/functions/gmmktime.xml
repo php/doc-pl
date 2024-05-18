@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: bce4e5f7d7979c5b672e9375a17860b0ced5eef3 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 57e27d2a7615da2ee6de57ed27eb40b473d487cb Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: qrak -->
 <refentry xml:id="function.gmmktime" xmlns="http://docbook.org/ns/docbook">
@@ -11,14 +11,13 @@
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
-   <type>int</type><methodname>gmmktime</methodname>
-   <methodparam choice="opt"><type>int</type><parameter>godzina</parameter><initializer>gmdate("H")</initializer></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>minuta</parameter><initializer>gmdate("i")</initializer></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>sekunda</parameter><initializer>gmdate("s")</initializer></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>miesiąc</parameter><initializer>gmdate("n")</initializer></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>dzień</parameter><initializer>gmdate("j")</initializer></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>rok</parameter><initializer>gmdate("Y")</initializer></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>czy_letni</parameter><initializer>-1</initializer></methodparam>
+   <type class="union"><type>int</type><type>false</type></type><methodname>gmmktime</methodname>
+   <methodparam><type>int</type><parameter>hour</parameter></methodparam>
+   <methodparam choice="opt"><type class="union"><type>int</type><type>null</type></type><parameter>minute</parameter><initializer>&null;</initializer></methodparam>
+   <methodparam choice="opt"><type class="union"><type>int</type><type>null</type></type><parameter>second</parameter><initializer>&null;</initializer></methodparam>
+   <methodparam choice="opt"><type class="union"><type>int</type><type>null</type></type><parameter>month</parameter><initializer>&null;</initializer></methodparam>
+   <methodparam choice="opt"><type class="union"><type>int</type><type>null</type></type><parameter>day</parameter><initializer>&null;</initializer></methodparam>
+   <methodparam choice="opt"><type class="union"><type>int</type><type>null</type></type><parameter>year</parameter><initializer>&null;</initializer></methodparam>
   </methodsynopsis>
   <para>
    Identyczna z funkcją <function>mktime</function>, z tą różnicą, że przekazane parametry 
@@ -26,10 +25,15 @@
    więc można użyć tylko czasów poprawnych w czasie lokalnym.
   </para>
   <para>
-   Tak jak w <function>mktime</function>, argumenty mogą być pomijane
+   Tak jak w <function>mktime</function>, opcjonalne argumenty mogą być pomijane
    w kolejności od prawej do lewej, gdyż zostaną one ustawione na obecne
    wartości w czasie GMT.
   </para>
+  <simpara>
+   Wywołanie <function>gmmktime</function> bez żadnych argumentów nie jest
+   wspierane i będzie skutkować błędem <classname>ArgumentCountError</classname>.
+   Aby pobrać obecny znacznik czasu, można skorzystać z funkcji <function>time</function>.
+  </simpara>
  </refsect1>
 
  <refsect1 role="parameters">
@@ -37,38 +41,38 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>godzina</parameter></term>
+     <term><parameter>hour</parameter></term>
      <listitem>
       <para>
-       Liczba godzin relatywna do rozpoczęcia dnia określonego przez
-       <parameter>miesiąc</parameter>, <parameter>dzień</parameter> i <parameter>rok</parameter>.
+       Liczba godzin relatywna do rozpoczęcia dnia określonego przez parametry
+       <parameter>month</parameter>, <parameter>day</parameter> i <parameter>year</parameter>.
        Ujemne wartości odnoszą się do godzin przed północą zażądanego dnia.
        Wartości większe niż 23 odnoszą się do odpowiednich godzin w kolejnym dniu/dniach.
       </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>minuta</parameter></term>
+     <term><parameter>minute</parameter></term>
      <listitem>
       <para>
-       Liczba minut względem początku <parameter>godziny</parameter>.
+       Liczba minut względem początku godziny podanej w <parameter>hour</parameter>.
        Wartości ujemne oznaczają minutę w poprzedniej godzinie.
        Wartości większe niż 59 oznaczają opowiednią minutę w kolejnej godzinie/godzinach.
       </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>sekunda</parameter></term>
+     <term><parameter>second</parameter></term>
      <listitem>
       <para>
-       Liczba sekund względem początku <parameter>minuty</parameter>.
+       Liczba sekund względem początku minuty (<parameter>minute</parameter>).
        Wartości ujemne oznaczają sekundę w poprzedniej minucie.
-       Wartości większe niż 59 oznaczają opowiednią sekundę w kolejnej minucie/minutach.
+       Wartości większe niż 59 oznaczają odpowiednią sekundę w kolejnej minucie/minutach.
       </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>miesiąc</parameter></term>
+     <term><parameter>month</parameter></term>
      <listitem>
       <para>
        Numer miesiąca liczony względem końca poprzedniego roku.
@@ -79,7 +83,7 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>dzień</parameter></term>
+     <term><parameter>day</parameter></term>
      <listitem>
       <para>
        Liczba dni względem końca poprzedniego miesiąca.
@@ -90,25 +94,11 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>rok</parameter></term>
+     <term><parameter>year</parameter></term>
      <listitem>
       <para>
        Rok
       </para>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
-     <term><parameter>czy_letni</parameter></term>
-     <listitem>
-      <para>
-       Parametry zawsze reprezentują czas GMT, więc parametr <parameter>czy_letni</parameter>
-       nie ma wpływu na wynik.
-      </para>
-	  <note>
-       <para>
-        Ten parametr został usunięty w PHP 7.0.0.
-       </para>
-      </note>
      </listitem>
     </varlistentry>
    </variablelist>
@@ -118,7 +108,8 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca <type>integer</type> będący uniksowym znacznikiem czasu.
+   Zwraca liczbę całkowitą (<type>int</type>) będącą uniksowym znacznikiem czasu w wypadku powodzenia
+   lub &false; jeśli zwrócony znacznik czasu nie mieściłby się w zakresie liczb całkowitych obsługiwanych przez PHP.
   </para>
  </refsect1>
 
@@ -134,18 +125,18 @@
       </row>
      </thead>
      <tbody>
-	  <row>
-       <entry>7.0.0</entry>
+      <row>
+       <entry>8.0.0</entry>
        <entry>
-        Parametr <parameter>czy_letni</parameter> został usunięty.
+        Parametr <parameter>hour</parameter> nie jest już opcjonalny. Jeśli potrzebujesz uniksowego
+        znacznika czasu, skorzystaj z funkcji <function>time</function>.
        </entry>
       </row>
       <row>
-       <entry>5.1.0</entry>
+       <entry>8.0.0</entry>
        <entry>
-        Od PHP 5.1.0, parametr <parameter>czy_letni</parameter> został zdeprecjonowany.
-        W wyniku tego, w zamian powinno się używać nowych możliwości obsługi stref
-        czasowych.
+        Parametry <parameter>minute</parameter>, <parameter>second</parameter>, <parameter>month</parameter>,
+        <parameter>day</parameter> oraz <parameter>year</parameter> akceptują teraz &null;.
        </entry>
       </row>
      </tbody>
@@ -175,6 +166,7 @@ echo "Pierwszy lipca 2000 wypada w: " . date("l", gmmktime(0, 0, 0, 7, 1, 2000))
   &reftitle.seealso;
   <para>
    <simplelist>
+    <member>Klasa <classname>DateTimeImmutable</classname></member>
     <member><function>mktime</function></member>
     <member><function>date</function></member>
     <member><function>time</function></member>
@@ -182,7 +174,6 @@ echo "Pierwszy lipca 2000 wypada w: " . date("l", gmmktime(0, 0, 0, 7, 1, 2000))
   </para>
  </refsect1>
 </refentry>
-
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

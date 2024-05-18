@@ -1,28 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: qrak Status: ready -->
+<!-- EN-Revision: 5c951013ca04161992efed8b86fb40f55669958e Maintainer: qrak Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: sobak -->
-  <refentry xml:id="function.gmstrftime" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>gmstrftime</refname>
-    <refpurpose>Formatuje czas/datę ze strefy GMT/UTC zgodnie z 
-    lokalizacją</refpurpose>
-   </refnamediv>
+<refentry xml:id="function.gmstrftime" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>gmstrftime</refname>
+  <refpurpose>Formatuje czas/datę ze strefy GMT/UTC zgodnie z ustawieniami locale</refpurpose>
+ </refnamediv>
+
+ <refsynopsisdiv>
+  &warn.deprecated.function-8-1-0.alternatives;
+  <simplelist role="alternatives">
+   <member><function>gmdate</function></member>
+   <member><methodname>IntlDateFormatter::format</methodname></member>
+  </simplelist>
+ </refsynopsisdiv>
 
  <refsect1 role="description">
   &reftitle.description;
-     <methodsynopsis>
-      <type>string</type><methodname>gmstrftime</methodname>
-      <methodparam><type>string</type><parameter>format</parameter></methodparam>
-      <methodparam choice="opt"><type>int</type><parameter>znacznik_czasu</parameter><initializer>time()</initializer></methodparam>
-     </methodsynopsis>
-    <para>
-     Zachowuje się identycznie jak <function>strftime</function> z tym
-     wyjątkiem, że zwracany jest czas strefy Greenwich (Greenwich Mean Time -
-     GMT). Na przykład, uruchomiona we Wschodnim Czasie Standardowym
-     (GMT -0500) pierwsza linia poniżej wyświetla "Dec 31 1998 20:00:00",
-     podczas gdy druga "Jan 01 1999 01:00:00".
-    </para>
+  <methodsynopsis>
+   <type class="union"><type>string</type><type>false</type></type><methodname>gmstrftime</methodname>
+   <methodparam><type>string</type><parameter>format</parameter></methodparam>
+   <methodparam choice="opt"><type class="union"><type>int</type><type>null</type></type><parameter>timestamp</parameter><initializer>&null;</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   Zachowuje się identycznie jak <function>strftime</function> z tym
+   wyjątkiem, że zwracany jest czas strefy Greenwich (Greenwich Mean Time -
+   GMT). Na przykład, uruchomiona we Wschodnim Czasie Standardowym
+   (GMT -0500) pierwsza linia poniżej wyświetla "Dec 31 1998 20:00:00",
+   podczas gdy druga "Jan 01 1999 01:00:00".
+  </para>
  </refsect1>
 
  <refsect1 role="parameters">
@@ -50,6 +57,31 @@
    czasu lokalnego, jeżeli nie podano znacznika. Nazwy miesięcy, dni tygodnia i
    innych ciągów zależnych od języka, bazują na obecnej lokalizacji ustawionej
    funkcją <function>setlocale</function>.
+   W wypadku błędu zwracane jest &false;.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>8.0.0</entry>
+       <entry>
+        Parametr <parameter>timestamp</parameter> akceptuje teraz &null;.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
   </para>
  </refsect1>
    
@@ -75,12 +107,13 @@ echo gmstrftime("%b %d %Y %H:%M:%S", mktime(20, 0, 0, 12, 31, 98)) . "\n";
   &reftitle.seealso;
   <para>
    <simplelist>
+    <member><methodname>IntlDateFormatter::format</methodname></member>
+    <member><methodname>DateTimeInterface::format</methodname></member>
     <member><function>strftime</function></member>
    </simplelist>
   </para>
  </refsect1>
 </refentry>
-
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

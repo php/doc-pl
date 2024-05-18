@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: b8758b0605e80c4e3610137b7502a6abeea5c69b Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 5c951013ca04161992efed8b86fb40f55669958e Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: qrak -->
 <refentry xml:id="function.microtime" xmlns="http://docbook.org/ns/docbook">
@@ -11,13 +11,16 @@
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
-   <type>mixed</type><methodname>microtime</methodname>
-   <methodparam choice="opt"><type>bool</type><parameter>get_as_float</parameter><initializer>&false;</initializer></methodparam>
+   <type class="union"><type>string</type><type>float</type></type><methodname>microtime</methodname>
+   <methodparam choice="opt"><type>bool</type><parameter>as_float</parameter><initializer>&false;</initializer></methodparam>
   </methodsynopsis>
   <para>
    <function>microtime</function> zwraca aktualny znacznik czasu Uniksa z
    mikrosekundami. Ta funkcja jest dostępna tylko na systemach, które
    umożliwiają wywołanie systemowe gettimeofday().
+  </para>
+  <para>
+   Do mierzenia wydajności rekomendowane jest użycie <function>hrtime</function>.
   </para>
  </refsect1>
 
@@ -26,7 +29,7 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>get_as_float</parameter></term>
+     <term><parameter>as_float</parameter></term>
      <listitem>
       <para>
        Jeżeli użyto i ustawiono na &true;, <function>microtime</function> zwróci
@@ -46,10 +49,10 @@
    w postaci "msek sek", gdzie <literal>sek</literal> to liczba sekund, które 
    upłynęły od epoki Uniksa (1 stycznia 1970 00:00:00 GMT), a <literal>msek</literal>,
    to liczba sekund, które upłynęły od <literal>sek</literal>,
-   która także wyrażona jest w sekundach.
+   która także wyrażona jest w sekundach jako ułamek dziesiętny.
   </para>
   <para>
-   Jeżeli <parameter>get_as_float</parameter> ustawiono na &true;, to
+   Jeżeli <parameter>as_float</parameter> ustawiono na &true;, to
    <function>microtime</function> zwraca <type>float</type>, który
    reprezentuje obecny czas w sekundach do epoki Uniksa, z dokładnością
    do najbliższej mikrosekundy.
@@ -60,34 +63,7 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Mierzenie czasu pracy skryptu dzięki <function>microtime</function></title>
-    <programlisting role="php">
-<![CDATA[
-<?php
-/**
- * Prosta funkcja do odtworzenia zachowania w PHP 5
- */
-function microtime_float()
-{
-    list($usec, $sec) = explode(" ", microtime());
-    return ((float)$usec + (float)$sec);
-}
-
-$czas_start = microtime_float();
-
-// Poczekaj chwilę
-usleep(100);
-
-$czas_koniec = microtime_float();
-$czas = $czas_koniec - $czas_start;
-
-echo "Nie robiłem nic przez $czas sekund\n";
-?>
-]]>
-    </programlisting>
-   </example>
-   <example>
-    <title>Mierzenie czasu pracy skryptu w PHP 5</title>
+    <title>Mierzenie czasu pracy skryptu</title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -112,7 +88,7 @@ echo "Nie robiłem nic przez $czas sekund\n";
 // Losowy czas uśpienia skryptu
 usleep(mt_rand(100, 10000));
 
-// Od PHP 5.4.0, w tablicy superglobalnej $_SERVER dostępny jest klucz REQUEST_TIME_FLOAT.
+// W tablicy superglobalnej $_SERVER dostępny jest klucz REQUEST_TIME_FLOAT.
 // Zawiera on znacznik czasu w momencie rozpoczęcia żądania, z precyzją do mikrosekund.
 $czas = microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"];
 
