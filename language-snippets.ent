@@ -903,15 +903,22 @@ PHP zostało skompilowane z obsługą FreeType (<option role="configure">--with-
 
 <!ENTITY note.gd.interpolation '<note xmlns="http://docbook.org/ns/docbook"><para>Na działanie tej funkcji wpływa metoda interpolacji ustawiana przez  <function>imagesetinterpolation</function>.</para></note>'>
 
-<!ENTITY gd.image.description '<varlistentry xmlns="http://docbook.org/ns/docbook"><term xmlns="http://docbook.org/ns/docbook"><parameter xmlns="http://docbook.org/ns/docbook">
-obraz</parameter></term><listitem xmlns="http://docbook.org/ns/docbook"><para xmlns="http://docbook.org/ns/docbook">Zasób obrazu, zwrócony przez jedną z funkcji tworzących obrazy, 
-taką jak <function xmlns="http://docbook.org/ns/docbook">imagecreatetruecolor</function>.</para></listitem></varlistentry>'>
+<!ENTITY gd.image.description '<varlistentry xmlns="http://docbook.org/ns/docbook"><term>
+<parameter>image</parameter></term><listitem><para>Obiekt klasy <classname>GdImage</classname> zwrócony przez jedną z funkcji tworzących obrazy,
+taką jak <function>imagecreatetruecolor</function>.</para></listitem></varlistentry>'>
 
-<!ENTITY gd.font.description '<varlistentry xmlns="http://docbook.org/ns/docbook"><term xmlns="http://docbook.org/ns/docbook"><parameter xmlns="http://docbook.org/ns/docbook">
-czcionka</parameter></term><listitem xmlns="http://docbook.org/ns/docbook"><para xmlns="http://docbook.org/ns/docbook">Może przyjąć 1, 2, 3, 4, 5 dla wbudowanych 
-czcionek w kodowaniu latin2 (gdzie większy numer odpowiada większej czcionce) lub własny dowolny
-identyfikator czcionki zarejestrowany przez <function xmlns="http://docbook.org/ns/docbook">imageloadfont</function>.
-</para></listitem></varlistentry>'>
+<!ENTITY gd.font.description '<varlistentry xmlns="http://docbook.org/ns/docbook"><term>
+<parameter>font</parameter></term><listitem><para>Czcionka. Może przyjąć 1, 2, 3, 4, 5 dla wbudowanych
+czcionek w kodowaniu latin2 (gdzie większy numer odpowiada większej czcionce) lub obiekt klasy <classname>GdFont</classname>
+zwrócony przez <function>imageloadfont</function>.</para></listitem></varlistentry>'>
+
+<!ENTITY gd.changelog.gdfont-instance '<row xmlns="http://docbook.org/ns/docbook">
+  <entry>8.1.0</entry>
+  <entry>
+  Parametr <parameter>font</parameter> przyjmuje teraz zarówno obiekt klasy <classname>GdFont</classname>
+  oraz typ &integer;; wcześniej akceptowany był tylko typ &integer;.
+  </entry>
+</row>'>
 
 <!ENTITY gd.ttf.fontfile "
     <varlistentry xmlns='http://docbook.org/ns/docbook'>
@@ -927,24 +934,22 @@ identyfikator czcionki zarejestrowany przez <function xmlns="http://docbook.org/
        a biblioteka GD będzie szukać pliku o tej nazwie w swojej globalnej ścieżce dla fontów.
       </para>
       <para>
-       Gdy używana jest biblioteka GD w wersji niższej niż 2.0.18 znak <literal>spacji</literal>,
-       a nie średnik 
-       When using versions of the GD library lower than 2.0.18, a <literal>space</literal> character,
-       rather than a semicolon, was used as the 'path separator' for different font files.
-       Unintentional use of this feature will result in the warning message:
-       <literal>Warning: Could not find/open font</literal>. For these affected versions, the
-       only solution is moving the font to a path which does not contain spaces.
+       Gdy używana jest biblioteka GD w wersji niższej niż 2.0.18, to znakiem 'separacji ścieżek' dla różnych plików czcionek
+       jest znak <literal>spacji</literal>, a nie średnik.
+       Nieświadome skorzystanie z tej funkcjonalności będzie skutkować ostrzeżeniem:
+       <literal>Warning: Could not find/open font</literal>. Jeśli używasz wersji dotkniętej tym problemem,
+       to jedynym rozwiązaniem jest przeniesienie pliku do ścieżki nie zawierającej spacji.
       </para>
       <para>
-       In many cases where a font resides in the same directory as the script using it
-       the following trick will alleviate any include problems.
+       W wielu wypadkach, gdy plik czcionki znajduje się w tym samym katalogu co skrypt, który go wykorzystuje,
+       użycie następującej sztuczki pozwoli uniknąć jakichkolwiek problemów z dołączaniem czcionek.
        <programlisting role='php'>
 <![CDATA[
 <?php
-// Set the enviroment variable for GD
+// Ustaw zmienną środowiskową dla GD
 putenv('GDFONTPATH=' . realpath('.'));
 
-// Name the font to be used (note the lack of the .ttf extension)
+// Nazwa czcionki, której chcemy użyć (zwróć uwagę na brak rozszerzenia .ttf)
 $font = 'SomeFont';
 ?>
 ]]>
@@ -952,8 +957,8 @@ $font = 'SomeFont';
       </para>
       <note>
        <para>
-        Note that <link linkend='ini.open-basedir'>open_basedir</link> does
-        <emphasis>not</emphasis> apply to <parameter>fontfile</parameter>.
+        Dyrektywa <link linkend='ini.open-basedir'>open_basedir</link>
+        <emphasis>nie ma</emphasis> wpływu na <parameter>fontfile</parameter>.
        </para>
       </note>
      </listitem>
@@ -961,6 +966,10 @@ $font = 'SomeFont';
 ">
 
 <!ENTITY gd.return.identifier 'Zwraca identyfikator zasobu obrazu w przypadku powodzenia lub &false; w przypadku błędów.'>
+
+<!ENTITY gd.return.trueonerror '<caution xmlns="http://docbook.org/ns/docbook"><simpara>Jednakże, jeśli libgd nie jest w stanie zwrócić obrazka, ta funkcja zwraca &true;.</simpara></caution>'>
+
+<!ENTITY gd.identifier.color "Identyfikator koloru stworzony z użyciem <function xmlns='http://docbook.org/ns/docbook'>imagecolorallocate</function>.">
 
 <!ENTITY gd.value.red 'Wartość składowa czerwonego.'>
 
@@ -972,7 +981,7 @@ $font = 'SomeFont';
 
 <!ENTITY gd.source.width 'Szerokość źródła.'>
 
-<!ENTITY gd.image.path 'Ścieżka do zapisu pliku. Jeśli nie jest ustawiona lub ma wartość &null;, obraz zostanie przesłany bezpośrednio na wyjście.'>
+<!ENTITY gd.image.path 'Ścieżka lub otwarty zasób (który jest automatycznie zamykany gdy ta funkcja zwraca wartość) do miejsca gdzie zapisać plik. Jeśli nie jest ustawiona lub ma wartość &null;, obraz zostanie przesłany bezpośrednio na wyjście.'>
 
 <!ENTITY gd.image.new 'Tworzy nowy obraz z pliku lub URL'>
 
@@ -984,44 +993,98 @@ $font = 'SomeFont';
 
 <!ENTITY gd.image.colors 'Jeśli tworzony jest obraz z pliku, zwracane są indeksy kolorów użyte tylko w obrazie. Kolory będące tylko w palecie nie są zwracane.'>
 
-<!ENTITY gd.font.size 'Rozmiar czcionki. W zależności od wersji GD rozmiar jest określony albo w pikselach (GD1), albo w punktach (GD2).'>
+<!ENTITY gd.font.size 'Rozmiar czcionki, określony w punktach.'>
+
+<!ENTITY gd.constants.types '<simpara xmlns="http://docbook.org/ns/docbook">
+    Używana jako wartość zwracana przez <function>imagetypes</function>
+</simpara>'>
+
+<!ENTITY gd.constants.color '<simpara xmlns="http://docbook.org/ns/docbook">
+    Specjalna operacja na kolorze, która może być użyta zamiast koloru zaalokowanego przez
+    <function>imagecolorallocate</function> lub
+    <function>imagecolorallocatealpha</function>.
+</simpara>'>
+
+<!ENTITY gd.constants.affine '<simpara xmlns="http://docbook.org/ns/docbook">
+    Typ przekształcenia aficznego używany przez funkcję <function>imageaffinematrixget</function>.
+</simpara>'>
+
+<!ENTITY gd.constants.arc '<simpara xmlns="http://docbook.org/ns/docbook">
+    Stała stylu używana przez funkcję <function>imagefilledarc</function>.
+</simpara>'>
+
+<!ENTITY gd.constants.gd2 '<simpara xmlns="http://docbook.org/ns/docbook">
+    Stała typu używana przez funkcję <function>imagegd2</function>.
+</simpara>'>
+
+<!ENTITY gd.constants.effect '<simpara xmlns="http://docbook.org/ns/docbook">
+    Efekt łączenia alfa używany przez funkcję <function>imagelayereffect</function>.
+</simpara>'>
+
+<!ENTITY gd.constants.filter '<simpara xmlns="http://docbook.org/ns/docbook">
+    Specjalny filtr GD używany przez funkcję <function>imagefilter</function>.
+</simpara>'>
+
+<!ENTITY gd.constants.type '<simpara xmlns="http://docbook.org/ns/docbook">
+    Stała typu obrazu używana przez funkcje<function>image_type_to_mime_type</function>
+    i <function>image_type_to_extension</function>.
+</simpara>'>
+
+<!ENTITY gd.constants.png-filter '<simpara xmlns="http://docbook.org/ns/docbook">
+    Specjalny filtr PNG używany przez funkcję  <function>imagepng</function>.
+</simpara>'>
+
+<!ENTITY gd.constants.flip '<simpara xmlns="http://docbook.org/ns/docbook">
+    Używane razem z <function>imageflip</function>, dostępne od PHP 5.5.0.
+</simpara>'>
+
+<!ENTITY gd.constants.interpolation '<simpara xmlns="http://docbook.org/ns/docbook">
+    Używane razem z <function>imagesetinterpolation</function>, dostępne od PHP 5.5.0.
+</simpara>'>
+
+<!ENTITY gd.changlog.t1lib '<row xmlns="http://docbook.org/ns/docbook">
+    <entry>7.0.0</entry><entry>Z PHP usunięto wsparcie T1Lib, a więc i ta funkcja została usunięta.</entry>
+</row>'>
+
+<!ENTITY gd.deprecated.gd-formats '<warning xmlns="http://docbook.org/ns/docbook"><simpara>Formaty obrazów GD
+i GD2 są własnościowymi formatami libgd. Powinno się je traktować jako
+<emphasis>przestarzałe</emphasis> i używać ich tylko w celu testowania i rozwoju
+oprogramowania.</simpara></warning>'>
+
+<!ENTITY gd.changelog.image-param '<row xmlns="http://docbook.org/ns/docbook">
+ <entry>8.0.0</entry>
+ <entry>
+  Parametr <parameter>image</parameter> oczekuje obiektu klasy <classname>GdImage</classname>;
+  wcześniej oczekiwany był poprawny <link linkend="language.types.resource">zasób</link> <literal>gd</literal>.
+ </entry>
+</row>'>
 
 <!-- DBM notes -->
 
-<!ENTITY dbm.dbm-identifier.description '<varlistentry xmlns="http://docbook.org/ns/docbook"><term xmlns="http://docbook.org/ns/docbook"><parameter xmlns="http://docbook.org/ns/docbook">
-dbm_identifier</parameter></term><listitem xmlns="http://docbook.org/ns/docbook"><para xmlns="http://docbook.org/ns/docbook">Identyfikator połączenia DBM,
-zwrócony przez <function xmlns="http://docbook.org/ns/docbook">dbmopen</function>.</para></listitem></varlistentry>'>
+<!ENTITY dbm.dbm-identifier.description '<varlistentry xmlns="http://docbook.org/ns/docbook"><term>
+<parameter>dbm_identifier</parameter></term><listitem><para>Identyfikator połączenia DBM,
+zwrócony przez <function>dbmopen</function>.</para></listitem></varlistentry>'>
 
 <!-- JSON notes -->
 
 <!ENTITY json.implementation.superset '
  <note xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
   <para>
-   PHP implementuje podzbiór JSON tak jak określono oryginalnie w
-   <link xlink:href="&url.rfc;4627">RFC 4627</link> - koduje i dekoduje
-   także typy skalarne oraz &null;. RFC 4627 obsługuje te wartości tylko gdy
-   zostaną zagnieżdżone wewnątrz tablicy lub obiektu.
-  </para>
-  <para>
-   Mimo że ten pozbiór jest spójny z rozszerzoną definicją "tekstu
-   JSON" z nowszego <link xlink:href="&url.rfc;7159">RFC 7159</link> (który ma
-   na celu zastąpić RFC 4627) i
-   ECMA-404, może to spowodować
-   problemy z interoperacyjnością starszych parserów JSON, które ściśle trzymają się RFC
-   4627 dekodując pojedynczą wartość skalarną.
+   PHP implementuje nadzbiór JSON tak jak określono oryginalnie w
+   <link xlink:href="&url.rfc;7159">RFC 7159</link>.
   </para>
  </note>
 '>
 
 <!-- cURL notes -->
 
-<!ENTITY curl.ch.description '<varlistentry xmlns="http://docbook.org/ns/docbook"><term xmlns="http://docbook.org/ns/docbook"><parameter xmlns="http://docbook.org/ns/docbook">ch</parameter>
-</term><listitem xmlns="http://docbook.org/ns/docbook"><para xmlns="http://docbook.org/ns/docbook">Uchwyt cURL zwrócony przez 
-<function xmlns="http://docbook.org/ns/docbook">curl_init</function>.</para></listitem></varlistentry>'>
+<!ENTITY curl.ch.description '<varlistentry xmlns="http://docbook.org/ns/docbook"><term><parameter>handle</parameter>
+</term><listitem><para>Uchwyt cURL zwrócony przez
+<function>curl_init</function>.</para></listitem></varlistentry>'>
 
-<!ENTITY curl.mh.description '<varlistentry xmlns="http://docbook.org/ns/docbook"><term xmlns="http://docbook.org/ns/docbook"><parameter xmlns="http://docbook.org/ns/docbook">mh</parameter>
-</term><listitem xmlns="http://docbook.org/ns/docbook"><para xmlns="http://docbook.org/ns/docbook">Wielokrotny uchwyt cURL zwrócony przez 
-<function xmlns="http://docbook.org/ns/docbook">curl_multi_init</function>.</para></listitem></varlistentry>'>
+<!ENTITY curl.mh.description '<varlistentry xmlns="http://docbook.org/ns/docbook"><term><parameter>multi_handle</parameter>
+</term><listitem><para>Wielokrotny uchwyt cURL zwrócony przez
+<function>curl_multi_init</function>.</para></listitem></varlistentry>'>
 
 <!-- IMAP notes -->
 
