@@ -1086,11 +1086,119 @@ zwrócony przez <function>dbmopen</function>.</para></listitem></varlistentry>'>
 </term><listitem><para>Wielokrotny uchwyt cURL zwrócony przez
 <function>curl_multi_init</function>.</para></listitem></varlistentry>'>
 
+<!ENTITY curl.sh.description '<varlistentry xmlns="http://docbook.org/ns/docbook"><term><parameter>share_handle</parameter>
+</term><listitem><para>Współdzielony uchwyt cURL zwrócony przez
+<function>curl_share_init</function>.</para></listitem></varlistentry>'>
+
+<!ENTITY curl.changelog.handle-param '<row xmlns="http://docbook.org/ns/docbook">
+ <entry>8.0.0</entry>
+ <entry>
+  Parametr <parameter>handle</parameter> oczekuje teraz obiektu klasy <classname>CurlHandle</classname>;
+  wcześniej oczekiwany był <link linkend="language.types.resource">zasób</link>.
+ </entry>
+</row>'>
+
+<!ENTITY curl.changelog.multi-handle-param '<row xmlns="http://docbook.org/ns/docbook">
+ <entry>8.0.0</entry>
+ <entry>
+  Parametr <parameter>multi_handle</parameter> oczekuje teraz obiektu klasy <classname>CurlMultiHandle</classname>;
+  wcześniej oczekiwany był <link linkend="language.types.resource">zasób</link>.
+ </entry>
+</row>'>
+
+<!ENTITY curl.changelog.share-handle-param '<row xmlns="http://docbook.org/ns/docbook">
+ <entry>8.0.0</entry>
+ <entry>
+  Parametr <parameter>share_handle</parameter> oczekuje teraz obiektu klasy <classname>CurlShareHandle</classname>
+  wcześniej oczekiwany był <link linkend="language.types.resource">zasób</link>.
+ </entry>
+</row>'>
+
+<!-- dbase notes -->
+
+<!ENTITY dbase.type-conversion '<para xmlns="http://docbook.org/ns/docbook">
+   Każde pole jest konwertowane na odpowiadający typ PHP, z wyjątkiem:
+   <itemizedlist>
+    <listitem>
+     <simpara>
+      Dat, które pozostają ciągami znaków.
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      Wartości DateTime są konwertowane na ciągi znaków.
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      Liczby stałe spoza zakresu
+      <constant>PHP_INT_MIN</constant>..<constant>PHP_INT_MAX</constant> są
+      zwracane jako ciąg znaków.
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      Przed dbase 7.0.0, typy logiczne (<literal>L</literal>) były konwertowane na <literal>1</literal> lub
+      <literal>0</literal>.
+     </simpara>
+    </listitem>
+   </itemizedlist>
+  </para>'>
+
+<!-- enchant entities -->
+
+<!ENTITY enchant.param.broker '<varlistentry xmlns="http://docbook.org/ns/docbook">
+     <term><parameter>broker</parameter></term>
+     <listitem>
+      <para>
+       Broker Enchant zwrócony przez <function>enchant_broker_init</function>.
+      </para>
+     </listitem>
+    </varlistentry>'>
+
+<!ENTITY enchant.param.dictionary '<varlistentry xmlns="http://docbook.org/ns/docbook">
+     <term><parameter>dictionary</parameter></term>
+     <listitem>
+      <para>
+       Słownik Enchant zwrócony przez <function>enchant_broker_request_dict</function>
+       lub <function>enchant_broker_request_pwl_dict</function>.
+      </para>
+     </listitem>
+    </varlistentry>'>
+
+<!ENTITY enchant.changelog.broker-param '<row xmlns="http://docbook.org/ns/docbook">
+ <entry>8.0.0</entry>
+ <entry>
+  Parametr <parameter>broker</parameter> oczekuje obiektu klasy <classname>EnchantBroker</classname>;
+  wcześniej oczekiwany był <link linkend="language.types.resource">zasób</link>.
+ </entry>
+</row>'>
+
+<!ENTITY enchant.changelog.dictionary-param '<row xmlns="http://docbook.org/ns/docbook">
+ <entry>8.0.0</entry>
+ <entry>
+  Parametr <parameter>dictionary</parameter> oczekuje teraz obiektu klasy <classname>EnchantDictionary</classname>;
+  wcześniej oczekiwany był <link linkend="language.types.resource">zasób</link>.
+ </entry>
+</row>'>
+
 <!-- IMAP notes -->
 
-<!ENTITY imap.imap-stream.description '<varlistentry xmlns="http://docbook.org/ns/docbook"><term xmlns="http://docbook.org/ns/docbook"><parameter xmlns="http://docbook.org/ns/docbook">
-imap_stream</parameter></term><listitem xmlns="http://docbook.org/ns/docbook"><para xmlns="http://docbook.org/ns/docbook">Strumień IMAP zwrócony przez 
-<function xmlns="http://docbook.org/ns/docbook">imap_open</function>.</para></listitem></varlistentry>'>
+<!ENTITY imap.changelog.imap-param '<row xmlns="http://docbook.org/ns/docbook">
+ <entry>8.1.0</entry>
+ <entry>
+  Parametr <parameter>imap</parameter> oczekuje teraz obiektu klasy <classname>IMAP\Connection</classname>;
+  wcześniej oczekiwany był poprawny <link linkend="language.types.resource">zasób</link> <literal>imap</literal>.
+ </entry>
+</row>'>
+
+<!ENTITY imap.imap-parameter.imap '<varlistentry xmlns="http://docbook.org/ns/docbook"><term>
+<parameter>imap</parameter></term><listitem><para>Instancja <classname>IMAP\Connection</classname>.</para></listitem></varlistentry>'>
+
+<!-- Deprecated -->
+<!ENTITY imap.imap-stream.description '<varlistentry xmlns="http://docbook.org/ns/docbook"><term>
+<parameter>imap_stream</parameter></term><listitem><para>Strumień IMAP zwrócony przez
+<function>imap_open</function>.</para></listitem></varlistentry>'>
 
 <!ENTITY imap.pattern '<para xmlns="http://docbook.org/ns/docbook">Określa gdzie w hierarchii skrzynki rozpocząć
 wyszukiwanie.</para><para xmlns="http://docbook.org/ns/docbook">Istnieją dwa specjalne znaki, które możesz
@@ -1105,13 +1213,24 @@ oznacza zwrócenie tylko obecnego poziomu.
 zwróci tylko skrzynki mailowe najwyższego
 poziomu; &apos;<literal xmlns="http://docbook.org/ns/docbook">~/mail/&#37;</literal>&apos; na <literal xmlns="http://docbook.org/ns/docbook">UW_IMAPD</literal> zwróci każdą skrzynkę w katalogu <filename xmlns="http://docbook.org/ns/docbook">~/mail</filename>, ale nie w jego podkatalogach.</para>'>
 
+<!ENTITY imap.mailboxname.insecure '<warning xmlns="http://docbook.org/ns/docbook"><simpara>
+Przekazywanie niezaufanych danych do tego parametru jest <emphasis>niebezpieczne</emphasis>, chyba że dyrektywa
+<link linkend="ini.imap.enable-insecure-rsh">imap.enable_insecure_rsh</link> jest wyłączona.
+</simpara></warning>'>
+
 <!-- intl notes -->
 
-<!ENTITY intl.codepoint.parameter '<para xmlns="http://docbook.org/ns/docbook">Wartość typu <type>integer</type> dla punktu kodowego (np. <literal>0x2603</literal> dla <emphasis>U+2603 SNOWMAN</emphasis>) lub znak zakodowany jako <type>string</type> UTF-8 (np. <literal>"\u{2603}"</literal>)</para>'>
+<!ENTITY intl.parameter.intl-calendar '<para xmlns="http://docbook.org/ns/docbook">Instancja <classname>IntlCalendar</classname>.</para>'>
 
-<!ENTITY intl.codepoint.return '<para xmlns="http://docbook.org/ns/docbook">Zwróconym typem będzie <type>integer</type>, chyba że codepoint przekazano jako łańcuch znaków UTF-8 - w tym wypadku zwrócony zostanie <type>string</type>.</para>'>
+<!ENTITY intl.error.intl-calendar '<para xmlns="http://docbook.org/ns/docbook">W wypadku błędu zwracane jest także &false;. Aby wykryć wystąpienie błędu użyj <function>intl_get_error_code</function>, lub ustaw Intl tak, aby rzucało <link linkend="ini.intl.use-exceptions">wyjątki</link>.</para>'>
+
+<!ENTITY intl.codepoint.parameter '<para xmlns="http://docbook.org/ns/docbook">Wartość typu <type>int</type> dla punktu kodowego (np. <literal>0x2603</literal> dla <emphasis>U+2603 SNOWMAN</emphasis>) lub znak zakodowany jako <type>string</type> UTF-8 (np. <literal>"\u{2603}"</literal>)</para>'>
+
+<!ENTITY intl.codepoint.return '<para xmlns="http://docbook.org/ns/docbook">Zwróconym typem będzie <type>int</type>, chyba że codepoint przekazano jako łańcuch znaków UTF-8 - w tym wypadku zwrócony zostanie <type>string</type>.</para>'>
 
 <!ENTITY intl.codepoint.example 'Testowanie różnych punktów kodowych'>
+
+<!ENTITY intl.locale-len.return '<para xmlns="http://docbook.org/ns/docbook">Zwraca &null; gdy długość podanego <parameter>locale</parameter> przekracza <constant>INTL_MAX_LOCALE_LEN</constant>.</para>'>
 
 <!ENTITY intl.property.parameter '<para xmlns="http://docbook.org/ns/docbook">Właściwość Unicodu do znalezienia (zobacz stałe <literal>IntlChar::PROPERTY_*</literal>).</para>'>
 
