@@ -2613,11 +2613,32 @@ metoda została usunięta z rozszerzenia phar w wersji 2.0.0.  Dostępne są zas
 implementacje: <function xmlns="http://docbook.org/ns/docbook">PharFileInfo::isCompressed</function>,
 <function xmlns="http://docbook.org/ns/docbook">PharFileInfo::decompress</function>, i <function xmlns="http://docbook.org/ns/docbook">PharFileInfo::compress</function>.</para></note>'>
 
+<!ENTITY phar.note.performance '<note xmlns="http://docbook.org/ns/docbook">
+ <simpara>
+  <function>Phar::addFile</function>, <function>Phar::addFromString</function> and <function>Phar::offsetSet</function>
+  zapisują nowe archiwum phar przy każdym ich wywołaniu. Jeśli wydajność budzi niepokój,
+  możesz zamiast tego użyć <function>Phar::buildFromDirectory</function>
+  lub <function>Phar::buildFromIterator</function>.
+ </simpara>
+</note>'>
+
+<!ENTITY phardata.note.performance '<note xmlns="http://docbook.org/ns/docbook">
+ <simpara>
+  <function>PharData::addFile</function>, <function>PharData::addFromString</function> and <function>PharData::offsetSet</function>
+  zapisują nowe archiwum phar przy każdym ich wywołaniu. Jeśli wydajność budzi niepokój,
+  możesz zamiast tego użyć  <function>PharData::buildFromDirectory</function>
+  lub <function>PharData::buildFromIterator</function>.
+ </simpara>
+</note>'>
+
 <!-- XML -->
-<!ENTITY libxml.required '<para xmlns="http://docbook.org/ns/docbook">To rozszerzenie wymaga rozszerzenia PHP
-<link linkend="book.libxml">libxml</link>. To oznacza, że należy podać dyrektywę konfiguracyjną
-<option role="configure">--enable-libxml</option> podczas kompilacji, pomimo tego, że pośrednio jest to spełnione,
-ponieważ libxml jest domyślnie włączone.</para>'>
+<!ENTITY libxml.required '<para xmlns="http://docbook.org/ns/docbook">
+ To rozszerzenie wymaga rozszerzenia PHP <link linkend="book.libxml">libxml</link>.
+ To oznacza, że należy podać dyrektywę konfiguracyjną <option role="configure">--with-libxml</option>
+ lub <option role="configure">--enable-libxml</option> przed PHP 7.4
+ podczas kompilacji, pomimo tego, że zasadniczo jest to już spełnione, ponieważ libxml
+ jest domyślnie włączone.
+</para>'>
 
 <!-- XMLReader -->
 <!ENTITY xmlreader.libxml20620.note '<caution xmlns="http://docbook.org/ns/docbook"><para xmlns="http://docbook.org/ns/docbook">Ta funkcja jest dostępna tylko wtedy,
@@ -2646,12 +2667,40 @@ jest ustawiony na &true;, eksport jest zwracany jako <type xmlns="http://docbook
 w przeciwnym przypadku jako &null;.'>
 
 <!ENTITY reflection.export.param.return 'Ustawienie na &true; zwróci eksport,
-zamiast go wyświetlać. Ustawienie na &false; (domyslne), odwrotnie.'>
+zamiast go wyświetlać. Ustawienie na &false; (domyślne) odwrotnie.'>
 
 <!ENTITY reflection.invoke.reference 'Jeśli funkcja posiada argumenty które muszą być
 referencjami, muszą one być referencjami w przekazywanej liście argumentów.'>
 
 <!ENTITY reflection.export.param.name 'Refleksja do eksportu.'>
+
+<!ENTITY reflection.getattributes.param.name '<varlistentry xmlns="http://docbook.org/ns/docbook">
+<term><parameter>name</parameter></term>
+<listitem>
+ <para>
+  Filtruje wyniki tak aby zawierały tylko obiekty <classname>ReflectionAttribute</classname>
+  dla atrybutów, które pasują do podanej nazwy.
+ </para>
+</listitem>
+</varlistentry>'>
+
+<!ENTITY reflection.getattributes.param.flags '<varlistentry xmlns="http://docbook.org/ns/docbook">
+<term><parameter>flags</parameter></term>
+<listitem>
+ <para>
+  Flagi określające jak filtrować wyniki, jeśli parametr <parameter>name</parameter>
+  został podany.
+ </para>
+ <para>
+  Domyślnym ustawieniem jest <literal>0</literal>, które zwróci wyniki tylko dla atrybutów,
+  które są klasy podanej w <parameter>name</parameter>.
+ </para>
+ <para>
+  Jedyną inną dostępną opcją jest użycie <constant>ReflectionAttribute::IS_INSTANCEOF</constant>,
+  które zamiast tego do filtrowania użyje <literal>instanceof</literal>.
+ </para>
+</listitem>
+</varlistentry>'>
 
 <!-- SPL -->
 <!ENTITY spl.datastructures.intro.title '<title xmlns="http://docbook.org/ns/docbook">Struktury danych</title>'>
@@ -2672,10 +2721,13 @@ referencjami, muszą one być referencjami w przekazywanej liście argumentów.'
 <!ENTITY spl.misc.intro.title '<title xmlns="http://docbook.org/ns/docbook">Różne klasy i interfejsy</title>'>
 <!ENTITY spl.misc.intro '<partintro xmlns="http://docbook.org/ns/docbook"><para xmlns="http://docbook.org/ns/docbook">Pozostałe klasy i interfejsy SPL.</para></partintro>'>
 
+<!-- ZIP -->
+<!ENTITY zip.filename.separator '<note xmlns="http://docbook.org/ns/docbook"><simpara>W celu zapewnienia maksymalnej przenośności zaleca się aby zawsze używać normalnych ukośników (<literal>/</literal>) jako separatora katalogów w nazwach plików w ZIP.</simpara></note>'>
+
 <!-- Win32Service -->
 <!ENTITY win32service.false.error ', &false; jeśli występuje problem z parametrami lub <link xmlns="http://docbook.org/ns/docbook" linkend="win32service.constants.errors">Kod Błędu Win32</link> w przypadku niepowodzenia.'>
 <!ENTITY win32service.success.false.error 'Zwraca &true; w przypadku powodzenia &win32service.false.error;'>
-<!ENTITY win32service.noerror.false.error 'Zwraca <constant xmlns="http://docbook.org/ns/docbook">WIN32_NO_ERROR</constant> w przypadku powodzenia &win32service.false.error;'>
+<!ENTITY win32service.noerror.false.error 'zwracane było <constant xmlns="http://docbook.org/ns/docbook">WIN32_NO_ERROR</constant> w przypadku powodzenia, &win32service.false.error;'>
 
 <!-- SNMP -->
 <!ENTITY snmp.set.type.values '<para xmlns="http://docbook.org/ns/docbook">
