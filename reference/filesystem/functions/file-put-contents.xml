@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 0faac5c51e09a4736a0d1aa4fe7123f344562db4 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: ea62fb83196997032641b50fe44420305466195e Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-
+<!-- CREDITS: grzesiek -->
 <refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.file-put-contents">
  <refnamediv>
-  <refname>file_put_contents</refname> 
-  <refpurpose>Zapisuje łańcuch znaków do pliku</refpurpose>
+  <refname>file_put_contents</refname>
+  <refpurpose>Zapisuje dane do pliku</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
-   <type>int</type><methodname>file_put_contents</methodname>
-   <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
-   <methodparam><type>mixed</type><parameter>dane</parameter></methodparam>
+   <type class="union"><type>int</type><type>false</type></type><methodname>file_put_contents</methodname>
+   <methodparam><type>string</type><parameter>filename</parameter></methodparam>
+   <methodparam><type>mixed</type><parameter>data</parameter></methodparam>
    <methodparam choice="opt"><type>int</type><parameter>flagi</parameter><initializer>0</initializer></methodparam>
-   <methodparam choice="opt"><type>resource</type><parameter>kontekst</parameter></methodparam>
+   <methodparam choice="opt"><type class="union"><type>resource</type><type>null</type></type>
+   <parameter>context</parameter><initializer>&null;</initializer></methodparam>
   </methodsynopsis>
-  <para> 
-   Ta funkcja działa identycznie jak kolejne wywołanie <function>fopen</function>, 
+  <para>
+   Ta funkcja działa identycznie jak kolejne wywołanie funkcji <function>fopen</function>,
    <function>fwrite</function> i <function>fclose</function>,
    aby zapisać dane do pliku.
   </para>
   <para>
-   Jeżeli <parameter>nazwa_pliku</parameter> nie istnieje, plik jest tworzony.
-   W przeciwnym wypadku plik jest nadpisywany, dopóki nie ustawiono flagi 
+   Jeżeli plik <parameter>filename</parameter> nie istnieje, plik jest tworzony.
+   W przeciwnym wypadku plik jest nadpisywany, dopóki nie ustawiono flagi
    <constant>FILE_APPEND</constant>.
   </para>
  </refsect1>
@@ -34,7 +35,7 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>nazwa_pliku</parameter></term>
+     <term><parameter>filename</parameter></term>
      <listitem>
       <para>
        Ścieżka do pliku, w którym zapisać dane.
@@ -42,19 +43,19 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>dane</parameter></term>
+     <term><parameter>data</parameter></term>
      <listitem>
       <para>
        Dane do zapisania. Może być typu <type>string</type>,
        <type>array</type> lub <type>stream</type>.
       </para>
       <para>
-       Jeżeli <parameter>dane</parameter> są typu <type>stream</type>,
+       Jeżeli parmetr <parameter>data</parameter> jest typu <type>stream</type>,
        pozostały bufor tego strumienia będzie skopiowany do określonego pliku.
        Jest to adekwatne do użycia <function>stream_copy_to_stream</function>.
       </para>
       <para>
-       W parametrze <parameter>dane</parameter> można podać jednowymiarową
+       W parametrze <parameter>data</parameter> można podać jednowymiarową
        tablicę. Jest do adekwatne do użycia kodu
        <literal>file_put_contents($filename, implode('', $array))</literal>.
       </para>
@@ -64,7 +65,7 @@
      <term><parameter>flagi</parameter></term>
      <listitem>
       <para>
-       Wartość parametru <parameter>flagi</parameter> może być dowolną kombinacją 
+       Wartość parametru <parameter>flagi</parameter> może być dowolną kombinacją
        następujących flag połączonych przez binarny operator OR (<literal>|</literal>).
       </para>
       <para>
@@ -83,7 +84,7 @@
             <constant>FILE_USE_INCLUDE_PATH</constant>
            </entry>
            <entry>
-            Szuka <parameter>nazwa_pliku</parameter> w katalogu dołączania.
+            Szuka pliku <parameter>filename</parameter> w katalogu dołączania.
             Zobacz <link linkend="ini.include-path">include_path</link>, aby uzyskać
             więcej informacji.
            </entry>
@@ -93,7 +94,7 @@
             <constant>FILE_APPEND</constant>
            </entry>
            <entry>
-            Jeżeli <parameter>nazwa_pliku</parameter> już istnieje, dane zostaną 
+            Jeżeli plik <parameter>filename</parameter> już istnieje, dane zostaną
             dopisane do pliku, zamiast go nadpisywać.
            </entry>
           </row>
@@ -102,10 +103,10 @@
             <constant>LOCK_EX</constant>
            </entry>
            <entry>
-            Funkcja nabywa wyłączną blokadę na pliku podczas 
+            Funkcja nabywa wyłączną blokadę na pliku podczas
             zapisu do niego. Innymi słowy, wywołanie <function>flock</function> występuje
             pomiędzy wywołaniem <function>fopen</function> a <function>fwrite</function>.
-            Nie jest to identyczne z wywołaniem funkcji <function>fopen</function> w trybie "x".			
+            Nie jest to identyczne z wywołaniem funkcji <function>fopen</function> w trybie "x".
            </entry>
           </row>
          </tbody>
@@ -115,10 +116,10 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>kontekst</parameter></term>
+     <term><parameter>context</parameter></term>
      <listitem>
       <para>
-       Poprawny zasób kontekstu utworzony przy użyciu 
+       Poprawny zasób kontekstu utworzony przy użyciu
        <function>stream_context_create</function>.
       </para>
      </listitem>
@@ -163,7 +164,7 @@ file_put_contents($file, $current);
 $file = 'people.txt';
 // Nowa osoba do dodania do pliku
 $person = "John Smith\n";
-// Zapisz zawartość do pliku 
+// Zapisz zawartość do pliku
 // używając flagi FILE_APPEND, aby dopisać zawartość na koniec pliku
 // i flagi LOCK_EX, aby zapobiec równoczesnemu zapisowi do tego pliku przez kogoś innego
 file_put_contents($file, $person, FILE_APPEND | LOCK_EX);
@@ -174,31 +175,6 @@ file_put_contents($file, $person, FILE_APPEND | LOCK_EX);
   </para>
  </refsect1>
 
- <refsect1 role="changelog">
-  &reftitle.changelog;
-  <para>
-   <informaltable>
-    <tgroup cols="2">
-     <thead>
-      <row>
-       <entry>&Version;</entry>
-       <entry>&Description;</entry>
-      </row>
-     </thead>
-     <tbody>
-     <row>
-       <entry>5.1.0</entry>
-       <entry>
-        Dodano wsparcie dla <constant>LOCK_EX</constant> i możliwość przekazania
-        zasobu strumienia do parametru <parameter>dane</parameter>
-       </entry>
-      </row>
-     </tbody>
-    </tgroup>
-   </informaltable>
-  </para>
- </refsect1>
-  
  <refsect1 role="notes">
   &reftitle.notes;
   &note.bin-safe;

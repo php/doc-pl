@@ -1,28 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: d225d8999548421ae145c612f14c683a41e543f9 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: ea62fb83196997032641b50fe44420305466195e Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-
-<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.file-get-contents">
+<!-- CREDITS: grzesiek -->
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.file-get-contents"
+xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
-  <refname>file_get_contents</refname> 
+  <refname>file_get_contents</refname>
   <refpurpose>Odczytuje cały plik i zwraca łańcuch znaków</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
-   <type>string</type><methodname>file_get_contents</methodname>
-   <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
-   <methodparam choice="opt"><type>bool</type><parameter>use_include_path</parameter><initializer>false</initializer></methodparam>
-   <methodparam choice="opt"><type>resource</type><parameter>kontekst</parameter></methodparam>
+   <type class="union"><type>string</type><type>false</type></type><methodname>file_get_contents</methodname>
+   <methodparam><type>string</type><parameter>filename</parameter></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>use_include_path</parameter><initializer>&false;
+   </initializer></methodparam>
+   <methodparam choice="opt"><type class="union"><type>resource</type><type>null</type></type>
+   <parameter>context</parameter><initializer>&null;</initializer></methodparam>
    <methodparam choice="opt"><type>int</type><parameter>offset</parameter><initializer>0</initializer></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>maksymalna_dlugosc</parameter></methodparam>
+   <methodparam choice="opt"><type class="union"><type>int</type><type>null</type></type>
+   <parameter>length</parameter><initializer>&null;</initializer></methodparam>
   </methodsynopsis>
-  <para> 
+  <para>
    Ta funkcja jest stosunkowo podobna do <function>file</function>, z tą różnicą, że
-   <function>file_get_contents</function> zwraca zawartość pliku jako 
+   <function>file_get_contents</function> zwraca zawartość pliku jako
    <type>string</type>, rozpoczynając od miejsca określonego w argumencie <parameter>offset</parameter>,
-   aż do <parameter>maksymalna_dlugosc</parameter>. W przypadku niepowodzenia 
+   aż do <parameter>length</parameter>. W przypadku niepowodzenia
    <function>file_get_contents</function> zwróci &false;.
   </para>
   <para>
@@ -43,7 +47,7 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>nazwa_pliku</parameter></term>
+     <term><parameter>filename</parameter></term>
      <listitem>
       <para>
        Ścieżka do otwieranego pliku.
@@ -55,17 +59,21 @@
      <listitem>
       <note>
        <para>
-        Od PHP 5 można skorzystać ze stałej <constant>FILE_USE_INCLUDE_PATH</constant> 
+        Stała <constant>FILE_USE_INCLUDE_PATH</constant> może być użyta,
         aby aktywować szukanie w <link linkend="ini.include-path">include path</link>.
-       </para>
+        Nie jest to możliwe, jeśli <link
+        linkend="language.types.declarations.strict">ścisłe typowanie</link>
+        jest włączone, ponieważ stała <constant>FILE_USE_INCLUDE_PATH</constant> jest typem
+        <type>int</type>. Zamiast tego należy użyć &true;
+ </para>
       </note>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>kontekst</parameter></term>
+     <term><parameter>context</parameter></term>
      <listitem>
       <para>
-       Właściwy zasób kontekstu utworzony z pomocą funkcji 
+       Właściwy zasób kontekstu utworzony z pomocą funkcji
        <function>stream_context_create</function>. Jeżeli nie ma konieczności stosowania
        własnego kontekstu, można pominąć ten parametr podając &null;.
       </para>
@@ -76,7 +84,7 @@
      <listitem>
       <para>
        Określa offset, od którego ma rozpocząć się czytanie w pliku.
-       Ujemne offsety liczą od końca strumienia danych.   
+       Ujemne offsety liczą od końca strumienia danych.
       </para>
       <para>
        Szukanie (<parameter>offset</parameter>) nie jest możliwe dla plików zdalnych.
@@ -86,7 +94,7 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>maksymalna_dlugosc</parameter></term>
+     <term><parameter>length</parameter></term>
      <listitem>
       <para>
        Maksymalna długść danych do odczytania. Domyślnie, funkcja będzie czytać
@@ -110,8 +118,43 @@
  <refsect1 role="errors">
   &reftitle.errors;
   <para>
-   Błąd o poziomie <constant>E_WARNING</constant> występuje gdy plik określony jako <parameter>nazwa_pliku</parameter> nie zostanie znaleziony, <parameter>maksymalna_dlugosc</parameter>
+   Błąd o poziomie <constant>E_WARNING</constant> występuje gdy plik określony jako <parameter>filename</parameter> nie zostanie znaleziony, <parameter>length</parameter>
    jest mniejsza od zera lub jeśli szukanie do określonego <parameter>offset</parameter>u nie powiedzie się.
+  </para>
+  <para>
+   Gdy funkcja <function>file_get_contents</function> jest wywoływana na katalogu,
+   generowany jest błąd poziomu <constant>E_WARNING</constant> w systemie Windows,
+   od PHP 7.4 także w innych systemach operacyjnych.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>8.0.0</entry>
+       <entry>
+        Parametr <parameter>length</parameter> akceptuje teraz wartość null.
+       </entry>
+      </row>
+      <row>
+       <entry>7.1.0</entry>
+       <entry>
+        Dodano obsługę ujemnych wartości dla parametru <parameter>offset</parameter>.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
   </para>
  </refsect1>
 
@@ -134,9 +177,9 @@ echo $homepage;
     <programlisting role="php">
 <![CDATA[
 <?php
-// <= PHP 5
+// Jeśli typy ścisłe są włączone, tj. declare(strict_types=1);
 $file = file_get_contents('./people.txt', true);
-// > PHP 5
+// W przeciwnym razie
 $file = file_get_contents('./people.txt', FILE_USE_INCLUDE_PATH);
 ?>
 ]]>
@@ -148,7 +191,7 @@ $file = file_get_contents('./people.txt', FILE_USE_INCLUDE_PATH);
 <![CDATA[
 <?php
 // Odczytaj 14 znaków poczynając od 21
-$section = file_get_contents('./people.txt', NULL, NULL, 20, 14);
+$section = file_get_contents('./people.txt', FALSE, NULL, 20, 14);
 var_dump($section);
 ?>
 ]]>
@@ -156,7 +199,7 @@ var_dump($section);
     &example.outputs.similar;
     <screen>
 <![CDATA[
-string(14) "lle Bjori Ro" 
+string(14) "lle Bjori Ro"
 ]]>
     </screen>
    </example>
@@ -182,37 +225,6 @@ $file = file_get_contents('http://www.example.com/', false, $context);
 ]]>
     </programlisting>
    </example>
-  </para>
- </refsect1>
- 
- <refsect1 role="changelog">
-  &reftitle.changelog;
-  <para>
-   <informaltable>
-    <tgroup cols="2">
-     <thead>
-      <row>
-       <entry>&Version;</entry>
-       <entry>&Description;</entry>
-      </row>
-     </thead>
-     <tbody>
-      <row>
-       <entry>7.1.0</entry>
-       <entry>
-        Dodano wsparcie dla ujemnych <parameter>offset</parameter>ów.
-       </entry>
-      </row>
-      <row>
-       <entry>5.1.0</entry>
-       <entry>
-        Dodano parametry <parameter>offset</parameter> i
-        <parameter>maksymalna_dlugosc</parameter>.
-       </entry>
-      </row>
-     </tbody>
-    </tgroup>
-   </informaltable>
   </para>
  </refsect1>
 

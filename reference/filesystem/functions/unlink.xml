@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: a706ea6af5e3015603a3ecc0264b846af0ca7a7a Maintainer: adi Status: ready -->
+<!-- EN-Revision: ea62fb83196997032641b50fe44420305466195e Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: sobak, grzesiek -->
 <refentry xml:id="function.unlink" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>unlink</refname>
   <refpurpose>Kasowanie pliku</refpurpose>
  </refnamediv>
- 
+
 <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>unlink</methodname>
-   <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
-   <methodparam choice="opt"><type>resource</type><parameter>kontekst</parameter></methodparam>
+   <methodparam><type>string</type><parameter>filename</parameter></methodparam>
+   <methodparam choice="opt"><type class="union"><type>resource</type><type>null</type></type>
+   <parameter>context</parameter><initializer>&null;</initializer></methodparam>
   </methodsynopsis>
   <para>
-   Kasuje <parameter>nazwa_pliku</parameter>. Podobnie do uniksowej funkcji C 
+   Kasuje <parameter>filename</parameter>. Podobnie do uniksowej funkcji C
    unlink(). W przypadku porażki zostanie wygenerowany błąd na poziomie
-   <constant>E_WARNING</constant>. 
+   <constant>E_WARNING</constant>.
   </para>
  </refsect1>
 
@@ -26,10 +28,15 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>nazwa_pliku</parameter></term>
+     <term><parameter>filename</parameter></term>
      <listitem>
       <para>
        Ścieżka do pliku.
+      </para>
+      <para>
+       Jeśli plik jest dowiązaniem symbolicznym, dowiązanie symboliczne zostanie usunięte.
+       W systemie Windows, aby usunąć dowiązanie symboliczne do katalogu, należy użyć funkcji
+       <function>rmdir</function>.
       </para>
      </listitem>
     </varlistentry>
@@ -52,29 +59,27 @@
 
  <refsect1 role="changelog">
   &reftitle.changelog;
-  <para>
-   <informaltable>
-    <tgroup cols="2">
-     <thead>
-      <row>
-       <entry>&Version;</entry>
-       <entry>&Description;</entry>
-      </row>
-     </thead>
-     <tbody>
-      <row>
-       <entry>5.0.0</entry>
-       <entry>
-        Od PHP 5.0.0 <function>unlink</function> może być również użyty z
-        <emphasis>niektórymi</emphasis> osłonami (wrapperami) URL. Zajrzyj do <xref
-        linkend="wrappers"/> aby uzyskać listę wrapperów, które obsługuje
-        <function>unlink</function>.
-       </entry>
-      </row>
-     </tbody>
-    </tgroup>
-   </informaltable>
-  </para>
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>7.3.0</entry>
+      <entry>
+       W systemie Windows możliwe jest teraz użycie funkcji <function>unlink</function>
+       na plikach z uchwytami w użyciu, podczas gdy wcześniej kończyło się to niepowodzeniem.
+       Jednak nadal nie jest możliwe ponowne utworzenie usuniętego pliku, dopóki wszystkie
+       uchwyty do niego nie zostaną zamknięte.
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </informaltable>
  </refsect1>
 
  <refsect1 role="examples">

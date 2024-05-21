@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 26646268168d57f4c916dc102b9fa473800d36f2 Maintainer: adi Status: ready -->
+<!-- EN-Revision: ea62fb83196997032641b50fe44420305466195e Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: sobak, grzesiek -->
 <refentry xml:id="function.copy" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>copy</refname>
   <refpurpose>Kopiuje plik</refpurpose>
  </refnamediv>
- 
+
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>copy</methodname>
-   <methodparam><type>string</type><parameter>źródło</parameter></methodparam>
-   <methodparam><type>string</type><parameter>przeznaczenie</parameter></methodparam>
-   <methodparam choice="opt"><type>resource</type><parameter>kontekst</parameter></methodparam>
+   <methodparam><type>string</type><parameter>from</parameter></methodparam>
+   <methodparam><type>string</type><parameter>to</parameter></methodparam>
+   <methodparam choice="opt"><type class="union"><type>resource</type><type>null</type></type>
+   <parameter>context</parameter><initializer>&null;</initializer></methodparam>
   </methodsynopsis>
   <para>
-   Kopiuje plik z <parameter>źródło</parameter> do
-   <parameter>przeznaczenie</parameter>.
+   Kopiuje plik z parametru <parameter>from</parameter> do
+   parametru <parameter>to</parameter>.
   </para>
   <para>
    Jeśli chcesz przenieść plik, użyj funkcji <function>rename</function>.
@@ -29,7 +31,7 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>źródło</parameter></term>
+     <term><parameter>from</parameter></term>
      <listitem>
       <para>
        Ścieżka do pliku źródłowego.
@@ -37,10 +39,10 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>przeznaczenie</parameter></term>
+     <term><parameter>to</parameter></term>
      <listitem>
       <para>
-       Ścieżka docelowa. Jeśli <parameter>przeznaczenie</parameter> jest URLem, 
+       Ścieżka docelowa. Jeśli parametr <parameter>to</parameter> jest URLem,
        operacja kopiowania może się niepowieść, jeśli wrapper nie obsługuje nadpisywania
        istniejących plików.
       </para>
@@ -71,48 +73,9 @@
   </para>
  </refsect1>
 
- <refsect1 role="changelog">
-  &reftitle.changelog;
-  <para>
-   <informaltable>
-    <tgroup cols="2">
-     <thead>
-      <row>
-       <entry>&Version;</entry>
-       <entry>&Description;</entry>
-      </row>
-     </thead>
-     <tbody>
-      <row>
-       <entry>5.3.4</entry>
-       <entry>
-        Parametr <parameter>kontekst</parameter> faktycznie ma wpływ.
-        Wcześniej dowolny <parameter>kontekst</parameter> był ignorowany.
-       </entry>
-      </row>
-      <row>
-       <entry>5.3.0</entry>
-       <entry>
-        Dodano obsługę kontekstu.
-       </entry>
-      </row>
-      <row>
-       <entry>4.3.0</entry>
-       <entry>
-        Zarówno <parameter>źródło</parameter> i <parameter>przeznaczenie</parameter>
-        mogą być URLami jeśli "wrappery fopen" zostały włączone.
-        Zobacz <function>fopen</function> w celu poznania więcej szczegółów.
-       </entry>
-      </row>
-     </tbody>
-    </tgroup>
-   </informaltable>
-  </para>
- </refsect1>
-
- <refsect1 role="examples">
+<refsect1 role="examples">
   &reftitle.examples;
-  <para>   
+  <para>
    <example>
     <title><function>copy</function> przykład</title>
     <programlisting role="php">
@@ -137,7 +100,7 @@ if (!copy($file, $newfile)) {
    <simplelist>
     <member><function>move_uploaded_file</function></member>
     <member><function>rename</function></member>
-    <member>Rozdział podręcznika dotyczący<link 
+    <member>Rozdział podręcznika dotyczący<link
      linkend="features.file-upload">obsługi wgrywania plików</link></member>
    </simplelist>
   </para>

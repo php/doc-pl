@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 23348cb918016e0da9a346d1b65f316696fad6cd Maintainer: adi Status: ready -->
+<!-- EN-Revision: d0cc084a925f112c156d0dbac12718b2bd8d4889 Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS: sobak -->
+<!-- CREDITS: sobak, grzesiek -->
 <refentry xml:id="function.pathinfo" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>pathinfo</refname>
@@ -11,20 +11,35 @@
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
-   <type>mixed</type><methodname>pathinfo</methodname>
-   <methodparam><type>string</type><parameter>ścieżka</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>opcje</parameter><initializer>PATHINFO_DIRNAME | PATHINFO_BASENAME | PATHINFO_EXTENSION | PATHINFO_FILENAME</initializer></methodparam>
+   <type class="union"><type>array</type><type>string</type></type><methodname>pathinfo</methodname>
+   <methodparam><type>string</type><parameter>path</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>flags</parameter><initializer>
+   <constant>PATHINFO_ALL</constant></initializer></methodparam>
   </methodsynopsis>
   <para>
    <function>pathinfo</function> zwraca informacje o
    ścieżce: tablicę asocjacyjną lub łańcuch znaków,
-   zależnie od paramtetru <parameter>opcje</parameter>.
+   zależnie od paramtetru <parameter>flags</parameter>.
   </para>
   <note>
    <para>
     W celu uzyskania informacji jak pobrać bieżącą ścieżkę, przeczytaj 
     rozdział <link linkend="language.variables.predefined">
     zastrzeżone zmienne predefiniowane</link>.
+   </para>
+  </note>
+  <note>
+   <para>
+    <function>pathinfo</function> działa naiwnie na ciągu wejściowym
+    i nie jest świadoma rzeczywistego systemu plików lub komponentów ścieżki,
+    takich jak "<literal>..</literal>".
+   </para>
+  </note>
+  <note>
+   <para>
+    Tylko w systemach Windows znak <literal>\</literal> będzie interpretowany
+    jako separator katalogów. W innych systemach będzie on traktowany jak każdy
+    inny znak.
    </para>
   </note>
   <caution>
@@ -41,7 +56,7 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>ścieżka</parameter></term>
+     <term><parameter>path</parameter></term>
      <listitem>
       <para>
         Ścieżka do sparsowania
@@ -49,7 +64,7 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>opcje</parameter></term>
+     <term><parameter>flags</parameter></term>
      <listitem>
       <para>
        Jeżeli podano, określa konkretny element ścieżki do zwrócenia;
@@ -60,7 +75,7 @@
        <constant>PATHINFO_FILENAME</constant>.
       </para>
       <para>
-       Jeżeli <parameter>opcje</parameter> nie zostały określone,
+       Jeżeli parametr <parameter>flags</parameter> nie został określony,
        funkcja zwraca wszystkie elementy.
       </para>
      </listitem>
@@ -80,7 +95,7 @@
   </para>
   <note>
    <para>
-    Jeżeli <parameter>ścieżka</parameter> ma więcej niż jedno rozszerzenie,
+    Jeżeli parametr <parameter>path</parameter> ma więcej niż jedno rozszerzenie,
     <constant>PATHINFO_EXTENSION</constant> zwraca tylko ostatnie, a
     <constant>PATHINFO_FILENAME</constant> ucina tylko ostatnie.
     Spójrz na przykłady poniżej.
@@ -88,7 +103,7 @@
   </note>
   <note>
    <para>
-    Jeśli <parameter>ścieżka</parameter> nie zawiera rozszerzenia,
+    Jeśli parametr <parameter>path</parameter> nie zawiera rozszerzenia,
     element <literal>extension</literal> nie będzie zwrócony
     (zobacz drugi przykład poniżej).
    </para>
@@ -102,32 +117,8 @@
    </para>
   </note>
   <para>
-   Jeśli parametr <parameter>opcje</parameter> jest obecny, funkcja zwróci  
+   Jeśli parametr <parameter>flags</parameter> jest obecny, funkcja zwróci  
    <type>string</type> zawierający określony element.
-  </para>
- </refsect1>
-
- <refsect1 role="changelog">
-  &reftitle.changelog;
-  <para>
-   <informaltable>
-    <tgroup cols="2">
-     <thead>
-      <row>
-       <entry>&Version;</entry>
-       <entry>&Description;</entry>
-      </row>
-     </thead>
-     <tbody>
-      <row>
-       <entry>5.2.0</entry>
-       <entry>
-        Została dodana stała <constant>PATHINFO_FILENAME</constant>.
-       </entry>
-      </row>
-     </tbody>
-    </tgroup>
-   </informaltable>
   </para>
  </refsect1>
 
@@ -144,7 +135,7 @@ $path_parts = pathinfo('/www/htdocs/inc/lib.inc.php');
 echo $path_parts['dirname'], "\n";
 echo $path_parts['basename'], "\n";
 echo $path_parts['extension'], "\n";
-echo $path_parts['filename'], "\n"; // od PHP 5.2.0
+echo $path_parts['filename'], "\n";
 ?>
 ]]>
     </programlisting>
@@ -208,6 +199,32 @@ Array
     </screen>
    </example>
   </para>
+  <para>
+   <example>
+    <title><function>pathinfo</function> example with array dereferencing</title>
+    <para>
+     Parametr <parameter>flags</parameter> maską bitową. Może być podana tylko
+     jedna wartość. Aby wybrać tylko ograniczony zestaw przeanalizowanych wartości,
+     użyj destrukturyzacji tablicy w następujący sposób:
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+['basename' => $basename, 'dirname' => $dirname] = pathinfo('/www/htdocs/inc/lib.inc.php');
+
+var_dump($basename, $dirname);
+?>
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
+<![CDATA[
+string(11) "lib.inc.php"
+string(15) "/www/htdocs/inc"
+]]>
+    </screen>
+   </example>
+  </para>
  </refsect1>
 
  <refsect1 role="seealso">
@@ -223,7 +240,6 @@ Array
  </refsect1>
 
 </refentry>
-
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml
