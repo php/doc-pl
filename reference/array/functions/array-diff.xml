@@ -16,8 +16,8 @@
    <methodparam rep="repeat"><type>array</type><parameter>arrays</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Porównuje <parameter>array</parameter> z jedną lub większą ilością tablic
-   i zwraca wartości <parameter>array</parameter>, które nie są obecne w
+   Porównuje tablicę <parameter>array</parameter> z jedną lub większą ilością tablic
+   i zwraca wartości w tablicy <parameter>array</parameter>, które nie są obecne w
    żadnej z innych tablic.
   </para>
  </refsect1>
@@ -49,9 +49,9 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca tablicę zawierającą wszystkie elementy z
+   Zwraca tablicę zawierającą wszystkie elementy z tablicy
    <parameter>array</parameter> które nie są obecne w żadnej z pozostałych tablic.
-   Klucze w <parameter>array</parameter> są zachowywane.
+   Klucze w tablicy <parameter>array</parameter> są zachowywane.
   </para>
  </refsect1>
 
@@ -82,16 +82,16 @@
     <programlisting role="php">
 <![CDATA[
 <?php
-$tablica1 = array("a" => "green", "red", "blue", "red");
-$tablica2 = array("b" => "green", "yellow", "red");
-$wynik = array_diff($tablica1, $tablica2);
+$array1 = array("a" => "green", "red", "blue", "red");
+$array2 = array("b" => "green", "yellow", "red");
+$result = array_diff($array1, $array2);
 
-print_r($wynik);
+print_r($result);
 ?>
 ]]>
     </programlisting>
     <para>
-     Wielokrotne wystąpienia w <varname>$tablica1</varname> są
+     Wielokrotne wystąpienia w tablicy <varname>$array1</varname> są
      traktowane w ten sam sposób. Wynikiem będzie:
     </para>
     <screen>
@@ -107,21 +107,21 @@ Array
 
   <para>
    <example>
-    <title><function>array_diff</function> przykład z niepasującymi typami</title>
+    <title><function>array_diff</function> z niepasującymi typami</title>
     <para>
      Dwa elementy są uznawane za równe wtedy i tylko wtedy, gdy
      <literal>(string) $elem1 === (string) $elem2</literal>. To jest,
-     kiedy <link linkend="language.types.string.casting">reprezentacja łańcuchowa</link> jest taka sama.
+     kiedy <link linkend="language.types.string.casting">reprezentacja jako ciąg znaków</link> jest taka sama.
     </para>
     <programlisting role="php">
      <![CDATA[
 <?php
-// Spowoduje to wygenerowanie Powiadomienia, że tablica nie może zostać rzutowana na ciąg znaków.
+// Spowoduje to wygenerowanie Ostrzeżenia, że tablica nie może zostać rzutowana na ciąg znaków.
 $source = [1, 2, 3, 4];
 $filter = [3, 4, [5], 6];
 $result = array_diff($source, $filter);
 
-// Jest to w porządku, ponieważ obiekty mogą rzutować na ciąg znaków.
+// Zadziała ponieważ te obiekty mogą zostać zrzutowane na ciąg znaków.
 class S {
   private $v;
 

@@ -22,12 +22,12 @@
   </methodsynopsis>
   <para>
    <function>array_keys</function> zwraca klucze, numeryczne
-   i tekstowe, z <parameter>array</parameter>.
+   i tekstowe, z tablicy <parameter>array</parameter>.
   </para>
   <para>
    Jeżeli parametr <parameter>filter_value</parameter> został podany,
    to zwracane są klucze tylko dla tej wartości. W przeciwnym wypadku zwrócone
-   zostaną wszystkie klucze z podanej <parameter>tablicy</parameter>.
+   zostaną wszystkie klucze z podanej tablicy <parameter>array</parameter>.
   </para>
  </refsect1>
 
@@ -66,7 +66,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca tablicę wszystkich kluczy z parametru <parameter>array</parameter>.
+   Zwraca tablicę wszystkich kluczy z tablicy <parameter>array</parameter>.
   </para>
  </refsect1>
 
@@ -78,14 +78,14 @@
     <programlisting role="php">
 <![CDATA[
 <?php
-$array = array(0 => 100, "kolor" => "czerwony");
+$array = array(0 => 100, "color" => "red");
 print_r(array_keys($array));
 
-$array = array("niebieski", "czerwony", "zielony", "niebieski", "niebieski");
-print_r(array_keys($array, "niebieski"));
+$array = array("blue", "red", "green", "blue", "blue");
+print_r(array_keys($array, "blue"));
 
-$array = array("kolor" => array("niebieski", "czerwony", "zielony"),
-               "rozmiar"  => array("mały", "średni", "duży"));
+$array = array("color" => array("blue", "red", "green"),
+               "size"  => array("small", "medium", "large"));
 print_r(array_keys($array));
 ?>
 ]]>
@@ -96,7 +96,7 @@ print_r(array_keys($array));
 Array
 (
     [0] => 0
-    [1] => kolor
+    [1] => color
 )
 Array
 (
@@ -106,8 +106,8 @@ Array
 )
 Array
 (
-    [0] => kolor
-    [1] => rozmiar
+    [0] => color
+    [1] => size
 )
 ]]>
     </screen>

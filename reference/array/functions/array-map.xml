@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- EN-Revision: e8c83816e0ca7a4136a5991b2227ddf00fa9adc6 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS: cyb0org, leszek, grzesiek -->
+<!-- CREDITS: cyb0org, leszek, sobak, grzesiek -->
 <refentry xml:id="function.array-map" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>array_map</refname>
@@ -20,10 +20,10 @@
   <para>
    <function>array_map</function> zwraca tablicę &array; zawierającą
    wyniki zastosowania <parameter>callback</parameter> do odpowiedniej wartości
-   <parameter>array</parameter> (i <parameter>arrays</parameter>, jeśli podano
+   tablicy <parameter>array</parameter> (i tablic <parameter>arrays</parameter>, jeśli podano
    więcej tablic) użytych jako argumenty dla funkcji zwrotnej callback. Liczba
    parametrów, które <parameter>callback</parameter> akceptuje, powinna być
-   zgoda z liczbą tablic przekazanych do <function>array_map</function>.
+   zgodna z liczbą tablic przekazanych do funkcji <function>array_map</function>.
    Nadmiarowe tablice wejściowe są ignorowane. Błąd <classname>ArgumentCountError</classname>
    jest zgłaszany, jeśli podano niewystarczającą liczbę argumentów.
   </para>
@@ -60,7 +60,7 @@
      <listitem>
       <para>
        Dodatkowa zmienna lista argumentów tablicowych, które mają być uruchomione
-       przez funkcję<parameter>callback</parameter>.
+       przez funkcję <parameter>callback</parameter>.
       </para>
      </listitem>
     </varlistentry>
@@ -72,14 +72,14 @@
   &reftitle.returnvalues;
   <para>
    Zwraca tablicę zawierającą wyniki zastosowania funkcji <parameter>callback</parameter>
-   do odpowiedniej wartości <parameter>array</parameter>
-   (and <parameter>arrays</parameter> jeśli podano więcej tablic)
+   do odpowiedniej wartości tablicy <parameter>array</parameter>
+   (i tablic <parameter>arrays</parameter> jeśli podano więcej tablic)
    używanych jako argumenty funkcji zwrotnej callback
   </para>
   <para>
-   The returned array will preserve the keys of the array argument if and only
-   if exactly one array is passed. If more than one array is passed, the
-   returned array will have sequential integer keys.
+   Zwrócona tablica zachowa klucze argumentu tablicy wtedy i tylko wtedy,
+   jeśli przekazano dokładnie jedną tablicę. Jeśli przekazano więcej niż jedną tablicę,
+   zwrócona tablica będzie miała sekwencyjne klucze liczb całkowitych.
   </para>
  </refsect1>
 
@@ -172,7 +172,7 @@ Array
   </para>
   <para>
    <example>
-    <title><function>array_map</function> - większa ilość tablic</title>
+    <title><function>array_map</function> - użycie większej ilości tablic</title>
     <programlisting role="php">
 <![CDATA[
 <?php

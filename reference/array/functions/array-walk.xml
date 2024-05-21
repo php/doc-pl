@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: d45ff7a3e78243470d1b7e5141d7ded022286d7f Maintainer: cyb0org Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS: leszek, grzesiek -->
+<!-- CREDITS: leszek, sobak, grzesiek -->
 <refentry xml:id="function.array-walk" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>array_walk</refname>
-  <refpurpose>Zastosuj funkcję użytkownika do każdego elementu tablicy</refpurpose>
+  <refpurpose>Stosuje funkcję użytkownika do każdego elementu tablicy</refpurpose>
  </refnamediv>
  <refsect1 role="description">
   &reftitle.description;
@@ -21,7 +21,7 @@
   </simpara>
   <para>
    Na działanie <function>array_walk</function> nie wpływa pozycja wewnętrznego wskaźnika
-   parametru <parameter>array</parameter>. <function>array_walk</function>
+   tablicy <parameter>array</parameter>. <function>array_walk</function>
    przetworzy wszystkie elementy tablicy niezależnie od pozycji tego wskaźnika.
   </para>
  </refsect1>
@@ -48,7 +48,7 @@
       <note>
        <para>
         Jeśli <parameter>callback</parameter> ma zmieniać wartości tablicy,
-        należy określić pierwszy argument <parameter>callback</parameter>
+        należy określić pierwszy parametr <parameter>callback</parameter>
         jako <link linkend="language.references">referencję</link>. W tym
         przypadku wszystkie zmiany dokonane przez tą funkcję będą dokonywane
         bezpośrednio na oryginalnej tablicy.
@@ -57,7 +57,7 @@
       <note>
         <para>
           Wiele wewnętrznych funkcji (na przykład <function>strtolower</function>)
-          wygeneruje ostrzeżenie jeśli przekazanych zostanie więcej argumentów
+          wygeneruje ostrzeżenie, jeśli przekazanych zostanie więcej argumentów
           niż oczekiwano i nie nadają się do użycia bezpośrednio jako
           <parameter>callback</parameter>.
         </para>
@@ -118,7 +118,7 @@
       <entry>8.0.0</entry>
       <entry>
        Jeśli <parameter>callback</parameter> oczekuje drugiego lub trzeciego parametru przekazanego
-       przez referencję, wówczas ta funkcja wyemituje <constant>E_WARNING</constant>.
+       przez referencję, wówczas ta funkcja wyemituje błąd <constant>E_WARNING</constant>.
       </entry>
      </row>
     </tbody>
@@ -134,25 +134,25 @@
     <programlisting role="php">
 <![CDATA[
 <?php
-$owoce = array ("d" => "cytryna", "a" => "pomarańcza", "b" => "banan", "c" => "jabłko");
+$fruits = array ("d" => "lemon", "a" => "orange", "b" => "banana", "c" => "apple");
 
-function testowa_zmiana(&$element1, $klucz, $prefiks)
+function test_alter(&$element1, $key, $prefiks)
 {
     $element1 = "$prefiks: $element1";
 }
 
-function testowe_wyswietlenie($element2, $klucz)
+function test_print($element2, $key)
 {
-    echo "$klucz. $element2\n";
+    echo "$key. $element2\n";
 }
 
 echo "Przed ...:\n";
-array_walk ($owoce, 'testowe_wyswietlenie');
+array_walk ($fruits, 'test_print');
 
-array_walk ($owoce, 'testowa_zmiana', 'owoc');
+array_walk ($fruits, 'test_alter', 'fruit');
 echo "... i po:\n";
 
-array_walk ($owoce, 'testowe_wyswietlenie');
+array_walk ($fruits, 'test_print');
 ?>
 ]]>
     </programlisting>
@@ -160,15 +160,15 @@ array_walk ($owoce, 'testowe_wyswietlenie');
     <screen role="php">
 <![CDATA[
 Przed ...:
-d. cytryna
-a. pomarańcza
-b. banan
-c. jabłko
+d. lemon
+a. orange
+b. banana
+c. apple
 ... i po:
-d. owoc: cytryna
-a. owoc: pomarańcza
-b. owoc: banan
-c. owoc: jabłko
+d. fruit: lemon
+a. fruit: orange
+b. fruit: banana
+c. fruit: apple
 ]]>
     </screen>
    </example>

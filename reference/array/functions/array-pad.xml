@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 2ed209827b7652deaf6d37293938a91196dcd91a Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS: grzesiek -->
+<!-- CREDITS: sobak, grzesiek -->
 <refentry xml:id="function.array-pad" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>array_pad</refname>
-  <refpurpose>Dopełnij tablicę do podanej długości podanymi wartościami</refpurpose>
+  <refpurpose>Dopełnia tablicę do podanej długości podanymi wartościami</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
@@ -19,8 +19,8 @@
   <para>
    <function>array_pad</function> zwraca kopię tablicy
    <parameter>array</parameter> dopełnioną do rozmiaru określonego przez
-   <parameter>length</parameter> wartością
-   <parameter>value</parameter>. Jeśli <parameter>length</parameter>
+   parametr <parameter>length</parameter> wartością podaną przez parmetr
+   <parameter>value</parameter>. Jeśli parametr <parameter>length</parameter>
    jest wartością dodatnią, to tablica jest dopełniana z prawej strony,
    jeśli ujemna to z lewej. Jeśli wartość bezwzględna parametru
    <parameter>length</parameter> jest mniejsza lub równa długości tablicy
@@ -53,8 +53,8 @@
      <listitem>
       <para>
        Wartość, której należy użyć do dopełniania jeśli
-       <parameter>array</parameter> jest mniejsza niż
-       <parameter>length</parameter>.
+       tablica <parameter>array</parameter> jest mniejsza niż
+       parametr <parameter>length</parameter>.
       </para>
      </listitem>
     </varlistentry>
@@ -66,12 +66,12 @@
   &reftitle.returnvalues;
   <para>
    Zwraca kopię tablicy <parameter>array</parameter> dopełnioną do rozmiaru
-   określonego przez <parameter>length</parameter> wartością
-   <parameter>value</parameter>. Jeśli <parameter>length</parameter> jest
+   określonego przez parametr <parameter>length</parameter> wartością okeśloną przez
+   parametr <parameter>value</parameter>. Jeśli parametr <parameter>length</parameter> jest
    wartością dodatnią, to tablica jest dopełniana z prawej strony, jeśli
    ujemna to z lewej. Jeśli wartość bezwzględna parametru
    <parameter>length</parameter> jest mniejsza lub równa długości tablicy
-   <parameter>tablica</parameter>, to tablica nie jest dopełniana.
+   <parameter>array</parameter>, to tablica nie jest dopełniana.
   </para>
  </refsect1>
 
@@ -108,15 +108,15 @@
     <programlisting role="php">
 <![CDATA[
 <?php
-$wejscie = array(12, 10, 9);
+$input = array(12, 10, 9);
 
-$wynik = array_pad($wejscie, 5, 0);
+$result = array_pad($input, 5, 0);
 // wynik to array(12, 10, 9, 0, 0)
 
-$wynik = array_pad($wejscie, -7, -1);
+$result = array_pad($input, -7, -1);
 // wynik to array(-1, -1, -1, -1, 12, 10, 9)
 
-$wynik = array_pad($wejscie, 2, "noop");
+$result = array_pad($input, 2, "noop");
 // nie ma dopełniania
 ?>
 ]]>
