@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 1a34931477c98bef69ac1708ebe9947705045d52 Maintainer: adi Status: ready -->
+<!-- EN-Revision: 2b56c905fb0d6fcab44cc0c2abdbf393fc2b69ea Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: sobak, grzesiek -->
 <refentry xml:id="function.touch" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>touch</refname>
@@ -12,13 +13,15 @@
   <methodsynopsis>
    <type>bool</type><methodname>touch</methodname>
    <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>czas</parameter><initializer>time()</initializer></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>dczas</parameter></methodparam>
+   <methodparam choice="opt"><type class="union"><type>int</type><type>null</type></type>
+   <parameter>mtime</parameter><initializer>&null;</initializer></methodparam>
+   <methodparam choice="opt"><type class="union"><type>int</type><type>null</type></type>
+   <parameter>atime</parameter><initializer>&null;</initializer></methodparam>
   </methodsynopsis>
   <para>
    Próbuje ustawić czas dostępu i modyfikacji pliku o nazwie
    <parameter>nazwa_pliku</parameter> na wartość podaną przez 
-   <parameter>czas</parameter>.
+   <parameter>mtime</parameter>.
    Zauważ, że czas dostępu jest zawsze modyfikowany, niezależnie od 
    ilości parametrów.
   </para>
@@ -40,22 +43,22 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>czas</parameter></term>
+     <term><parameter>mtime</parameter></term>
      <listitem>
       <para>
-       Czas modyfikacji. Jeśli <parameter>czas</parameter> nie został podany,
+       Czas modyfikacji. Jeśli parametr <parameter>mtime</parameter> ma wartość &null;,
        zostanie użyty bieżący czas systemowy.
       </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>dczas</parameter></term>
+     <term><parameter>atime</parameter></term>
      <listitem>
       <para>
-       Jeśli podano, to czas dostępu do podanego pliku zostanie ustawiony
-       na wartość <parameter>dczas</parameter>. W przeciwnym wypadku zostanie ustawiony na
-       wartość przekazaną w parametrze <parameter>time</parameter>.
-       Jeśli, żaden nie występuje, zostanie użyty bieżący czas.
+       Jeśli nie mm wartości &null;, to czas dostępu do podanego pliku zostanie ustawiony
+       na wartość <parameter>atime</parameter>. W przeciwnym wypadku zostanie ustawiony na
+       wartość przekazaną w parametrze <parameter>mtime</parameter>.
+       Jeśli, oba mają wartość &null;, zostanie użyty bieżący czas.
       </para>
      </listitem>
     </varlistentry>
@@ -72,27 +75,25 @@
 
  <refsect1 role="changelog">
   &reftitle.changelog;
-  <para>
-   <informaltable>
-    <tgroup cols="2">
-     <thead>
-      <row>
-       <entry>&Version;</entry>
-       <entry>&Description;</entry>
-      </row>
-     </thead>
-     <tbody>
-      <row>
-       <entry>5.3.0</entry>
-       <entry>
-        Możliwa jest zmiana czasu modyfikacji katalogu 
-        pod Windows.
-       </entry>
-      </row>
-     </tbody>
-    </tgroup>
-   </informaltable>
-  </para>
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>8.0.0</entry>
+      <entry>
+       Parametr <parameter>mtime</parameter> i <parameter>atime</parameter>
+       akceptują teraz wartość null.
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </informaltable>
  </refsect1>
 
  <refsect1 role="examples">
@@ -115,7 +116,7 @@ if (touch($filename)) {
   </para>
   <para>
    <example>
-    <title><function>touch</function> użycie parametru <parameter>czas</parameter></title>
+    <title><function>touch</function> użycie parametru <parameter>mtime</parameter></title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -138,12 +139,6 @@ if (!touch('jakis_plik.txt', $time)) {
  <refsect1 role="notes">
   &reftitle.notes;
   &note.filesystem-time-res;
-  <warning>
-   <para>
-    Przed wersją PHP 5.3.0 nie istniała mozliwość zmiany czasu modyfikacji
-    katalogu za pomocą tej funkcji pod systemem Windows.
-   </para>
-  </warning>
  </refsect1>
 
 </refentry>

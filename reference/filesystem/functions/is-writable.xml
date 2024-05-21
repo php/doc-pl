@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 44aabb8f7e3cc8760d33b0ff60ffae362b9d1ed3 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: fccc7eb7010120c17732c57f93df1f321245376c Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: sobak, grzesiek -->
 <refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.is-writable">
  <refnamediv>
   <refname>is_writable</refname>
   <refpurpose>Sprawdza czy można zapisać do pliku</refpurpose>
  </refnamediv>
- 
+
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>is_writable</methodname>
-   <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
+   <methodparam><type>string</type><parameter>filename</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Zwraca &true; jeżeli plik <parameter>nazwa_pliku</parameter> istnieje i jest
+   Zwraca &true; jeżeli plik <parameter>filename</parameter> istnieje i jest
    zapisywalny. Jako ten argument można podać nazwę katalogu, aby sprawdzić
    czy katalog jest zapisywalny.
   </para>
   <para>
    Miej świadomość, że PHP będzie próbował uzyskać dostęp do pliku jako użytkownik,
-   pod którym jest uruchamiany serwer (często 'nobody'). Ograniczenia trybu
-   bezpiecznego nie są brane pod uwagę.
+   pod którym jest uruchamiany serwer (często 'nobody').
   </para>
  </refsect1>
 
@@ -30,7 +30,7 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>nazwa_pliku</parameter></term>
+     <term><parameter>filename</parameter></term>
      <listitem>
       <para>
        Nazwa sprawdzanego pliku lub katalogu.
@@ -40,11 +40,11 @@
    </variablelist>
   </para>
  </refsect1>
- 
+
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca &true; jeżeli <parameter>nazwa_pliku</parameter> istnieje
+   Zwraca &true; jeżeli <parameter>filename</parameter> istnieje
    i jest zapisywalny.
   </para>
  </refsect1>
@@ -77,11 +77,11 @@ if (is_writable($filename)) {
 
  <refsect1 role="notes">
   &reftitle.notes;
-  
+
   &note.clearstatcache;
   &tip.fopen-wrapper.stat;
  </refsect1>
- 
+
  <refsect1 role="seealso">
   &reftitle.seealso;
   <para>

@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 44aabb8f7e3cc8760d33b0ff60ffae362b9d1ed3 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 871a231f4a1caa5fb258ae53b1bb7d1fb2a0f949 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: grzesiek -->
 <refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.fileatime">
  <refnamediv>
   <refname>fileatime</refname>
   <refpurpose>Zwraca czas ostatniego dostępu do pliku</refpurpose>
  </refnamediv>
- 
+
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
-   <type>int</type><methodname>fileatime</methodname>
-   <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
+   <type class="union"><type>int</type><type>false</type></type><methodname>fileatime</methodname>
+   <methodparam><type>string</type><parameter>filename</parameter></methodparam>
   </methodsynopsis>
   <simpara>
    Zwraca czas ostatniego dostępu do pliku.
@@ -23,7 +24,7 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>nazwa_pliku</parameter></term>
+     <term><parameter>filename</parameter></term>
      <listitem>
       <para>
        Ścieżka do pliku.
@@ -40,6 +41,11 @@
    Zwraca czas w którym nastąpił ostatni dostęp do pliku, &return.falseforfailure;.
    Wartość jest zwracana w postaci Unixowego znacznika czau.
   </para>
+ </refsect1>
+
+ <refsect1 role="errors">
+  &reftitle.errors;
+  &fs.emits.warning.on.failure;
  </refsect1>
 
  <refsect1 role="examples">
@@ -63,11 +69,6 @@ if (file_exists($filename)) {
     </programlisting>
    </example>
   </para>
- </refsect1>
-
- <refsect1 role="errors">
-  &reftitle.errors;
-  &fs.emits.warning.on.failure;
  </refsect1>
 
  <refsect1 role="notes">

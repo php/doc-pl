@@ -1,25 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 3636c163fb926c758e2bed427b7bcd6a8e4fc581 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: cb3e68d99d80a70feafc6f9a1b5f678e4d0522af Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS: adi -->
+<!-- CREDITS: adi, sobak, grzesiek -->
 <refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.fgetss">
  <refnamediv>
   <refname>fgetss</refname>
   <refpurpose>Pobiera linię ze wskaźnika pliku i usuwa znaczniki HTML</refpurpose>
  </refnamediv>
  
+ <refsynopsisdiv>
+   &warn.deprecated.function-7-3-0.removed-8-0-0;
+ </refsynopsisdiv>
+
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>string</type><methodname>fgetss</methodname>
-   <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>długość</parameter></methodparam>
-   <methodparam choice="opt"><type>string</type><parameter>dozwolone_tagi</parameter></methodparam>
+   <methodparam><type>resource</type><parameter>handle</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>length</parameter></methodparam>
+   <methodparam choice="opt"><type>string</type><parameter>allowable_tags</parameter></methodparam>
   </methodsynopsis>
   <para>
    Działa identycznie jak <function>fgets</function>, oprócz tego że 
    <function>fgetss</function> próbuje usunąć wszystkie bajty NUL, znaczniki HTML i PHP z 
    tekstu, który przeczyta.
+   Funkcja zachowuje stan parsowania od wywołania do wywołania i jako taka nie jest
+   równoważna wywołaniu funkcji <function>strip_tags</function> na wartości zwracanej
+   przez funkcję <function>fgets</function>.
   </para>
  </refsect1>
 
@@ -28,13 +35,13 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>uchwyt</parameter></term>
+     <term><parameter>handle</parameter></term>
      <listitem>
       &fs.validfp.all;
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>długość</parameter></term>
+     <term><parameter>length</parameter></term>
      <listitem>
       <para>
        Długość danych do pobrania.
@@ -42,7 +49,7 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>dozwolone_tagi</parameter></term>
+     <term><parameter>allowable_tags</parameter></term>
      <listitem>
       <para>
        Możesz użyć opcjonalnego trzeciego parametru do określenia które znaczniki nie powinny 
@@ -59,8 +66,8 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca łańcuch znaków o <parameter>długości</parameter> - 1 bajtów odczytanych ze
-   wskaźnika pliku wskazanego przez <parameter>uchwyt</parameter>, pozbawionego całego
+   Zwraca łańcuch znaków o długości <parameter>length</parameter> - 1 bajtów odczytanych ze
+   wskaźnika pliku wskazanego przez <parameter>handle</parameter>, pozbawionego całego
    kodu HTML i PHP.
   </para>
   <para>
@@ -69,6 +76,7 @@
  </refsect1>
 
  <refsect1 role="examples">
+  &reftitle.examples;
   <para>
    <example>
     <title>Czytanie pliku PHP linia po linii</title>
@@ -81,15 +89,15 @@ $str = <<<EOD
 </body></html>
 Tekst po za blokiem HTML.
 EOD;
-file_put_contents('przyklad.php', $str);
+file_put_contents('sample.php', $str);
 
-$uchwyt = @fopen("przyklad.php", "r");
-if ($uchwyt) {
-    while (!feof($uchwyt)) {
-        $bufor = fgetss($uchwyt, 4096);
+$handle = @fopen("sample.php", "r");
+if ($handle) {
+    while (!feof($handle)) {
+        $bufor = fgetss($handle, 4096);
         echo $bufor;
     }
-    fclose($uchwyt);
+    fclose($handle);
 }
 ?>
 ]]>
@@ -120,6 +128,8 @@ Tekst po za blokiem HTML.
     <member><function>popen</function></member>
     <member><function>fsockopen</function></member>
     <member><function>strip_tags</function></member>
+    <member><methodname>SplFileObject::fgetss</methodname></member>
+    <member>The <link linkend="filters.string.strip_tags">string.strip_tags</link> filter</member>
    </simplelist>
   </para>
  </refsect1>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 23348cb918016e0da9a346d1b65f316696fad6cd Maintainer: adi Status: ready -->
+<!-- EN-Revision: 67ca0d930c95a85ea49aff456409409f6ae06c1b Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: sobak, grzesiek -->
 <refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.dirname">
  <refnamediv>
   <refname>dirname</refname>
@@ -11,8 +12,8 @@
   &reftitle.description;
   <methodsynopsis>
    <type>string</type><methodname>dirname</methodname>
-   <methodparam><type>string</type><parameter>ścieżka</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>poziomy</parameter><initializer>1</initializer></methodparam>
+   <methodparam><type>string</type><parameter>path</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>levels</parameter><initializer>1</initializer></methodparam>
   </methodsynopsis>
   <para>
    Z podanego łańcucha zawierającego ścieżkę do pliku, funkcja ta
@@ -28,9 +29,16 @@
   </note>
   <caution>
    <para>
-    <function>dirname</function> bierze pod uwagę ustawioną lokalizację i aby widzieć
-    prawidłową nazwę katalogu z ścieżek z wielobajtowymi znakami, musi zostać
-    ustawiona właściwa lokalizacja, za pomocą funkcji <function>setlocale</function>.
+    W systemie Windows, <function>dirname</function> przyjmuje aktualnie ustawioną stronę kodową,
+    więc aby zobaczyć poprawną nazwę katalogu z wielobajtowymi ścieżkami znakowymi,
+    musi być ustawiona odpowiednia strona kodowa.
+    Jeśli parametr <parameter>path</parameter> zawiera znaki, które są nieprawidłowe
+    dla bieżącej strony kodowej, zachowanie <function>dirname</function> jest niezdefiniowane.
+   </para>
+   <para>
+    W innych systemach <function>dirname</function> zakłada, że parametr <parameter>path</parameter>
+    jest zakodowany w kodowaniu zgodnym z ASCII. W przeciwnym razie zachowanie funkcji
+    jest niezdefiniowane.
    </para>
   </caution>
  </refsect1>
@@ -43,7 +51,7 @@
      <term><parameter>path</parameter></term>
      <listitem>
       <para>
-       A path.
+       Ścieżka.
       </para>
       <para>
        W Windows jako separator katalogu używany jest znak slash
@@ -53,7 +61,7 @@
      </listitem>
     </varlistentry>
 	<varlistentry>
-     <term><parameter>poziomy</parameter></term>
+     <term><parameter>levels</parameter></term>
      <listitem>
       <para>
        Ilość katalogów w górę, które należy przejść.
@@ -70,12 +78,31 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca nazwę katalogu. Jeśli, w <parameter>ścieżce</parameter> nie znajdują się
+   Zwraca nazwę katalogu. Jeśli, w parametrze <parameter>path</parameter> nie znajdują się
    ukośniki to zwracana jest kropka ('<literal>.</literal>'), oznaczająca
-   bieżący katalog. W innym przypadku, zwracany jest łańcuch znaków 
-   <parameter>ścieżka</parameter> z usuniętymi wszystkimi koncowymi
-   <literal>/komponentami</literal>.  
+   bieżący katalog. W innym przypadku, zwracany jest łańcuch znaków
+   parametru <parameter>path</parameter> z usuniętymi wszystkimi koncowymi
+   <literal>/komponentami</literal>.
   </para>
+
+  <caution>
+   <para>
+    Należy zachować ostrożność podczas korzystania z tej funkcji w pętli, która może dotrzeć do
+    katalogu najwyższego poziomu, ponieważ może to spowodować nieskończoną pętlę.
+    <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<?php
+dirname('.');    // Zwróci '.'.
+dirname('/');    // Zwróci `\` systemach Windows i '/' w systemach uniksowych.
+dirname('\\');   // Zwróci `\` systemach Windows i '.' w systemach uniksowych.
+dirname('C:\\'); // Zwróci 'C:\' systemach Windows i '.' w systemach uniksowych.
+?>
+]]>
+     </programlisting>
+    </informalexample>
+   </para>
+  </caution>
  </refsect1>
 
  <refsect1 role="changelog">
@@ -93,13 +120,7 @@
 	 <row>
        <entry>7.0.0</entry>
        <entry>
-        Dodano opcjonalny parametr <parameter>poziomy</parameter>.
-       </entry>
-      </row>
-      <row>
-       <entry>5.0.0</entry>
-       <entry>
-        <function>dirname</function> od teraz jest binarnie bezpieczna
+        Dodano opcjonalny parametr <parameter>levels</parameter>.
        </entry>
       </row>
      </tbody>

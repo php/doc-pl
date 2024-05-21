@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: e41aab5ecacf449e51179886c17f1d41735b0234 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 8d8cd43bfcd67415f3d548b7209c5b1a63d88fd1 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: sobak, grzesiek -->
 <refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.is-executable">
  <refnamediv>
   <refname>is_executable</refname>
   <refpurpose>Sprawdza czy podany plik jest wykonywalny</refpurpose>
  </refnamediv>
- 
+
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>is_executable</methodname>
-   <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
+   <methodparam><type>string</type><parameter>filename</parameter></methodparam>
   </methodsynopsis>
   <para>
    Sprawdza czy podany plik jest wykonywalny.
@@ -23,7 +24,7 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>nazwa_pliku</parameter></term>
+     <term><parameter>filename</parameter></term>
      <listitem>
       <para>
        Ścieżka do pliku.
@@ -38,8 +39,14 @@
   &reftitle.returnvalues;
   <para>
    Zwraca &true; jeżeli plik istnieje i jest wykonywalny lub &false; w
-   wypadku błędu.
+   wypadku błędu. W systemach POSIX plik jest wykonywalny, jeśli ustawiony jest bit
+   wykonywalności uprawnień pliku. W przypadku systemu Windows, patrz uwaga poniżej.
   </para>
+ </refsect1>
+
+ <refsect1 role="errors">
+  &reftitle.errors;
+  &fs.emits.warning.on.failure;
  </refsect1>
 
  <refsect1 role="examples">
@@ -66,15 +73,21 @@ if (is_executable($file)) {
   </para>
  </refsect1>
 
- <refsect1 role="errors">
-  &reftitle.errors;
-  &fs.emits.warning.on.failure;
- </refsect1>
-
  <refsect1 role="notes">
   &reftitle.notes;
   &note.clearstatcache;
   &tip.fopen-wrapper.stat;
+  <note>
+   <simpara>
+    W systemie Windows plik jest uważany za wykonywalny, jeśli jest poprawnie wykonywalnym
+    plikiem zgłoszonym przez Win API <literal>GetBinaryType()</literal>; z podowdów BC
+    pliki z rozszerzeniem <filename>.bat</filename> lub <filename>.cmd</filename>
+    są również uważane za wykonywalne. Przed PHP 7.4.0, każdy niepusty plik
+    z rozszerzeniem <filename>.exe</filename> lub <filename>.com</filename>
+    był uważany za wykonywalny. Zauważ, że zmienna środowiskowa <envar>PATHEXT</envar>
+    nie ma znaczenia dla funkcji <function>is_executable</function>.
+   </simpara>
+  </note>
  </refsect1>
 
  <refsect1 role="seealso">
