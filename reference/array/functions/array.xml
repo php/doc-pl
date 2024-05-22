@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: leszek Status: ready -->
+<!-- EN-Revision: c6534cb59e785d4fc77f123602132da74b07ac2a Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS: sobak -->
+<!-- CREDITS: sobak, grzesiek -->
 <refentry xml:id="function.array" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>array</refname>
-  <refpurpose>Stwórz tablicę</refpurpose>
+  <refpurpose>Tworzy tablicę</refpurpose>
  </refnamediv>
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>array</type><methodname>array</methodname>
-   <methodparam choice="opt"><type>mixed</type><parameter>...</parameter></methodparam>
+   <methodparam rep="repeat"><type>mixed</type><parameter>values</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Tworzy tablicę. Przeczytaj rozdział poświęcony
-   <link linkend="language.types.array">typowi tablicowemu</link>, żeby dowiedzieć się
+   Tworzy tablicę. Przeczytaj rozdział poświęcony typowi tablicowemu
+   <link linkend="language.types.array">array type</link>, żeby dowiedzieć się
    czym jest tablica.
   </para>
  </refsect1>
@@ -24,7 +24,7 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>...</parameter></term>
+     <term><parameter>values</parameter></term>
      <listitem>
       <para>
        Składnia "index =&gt; wartości", oddzielona przecinkami, definiuje pary
@@ -32,8 +32,8 @@
        stałoprzecinkową. Jeśli indeks zostanie pominięty, automatycznie
        wygenerowany zostanie indeks będący liczbą całkowitą, poczynając od 0.
        Jeśli indeks jest liczbą całkowitą, następny wygenerowany indeks będzie
-       miał wartość "największy indeks + 1".  Zauważ, że jeśli pojawią się dwie
-       wartości o tym samym indeksie, ostatnia nadpisze wcześniejsze.
+       miał wartość "największy indeks + 1".  Zauważ, że jeśli są zdefiniowane
+       dwa takie same indeksy, ostatni zastąpi pierwszy.
       </para>
       <para>
        Przecinek po ostatniej podanej wartości, mimo że jest niespotykany, jest
@@ -48,8 +48,8 @@
   &reftitle.returnvalues;
   <para>
    Zwraca tablicę parametrów. Parametrom można przypisać
-   indeks używając operatora <literal>=&gt;</literal>. Przeczytaj rozdział
-   o <link linkend="language.types.array">typie tablicowym</link>, aby dowiedzieć się
+   indeks używając operatora <literal>=&gt;</literal>. Przeczytaj rozdział o typie tablicowym
+   <link linkend="language.types.array">array type</link>, aby dowiedzieć się
    czym dokładnie jest tablica.
   </para>
  </refsect1>
@@ -65,9 +65,9 @@
 <![CDATA[
 <?php
 $fruits = array (
-    "owoce"  => array("a" => "pomarańcza", "b" => "banan", "c" => "jabłko"),
-    "liczby" => array(1, 2, 3, 4, 5, 6),
-    "dziury"   => array("pierwsza", 5 => "druga", "trzecia")
+    "fruits"  => array("a" => "orange", "b" => "banana", "c" => "apple"),
+    "numbers" => array(1, 2, 3, 4, 5, 6),
+    "dziury"   => array("first", 5 => "second", "third")
 );
 ?>
 ]]>
@@ -114,8 +114,8 @@ Array
     <programlisting role="php">
 <![CDATA[
 <?php
-$kwartal = array(1 => 'Styczeń', 'Luty', 'Marzec');
-print_r($kwartal);
+$firstquarter = array(1 => 'January', 'February', 'March');
+print_r($firstquarter);
 ?>
 ]]>
     </programlisting>
@@ -124,9 +124,9 @@ print_r($kwartal);
 <![CDATA[
 Array
 (
-    [1] => Styczeń
-    [2] => Luty
-    [3] => Marzec
+    [1] => January
+    [2] => February
+    [3] => March
 )
 ]]>
     </screen>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: leszek Status: ready -->
+<!-- EN-Revision: aba94933258b1d1ce9fa5935a239804d71a481fa Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS:  soanvig -->
+<!-- CREDITS:  soanvig, sobak, grzesiek -->
 <refentry xml:id="function.array-shift" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>array_shift</refname>
@@ -11,14 +11,14 @@
   &reftitle.description;
   <methodsynopsis>
    <type>mixed</type><methodname>array_shift</methodname>
-   <methodparam><type>array</type><parameter role="reference">tablica</parameter></methodparam>
+   <methodparam><type>array</type><parameter role="reference">array</parameter></methodparam>
   </methodsynopsis>
   <para>
    <function>array_shift</function> zwraca pierwszą wartość tablicy (z parametru
-   <parameter>tablica</parameter>), jednocześnie usuwając ten element z tablicy 
-   i cofając wszystkie jej indeksy o jeden. 
+   <parameter>array</parameter>), jednocześnie usuwając ten element z tablicy
+   i cofając wszystkie jej indeksy o jeden.
    Tablice numeryczne będą tak zmodyfikowane, aby indeksy zaczynały się od zera,
-   a klucze tablic asocjacyjnych pozostaną nienaruszone.
+   podczas, gdy klucze tablic asocjacyjnych nie zostaną naruszone.
   </para>
   &array.resetspointer;
  </refsect1>
@@ -27,7 +27,7 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>tablica</parameter></term>
+     <term><parameter>array</parameter></term>
      <listitem>
       <para>
        Tablica wejściowa.
@@ -40,7 +40,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca usunięty element lub &null; jeśli <parameter>tablica</parameter> jest
+   Zwraca usunięty element lub &null; jeśli tablica <parameter>array</parameter> jest
    pusta, lub jeśli w rzeczywistości nie jest tablicą.
   </para>
  </refsect1>
@@ -52,7 +52,7 @@
     <programlisting role="php">
 <![CDATA[
 <?php
-$stack = array("pomarańcza", "banan", "jabłko", "malina");
+$stack = array("orange", "banana", "apple", "raspberry");
 $fruit = array_shift($stack);
 print_r($stack);
 ?>
@@ -64,13 +64,13 @@ print_r($stack);
 Array
 (
     [0] => banan
-    [1] => jabłko
-    [2] => malina
+    [1] => apple
+    [2] => raspberry
 )
 ]]>
     </screen>
     <para>
-     a <literal>pomarańcza</literal> zostanie przypisana do
+     a <literal>orange</literal> zostanie przypisana do
      <varname>$fruit</varname>.
     </para>
    </example>

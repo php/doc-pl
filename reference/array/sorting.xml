@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 79a458220566758cd6abb064de988bebe9246028 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: d1df62fe77b6cb0676d064e8e63ee2c3304d4260 Maintainer: sobak Status: ready -->
+<!-- CREDITS: grzesiek -->
 <chapter xml:id="array.sorting" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <title>Sortowanie tablic</title>
  <para>
@@ -18,8 +19,8 @@
     są resetowane i tablice otrzymują indeksy numeryczne (0,1,2...)
    </member>
    <member>
-    Kolejność sortowania: alfabetyczna, rosnąca, malejąca, numeryczna,
-    naturalna, losowa lub określona przez użytkownika
+    Kolejność sortowania: alfabetyczna, rosnąca (od najniższej do najwyższej),
+    malejąca (od najwyższej do najniższej), naturalna, losowa lub zdefiniowana przez użytkownika
    </member>
    <member>
     Uwaga: wszystkie z funkcji sortujących operują bezpośrednio
@@ -27,8 +28,9 @@
     tablicę.
    </member>
    <member>
-    Jeżeli którakolwiek z tych funkcji określa dwa elementy jako równoznaczne,
-    oznacza to że kolejność nie została zdefiniowana (sortowanie nie działa poprawnie).
+    Jeśli którakolwiek z tych funkcji sortowania oceni dwa elementy jako równe,
+    zachowują one swoją pierwotną kolejność.
+    Przed PHP 8.0.0 ich kolejność była niezdefiniowana (sortowanie nie było stabilne).
    </member>
   </simplelist>
  </para>
@@ -49,7 +51,7 @@
      <row>
       <entry><function>array_multisort</function></entry>
       <entry>wartości</entry>
-      <entry>asocjacyjne tak, numeryczne nie</entry>
+      <entry><type>string</type> klucze tak, <type>int</type> klucze nie</entry>
       <entry>pierwsza tablica lub opcje sortowania</entry>
       <entry><function>array_walk</function></entry>
      </row>
@@ -142,7 +144,6 @@
   </table>
  </para>
 </chapter>
-
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

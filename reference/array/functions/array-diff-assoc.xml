@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 1b98a453d1d877745d9af3d8d06cf6e620a67197 Maintainer: leszek Status: ready -->
+<!-- EN-Revision: 6b64170daac5587bee4bb63c0020cb2fbf7f1253 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS: sobak -->
+<!-- CREDITS: sobak, grzesiek -->
 <refentry xml:id="function.array-diff-assoc" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>array_diff_assoc</refname>
   <refpurpose>Oblicza różnicę między tablicami z dodatkowym sprawdzaniem kluczy</refpurpose>
  </refnamediv>
- 
+
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>array</type><methodname>array_diff_assoc</methodname>
-   <methodparam><type>array</type><parameter>tablica1</parameter></methodparam>
-   <methodparam><type>array</type><parameter>tablica2</parameter></methodparam>
-   <methodparam choice="opt"><type>array</type><parameter>...</parameter></methodparam>
+   <methodparam><type>array</type><parameter>array</parameter></methodparam>
+   <methodparam rep="repeat"><type>array</type><parameter>arrays</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Porównuje <parameter>tablica1</parameter> z <parameter>tablica2</parameter> i
+   Porównuje tablicę <parameter>array</parameter> z tablicami <parameter>arrays</parameter> i
    zwraca różnicę. W przeciwieństwie do <function>array_diff</function>, porównywane
+   Porównuje tablicę <parameter>array</parameter> z tablicami <parameter>arrays</parameter> i
+   zwraca różnicę. W przeciwieństwie do funkcji <function>array_diff</function>, porównywane
    są także klucze tablic.
   </para>
  </refsect1>
@@ -29,7 +30,7 @@
    <variablelist>
 
     <varlistentry>
-     <term><parameter>tablica1</parameter></term>
+     <term><parameter>array</parameter></term>
      <listitem>
       <para>
        Tablica do porównania
@@ -38,19 +39,10 @@
     </varlistentry>
 
     <varlistentry>
-     <term><parameter>tablica2</parameter></term>
+     <term><parameter>arrays</parameter></term>
      <listitem>
       <para>
-       Tablica, z którą porównujemy
-      </para>
-     </listitem>
-    </varlistentry>
-
-    <varlistentry>
-     <term><parameter>...</parameter></term>
-     <listitem>
-      <para>
-       Więcej tablic do porównania
+       Tablice do porównania
       </para>
      </listitem>
     </varlistentry>
@@ -62,8 +54,27 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca tablicę zawierającą wszystkie wartości z
-   <parameter>tablica1</parameter>, które nie są obecne w żadnej z innych tablic.
+   Zwraca tablicę zawierającą wszystkie wartości z tablicy
+   <parameter>array</parameter> które nie są obecne w żadnej z pozostałych tablic.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      &array.changelog.require-only-one;
+     </tbody>
+    </tgroup>
+   </informaltable>
   </para>
  </refsect1>
 
@@ -80,18 +91,20 @@
    <example>
     <title>Przykład użycia <function>array_diff_assoc</function></title>
     <para>
-     W tym przykładzie możesz zobaczyć, że para <literal>"a" =&gt; "green"</literal>
+     W tym przykładzie para <literal>"a" =&gt; "green"</literal>
      jest obecna w obu tablicach i dlatego nie jest wyświetlana przez funkcję
      W odróżnieniu od <literal>0 =&gt; "red"</literal>, które jest wyświetlane,
-     ponieważ w drugiej tablicy <literal>"red"</literal>
-     ma klucz, którym jest <literal>1</literal>.
+     ponieważ klucz <literal>"red"</literal> jest
+     automatycznie przypisywany do <literal>0</literal> w pierwszej tablicy,
+     podczas gdy jest on przypisany do <literal>1</literal> w drugiej tablicy,
+     ponieważ klucz <literal>0</literal> jest już zajęty przez <literal>yellow</literal>.
     </para>
     <programlisting role="php">
 <![CDATA[
 <?php
-$tablica1 = array("a" => "green", "b" => "brown", "c" => "blue", "red");
-$tablica2 = array("a" => "green", "yellow", "red");
-$wynik = array_diff_assoc($tablica1, $tablica2);
+$array1 = array("a" => "green", "b" => "brown", "c" => "blue", "red");
+$array2 = array("a" => "green", "yellow", "red");
+$result = array_diff_assoc($array1, $array2);
 print_r($tablica);
 ?>
 ]]>
@@ -121,10 +134,10 @@ Array
     <programlisting role="php">
 <![CDATA[
 <?php
-$tablica1 = array(0, 1, 2);
-$tablica2 = array("00", "01", "2");
-$wynik = array_diff_assoc($tablica1, $tablica2);
-print_r($wynik);
+$array1 = array(0, 1, 2);
+$array2 = array("00", "01", "2");
+$result = array_diff_assoc($array1, $array2);
+print_r($result);
 ?>
 ]]>
     </programlisting>
@@ -135,7 +148,7 @@ Array
 (
     [0] => 0
     [1] => 1
-    )
+)
 ]]>
     </screen>
    </example>
@@ -147,14 +160,14 @@ Array
   <note>
    <simpara>
     Ta funkcja sprawdza tylko pierwszy wymiar tablicy wielowymiarowej.
-    Oczywiście można porównać głębsze wymiary używając
+    Możliwe jest sprawdzenie głębszych wymiarów za pomocą na przykład,
     <literal>array_diff_assoc($array1[0], $array2[0]);</literal>.
    </simpara>
   </note>
   <note>
    <simpara>
-    Upewnij się, że przekazujesz argumenty z odpowiedniej kolejności, gdy porównujesz
-    podobne tablice z większą ilością kluczy. Nowa tablica powinna być przekazana pierwsza.
+    Upewnij się, że argumenty są przekazywane we właściwej kolejności podczas porównywania
+    podobnych tablic z większą liczbą kluczy. Nowa tablica powinna być przekazana pierwsza.
    </simpara>
   </note>
  </refsect1>

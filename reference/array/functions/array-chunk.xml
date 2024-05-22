@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: b8758b0605e80c4e3610137b7502a6abeea5c69b Maintainer: leszek Status: ready -->
+<!-- EN-Revision: 214519fdbdd6bfe2942775d3554fa8f440f85404 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS: sobak -->
+<!-- CREDITS: sobak, grzesiek -->
 <refentry xml:id="function.array-chunk" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>array_chunk</refname>
-  <refpurpose>Podziel tablicę na kawałki</refpurpose>
+  <refpurpose>Dzieli tablicę na kawałki</refpurpose>
  </refnamediv>
- 
+
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
    <type>array</type><methodname>array_chunk</methodname>
-   <methodparam><type>array</type><parameter>tablica</parameter></methodparam>
-   <methodparam><type>int</type><parameter>rozmiar</parameter></methodparam>
-   <methodparam choice="opt"><type>bool</type><parameter>zachowaj_klucze</parameter><initializer>&false;</initializer></methodparam>
+   <methodparam><type>array</type><parameter>array</parameter></methodparam>
+   <methodparam><type>int</type><parameter>length</parameter></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>preserve_keys</parameter><initializer>&false;</initializer></methodparam>
   </methodsynopsis>
   <para>
-   Dzieli tablicę po ilości elementów określonej jako <parameter>rozmiar</parameter>.
-   Ostatni kawałek może zawierać mniej elementów niż określono w argumencie
-   <parameter>rozmiar</parameter>.
+   Dzieli tablicę po ilości elementów określonej jako <parameter>length</parameter>.
+   Ostatni kawałek może zawierać mniej elementów niż określono w parametrze
+   <parameter>length</parameter>.
   </para>
  </refsect1>
 
@@ -29,7 +29,7 @@
    <variablelist>
 
     <varlistentry>
-     <term><parameter>tablica</parameter></term>
+     <term><parameter>array</parameter></term>
      <listitem>
       <para>
        Tablica do podzielenia
@@ -38,7 +38,7 @@
     </varlistentry>
 
     <varlistentry>
-     <term><parameter>rozmiar</parameter></term>
+     <term><parameter>length</parameter></term>
      <listitem>
       <para>
        Rozmiar każdego z fragmentów
@@ -47,7 +47,7 @@
     </varlistentry>
 
     <varlistentry>
-     <term><parameter>zachowaj_klucze</parameter></term>
+     <term><parameter>preserve_keys</parameter></term>
      <listitem>
       <para>
        Kiedy ustawione na &true;, klucze zostaną zachowane.
@@ -65,16 +65,42 @@
   &reftitle.returnvalues;
   <para>
    Zwraca tablicę wielowymiarową, numerowaną od zera, gdzie każdy
-   wymiar zawiera ilość elementów określoną jako <parameter>rozmiar</parameter>.
+   wymiar zawiera ilość elementów określoną jako parametr <parameter>length</parameter>.
   </para>
  </refsect1>
 
  <refsect1 role="errors">
   &reftitle.errors;
   <para>
-   Jeżeli <parameter>rozmiar</parameter> jest mniejszy niż 1,
-   zostanie wygenerowany <constant>E_WARNING</constant> i zwrócony &null;.
+   Jeżeli parametr <parameter>length</parameter> jest mniejszy niż <literal>1</literal>,
+   zostanie zgłoszony błąd<classname>ValueError</classname>.
   </para>
+ </refsect1>
+
+<refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>8.0.0</entry>
+      <entry>
+       Jeśli <parameter>length</parameter> jest mniejszy niż <literal>1</literal>,
+       Jeśli parametr <parameter>length</parameter> jest mniejszy niż <literal>1</literal>,
+       zostanie teraz zgłoszony błąd <classname>ValueError</classname>;
+       poprzednio zamiast tego zgłaszany był błąd poziomu<constant>E_WARNING</constant>
+       i funkcja zwracała &null;.
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </informaltable>
  </refsect1>
 
  <refsect1 role="examples">
@@ -150,7 +176,6 @@ Array
  </refsect1>
 
 </refentry>
-
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml
