@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 73f204de3d42053aff3c10f5bc291023eb897942 Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: a0ae28d3bc85f927c22649ebd9a590b921534b7d Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: sobak, grzesiek -->
 <refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.session-regenerate-id">
  <refnamediv>
   <refname>session_regenerate_id</refname>
@@ -13,7 +14,7 @@
   &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>session_regenerate_id</methodname>
-   <methodparam choice="opt"><type>bool</type><parameter>usunięcie_starej_sesji</parameter><initializer>false</initializer></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>delete_old_session</parameter><initializer>&false;</initializer></methodparam>
   </methodsynopsis>
   <para>
    <function>session_regenerate_id</function> zastępuje bieżący identyfikator
@@ -24,6 +25,22 @@
    jest włączone, wyjście musi się rozpocząć po wywołaniu <function>session_regenerate_id</function>.
    W przeciwnym wypadku zostanie użyte stare ID.
   </para>
+  <warning>
+   <para>
+    Obecnie session_regenerate_id nie radzi sobie dobrze z niestabilną siecią,
+    np. siecią komórkową i WiFi. W związku z tym może dojść do utraty
+    sesji przez wywołanie session_regenerate_id
+   </para>
+   <para>
+    Nie należy natychmiast niszczyć starych danych sesji, ale należy użyć
+    niszczącego znacznika czasu i kontrolować dostęp do starego identyfikatora sesji. W przeciwnym razie,
+    równoczesny dostęp do strony może skutkować niespójnym stanem lub
+    utratą sesji, lub może spowodować warunek wyścigu po stronie klienta (przeglądarki)
+    i może niepotrzebnie utworzyć wiele identyfikatorów sesji. Natychmiastowe
+    usunięcie danych sesji wyłącza również wykrywanie ataków związanych z przejęciem sesji
+    i zapobieganie im.
+   </para>
+  </warning>
  </refsect1>
 
  <refsect1 role="parameters">
@@ -31,10 +48,13 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>usunięcie_starej_sesji</parameter></term>
+     <term><parameter>delete_old_session</parameter></term>
       <listitem>
        <para>
         Określa czy stary identyfikator sesji ma zostać usunięty, czy też nie.
+        Nie powinieneś usuwać starej sesji, jeśli chcesz uniknąć
+        wyścigów spowodowanych usunięciem lub wykryciem/uniknięciem ataków polegających
+        na przejęciu sesji.
        </para>
       </listitem>
      </varlistentry>
@@ -49,38 +69,6 @@
   </para>
  </refsect1>
 
- <refsect1 role="changelog">
-  &reftitle.changelog;
-  <para>
-   <informaltable>
-    <tgroup cols="2">
-     <thead>
-      <row>
-       <entry>&Version;</entry>
-       <entry>&Description;</entry>
-      </row>
-     </thead>
-     <tbody>
-      <row>
-       <entry>4.3.3</entry>
-       <entry>
-        Od tej wersji PHP, jeśli ciasteczka sesji są aktywne, wywołanie
-        <function>session_regenerate_id</function> utworzy nowe ciasteczko
-        sesji z nowym identyfikatorem sesji.
-       </entry>
-      </row>
-      <row>
-       <entry>5.1.0</entry>
-       <entry>
-        Dodano parametr <parameter>usunięcie_starej_sesji</parameter>.
-       </entry>
-      </row>
-     </tbody>
-    </tgroup>
-   </informaltable>
-  </para>
- </refsect1>
-
  <refsect1 role="examples">
   &reftitle.examples;
   <para>
@@ -89,11 +77,30 @@
     <programlisting role="php">
 <![CDATA[
 <?php
+// Notatka: Ten kod nie jest w pełni działającym kodem, ale przykładem!
+
 session_start();
+
+// Sprawdza usunięty znacznik czasu time-stamp
+if (isset($_SESSION['destroyed'])
+    && $_SESSION['destroyed'] < time() - 300) {
+    // Zwykle nie powinno się to zdarzać. Może to być spowodowane atakiem lub niestabilną siecią.
+    // Usunięcie całego statusu uwierzytelniania tej sesji użytkownika.
+    remove_all_authentication_flag_from_active_sessions($_SESSION['userid']);
+    throw(new DestroyedSessionAccessException);
+}
 
 $old_sessionid = session_id();
 
+// Ustawienie znacznika czasu zniszczenia
+$_SESSION['destroyed'] = time(); // session_regenerate_id() zapisuje stare dane sesji
+
+// Samo wywołanie session_regenerate_id() może spowodować utratę sesji itp.
+// Zobacz następny przykład.
 session_regenerate_id();
+
+// Nowa sesja nie potrzebuje zniszczonego znacznika czasu
+unset($_SESSION['destroyed']);
 
 $new_sessionid = session_id();
 
@@ -106,14 +113,85 @@ print_r($_SESSION);
     </programlisting>
    </example>
   </para>
- </refsect1>
+
+  <para>
+   Obecny moduł sesji nie radzi sobie dobrze z niestabilną siecią. Powinieneś
+   zarządzać identyfikatorem sesji, aby uniknąć utraty sesji za pomocą funkcji session_regenerate_id.
+  </para>
+
+  <para>
+   <example>
+    <title>Unikanie utraconej sesji za pomocą funkcji <function>session_regenerate_id</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// UWAGA: Ten kod nie jest w pełni działającym kodem, ale przykładem!
+// my_session_start() i my_session_regenerate_id() zapobiegają utracie sesji przez
+// niestabilną sieć. Ponadto, kod ten może zapobiec wykorzystaniu skradzionej
+// sesji przez atakujących.
+
+function my_session_start() {
+    session_start();
+    if (isset($_SESSION['destroyed'])) {
+       if ($_SESSION['destroyed'] < time()-300) {
+           // Zwykle nie powinno się to zdarzać. Może to być spowodowane atakiem lub niestabilną siecią.
+           // Usunięcie całego statusu uwierzytelniania tej sesji użytkownika.
+           remove_all_authentication_flag_from_active_sessions($_SESSION['userid']);
+           throw(new DestroyedSessionAccessException);
+       }
+       if (isset($_SESSION['new_session_id'])) {
+           // Nie wygasł jeszcze całkowicie. Możliwe, że plik cookie został utracony przez niestabilną sieć.
+           // Spróbuj ponownie ustawić prawidłowy identyfikator sesji cookie.
+           // UWAGA: Nie próbuj ponownie ustawiać identyfikatora sesji, jeśli chcesz usunąć
+           // flagę uwierzytelniania.
+           session_commit();
+           session_id($_SESSION['new_session_id']);
+           // Nowy identyfikator sesji powinien istnieć
+           session_start();
+           return;
+       }
+   }
+}
+
+function my_session_regenerate_id() {
+    // Nowy identyfikator sesji jest wymagany do ustawienia prawidłowego identyfikatora
+    // sesji, gdy identyfikator sesji nie jest ustawiony z powodu niestabilnej sieci.
+    $new_session_id = session_create_id();
+    $_SESSION['new_session_id'] = $new_session_id;
+
+    // Ustawienie znacznika czasu zniszczenia
+    $_SESSION['destroyed'] = time();
+
+    // Zapis i zamknięcie bieżącej sesji;
+    session_commit();
+
+    // Rozpoczęcie sesji z nowym identyfikatorem sesji
+    session_id($new_session_id);
+    ini_set('session.use_strict_mode', 0);
+    session_start();
+    ini_set('session.use_strict_mode', 1);
+
+    // Nowa sesja ich nie potrzebuje
+    unset($_SESSION['destroyed']);
+    unset($_SESSION['new_session_id']);
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+
+</refsect1>
 
  <refsect1 role="seealso">
   &reftitle.seealso;
   <para>
    <simplelist>
     <member><function>session_id</function></member>
+    <member><function>session_create_id</function></member>
     <member><function>session_start</function></member>
+    <member><function>session_destroy</function></member>
+    <member><function>session_reset</function></member>
     <member><function>session_name</function></member>
    </simplelist>
   </para>

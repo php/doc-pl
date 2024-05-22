@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 35587e18d6d7f439af6f600853b04bacb23ac1da Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 0c9c2dd669fe9395eaa73d487fbd160f9057429a Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-<refentry xml:id="function.base64-decode" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+<!-- CREDITS: sobak, grzesiek -->
+<refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="function.base64-decode">
  <refnamediv>
   <refname>base64_decode</refname>
   <refpurpose>Dekoduje dane zakodowane przez MIME base64</refpurpose>
  </refnamediv>
- 
+
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
-   <type>string</type><methodname>base64_decode</methodname>
-   <methodparam><type>string</type><parameter>dane</parameter></methodparam>
-   <methodparam choice="opt"><type>bool</type><parameter>ściśle</parameter><initializer>false</initializer></methodparam>
+   <type class="union"><type>string</type><type>false</type></type><methodname>base64_decode</methodname>
+   <methodparam><type>string</type><parameter>string</parameter></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>strict</parameter><initializer>&false;</initializer></methodparam>
   </methodsynopsis>
   <para>
-   Odkodowuje <parameter>dane</parameter> zakodowane w base64.
+   Odkodowuje dane z parametru <parameter>string</parameter> zakodowane w base64.
   </para>
  </refsect1>
 
@@ -24,7 +25,7 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>dane</parameter></term>
+     <term><parameter>string</parameter></term>
      <listitem>
       <para>
        Zakodowane dane.
@@ -49,30 +50,8 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca oryginalne dane&return.falseforfailure;. Zwrócone dane mogą mieć postać
+   Zwraca zdekodowane dane&return.falseforfailure;. Zwrócone dane mogą mieć postać
    binarną.
-  </para>
- </refsect1>
-
- <refsect1 role="changelog">
-  &reftitle.changelog;
-  <para>
-   <informaltable>
-    <tgroup cols="2">
-     <thead>
-      <row>
-       <entry>&Version;</entry>
-       <entry>&Description;</entry>
-      </row>
-     </thead>
-     <tbody>
-      <row>
-       <entry>5.2.0</entry>
-       <entry>Dodano parametr <parameter>ściśle</parameter></entry>
-      </row>
-     </tbody>
-    </tgroup>
-   </informaltable>
   </para>
  </refsect1>
 
@@ -110,7 +89,6 @@ PHP jest super
  </refsect1>
 
 </refentry>
-
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml
