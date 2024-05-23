@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 2a6fc6a1d5427420d104b23e259ed79c8b08e0f1 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: c9bc21cb7302db778f3c519cbe6a9c8286dc08b8 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.get-object-vars" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
@@ -36,32 +36,7 @@
   &reftitle.returnvalues;
   <para>
    Zwraca tablicę asocjacyjną zdefiniowanych właściwości niestatycznych, 
-   które posiada dany <parameter>obiekt</parameter> w danym zasięgu. Jeżeli właściwość
-   nie ma przypisanej wartości, zostanie zwrócona z &null; jako wartością.
-  </para>
- </refsect1>
- <refsect1 role="changelog">
-  &reftitle.changelog;
-  <para>
-   <informaltable>
-    <tgroup cols="2">
-     <thead>
-      <row>
-       <entry>&Version;</entry>
-       <entry>&Description;</entry>
-      </row>
-     </thead>
-     <tbody>
-      <row>
-       <entry>5.3.0</entry>
-       <entry>
-        Funkcja zwraca &null; jeżeli
-        <parameter>obiekt</parameter> nie jest obiektem. Poprzednio zwracane było &false;.
-       </entry>
-      </row>
-     </tbody>
-    </tgroup>
-   </informaltable>
+   które posiada dany <parameter>obiekt</parameter> w danym zasięgu.
   </para>
  </refsect1>
  <refsect1 role="examples">
@@ -116,6 +91,11 @@ array(4) {
     </screen>
    </example>
   </para>
+  <note>
+   <para>
+    Niezainicjalizowane wartości są traktowane jako niedostepne i w związku z tym nie są zawarte w zwracanej tablicy.
+   </para>
+  </note>
  </refsect1>
  <refsect1 role="seealso">
   &reftitle.seealso;

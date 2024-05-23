@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: 0799f7789c50a11b746ad713cc8787e4b04dd926 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: slawek -->
  <chapter xml:id="features.persistent-connections" xmlns="http://docbook.org/ns/docbook">
@@ -17,7 +17,7 @@
    Ludzie niezbyt dobrze znający zasady działania serwerów mogą czasem
    brać stałe połączenia za coś, czym te nie są. Stałe połączenia
    <emphasis>nie</emphasis> stwarzają możliwości otwarcia połączenia dla
-   konkretnego użytkonika, <emphasis>nie</emphasis> pozwalają na skuteczne
+   konkretnego użytkownika, <emphasis>nie</emphasis> pozwalają na skuteczne
    stworzenie systemu transakcji, i nie robią wielu innych rzeczy.
    Powiedzmy to jasno, stałe połączenia nie oferują <emphasis>nic</emphasis>
    ponad to, co robią 'zwykłe' połączenia.
@@ -26,8 +26,8 @@
    Dlaczego?
   </simpara> 
   <simpara>
-   Jest to związane z zasadą działania serwerów. Są trzy sposoby na
-   które serwer może wykorzystac PHP do generowania stron.
+   Jest to związane z zasadą działania serwerów. Są trzy sposoby, na
+   które serwer może wykorzystać PHP do generowania stron.
   </simpara>
   <simpara>
    Pierwsza metoda to wykorzystanie PHP jako "wrappera" CGI. Przy wywołaniu
@@ -51,7 +51,7 @@
   </simpara>
   <simpara>
    Ostatnia metoda to wykorzystanie PHP jako wtyczki (plug-in) do
-   serwera wielowątkowego. Obecnie PHP4 zawiera obsługę mechanizmów
+   serwera wielowątkowego. Obecnie PHP zawiera obsługę mechanizmów
    ISAPI, WSAPI i NSAPI (w Windows), które umożliwiają uruchomienie PHP
    jako wtyczki do wielowątkowych serwerów takich jak Netscape FastTrack
    (iPlanet), Microsoft Internet Information Server (IIS) i O'Reilly WebSite
@@ -63,15 +63,15 @@
    mogą być przydatne?
   </simpara>
   <simpara>
-   Odpowiedź jest niezwykle prosta -- wydajność. Stałe połączenia
+   Odpowiedź jest niezwykle prosta - wydajność. Stałe połączenia
    sprawdzają się w przypadku, gdy koszt nawiązania połączenia z SQL
-   serwerem jest wysoki. To czy koszt jest duży czy nie zależy od wielu
-   czynników. Na przykład od typu bazy danych, od tego czy znajduje się
+   serwerem jest wysoki. To czy koszt jest duży, czy nie zależy od wielu
+   czynników. Na przykład od typu bazy danych, od tego, czy znajduje się
    ona na tym samym serwerze, od obciążenia maszyny, która obsługuje serwer
-   SQL, itd. Jeśli zatem koszt połączenia jest wysoki, stałe połączenia
+   SQL itd. Jeśli zatem koszt połączenia jest wysoki, stałe połączenia
    znacznie pomagają. Sprawiają, że proces potomny łączy się z serwerem SQL
    tylko raz podczas swojego życia, zamiast otwierać połączenie za każdym
-   razem gdy zażąda tego skrypt. Oznacza to, że każdy proces potomny, który
+   razem, gdy zażąda tego skrypt. Oznacza to, że każdy proces potomny, który
    nawiązał stałe połączenie, będzie posiadał własne połączenie z serwerem
    bazy danych. Dla przykładu, jeżeli 20 procesów potomnych uruchomi skrypt,
    który ustanowi stałe połączenie z serwerem SQL, będziesz mieć 20 różnych
@@ -90,7 +90,7 @@
   </simpara>
   <warning>
    <simpara>
-    Istnieje kilka zagrożeń, które należy brać pod uwagę decydując się na
+    Istnieje kilka zagrożeń, które należy brać pod uwagę, decydując się na
     używanie stałych połączeń. Jednym z nich jest sytuacja, w której skrypt
     blokujący tabelę, z jakiegokolwiek powodu nie może zdjąć blokady. Wtedy
     kolejne skrypty korzystające z tego samego połączenia będą zablokowane i
@@ -112,14 +112,9 @@
    jego wydajność!
   </simpara>
   <para>
-   Zobacz także <function>fbsql_pconnect</function>,
-   <function>ibase_pconnect</function>, <function>ifx_pconnect</function>,
-   <function>ingres_pconnect</function>,
-   <function>msql_pconnect</function>, <function>mssql_pconnect</function>,
-   <function>mysql_pconnect</function>, <function>ociplogon</function>,
+   Zobacz także <function>ibase_pconnect</function>, <function>ociplogon</function>,
    <function>odbc_pconnect</function>, <function>oci_pconnect</function>,
-   <function>pfsockopen</function>, <function>pg_pconnect</function> i
-   <function>sybase_pconnect</function>.
+   <function>pfsockopen</function> i <function>pg_pconnect</function>.
   </para>
  </chapter>
 

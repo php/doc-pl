@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: dac44789165076f0681f0f3403a80c57a4c99b4c Maintainer: sobak Status: ready -->
+<!-- EN-Revision: f94d903985119d3ac00f4528551df947f57b667f Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 
 <phpdoc:classref xml:id="class.arrayaccess" xmlns:phpdoc="http://php.net/ns/phpdoc" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude">
@@ -21,43 +21,36 @@
   <section xml:id="arrayaccess.synopsis">
    &reftitle.interfacesynopsis;
 
-<!-- {{{ Synopsis -->
-   <classsynopsis>
-    <ooclass><classname>ArrayAccess</classname></ooclass>
+   <!-- {{{ Synopsis -->
+   <classsynopsis class="interface">
+    <oointerface>
+     <interfacename>ArrayAccess</interfacename>
+    </oointerface>
 
-<!-- {{{ Class synopsis -->
-    <classsynopsisinfo>
-     <ooclass>
-      <classname>ArrayAccess</classname>
-     </ooclass>
-    </classsynopsisinfo>
-<!-- }}} -->
-    
     <classsynopsisinfo role="comment">&Methods;</classsynopsisinfo>
-    <xi:include xpointer="xmlns(db=http://docbook.org/ns/docbook) xpointer(id('class.arrayaccess')/db:refentry/db:refsect1[@role='description']/descendant::db:methodsynopsis[1])" />
+    <xi:include xpointer="xmlns(db=http://docbook.org/ns/docbook) xpointer(id('class.arrayaccess')/db:refentry/db:refsect1[@role='description']/descendant::db:methodsynopsis[@role='ArrayAccess'])">
+     <xi:fallback/>
+    </xi:include>
    </classsynopsis>
-<!-- }}} -->
+   <!-- }}} -->
 
   </section>
 
   <section xml:id="arrayaccess.examples">
+   &reftitle.examples;
    <example xml:id="arrayaccess.example.basic"><!-- {{{ -->
     <title>Podstawowe użycie</title>
     <programlisting role="php">
 <![CDATA[
 <?php
-class obj implements ArrayAccess {
-    private $container = array();
+class Obj implements ArrayAccess {
+    public $container = [
+        "raz"   => 1,
+        "dwa"   => 2,
+        "trzy" => 3,
+    ];
 
-    public function __construct() {
-        $this->container = array(
-            "raz"   => 1,
-            "dwa"   => 2,
-            "trzy" => 3,
-        );
-    }
-
-    public function offsetSet($offset, $value) {
+    public function offsetSet($offset, $value): void {
         if (is_null($offset)) {
             $this->container[] = $value;
         } else {
@@ -65,20 +58,20 @@ class obj implements ArrayAccess {
         }
     }
 
-    public function offsetExists($offset) {
+    public function offsetExists($offset): bool {
         return isset($this->container[$offset]);
     }
 
-    public function offsetUnset($offset) {
+    public function offsetUnset($offset): void {
         unset($this->container[$offset]);
     }
 
-    public function offsetGet($offset) {
+    public function offsetGet($offset): mixed {
         return isset($this->container[$offset]) ? $this->container[$offset] : null;
     }
 }
 
-$obj = new obj;
+$obj = new Obj;
 
 var_dump(isset($obj["dwa"]));
 var_dump($obj["dwa"]);
@@ -126,7 +119,6 @@ obj Object
  &language.predefined.arrayaccess.offsetunset;
 
 </phpdoc:classref>
-
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml
