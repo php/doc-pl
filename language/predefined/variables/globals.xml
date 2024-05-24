@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: cb0630b14901459c0bf1556e7d68f1b4c0d3796e Maintainer: sobak Status: ready -->
+<!-- EN-Revision: a6d209f4ff71ccba3f1255902827f5df3e092ff9 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 
 <refentry role="variable" xml:id="reserved.variables.globals" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -46,6 +46,28 @@ $foo w zasięgu lokalnym: lokalna zmienna
     </screen>
    </example>
   </para>
+  <warning>
+   <para>
+    Począwszy od PHP 8.1.0 nie jest wspierany już zapis do całości tablicy <varname>$GLOBALS</varname>:
+    <example xml:id="variable.globals.entire_write_error">
+     <title>Zapis całości <varname>$GLOBALS</varname> skutkuje błędem.</title>
+     <programlisting role="php">
+      <![CDATA[
+ <?php
+ // Powoduje błąd czasu kompilacji:
+ $GLOBALS = [];
+ $GLOBALS += [];
+ $GLOBALS =& $x;
+ $x =& $GLOBALS;
+ unset($GLOBALS);
+ array_pop($GLOBALS);
+ // ...i dowolne inne operacje zapisu/odczytu-zapisu na $GLOBALS
+ ?>
+ ]]>
+     </programlisting>
+    </example>
+   </para>
+  </warning>
  </refsect1>
  
  <refsect1 role="notes">
@@ -56,6 +78,34 @@ $foo w zasięgu lokalnym: lokalna zmienna
    <para>
     W odróżnieniu od innych zmiennych <link linkend="language.variables.superglobals">superglobalnych</link>,
     <varname>$GLOBALS</varname> była od zawsze dostępna w PHP.
+   </para>
+  </note>
+  <note>
+   <para>
+    Od PHP 8.1.0 <varname>$GLOBALS</varname> jest kopią tylko do odczytu globalnej tablicy symboli. To znaczy, że zmienne globalne nie mogą być zmodyfikowane przez jej kopię. Wcześniej tablica <varname>$GLOBALS</varname> była wykluczona ze standardowego zachowania PHP, w którym tablice są przekazywane przez wartość. Zmienne globalne mogły być modyfikowane przez ich kopię.
+    <informalexample>
+     <programlisting role="php">
+      <![CDATA[
+<?php
+// Przed PHP 8.1.0
+$a = 1;
+$globals = $GLOBALS; // Ostensibly by-value copy
+$globals['a'] = 2;
+var_dump($a); // int(2)
+
+// Od PHP 8.1.0
+// ten kod nie modyfikuje już $a. Poprzednie zachowanie naruszało semantykę przekazywania tablic przez wartość.
+$globals = $GLOBALS;
+$globals['a'] = 1;
+
+// Aby odtworzyć poprzednie zachowanie, możesz przeiterować po kopii i przypisać wszystkie wartości z powrotem do $GLOBALS
+foreach ($globals as $key => $value) {
+    $GLOBALS[$key] = $value;
+}
+?>
+]]>
+     </programlisting>
+    </informalexample>
    </para>
   </note>
  </refsect1>

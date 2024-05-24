@@ -1,39 +1,94 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 151e61773c016edcae8fd4989ad9a86ffd03c283 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
-  <refentry xml:id="function.session-save-path" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>session_save_path</refname>
-    <refpurpose>Pobierz i/lub ustaw ścieżkę zapisu bieżącej sesji</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>string</type><methodname>session_save_path</methodname>
-      <methodparam choice="opt"><type>string</type><parameter>ścieżka</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     <function>session_save_path</function> zwraca ścieżkę do katalogu, który
-     aktualnie jest używany do zapisu danych sesji. Jeśli podany został
-     parametr <parameter>ścieżka</parameter>, zmieniona zostanie ścieżka
-     zapisu danych. W tym celu funkcja <function>session_save_path</function>
-     musi być wywołana przed <function>session_start</function>.
-     <note>
-      <para>
-       Na niektórych systemach operacyjnych możesz chciać podać ścieżkę do
-       systemu plików, który lepiej obsługuje duże ilości małych plików. Na
-       przykład na Linuksie reiserfs w takich warunkach ma lepszą wydajność
-       niż ext2fs.
-      </para>
-     </note>
-    </para>
-    <para>
-      Zobacz także opis dyrektywy konfiguracji <link
-       linkend="ini.session.save-path">session.save_path</link>.
-    </para>
-   </refsect1>
-  </refentry>
+<!-- CREDITS: sobak -->
+<refentry xml:id="function.session-save-path" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>session_save_path</refname>
+  <refpurpose>Pobiera i/lub ustawia ścieżkę zapisu bieżącej sesji</refpurpose>
+ </refnamediv>
 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type class="union"><type>string</type><type>false</type></type><methodname>session_save_path</methodname>
+   <methodparam choice="opt"><type class="union"><type>string</type><type>null</type></type><parameter>path</parameter><initializer>&null;</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>session_save_path</function> zwraca ścieżkę obecnego katalogu
+   używanego do zapisu danych sesji.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>path</parameter></term>
+     <listitem>
+      <para>
+       Ścieżka danych sesji. Jeśli podany i nie jest &null;, to ścieżka, w której zapisywane są dane, zostanie
+       zmieniona. W tym celu <function>session_save_path</function> musi zostać wywołana przed
+       <function>session_start</function>.
+      </para>
+      <para>
+       <note>
+        <para>
+         Na niektórych systemach operacyjnych możesz chcieć podać ścieżkę do
+         systemu plików, który lepiej obsługuje duże ilości małych plików. Na przykład
+         na Linuksie reiserfs może mieć lepszą wydajność niż ext2fs.
+        </para>
+       </note>
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca ścieżkę obecnego katalogu używanego do przechowywania danych &return.falseforfailure;.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>8.0.0</entry>
+      <entry>
+       Parametr <parameter>path</parameter> akceptuje teraz &null;.
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </informaltable>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member>
+     Dyrektywa konfiguracyjna 
+     <link linkend="ini.session.save-path">session.save_path</link>
+    </member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

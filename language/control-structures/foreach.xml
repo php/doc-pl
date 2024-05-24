@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 75fb719c3c051fdd62a704bc110197edcba8f532 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: e49940b757b35b8ef26bb64380c231eda7b49fc4 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 
 <sect1 xml:id="control-structures.foreach" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
- <title><literal>foreach</literal></title>
+ <title>foreach</title>
  <?phpdoc print-version-for="foreach"?>
  <para>
   Konstrukcja <literal>foreach</literal> umożliwia łatwy sposób do
@@ -14,46 +14,33 @@
   <informalexample>
    <programlisting>
 <![CDATA[
-foreach (wyrażenie_tablicy as $wartość)
+foreach (wyrażenie_iterowalne as $wartość)
     statement
-foreach (wyrażenie_tablicy as $klucz => $wartość)
+foreach (wyrażenie_iterowalne as $klucz => $wartość)
     statement
 ]]>
    </programlisting>
   </informalexample>
  </para>
  <simpara>
-  Pierwsza forma przechodzi przez tablicę podaną jako
+  Pierwsza forma przechodzi przez iterowalny element podany jako
   <literal>wyrażenie_tablicy</literal>. Przy każdej iteracji, wartość
-  obecnego elementu jest przypisywana do zmiennej <literal>$wartość</literal>, a
-  wewnętrzny wskaźnik tablicy jest zwiększany o jeden (tak więc przy następnej
-  iteracji, w zmiennej znajdzie się kolejny element).
+  obecnego elementu jest przypisywana do zmiennej <literal>$wartość</literal>.
  </simpara>
  <simpara>
   Druga forma dodatkowo przypisze klucz aktualnego elementu
   do zmiennej <literal>$klucz</literal> przy każdej iteracji.
  </simpara>
  <simpara>
-  Jest możliwe
-  <link linkend="language.oop5.iterations">dostosowywanie iteracji obiektów</link>.
+  Zauważ że <literal>foreach</literal> nie zmienia wewnętrznego wskaźnika
+  tablicy, który jest wykorzystywany przez takie funkcje, jak <function>current</function>
+  i <function>key</function>.
  </simpara>
- <para>
-  <note>
-   <para>
-    W PHP 5, kiedy rozpoczyna się wykonywanie <literal>foreach</literal>,
-    wewnętrzny wskaźnik tablicy jest automatycznie resetowany do pierwszego elementu
-    tablicy. Oznacza to, że nie musisz wykonywać funkcji
-    <function>reset</function> przed pętlą <literal>foreach</literal>.
-   </para>
-   <para>
-    Jako że w PHP 5 <literal>foreach</literal> korzysta z wewnętrznego wskaźnika tablicy, jego
-    zmiana wewnątrz pętli może prowadzić do nieoczekiwanych wyników.
-   </para>
-   <para>
-    W PHP 7 <literal>foreach</literal> nie korzysta z wewnętrznego wskaźnika tablicy.
-   </para>
-  </note>
- </para>
+ <simpara>
+  Jest możliwe
+  <link linkend="language.oop5.iterations">zdefiniowane własnej iteracji obiektów</link>.
+ </simpara>
+
  <para>
   Aby być w stanie bezpośrednio modyfikować elementy tablicy w pęli, poprzedź
  <literal>$wartość</literal> znakiem &amp;. W tym wypadku wartość zostanie przypisana
@@ -111,8 +98,7 @@ foreach ($arr as $key => $value) {
   </informalexample>
  </warning>
  <para>
-  Przed wersją PHP 5.5.0 referencja zmiennej <literal>$wartość</literal> jest możliwa tylko jeśli iterowana tablica 
-  może być zreferencjonowana (np. jeżeli jest zmienną). Poniższy kod nie zadziała:
+  Możliwe jest iterowanie po stałej wartości tablicy przez referencję:
   <informalexample>
    <programlisting role="php">
 <![CDATA[
@@ -129,7 +115,8 @@ foreach (array(1, 2, 3, 4) as &$value) {
   <note>
    <para>
     <literal>foreach</literal> nie wspiera tłumienia
-    wiadomości błędów przez '@'.
+    wiadomości błędów przy użyciu
+    <literal linkend="language.operators.errorcontrol">@</literal>.
    </para>
   </note>
  </para>
@@ -297,43 +284,6 @@ A: 3; B: 4; C:
 ]]>
     </screen>
    </informalexample>
-  </para>
- </sect2>
-
- <sect2 role="changelog">
-  &reftitle.changelog;
-  <para>
-   <informaltable>
-    <tgroup cols="2">
-     <thead>
-      <row>
-       <entry>&Version;</entry>
-       <entry>&Description;</entry>
-      </row>
-     </thead>
-     <tbody>
-      <row>
-       <entry>7.0.0</entry>
-       <entry>
-        <literal>foreach</literal> nie korzysta więcej z wewnętrznego wskaźnika tablicy.
-       </entry>
-      </row>
-      <row>
-       <entry>5.5.0</entry>
-       <entry>
-        Wspierana jest referencja <literal>$wartości</literal> dla wyrażeń.
-        Wcześniej były wspierane tylko zmienne.
-       </entry>
-      </row>
-      <row>
-       <entry>5.5.0</entry>
-       <entry>
-        Wspierane jest rozpakowywanie zagnieżdżonych tablic przy użyciu <function>list</function>.
-       </entry>
-      </row>
-     </tbody>
-    </tgroup>
-   </informaltable>
   </para>
  </sect2>
 
