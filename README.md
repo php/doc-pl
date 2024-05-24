@@ -183,7 +183,7 @@ W połączeniu z faktem, że polska wersja ma małą ilość zdeaktualizowanych 
 pozycji wyjściowej w porównaniu do większości innych języków. Nie widać tego być może na [doc.php.net](http://doc.php.net),
 ale faktycznych tłumaczeń dokumentacji PHP jest około 30. Większość z nich po prostu jest w stanie tak złym, że zrezygnowano
 z cyklicznego analizowania ich statusu w tym narzędziu do momentu, gdy ktoś zabrałby się za ich wskrzeszenie i zapewnił
-aktualne tłumaczenie przynajmniej dla kilku setek plików :) Jest to coś, czego polska wersja robić nie musi :)
+aktualne tłumaczenie przynajmniej dla kilku setek plików. Jest to coś, czego polska wersja robić nie musi :)
 
 
 [gh-forking]: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo
