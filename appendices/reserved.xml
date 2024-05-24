@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: edc3471f8384a8cbc50d998dd643313f37aba0e8 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 010542d1dcb9b1d5cd397a77ed580e50de25aca7 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 
  <appendix xml:id="reserved" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -16,12 +16,9 @@
    <simpara>
     Te słowa mają specjalne znaczenie w PHP. Niektóre z nich reprezentują rzeczy, 
     które wyglądają jak funkcje, niektóre wyglądają jak stałe i tak dalej, ale 
-    nie są nimi, naprawdę: są konstrukcjami języka. Nie możesz użyć żadnego
-    z poniższych słów jako nazwy stałej, klasy, funkcji lub metody. 
-    Używanie ich jako nazw zmiennych jest raczej w porządku, ale może powodować pomyłki.
-   </simpara>
-   <simpara>
-    Od PHP 7.0.0 słowa te są dozwolone jako nazwy właściwości, stałych,
+    nie są nimi, naprawdę: są konstrukcjami języka.
+    Następujące słowa nie mogą być użyte jako nazwy stałych, klas ani funkcji.
+    Można ich natomiast użyć jako nazw własności, stałych,
     metod klas, interfejsów i traitów, z wyjątkiem słowa
     <literal>class</literal>, które nie może być użyte jako nazwa stałej.
    </simpara>
@@ -52,7 +49,7 @@
         <link linkend="control-structures.break">break</link>
        </entry>
        <entry>
-        <link linkend="language.types.callable">callable</link> (od PHP 5.4)
+        <link linkend="language.types.callable">callable</link>
        </entry>
        <entry>
         <link linkend="control-structures.switch">case</link>
@@ -137,7 +134,10 @@
         <link linkend="language.oop5.final">final</link>
        </entry>
        <entry>
-        <link linkend="language.exceptions">finally</link> (od PHP 5.5)
+        <link linkend="language.exceptions">finally</link>
+       </entry>
+       <entry>
+        <link linkend="functions.arrow">fn</link> (od PHP 7.4)
        </entry>
        <entry>
         <link linkend="control-structures.for">for</link>
@@ -145,16 +145,16 @@
        <entry>
         &foreach;
        </entry>
+      </row>
+      <row>
        <entry>
         <link linkend="functions.user-defined">function</link>
        </entry>
-      </row>
-      <row>
        <entry>
         <link linkend="language.variables.scope">global</link>
        </entry>
        <entry>
-        <link linkend="control-structures.goto">goto</link> (od PHP 5.3)
+        <link linkend="control-structures.goto">goto</link>
        </entry>
        <entry>
         <link linkend="control-structures.if">if</link>
@@ -162,11 +162,11 @@
        <entry>
         <link linkend="language.oop5.interfaces">implements</link>
        </entry>
+      </row>
+      <row>
        <entry>
         <function>include</function>
        </entry>
-      </row>
-      <row>
        <entry>
         <function>include_once</function>
        </entry>
@@ -174,33 +174,36 @@
         <link linkend="language.operators.type">instanceof</link>
        </entry>
        <entry>
-        <link linkend="language.oop5.traits.conflict">insteadof</link> (od PHP 5.4)
+        <link linkend="language.oop5.traits.conflict">insteadof</link>
        </entry>
        <entry>
         <link linkend="language.oop5.interfaces">interface</link>
        </entry>
+      </row>
+      <row>
        <entry>
         <function>isset</function>
        </entry>
-      </row>
-      <row>
        <entry>
         <function>list</function>
        </entry>
        <entry>
-        <link linkend="language.namespaces">namespace</link> (od PHP 5.3)
+        &match; (od PHP 8.0.0)
+       </entry>
+       <entry>
+        <link linkend="language.namespaces">namespace</link>
        </entry>
        <entry>
         <link linkend="language.oop5.basic.new">new</link>
        </entry>
+      </row>
+      <row>
        <entry>
         <link linkend="language.operators.logical">or</link>
        </entry>
        <entry>
         <function>print</function>
        </entry>
-      </row>
-      <row>
        <entry>
         <link linkend="language.oop5.visibility">private</link>
        </entry>
@@ -210,20 +213,25 @@
        <entry>
         <link linkend="language.oop5.visibility">public</link>
        </entry>
+      </row>
+      <row>
+       <entry>
+        <link linkend="language.oop5.properties.readonly-properties">readonly</link> (od PHP 8.1.0) *
+       </entry>
        <entry>
         <function>require</function>
        </entry>
        <entry>
         <function>require_once</function>
        </entry>
-      </row>
-      <row>
        <entry>
         <function>return</function>
        </entry>
        <entry>
         <link linkend="language.variables.scope">static</link>
        </entry>
+      </row>
+      <row>
        <entry>
         <link linkend="control-structures.switch">switch</link>
        </entry>
@@ -231,16 +239,16 @@
         <link linkend="language.exceptions">throw</link>
        </entry>
        <entry>
-        <link linkend="language.oop5.traits">trait</link> (od PHP 5.4)
+        <link linkend="language.oop5.traits">trait</link>
        </entry>
-      </row>
-      <row>
        <entry>
         <link linkend="language.exceptions">try</link>
        </entry>
        <entry>
         <function>unset</function>
        </entry>
+      </row>
+      <row>
        <entry>
         <link linkend="language.namespaces">use</link>
        </entry>
@@ -250,24 +258,29 @@
        <entry>
         <link linkend="control-structures.while">while</link>
        </entry>
-      </row>
-      <row>
        <entry>
         <link linkend="language.operators.logical">xor</link>
        </entry>
        <entry>
-        <link linkend="language.generators">yield</link> (od PHP 5.5)
+        <link linkend="language.generators">yield</link>
        </entry>
+      </row>
+      <row>
        <entry>
+        <link linkend="control-structures.yield.from">yield from</link>
        </entry>
-       <entry>
-       </entry>
-       <entry>
-       </entry>
+       <entry></entry>
+       <entry></entry>
+       <entry></entry>
+       <entry></entry>
       </row>
      </tbody>
     </tgroup>
    </table>
+
+   <simpara>
+    * <literal>readonly</literal> może być użyte jako nazwa funkcji.
+   </simpara>
    
    <table>
     <title>Stałe czasu kompilacji</title>
@@ -278,7 +291,7 @@
         <link linkend="language.constants.predefined">__CLASS__</link>
        </entry>
        <entry> 
-        <link linkend="language.constants.predefined">__DIR__</link> (od PHP 5.3)
+        <link linkend="language.constants.predefined">__DIR__</link>
        </entry>
        <entry>
         <link linkend="language.constants.predefined">__FILE__</link>
@@ -295,10 +308,10 @@
       </row>
       <row>
        <entry>
-        <link linkend="language.namespaces.nsconstants">__NAMESPACE__</link> (od PHP 5.3)
+        <link linkend="language.namespaces.nsconstants">__NAMESPACE__</link>
        </entry>
        <entry>
-        <link linkend="language.constants.predefined">__TRAIT__</link> (od PHP 5.4)
+        <link linkend="language.constants.predefined">__TRAIT__</link>
        </entry>
        <entry>
        </entry>
@@ -325,8 +338,8 @@
     <title>Standardowo definiowane klasy</title>
 
     <simpara>
-     Te klasy są zdefiniowane w standarowym zestawie funkcji dołączonych do
-     buildu PHP.
+     Te klasy są zdefiniowane w standardowym zestawie funkcji dołączonych do
+     kopii PHP.
     </simpara>
 
     <variablelist>
@@ -342,8 +355,9 @@
       <term><classname>stdClass</classname></term>
       <listitem>
        <simpara>
-        Tworzone przez <link linkend="language.types.object.casting">rzutowanie
-        na obiekt</link>.
+        Ogólna pusta klasa powstała w wyniku
+        <link linkend="language.types.object.casting">rzutowania
+        na obiekt</link> i użycia różnych wbudowanych funkcji.
        </simpara>
       </listitem>
      </varlistentry>
@@ -355,18 +369,6 @@
        </simpara>
       </listitem>
      </varlistentry>
-    </variablelist>
-   </sect2>
-   
-   <sect2 xml:id="reserved.classes.php5">
-    <title>Predefiniowane klasy od PHP 5</title>
-    
-    <simpara>
-     Te dodatkowe predefiniowane klasy zostały wprowadzone w 
-     PHP 5.0.0.
-    </simpara>
-    
-    <variablelist>
      <varlistentry>
       <term><classname>Exception</classname></term>
       <listitem>
@@ -378,7 +380,7 @@
       <term><classname>ErrorException</classname></term>
       <listitem>
        <simpara>
-        Dostępna od PHP 5.1.0.
+
        </simpara>
       </listitem>
      </varlistentry>
@@ -389,46 +391,26 @@
        </simpara>
       </listitem>
      </varlistentry>
-    </variablelist>
-   </sect2>
-
-   <sect2 xml:id="reserved.classes.closure">
-    <title>Closure</title>
-    
-    <simpara>
-     Predefiniowana finalna klasa <classname>Closure</classname> została wprowadzona
-     w PHP 5.3.0. Jest używana do reprezentacji <link
-     linkend="functions.anonymous">funkcji anonimowych</link>.
-    </simpara>
-    <simpara>
-     Aby dowiedzieć się więcej, zobacz <link linkend="class.closure">stronę
-     tej klasy</link>.
-    </simpara>
-   </sect2>
-
-   <sect2 xml:id="reserved.classes.generator">
-    <title>Generator</title>
-    
-    <simpara>
-     Predefiniowana finalna klasa <classname>Generator</classname> została wprowadzona
-     w PHP 5.5.0. Jest używana do reprezentacji <link
-     linkend="language.generators">generatorów</link>.
-    </simpara>
-    <simpara>
-     Aby dowiedzieć się więcej, zobacz <link linkend="class.generator">stronę
-     tej klasy</link>.
-    </simpara>
-   </sect2>
-
-   <sect2 xml:id="reserved.classes.php7">
-    <title>Predefiniowane interfejsy i klasy od PHP 7</title>
-
-    <simpara>
-     Niżej wymienione dodatkowe klasy i interfejsy zostały wprowadzone w
-     PHP 7.0.0.
-    </simpara>
-
-    <variablelist>
+     <varlistentry>
+      <term><classname>Closure</classname></term>
+      <listitem>
+       <simpara>
+        Predefiniowana klasa finalna <classname>Closure</classname>
+        jest używana do reprezentowania <link
+        linkend="functions.anonymous">funkcji anonimowych</link>.
+       </simpara>
+      </listitem>
+     </varlistentry>
+     <varlistentry>
+      <term><classname>Generator</classname></term>
+      <listitem>
+       <simpara>
+        Predefiniowana klasa finalna <classname>Generator</classname>
+        jest używana do reprezentowania <link
+        linkend="language.generators">generatorów</link>.
+       </simpara>
+      </listitem>
+     </varlistentry>
      <varlistentry>
       <term><classname>ArithmeticError</classname></term>
       <listitem>
@@ -526,36 +508,36 @@
    <title>Lista innych zarezerwowanych słów</title>
    <simpara>
     Te słowa nie mogą zostać użyte jako nazwa klasy, interfejsu lub traita. 
-    Ich użycie jest także zabronione w przestrzeniach nazw.
+    Przed PHP 8.0.0 ich użycie było zabronione także w przestrzeniach nazw.
    </simpara>
    <para>
     <table>
      <title>Zarezerwowane słowa</title>
-     <tgroup cols="5">
+     <tgroup cols="4">
       <tbody>
        <row>
         <entry>
-         int (od PHP 7)
+         int
         </entry>
         <entry>
-         float (od PHP 7)
+         float
         </entry>
         <entry>
-         bool (od PHP 7)
+         bool
         </entry>
         <entry>
-         string (od PHP 7)
+         string
         </entry>
        </row>
        <row>
         <entry>
-         true (od PHP 7)
+         true
         </entry>
         <entry>
-         false (od PHP 7)
+         false
         </entry>
         <entry>
-         null (od PHP 7)
+         null
         </entry>
         <entry>
          void (od PHP 7.1)
@@ -568,6 +550,12 @@
         <entry>
          object (od PHP 7.2)
         </entry>
+        <entry>
+         mixed (od PHP 8.0)
+        </entry>
+        <entry>
+         never (od PHP 8.1)
+        </entry>
        </row>
       </tbody>
      </tgroup>
@@ -575,24 +563,24 @@
    </para>
    <para>
     Poniższa lista zawiera słowa zarezerwowane w sposób "miękki". Wciąż mogą one
-    być używane jako nazwy klas, interfejsów czy traitów (tak samo w przestrzeniach
-    nazw), ale ich użycie jest wysoce niezalecane, ponieważ mogą one zostać zarezerwowane
+    być używane jako nazwy klas, interfejsów czy traitów,
+    ale ich użycie jest wysoce niezalecane, ponieważ mogą one zostać zarezerwowane
     w przyszłych wersjach PHP.
    </para>
    <para>
     <table>
      <title>Słowa zarezerwowane w sposób "miękki"</title>
-     <tgroup cols="5">
+     <tgroup cols="4">
       <tbody>
        <row>
         <entry>
-         resource (od PHP 7)
+         resource
         </entry>
         <entry>
-         mixed (od PHP 7)
+         mixed
         </entry>
         <entry>
-         numeric (od PHP 7)
+         numeric
         </entry>
         <entry>
         </entry>

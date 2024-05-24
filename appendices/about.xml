@@ -18,10 +18,9 @@
    </para>
   </note>
   <para>
-   Podręcznik jest dostępny online na <link xlink:href="&url.php;">stronie PHP.net</link>
-   i stronach wielu mirrorów. Dla najlepszej wydajności wybierz mirror
-   najbliżej Ciebie. Wersja online ma obecnie dwa arkusze <acronym>CSS</acronym>:
-   przystosowany do czytania na stronie i drukowania.
+   Podręcznik jest dostępny online na <link xlink:href="&url.php;">stronie PHP.net</link>.
+   Wersja online ma obecnie dwa
+   arkusze <acronym>CSS</acronym>: przystosowany do czytania na stronie i drukowania.
   </para>
   <para>
    Dwie najistotniejsze zalety podręcznika online nad większością formatów offline to
@@ -134,13 +133,13 @@
 <![CDATA[
 strlen
 
-(PHP 4, PHP 5)
-strlen -- Określ długość ciągu tekstowego
+(PHP 4, PHP 5, PHP 7)
+strlen -- Określa długość ciągu znaków
 
 Opis
-int strlen ( string $string )
+strlen ( string $string ) : int
 
-Zwraca długość podanego parametru ciąg.
+Zwraca długość podanego ciągu znaków.
 ]]>
     </screen>
    </para>
@@ -165,10 +164,20 @@ Zwraca długość podanego parametru ciąg.
         </row>
         <row>
          <entry>
-          (PHP 4, PHP 5)
+          (PHP 4, PHP 5, PHP 7)
          </entry>
          <entry>
-          strlen() jest dostępna we wszystkich wersjach PHP 4 i PHP 5
+          strlen() jest dostępna we wszystkich wersjach PHP 4, 5 i 7
+         </entry>
+        </row>
+        <row>
+         <entry>
+          ( string $string )
+         </entry>
+         <entry>
+          Pierwszy (i w tym wypadku jedyny) parametr/argument dla tej
+          funkcji jest nazwany <parameter>string</parameter> i jego typ to
+          <link linkend="language.types.string">ciąg znaków</link>.
          </entry>
         </row>
         <row>
@@ -177,18 +186,8 @@ Zwraca długość podanego parametru ciąg.
          </entry>
          <entry>
           Typ wartości, którą zwraca funkcja. Jest nim
-          <type>integer</type> (długość ciągu jest określana jako
-          numer). 
-         </entry>
-        </row>
-        <row>
-         <entry>
-          ( string $string )
-         </entry>
-         <entry>
-          Pierwszy (i w tym wypadku jedyny) parametr/argument dla tej 
-          funkcji jest nazwany <parameter>string</parameter> i jego typ to 
-          <type>string</type>.
+          <type>int</type> (długość ciągu jest określana jako
+          liczba).
          </entry>
         </row>
        </tbody>
@@ -201,7 +200,7 @@ Zwraca długość podanego parametru ciąg.
     <para>
      <screen>
 <![CDATA[
-      zwracany typ    nazwa funkcji    ( typ argumentu   nazwa argumentu )
+      nazwa funkcji    ( typ argumentu   nazwa argumentu ) : zwracany typ
 ]]>
      </screen>
     </para>
@@ -212,30 +211,30 @@ Zwraca długość podanego parametru ciąg.
     <para>
      <screen>    
 <![CDATA[
-      bool in_array ( mixed $igła, array $stóg_siana [, bool $ścisłe])
+      in_array ( mixed $needle, array $haystack , bool $strict = false ) : bool
 ]]>
      </screen>
     </para>
     <para>
-     Co to oznaca? in_array() zwraca wartość
+     Co to oznacza? in_array() zwraca wartość
      <link linkend="language.types.boolean">boolean</link>, &true; przy
-     powodzeniu (jeśli <parameter>igła</parameter> została znaleziona w parametrze
-     <parameter>stóg_siana</parameter>&return.falseforfailure; (jeśli
-     <parameter>igła</parameter> nie została znaleziona w parametrze
-     <parameter>stóg_siana</parameter>). Pierwszy argument jest nazwany
-     <parameter>igła</parameter> i może być różnych
+     powodzeniu (jeśli parametr <parameter>needle</parameter> został znaleziony w parametrze
+     <parameter>haystack</parameter>&return.falseforfailure; (jeśli
+     <parameter>needle</parameter> nie został znaleziony w parametrze
+     <parameter>haystack</parameter>). Pierwszy argument jest nazwany
+     <parameter>needle</parameter> i może być różnych
      <link linkend="language.types">typów</link>, więc nazywamy go
-     "<emphasis>mixed</emphasis>". Parametr <parameter>igła</parameter>
-     typu mixed (to, czego szukamy) może być typem skalarnym (string, integer
+     "<emphasis>mixed</emphasis>". Parametr <parameter>needle</parameter>
+     typu mixed (to, czego szukamy) może być typem skalarnym (string, int
      lub <link linkend="language.types.float">float</link>) lub
      <link linkend="language.types.array">tablicą</link>.
-     <parameter>stóg_siana</parameter> (tablica, którą przeszukujemy) jest 
+     <parameter>haystack</parameter> (tablica, którą przeszukujemy) jest 
      drugim parametrem. Trzeci, <emphasis>opcjonalny</emphasis> parametr jest 
-     nazwany <parameter>ścisłe</parameter>. Wszystkie argumenty opcjonalne umieszczono 
-     w <emphasis>[</emphasis> nawiasach klamrowych <emphasis>]</emphasis>.  Podręcznik 
-     podaje, że parametr <parameter>ścisłe</parameter> domyślnie ustawiony jest na 
+     nazwany <parameter>strict</parameter>. Wszystkie argumenty opcjonalne mają domyślne
+     wartości; jeśli wartość domyślna jest nieznana, to jest pokazana jako <literal>?</literal>.  Podręcznik 
+     podaje, że parametr <parameter>strict</parameter> domyślnie ustawiony jest na 
      wartość logiczną &false;. Zapoznaj się ze stroną podręcznika dla odpowiedniej funkcji,
-     aby dowiedzieć się, jak działa.
+     aby dowiedzieć się dokładnie, jak działa.
     </para>
 	<para> 
      Ponadto, znak &amp; (ampersand) poprzedzający argument funkcji 
@@ -244,8 +243,8 @@ Zwraca długość podanego parametru ciąg.
     <para>
      <screen> 
 <![CDATA[
-       int preg_match ( string $pattern , string $subject [, array &$matches 
-      [, int $flags = 0 [, int $offset = 0 ]]] )
+       preg_match ( string $pattern , string $subject , array &$matches = null,
+       int $flags = 0 , int $offset = 0 ) : int|false
 ]]>
      </screen>
     </para>
@@ -260,7 +259,7 @@ Zwraca długość podanego parametru ciąg.
     <para>
      <screen>    
 <![CDATA[
-(PHP 4 >= 4.3.0, PHP 5)
+(PHP 4 >= 4.3.0, PHP 5, PHP 7)
 ]]>
      </screen>
     </para>
@@ -276,7 +275,7 @@ Zwraca długość podanego parametru ciąg.
    Podręcznik zawiera informacje na temat przeszłych, obecnych i przyszłych
    wersji PHP. Zmiany w zachowaniu są udokumentowane za pomocą notatek, tabel
    zmian i informacji w tekście na stronach podręcznika.
-   Najwcześniejszą udokumentowaną wersją jest PHP 5.0.0.
+   Najwcześniejszą udokumentowaną wersją jest PHP 7.0.0.
   </para>
   <para>
    Kiedy dokumentacja występuje dla ostatniej (niewydanej) wersji deweloperskiej
@@ -291,7 +290,7 @@ Zwraca długość podanego parametru ciąg.
   </para>
   <para>
    Uściślając, podręcznik będzie odnosił się do wersji PHP major, minor i point.
-   Używając PHP <literal>5.3.1</literal> jako przykładu, liczba <emphasis>5</emphasis>
+   Używając PHP <literal>7.3.1</literal> jako przykładu, liczba <emphasis>7</emphasis>
    oznacza wersję major (główną), <emphasis>3</emphasis> oznacza minor, a
    <emphasis>1</emphasis> to najmniejsze wydanie (point). Zazwyczaj PHP dodaje nowe możliwości
    do wydań major i minor, a poprawki błędów do wydań typu point. Jednakże ta
@@ -334,14 +333,17 @@ Zwraca długość podanego parametru ciąg.
  <sect1 xml:id="about.howtohelp">
   <title>Jak pomóc ulepszyć dokumentację</title>
   <para>
-   Istnieją trzy sposoby, na które każdy może pomóc ulepszyć ten podręcznik.
+   Istnieją kilka sposobów, na które każdy może pomóc ulepszyć ten podręcznik.
   </para>
   <para>
    Jeżeli znalazłeś błąd w manualu, w dowolnym języku, zgłoś go proszę
-   używając systemu błędów na <link xlink:href="&url.php.bugs;">&url.php.bugs;</link>.
-   Sklasyfikuj błąd jako <literal>"Documentation Problem"</literal>. Wszystkie problemy
+
+   używając systemu śledzenia błędów w repozytorium odpowiedniego języka pod <link xlink:href="https://github.com/php/?q=doc">https://github.com/php</link>.
+   Przykładowo błędy w angielskiej wersji podręcznika powinny być zgłaszane pod
+   <link xlink:href="https://github.com/php/doc-en/issues">https://github.com/php/doc-en/issues</link>.
+   Wszystkie problemy
    związane z dokumentacją, także te o formatach podręcznika, powinny być zgłaszane jako 
-   rapoty błędów.
+   zgłoszenia błędów.
   </para>
   <note>
    <para>
@@ -355,6 +357,10 @@ Zwraca długość podanego parametru ciąg.
    dodać wyjaśnienia dla innych czytelników. Jednakże proszę, nie wysyłaj raportów błędów,
    używając systemu notatek. Więcej szczegółów znajdziesz w sekcji zatytułowanej <link
    linkend="about.notes">'O notatkach użytkowników'</link>.
+  </para>
+  <para>
+   Można także zgłaszać pull requesty do
+   <link xlink:href="&url.php.git.mirror;doc-en">repozytorium dokumentacji na Githubie</link>.
   </para>
   <para>
    Podręcznik PHP jest tłumaczony na wiele języków. Znajomość angielskiego i
@@ -387,15 +393,14 @@ Zwraca długość podanego parametru ciąg.
    xlink:href="&url.phd;">PhD</link>.
    Używamy programu <link xlink:href="&url.winhelp;">Microsoft HTML Help
    Workshop</link>, aby wygenerować manual w formacie <productname>Windows HTML Help</productname>,
-   no i oczywiście PHP samego w sobie aby wykonać pewne
+   no i oczywiście PHP samego w sobie, aby wykonać pewne
    dodatkowe konwersje i formatowanie.
   </para>
   <para>
    Podręcznik PHP jest generowany w różnych językach i formatach, zobacz 
    <link xlink:href="&url.php.docs;">&url.php.docs;</link>, aby poznać szczegóły.
-   Kod źródłowy <acronym>XML</acronym> może zostać pobrany z SVN lub
-   wyświetlony na <link xlink:href="&url.php.svn;">&url.php.svn;</link>. Dokumentacja
-   znajduje się w module <literal>phpdoc</literal>.
+   Kod źródłowy <acronym>XML</acronym> może zostać pobrany z git lub
+   wyświetlony na <link xlink:href="&url.php.git.mirror;doc-en">&url.php.git.mirror;doc-en</link>.
   </para>
  </sect1>
 
@@ -412,7 +417,7 @@ Zwraca długość podanego parametru ciąg.
   </para>
   <para>
    Ludzie zaangażowani w tłumaczenia pracują na kodzie źródłowym <acronym>XML</acronym>
-   dostępnym na <link xlink:href="&url.php.svn;">&url.php.svn;</link>
+   dostępnym pod adresem <link xlink:href="&url.php.git.mirror;doc-en">&url.php.git.mirror;doc-en</link>
    i tłumaczą go na ich własne języki. Tłumacze 
    <emphasis>nie korzystają</emphasis> z wygenerowanych wersji (jak 
    <acronym>HTML</acronym> lub czysty tekst), ponieważ to system budowania 
