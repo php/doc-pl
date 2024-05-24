@@ -9,6 +9,9 @@ a ten dokument opisuje, w jaki sposób można uczestniczyć w procesie tłumacze
 2. [Zbuduj dokumentację](#zbuduj-dokumentację)
 3. [Śledzenie wersji](#śledzenie-wersji)
 4. [Tłumaczenie](#tłumaczenie)
+   1. [Słowniczek](#słowniczek)
+5. [Praca z git](#praca-z-git)
+6. [Obecny stan polskiego tłumaczenia](#obecny-stan-polskiego-tłumaczenia)
 
 ## Instalacja
 
@@ -130,6 +133,8 @@ pierwowzór. Bardzo ułatwia to późniejszą analizę diffów na doc.php.net, a
 że nie zawsze jest to możliwe, bo często szyk zdania w języku polskim jest zupełnie inny niż w angielskim, ale warto
 dbać o to tam, gdzie to możliwe.
 
+### Słowniczek
+
 Poniżej zamieszczono listę kilku z częściej występujących i mniej oczywistych tłumaczeń, na które łatwo się natknąć
 w dokumentacji PHP.
 
@@ -138,15 +143,49 @@ w dokumentacji PHP.
 > więc do momentu osiągnięcia ewentualnego konsensusu w sprawie nowego tłumaczenia, stosujmy się do tych, które już są
 > używane w polskiej wersji lub wymienione poniżej.
 
-| Angielski wyraz lub wyrażenie      | Polskie tłumaczenie                  | Komentarz                              |
-|------------------------------------|--------------------------------------|----------------------------------------|
-| Locale settings                    | Ustawienia regionalne (locale)       | Jako iż nie ma powszechnie używanego tłumaczenia na j. polski to zawieramy też oryginalne słówko, aby ułatwić np. Googlowanie |
-| locale-dependent / locale-specific | z uwzględnieniem ustawień regionalnych (locale) | |
-| locale-independent                 | bez uwzględnienia ustawień lokalnych (locale) | |
-| string                             | ciąg znaków (ew. łańcuch znaków, jeśli gdzieś bardzo chcemy uniknąć powtórzeń | |
-| `<parameter>foo</parameter>`       | Parametr `<parameter>foo</parameter>` | Poprzedzić słowem "parametr" przynajmniej przy pierwszym opisywaniu danego parametru na danej stronie. W przeciwnym razie dostajemy mieszkankę polskiego i angielskiego, która nie zawsze jest zrozumiała
-| `&resource;`                       | `<link linkend="language.types.resource">Zasób</link>` | Analogicznie dla innych encji typów danych, jeśli uznamy że warto utrzymać linkowanie jak w angielskiej wersji
+| Angielski wyraz lub wyrażenie      | Polskie tłumaczenie                                    | Komentarz                                                                                                                                                                                                 |
+|------------------------------------|--------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Locale settings                    | Ustawienia regionalne (locale)                         | Jako iż nie ma powszechnie używanego tłumaczenia na j. polski to zawieramy też oryginalne słówko, aby ułatwić np. Googlowanie                                                                             |
+| locale-dependent / locale-specific | z uwzględnieniem ustawień regionalnych (locale)        |                                                                                                                                                                                                           |
+| locale-independent                 | bez uwzględnienia ustawień lokalnych (locale)          |                                                                                                                                                                                                           |
+| string                             | ciąg znaków                                            | ew. łańcuch znaków, jeśli gdzieś bardzo chcemy uniknąć powtórzeń                                                                                                                                          |
+| `<parameter>foo</parameter>`       | Parametr `<parameter>foo</parameter>`                  | Poprzedzić słowem "parametr" przynajmniej przy pierwszym opisywaniu danego parametru na danej stronie. W przeciwnym razie dostajemy mieszkankę polskiego i angielskiego, która nie zawsze jest zrozumiała |
+| `&resource;`                       | `<link linkend="language.types.resource">Zasób</link>` | Analogicznie dla innych encji typów danych, jeśli uznamy że warto utrzymać linkowanie jak w angielskiej wersji                                                                                            |
+
+
+
+## Praca z git
+
+Przygotuj jakąś ilość zmian. Możesz zająć się jednym lub kilkunastoma plikami, ale zalecane jest, aby na początek brać
+mniejsze ilości plików. W ten sposób będzie mniej do ewentualnej poprawki po procesie code review. Później można stopniowo
+zwiększać ilość zmian, wraz z nabieraniem doświadczenia ...choć też bez przesady ze zmianami w jednym pull requeście, żeby
+przeglądanie zmian nie trwało wieków, bo to może być demotywujące :)
+
+Commity tworzymy w języku angielskim, choćby ze względu na to, że pewne zmiany struktury są wykonywane przez ludzi z różnych
+krajów dla wszystkich tłumaczeń jednocześnie, tak więc w ten prosty sposób znacząco ułatwiamy pracę komukolwiek spoza Polski.
+
+Po przygotowaniu zmian w forku należy [otworzyć pull request][gh-fork-prs] do repozytorium `php/doc-pl`, a następnie poczekać
+na przejrzenie i zatwierdzenie zmian. Najlepiej zapoznać się z całą sekcją "Propose changes" w spisie treści wyświetlanym
+po lewej stronie, po otwarciu powyższego linku. Można też oczywiście poszukać materiałów w języku polskim na ten temat.
+
+## Obecny stan polskiego tłumaczenia
+
+Mówiąc w wielkim skrócie: gorsza wiadomość jest taka, że polskie tłumaczenie nie jest obecnie widoczne na [php.net](https://php.net).
+Znacznie lepsza wiadomość to taka, że polskie tłumaczenie jest jednocześnie w najlepszym stanie od przynajmniej ośmiu lat
+i że w perspektywie około miesiąca (tj. okolice czerwca, _ewentualnie_ lipca 2024) powinno się to zmienić.
+
+Polskie tłumaczenie nie ma może największej ilości przetłumaczonej treści (na maj 2024 jest to około 5% całości), ale też
+sam manual PHP jest _gigantyczny_. Większość zawartości manuala PHP to opisy rozszerzeń, w tym rzadko używanych lub niemal
+martwych rozszerzeń PECL, z których nikt nie korzysta i niemal nikt nie czyta ich dokumentacji. Polskie tłumaczenie skupia
+się w większości na najczęściej wykorzystywanych funkcjach i rozdziałach podręcznika.
+
+W połączeniu z faktem, że polska wersja ma małą ilość zdeaktualizowanych tłumaczeń, stawia nas to w naprawdę dobrej
+pozycji wyjściowej w porównaniu do większości innych języków. Nie widać tego być może na [doc.php.net](http://doc.php.net),
+ale faktycznych tłumaczeń dokumentacji PHP jest około 30. Większość z nich po prostu jest w stanie tak złym, że zrezygnowano
+z cyklicznego analizowania ich statusu w tym narzędziu do momentu, gdy ktoś zabrałby się za ich wskrzeszenie i zapewnił
+aktualne tłumaczenie przynajmniej dla kilku setek plików :) Jest to coś, czego polska wersja robić nie musi :)
 
 
 [gh-forking]: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo
+[gh-prs]: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork
 [phd]: https://github.com/php/phd
