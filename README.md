@@ -64,7 +64,7 @@ Jeżeli wszystko poszło okej, to zobaczysz komunikat podobny do tego:
 
 ```
 All good. Saving .manual.xml... done.
-All you have to do now is run 'phd -d /home/user/Dev/php-docs/base/.manual.xml'
+All you have to do now is run 'phd -d /home/user/Dev/phpdoc/doc-base/.manual.xml'
 If the script hangs here, you can abort with ^C.
          _ _..._ __
         \)`    (` /
