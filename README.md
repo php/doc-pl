@@ -120,7 +120,7 @@ hash umieszczamy jako wartość `EN-Revision`.
 Jeżeli chodzi o pole `Maintainer` to przy aktualizacji tłumaczeń zasadniczo nie zmieniamy go. W wypadku
 nowych tłumaczeń możemy tam podać którąś z istniejących już wartości lub, jeśli bierzemy już częstszy udział
 w tłumaczeniu na j. polski, pokusić się o "stworzenie" własnego nicku. Nie wymaga to żadnej rejestracji,
-a jedynie dodania wpisu do pliku `translators.xml`, znajdującego się w głównym katalogu tego repozytorium.
+a jedynie dodania wpisu do pliku `translation.xml`, znajdującego się w głównym katalogu tego repozytorium.
 
 ## Tłumaczenie
 
