@@ -12,9 +12,9 @@
   &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>mail</methodname>
-   <methodparam><type>string</type><parameter>do</parameter></methodparam>
-   <methodparam><type>string</type><parameter>temat</parameter></methodparam>
-   <methodparam><type>string</type><parameter>treść</parameter></methodparam>
+   <methodparam><type>string</type><parameter>to</parameter></methodparam>
+   <methodparam><type>string</type><parameter>subject</parameter></methodparam>
+   <methodparam><type>string</type><parameter>message</parameter></methodparam>
    <methodparam choice="opt"><type class="union"><type>array</type><type>string</type></type><parameter>additional_headers</parameter><initializer>[]</initializer></methodparam>
    <methodparam choice="opt"><type>string</type><parameter>additional_params</parameter><initializer>""</initializer></methodparam>
   </methodsynopsis>
@@ -28,7 +28,7 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>do</parameter></term>
+     <term><parameter>to</parameter></term>
      <listitem>
       <para>
        Odbiorca lub odbiorcy e-maila.
@@ -46,7 +46,7 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>temat</parameter></term>
+     <term><parameter>subject</parameter></term>
      <listitem>
       <para>
        Temat e-maila.
@@ -59,7 +59,7 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>treść</parameter></term>
+     <term><parameter>message</parameter></term>
      <listitem>
       <para>
        Treść wiadomości.
@@ -372,7 +372,7 @@ mail($to, $subject, $message, implode("\r\n", $headers));
     <literal>MTA</literal>, tylko parsowane za pomocą PHP.
    </para>
    <para>
-    Parametr <parameter>do</parameter> nie powinien być adresem
+    Parametr <parameter>to</parameter> nie powinien być adresem
     w postaci &quot;Osoba &lt;ktokolwiek@example.com&gt;&quot;. Polecenie
     mail może nie parsować tego właściwie, podczas komunikowania się
     z MTA.
