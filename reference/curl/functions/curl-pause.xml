@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: c672ec208a81a60850823b9e46318485c30bec6f Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 77a60306bc47d2151ebca7e6983897a0371a9671 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-
 <refentry xml:id="function.curl-pause" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>curl_pause</refname>
@@ -12,15 +11,15 @@
   &reftitle.description;
   <methodsynopsis>
    <type>int</type><methodname>curl_pause</methodname>
-   <methodparam><type>resource</type><parameter>ch</parameter></methodparam>
-   <methodparam><type>int</type><parameter>maska_bitowa</parameter></methodparam>
+   <methodparam><type>CurlHandle</type><parameter>handle</parameter></methodparam>
+   <methodparam><type>int</type><parameter>flags</parameter></methodparam>
   </methodsynopsis>
   <para>
-
+   Zatrzymuje lub wznawia sesję cURL. Sesja może być wstrzymana gdy transfer jest w toku
+   (trwa odczyt, zapis lub oba), dzięki wywołaniu tej funkcji przez callback
+   zarejestrowany z użyciem <function>curl_setopt</function>.
   </para>
-
-  &warn.undocumented.func;
-
+  
  </refsect1>
 
  <refsect1 role="parameters">
@@ -28,7 +27,7 @@
   <variablelist>
    &curl.ch.description;
    <varlistentry>
-    <term><parameter>maska_bitowa</parameter></term>
+    <term><parameter>flags</parameter></term>
     <listitem>
      <para>
       Jedna ze stałych <constant>CURLPAUSE_*</constant>.
@@ -43,6 +42,23 @@
   <para>
    Zwraca kod błędu (<constant>CURLE_OK</constant> jeżeli nie wystąpił błąd).
   </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     &curl.changelog.handle-param;
+    </tbody>
+   </tgroup>
+  </informaltable>
  </refsect1>
 
 </refentry>
