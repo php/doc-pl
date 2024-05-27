@@ -1,66 +1,125 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 682510e91d1f19fb59d2f7aef6ab370e8af842a1 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-  <refentry xml:id="function.session-destroy" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>session_destroy</refname>
-    <refpurpose>Niszczy wszystkie dane zarejestrowane w sesji</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>bool</type><methodname>session_destroy</methodname>
-      <void/>
-     </methodsynopsis>
-    <simpara>
-     <function>session_destroy</function> niszczy wszystkie dane skojarzone z
-     bieżącą sesją. Nie usuwa żadnych globalnych zmiennych związanych z sesją.
-     Nie usuwa też ciasteczka sesyjnego.
-    </simpara>
-    <para>
-     Aby "zabić" całość sesji, na przykład aby wylogować użytwkonika, należy
-     także usunąć identyfikator sesji. Jeśli do propagowania identyfikatora
-     sesji jużyte było ciasteczko, to usunięte musi być ciasteczko sesyjne.
-     Można do tego użyć funkcji <function>setcookie</function>.
-    </para>
-    <simpara>
-     &return.success;
-    </simpara>
-    <para>
-     <example>
-      <title>Niszczenie sesji przy użyciu <varname>$_SESSION</varname></title>
-      <programlisting role="php">
-<![CDATA[
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.session-destroy">
+ <refnamediv>
+  <refname>session_destroy</refname>
+  <refpurpose>Niszczy wszystkie dane zarejestrowane w sesji</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>bool</type><methodname>session_destroy</methodname>
+   <void/>
+  </methodsynopsis>
+  <simpara>
+   <function>session_destroy</function> niszczy wszystkie dane skojarzone z
+   bieżącą sesją. Nie usuwa żadnych globalnych zmiennych związanych z sesją.
+   Nie usuwa też ciasteczka sesyjnego.
+   Aby ponownie użyć zmiennych sesyjnych, należy wywołać funkcję
+   <function>session_start</function>.
+  </simpara>
+  <note>
+   <simpara>
+    Nie musisz wołać <function>session_destroy</function> dla kodu o typowych
+    zastosowaniach. Sugerowane jest raczej czyszczenie tablicy $_SESSION, a nie niszczenie danych sesyjnych.
+   </simpara>
+  </note>
+  <para>
+   Aby całkowicie zniszczyć sesję, ID
+   sesji powinno również zostać usunięte. Jeśli do przekazania ID sesji
+   jest używane ciasteczko (domyślne zachowanie), to ciasteczko sesyjne musi zostać usunięte.
+   Można użyć do tego <function>setcookie</function>.
+  </para>
+  <para>
+   Kiedy opcja <link linkend="ini.session.use-strict-mode">session.use_strict_mode</link>
+   jest włączona, nie musisz usuwać starego ciasteczka z ID sesji, ponieważ
+   moduł obsługi sesji nie zaakceptuje ciasteczka z ID sesji, jeśli nie ma
+   danych powiązanych z danym ID sesji, a zamiast tego wyśle nowe ciasteczko z identyfikatorem sesji.
+   Włączenie opcji <link linkend="ini.session.use-strict-mode">session.use_strict_mode</link>
+   jest zalecane dla wszystkich witryn.
+  </para>
+  <warning>
+   <para>
+    Natychmiastowe usunięcie sesji może spowodować nieoczekiwane wyniki. Jeśli występują
+    równoległe żądania HTTP, to inne połączenia mogą doświadczyć nagłej utraty danych
+    z sesji. Tyczy się to na przykład żądań wykonywanych przez JavaScript i/lub zapytań z linków URL.
+   </para>
+   <para>
+    Mimo iż obecnie moduł obsługi sesji nie wspiera pustych ciasteczek z identyfikatorem
+    sesji, to natychmiastowe usunięcie sesji może skutkować takim właśnie pustym ciasteczkiem
+    z identyfikatorem sesji, ze względu na race-condition klienta (przeglądarki). Spowoduje to,
+    że klient utworzy niepotrzebnie wiele identyfikatorów sesji.
+   </para>
+   <para>
+    Aby temu zapobiec, powinno się ustawić znacznik czasu usunięcia w $_SESSION i
+    odrzucać dostęp dopiero po czasie. Zamiast tego można też upewnić się, że aplikacja nie
+    odbiera równoległych żądań. Tyczy się to również <function>session_regenerate_id</function>.
+   </para>
+  </warning>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  &no.function.parameters;
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Niszczenie sesji z <varname>$_SESSION</varname></title>
+    <programlisting role="php">
+     <![CDATA[
 <?php
-// Inicjalizuj sesję
-// Jeśli używasz sesion_name("cośtam"), nie zapomnij o tym teraz!
+// Zainicjalizuj sesję.
+// Jeżeli korzystasz z session_name("jakasnazwa"), nie zapomnij aby użyć go tutaj!
 session_start();
-// Usuń wszystkie zmienne sesyjne
+
+// Usuń wszystkie zmienne sesyjne.
 $_SESSION = array();
 
-// Jeśli pożądane jest zabicie sesji, usuń także ciasteczko sesyjne.
-// Uwaga: to usunie sesję, nie tylko dane sesji
-if (isset($_COOKIE[session_name()])) { 
-   setcookie(session_name(), '', time()-42000, '/'); 
+// Jeśli chcesz całkowicie usunąć sesję, skasuj też ciasteczko sesyjne.
+// Uwaga: to zniszczy całą sesję, a nie tylko dane sesyjne! 
+if (ini_get("session.use_cookies")) {
+    $params = session_get_cookie_params();
+    setcookie(session_name(), '', time() - 42000,
+        $params["path"], $params["domain"],
+        $params["secure"], $params["httponly"]
+    );
 }
 
-// Na koniec zniszcz sesję
+// Następnie zniszcz sesję.
 session_destroy();
+?>
 ]]>
-      </programlisting>
-     </example>
-    </para>
-    <note>
-     <para>
-      <function>session_unset</function> należy używać dla starszego kodu,
-      który nie korzysta z <varname>$_SESSION</varname>.
-     </para>
-    </note>
-    <para>
-     Patrz także: <function>unset</function> i <function>setcookie</function>.
-    </para>
-   </refsect1>
-  </refentry>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><link linkend="ini.session.use-strict-mode">session.use_strict_mode</link></member>
+    <member><function>session_reset</function></member>
+    <member><function>session_regenerate_id</function></member>
+    <member><function>unset</function></member>
+    <member><function>setcookie</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

@@ -1,62 +1,92 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: adi Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 0c9c2dd669fe9395eaa73d487fbd160f9057429a Maintainer: adi Status: ready -->
 <!-- $Revision$ -->
-  <refentry xml:id="function.base64-encode" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
-   <refnamediv>
-    <refname>base64_encode</refname>
-    <refpurpose>Koduje dane za pomocą algorytmu MIME base64</refpurpose>
-   </refnamediv>
-   
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>string</type><methodname>base64_encode</methodname>
-      <methodparam><type>string</type><parameter>dane</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     <function>base64_encode</function> zwraca
-     <parameter>dane</parameter> zakodowane za pomocą algorytmu base64.
-     Ten sposób kodowania został zaprojektowany, aby móc bezpiecznie
-     przesyłać dane binarne, poprzez warstwy transportujące nie
-     zaprojektowane do obsługi 8 bitowego przesyłania informacji, np.
-     treść emaili.
-    </para>
-    <para>
-     Dane zakodowane tą funkcją zajmują ok 33% więcej miejsca niż dane
-     oryginalne.
-    </para>
-    <para>
-     <example>  
-      <title><function>base64_encode</function> przykład</title>  
-      <programlisting role="php">
+<!-- CREDITS: sobak -->
+<refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="function.base64-encode">
+ <refnamediv>
+  <refname>base64_encode</refname>
+  <refpurpose>Koduje dane za pomocą algorytmu MIME base64</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>string</type><methodname>base64_encode</methodname>
+   <methodparam><type>string</type><parameter>string</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Koduje podany ciąg znaków <parameter>string</parameter> przy użyciu base64.
+  </para>
+  <para>
+   Ten sposób kodowania został zaprojektowany, aby móc bezpiecznie
+   przesyłać dane binarne, poprzez warstwy transportujące niezaprojektowane
+   do obsługi 8 bitowego przesyłania informacji, np. treść emaili.
+  </para>
+  <para>
+   Dane zakodowane tą funkcją zajmują ok. 33% więcej miejsca niż dane
+   oryginalne.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>string</parameter></term>
+     <listitem>
+      <para>
+       Dane do zakodowania.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zakodowane dane, jako ciąg znaków.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład użycia <function>base64_encode</function></title>
+    <programlisting role="php">
+ <![CDATA[
+<?php
+$str = 'This is an encoded string';
+echo base64_encode($str);
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
 <![CDATA[
-<?php  
-$str = 'This is an encoded string';  
-echo base64_encode($str);  
-?>  
-]]>  
-      </programlisting>  
-      <para>  
-       Ten przykład wygeneruje:  
-      </para>  
-      <screen>  
-<![CDATA[  
-VGhpcyBpcyBhbiBlbmNvZGVkIHN0cmluZw==  
-]]>  
-      </screen>  
-     </example>  
-    </para>  
+VGhpcyBpcyBhbiBlbmNvZGVkIHN0cmluZw==
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
 
-    <para>
-     Patrz także
-     <function>base64_decode</function>,
-     <function>chunk_split</function>,
-     <function>convert_uuencode</function> i
-     <link xlink:href="&url.rfc;rfc2045.html">RFC 2045</link> sekcja 6.8.
-    </para>
-   </refsect1>
-  </refentry>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>base64_decode</function></member>
+    <member><function>chunk_split</function></member>
+    <member><function>convert_uuencode</function></member>
+    <member><link xlink:href="&url.rfc;2045">RFC 2045</link> section 6.8</member>
+   </simplelist>
+  </para>
+ </refsect1>
 
+</refentry>
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

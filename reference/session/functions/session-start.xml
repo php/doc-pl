@@ -1,132 +1,243 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 151e61773c016edcae8fd4989ad9a86ffd03c283 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
-  <refentry xml:id="function.session-start" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>session_start</refname>
-    <refpurpose>Inicjalizuj dane sesji</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>bool</type><methodname>session_start</methodname>
-      <void/>
-     </methodsynopsis>
-    <simpara>
-     <function>session_start</function> tworzy sesję lub wznawia bieżącą na
-     podstawie aktualnego identyfikatora sesji przekazanego przy wywołaniu,
-     poprzez metodę GET, POST lub ciasteczko.
-    </simpara>
-    <simpara>
-     Jeśli chcesz, aby sesja była nazwana, przed wywołaniem
-     <function>session_start</function> musisz wywołać
-     <function>session_name</function>.
-    </simpara>
-    <simpara>
-     Ta funkcja zawsze zwraca wartość &true;.
-    </simpara>
-    <note>
+<refentry xml:id="function.session-start" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>session_start</refname>
+  <refpurpose>Rozpoczyna nową lub wznawia istniejącą sesję</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>bool</type><methodname>session_start</methodname>
+   <methodparam choice="opt"><type>array</type><parameter>options</parameter><initializer>[]</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>session_start</function> tworzy sesję lub wznawia
+   bieżącą na podstawie identyfikatora sesji przekazanego przy wywołaniu poprzez metodę GET lub POST,
+   lub też przekazanego przez ciasteczko.
+  </para>
+  <para>
+   Gdy wywołane jest <function>session_start</function> lub gdy sesja rozpoczyna się automatycznie,
+   PHP wywoła funkcje obsługi otwarcia, odczytu i zapisu sesji. Będą to albo wbudowane funkcje obsługi
+   dostarczone domyślnie lub dostarczone przez rozszerzenia PHP (jak np. SQLite lub Memcached); lub może
+   to być własna funkcja obsługi ustawiona przez <function>session_set_save_handler</function>.
+   Funkcja zwrotna odczytu pobierze istniejące dane sesji (zapisane w specjalnym zserializowanym formacie),
+   dane te zostaną odserializowane i użyte do automatycznego ustawienia superglobalnej $_SESSION, gdy
+   funkcja zwrotna odczytu zwróci zapisane dane sesji do modułu obsługi sesji wbudowanego w PHP.
+  </para>
+  <para>
+   Aby użyć nazwanej sesji, wywołaj
+   <function>session_name</function> przed wywołaniem
+   <function>session_start</function>.
+  </para>
+  <para>
+   Jeśli opcja <link linkend="ini.session.use-trans-sid">session.use_trans_sid</link>
+   jest włączona, funkcja <function>session_start</function>
+   zarejestruje wewnętrzną funkcję obsługi wyjścia do przepisywania adresów URL.
+  </para>
+  <para>
+   Jeżeli użytkownik używa <literal>ob_gzhandler</literal> lub podobnych z
+   <function>ob_start</function>, ważna staje się kolejność wywołania tych funkcji.
+   Przykładowo,
+   <literal>ob_gzhandler</literal> musi zostać wywołana przed rozpoczęciem sesji.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <variablelist>
+   <varlistentry>
+    <term><parameter>options</parameter></term>
+    <listitem>
      <para>
-      Jeśli używasz sesji opartych o ciasteczka, to
-      <function>session_start</function> musi być wywołane przed wysłaniem
-      jakichkolwiek danych do przeglądarki.
+      Jeżeli podano, to jest to tablica asocjacyjna opcji, które nadpiszą
+      obecnie ustawione
+      <link linkend="session.configuration">opcje konfiguracyjne sesji</link>.
+      Klucze nie powinny zawierać prefiksu <literal>session.</literal>.
      </para>
-    </note>
-    <para>
-     <example>
-      <title>Przykład sesji: <filename>page1.php</filename></title>
-      <programlisting role="php">
+     <para>
+      Poza standardową listą opcji konfiguracyjnych,
+      może też zostać podana opcja <literal>read_and_close</literal>. Jeśli ustawiona jest ona na
+      &true;, to sesja będzie zamknięta natychmiast po jej
+      odczytaniu, zapobiegając w ten sposób niepotrzebnemu blokowaniu, jeśli dane sesji
+      nie będą zmieniane.
+     </para>
+    </listitem>
+   </varlistentry>
+  </variablelist>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Ta funkcja zwraca &true; jeśli sesja została pomyślnie rozpoczęta,
+   w przeciwnym wypadku zwraca &false;.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>7.1.0</entry>
+       <entry>
+        <function>session_start</function> zwraca teraz &false; i nie
+        inicjalizuje już <varname>$_SESSION</varname>, jeśli nie udało się rozpocząć
+        sesji.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <refsect2>
+   <title>Podstawowy przykład sesji</title>
+
+   <para>
+    <example>
+     <title><filename>strona1.php</filename></title>
+     <programlisting role="php">
 <![CDATA[
 <?php
-// page1.php
+// strona1.php
 
 session_start();
 
 echo 'Witaj na stronie #1';
 
-$_SESSION['kolor']     = 'zielony';
-$_SESSION['zwierze']   = 'kot';
-$_SESSION['czas']      = time();
+$_SESSION['kolor']    = 'zielony';
+$_SESSION['zwierze']  = 'kot';
+$_SESSION['czas']     = time();
 
 // Działa jeśli ciasteczko sesyjne zostało zaakceptowane
-echo '<br /><a href="page2.php">strona 2</a>';
+echo '<br /><a href="strona2.php">strona 2</a>';
 
 // Lub może przekaż ciasteczko sesyjne, jeśli to konieczne
-echo '<br /><a href="page2.php?' . SID . '">strona 2</a>';
+echo '<br /><a href="page2.php?' . SID . '">page 2</a>';
 ?>
 ]]>
-      </programlisting>
-     </example>
-    </para>
-    <para>
-     Po odwiedzeniu strony <filename>page1.php</filename>, druga strona,
-     <filename>page2.php</filename> będzie magicznie zawierała dane sesji. W
-     rozdziale <link linkend="ref.session">Sesje</link> znajduje się więcej
-     informacji na temat <link linkend="session.idpassing">propagowania
-      identyfikatora sesji</link>, gdzie można znaleźć na przykład
-     wytłumaczenie co zawiera stała <constant>SID</constant>.
-    </para>
-    <para>
-     <example>
-      <title>Przykład sesji: <filename>page2.php</filename></title>
-      <programlisting role="php">
+     </programlisting>
+    </example>
+   </para>
+   <para>
+    Po odwiedzeniu strony <filename>strona1.php</filename>, druga strona,
+    <filename>strona2.php</filename> będzie magicznie zawierała dane sesji.
+    W rozdziale <link linkend="ref.session">Sesje</link> znajduje się więcej
+    informacji na temat <link linkend="session.idpassing">propagowania
+    identyfikatora sesji</link>, gdzie można znaleźć na przykład
+    wytłumaczenie co zawiera stała <constant>SID</constant>.
+   </para>
+   <para>
+    <example>
+     <title><filename>strona2.php</filename></title>
+     <programlisting role="php">
 <![CDATA[
 <?php
-// page2.php
+// strona2.php
 
 session_start();
 
 echo 'Witaj na stronie #2<br />';
 
-echo $_SESSION['kolor']; // zielony
-echo $_SESSION['zwierze'];   // not
-echo date('Y m d H:i:s', $_SESSION['time']);
+echo $_SESSION['kolor'];   // zielony
+echo $_SESSION['zwierze']; // kot
+echo date('Y m d H:i:s', $_SESSION['czas']);
 
-// Tu można wstawić SID, podobnie jak to był na page1.php
-echo '<br /><a href="page1.php">page 1</a>';
+// Możesz chcieć użyć tutaj SID, jak zrobiliśmy to w strona1.php
+echo '<br /><a href="page1.php">strona 1</a>';
 ?>
 ]]>
-      </programlisting>
-     </example>
-    </para>
-    <simpara>
-     W celu stworzenia nazwanej sesji, niezbędne jest wywołanie funkcji
-     <function>session_name</function> przed wywołaniem
-     <function>session_start</function>.
-    </simpara>
-    <simpara>
-     <function>session_start</function> zarejestruje wewnętrzny uchwyt obsługi 
-     wyjścia dla przepisywania URLi jeśli włączona jest opcja
-     <literal>trans-sid</literal>. Jeśli użytkownik używa
-     <literal>ob_gzhandler</literal> lub podobne z
-     <function>ob_start</function>, kolejność uchwytów obsługi wyjścia jest
-     ważna dla prawidłowego wyjścia. Na przykład, użytkownik musi
-     zarejestrować <literal>ob_gzhandler</literal> przed rozpoczęciem sesji.
-    </simpara>
-    <note>
-     <simpara>
-      Wskazane jest użycie
-      <link linkend="ini.zlib.output-compression">zlib.output_compression</link>
-      zamiast <literal>ob_gzhandler</literal>
-     </simpara>
-    </note>
-    <note>
-     <para>
-      Od PHP 4.3.3, wywołanie <function>session_start</function> podczas gdy
-      sesja już została rozpoczęta, spowoduje błąd poziomu
-      <constant>E_NOTICE</constant>. Drugie rozpoczęcie sesji zostanie
-      zignorowane.
-     </para>
-    </note>
-    <para>
-     Patrz także:
-     <link linkend="reserved.variables.session">$_SESSION</link>,
-     <link linkend="ini.session.auto-start">session.auto_start</link> i
-     <function>session_id</function>.
-    </para>
-   </refsect1>
-  </refentry>
+     </programlisting>
+    </example>
+   </para>
+  </refsect2>
+  <refsect2>
+   <title>Podawanie opcji do <function>session_start</function></title>
 
+   <example>
+    <title>Nadpisanie czasu życia ciasteczka</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// Wyśle to ciasteczko ważne przez jeden dzień.
+session_start([
+    'cookie_lifetime' => 86400,
+]);
+?>
+]]>
+    </programlisting>
+   </example>
+
+   <example>
+    <title>Odczyt sesji i jej zamknięcie</title>
+    <programlisting role="php">
+     <![CDATA[
+<?php
+// Jeśli wiemy, że nie będziemy zmieniać nic w
+// sesji, to możemy po prostu odczytać i natychmiast zamknąć sesję
+// aby uniknąć blokowania pliku sesji, i blokowania innych stron
+session_start([
+    'cookie_lifetime' => 86400,
+    'read_and_close'  => true,
+]);
+]]>
+    </programlisting>
+   </example>
+  </refsect2>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    Jeśli używasz sesji opartych o ciasteczka, to <function>session_start</function>
+    musi być wywołane przed wysłaniem jakichkolwiek danych do przeglądarki.
+   </para>
+  </note>
+  <note>
+   <para>
+    Wskazane jest użycie <link linkend="ini.zlib.output-compression">zlib.output_compression</link>
+    zamiast <literal>ob_gzhandler</literal>
+   </para>
+  </note>
+  <note>
+   <para>
+    Ta funkcja wysyła kilka nagłówków HTTP, w zależności od
+    ustawień. Zobacz dokumentację <function>session_cache_limiter</function>,
+    aby dowiedzieć się, jak dostosować te nagłówki.
+   </para>
+  </note>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><varname>$_SESSION</varname></member>
+    <member>
+     Opcja konfiguracyjna <link linkend="ini.session.auto-start">session.auto_start</link>
+    </member>
+    <member><function>session_id</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

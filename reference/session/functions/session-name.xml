@@ -1,61 +1,148 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: c35c07ab6a9cf533455947147634399fc928f6ca Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
-  <refentry xml:id="function.session-name" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>session_name</refname>
-    <refpurpose>Pobierz i/lub ustaw nazwę bieżącej sesji</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>string</type><methodname>session_name</methodname>
-      <methodparam choice="opt"><type>string</type><parameter>nazwa</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     <function>session_name</function> zwraca nazwę bieżącej sesji. Jeśli
-     podano parametr <parameter>name</parameter>, nazwa bieżącej sesji
-     zostanie zmieniona na tą wartość.
-    </para>
-    <para>
-     Nazwa sesji jest używana w identyfikatorze sesji w ciasteczkach i URLach.
-     Powinna zawierać tylko znaki alfanumeryczne; powinna być krótka i
-     treściwa (np. dla użytkowników z włączonymi ostrzeżeniami o
-     ciasteczkach). Nazwa sesji jest przywracana do domyślnej wartości
-     określonej w <literal>session.name</literal> na początku wywołania
-     strony, a więc musisz wywołać <function>session_name</function> dla
-     każdej strony (przed wywołaniem w niej <function>session_start</function>
-     i <function>session_register</function>).
-    </para>
-    <warning>
-     <para>
-      Nazwa sesji nie może składać się tylko z cyfr - musi zawierać
-      przynajmniej jedną literę. W przeciwnym przypadku za każdym odwołaniem
-      generowana będzie nowa sesja.
-     </para>
-    </warning>
-    <example>
-     <title>Przykłady <function>session_name</function></title>
-     <programlisting role="php">
+<refentry xml:id="function.session-name" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>session_name</refname>
+  <refpurpose>Pobiera i/lub ustawia nazwę bieżącej sesji</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type class="union"><type>string</type><type>false</type></type><methodname>session_name</methodname>
+   <methodparam choice="opt"><type class="union"><type>string</type><type>null</type></type><parameter>name</parameter><initializer>&null;</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>session_name</function> zwraca nazwę bieżącej sesji. Jeśli
+   podano parametr <parameter>name</parameter>,
+   <function>session_name</function> zaktualizuje nazwę bieżącej sesji i zwróci
+   <emphasis>poprzednią</emphasis> nazwę sesji.
+  </para>
+  <para>
+   Jeżeli podano parametr <parameter>name</parameter>,
+   <function>session_name</function> modyfikuje ciasteczko HTTP
+   (i zawartość odpowiedzi, jeśli opcja <literal>session.transid</literal> jest
+   włączona). Jeśli ciasteczko HTTP zostało już
+   wysłane, <function>session_name</function> zwraca błąd.
+   <function>session_name</function> musi być wywołana
+   przed <function>session_start</function>, aby sesja działała
+   prawidłowo.
+  </para>
+  <para>
+   Nazwa sesji jest przywracana do domyślnej wartości określonej w
+   <literal>session.name</literal> na początku wywołania strony. W związku z tym musisz
+   wywołać <function>session_name</function> dla każdej strony (przed
+   wywołaniem w niej <function>session_start</function>).
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>name</parameter></term>
+     <listitem>
+      <para>
+       Nazwa sesji odnosi się do nazwy używanej w
+       ciasteczkach sesyjnych oraz adresach URL (np. <literal>PHPSESSID</literal>).
+       Nazwa powinna zawierać tylko znaki alfanumeryczne; powinna być krótka i
+       treściwa (np. dla użytkowników z włączonymi ostrzeżeniami o ciasteczkach).
+       Jeśli parametr <parameter>name</parameter> jest podany i nie został ustawiony na &null;, nazwa obecnej
+       sesji jest zmieniana na jego wartość.
+      </para>
+      <para>
+       <warning>
+        <para>
+         Nazwa sesji nie może składać się tylko z cyfr - musi zawierać przynajmniej
+         jedną literę. W przeciwnym przypadku za każdym odwołaniem generowany będzie nowy identyfikator sesji.
+        </para>
+       </warning>
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca nazwę obecnej sesji. Jeśli parametr <parameter>name</parameter> zostal podany
+   i funkcja zmienia nazwę sesji, zwracana jest <emphasis>poprzednia</emphasis> nazwa
+   sesji &return.falseforfailure;.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>8.0.0</entry>
+       <entry>
+        Parametr <parameter>name</parameter> akceptuje teraz &null;.
+       </entry>
+      </row>
+      <row>
+       <entry>7.2.0</entry>
+       <entry>
+        <function>session_name</function> sprawdza stan sesji,
+        wcześniej sprawdzany był tylko stan ciasteczka. W związku z tym
+        wcześniej dozwolone było
+        wywołanie <function>session_name</function>
+        po <function>session_start</function>, co mogło spowodować zawieszenie się PHP
+        i niepoprawne działanie.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład użycia <function>session_name</function></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 
 /* ustaw nazwę sesji na WebsiteID */
 
-$poprzednia_nazwa = session_name ("WebsiteID");
+$poprzednia_nazwa = session_name("WebsiteID");
 
 echo "Poprzednią nazwą sesji było $poprzednia_nazwa<br />";
 ?>
 ]]>
-     </programlisting>
-    </example>
-    <para>
-     Zobacz także opis dyrektywy konfiguracji
-     <link linkend="ini.session.name">session.name</link>.
-    </para>
-   </refsect1>
-  </refentry>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
 
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member>
+     Opcja konfiguracyjna <link linkend="ini.session.name">session.name</link>
+    </member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

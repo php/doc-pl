@@ -1,28 +1,30 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: adi Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 195fde0082f2771a210a2818d3d4fa09c7ee785d Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-<refentry xml:id="function.parse-url" xmlns="http://docbook.org/ns/docbook">
+<!-- CREDITS: adi -->
+<refentry xml:id="function.parse-url" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>parse_url</refname>
-  <refpurpose>Przetwarza adres URL i zwraca jego składowe</refpurpose>
+  <refpurpose>Parsuje URL i zwraca jego elementy</refpurpose>
  </refnamediv>
- 
+
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
-   <type>mixed</type><methodname>parse_url</methodname>
+   <type class="union"><type>int</type><type>string</type><type>array</type><type>null</type><type>false</type></type><methodname>parse_url</methodname>
    <methodparam><type>string</type><parameter>url</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>składnik</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>component</parameter><initializer>-1</initializer></methodparam>
   </methodsynopsis>
   <para>
-   Funkcja przetwarza URL i zwraca tablicę asocjacyjną zawierającą każdy z 
-   komponentów wchodzących w skład URL.
-   </para>
+   Funkcja przetwarza URL i zwraca tablicę asocjacyjną zawierającą każdy z
+   różnych komponentów wchodzących w skład URL, które są obecne w podanym adresie.
+   Wartości elementów tablicy <emphasis>nie</emphasis> są zakodowane jak dane URL.
+  </para>
   <para>
-   Ta funkcja <emphasis role="strong">nie służy</emphasis> do sprawdzania
-   poprawności podanego URL, tylko rozbija go na podane niżej części. Częściowe
-   URLe także są obsługiwane <function>parse_url</function> postara się przetworzyć
-   je poprawnie.
+   Ta funkcja <emphasis role="strong">nie</emphasis> służy do walidacji podanego
+   adresu URL, a jedynie podzielenia go na części wymienione poniżej. Częściowe i niepoprawne
+   adresy URLs też są akceptowane, a <function>parse_url</function> spróbuje sparsować
+   je najlepiej jak potrafi.
   </para>
  </refsect1>
 
@@ -34,22 +36,24 @@
      <term><parameter>url</parameter></term>
      <listitem>
       <para>
-       Adres URL do przetworzenia
+       URL do sparsowania.
       </para>
      </listitem>
     </varlistentry>
    </variablelist>
    <variablelist>
     <varlistentry>
-     <term><parameter>składnik</parameter></term>
+     <term><parameter>component</parameter></term>
      <listitem>
       <para>
-       Podaj jedną ze stałych <constant>PHP_URL_SCHEME</constant>,
+       Określ jedną z: <constant>PHP_URL_SCHEME</constant>,
        <constant>PHP_URL_HOST</constant>, <constant>PHP_URL_PORT</constant>,
        <constant>PHP_URL_USER</constant>, <constant>PHP_URL_PASS</constant>,
        <constant>PHP_URL_PATH</constant>, <constant>PHP_URL_QUERY</constant>
-       or <constant>PHP_URL_FRAGMENT</constant> aby otrzymać określony składnik URL
-       jako <type>string</type>.
+       lub <constant>PHP_URL_FRAGMENT</constant>, aby pobrać tylko konkretny
+       komponent adresu URL jako <type>string</type> (z wyjątkiem użycia
+       <constant>PHP_URL_PORT</constant>, wtedy zwróconą
+       wartością będzie <type>int</type>).
       </para>
      </listitem>
     </varlistentry>
@@ -60,18 +64,22 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   W przypadku poważnie zdeformowanych URLi, <function>parse_url</function> może zwrócić
-   &false; i wyemitować <constant>E_WARNING</constant>. W przeciwnym wypadku zostanie zwrócona asocjatywna tablica,
-   której składowe mogą być następujące (wystąpi przynajmnej jedena):  
+   Dla naprawdę zniekształconych adresów URL <function>parse_url</function> może zwrócić
+   &false;.
+  </para>
+  <para>
+   Jeżeli parametr <parameter>component</parameter> został pominięty, to
+   zwracana jest tablica asocjacyjna. Będzie w niej obecny przynajmniej
+   jeden klucz. Możliwe klucze w tej tablicy to:
    <itemizedlist>
     <listitem>
      <simpara>
-      <varname remap="structfield">scheme (protokół)</varname> - np. http
+      <varname remap="structfield">scheme</varname> - np. http
      </simpara>
     </listitem>
     <listitem>
      <simpara>
-      <varname remap="structfield">host</varname> 
+      <varname remap="structfield">host</varname>
      </simpara>
     </listitem>
     <listitem>
@@ -81,112 +89,192 @@
     </listitem>
     <listitem>
      <simpara>
-      <varname remap="structfield">user (użytkownik)</varname>
+      <varname remap="structfield">user</varname>
      </simpara>
     </listitem>
     <listitem>
      <simpara>
-      <varname remap="structfield">pass (hasło)</varname>
+      <varname remap="structfield">pass</varname>
      </simpara>
     </listitem>
     <listitem>
      <simpara>
-      <varname remap="structfield">path (ścieżka)</varname>
+      <varname remap="structfield">path</varname>
      </simpara>
     </listitem>
     <listitem>
      <simpara>
-      <varname remap="structfield">query (zapytanie)</varname> - po znaku <literal>?</literal>
+      <varname remap="structfield">query</varname> - po znaku zapytania <literal>?</literal>
      </simpara>
     </listitem>
     <listitem>
      <simpara>
-      <varname remap="structfield">fragment</varname> - po znaku <literal>#</literal>
-     </simpara> 
-    </listitem> 
-   </itemizedlist> 
+      <varname remap="structfield">fragment</varname> - po znaku hash <literal>#</literal>
+     </simpara>
+    </listitem>
+   </itemizedlist>
   </para>
   <para>
-   Jeśli parametr <parameter>składnik</parameter> jest określony, zwracany jest
-   <type>string</type> zamiast <type>array</type>.
+   Jeżeli parametr <parameter>component</parameter> został określony,
+   <function>parse_url</function> zwraca typ <type>string</type> (lub
+   <type>int</type> w wypadku użycia <constant>PHP_URL_PORT</constant>)
+   zamiast tablicy. Jeżeli żądany komponent nie istnieje
+   w podanym URL, zwrócony zostanie &null;.
+   Od PHP 8.0.0, <function>parse_url</function> rozróżnia brakujące i puste
+   query stringi (po znaku <literal>?</literal>) and fragmenty (po znaku <literal>#</literal>):
+  </para>
+  <para>
+   <informalexample>
+    <screen>
+<![CDATA[
+http://example.com/foo → query = null, fragment = null
+http://example.com/foo? → query = "",   fragment = null
+http://example.com/foo# → query = null, fragment = ""
+http://example.com/foo?# → query = "",   fragment = ""
+]]>
+    </screen>
+   </informalexample>
+  </para>
+  <para>
+   Wcześniej we wszystkich wypadkach klucze query i fragment były ustawione na &null;.
+  </para>
+  <para>
+   Zwróć uwagę, że znaki kontrolne (por. <function>ctype_cntrl</function>) w
+   komponentach są zamieniane na znak podkreślenia (<literal>_</literal>).
   </para>
  </refsect1>
 
  <refsect1 role="changelog">
   &reftitle.changelog;
-  <para>
-   <informaltable>
-    <tgroup cols="2">
-     <thead>
-      <row>
-       <entry>&Version;</entry>
-       <entry>&Description;</entry>
-      </row>
-     </thead>
-     <tbody>
-      <row>
-       <entry>5.1.2</entry>
-       <entry>Dodano parametr <parameter>składnik</parameter></entry>
-      </row>
-     </tbody>
-    </tgroup>
-   </informaltable>
-  </para>
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>8.0.0</entry>
+      <entry>
+       <function>parse_url</function> rozróżnia teraz puste i brakujące query stringi
+       (<literal>?</literal>) oraz fragmenty (<literal>#</literal>).
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </informaltable>
  </refsect1>
- 
- <refsect1 role="examples"> &reftitle.examples; 
+
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
-   <example> 
-    <title>A <function>parse_url</function> przykład</title>
+   <example>
+    <title>Przykład użycia <function>parse_url</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
-$url = 'http://uzytkownik:haslo@serwer/sciezka?arg=wartosc#kotwica';
+$url = 'http://uzytkownik:haslo@serwer:9090/sciezka?arg=wartosc#kotwica';
 
-print_r(parse_url($url));
-
-echo parse_url($url, PHP_URL_PATH);
+var_dump(parse_url($url));
+var_dump(parse_url($url, PHP_URL_SCHEME));
+var_dump(parse_url($url, PHP_URL_USER));
+var_dump(parse_url($url, PHP_URL_PASS));
+var_dump(parse_url($url, PHP_URL_HOST));
+var_dump(parse_url($url, PHP_URL_PORT));
+var_dump(parse_url($url, PHP_URL_PATH));
+var_dump(parse_url($url, PHP_URL_QUERY));
+var_dump(parse_url($url, PHP_URL_FRAGMENT));
 ?>
-]]> 
-    </programlisting> 
-    &example.outputs; 
-    <screen> 
-<![CDATA[
-Array
-(
-    [scheme] => http
-    [host] => serwer
-    [user] => uzytkownik
-    [pass] => haslo
-    [path] => /sciezka
-    [query] => arg=wartosc
-    [fragment] => kotwica
-)
-/sciezka
 ]]>
-    </screen> 
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+array(8) {
+  ["scheme"]=>
+  string(4) "http"
+  ["host"]=>
+  string(8) "serwer"
+  ["port"]=>
+  int(9090)
+  ["user"]=>
+  string(8) "uzytkownik"
+  ["pass"]=>
+  string(8) "haslo"
+  ["path"]=>
+  string(5) "/sciezka"
+  ["query"]=>
+  string(9) "arg=wartosc"
+  ["fragment"]=>
+  string(6) "kotwica"
+}
+string(4) "http"
+string(8) "uzytkownik"
+string(8) "haslo"
+string(8) "serwer"
+int(9090)
+string(5) "/sciezka"
+string(9) "arg=wartosc"
+string(6) "kotwica"
+]]>
+    </screen>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title>Przykład <function>parse_url</function> dla brakującego protokołu</title>
+    <programlisting role="php">
+     <![CDATA[
+<?php
+$url = '//www.example.com/path?googleguy=googley';
+
+// Przed PHP 5.4.7 zostałoby to potraktowane jako ścieżka "//www.example.com/path"
+var_dump(parse_url($url));
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+     <![CDATA[
+array(3) {
+  ["host"]=>
+  string(15) "www.example.com"
+  ["path"]=>
+  string(5) "/path"
+  ["query"]=>
+  string(17) "googleguy=googley"
+}
+]]>
+    </screen>
    </example>
   </para>
  </refsect1>
- 
+
  <refsect1 role="notes">
   &reftitle.notes;
-  <note>
+  <caution>
    <para>
-    Funkcja nie działa na relatywnych URLach.
+    Ta funkcja może nie zwrócić poprawnych wyników dla względnych lub niepoprawnych adresów URL,
+    a wyniki mogą nie zgadzać się nawet z powszechnym zachowaniem klientów HTTP.
+    Jeżeli chcesz sparsować adresy URL pochodzące z niezaufanych źródeł, wymagana jest dodatkowa
+    walidacja, np. przy użyciu <function>filter_var</function> z filtrem
+    <constant>FILTER_VALIDATE_URL</constant>.
    </para>
-  </note>
+  </caution>
   <note>
    <para>
-    Ta funkcja jest przeznaczona do przetwarzania URLi, a nie URI.
-    Jednakże, aby zastosować wymóg wstecznej kompatybilności PHP, zrobiono wyjątek dla
-    protokołu file:// gdzie potrójne ukośniki (file:///...) są dozwolone. Dla innych protokołów
-    jest to nieprawidłowe.
+    Ta funkcja jest przeznaczona konkretnie do parsowania adresów URL,
+    a nie URI. Jednakże, aby zachować kompatybilność wsteczną z innymi
+    wydaniami PHP, zrobiono wyjątek dla protokołu file://, gdzie
+    potrójny ukośnik (file:///...) jest dozwolony. Dla każdego innego protokołu jest to niepoprawne.
    </para>
   </note>
  </refsect1>
- 
- <refsect1 role="seealso"> &reftitle.seealso;
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
   <para>
    <simplelist>
     <member><function>pathinfo</function></member>
@@ -194,11 +282,11 @@ Array
     <member><function>http_build_query</function></member>
     <member><function>dirname</function></member>
     <member><function>basename</function></member>
+    <member><link xlink:href="&url.rfc;3986">RFC 3986</link></member>
    </simplelist>
   </para>
  </refsect1>
 </refentry>
-
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml
