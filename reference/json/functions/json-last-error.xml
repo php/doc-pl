@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 0e75cfe1a9c5339e4d7e227f714ded06f088a2fd Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: 8cdc6621f9826d04abc3e50438c010804d7e8683 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.json-last-error" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
@@ -14,7 +14,8 @@
    <void />
   </methodsynopsis>
   <para>
-   Zwraca ostatni błąd, który wystąpił podaczas kodowania/dekodowania JSON.
+   Zwraca ostatni błąd, który wystąpił podczas kodowania/dekodowania JSON,
+   które nie korzystało z flagi <constant>JSON_THROW_ON_ERROR</constant>.
   </para>
  </refsect1>
 
@@ -26,11 +27,11 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwaraca kod błędu jako integer. Wartość może być jedną z następujących
+   Zwraca kod błędu jako liczbę całkowitą. Wartość może być jedną z następujących
    stałych:
   </para>
   <table>
-   <title>JSON error codes</title>
+   <title>Kody błędów JSON</title>
    <tgroup cols="2">
     <thead>
      <row>
@@ -68,12 +69,12 @@
      <row>
       <entry><constant>JSON_ERROR_UTF8</constant></entry>
       <entry>Nieprawidłowe znaki UTF-8. Możliwe, że nieprawidłowo zakodowane</entry>
-      <entry>PHP 5.3.3</entry>
+      <entry></entry>
      </row>
      <row>
       <entry><constant>JSON_ERROR_RECURSION</constant></entry>
       <entry>Jedna lub więcej rekurencji rekursywnych w wartości do zakodowania</entry>
-      <entry>PHP 5.5.0</entry>
+      <entry></entry>
      </row>
      <row>
       <entry><constant>JSON_ERROR_INF_OR_NAN</constant></entry>
@@ -83,7 +84,7 @@
        lub <link linkend="function.is-infinite"><constant>INF</constant></link>
        do zakodowania
       </entry>
-      <entry>PHP 5.5.0</entry>
+      <entry></entry>
      </row>
      <row>
       <entry><constant>JSON_ERROR_UNSUPPORTED_TYPE</constant></entry>
@@ -93,12 +94,12 @@
      <row>
       <entry><constant>JSON_ERROR_INVALID_PROPERTY_NAME</constant></entry>
       <entry>Podano nazwę własności, która nie może być zdekodowana</entry>
-      <entry>PHP 7.0.0</entry>
+      <entry></entry>
      </row>
      <row>
       <entry><constant>JSON_ERROR_UTF16</constant></entry>
       <entry>Niepoprawne znaki UTF-16, prawdopodobnie źle zakodowane</entry>
-      <entry>PHP 7.0.0</entry>
+      <entry></entry>
      </row>
     </tbody>
    </tgroup>
@@ -109,7 +110,7 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład <function>json_last_error</function></title>
+    <title>Przykład użycia <function>json_last_error</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -183,6 +184,31 @@ var_dump($json, $error === JSON_ERROR_UTF8);
     <screen>
 <![CDATA[
 string(4) "null"
+bool(true)
+]]>
+    </screen>
+   </example>
+  </para>
+  <para>
+   <example>
+    <title><function>json_last_error</function> i <constant>JSON_THROW_ON_ERROR</constant></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// Niepoprawna sekwencja UTF8, która powoduje JSON_ERROR_UTF8
+json_encode("\xB1\x31");
+
+// Następujący kod nie powoduje błędu JSON
+json_encode('okay', JSON_THROW_ON_ERROR);
+
+// Globalny stan błędu nie został zmieniony przez powyższe wywołanie json_encode()
+var_dump(json_last_error() === JSON_ERROR_UTF8);
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
 bool(true)
 ]]>
     </screen>

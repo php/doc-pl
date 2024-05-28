@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 3b09ff696e91d8630eaf1e855d01520483639f1e Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: 19e8122137a1d42ed60f17fe2c0c2b69b0b2d16b Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: sobak -->
 <refentry xml:id="function.json-encode" xmlns="http://docbook.org/ns/docbook">
@@ -11,17 +11,23 @@
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
-   <type>string</type><methodname>json_encode</methodname>
-   <methodparam><type>mixed</type><parameter>wartość</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>opcje</parameter><initializer>0</initializer></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>zagnieżdżenie</parameter><initializer>512</initializer></methodparam>
+   <type class="union"><type>string</type><type>false</type></type><methodname>json_encode</methodname>
+   <methodparam><type>mixed</type><parameter>value</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>flags</parameter><initializer>0</initializer></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>depth</parameter><initializer>512</initializer></methodparam>
   </methodsynopsis>
   <para>
-   Zwraca łańcuch JSON reprezentujący podaną
-   <parameter>wartość</parameter>.
+   Zwraca łańcuch JSON reprezentujący wartość, podaną w parametrze
+   <parameter>value</parameter>. Jeżeli parametr jest <link linkend="language.types.array">tablicą</link> lub
+   <link linkend="language.types.object">obiektem</link>, to będzie on zserializowany rekurencyjnie.
   </para>
   <para>
-   Na kodowanie mają wpływ przekazane <parameter>opcje</parameter>,
+   Jeżeli wartość do zserializowania jest obiektem, to domyślnie będą uwzględnione
+   tylko publiczne własności. Klasa może implementować interfejs <interfacename>JsonSerializable</interfacename>,
+   aby kontrolować w jaki sposób jej wartości będą serializowane do <acronym>JSON</acronym>.
+  </para>
+  <para>
+   Na kodowanie mają wpływ flagi, przekazane w parametrze <parameter>flags</parameter>,
    ponadto kodowanie wartości zmiennoprzecinkowych jest zależne od wartości
    <link linkend="ini.serialize-precision">serialize_precision</link>.
   </para>
@@ -32,39 +38,44 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>wartość</parameter></term>
+     <term><parameter>value</parameter></term>
      <listitem>
       <para>
-       <parameter>wartość</parameter> zostanie zakodowana i może być dowolnego typu,
-       wykluczając <type>zasoby</type>.
+       Wartość do zakodowania. Może być dowolnego typu
+       poza <link linkend="language.types.resource">zasobem</link>.
       </para>
       <para>
-       Wszystkie dane muszą być zakodowane w formacie UTF-8.
+       Wszystkie dane muszą być podane w formacie UTF-8.
       </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>opcje</parameter></term>
+     <term><parameter>flags</parameter></term>
      <listitem>
       <para>
-       Struktura bitów składająca się z <constant>JSON_HEX_QUOT</constant>,
+       Maska bitowa składająca się z
+       <constant>JSON_FORCE_OBJECT</constant>,
+       <constant>JSON_HEX_QUOT</constant>,
        <constant>JSON_HEX_TAG</constant>,
        <constant>JSON_HEX_AMP</constant>,
        <constant>JSON_HEX_APOS</constant>,
+       <constant>JSON_INVALID_UTF8_IGNORE</constant>,
+       <constant>JSON_INVALID_UTF8_SUBSTITUTE</constant>,
        <constant>JSON_NUMERIC_CHECK</constant>,
-       <constant>JSON_PRETTY_PRINT</constant>,
-       <constant>JSON_UNESCAPED_SLASHES</constant>,
-       <constant>JSON_FORCE_OBJECT</constant>,
+       <constant>JSON_PARTIAL_OUTPUT_ON_ERROR</constant>,
        <constant>JSON_PRESERVE_ZERO_FRACTION</constant>,
+       <constant>JSON_PRETTY_PRINT</constant>,
+       <constant>JSON_UNESCAPED_LINE_TERMINATORS</constant>,
+       <constant>JSON_UNESCAPED_SLASHES</constant>,
        <constant>JSON_UNESCAPED_UNICODE</constant>,
-       <constant>JSON_PARTIAL_OUTPUT_ON_ERROR</constant>. Zachowanie tych
-       stałych zostało opisane na
-       <link linkend="json.constants">stronie stałych JSON</link>.
+       <constant>JSON_THROW_ON_ERROR</constant>.
+       Zachowanie tych stałych opisano na
+       stronie <link linkend="json.constants">stałe JSON</link>.
       </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>zagnieżdżenie</parameter></term>
+     <term><parameter>depth</parameter></term>
      <listitem>
       <para>
        Określa maksymalne zagnieżdżenie. Musi być większe od zera.
@@ -78,7 +89,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   W przypadku powodzenia zwraca zakodowany <type>string</type> JSON&return.falseforfailure;.
+   W przypadku powodzenia zwraca zakodowany &string; JSON&return.falseforfailure;.
   </para>
  </refsect1>
 
@@ -94,59 +105,33 @@
       </row>
      </thead>
      <tbody>
-	  <row>
+      <row>
+       <entry>7.3.0</entry>
+       <entry>
+        Dodano flagę
+        <constant>JSON_THROW_ON_ERROR</constant>.
+       </entry>
+      </row>
+      <row>
+       <entry>7.2.0</entry>
+       <entry>
+        Dodano flagi <constant>JSON_INVALID_UTF8_IGNORE</constant> i
+        <constant>JSON_INVALID_UTF8_SUBSTITUTE</constant>.
+       </entry>
+      </row>
+      <row>
        <entry>7.1.0</entry>
        <entry>
-        Przy dekodowaniu wartości zmiennoprzecinkowych używana jest wartość
+        Dodano flagę
+        <constant>JSON_UNESCAPED_LINE_TERMINATORS</constant>.
+       </entry>
+      </row>
+	     <row>
+       <entry>7.1.0</entry>
+       <entry>
+        Przy dekodowaniu wartości zmiennoprzecinkowych (&float;) używane jest ustawienie
         <link linkend="ini.serialize-precision">serialize_precision</link>
         zamiast <link linkend="ini.precision">precision</link>.
-       </entry>
-      </row>
-      <row>
-       <entry>5.6.6</entry>
-       <entry>
-        Dodano <parameter>opcję</parameter>
-        <constant>JSON_PRESERVE_ZERO_FRACTION</constant>.
-       </entry>
-      </row>
-      <row>
-       <entry>5.5.0</entry>
-       <entry>
-        Dodano parametr <parameter>zagnieżdżenie</parameter>.
-       </entry>
-      </row>
-      <row>
-       <entry>5.5.0</entry>
-       <entry>
-        Dodano opcję <constant>JSON_PARTIAL_OUTPUT_ON_ERROR</constant>.
-       </entry>
-      </row>
-      <row>
-       <entry>5.5.0</entry>
-       <entry>
-        W wypadku niepowodzenia zwracaną wartość zmieniono z tekstu <literal>null</literal>
-        na &false;.
-       </entry>
-      </row>
-      <row>
-       <entry>5.4.0</entry>
-       <entry>
-        Dodano <parameter>opcje</parameter>
-        <constant>JSON_PRETTY_PRINT</constant>,
-        <constant>JSON_UNESCAPED_SLASHES</constant> i
-        <constant>JSON_UNESCAPED_UNICODE</constant>.
-       </entry>
-      </row>
-      <row>
-       <entry>5.3.3</entry>
-       <entry>
-        Dodano opcję <constant>JSON_NUMERIC_CHECK</constant>.
-       </entry>
-      </row>
-      <row>
-       <entry>5.3.0</entry>
-       <entry>
-        Dodano parametr <parameter>opcje</parameter>.
        </entry>
       </row>
      </tbody>
@@ -179,7 +164,7 @@ echo json_encode($arr);
 
    <example>
     <title>
-     Przykład <function>json_encode</function> pokazuje zastosowanie parametru: opcje
+     Przykład <function>json_encode</function> pokazujący działanie niektórych flag
     </title>
     <programlisting role="php">
 <![CDATA[
@@ -381,22 +366,21 @@ string(2) "12"
   <note>
    <para>
     W przypadku kodowania tablicy, której indeksy nie są kolejnymi liczbami
-    począwszy od zera 0, wszystkie klucze zapisywane są jako łańcuchy znaków i określone
+    zaczynającymi się od zera 0, wszystkie klucze zapisywane są jako łańcuchy znaków i określone
     dokładnie dla każdej pary klucz-wartość.
    </para>
   </note>
   <note>
    <para>
-    Jak wyjaśnia specyfikacja JSON, <function>json_encode</function> wygeneruje
-    JSON, który jest typem prostym (czyli nie jest obiektem ani
-    tablicą) jeżeli podano typy <type>string</type>, <type>integer</type>,
-    <type>float</type> lub <type>boolean</type> jako wejściową
-    <parameter>wartość</parameter>. Mimo, że większość dekoderów traktuje te wartości
+    Tak jak referencyjna funkcja kodująca JSON, <function>json_encode</function> 
+    wygeneruje JSON, który jest typem prostym (czyli nie jest obiektem ani
+    tablicą), jeżeli podano typy &string;, &integer;, &float; lub &boolean; jako wejście w
+    <parameter>value</parameter>. Mimo że większość dekoderów traktuje te wartości
     jak poprawny JSON, niektóre mogą tego nie robić, ponieważ specyfikacja jest
     niejednoznaczna w tej kwestii.
    </para>
    <para>
-    Podsumowując, zawsze sprawdzaj czy Twój dekoder JSON radzi sobie z wyjściem,
+    Podsumowując, zawsze sprawdzaj, czy Twój dekoder JSON radzi sobie z wyjściem,
     które generujesz przez <function>json_encode</function>.
    </para>
   </note>
@@ -414,7 +398,6 @@ string(2) "12"
   </para>
  </refsect1>
 </refentry>
-
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

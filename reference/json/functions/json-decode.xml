@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: ed0816f0b0e500f668eb8e89e28cb034afb52c81 Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: ce1856e7b95807615565d2f1427582e107c450a9 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: sobak -->
 <refentry xml:id="function.json-decode" xmlns="http://docbook.org/ns/docbook">
@@ -13,12 +13,12 @@
   <methodsynopsis>
    <type>mixed</type><methodname>json_decode</methodname>
    <methodparam><type>string</type><parameter>json</parameter></methodparam>
-   <methodparam choice="opt"><type>bool</type><parameter>asocjacyjnie</parameter><initializer>false</initializer></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>poziom_zagłębienia</parameter><initializer>512</initializer></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>opcje</parameter><initializer>0</initializer></methodparam>
+   <methodparam choice="opt"><type class="union"><type>bool</type><type>null</type></type><parameter>associative</parameter><initializer>&null;</initializer></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>depth</parameter><initializer>512</initializer></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>flags</parameter><initializer>0</initializer></methodparam>
   </methodsynopsis>
   <para>
-   Konwertuje łańcuch JSON do zmiennej PHP.
+   Konwertuje łańcuch znaków zakodowany jako JSON na wartość PHP.
   </para>
  </refsect1>
 
@@ -39,32 +39,39 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>asocjacyjnie</parameter></term>
+     <term><parameter>associative</parameter></term>
      <listitem>
       <para>
-       Gdy jest ustawiony na &true;, zwracane <type>obiekty</type> zostaną
-       przekonwertowane do <type>tablic</type> asocjacyjnych.
+       Jeśli ustawione na &true;, obiekty JSON będą zwrócone jako <link linkend="language.types.array">tablice</link>
+       asocjacyjne, jeśli ustawione na &false;, obiekty będą zwrócone jako <link linkend="language.types.object">obiekty</link>>.
+       Jeśli ustawiono na &null;, to obiekty będą zwrócone jako tablice asocjacyjne lub
+       obiekty, w zależności czy w parametrze <parameter>flags</parameter>
+       ustawiono <constant>JSON_OBJECT_AS_ARRAY</constant>.
       </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>poziom_zagłębienia</parameter></term>
+     <term><parameter>depth</parameter></term>
      <listitem>
       <para>
-       Limit zagnieżdżania danych określony przez użytkownika.
+       Maksymalna głębokość zagnieżdżenia dekodowanej struktury.
+       Wartość musi być większa niż <literal>0</literal>,
+       i mniejsza bądź równa <literal>2147483647</literal>.
       </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>opcje</parameter></term>
+     <term><parameter>flags</parameter></term>
      <listitem>
       <para>
-       Maska bitowa opcji dekodowania JSON. Obecnie są wspierane dwie
-       opcje. Pierwsza to <constant>JSON_BIGINT_AS_STRING</constant>, która
-       umożliwia rzutowanie dużych liczb na tekst zamiast na wartość zmiennoprzecinkową,
-       jak domyślnie. Drugą opcją jest <constant>JSON_OBJECT_AS_ARRAY</constant>,
-       która ma taki sam efekt jak ustawienie parametru <parameter>asocjacyjnie</parameter>
-       na &true;.
+       Maska bitowa z
+       <constant>JSON_BIGINT_AS_STRING</constant>,
+       <constant>JSON_INVALID_UTF8_IGNORE</constant>,
+       <constant>JSON_INVALID_UTF8_SUBSTITUTE</constant>,
+       <constant>JSON_OBJECT_AS_ARRAY</constant>,
+       <constant>JSON_THROW_ON_ERROR</constant>.
+       Zachowanie tych stałych opisano na
+       stronie <link linkend="json.constants">stałe JSON</link>.
       </para>
      </listitem>
     </varlistentry>
@@ -75,12 +82,67 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca wartość zakodowaną w <parameter>json</parameter> w odpowiednim
-   typie PHP. Wartości <literal>true</literal>, <literal>false</literal>
-   i <literal>null</literal> są zwracane odpowiednio
-   jako &true;, &false; i &null;. &null; jest zwracany jeśli parametr
-   <parameter>json</parameter> nie może zostać odkodowany lub jeżeli zakodowane
-   dane znajdują się głębiej niż ustalony limit zagnieżdżania.
+   Zwraca wartość zakodowaną w <parameter>json</parameter> jako odpowiedni
+   typ PHP. Wartości <literal>true</literal>, <literal>false</literal>
+   i <literal>null</literal> bez cudzysłowów są zwracane odpowiednio jako &true;, 
+   &false; i &null;. &null; jest zwracany, jeśli parametr
+   <parameter>json</parameter> nie może zostać odkodowany lub jeżeli zakodowane dane znajdują się
+   głębiej niż ustalony limit zagnieżdżania.
+  </para>
+ </refsect1>
+
+ <refsect1 role="errors">
+  &reftitle.errors;
+  <para>
+   Jeżeli parametr <parameter>depth</parameter> jest poza dozwolonym zakresem,
+   to od PHP 8.0.0 rzucany jest <classname>ValueError</classname>,
+   a wcześniej zgłaszany był błąd <constant>E_WARNING</constant>.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>7.3.0</entry>
+       <entry>
+        Dodano flagę 
+        <constant>JSON_THROW_ON_ERROR</constant>.
+       </entry>
+      </row>
+      <row>
+       <entry>7.2.0</entry>
+       <entry>
+        Parametr <parameter>associative</parameter> akceptuje teraz &null;.
+       </entry>
+      </row>
+      <row>
+       <entry>7.2.0</entry>
+       <entry>
+        Dodano flagi
+        <constant>JSON_INVALID_UTF8_IGNORE</constant>, i
+        <constant>JSON_INVALID_UTF8_SUBSTITUTE</constant>.
+       </entry>
+      </row>
+      <row>
+       <entry>7.1.0</entry>
+       <entry>
+        Pusty klucz JSON ("") może być prawidłowo zdekodowany do pustego
+        obiektu, zamiast używania klucza z wartością <literal>_empty_</literal>.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
   </para>
  </refsect1>
 
@@ -88,7 +150,7 @@
   &reftitle.examples;
   <para>
    <example>
-    <title>Przykład <function>json_decode</function></title>
+    <title>Przykład użycia <function>json_decode</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -167,11 +229,11 @@ json_decode($bad_json); // null
     </programlisting>
    </example>
    <example>
-    <title>Błędy - <parameter>poziom_zagłębienia</parameter></title>
+    <title>Błędy - ustawianie głębokości zagnieżdżenia w <parameter>depth</parameter></title>
     <programlisting role="php">
 <![CDATA[
 <?php
-// Kodowanie danych.
+// Kodowanie danych z maksymalną głębokością 4 (array -> array -> array -> string)
 $json = json_encode(
     array(
         1 => array(
@@ -187,20 +249,11 @@ $json = json_encode(
     )
 );
 
-// Określ błędy.
-$constants = get_defined_constants(true);
-$json_errors = array();
-foreach ($constants["json"] as $name => $value) {
-    if (!strncmp($name, "JSON_ERROR_", 11)) {
-        $json_errors[$value] = $name;
-    }
-}
+var_dump(json_decode($json, true, 4));
+echo 'Ostatni <błąd></błąd>: ', json_last_error_msg(), PHP_EOL, PHP_EOL;
 
-// Pokaż błędy na różych poziomach zagłębienia.
-foreach (range(4, 3, -1) as $depth) {
-    var_dump(json_decode($json, true, $depth));
-    echo 'Last error: ', $json_errors[json_last_error()], PHP_EOL, PHP_EOL;
-}
+var_dump(json_decode($json, true, 3));
+echo 'Ostatni błąd: ', json_last_error_msg(), PHP_EOL, PHP_EOL;
 ?>
 ]]>
     </programlisting>
@@ -226,10 +279,10 @@ array(1) {
     }
   }
 }
-Ostatni błąd: JSON_ERROR_NONE
+Ostatni błąd: No error
 
 NULL
-Ostatni błąd: JSON_ERROR_DEPTH
+Ostatni błąd: Maximum stack depth exceeded
 ]]>
     </screen>
    </example>
@@ -278,79 +331,6 @@ object(stdClass)#1 (1) {
   </note>
  </refsect1>
 
- <refsect1 role="changelog">
-  &reftitle.changelog;
-  <para>
-   <informaltable>
-    <tgroup cols="2">
-     <thead>
-      <row>
-       <entry>&Version;</entry>
-       <entry>&Description;</entry>
-      </row>
-     </thead>
-     <tbody>
-      <row>
-       <entry>7.1.0</entry>
-       <entry>
-        Pusty klucz JSON ("") może być prawidłowo zdekodowany do pustego
-        obiektu, zamiast używania klucza z wartością <literal>_empty_</literal>.
-       </entry>
-      </row>
-      <row>
-       <entry>7.0.0</entry>
-       <entry>
-        Odrzucono niezgodne z RFC 7159 formaty liczb - głównego poziomu
-        (07, 0xff, .1, -.1) i wszystkich poziomów ([1.], [1.e1])
-       </entry>
-      </row>
-      <row>
-       <entry>7.0.0</entry>
-       <entry>
-        Pusty string PHP lub wartość, która po rzutowaniu na string jest pusta
-        (<literal>NULL</literal>, <literal>FALSE</literal>) skutkuje
-        błędem składniowym JSON.
-       </entry>
-      </row>
-      <row>
-       <entry>5.6.0</entry>
-       <entry>
-        Błędne (napisane innymi niż małymi znakami) warianty <literal>true</literal>,
-        <literal>false</literal> i <literal>null</literal> nie są dłużej
-        akceptowne jako prawidłowe wejście i wygenerują ostrzeżenia
-       </entry>
-      </row>
-      <row>
-       <entry>5.4.0</entry>
-       <entry>
-        Dodano parametr <parameter>opcje</parameter>.
-       </entry>
-      </row>
-      <row>
-       <entry>5.3.0</entry>
-       <entry>
-        Dodano opcjonalny parametr <parameter>poziom_zagłębienia</parameter>.
-        Domyślny limit zagnieżdżania danych został zwiększony z 128 do 512
-       </entry>
-      </row>
-      <row>
-       <entry>5.2.3</entry>
-       <entry>
-        Limit zagnieżdżania danych został zwiększony z 20 do 128
-       </entry>
-      </row>
-      <row>
-       <entry>5.2.1</entry>
-       <entry>
-        Dodano wsparcie dla dekodowania podstawowych typów z JSON.
-       </entry>
-      </row>
-     </tbody>
-    </tgroup>
-   </informaltable>
-  </para>
- </refsect1>
-
  <refsect1 role="seealso">
   &reftitle.seealso;
   <para>
@@ -361,7 +341,6 @@ object(stdClass)#1 (1) {
   </para>
  </refsect1>
 </refentry>
-
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml
