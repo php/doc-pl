@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 02b1d42099b98f45609d49fde36d10893ad0a314 Maintainer: sobak Status: ready -->
+<!-- $Revision$ -->
+<appendix xml:id="json.constants" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ &reftitle.constants;
+ &extension.constants;
+ <para>
+  Następujące stałe oznaczają typ błędu zwrócony przez
+  <function>json_last_error</function> lub przechowywany we własności <varname>code</varname>
+  wyjątku <classname>JsonException</classname>.
+ </para>
+ <variablelist>
+  <varlistentry xml:id="constant.json-error-none">
+   <term>
+    <constant>JSON_ERROR_NONE</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Nie wystąpił żaden błąd.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-error-depth">
+   <term>
+    <constant>JSON_ERROR_DEPTH</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Został przekroczony maksymalny poziom zagnieżdżenia stosu.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-error-state-mismatch">
+   <term>
+    <constant>JSON_ERROR_STATE_MISMATCH</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Occurs with underflow or with the modes mismatch.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-error-ctrl-char">
+   <term>
+    <constant>JSON_ERROR_CTRL_CHAR</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Błąd znaków kontroli, prawdopodobnie zostały one niewłaściwie zakodowane.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-error-syntax">
+   <term>
+    <constant>JSON_ERROR_SYNTAX</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Błąd składniowy.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-error-utf8">
+   <term>
+    <constant>JSON_ERROR_UTF8</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Zniekształcone znaki UTF-8, prawdopodobni niewłaściwie zakodowane.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-error-recursion">
+   <term>
+    <constant>JSON_ERROR_RECURSION</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Obiekt lub tablica przekazana do <function>json_encode</function> zawiera
+     rekurencyjne referencje i nie może zostać zakodowana.
+     Jeśli została użyta flaga <constant>JSON_PARTIAL_OUTPUT_ON_ERROR</constant>,
+     w miejsce rekurencyjnej referencji zostanie zakodowany &null;.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-error-inf-or-nan">
+   <term>
+    <constant>JSON_ERROR_INF_OR_NAN</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Wartość przekazana do <function>json_encode</function> zawiera
+     <link linkend="language.types.float.nan"><constant>NAN</constant></link>
+     albo <link linkend="function.is-infinite"><constant>INF</constant></link>.
+     Jeśli została użyta flaga <constant>JSON_PARTIAL_OUTPUT_ON_ERROR</constant>,
+     w miejsce tych specjalnych liczb zostanie zakodowane <literal>0</literal>.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-error-unsupported-type">
+   <term>
+    <constant>JSON_ERROR_UNSUPPORTED_TYPE</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Przekazano wartość o niewspieranym typie do
+     <function>json_encode</function>, taką jak <link linkend="language.types.resource">zasób</link>.
+     Jeśli została użyta flaga <constant>JSON_PARTIAL_OUTPUT_ON_ERROR</constant>,
+     If the <constant>JSON_PARTIAL_OUTPUT_ON_ERROR</constant> option was
+     w miejsce niewspieranej wartości zostanie zakodowany &null;.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-error-invalid-property-name">
+   <term>
+    <constant>JSON_ERROR_INVALID_PROPERTY_NAME</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Podczas dekodowania JSON do obiektu PHP do funkcji <function>json_decode</function> 
+     przekazano ciąg znaków zawierający klucz zaczynający się od znaku 
+     \u0000.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-error-utf16">
+   <term>
+    <constant>JSON_ERROR_UTF16</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Do <function>json_decode</function> przekazano ciąg znaków JSON
+     zawierający pojedynczy niesparowany znak UTF-16.
+    </simpara>
+   </listitem>
+  </varlistentry>
+ </variablelist>
+
+ <para>
+  Następujące stałe mogą zostać połączone, aby utworzyć opcje dla
+  <function>json_decode</function>.
+ </para>
+ <variablelist>
+  <varlistentry xml:id="constant.json-bigint-as-string">
+   <term>
+    <constant>JSON_BIGINT_AS_STRING</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Dekoduje duże liczby całkowite jako ciąg znaków, zachowując ich oryignalną wartość.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-object-as-array">
+   <term>
+    <constant>JSON_OBJECT_AS_ARRAY</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Dekoduje obiekty JSON jako tablice PHP. Ta opcja jest dodawana automatycznie,
+     jeśli przy wywołaniu <function>json_decode</function> drugi parametr został
+     ustawiony na &true;.
+    </simpara>
+   </listitem>
+  </varlistentry>
+ </variablelist>
+
+ <para>
+  Następujące stałe mogą być połączone, aby utworzyć opcje dla
+  <function>json_encode</function>.
+ </para>
+ <variablelist>
+  <varlistentry xml:id="constant.json-hex-tag">
+   <term>
+    <constant>JSON_HEX_TAG</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Znaki &lt; i &gt; są zamieniane na \u003C and \u003E.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-hex-amp">
+   <term>
+    <constant>JSON_HEX_AMP</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Znaki &amp; są zamieniane na \u0026.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-hex-apos">
+   <term>
+    <constant>JSON_HEX_APOS</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Znaki ' są zamieniane na \u0027.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-hex-quot">
+   <term>
+    <constant>JSON_HEX_QUOT</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Znaki " są zamieniane na \u0022.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-force-object">
+   <term>
+    <constant>JSON_FORCE_OBJECT</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Zwraca obiekt zamiast tablicy kiedy użyto tablicy nie-asocjacyjnej.
+     Szczególnie przydatne, gdy odbiorca wyniku oczekuje
+     obiektu, a tablica jest pusta.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-numeric-check">
+   <term>
+    <constant>JSON_NUMERIC_CHECK</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Koduje numeryczne ciągi znaków jako liczby.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-pretty-print">
+   <term>
+    <constant>JSON_PRETTY_PRINT</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Używa białych znaków, aby sformatować zwrócone dane.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-unescaped-slashes">
+   <term>
+    <constant>JSON_UNESCAPED_SLASHES</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Nie dodaje znaku ucieczki przed <literal>/</literal>.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-unescaped-unicode">
+   <term>
+    <constant>JSON_UNESCAPED_UNICODE</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Koduje wielobajtowe znaki Unikodu dosłownie (domyślnie są kodowane jako
+     \uXXXX).
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-partial-output-on-error">
+   <term>
+    <constant>JSON_PARTIAL_OUTPUT_ON_ERROR</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Podmienia niektóre z wartości niemożliwych do zakodowania, zamiast zwracać błąd.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-preserve-zero-fraction">
+   <term>
+    <constant>JSON_PRESERVE_ZERO_FRACTION</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Upewnia się że wartości zmiennoprzecinkowe &float; zostaną zawsze zakodowane jako typ float.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-unescaped-line-terminators">
+   <term>
+    <constant>JSON_UNESCAPED_LINE_TERMINATORS</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Znaki końca linii nie używają znaków ucieczki, gdy
+     użyta została <constant>JSON_UNESCAPED_UNICODE</constant>. Używa
+     takiego zachowania, jakie przed PHP 7.1 było domyślnym bez tej stałej.
+     Dostępna od PHP 7.1.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+ </variablelist>
+
+ <para>
+  Następujące stałe mogą być połączone, aby utworzyć opcje dla
+  <function>json_decode</function> lub <function>json_encode</function>.
+ </para>
+ <variablelist>
+  <varlistentry xml:id="constant.json-invalid-utf8-ignore">
+   <term>
+    <constant>JSON_INVALID_UTF8_IGNORE</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Ignoruje niepoprawne znaki UTF-8.
+     Dostępna od PHP 7.2.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-invalid-utf8-substitute">
+   <term>
+    <constant>JSON_INVALID_UTF8_SUBSTITUTE</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Zamienia niepoprawne znaki UTF-8 na \0xfffd
+     (Znak Unikodu 'REPLACEMENT CHARACTER')
+     Dostępna od PHP 7.2.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-throw-on-error">
+   <term>
+    <constant>JSON_THROW_ON_ERROR</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Rzuca wyjątek <classname>JsonException</classname> w razie wystąpienia błędu,
+     zamiast ustawiać globalny stan błędu, który można pobrać funkcjami
+     <function>json_last_error</function> i <function>json_last_error_msg</function>.
+     <constant>JSON_PARTIAL_OUTPUT_ON_ERROR</constant> ma wyższy priorytet niż
+     <constant>JSON_THROW_ON_ERROR</constant>.
+     Dostępna od PHP 7.3.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.json-error-non-backed-enum">
+   <term>
+    <constant>JSON_ERROR_NON_BACKED_ENUM</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Wartość przekazana do <function>json_encode</function>
+     zawiera enum bez przypisanych wartości, który nie może być zserializowany.
+     Dostępna od PHP 8.1.0.
+    </simpara>
+   </listitem>
+  </varlistentry>
+ </variablelist>
+
+</appendix>
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
