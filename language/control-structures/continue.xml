@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: ac33a4e7912f908119fa171248c917b25651c778 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 16389a7b31069481d6c8c0705172bee5ef1ddf5f Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 
 <sect1 xml:id="control-structures.continue" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
- <title><literal>continue</literal></title>
+ <title>continue</title>
  <?phpdoc print-version-for="continue"?>
  <simpara>
   <literal>continue</literal> jest używane wewnątrz pętli do
-  pominięcia aktualnej iteracji i kontynuacji wykonywnania
+  pominięcia aktualnej iteracji oraz do kontynuacji wykonywania
   w momencie wykonywania warunków, a później kolejnej iteracji.
  </simpara>
  <note>
   <simpara>
-   W PHP
+   W PHP,
+   z punktu widzenia <literal>continue</literal>,
    <link linkend="control-structures.switch">switch</link> jest traktowany
-   jak wyrażenie pętlowe, dla potrzeb
-   <literal>continue</literal>. <literal>continue</literal> zachowuje się
-   jak <literal>break</literal> (jeżeli nie podano żadnych argumentów). Jeśli
+   jak wyrażenie pętlowe.
+   <literal>continue</literal> zachowuje się
+   jak <literal>break</literal> (jeżeli nie podano żadnych argumentów), ale zostanie
+   wygenerowane ostrzeżenie, jako że użycie go w takim miejscu prawdopodobnie jest pomyłką. Jeśli
    <literal>switch</literal> znajduje się wewnątrz pętli,
    <literal>continue 2</literal> przejdzie do kolejnej iteracji tej pętli.
   </simpara>
@@ -32,29 +34,64 @@
    <programlisting role="php">
 <![CDATA[
 <?php
+$arr = ['zero', 'jeden', 'dwa', 'trzy', 'cztery', 'pięć', 'sześć'];
 foreach ($arr as $key => $value) {
-    if (!($key % 2)) { // pomiń klucze parzyste
+    if (0 === ($key % 2)) { // pomiń elementy z parzystymi kluczami
         continue;
     }
-    do_something_odd($value);
+    echo $value . "\n";
 }
 
+?>
+]]>
+   </programlisting>
+   &examples.outputs;
+   <screen>
+<![CDATA[
+jeden
+trzy
+pięć
+]]>
+   </screen>
+   <programlisting role="php">
+<![CDATA[
+<?php
 $i = 0;
 while ($i++ < 5) {
-    echo "Na zewnątrz<br />\n";
+    echo "Zewnętrzny\n";
     while (1) {
-        echo "Na środku<br />\n";
+        echo "Środkowy\n";
         while (1) {
-            echo "Wewnątrz<br />\n";
+            echo "Wewnętrzny\n";
             continue 3;
         }
-        echo "To nigdy nie zostanie wyświetlone.<br />\n";
+        echo "To nigdy nie zostanie wyświetlone.\n";
     }
-    echo "Tak samo jak to.<br />\n";
+    echo "Tak samo jak to.\n";
 }
 ?>
 ]]>
    </programlisting>
+   &examples.outputs;
+   <screen>
+<![CDATA[
+Zewnętrzny
+Środkowy
+Wewnętrzny
+Zewnętrzny
+Środkowy
+Wewnętrzny
+Zewnętrzny
+Środkowy
+Wewnętrzny
+Zewnętrzny
+Środkowy
+Wewnętrzny
+Zewnętrzny
+Środkowy
+Wewnętrzny
+]]>
+   </screen>
   </informalexample>
  </para>
  <para>
@@ -85,27 +122,6 @@ for ($i = 0; $i < 5; ++$i) {
 4
 ]]>
    </screen>
-   <para>
-    jednak ten skrypt, w wersjach PHP poniżej 5.4.0, wyświetli:
-   </para>
-   <screen>
-<![CDATA[
-2
-]]>
-   </screen>
-   <para>
-    ponieważ całe <literal>continue print "$i\n";</literal> jest wykonywane
-    jako jedno wyrażenie, więc <function>print</function> jest wywoływane,
-    tylko gdy <literal>$i == 2</literal> jest prawdą. Wartość zwracana przez
-    <literal>print</literal> jest przekazywana do <literal>continue</literal> jako
-    argument numeryczny.
-   </para>
-   <note>
-    <para>
-     Od PHP 5.4.0 powyższy przykład wywoła błąd
-     <constant>E_COMPILE_ERROR</constant>.
-    </para>
-   </note>
   </informalexample>
  </para>
  <para>
@@ -120,25 +136,10 @@ for ($i = 0; $i < 5; ++$i) {
     </thead>
     <tbody>
      <row>
-      <entry>7.0.0</entry>
+      <entry>7.3.0</entry>
       <entry>
-       <literal>continue</literal> poza pętlą lub strukturą <literal>switch</literal>
-       jest teraz wykrywany podczas kompilacji, a nie uruchamiania, jak wcześniej
-       i wywołuje błąd typu <constant>E_COMPILE_ERROR</constant>.
-      </entry>
-     </row>
-     <row>
-      <entry>5.4.0</entry>
-      <entry>
-       <literal>continue 0;</literal> nie jest dłużej poprawne. W poprzednich wersjach było
-       interpretowane tak samo jak <literal>continue 1;</literal>.
-      </entry>
-     </row>
-     <row>
-      <entry>5.4.0</entry>
-      <entry>
-       Usunięto możliwość przekazania zmiennej (np. <literal>$num = 2; continue $num;</literal>),
-       jako argumentu numerycznego.
+       <literal>continue</literal> wewnątrz wyrażenia <literal>switch</literal>, które próbuje działać jak <literal>break</literal> dla wyrażenia
+       <literal>switch</literal> wywoła <constant>E_WARNING</constant>.
       </entry>
      </row>
     </tbody>

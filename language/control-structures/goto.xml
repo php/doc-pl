@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: a5895bafdca5bdc902be9e8650ea3c6307396477 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 7204e2dbb9b484c8b67bb5ad4a93fa1369c5b317 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 
 <sect1 xml:id="control-structures.goto" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
- <title><literal>goto</literal></title>
+ <title>goto</title>
  <?phpdoc print-version-for="goto"?>
  <para>
   <mediaobject>
@@ -11,12 +11,16 @@
    <imageobject>
     <imagedata fileref="en/language/figures/xkcd-goto.png" format="PNG"/>
    </imageobject>
+   <caption>
+    <simpara>
+     Obrazek dzięki uprzejmości <link xlink:href="&url.xkcd;292">xkcd</link>
+    </simpara>
+   </caption>
   </mediaobject>
-  Zdjęcie dzięki uprzejmości <link xlink:href="&url.xkcd;292">xkcd</link>
  </para>
  <para>
   Operator <literal>goto</literal> może zostać użyty do przeskoczenia do
-  innej sekcji programu. Punkt docelowy jest oznaczony przez etykietę
+  innej sekcji programu. Punkt docelowy jest oznaczony przez <emphasis>rozróżniającą wielkość znaków</emphasis> etykietę
   zakończoną dwukropkiem, a instrukcja jest zapisywana jako
   <literal>goto</literal> z następującą nazwą etykiety. Konstrukcja
   <literal>goto</literal> ma pewne ograniczenia. Docelowa etykieta
@@ -32,11 +36,13 @@
    <programlisting role="php">
 <![CDATA[
 <?php
+
 goto a;
 echo 'Foo';
  
 a:
 echo 'Bar';
+
 ?>
 ]]>
    </programlisting>
@@ -54,14 +60,18 @@ Bar
    <programlisting role="php">
 <![CDATA[
 <?php
-for($i=0,$j=50; $i<100; $i++) {
-  while($j--) {
-    if($j==17) goto koniec; 
-  }  
+
+for ($i = 0, $j = 50; $i < 100; $i++) {
+    while ($j--) {
+        if ($j == 17) {
+            goto end;
+        }
+    }
 }
 echo "i = $i";
 koniec:
 echo 'j osiągnęło wartość 17';
+
 ?>
 ]]>
    </programlisting>
@@ -79,13 +89,15 @@ j osiągnęło wartość 17
    <programlisting role="php">
 <![CDATA[
 <?php
+
 goto petla;
-for($i=0,$j=50; $i<100; $i++) {
-  while($j--) {
-    petla:
-  }
+for ($i = 0, $j = 50; $i < 100; $i++) {
+    while ($j--) {
+        loop:
+    }
 }
 echo "$i = $i";
+
 ?>
 ]]>
    </programlisting>
@@ -98,11 +110,7 @@ script on line 2
    </screen>
   </example>
  </para>
- <note>
-  <para>
-   Operator <literal>goto</literal> jest dostępny od PHP 5.3.
-  </para>
- </note>
+
 </sect1>
 
 <!-- Keep this comment at the end of the file
