@@ -1,52 +1,84 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!-- EN-Revision: n/a Maintainer: qrak Status: ready -->
 <!-- $Revision$ -->
-  <refentry xml:id="function.decoct" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>decoct</refname>
-    <refpurpose>Konwersja liczby dziesiętnej do ósemkowej</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>string</type><methodname>decoct</methodname>
-      <methodparam><type>int</type><parameter>liczba</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     Zwraca łańcuch znaków zawierający ósemkową reprezentację liczby
-     dziesiętnej <parameter>liczba</parameter>. Największą liczbą,
-     która może być skonwertowana jest
-     4 294 967 295 dziesiętnie, co odpowiada "37777777777" ósemkowo.
-    </para>
-   <para>
-     <example>
-      <title><function>decoct</function> przykład</title>
-      <programlisting role="php">
+<!-- CREDITS: sobak -->
+<refentry xml:id="function.decoct" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>decoct</refname>
+  <refpurpose>Konwertuje liczbę dziesiętną na liczbę ósemkową.</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>string</type><methodname>decoct</methodname>
+   <methodparam><type>int</type><parameter>num</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Zwraca ciąg znaków zawierający ósemkową reprezentację podanego argumentu
+   <parameter>num</parameter>. Największa liczba, którą można przekonwertować,
+   zależy od używanej platformy. Dla platform 32-bitowych jest to
+   <literal>4294967295</literal> w systemie dziesiętnym, co daje
+   <literal>37777777777</literal>. Dla platform 64-bitowych jest to zwykle
+   <literal>9223372036854775807</literal> w systemie dziesiętnym, co daje
+   <literal>777777777777777777777</literal>.
+  </para>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>num</parameter></term>
+     <listitem>
+      <para>
+       Wartość dziesiętna do skonwertowania
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Reprezentacja ósemkowa ciągu znaków parametru <parameter>num</parameter>
+  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład <function>decoct</function></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 echo decoct(15) . "\n";
 echo decoct(264);
 ?>
 ]]>
-      </programlisting>
-      &example.outputs;
-      <screen>
+    </programlisting>
+    &example.outputs;
+    <screen>
 <![CDATA[
 17
 410
 ]]>
-      </screen>
-     </example>
-    </para>
-    <para>
-     Patrz także <function>octdec</function>,
-     <function>decbin</function>,
-     <function>dechex</function> i
-     <function>base_convert</function>.
-    </para>
-   </refsect1>
-  </refentry>
-
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>octdec</function></member>
+    <member><function>decbin</function></member>
+    <member><function>dechex</function></member>
+    <member><function>base_convert</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

@@ -1,65 +1,105 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: qrak Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: fc174e8d6162091550edde46159917ee7e5a2e73 Maintainer: grzesiek Status: ready -->
 <!-- $Revision$ -->
-  <refentry xml:id="function.pow" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>pow</refname>
-    <refpurpose>Potęgowanie</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>number</type><methodname>pow</methodname>
-      <methodparam><type>number</type><parameter>podstawa</parameter></methodparam>
-      <methodparam><type>number</type><parameter>wykładnik</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     Zwraca argument <parameter>podstawa</parameter> podniesiony do potęgi
-     <parameter>wykładnik</parameter>. Jeśli możliwe, funkcja zwróci typ
-     <type>integer</type>.
-    </para>
-    <para>
-     Jeśli nie da się obliczyć potęgi, zostanie wyświetlone ostrzeżenie
-     a funkcja <function>pow</function> zwróci &false;. Począwszy od PHP 4.2.0 
-     <function>pow</function> nie emituje żadnych ostrzeżeń. 
-    </para>
-    <note> 
-     <para> 
-      PHP nie może cannot operować na ujemnej <parameter>podstawie</parameter>s. 
-     </para> 
-    </note> 
-    <example>
-     <title>Parę przykładów z <function>pow</function></title>
-     <programlisting role="php">
+<!-- CREDITS: sobak -->
+<refentry xml:id="function.pow" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>pow</refname>
+  <refpurpose>Exponential expression</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+   <methodsynopsis>
+   <type class="union"><type>int</type><type>float</type><type>object</type></type><methodname>pow</methodname>
+   <methodparam><type>mixed</type><parameter>num</parameter></methodparam>
+   <methodparam><type>mixed</type><parameter>exponent</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Zwraca parametr <parameter>num</parameter> podniesiony do potęgi określonej
+   w parametrze <parameter>exponent</parameter>. 
+  </para>
+  <note>
+   <para>
+    Zamiast tego można użyć operatora <link linkend="language.operators.arithmetic">**</link>.
+   </para>
+  </note>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>num</parameter></term>
+     <listitem>
+      <para>
+       Podstawa do użycia
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>exponent</parameter></term>
+     <listitem>
+      <para>
+       Wykładnik potęgi
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Parametr <parameter>num</parameter> podniesiony do potęgi podanej w parametrze 
+   <parameter>exponent</parameter>. Jeśli oba argumenty są nieujemnymi liczbami całkowitymi,
+   a wynik może być reprezentowany jako liczba całkowita, wynik zostanie zwrócony z typem
+   <type>int</type>, w przeciwnym razie zostanie zwrócony jako typ <type>float</type>.
+  </para>
+ </refsect1>
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Kilka przykładów <function>pow</function></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 
-var_dump( pow(2,8) ); // int(256)
-echo pow(-1,20); // 1
+var_dump(pow(2, 8)); // int(256)
+echo pow(-1, 20); // 1
 echo pow(0, 0); // 1
+echo pow(10, -1); // 0.1
 
-echo pow(-1, 5.5); // błąd
-
+echo pow(-1, 5.5); // NAN
 ?>
 ]]>
-     </programlisting>
-    </example>
-    <warning>
-     <para>
-      W PHP 4.0.6 i wcześniejszych funkcja <function>pow</function> zawsze
-      zwracała typ <type>float</type> i nie wyświetlała ostrzeżeń.
-     </para>
-    </warning>
-    <para> 
-     Patrz także: 
-     <function>exp</function> 
-     <function>sqrt</function>,
-     <function>bcpow</function> i
-     <function>gmp_pow</function>,
-    </para>
-   </refsect1>
-  </refentry>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
 
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    Ta funkcja konwertuje wszystkie dane wejściowe na liczby, nawet wartości nieskalarne,
+    co może prowadzić do <emphasis>dziwnych</emphasis> wyników.
+   </para>
+  </note>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>exp</function></member>
+    <member><function>sqrt</function></member>
+    <member><function>bcpow</function></member>
+    <member><function>gmp_pow</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml
