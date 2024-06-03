@@ -1,78 +1,176 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: qrak Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 9d044185431afc63026546899216053820ac5d64 Maintainer: grzesiek Status: ready -->
 <!-- $Revision$ -->
-  <refentry xml:id="function.min" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>min</refname>
-    <refpurpose>Znajduje najmniejszą wartość</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>mixed</type><methodname>min</methodname>
-      <methodparam><type>number</type><parameter>arg1</parameter></methodparam>
-      <methodparam><type>number</type><parameter>arg2</parameter></methodparam>
-      <methodparam choice="opt"><type>number</type><parameter>...</parameter></methodparam>
-     </methodsynopsis>
-     <methodsynopsis>
-      <type>mixed</type><methodname>min</methodname>
-      <methodparam><type>array</type><parameter>liczby</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     <function>min</function> zwraca najmniejszą liczbę spośród podanych
-     argumentów.
-    </para>
-    <para>
-     Jeśli pierwszym i jedynym argumentem funkcji jest tablica, zwrócona
-     zostanie najmniejsza wartość z tej tablicy. Jeśli pierwszym argumentem
-     jest liczba stałoprzecinkowa, ciąg znakowy lub liczba zmiennoprzecinkowa,
-     należy podać przynajmniej dwa argumenty, a <function>min</function>
-     zwróci najmniejszy z nich.  Można porównywać nieograniczoną ilość
-     wartości.
-    </para>
-    <note>
-     <para>
-      PHP będzie uznawał nieliczbowe wartości typu <type>string</type> jako 
-      <literal>0</literal>, jednakże zwracany będzie ciąg znakowy, jesli
-      zostanie on oznany numerycznie za najmniejszą wartość. Jeśli wiele
-      argumentów zostanie uznanych za wartość
-      <literal>0</literal>, to <function>min</function> zwróci wartość
-      najmniejszą alfanumerycznie, jeśli zostały podane jakiekolwiek ciągi
-      znakowe. W przeciwnym przypadku zwrócona zostanie wartość
-      <literal>0</literal>.
-     </para>
-    </note>
-    <para>
-     <example>  
-      <title>Przykłady użycia <function>min</function></title>
-      <programlisting role="php">
-<![CDATA[  
+<!-- CREDITS: sobak -->
+<refentry xml:id="function.min" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>min</refname>
+  <refpurpose>Znajduje najmniejszą wartość</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+   <methodsynopsis>
+    <type>mixed</type><methodname>min</methodname>
+    <methodparam><type>mixed</type><parameter>value</parameter></methodparam>
+    <methodparam rep="repeat"><type>mixed</type><parameter>values</parameter></methodparam>
+   </methodsynopsis>
+   <simpara>Alternatywny sygnatura (nieobsługiwana z nazwanymi argumentami):</simpara>
+   <methodsynopsis>
+    <type>mixed</type><methodname>min</methodname>
+    <methodparam><type>array</type><parameter>value_array</parameter></methodparam>
+   </methodsynopsis>
+  <para>
+   Jeśli pierwszym i jedynym parametrem jest tablica, funkcja <function>min</function>
+   zwraca najmniejszą wartość w tej tablicy. Jeśli podano co najmniej dwa parametry, 
+   <function>min</function> zwraca najmniejszą z tych wartości.
+  </para>
+  <note>
+   <para>
+    Wartości różnych typów zostaną porównane przy użyciu <link linkend="language.operators.comparison">
+    standardowych zasad porównania</link>. Na przykład, nienumeryczny typ <type>string</type> zostanie
+    porównany z typem <type>int</type> tak jakby miał wartość <literal>0</literal>, ale wiele nienumerycznych
+    wartości typu <type>string</type> zostanie porównanych alfanumerycznie. Rzeczywista zwrócona wartość będzie
+    typu oryginalnego, bez zastosowania konwersji.
+   </para>
+  </note>
+  <caution>
+   <simpara>
+    Należy zachować ostrożność podczas przekazywania argumentów różnych typów, ponieważ
+    <function>min</function> może dać nieprzewidywalne wyniki.
+   </simpara>
+  </caution>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>value</parameter></term>
+     <listitem>
+      <para>
+       Dowolna <link linkend="language.operators.comparison">porównywalna</link>
+       wartość.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>values</parameter></term>
+     <listitem>
+      <para>
+       Dowolne <link linkend="language.operators.comparison">porównywalne</link>
+       wartości.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>value_array</parameter></term>
+     <listitem>
+      <para>
+       Tablica zawierająca wartości.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   <function>min</function> zwraca wartość parametru uznawaną za „najniższą” zgodnie ze standardowymi
+   porównaniami. Jeśli wiele wartości różnych typów zostanie ocenionych jako równe (np. <literal>0</literal>
+   i <literal>'abc'</literal>) zwrócona zostanie pierwsza podana funkcji.
+  </para>
+ </refsect1>
+
+ <refsect1 role="errors">
+  &reftitle.errors;
+  <para>
+   Jeśli przekazana zostanie pusta tablica, <function>min</function> zgłasza błąd <classname>ValueError</classname>.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>8.0.0</entry>
+      <entry>
+       <function>min</function> zgłasza teraz błąd <classname>ValueError</classname> przy niepowodzeniu;
+       poprzednio zwrócony był &false; i wyemitowany błąd <constant>E_WARNING</constant>.
+      </entry>
+     </row>
+     <row>
+      <entry>8.0.0</entry>
+      <entry>
+       Ponieważ zmieniono <link linkend="migration80.incompatible.core.string-number-comparision">
+       porównania ciągów znaków z liczbami</link>, <function>min</function> nie zwraca już
+       w takich przypadkach innej wartości w oparciu o kolejność argumentów.
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </informaltable>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykładowe zastosowania <function>min</function></title>
+    <programlisting role="php">
+<![CDATA[
 <?php
 echo min(2, 3, 1, 6, 7);  // 1
 echo min(array(2, 4, 5)); // 2
-echo min(0, 'hello');     // 0
-echo min('hello', 0);     // hello
+
+// Tutaj porównujemy -1 < 0, więc -1 jest najniższą wartością
 echo min('hello', -1);    // -1
 
-// W przypadku podania wielu tablic, min porównuje je od lewej do prawej, 
-// A więc w poniższym przykładzie 2 == 2, ale 4 < 5
+// W przypadku wielu tablic o różnych długościach, min zwraca najkrótszą z nich
+$val = min(array(2, 2, 2), array(1, 1, 1, 1)); // array(2, 2, 2)
+
+// Wiele tablic o tej samej długości jest porównywanych od lewej do prawej.
+// więc w naszym przykładzie: 2 == 2, but 4 < 5
 $val = min(array(2, 4, 8), array(2, 5, 1)); // array(2, 4, 8)
 
-// Jeśli podane zostaną tablice i nie-tablice, nigdy nie jest zwracana
-// tablica, jako że zawsze jest uznawana za element największy
+// Jeśli podano zarówno tablicę, jak i nie-tablicę, tablica nigdy nie jest zwracana
+// ponieważ porównania traktują tablice jako większe niż jakakolwiek inna wartość.
 $val = min('string', array(2, 5, 7), 42);   // string
 
-?>  
-]]>  
-      </programlisting>  
-     </example>  
-    </para>
-    <para>    
-     Patrz także: <function>max</function> i <function>count</function>.
-    </para>
-   </refsect1>
-  </refentry>
+// Jeśli jednym z argumentów jest NULL lub wartość logiczna, zostanie ona porównana z
+// innymi wartościami przy użyciu reguł FALSE < TRUE i NULL == FALSE niezależnie od 
+// innych typów
+// W poniższych przykładach, zarówno -10 jak i 10 są traktowane jako TRUE w porównaniu
+$val = min(-10, FALSE, 10); // FALSE
+$val = min(-10, NULL, 10);  // NULL
 
+// 0, z drugiej strony, jest traktowane jako FALSE, więc jest „mniejsze niż” TRUE
+$val = min(0, TRUE); // 0
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>max</function></member>
+    <member><function>count</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

@@ -1,62 +1,136 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: qrak Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 19e8122137a1d42ed60f17fe2c0c2b69b0b2d16b Maintainer: grzesiek Status: ready -->
 <!-- $Revision$ -->
-  <refentry xml:id="function.base-convert" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>base_convert</refname>
-    <refpurpose>Konwertuje liczbę pomiędzy różnymi systemami liczbowymi
-    </refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>string</type><methodname>base_convert</methodname>
-      <methodparam><type>string</type><parameter>liczba</parameter></methodparam>
-      <methodparam><type>int</type><parameter>system_bazowy</parameter></methodparam>
-      <methodparam><type>int</type><parameter>system_docelowy</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     Zwraca łańcuch znaków zawierający <parameter>liczbę</parameter> w 
-     reprezentacji w <parameter>system_docelowy</parameter>. System w którym
-     podajemy liczbę jest określony w <parameter>system_bazowy</parameter>.
-     Parametry <parameter>system_bazowy</parameter> i
-     <parameter>system_docelowy</parameter> muszą zawierać się pomiędzy 2 a 36
-     włącznie. Cyfry w liczbach o bazie większej niż 10 są reprezentowane
-     za pomocą liter a-z, gdzie a oznacza 10, b oznacza 11, a z oznacza 35.
-     <example>
-      <title><function>base_convert</function> przykład</title>
-      <programlisting role="php">
-<![CDATA[      
+<!-- CREDITS: sobak, grzesiek -->
+<refentry xml:id="function.base-convert" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>base_convert</refname>
+  <refpurpose>Konwertuje liczbę pomiędzy różnymi bazami liczbowymi</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+   <methodsynopsis>
+   <type>string</type><methodname>base_convert</methodname>
+   <methodparam><type>string</type><parameter>num</parameter></methodparam>
+   <methodparam><type>int</type><parameter>from_base</parameter></methodparam>
+   <methodparam><type>int</type><parameter>to_base</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Zwraca ciąg znaków zawierający parametr <parameter>num</parameter>
+   reprezentowany w bazie określonej w parametrze <parameter>to_base</parameter>. Baza,
+   w której podano <parameter>num</parameter> jest określona w parametrze
+   <parameter>from_base</parameter>.  Oba parametry
+   <parameter>from_base</parameter> i <parameter>to_base</parameter>
+   muszą zawierać się w przedziale od 2 do 36.  Cyfry w liczbach o
+   wyższej niż 10 będą reprezentowane za pomocą liter a-z,
+   gdzie a oznacza 10, b oznacza 11, a z oznacza 35.
+   Wielkość liter nie ma znaczenia, tj. parametr
+   <parameter>num</parameter> jest interpretowany bez względu na wielkość liter.
+  </para>
+  <warning>
+   <simpara>
+    <function>base_convert</function> może stracić precyzję na dużych liczbach
+    ze względu na właściwości związane z używanym wewnętrznym typem <type>float</type>.
+    Więcej szczegółowych informacji i ograniczeń można znaleźć w sekcji
+    <link linkend="language.types.float">Liczby zmiennoprzecinkowe</link> w podręczniku.
+   </simpara>
+  </warning>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>num</parameter></term>
+     <listitem>
+      <para>
+       Liczba do skonwertowania. Wszelkie nieprawidłowe znaki w
+       <parameter>num</parameter> są po cichu ignorowane.
+       Od PHP 7.4.0 dostarczanie nieprawidłowych znaków jest zdeprecjonowane.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>from_base</parameter></term>
+     <listitem>
+      <para>
+       Baza liczbowa parametru <parameter>num</parameter>
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>to_base</parameter></term>
+     <listitem>
+      <para>
+       Baza liczbowa do jakiej <parameter>num</parameter> ma być skonwertowane
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Parametr <parameter>num</parameter> skonwertowany do bazy liczbowej określonej przez
+   parametr <parameter>to_base</parameter>
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>7.4.0</entry>
+      <entry>
+       Przekazanie nieprawidłowych znaków spowoduje teraz wygenerowanie powiadomienia o zdeprecjonowaniu.
+       Wynik nadal będzie obliczany tak, jakby nieprawidłowe znaki nie istniały.
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </informaltable>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład <function>base_convert</function></title>
+    <programlisting role="php">
+<![CDATA[
 <?php
-$hexadecimal = 'A37334';
+$hexadecimal = 'a37334';
 echo base_convert($hexadecimal, 16, 2);
 ?>
 ]]>
-      </programlisting>
-      <para>
-       Wyświetli:
-      </para>
-      <screen>
+    </programlisting>
+    &example.outputs;
+    <screen>
 <![CDATA[
 101000110111001100110100
 ]]>
-      </screen>
-     </example>
-    </para>
-    <warning>
-     <simpara>
-      <function>base_convert</function> może tracić precyzję przy dużych liczbach
-      z powodu odwoływania się do wewnętrznych typów "double" lub "float".
-      Proszę zajrzeć do sekcji <link linkend="language.types.float">Liczby zmiennoprzecinkowe</link>
-      podręcznika po szczegółowe informacje i ograniczenia.
-     </simpara>
-    </warning>
-    <para>
-     Patrz także: <function>intval</function>.
-    </para>
-   </refsect1>
-  </refentry>
-
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>intval</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

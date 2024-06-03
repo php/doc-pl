@@ -1,29 +1,96 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: qrak Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: f940d0cf4262b2bf1cf83663ed9cff1e739c8604 Maintainer: grzesiek Status: ready -->
 <!-- $Revision$ -->
-    <refentry xml:id='function.is-finite' xmlns="http://docbook.org/ns/docbook"> 
-     <refnamediv> 
-      <refname>is_finite</refname> 
-      <refpurpose>Sprawdza czy wartość jest prawidłową skończoną liczbą</refpurpose>
-     </refnamediv> 
-     <refsect1> 
-      <title>Opis</title> 
-       <methodsynopsis> 
-        <type>bool</type><methodname>is_finite</methodname> 
-        <methodparam><type>float</type><parameter>wartość</parameter></methodparam>
-       </methodsynopsis> 
-      <para>
-       Zwraca  &true;, jeśli argument <parameter>wartość</parameter> jest
-       skończoną liczbą, zawierającą się w zakresie liczb zmiennoprzecinkowych
-       (float) dla tej platformy.
-      </para> 
-      <para> 
-      Patrz także <function>is_infinite</function> i 
-      <function>is_nan</function>. 
-      </para> 
-     </refsect1> 
-    </refentry> 
+<!-- CREDITS: sobak -->
+<refentry xml:id="function.is-finite" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>is_finite</refname>
+  <refpurpose>Sprawdza czy wartość jest liczbą skończoną</refpurpose>
+ </refnamediv>
 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>bool</type><methodname>is_finite</methodname>
+   <methodparam><type>float</type><parameter>num</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Zwraca informację, czy dana wartość <parameter>num</parameter> jest liczbą skończoną.
+  </para>
+  <para>
+   Liczba skończona nie jest ani <constant>NAN</constant> (<function>is_nan</function>),
+   ani nieskończona (<function>is_infinite</function>).
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>num</parameter></term>
+     <listitem>
+      <para>
+       Liczba &float; do sprawdzenia
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &true;, jeśli <parameter>num</parameter> nie jest żadnym z <constant>NAN</constant>,
+   <constant>INF</constant>, -<constant>INF</constant>, w przeciwnym razie &false;.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład <function>is_finite</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$float = 1.2345;
+var_dump($float, is_finite($float));
+
+$nan = sqrt(-1);
+var_dump($nan, is_finite($nan));
+
+$inf = 1e308 * 2;
+var_dump($inf, is_finite($inf));
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+float(1.2345)
+bool(true)
+float(NAN)
+bool(false)
+float(INF)
+bool(false)
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>is_infinite</function></member>
+    <member><function>is_nan</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml
