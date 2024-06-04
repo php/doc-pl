@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 43d07782b514d0c7a8487f2c74063739f302df8d	 Maintainer: sobak Status: ready -->
+<sect1 xml:id="language.operators.increment">
+ <title>Operatory inkrementacji/dekrementacji</title>
+ <titleabbrev>Inkrementacja i dekrementacja</titleabbrev>
+ <para>
+  PHP obsługuje operatory pre- i post- inkrementacji i dekrementacji.
+  Te operatory pozwalają na zwiększenie lub zmniejszenie wartości o jeden.
+ </para>
+ <table>
+  <title>Operatory inkrementacji/dekrementacji</title>
+  <tgroup cols="3">
+   <thead>
+    <row>
+     <entry>Przykład</entry>
+     <entry>Nazwa</entry>
+     <entry>Efekt</entry>
+    </row>
+   </thead>
+   <tbody>
+    <row>
+     <entry>++$a</entry>
+     <entry>Pre-inkrementacja</entry>
+     <entry>Zwiększa <varname>$a</varname> o jeden, a następnie zwraca <varname>$a</varname>.</entry>
+    </row>
+    <row>
+     <entry>$a++</entry>
+     <entry>Post-inkrementacja</entry>
+     <entry>Zwraca <varname>$a</varname>, a następnie zwiększa <varname>$a</varname> o jeden.</entry>
+    </row>
+    <row>
+     <entry>--$a</entry>
+     <entry>Pre-dekrementacja</entry>
+     <entry>Zmniejsza <varname>$a</varname> o jeden, a następnie zwraca <varname>$a</varname>.</entry>
+    </row>
+    <row>
+     <entry>$a--</entry>
+     <entry>Post-dekrementacja</entry>
+     <entry>Zwraca <varname>$a</varname>, a następnie zmniejsza <varname>$a</varname> o jeden.</entry>
+    </row>
+   </tbody>
+  </tgroup>
+ </table>
+
+ <para>
+  Oto prosty skrypt z przykładami:
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php
+echo 'Post-inkrementacja:', PHP_EOL;
+$a = 5;
+var_dump($a++);
+var_dump($a);
+
+echo 'Pre-inkrementacja:', PHP_EOL;
+$a = 5;
+var_dump(++$a);
+var_dump($a);
+
+echo 'Post-dekrementacja:', PHP_EOL;
+$a = 5;
+var_dump($a--);
+var_dump($a);
+
+echo 'Pre-dekrementacja:', PHP_EOL;
+$a = 5;
+var_dump(--$a);
+var_dump($a);
+?>
+]]>
+   </programlisting>
+   &example.outputs;
+   <screen>
+<![CDATA[
+Post-inkrementacja:
+int(5)
+int(6)
+Pre-inkrementacja:
+int(6)
+int(6)
+Post-dekrementacja:
+int(5)
+int(4)
+Pre-dekrementacja:
+int(4)
+int(4)
+]]>
+   </screen>
+  </informalexample>
+
+  <warning>
+   <para>
+    Operatory inkrementacji i dekrementacji nie mają wpływu na wartości
+    typu <type>bool</type>.
+    Od PHP 8.3.0 emitowane jest ostrzeżenie (<constant>E_WARNING</constant>),
+    ponieważ w przyszłości spowoduje to niejawne zrzutowanie zmiennej na typ <type>int</type>.
+   </para>
+   <para>
+    Operator dekrementacji nie ma wpływu na wartości
+    o typie <type>null</type>.
+    Od PHP 8.3.0 emitowane jest ostrzeżenie (<constant>E_WARNING</constant>),
+    ponieważ w przyszłości spowoduje to niejawne zrzutowanie zmiennej na typ <type>int</type>.
+   </para>
+   <para>
+    Operator dekrementacji nie ma wpływu na ciągach znaków, które nie są 
+    <link linkend="language.types.numeric-strings">numeryczne</link>.
+    Od PHP 8.3.0 emitowane jest ostrzeżenie (<constant>E_WARNING</constant>),
+    a w przyszłości rzucany będzie <classname>TypeError</classname>.
+   </para>
+  </warning>
+  <note>
+   <para>
+    Wbudowane obiekty, które obsługują przeciążanie dodawania i/lub odejmowania
+    mogą być inkrementowane i dekrementowane.
+    Przykładem takiego obiektu jest <classname>GMP</classname>.
+   </para>
+  </note>
+ </para>
+
+ <sect2 xml:id="language.operators.increment.string">
+  <title>Opcja inkrementacji ciągu znaków PERL</title>
+  <warning>
+   <simpara>
+    Ta opcja jest przestarzała od PHP 8.3.0.
+    Zamiast niej skorzystaj z funkcji <function>str_increment</function>.
+   </simpara>
+  </warning>
+
+  <para>
+   W PHP możliwa jest inkrementacja ciągów znaków inne niż
+   <link linkend="language.types.numeric-strings">numeryczne ciągi znaków</link>.
+   Ciąg znaków musi być alfanumerycznym stringiem ASCII.
+   Zwiększa to wtedy literę na następną literę, a gdy zostanie osiągnięta litera
+   <literal>Z</literal>, powiększana jest kolejna wartość po lewej.
+   Przykładowo <code>$a = 'Z'; $a++;</code> ustawia <varname>$a</varname>
+   na <literal>'AA'</literal>.
+  </para>
+
+  <example>
+   <title>Przykład inkrementacji ciągu znaków PERL</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+echo '== Same litery ==' . PHP_EOL;
+$s = 'W';
+for ($n=0; $n<6; $n++) {
+    echo ++$s . PHP_EOL;
+}
+// Alfanumeryczne ciągi znaków zachowują się inaczej
+echo '== Ciągi alfanumeryczne ==' . PHP_EOL;
+$d = 'A8';
+for ($n=0; $n<6; $n++) {
+    echo ++$d . PHP_EOL;
+}
+$d = 'A08';
+for ($n=0; $n<6; $n++) {
+    echo ++$d . PHP_EOL;
+}
+?>
+]]>
+   </programlisting>
+   &example.outputs;
+   <screen>
+<![CDATA[
+== Same litery ==
+X
+Y
+Z
+AA
+AB
+AC
+== Ciągi alfanumeryczne ==
+A9
+B0
+B1
+B2
+B3
+B4
+A09
+A10
+A11
+A12
+A13
+A14
+]]>
+   </screen>
+  </example>
+
+  <warning>
+   <para>
+    Jeśli alfanumeryczny ciąg znaków może być zinterpretowany jako
+    <link linkend="language.types.numeric-strings">numeryczny ciąg znaków</link>,
+    to zostanie on zrzutowany na <type>int</type> lub <type>float</type>.
+    Jest to szczególnie problematyczne z ciągami znaków, które wyglądają jak liczby zmiennoprzecinkowe
+    zapisane w notacji wykładniczej.
+    Funkcja <function>str_increment</function> jest wolna od problemu
+    tego niejawnego rzutowania typów.
+   </para>
+   <example>
+    <title>Alfanumeryczne ciągi znaków skonwertowane na float</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$s = "5d9";
+var_dump(++$s);
+var_dump(++$s);
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+string(3) "5e0"
+float(6)
+]]>
+    </screen>
+    <para>
+     Dzieje się tak, ponieważ wartość <literal>"5e0"</literal> jest interpretowana
+     jako <type>float</type> i rzutowana na wartość <literal>5.0</literal>
+     zanim zostanie zinkrementowana.
+    </para>
+   </example>
+  </warning>
+ </sect2>
+</sect1>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 43d07782b514d0c7a8487f2c74063739f302df8d	 Maintainer: sobak Status: ready -->
+<sect1 xml:id="language.operators.array">
+ <title>Operatory tablicowe</title>
+ <titleabbrev>Tablicowe</titleabbrev>
+ <table>
+  <title>Operatory tablicowe</title>
+  <tgroup cols="3">
+   <thead>
+    <row>
+     <entry>Przykład</entry>
+     <entry>Nazwa</entry>
+     <entry>Wynik</entry>
+    </row>
+   </thead>
+   <tbody>
+    <row>
+     <entry>$a + $b</entry>
+     <entry>Unia</entry>
+     <entry>Unia <varname>$a</varname> i <varname>$b</varname>.</entry>
+    </row>
+    <row>
+     <entry>$a == $b</entry>
+     <entry>Równość</entry>
+     <entry>&true; jeśli <varname>$a</varname> i <varname>$b</varname> mają takie same pary klucz/wartość.</entry>
+    </row>
+    <row>
+     <entry>$a === $b</entry>
+     <entry>Identyczność</entry>
+     <entry>&true; jeśli <varname>$a</varname> i <varname>$b</varname> mają takie same pary klucz/wartość, w tej samej
+      kolejności i tych samych typów.</entry>
+    </row>
+    <row>
+     <entry>$a != $b</entry>
+     <entry>Nierówność</entry>
+     <entry>&true; jeśli <varname>$a</varname> nie jest równa z <varname>$b</varname>.</entry>
+    </row>
+    <row>
+     <entry>$a &lt;&gt; $b</entry>
+     <entry>Nierówność</entry>
+     <entry>&true; jeśli <varname>$a</varname> nie jest równa z <varname>$b</varname>.</entry>
+    </row>
+    <row>
+     <entry>$a !== $b</entry>
+     <entry>Nieidentyczność</entry>
+     <entry>&true; jeśli <varname>$a</varname> nie jest identyczna z <varname>$b</varname>.</entry>
+    </row>
+   </tbody>
+  </tgroup>
+ </table>
+ <para>
+  Operator <literal>+</literal> zwraca tablicę, w której prawostronna tablica została dołączona
+  do końca lewostronnej tablicy; dla kluczy, które istnieją w obu tablicach, wykorzystane
+  zostaną elementy z lewostronnej tablicy a odpowiadające im elementy z
+  prawostronnej tablicy zostaną pominięte.
+ </para>
+ <para>
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php
+$a = array("a" => "apple", "b" => "banana");
+$b = array("a" => "pear", "b" => "strawberry", "c" => "cherry");
+
+$c = $a + $b; // Unia $a i $b
+echo "Unia \$a i \$b: \n";
+var_dump($c);
+
+$c = $b + $a; // Unia $b i $a
+echo "Unia \$b i \$a: \n";
+var_dump($c);
+
+$a += $b; // Unia $a += $b to $a i $b
+echo "Unia \$a += \$b: \n";
+var_dump($a);
+?>
+]]>
+   </programlisting>
+  </informalexample>
+  Po wykonaniu ten skrypt wyświetli następujący wynik:
+  <screen role="php">
+<![CDATA[
+Unia $a i $b:
+array(3) {
+  ["a"]=>
+  string(5) "apple"
+  ["b"]=>
+  string(6) "banana"
+  ["c"]=>
+  string(6) "cherry"
+}
+Unia $b i $a:
+array(3) {
+  ["a"]=>
+  string(4) "pear"
+  ["b"]=>
+  string(10) "strawberry"
+  ["c"]=>
+  string(6) "cherry"
+}
+Unia $a += $b:
+array(3) {
+  ["a"]=>
+  string(5) "apple"
+  ["b"]=>
+  string(6) "banana"
+  ["c"]=>
+  string(6) "cherry"
+}
+]]>
+  </screen>
+ </para>
+ <para>
+  Elementy unii tablic są uznawane za identyczne, jeśli mają ten
+  sam klucz i wartość.
+ </para>
+ <para>
+  <example>
+   <title>Porównywanie tablic</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+$a = array("apple", "banana");
+$b = array(1 => "banana", "0" => "apple");
+
+var_dump($a == $b); // bool(true)
+var_dump($a === $b); // bool(false)
+?>
+]]>
+   </programlisting>
+  </example>
+ </para>
+
+ <sect2 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><link linkend="language.types.array">Typ tablicowy</link></member>
+    <member><link linkend="ref.array">Funkcje tablicowe</link></member>
+   </simplelist>
+  </para>
+ </sect2>
+</sect1>

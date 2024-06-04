@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 43d07782b514d0c7a8487f2c74063739f302df8d	 Maintainer: sobak Status: ready -->
+<sect1 xml:id="language.operators.errorcontrol">
+ <title>Operatory kontroli błędów</title>
+ <titleabbrev>Kontrola błędów</titleabbrev>
+ <simpara>
+  PHP obsługuje jeden operator kontroli błędów: znak małpy (<literal>@</literal>).
+  Jeśli postawiono go przed wyrażeniem PHP, wycisza on wszystkie rodzaje błędów
+  generowane przez to wyrażenie.
+ </simpara>
+ <para>
+  Jeśli zarejestrowano własną funkcję obsługi błędów przy użyciu
+  <function>set_error_handler</function>, to będzie ona wciąż wywołana, mimo iż
+  wyświetlane błędów zostanie wyciszone.
+ </para>
+
+ <warning>
+  <para>
+   Przed PHP 8.0.0 <function>error_reporting</function> wywołana wewnątrz własnej funkcji obsługi błędów
+   zawsze zwracała <literal>0</literal>, jeżeli błąd był wyciszony przez operator <literal>@</literal>.
+   Począwszy od PHP 8.0.0 zwracana jest wartość wyrażenia bitowego:
+   <literal>E_ERROR | E_CORE_ERROR | E_COMPILE_ERROR | E_USER_ERROR | E_RECOVERABLE_ERROR | E_PARSE</literal>.
+  </para>
+ </warning>
+
+ <simpara>
+  Jakakolwiek wiadomość błędu wygenerowana przez wyrażenie jest dostępna w elemencie
+  <literal>"message"</literal> tablicy zwróconej przez <function>error_get_last</function>.
+  Wynik wywołania tej funkcji zmieni się po każdym błędzie, więc sprawdzenie musi nastąpić wcześnie.
+ </simpara>
+ <para>
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php
+/* Umyślny błąd dostępu do pliku */
+$my_file = @file ('bledny_plik') or
+    die ("Nie można otworzyć pliku: błąd to '" . error_get_last()['message'] . "'");
+
+// działa to dla wszystkich wyrażeń, nie tylko funkcji:
+$value = @$cache[$key];
+// ten kod nie wygeneruje błędu, nawet jeśli indeks $key nie istnieje
+
+?>
+]]>
+   </programlisting>
+  </informalexample>
+ </para>
+ <note>
+  <simpara>
+   Operator <literal>@</literal>-działa tylko dla
+   <link linkend="language.expressions">wyrażeń</link>.
+   Prosta reguła brzmi: jeśli coś może przyjąć wartość czegoś,
+   to można to poprzedzić operatorem <literal>@</literal>.
+   Można nim poprzedzić np. zmienne, wywołania funkcji,
+   niektóre konstrukcje językowe (np. <function>include</function>)
+   i tak dalej.
+   Operatorem nie mogą być poprzedzone definicje funkcji i klas,
+   ani struktury warunkowe, takie jak <literal>if</literal>,
+   &foreach; i inne.
+  </simpara>
+ </note>
+ <warning>
+  <para>
+   Przed PHP 8.0.0 operator <literal>@</literal> mógł wyciszyć błędy krytyczne,
+   które zatrzymywały wykonywanie skryptu.
+   Na przykład poprzedzenie wywołania nieistniejącej funkcji
+   operatorem <literal>@</literal>, powodowało, że skrypt nagle kończył swoje
+   działanie i nie informował, dlaczego tak się stało.
+  </para>
+ </warning>
+
+ <sect2 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>error_reporting</function></member>
+    <member><link linkend="ref.errorfunc">Funkcje obsługi i logowania błędów</link></member>
+   </simplelist>
+  </para>
+ </sect2>
+</sect1>

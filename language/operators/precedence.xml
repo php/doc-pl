@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 43d07782b514d0c7a8487f2c74063739f302df8d	 Maintainer: sobak Status: ready -->
+<sect1 xml:id="language.operators.precedence">
+ <title>Pierwszeństwo operatorów</title>
+ <titleabbrev>Priorytet operatorów</titleabbrev>
+ <para>
+  Pierwszeństwo operatorów określa jak "mocno" wiąże on dwa
+  wyrażenia ze sobą. Na przykład w wyrażeniu <literal>1 +
+  5 * 3</literal> wynik to <literal>16</literal>, a nie
+  <literal>18</literal> ponieważ operator mnożenia ("*")
+  ma wyższy priorytet niż operator dodawania ("+").
+  Czasami może być konieczne użycie nawiasów, aby wymusić kolejność. Na
+  przykład: <literal>(1 + 5) * 3</literal> rozwiązuje się do
+  <literal>18</literal>.
+ </para>
+ <para>
+  Jeśli operatory mają taki sam priorytet, ich asocjacyjność decyduje
+  o tym, jak zostaną pogrupowane. Na przykład "-" jest lewostronnie-asocjacyjny, więc
+  <literal>1 - 2 - 3</literal> jest grupowany jako <literal>(1 - 2) - 3</literal>
+  i rozwiązywany do wyniku <literal>-4</literal>. Z kolei "=" jest
+  prawostronnie-asocjacyjny, więc <literal>$a = $b = $c</literal> jest grupowany jako
+  <literal>$a = ($b = $c)</literal>.
+ </para>
+ <para>
+  Operatory o tym samym priorytecie, które nie są asocjacyjne, nie mogą być użyte
+  obok siebie. Na przykład <literal>1 &lt; 2 &gt; 1</literal> nie
+  jest dozwolone w PHP. Z kolei wyrażenie <literal>1 &lt;= 1 == 1</literal> jest,
+  ponieważ operator <literal>==</literal> ma mniejszy
+  priorytet niż operator <literal>&lt;=</literal>.
+ </para>
+ <para>
+  Asocjacyjność ma znaczenie tylko dla operatorów binarnych i trójkowych.
+  Operatory dwuargumentowe są jedynie prefiksem lub sufiksem, więc ten aspekt nie odnosi się do nich.
+  Na przykład <literal>!!$a</literal> może być pogrupowane tylko jako <literal>!(!$a)</literal>.
+ </para>
+ <para>
+  Użycie nawiasów może często zwiększyć czytelność kodu, nawet jeśli nie jest
+  koniecznie niezbędne, ponieważ wprowadza jasne grupowanie zamiast polegać
+  na pierwszeństwie operatorów i ich asocjacyjności.
+ </para>
+ <para>
+  Poniższa tabela wymienia operatory w kolejności ich pierwszeństwa, gdzie
+  operatory o najwyższym priorytecie znajdują się na górze. Operatory w tej samej linii
+  mają identyczny priorytet i w tym wypadku o grupowaniu decyduje ich asocjacyjność.
+  <table>
+   <title>Priorytet operatorów</title>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>Asocjacyjność</entry>
+      <entry>Operatory</entry>
+      <entry>Dodatkowe informacje</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>(n/a)</entry>
+      <entry>
+       <literal>clone</literal>
+       <literal>new</literal>
+      </entry>
+      <entry><link linkend="language.oop5.cloning">clone</link> oraz <link linkend="language.oop5.basic.new">new</link></entry>
+     </row>
+     <row>
+      <entry>prawostronna</entry>
+      <entry><literal>**</literal></entry>
+      <entry><link linkend="language.operators.arithmetic">operatory arytmetyczne</link></entry>
+     </row>
+     <row>
+      <entry>(n/a)</entry>
+      <entry>
+       <literal>+</literal>
+       <literal>-</literal>
+       <literal>++</literal>
+       <literal>--</literal>
+       <literal>~</literal>
+       <literal>(int)</literal>
+       <literal>(float)</literal>
+       <literal>(string)</literal>
+       <literal>(array)</literal>
+       <literal>(object)</literal>
+       <literal>(bool)</literal>
+       <literal>@</literal>
+      </entry>
+      <entry>
+       operatory <link linkend="language.operators.arithmetic">arytmetyczne</link> (dwuargumentowe <literal>+</literal> i <literal>-</literal>),
+       <link linkend="language.operators.increment">inkrementacji/dekrementacji</link>,
+       <link linkend="language.operators.bitwise">bitowe</link>,
+       <link linkend="language.types.typecasting">rzutowania typów</link>&listendand;
+       <link linkend="language.operators.errorcontrol">kontroli błędów</link>
+      </entry>
+     </row>
+     <row>
+      <entry>lewostronna</entry>
+      <entry><literal>instanceof</literal></entry>
+      <entry>
+       <link linkend="language.operators.type">operatory typów</link>
+      </entry>
+     </row>
+     <row>
+      <entry>(n/a)</entry>
+      <entry><literal>!</literal></entry>
+      <entry>
+       <link linkend="language.operators.logical">operatory logiczne</link>
+      </entry>
+     </row>
+     <row>
+      <entry>lewostronna</entry>
+      <entry>
+       <literal>*</literal>
+       <literal>/</literal>
+       <literal>%</literal>
+      </entry>
+      <entry>
+       <link linkend="language.operators.arithmetic">operatory arytmetyczne</link>
+      </entry>
+     </row>
+     <row>
+      <entry>lewostronna</entry>
+      <entry>
+       <literal>+</literal>
+       <literal>-</literal>
+       <literal>.</literal>
+      </entry>
+      <entry>
+       operatory <link linkend="language.operators.arithmetic">arytmetyczne</link> (dwuargumentowe <literal>+</literal> i <literal>-</literal>),
+       <link linkend="language.operators.array">tablicowe</link>&listendand;
+       <link linkend="language.operators.string">ciągów znaków</link> (<literal>.</literal> przed PHP 8.0.0)
+      </entry>
+     </row>
+     <row>
+      <entry>lewostronna</entry>
+      <entry>
+       <literal>&lt;&lt;</literal>
+       <literal>&gt;&gt;</literal>
+      </entry>
+      <entry>
+       <link linkend="language.operators.bitwise">operatory bitowe</link>
+      </entry>
+     </row>
+     <row>
+      <entry>lewostronna</entry>
+      <entry><literal>.</literal></entry>
+      <entry>
+       <link linkend="language.operators.string">operatory ciągów znaków</link> (od PHP 8.0.0)
+      </entry>
+     </row>
+     <row>
+      <entry>non-associative</entry>
+      <entry>
+       <literal>&lt;</literal>
+       <literal>&lt;=</literal>
+       <literal>&gt;</literal>
+       <literal>&gt;=</literal>
+      </entry>
+      <entry>
+       <link linkend="language.operators.comparison">operatory porównania</link>
+      </entry>
+     </row>
+     <row>
+      <entry>non-associative</entry>
+      <entry>
+       <literal>==</literal>
+       <literal>!=</literal>
+       <literal>===</literal>
+       <literal>!==</literal>
+       <literal>&lt;&gt;</literal>
+       <literal>&lt;=&gt;</literal>
+      </entry>
+      <entry>
+       <link linkend="language.operators.comparison">operatory porównania</link>
+      </entry>
+     </row>
+     <row>
+      <entry>lewostronna</entry>
+      <entry><literal>&amp;</literal></entry>
+      <entry>
+       operatory <link linkend="language.operators.bitwise">bitowe</link>&listendand;
+       <link linkend="language.references">referencje</link></entry>
+     </row>
+     <row>
+      <entry>lewostronna</entry>
+      <entry><literal>^</literal></entry>
+      <entry>
+       <link linkend="language.operators.bitwise">operatory bitowe</link>
+      </entry>
+     </row>
+     <row>
+      <entry>lewostronna</entry>
+      <entry><literal>|</literal></entry>
+      <entry>
+       <link linkend="language.operators.bitwise">operatory bitowe</link>
+      </entry>
+     </row>
+     <row>
+      <entry>lewostronna</entry>
+      <entry><literal>&amp;&amp;</literal></entry>
+      <entry>
+       <link linkend="language.operators.logical">logical</link>
+      </entry>
+     </row>
+     <row>
+      <entry>lewostronna</entry>
+      <entry><literal>||</literal></entry>
+      <entry>
+       <link linkend="language.operators.logical">operatory logiczne</link>
+      </entry>
+     </row>
+     <row>
+      <entry>prawostronna</entry>
+      <entry><literal>??</literal></entry>
+      <entry>
+       <link linkend="language.operators.comparison.coalesce">null coalescing</link>
+      </entry>
+     </row>
+     <row>
+      <entry>non-associative</entry>
+      <entry><literal>? :</literal></entry>
+      <entry>
+       <link linkend="language.operators.comparison.ternary">operatory trójkowe</link>
+       (lewostronna-asocjacyjne przed PHP 8.0.0)
+      </entry>
+     </row>
+     <row>
+      <entry>prawostronna</entry>
+      <entry>
+       <literal>=</literal>
+       <literal>+=</literal>
+       <literal>-=</literal>
+       <literal>*=</literal>
+       <literal>**=</literal>
+       <literal>/=</literal>
+       <literal>.=</literal>
+       <literal>%=</literal>
+       <literal>&amp;=</literal>
+       <literal>|=</literal>
+       <literal>^=</literal>
+       <literal>&lt;&lt;=</literal>
+       <literal>&gt;&gt;=</literal>
+       <literal>??=</literal>
+      </entry>
+      <entry>
+       <link linkend="language.operators.assignment">operatory przypisania</link>
+      </entry>
+     </row>
+     <row>
+      <entry>(n/a)</entry>
+      <entry><literal>yield from</literal></entry>
+      <entry>
+       <link linkend="control-structures.yield.from">yield from</link>
+      </entry>
+     </row>
+     <row>
+      <entry>(n/a)</entry>
+      <entry><literal>yield</literal></entry>
+      <entry>
+       <link linkend="control-structures.yield">yield</link>
+      </entry>
+     </row>
+     <row>
+      <entry>(n/a)</entry>
+      <entry><literal>print</literal></entry>
+      <entry><function>print</function></entry>
+     </row>
+     <row>
+      <entry>lewostronna</entry>
+      <entry><literal>and</literal></entry>
+      <entry>
+       <link linkend="language.operators.logical">operatory logiczne</link>
+      </entry>
+     </row>
+     <row>
+      <entry>lewostronna</entry>
+      <entry><literal>xor</literal></entry>
+      <entry>
+       <link linkend="language.operators.logical">operatory logiczne</link>
+      </entry>
+     </row>
+     <row>
+      <entry>lewostronna</entry>
+      <entry><literal>or</literal></entry>
+      <entry>
+       <link linkend="language.operators.logical">operatory logiczne</link>
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </table>
+ </para>
+ <para>
+  <example>
+   <title>Asocjacyjność</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+$a = 3 * 3 % 5; // (3 * 3) % 5 = 4
+// asocjacyjność operatora trójkowego różni się od C/C++
+$a = true ? 0 : true ? 1 : 2; // (true ? 0 : true) ? 1 : 2 = 2 (przed PHP 8.0.0)
+
+$a = 1;
+$b = 2;
+$a = $b += 3; // $a = ($b += 3) -> $a = 5, $b = 5
+?>
+]]>
+   </programlisting>
+  </example>
+ </para>
+ <para>
+  Pierwszeństwo i asocjacyjność operatorów określają tylko to, jak wyrażenia
+  są grupowane, ale nie mają wpływu na kolejność wykonywania. PHP nie
+  określa (ogólnie rzecz biorąc) w jakiej kolejności wykonywane jest wyrażenie
+  i powinno się unikać kodu, który zakłada określoną kolejność wykonywania.
+  To zachowanie może się zmieniać między wersjami PHP lub zależeć od
+  otaczającego kodu.
+  <example>
+   <title>Nieokreślona kolejność wykonywania</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+$a = 1;
+echo $a + $a++; // może wyświetlić 2 lub 3
+
+$i = 1;
+$array[$i] = $i++; // może ustawić indeks na 1 lub 2
+?>
+]]>
+   </programlisting>
+  </example>
+  <example>
+   <title><literal>+</literal>, <literal>-</literal> i <literal>.</literal> mają ten sam priorytet (przed PHP 8.0.0)</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+$x = 4;
+// ta linia może dać nieoczekiwany wynik:
+echo "x minus jeden to " . $x-1 . ", a przynajmniej taką mam nadzieję\n";
+// ponieważ jest wykonywana tak jak ta linia (przed PHP 8.0.0):
+echo (("x minus jeden to " . $x) - 1) . ", a przynajmniej taką mam nadzieję\n";
+// the desired precedence can be enforced by using parentheses:
+// oczekiwane pierwszeństwo może zostać wymuszone nawiasami
+echo "x minus jeden to " . ($x-1) . ", a przynajmniej taką mam nadzieję\n";
+?>
+]]>
+   </programlisting>
+   &example.outputs;
+   <screen>
+<![CDATA[
+-1, a przynajmniej taką mam nadzieję
+-1, a przynajmniej taką mam nadzieję
+x minus jeden to 3, a przynajmniej taką mam nadzieję
+]]>
+   </screen>
+  </example>
+ </para>
+ <note>
+  <para>
+   Mimo iż <literal>=</literal> ma mniejszy priorytet niż
+   większość innych operatorów, PHP pozwala na wyrażenia
+   podobne do tego: <literal>if (!$a = foo())</literal>,
+   gdzie wartość zwracana przez <literal>foo()</literal> jest
+   przypisywana do <varname>$a</varname>.
+  </para>
+ </note>
+ <sect2 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>8.0.0</entry>
+      <entry>
+       Łączenie (konkatenacja) ciągów znaków (<literal>.</literal>) ma teraz mniejszy priorytet
+       niż operatory dodawania/odejmowania (<literal>+</literal> i <literal>-</literal>) oraz
+       przesunięcia bitowego w lewo/prawo (<literal>&lt;&lt;</literal> i <literal>&gt;&gt;</literal>);
+       wcześniej priorytet był identyczny z <literal>+</literal> i <literal>-</literal>,
+       a wyższy niż <literal>&lt;&lt;</literal> oraz <literal>&gt;&gt;</literal>.
+      </entry>
+     </row>
+     <row>
+      <entry>8.0.0</entry>
+      <entry>
+       Operator trójkowy (<literal>? :</literal>) nie jest teraz asocjacyjny;
+       wcześniej był on lewostronnie-asocjacyjny.
+      </entry>
+     </row>
+     <row>
+      <entry>7.4.0</entry>
+      <entry>
+       Poleganie na pierwszeństwie łączenia (konkatenacji) ciągów znaków (<literal>.</literal>) względem
+       dodawania/odejmowania (<literal>+</literal> or <literal>-</literal>) lub
+       przesunięcia bitowego w lewo/prawo (<literal>&lt;&lt;</literal> or <literal>&gt;&gt;</literal>),
+       tj. używanie ich razem w wyrażeniu bez nawiasów, jest uznane za przestarzałe.
+      </entry>
+     </row>
+     <row>
+      <entry>7.4.0</entry>
+      <entry>
+       Poleganie na lewostronnej ascocjacyjności operatora trójkowego (<literal>? :</literal>),
+       tj. zagnieżdżanie wielu operatorów trójkowych w wyrażeniu bez nawiasów, jest uznane za przestarzałe.
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </informaltable>
+ </sect2>
+</sect1>

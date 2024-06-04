@@ -1,0 +1,671 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 43d07782b514d0c7a8487f2c74063739f302df8d	 Maintainer: sobak Status: ready -->
+<sect1 xml:id="language.operators.bitwise">
+ <title>Operatory bitowe</title>
+ <titleabbrev>Bitowe</titleabbrev>
+ <simpara>
+  Operatory bitowe pozwalają na sprawdzenie i zmianę konkretnych
+  bitów w liczbach.
+ </simpara>
+ <table>
+  <title>Operatory bitowe</title>
+  <tgroup cols="3">
+   <thead>
+    <row>
+     <entry>Przykład</entry>
+     <entry>Nazwa</entry>
+     <entry>Wynik</entry>
+    </row>
+   </thead>
+   <tbody>
+    <row>
+     <entry><userinput>$a &amp; $b</userinput></entry>
+     <entry>And</entry>
+     <entry>Ustawiane są bity, które są ustawione w <varname>$a</varname> oraz <varname>$b</varname>.</entry>
+    </row>
+    <row>
+     <entry><userinput>$a | $b</userinput></entry>
+     <entry>Or (włącznie)</entry>
+     <entry>Ustawiane są bity, które są ustawione w <varname>$a</varname> lub <varname>$b</varname>.</entry>
+    </row>
+    <row>
+     <entry><userinput>$a ^ $b</userinput></entry>
+     <entry>Xor (wyłącznie)</entry>
+     <entry>
+      Ustawiane są bity, które są ustawione w <varname>$a</varname> lub <varname>$b</varname>, ale nie obu.
+     </entry>
+    </row>
+    <row>
+     <entry><userinput>~ $a</userinput></entry>
+     <entry>Not</entry>
+     <entry>
+      Bity, które są ustawione w <varname>$a</varname> nie są ustawiane i odwrotnie.
+     </entry>
+    </row>
+    <row>
+     <entry><userinput>$a &lt;&lt; $b</userinput></entry>
+     <entry>Przesunięcie w lewo</entry>
+     <entry>
+      Przesuwa bity <varname>$a</varname> o <varname>$b</varname> kroków w lewo (każdy krok oznacza
+      "pomnóż razy dwa")
+     </entry>
+    </row>
+    <row>
+     <entry><userinput>$a &gt;&gt; $b</userinput></entry>
+     <entry>Przesunięcie w prawo</entry>
+     <entry>
+      Przesuwa bity <varname>$a</varname> o <varname>$b</varname> kroków w prawo (każdy krok oznacza
+      "podziel na dwa")
+     </entry>
+    </row>
+   </tbody>
+  </tgroup>
+ </table>
+ <para>
+  Przesunięcia bitowe w PHP są arytmetyczne.
+  
+  Bit shifting in PHP is arithmetic.
+  Bity przesunięte poza któryś z końców są odrzucane.
+  Przesunięcia w lewo mają zera przesunięte w prawo, podczas gdy znak
+  jest przesunięty w lewo, co oznacza, że znak operandu
+  nie jest zachowany.
+  Przesunięcia w prawo mają kopie bitu znaku przesunięte w lewo,
+  co oznacza, że znak operandu jest zachowany.
+ </para>
+ <para>
+  Użyj nawiasów aby upewnić się, że zostanie zachowany oczekiwany
+  <link linkend="language.operators.precedence">priorytet</link>.
+  Przykładowo <literal>$a &amp; $b == true</literal> najpierw sprawdza
+  równość, a następnie bitowe "and", natomiast
+  <literal>($a &amp; $b) == true</literal> najpierw sprawdza bitowe "and",
+  a potem równość.
+ </para>
+ <para>
+  Jeżeli oba argumenty (operandy) dla operatorów <literal>&amp;</literal>, <literal>|</literal> i
+  <literal>^</literal> są ciągami znaków, to operacja będzie
+  dokonana na wartościach ASCII znaków, które tworzą ciągi znaków i
+  wynikiem będzie ciąg znaków. We wszystkich pozostałych wypadkach oba operandy zostaną
+  <link linkend="language.types.integer.casting">skonwertowane na liczby</link>
+  i wynik będzie liczbą.
+ </para>
+ <para>
+  Jeżeli operandem operatora <literal>~</literal> jest ciąg znaków, to
+  operacja będzie dokonana na wartościach ASCII znaków, które go tworzą
+  i wynik będzie ciągiem znaków, w przeciwnym razie operand i
+  wynik będą traktowane jako liczby.
+ </para>
+ <para>
+  Zarówno operand jak i wynik operatorów <literal>&lt;&lt;</literal> i
+  <literal>&gt;&gt;</literal> są zawsze traktowane jak liczby.
+ </para>
+ <para>
+  <informalexample>
+   <para>
+    <literallayout>
+     Ustawienie ini error_reporting języka PHP używa wartości bitowych,
+     co jest przykładem z życia dla wyłączania
+     bitów. Aby pokazać wszystkie błędy z wyjątkiem komunikatów (notice),
+     instrukcje w pliku php.ini mówią, aby użyć:
+     <userinput>E_ALL &amp; ~E_NOTICE</userinput>
+    </literallayout>
+   </para>
+   <para>
+    <literallayout>
+     Opiera się to o wzięcie wartości E_ALL:
+     <computeroutput>00000000000000000111011111111111</computeroutput>
+     Następnie wzięcie wartości E_NOTICE...
+     <computeroutput>00000000000000000000000000001000</computeroutput>
+     ... i odwrócenie jej z użyciem <literal>~</literal>:
+     <computeroutput>11111111111111111111111111110111</computeroutput>
+     Następnie użyte jest AND (&amp;) aby znaleźć bity włączone
+     w obu wartościach:
+     <computeroutput>00000000000000000111011111110111</computeroutput>
+    </literallayout>
+   </para>
+   <para>
+    <literallayout>
+     Innym sposobem aby to osiągnąć jest użycie XOR (<literal>^</literal>),
+     aby znaleźć bity które są tylko w jednej lub w drugiej wartości:
+     <userinput>E_ALL ^ E_NOTICE</userinput>
+    </literallayout>
+   </para>
+  </informalexample>
+ </para>
+ <para>
+  <informalexample>
+   <para>
+    <literallayout>
+     error_reporting może być użyte też do zademonstrowania włączania bitów.
+     Aby pokazać błędy i odzyskiwalne błędy można użyć::
+     <userinput>E_ERROR | E_RECOVERABLE_ERROR</userinput>
+    </literallayout>
+   </para>
+   <para>
+    <literallayout>
+     Ten proces łączy E_ERROR
+     <computeroutput>00000000000000000000000000000001</computeroutput>
+     z
+     <computeroutput>00000000000000000001000000000000</computeroutput>
+     używając operatora OR (<literal>|</literal>)
+     do pobrania bitów włączonych w którejś z wartości:
+     <computeroutput>00000000000000000001000000000001</computeroutput>
+    </literallayout>
+   </para>
+  </informalexample>
+ </para>
+ <para>
+  <example>
+   <title>Operacje bitowe AND, OR i XOR na liczbach</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+/*
+ * Zignoruj tę sekcję,
+ * służy ona tylko formatowaniu, aby wynik był bardziej czytelny.
+ */
+
+$format = '(%1$2d = %1$04b) = (%2$2d = %2$04b)'
+        . ' %3$s (%4$2d = %4$04b)' . "\n";
+
+echo <<<EOH
+ ---------     ---------  -- ---------
+ wynik         wartość    op test
+ ---------     ---------  -- ---------
+EOH;
+
+
+/*
+ * Przykłady są tutaj.
+ */
+
+$values = array(0, 1, 2, 4, 8);
+$test = 1 + 4;
+
+echo "\n Bitowe AND \n";
+foreach ($values as $value) {
+    $result = $value & $test;
+    printf($format, $result, $value, '&', $test);
+}
+
+echo "\n Bitowe OR \n";
+foreach ($values as $value) {
+    $result = $value | $test;
+    printf($format, $result, $value, '|', $test);
+}
+
+echo "\n Bitowe wyłączne OR (XOR) \n";
+foreach ($values as $value) {
+    $result = $value ^ $test;
+    printf($format, $result, $value, '^', $test);
+}
+?>
+]]>
+   </programlisting>
+   &example.outputs;
+   <screen>
+<![CDATA[
+ ---------     ---------  -- ---------
+ wynik         wartość    op test
+ ---------     ---------  -- ---------
+ Bitowe AND
+( 0 = 0000) = ( 0 = 0000) & ( 5 = 0101)
+( 1 = 0001) = ( 1 = 0001) & ( 5 = 0101)
+( 0 = 0000) = ( 2 = 0010) & ( 5 = 0101)
+( 4 = 0100) = ( 4 = 0100) & ( 5 = 0101)
+( 0 = 0000) = ( 8 = 1000) & ( 5 = 0101)
+
+ Bitowe OR
+( 5 = 0101) = ( 0 = 0000) | ( 5 = 0101)
+( 5 = 0101) = ( 1 = 0001) | ( 5 = 0101)
+( 7 = 0111) = ( 2 = 0010) | ( 5 = 0101)
+( 5 = 0101) = ( 4 = 0100) | ( 5 = 0101)
+(13 = 1101) = ( 8 = 1000) | ( 5 = 0101)
+
+ Bitowe wyłączne OR (XOR)
+( 5 = 0101) = ( 0 = 0000) ^ ( 5 = 0101)
+( 4 = 0100) = ( 1 = 0001) ^ ( 5 = 0101)
+( 7 = 0111) = ( 2 = 0010) ^ ( 5 = 0101)
+( 1 = 0001) = ( 4 = 0100) ^ ( 5 = 0101)
+(13 = 1101) = ( 8 = 1000) ^ ( 5 = 0101)
+]]>
+   </screen>
+  </example>
+ </para>
+ <para>
+  <example>
+   <title>Operacje bitowe XOR na ciągach znaków</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+echo 12 ^ 9; // Wyświetla '5'
+
+echo "12" ^ "9"; // Wyświetla znak Backspace (ascii 8)
+                 // ('1' (ascii 49)) ^ ('9' (ascii 57)) = #8
+
+echo "hallo" ^ "hello"; // Wyświetla wartości ascii #0 #4 #0 #0 #0
+                        // 'a' ^ 'e' = #4
+
+echo 2 ^ "3"; // Wyświetla 1
+              // 2 ^ ((int)"3") == 1
+
+echo "2" ^ 3; // Wyświetla 1
+              // ((int)"2") ^ 3 == 1
+?>
+]]>
+   </programlisting>
+  </example>
+ </para>
+ <para>
+  <example>
+   <title>Przesunięcia bitowe na liczbach</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+/*
+ * Przykłady.
+ */
+
+echo "\n--- PRZESUNIĘCIA W PRAWO NA LICZBACH DODATNICH ---\n";
+
+$val = 4;
+$places = 1;
+$res = $val >> $places;
+p($res, $val, '>>', $places, 'kopia bitu znaku przesunięta w lewą stronę');
+
+$val = 4;
+$places = 2;
+$res = $val >> $places;
+p($res, $val, '>>', $places);
+
+$val = 4;
+$places = 3;
+$res = $val >> $places;
+p($res, $val, '>>', $places, 'przesunięcie bitów na prawą stronę');
+
+$val = 4;
+$places = 4;
+$res = $val >> $places;
+p($res, $val, '>>', $places, 'taki sam wynik jak powyżej; nie można przesunąć poza 0');
+
+
+echo "\n--- PRZESUNIĘCIA W PRAWO NA LICZBACH UJEMNYCH ---\n";
+
+$val = -4;
+$places = 1;
+$res = $val >> $places;
+p($res, $val, '>>', $places, 'kopia bitu znaku przesunięta w lewą stronę');
+
+$val = -4;
+$places = 2;
+$res = $val >> $places;
+p($res, $val, '>>', $places, 'przesunięcie bitów na prawą stronę');
+
+$val = -4;
+$places = 3;
+$res = $val >> $places;
+p($res, $val, '>>', $places, 'taki sam wynik jak powyżej; nie można przesunąć poza -1');
+
+
+echo "\n--- PRZESUNIĘCIA W LEWO NA LICZBACH DODATNICH ---\n";
+
+$val = 4;
+$places = 1;
+$res = $val << $places;
+p($res, $val, '<<', $places, 'dopełnienie zerami z prawej strony');
+
+$val = 4;
+$places = (PHP_INT_SIZE * 8) - 4;
+$res = $val << $places;
+p($res, $val, '<<', $places);
+
+$val = 4;
+$places = (PHP_INT_SIZE * 8) - 3;
+$res = $val << $places;
+p($res, $val, '<<', $places, 'sign bits get shifted out');
+
+$val = 4;
+$places = (PHP_INT_SIZE * 8) - 2;
+$res = $val << $places;
+p($res, $val, '<<', $places, 'bits shift out left side');
+
+
+echo "\n--- PRZESUNIĘCIA W LEWO NA LICZBACH UJEMNYCH ---\n";
+
+$val = -4;
+$places = 1;
+$res = $val << $places;
+p($res, $val, '<<', $places, 'dopełnienie zerami z prawej strony');
+
+$val = -4;
+$places = (PHP_INT_SIZE * 8) - 3;
+$res = $val << $places;
+p($res, $val, '<<', $places);
+
+$val = -4;
+$places = (PHP_INT_SIZE * 8) - 2;
+$res = $val << $places;
+p($res, $val, '<<', $places, 'bits shift out left side, including sign bit');
+
+
+/*
+ * Możesz zignorować tę sekcję,
+ * służy ona tylko formatowaniu wyniku, aby był czytelniejszy.
+ */
+
+function p($res, $val, $op, $places, $note = '') {
+    $format = '%0' . (PHP_INT_SIZE * 8) . "b\n";
+
+    printf("Wyrażenie: %d = %d %s %d\n", $res, $val, $op, $places);
+
+    echo " Dziesiętna:\n";
+    printf("  val=%d\n", $val);
+    printf("  res=%d\n", $res);
+
+    echo " Binarnie:\n";
+    printf('  val=' . $format, $val);
+    printf('  res=' . $format, $res);
+
+    if ($note) {
+        echo " UWAGI: $note\n";
+    }
+
+    echo "\n";
+}
+?>
+]]>
+   </programlisting>
+   &example.outputs.32bit;
+   <screen>
+<![CDATA[
+
+--- PRZESUNIĘCIA W PRAWO NA LICZBACH DODATNICH ---
+Wyrażenie: 2 = 4 >> 1
+ Dziesiętna:
+  val=4
+  res=2
+ Binarnie:
+  val=00000000000000000000000000000100
+  res=00000000000000000000000000000010
+ UWAGI: kopia bitu znaku przesunięta w lewą stronę
+
+Wyrażenie: 1 = 4 >> 2
+ Dziesiętna:
+  val=4
+  res=1
+ Binarnie:
+  val=00000000000000000000000000000100
+  res=00000000000000000000000000000001
+
+Wyrażenie: 0 = 4 >> 3
+ Dziesiętna:
+  val=4
+  res=0
+ Binarnie:
+  val=00000000000000000000000000000100
+  res=00000000000000000000000000000000
+ UWAGI: przesunięcie bitów na prawą stronę
+
+Wyrażenie: 0 = 4 >> 4
+ Dziesiętna:
+  val=4
+  res=0
+ Binarnie:
+  val=00000000000000000000000000000100
+  res=00000000000000000000000000000000
+ UWAGI: taki sam wynik jak powyżej; nie można przesunąć poza 0
+
+
+--- PRZESUNIĘCIA W PRAWO NA LICZBACH UJEMNYCH ---
+Wyrażenie: -2 = -4 >> 1
+ Dziesiętna:
+  val=-4
+  res=-2
+ Binarnie:
+  val=11111111111111111111111111111100
+  res=11111111111111111111111111111110
+ UWAGI: kopia bitu znaku przesunięta w lewą stronę
+
+Wyrażenie: -1 = -4 >> 2
+ Dziesiętna:
+  val=-4
+  res=-1
+ Binarnie:
+  val=11111111111111111111111111111100
+  res=11111111111111111111111111111111
+ UWAGI: przesunięcie bitów na prawą stronę
+
+Wyrażenie: -1 = -4 >> 3
+ Dziesiętna:
+  val=-4
+  res=-1
+ Binarnie:
+  val=11111111111111111111111111111100
+  res=11111111111111111111111111111111
+ UWAGI: taki sam wynik jak powyżej; nie można przesunąć poza -1
+
+
+--- PRZESUNIĘCIA W LEWO NA LICZBACH DODATNICH ---
+Wyrażenie: 8 = 4 << 1
+ Dziesiętna:
+  val=4
+  res=8
+ Binarnie:
+  val=00000000000000000000000000000100
+  res=00000000000000000000000000001000
+ UWAGI: dopełnienie zerami z prawej strony
+
+Wyrażenie: 1073741824 = 4 << 28
+ Dziesiętna:
+  val=4
+  res=1073741824
+ Binarnie:
+  val=00000000000000000000000000000100
+  res=01000000000000000000000000000000
+
+Wyrażenie: -2147483648 = 4 << 29
+ Dziesiętna:
+  val=4
+  res=-2147483648
+ Binarnie:
+  val=00000000000000000000000000000100
+  res=10000000000000000000000000000000
+ UWAGI: sign bits get shifted out
+
+Wyrażenie: 0 = 4 << 30
+ Dziesiętna:
+  val=4
+  res=0
+ Binarnie:
+  val=00000000000000000000000000000100
+  res=00000000000000000000000000000000
+ UWAGI: bits shift out left side
+
+
+--- PRZESUNIĘCIA W LEWO NA LICZBACH UJEMNYCH ---
+Wyrażenie: -8 = -4 << 1
+ Dziesiętna:
+  val=-4
+  res=-8
+ Binarnie:
+  val=11111111111111111111111111111100
+  res=11111111111111111111111111111000
+ UWAGI: dopełnienie zerami z prawej strony
+
+Wyrażenie: -2147483648 = -4 << 29
+ Dziesiętna:
+  val=-4
+  res=-2147483648
+ Binarnie:
+  val=11111111111111111111111111111100
+  res=10000000000000000000000000000000
+
+Wyrażenie: 0 = -4 << 30
+ Dziesiętna:
+  val=-4
+  res=0
+ Binarnie:
+  val=11111111111111111111111111111100
+  res=00000000000000000000000000000000
+ UWAGI: bits shift out left side, including sign bit
+]]>
+   </screen>
+   &example.outputs.64bit;
+   <screen>
+<![CDATA[
+
+--- BIT SHIFT RIGHT ON POSITIVE INTEGERS ---
+Wyrażenie: 2 = 4 >> 1
+ Dziesiętna:
+  val=4
+  res=2
+ Binarnie:
+  val=0000000000000000000000000000000000000000000000000000000000000100
+  res=0000000000000000000000000000000000000000000000000000000000000010
+ UWAGI: kopia bitu znaku przesunięta w lewą stronę
+
+Wyrażenie: 1 = 4 >> 2
+ Dziesiętna:
+  val=4
+  res=1
+ Binarnie:
+  val=0000000000000000000000000000000000000000000000000000000000000100
+  res=0000000000000000000000000000000000000000000000000000000000000001
+
+Wyrażenie: 0 = 4 >> 3
+ Dziesiętna:
+  val=4
+  res=0
+ Binarnie:
+  val=0000000000000000000000000000000000000000000000000000000000000100
+  res=0000000000000000000000000000000000000000000000000000000000000000
+ UWAGI: przesunięcie bitów na prawą stronę
+
+Wyrażenie: 0 = 4 >> 4
+ Dziesiętna:
+  val=4
+  res=0
+ Binarnie:
+  val=0000000000000000000000000000000000000000000000000000000000000100
+  res=0000000000000000000000000000000000000000000000000000000000000000
+ UWAGI: taki sam wynik jak powyżej; nie można przesunąć poza 0
+
+
+--- BIT SHIFT RIGHT ON NEGATIVE INTEGERS ---
+Wyrażenie: -2 = -4 >> 1
+ Dziesiętna:
+  val=-4
+  res=-2
+ Binarnie:
+  val=1111111111111111111111111111111111111111111111111111111111111100
+  res=1111111111111111111111111111111111111111111111111111111111111110
+ UWAGI: kopia bitu znaku przesunięta w lewą stronę
+
+Wyrażenie: -1 = -4 >> 2
+ Dziesiętna:
+  val=-4
+  res=-1
+ Binarnie:
+  val=1111111111111111111111111111111111111111111111111111111111111100
+  res=1111111111111111111111111111111111111111111111111111111111111111
+ UWAGI: przesunięcie bitów na prawą stronę
+
+Wyrażenie: -1 = -4 >> 3
+ Dziesiętna:
+  val=-4
+  res=-1
+ Binarnie:
+  val=1111111111111111111111111111111111111111111111111111111111111100
+  res=1111111111111111111111111111111111111111111111111111111111111111
+ UWAGI: taki sam wynik jak powyżej; nie można przesunąć poza -1
+
+
+--- BIT SHIFT LEFT ON POSITIVE INTEGERS ---
+Wyrażenie: 8 = 4 << 1
+ Dziesiętna:
+  val=4
+  res=8
+ Binarnie:
+  val=0000000000000000000000000000000000000000000000000000000000000100
+  res=0000000000000000000000000000000000000000000000000000000000001000
+ UWAGI: dopełnienie zerami z prawej strony
+
+Wyrażenie: 4611686018427387904 = 4 << 60
+ Dziesiętna:
+  val=4
+  res=4611686018427387904
+ Binarnie:
+  val=0000000000000000000000000000000000000000000000000000000000000100
+  res=0100000000000000000000000000000000000000000000000000000000000000
+
+Wyrażenie: -9223372036854775808 = 4 << 61
+ Dziesiętna:
+  val=4
+  res=-9223372036854775808
+ Binarnie:
+  val=0000000000000000000000000000000000000000000000000000000000000100
+  res=1000000000000000000000000000000000000000000000000000000000000000
+ UWAGI: sign bits get shifted out
+
+Wyrażenie: 0 = 4 << 62
+ Dziesiętna:
+  val=4
+  res=0
+ Binarnie:
+  val=0000000000000000000000000000000000000000000000000000000000000100
+  res=0000000000000000000000000000000000000000000000000000000000000000
+ UWAGI: bits shift out left side
+
+
+--- BIT SHIFT LEFT ON NEGATIVE INTEGERS ---
+Wyrażenie: -8 = -4 << 1
+ Dziesiętna:
+  val=-4
+  res=-8
+ Binarnie:
+  val=1111111111111111111111111111111111111111111111111111111111111100
+  res=1111111111111111111111111111111111111111111111111111111111111000
+ UWAGI: dopełnienie zerami z prawej strony
+
+Wyrażenie: -9223372036854775808 = -4 << 61
+ Dziesiętna:
+  val=-4
+  res=-9223372036854775808
+ Binarnie:
+  val=1111111111111111111111111111111111111111111111111111111111111100
+  res=1000000000000000000000000000000000000000000000000000000000000000
+
+Wyrażenie: 0 = -4 << 62
+ Dziesiętna:
+  val=-4
+  res=0
+ Binarnie:
+  val=1111111111111111111111111111111111111111111111111111111111111100
+  res=0000000000000000000000000000000000000000000000000000000000000000
+ UWAGI: bits shift out left side, including sign bit
+]]>
+   </screen>
+  </example>
+ </para>
+ <warning>
+  <para>
+   Use functions from the <link linkend="book.gmp">gmp</link> extension for
+   bitwise manipulation on numbers beyond <constant>PHP_INT_MAX</constant>.
+  </para>
+ </warning>
+
+ <sect2 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <!-- <link linkend="language.oop5.basic.class.class">::class</link> -->
+    <member><function>pack</function></member>
+    <member><function>unpack</function></member>
+    <member><function>gmp_and</function></member>
+    <member><function>gmp_or</function></member>
+    <member><function>gmp_xor</function></member>
+    <member><function>gmp_testbit</function></member>
+    <member><function>gmp_clrbit</function></member>
+   </simplelist>
+  </para>
+ </sect2>
+</sect1>

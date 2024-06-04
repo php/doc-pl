@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 43d07782b514d0c7a8487f2c74063739f302df8d	 Maintainer: sobak Status: ready -->
+<sect1 xml:id="language.operators.arithmetic">
+ <title>Operatory arytmetyczne</title>
+ <titleabbrev>Arytmetyczne</titleabbrev>
+ <simpara>
+  Pamiętasz podstawową arytmetykę ze szkoły? Te operatory
+  służą właśnie do tego.
+ </simpara>
+ <table>
+  <title>Operatory arytmetyczne</title>
+  <tgroup cols="3">
+   <thead>
+    <row>
+     <entry>Przykład</entry>
+     <entry>Nazwa</entry>
+     <entry>Wynik</entry>
+    </row>
+   </thead>
+   <tbody>
+    <row>
+     <entry>+$a</entry>
+     <entry>Identity</entry>
+     <entry>
+      Conversion of <varname>$a</varname> to <type>int</type> or
+      <type>float</type> as appropriate.
+     </entry>
+    </row>
+    <row>
+     <entry>-$a</entry>
+     <entry>Negacja</entry>
+     <entry>Odwrotność <varname>$a</varname>.</entry>
+    </row>
+    <row>
+     <entry>$a + $b</entry>
+     <entry>Dodawanie</entry>
+     <entry>Suma <varname>$a</varname> i <varname>$b</varname>.</entry>
+    </row>
+    <row>
+     <entry>$a - $b</entry>
+     <entry>Odejmowanie</entry>
+     <entry>Difference of <varname>$a</varname> i <varname>$b</varname>.</entry>
+    </row>
+    <row>
+     <entry>$a * $b</entry>
+     <entry>Mnożenie</entry>
+     <entry>Iloczyn <varname>$a</varname> i <varname>$b</varname>.</entry>
+    </row>
+    <row>
+     <entry>$a / $b</entry>
+     <entry>Dzielenie</entry>
+     <entry>Iloraz <varname>$a</varname> i <varname>$b</varname>.</entry>
+    </row>
+    <row>
+     <entry>$a % $b</entry>
+     <entry>Modulo</entry>
+     <entry>Reszta z <varname>$a</varname> podzielonego przez <varname>$b</varname>.</entry>
+    </row>
+    <row>
+     <entry>$a ** $b</entry>
+     <entry>Potęgowanie</entry>
+     <entry>Wynik podniesienia <varname>$a</varname> do potęgi <varname>$b</varname>.</entry>
+    </row>
+   </tbody>
+  </tgroup>
+ </table>
+ <simpara>
+  Operator dzielenia ("/") zwraca liczbę zmiennoprzecinkową, chyba że oba argumenty (operandy)
+  są liczbami całkowitymi (lub ciągami znaków, które są konwertowane na liczby całkowite) i liczby te
+  mogą się równo podzielić - w tym wypadku zostanie zwrócona liczba całkowita. Aby
+  dowiedzieć się więcej o dzieleniu liczb całkowitych zobacz <function>intdiv</function>.
+ </simpara>
+ <simpara>
+  Argumenty modulo są konwertowane do typu <type>int</type>
+  przed ich przetworzeniem. Jeżeli chcesz użyć modulo z liczbami zmiennoprzecinkowymi
+  zapoznaj się z <function>fmod</function>.
+ </simpara>
+ <para>
+  Wynik dzielenia modulo <literal>%</literal> ma taki sam znak,
+  jak dzielna. Oznacza to, że wynik <literal>$a % $b</literal>
+  będzie miał taki sam znak jak <varname>$a</varname>. Przykładowo:
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php
+
+echo (5 % 3)."\n";           // wyświetla 2
+echo (5 % -3)."\n";          // wyświetla 2
+echo (-5 % 3)."\n";          // wyświetla -2
+echo (-5 % -3)."\n";         // wyświetla -2
+
+?>
+]]>
+   </programlisting>
+  </informalexample>
+ </para>
+ <sect2 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><link linkend="ref.math">Funkcje matematyczne</link></member>
+   </simplelist>
+  </para>
+ </sect2>
+</sect1>

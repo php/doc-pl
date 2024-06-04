@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 43d07782b514d0c7a8487f2c74063739f302df8d	 Maintainer: sobak Status: ready -->
+<sect1 xml:id="language.operators.logical">
+ <title>Operatory logiczne</title>
+ <titleabbrev>Logika</titleabbrev>
+
+ <table>
+  <title>Operatory logiczne</title>
+  <tgroup cols="3">
+   <thead>
+    <row>
+     <entry>Przykład</entry>
+     <entry>Nazwa</entry>
+     <entry>Wynik</entry>
+    </row>
+   </thead>
+   <tbody>
+    <row>
+     <entry>$a and $b</entry>
+     <entry>And</entry>
+     <entry>&true; jeśli zarówno <varname>$a</varname> i <varname>$b</varname> mają wartość &true;.</entry>
+    </row>
+    <row>
+     <entry>$a or $b</entry>
+     <entry>Or</entry>
+     <entry>&true; jeśli <varname>$a</varname> lub <varname>$b</varname> mają wartość &true;.</entry>
+    </row>
+    <row>
+     <entry>$a xor $b</entry>
+     <entry>Xor</entry>
+     <entry>&true; jeśli <varname>$a</varname> lub <varname>$b</varname> mają wartość &true;, ale nie oba na raz.</entry>
+    </row>
+    <row>
+     <entry>! $a</entry>
+     <entry>Not</entry>
+     <entry>&true; jeśli <varname>$a</varname> nie ma wartość &true;.</entry>
+    </row>
+    <row>
+     <entry>$a &amp;&amp; $b</entry>
+     <entry>And</entry>
+     <entry>&true; jeśli zarówno <varname>$a</varname> i <varname>$b</varname> mają wartość &true;.</entry>
+    </row>
+    <row>
+     <entry>$a || $b</entry>
+     <entry>Or</entry>
+     <entry>&true; jeśli <varname>$a</varname> lub <varname>$b</varname> mają wartość &true;.</entry>
+    </row>
+   </tbody>
+  </tgroup>
+ </table>
+ <simpara>
+  Powodem, dla którego istnieją dwa warianty operatorów "and" i "or"
+  jest fakt, że mają one inny priorytet wykonywania. (Patrz
+  <link linkend="language.operators.precedence">Pierwszeństwo
+   operatorów</link>).
+ </simpara>
+ <example>
+  <title>Przykłady operatorów logicznych</title>
+  <programlisting role="php">
+<![CDATA[
+<?php
+
+// --------------------
+// foo() nigdy nie zostanie wywołane, gdyż te operatory zapewniają short-circuit
+// oznacza to, że jeśli pierwszy argument zwróci false, to drugi w ogóle nie jest sprawdzany
+
+$a = (false && foo());
+$b = (true  || foo());
+$c = (false and foo());
+$d = (true  or  foo());
+
+// --------------------
+// "||" ma pierwszeństwo przed "or"
+
+// Do zmiennej $e przypisywany jest wynik wyrażenia (false || true)
+// Równoważne z: ($e = (false || true))
+$e = false || true;
+
+// Do $f przypisywana jest stała false, jeszcze zanim nastąpi operacja "or"
+// Równoważne z: (($f = false) or true)
+$f = false or true;
+
+var_dump($e, $f);
+
+// --------------------
+// "&&" ma pierwszeństwo przed "and"
+
+// Do zmiennej $g przypisywany jest wynik wyrażenia (true && false)
+// Równoważne z: ($g = (true && false))
+$g = true && false;
+
+// Do $h przypisywana jest stała true, jeszcze zanim nastąpi operacja "and"
+// Równoważne z: (($h = true) and false)
+$h = true and false;
+
+var_dump($g, $h);
+?>
+]]>
+  </programlisting>
+  &example.outputs.similar;
+  <screen>
+<![CDATA[
+bool(true)
+bool(false)
+bool(false)
+bool(true)
+]]>
+  </screen>
+ </example>
+</sect1>
