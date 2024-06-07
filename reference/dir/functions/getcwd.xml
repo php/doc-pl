@@ -1,44 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: leniwiec Status: ready -->
+<!-- EN-Revision: 62126c55f1c6ed444043e7272c4f9e233818a44b Maintainer: leniwiec Status: ready -->
 <!-- $Revision$ -->
-  <refentry xml:id="function.getcwd" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>getcwd</refname>
-    <refpurpose>Wskazuje bieżący katalog roboczy</refpurpose>
-   </refnamediv>
-   
-   <refsect1 role="description">
-    &reftitle.description;
-     <methodsynopsis>
-      <type>string</type><methodname>getcwd</methodname>
-      <void/>
-     </methodsynopsis>
-    <para>
-     Pobiera aktualny katalog roboczy.
-    </para> 
-   </refsect1> 
-   
-   <refsect1 role="returnvalues"> 
-    &reftitle.returnvalues; 
-    <para> 
-     Zwraca aktualny katalog roboczy, lub &false; w przypadku błędu.
-    </para>
+<refentry xml:id="function.getcwd" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>getcwd</refname>
+  <refpurpose>Wskazuje bieżący katalog roboczy</refpurpose>
+ </refnamediv>
 
-     <para>
-      W niektórych przypadkach w systemie Uniksowym, <function>getcwd</function> zwróci
-      &false; jeśli którykolwiek z katalogów w ścieżce nie posiada
-      praw do odczytu lub wykonywania, nawet jeśli bieżący katalog roboczy
-      posiada takie prawa. Więcej informacji na temat praw można przeczytać w
-      opisie funckji <function>chmod</function>. 
-     </para>
-    </refsect1> 
-    
-    <refsect1 role="examples"> 
-     &reftitle.examples; 
-    <para>
-     <example>
-      <title>Przykład użycia <function>getcwd</function></title>
-       <programlisting role="php">
+ <refsect1 role="description">
+  &reftitle.description;
+   <methodsynopsis>
+    <type class="union"><type>string</type><type>false</type></type><methodname>getcwd</methodname>
+    <void/>
+   </methodsynopsis>
+  <para>
+   Pobiera aktualny katalog roboczy.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  &no.function.parameters;
+ </refsect1>
+   
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca aktualny katalog roboczy, lub &false; w przypadku błędu.
+  </para>
+
+  <para>
+   W niektórych przypadkach w systemie Uniksowym, <function>getcwd</function> zwróci
+   &false; jeśli którykolwiek z katalogów w ścieżce nie posiada
+   praw do odczytu lub wykonywania, nawet jeśli bieżący katalog roboczy
+   ma takie prawa. Więcej informacji na temat praw można przeczytać w
+   opisie funkcji <function>chmod</function>.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład użycia <function>getcwd</function></title>
+     <programlisting role="php">
 <![CDATA[
 <?php
 
@@ -52,28 +57,41 @@ echo getcwd() . "\n";
 
 ?>
 ]]>
-       </programlisting>
-       &example.outputs.similar;
-       <screen>
+     </programlisting>
+     &example.outputs.similar;
+     <screen>
 <![CDATA[
 /home/didou
 /home/didou/cvs
 ]]>
-       </screen>
-     </example>
-    </para>
-   </refsect1> 
-    
-   <refsect1 role="seealso"> 
-    &reftitle.seealso; 
-    <para>
-     <simplelist>
-      <member><function>chdir</function></member>
-      <member><function>chmod</function></member>
-     </simplelist>
-    </para>
-   </refsect1>
-  </refentry>
+     </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <caution>
+   <para>
+    Jeżeli interpreter PHP został skompilowany z włączonym ZTS (Zend Thread Safety),
+    to obecny katalog roboczy zwracany przez <function>getcwd</function>
+    może być inny niż ten, z którym pracuje system operacyjny.
+    Zewnętrzne biblioteki (wywoływane przez <link linkend="book.ffi">FFI</link>),
+    które korzystają z informacji o obecnym katalogu roboczym, mogą być tym problemem dotknięte.
+   </para>
+  </caution>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>chdir</function></member>
+    <member><function>chmod</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
 
 <!-- Keep this comment at the end of the file
 Local variables:

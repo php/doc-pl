@@ -12,11 +12,11 @@
   &reftitle.description;
   <methodsynopsis>
    <type>void</type><methodname>rewinddir</methodname>
-   <methodparam choice="opt"><type>zasób</type><parameter>uchwyt_katalogu</parameter></methodparam>
+   <methodparam choice="opt"><type class="union"><type>resource</type><type>null</type></type><parameter>dir_handle</parameter><initializer>&null;</initializer></methodparam>
   </methodsynopsis>
   <para>
-   Ustawia wskaźnik strumienia katalogu
-   <parameter>uchwyt_katalogu</parameter> na początek
+   Ustawia uchwyt do strumienia katalogu
+   <parameter>dir_handle</parameter> na początek
    katalogu.
   </para>
  </refsect1>
@@ -26,10 +26,10 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>uchwyt_katalogu</parameter></term>
+     <term><parameter>dir_handle</parameter></term>
      <listitem>
       <para>
-       Uchwyt katalogu (<type>zasób</type>) otwarty wcześniej za pomocą
+       Uchwyt katalogu (<link linkend="language.types.resource">zasób</link>) otwarty wcześniej za pomocą
        <function>opendir</function>. Jeśli uchwyt katalogu nie jest
        podany, przyjmowany jest ostatni wskaźnik katalogu utworzony
        przez <function>opendir</function>.
@@ -38,6 +38,28 @@
     </varlistentry>
    </variablelist>
   </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>8.0.0</entry>
+      <entry>
+       Parametr <parameter>dir_handle</parameter> akceptuje teraz &null;.
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </informaltable>
  </refsect1>
 </refentry>
 
