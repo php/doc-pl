@@ -1,17 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 12019a89a3502579366c4db7d395e5b0b4dc6b06 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 2ae2df906e1172b11e1963086d0ef4f5baedac2a Maintainer: sobak Status: ready -->
 
-<chapter xml:id="password.setup">
+<chapter xml:id="password.setup" xmlns:xlink="http://www.w3.org/1999/xlink">
  &reftitle.setup;
 
  <section xml:id="password.requirements">
   &reftitle.required;
   &no.requirement;
+  <para>
+   Hashowanie przy użyciu Argon2 wymaga jednakże <link xlink:href="&url.libargon2;">libargon2</link>.
+   Od PHP 7.3.0 wymagana jest biblioteka libargon2 w wersji 20161029 lub
+   nowszej.
+  </para>
  </section>
 
  <section xml:id="password.installation">
   &reftitle.install;
   &no.install;
+  <para>
+   Jednakże by włączyć wsparcie dla hashowania Argon2, PHP musi zostać skompilowane z obsługą
+   z libargon2 przy użyciu opcji konfiguracyjnej <option role="configure">--with-password-argon2</option>.
+  </para>
+  <para>
+   Przed PHP 8.1.0, określenie katalogu z argon2 było możliwe za pomocą
+   <option role="configure">--with-password-argon2[=DIR]</option>.
+  </para>
  </section>
 
  <section xml:id="password.configuration">
