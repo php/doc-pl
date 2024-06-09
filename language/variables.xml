@@ -206,10 +206,10 @@ var_dump($nieinicjowany_obiekt);
    </para>
 
    <note>
-    <title>Zmienne zmienne</title>
+    <title>e</title>
     <para>
      Zmienne superglobalne nie mogą być użyte jako
-     <link linkend="language.variables.variable">zmienne zmienne</link>
+     <link linkend="language.variables.variable">zmienne zmiennych</link>
      wewnątrz funkcji, ani jako metody klasy.
     </para>
    </note>
@@ -498,7 +498,7 @@ function foo(){
    <para>
     Od PHP 8.1.0, kiedy metoda używająca zmiennych statycznych jest dziedziczona (ale nie nadpisywana),
     odziedziczona metoda będzie współdzielić zmienne statyczne z metodą rodzica.
-    To oznacza, że zmienne statyczne w metodach zachowują się teraz w taki sam sposób jak własności statyczne.
+    To oznacza, że zmienne statyczne w metodach zachowują się teraz w taki sam sposób jak właściwości statyczne.
    </para>
 
    <example>
@@ -657,7 +657,7 @@ Obiekt statyczny: object(stdClass)#3 (1) {
   </sect1>
 
   <sect1 xml:id="language.variables.variable">
-   <title>Zmienne zmienne</title>
+   <title>Zmienne zmiennych</title>
 
    <simpara>
     W niektórych przypadkach jest wygodne, by móc użyć zmiennej o zmiennej
@@ -740,27 +740,27 @@ echo "$a $witaj";
 
    <simpara>
     Dostęp do właściwości klas można uzyskać także za pomocą zmiennej nazwy
-    własności. Zmienna nazwa własności zostanie zinterpretowana w
-    zasięgu z którego jest wywoływana. Przykładowo, jeżeli masz
+    właściwości. Zmienna nazwa właściwości zostanie zinterpretowana w
+    zasięgu, z którego jest wywoływana. Przykładowo, jeżeli masz
     wyrażenie takie jak <varname>$foo->$bar</varname>, to zasięg
     lokalny będzie przeszukany pod kątem <varname>$bar</varname> i jej wartość
-    zostanie użyta jako nazwa własności
+    zostanie użyta jako nazwa właściwości
     of <varname>$foo</varname>. Jest to także prawdą
     jeżeli <varname>$bar</varname> jest dostępem do tablicy.
    </simpara>
    
    <simpara>
-    Do jasnego ograniczenia nazwy własności można wykorzystać też nawiasy
+    Do jasnego ograniczenia nazwy właściwości można wykorzystać też nawiasy
     klamrowe. Są one szczególnie użyteczne, gdy uzyskuje się dostęp do właściwości
-    zawierającej tablicę, gdy nazwa własności jest składana z wielu części
-    lub gdy nazwa własności zawiera znaki, które nie są
+    zawierającej tablicę, gdy nazwa właściwości jest składana z wielu części
+    lub gdy nazwa właściwości zawiera znaki, które nie są
     w innym wypadku prawidłowe (np. z <function>json_decode</function>
     lub <link linkend="book.simplexml">SimpleXML</link>).
    </simpara>
 
    <para>
     <example>
-     <title>Przykład zmiennej własności</title>
+     <title>Przykład zmiennej właściwości</title>
       <programlisting role="php">
 <![CDATA[
 <?php
@@ -798,7 +798,7 @@ I am r.
 
    <warning>   
     <simpara>
-     Zauważ, że zmienne zmienne nie mogą być używane z
+     Zauważ, że zmienne zmiennych nie mogą być używane z
      <link linkend="language.variables.superglobals">Tablicami superglobalnymi</link>
      PHP, wewnątrz funkcji, czy metod klas. Zmienna <literal>$this</literal>
      jest także specjalną zmienną, dla której referencje dynamiczne nie są dozwolone.

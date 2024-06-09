@@ -367,7 +367,7 @@ Parzę przepyszną kawę specjalnie dla ciebie.
 
     <simpara>
      Domyślna wartość musi być wyrażeniem stałym, a nie np.
-     zmienną, własnością klasy czy wywołaniem funkcji.
+     zmienną, właściwością klasy czy wywołaniem funkcji.
     </simpara>
     <para>
      Zauważ że argumenty opcjonalne powinny być zdefiniowane po
@@ -918,7 +918,7 @@ $foo->$funcname();  // Wywołuje $foo->Zmienna()
     </example>
    </para>
    <para>
-    Gdy wywołuje się metody statyczne, wywołanie funkcji jest mocniejsze niż operator własności statycznej:
+    Gdy wywołuje się metody statyczne, wywołanie funkcji jest mocniejsze niż operator właściwości statycznej:
     <example>
      <title>Przykład zmiennej metody z właściwościami statycznymi</title>
      <programlisting role="php">
@@ -926,14 +926,14 @@ $foo->$funcname();  // Wywołuje $foo->Zmienna()
 <?php
 class Foo
 {
-    static $zmienna = 'własność statyczna';
+    static $zmienna = 'właściwość statyczna';
     static function Zmienna()
     {
         echo 'Wywołano metodę Zmienna';
     }
 }
 
-echo Foo::$zmienna; // Wyświetli 'własność statyczna'. Potrzebna jest $zmienna w tym zasięgu.
+echo Foo::$zmienna; // Wyświetli 'właściwość statyczna'. Potrzebna jest $zmienna w tym zasięgu.
 $zmienna = "Zmienna";
 Foo::$variable();  // Wywoła $foo->Zmienna() odczytując $zmienna w tym zasięgu.
 
