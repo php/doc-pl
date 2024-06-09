@@ -10,6 +10,7 @@ a ten dokument opisuje, w jaki sposób można uczestniczyć w procesie tłumacze
 3. [Śledzenie wersji](#śledzenie-wersji)
 4. [Tłumaczenie](#tłumaczenie)
    1. [Słowniczek](#słowniczek)
+   2. [Inne porady dot. tłumaczenia](#inne-porady-dot-tłumaczenia)
 5. [Praca z git](#praca-z-git)
 6. [Obecny stan polskiego tłumaczenia](#obecny-stan-polskiego-tłumaczenia)
 
@@ -90,8 +91,8 @@ W przeciwnym razie zobaczysz informację o błędach, które wystąpiły w plika
 ## Śledzenie wersji
 
 Kluczową sprawą przy tłumaczeniu dokumentacji jest jej zgodność z angielskim pierwowzorem. W tym celu
-powstał system `revcheck`, który jest dostępny m.in. na [doc.php.net](http://doc.php.net), który śledzi
-zmiany, jakie wystąpiły w angielskiej wersji manuala, a więc to co musimy zmienić w polskim tłumaczeniu,
+powstał system `revcheck`, który jest dostępny m.in. na [doc.php.net], który śledzi
+zmiany, jakie wystąpiły w angielskiej wersji manuala, a więc to, co musimy zmienić w polskim tłumaczeniu,
 aby było ono aktualne.
 
 Cały system opiera się o hashe commitów gita i komentarze zawarte na górze każdego przetłumaczonego pliku
@@ -101,9 +102,9 @@ XML:
 <!-- EN-Revision: git-hash Maintainer: XXXX Status: ready -->
 ```
 
-Kiedy tłumaczymy jakiś plik, to `git-hash` w komentarzu powyżej musi być ustawiony na hash _angielskiej_
-wersji pliku, na którym opieraliśmy tłumaczenie. Pomaga w tym wspomniana witryna doc.php.net. Na przykład
-zakładka "Outdated files" http://doc.php.net/revcheck.php?p=files&lang=pl pokazuje, które z plików
+Kiedy tłumaczymy jakiś plik, to `git-hash` w komentarzu powyżej musi być zamieniony na hash _angielskiej_
+wersji pliku, na którym opieraliśmy tłumaczenie. Pomaga w tym wspomniana witryna [doc.php.net]. Na przykład
+zakładka "[Outdated files](http://doc.php.net/revcheck.php?p=files&lang=pl)" pokazuje, które z plików
 przetłumaczonych już na język polski, wymagają aktualizacji. Podaje ona wtedy, o jaki hash jest oparte
 obecne tłumaczenie, hash najnowszej angielskiej wersji, a także diff (wykaz zmian) między nimi. Hash
 najnowszej angielskiej wersji musimy umieścić w polu `EN-Revision` wyżej wspomnianego komentarza.
@@ -114,7 +115,7 @@ jakie pliki nie zostały przetłumaczone i jaki jest ich obecny hash commita w a
 manuala. Wtedy do naszego nowego tłumaczenia dodajemy komentarz jak powyżej, a podany na stronie
 hash umieszczamy jako wartość `EN-Revision`.
 
-> **Uwaga:** informacje na stronie doc.php.net są aktualizowane co cztery godziny. Czasy ostatniej
+> **Uwaga:** informacje na stronie [doc.php.net] są aktualizowane co cztery godziny. Czasy ostatniej
 > aktualizacji, podane tam w stopce, są w UTC.
 
 Jeżeli chodzi o pole `Maintainer` to przy aktualizacji tłumaczeń zasadniczo nie zmieniamy go. W wypadku
@@ -129,7 +130,7 @@ więc jeśli używasz edytora, który wspiera ten standard (bezpośrednio lub pr
 wykryte automatycznie.
 
 Tłumacząc pliki, warto zadbać o to, aby tekst był podzielony na nowe linie w tych samych miejscach, co angielski
-pierwowzór. Bardzo ułatwia to późniejszą analizę diffów na doc.php.net, a więc i aktualizację tłumaczeń. Wiadomo,
+pierwowzór. Bardzo ułatwia to późniejszą analizę diffów na [doc.php.net], a więc i aktualizację tłumaczeń. Wiadomo,
 że nie zawsze jest to możliwe, bo często szyk zdania w języku polskim jest zupełnie inny niż w angielskim, ale warto
 dbać o to tam, gdzie to możliwe.
 
@@ -141,18 +142,47 @@ w dokumentacji PHP.
 > **Uwaga:** żadna z osób biorących udział w pracach nad polską wersją podręcznika PHP nie jest zawodowym tłumaczem.
 > Pewne frazy można zapewne przetłumaczyć lepiej, więc sugestie są mile widziane. Dobrze byłoby jednak zadbać o spójność,
 > więc do momentu osiągnięcia ewentualnego konsensusu w sprawie nowego tłumaczenia, stosujmy się do tych, które już są
-> używane w polskiej wersji lub wymienione poniżej.
+> używane w polskiej wersji i zostały wymienione poniżej.
 
-| Angielski wyraz lub wyrażenie      | Polskie tłumaczenie                                    | Komentarz                                                                                                                                                                                                 |
-|------------------------------------|--------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Locale settings                    | Ustawienia regionalne (locale)                         | Jako iż nie ma powszechnie używanego tłumaczenia na j. polski to zawieramy też oryginalne słówko, aby ułatwić np. Googlowanie                                                                             |
-| locale-dependent / locale-specific | z uwzględnieniem ustawień regionalnych (locale)        |                                                                                                                                                                                                           |
-| locale-independent                 | bez uwzględnienia ustawień lokalnych (locale)          |                                                                                                                                                                                                           |
-| string                             | ciąg znaków                                            | ew. łańcuch znaków, jeśli gdzieś bardzo chcemy uniknąć powtórzeń                                                                                                                                          |
-| `<parameter>foo</parameter>`       | Parametr `<parameter>foo</parameter>`                  | Poprzedzić słowem "parametr" przynajmniej przy pierwszym opisywaniu danego parametru na danej stronie. W przeciwnym razie dostajemy mieszkankę polskiego i angielskiego, która nie zawsze jest zrozumiała |
-| `&resource;`                       | `<link linkend="language.types.resource">Zasób</link>` | Analogicznie dla innych encji typów danych, jeśli uznamy że warto utrzymać linkowanie jak w angielskiej wersji                                                                                            |
+| Angielski wyraz lub wyrażenie                | Polskie tłumaczenie                                                     | Komentarz                                                                                                                                                                                                 |
+|----------------------------------------------|-------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| handler                                      | funkcja obsługi                                                         |                                                                                                                                                                                                           |
+| Locale settings                              | Ustawienia regionalne (locale)                                          | Jako iż nie ma powszechnie używanego tłumaczenia na j. polski to zawieramy też oryginalne słówko, aby ułatwić np. Googlowanie                                                                             |
+| locale-dependent / locale-specific           | z uwzględnieniem ustawień regionalnych (locale)                         |                                                                                                                                                                                                           |
+| locale-independent                           | bez uwzględnienia ustawień regionalnych (locale)                        |                                                                                                                                                                                                           |
+| null-coalescing operator                     | -                                                                       | Nie jest mi znane żadne tłumaczenie, tym bardziej żadne powszechnie zrozumiałe                                                                                                                            |
+| property                                     | właściwość                                                              | W kontekście właściwości klas                                                                                                                                                                             |
+| scope                                        | zasięg                                                                  | W kontekście zmiennych                                                                                                                                                                                    |
+| string                                       | ciąg znaków                                                             | Ewentualnie _łańcuch znaków_, jeśli gdzieś chcemy uniknąć powtórzeń                                                                                                                                       |
+| trait, traits                                | trait, traity                                                           | Brak tłumaczenia, jedynie polska odmiana                                                                                                                                                                  |
+| variable variables                           | zmienne zmiennych                                                       |                                                                                                                                                                                                           |
+| will generate deprecation notice             | wygeneruje komunikat `<constant>E_DEPRECATED</constant>`                |                                                                                                                                                                                                           |
+| `<parameter>foo</parameter>`                 | Parametr `<parameter>foo</parameter>`                                   | Poprzedzić słowem "parametr" przynajmniej przy pierwszym opisywaniu danego parametru na danej stronie. W przeciwnym razie dostajemy mieszkankę polskiego i angielskiego, która nie zawsze jest zrozumiała |
+| `<parameter>foo</parameter>` is nullable now | Parametr `<parameter>foo</parameter> dopuszcza teraz &null;             |                                                                                                                                                                                                           |
+| `<function>bar</function>` example           | Przykład użycia `<function>bar</function>`                              | W tytułach większości przykładów                                                                                                                                                                          |
+| `&array;`                                    | `<link linkend="language.types.array">Tablica</link>`                   | Nie zawsze warto tłumaczyć, patrz pkt. 4 poniżej                                                                                                                                                          |
+| `&bool;`                                     | `<link linkend="language.types.bool">Wartość logiczna</link>`           | Nie zawsze warto tłumaczyć, patrz pkt. 4 poniżej                                                                                                                                                          |
+| `&float;`                                    | `<link linkend="language.types.float">Liczba zmiennoprzecinkowa</link>` | Nie zawsze warto tłumaczyć, patrz pkt. 4 poniżej                                                                                                                                                          |
+| `&integer;`                                  | `<link linkend="language.types.integer">Liczba</link>`                  | Czasami też "liczba całkowita". Nie zawsze warto tłumaczyć, patrz pkt. 4 poniżej                                                                                                                          |
+| `&object;`                                   | `<link linkend="language.types.object">Obiekt</link>`                   | Nie zawsze warto tłumaczyć, patrz pkt. 4 poniżej                                                                                                                                                          |
+| `&resource;`                                 | `<link linkend="language.types.resource">Zasób</link>`                  | Nie zawsze warto tłumaczyć, patrz pkt. 4 poniżej                                                                                                                                                          |
+| `&string;`                                   | `<link linkend="language.types.string">Ciąg znaków</link>`              | Nie zawsze warto tłumaczyć, patrz pkt. 4 poniżej                                                                                                                                                          |
 
 
+### Inne porady dot. tłumaczenia
+
+1. Nie należy się bać zmian szyku zdania. Zbyt dosłowne przekładanie szyku zdania z angielskiego jest chyba najczęstszym
+   powodem, dla którego polska treść, mimo iż zrozumiała, jest mocno nienaturalna w odbiorze.
+2. `<refpurpose>` czyli jednozdaniowy opis na górze strony funkcji tłumaczymy w trybie oznajmującym, czyli np. _"Pobiera obecną
+   datę_", a nie _"Pobierz obecną datę"_
+3. Odpowiedniki wielu angielskich wyrażeń, np. `As of PHP X`, `Prior to PHP X`, czy `however`, _nie_ mają po sobie obowiązkowego
+   przecinka w języku polskim
+4. Jeśli chodzi o encje reprezentujące link do opisu typu danych (np. `&array;` czy `&string;`) to nie zawsze jest konieczność
+   linkowania ich do konkretnej strony. Ze względu na brak konieczności tłumaczenia i odmiany tych wyrazów w j. angielskim, te
+   encje są używane znacznie częściej niż jest to niezbędne
+   1. Ponadto ciężko tutaj o regułę, ale nie widzę konieczności każdorazowego tłumaczenia np. "string" na "ciąg znaków". W tych
+      czasach nazwy typów są raczej zrozumiałe nawet dla ludzi nieposługujących się j. angielskim. Osobiście staram się przetłumaczyć
+      nazwę typu przynajmniej raz na stronie, a potem nie mam problemu z pozostawieniem angielskiej wersji
 
 ## Praca z git
 
@@ -164,7 +194,7 @@ przeglądanie zmian nie trwało wieków, bo to może być demotywujące :)
 Commity tworzymy w języku angielskim, choćby ze względu na to, że pewne zmiany struktury są wykonywane przez ludzi z różnych
 krajów dla wszystkich tłumaczeń jednocześnie, tak więc w ten prosty sposób znacząco ułatwiamy pracę komukolwiek spoza Polski.
 
-Po przygotowaniu zmian w forku należy [otworzyć pull request][gh-fork-prs] do repozytorium `php/doc-pl`, a następnie poczekać
+Po przygotowaniu zmian w forku należy [otworzyć pull request][gh-prs] do repozytorium `php/doc-pl`, a następnie poczekać
 na przejrzenie i zatwierdzenie zmian. Najlepiej zapoznać się z całą sekcją "Propose changes" w spisie treści wyświetlanym
 po lewej stronie, po otwarciu powyższego linku. Można też oczywiście poszukać materiałów w języku polskim na ten temat.
 
@@ -175,17 +205,18 @@ Znacznie lepsza wiadomość to taka, że polskie tłumaczenie jest jednocześnie
 i że w perspektywie około miesiąca (tj. okolice czerwca, _ewentualnie_ lipca 2024) powinno się to zmienić.
 
 Polskie tłumaczenie nie ma może największej ilości przetłumaczonej treści (na maj 2024 jest to około 5% całości), ale też
-sam manual PHP jest _gigantyczny_. Większość zawartości manuala PHP to opisy rozszerzeń, w tym rzadko używanych lub niemal
+sam manual PHP jest _gigantyczny_. Większość zawartości manuala PHP to opisy rozszerzeń, w tym takich rzadko używanych lub niemal
 martwych rozszerzeń PECL, z których nikt nie korzysta i niemal nikt nie czyta ich dokumentacji. Polskie tłumaczenie skupia
 się w większości na najczęściej wykorzystywanych funkcjach i rozdziałach podręcznika.
 
 W połączeniu z faktem, że polska wersja ma małą ilość zdeaktualizowanych tłumaczeń, stawia nas to w naprawdę dobrej
-pozycji wyjściowej w porównaniu do większości innych języków. Nie widać tego być może na [doc.php.net](http://doc.php.net),
+pozycji wyjściowej w porównaniu do większości innych języków. Nie widać tego obecnie na [doc.php.net],
 ale faktycznych tłumaczeń dokumentacji PHP jest około 30. Większość z nich po prostu jest w stanie tak złym, że zrezygnowano
 z cyklicznego analizowania ich statusu w tym narzędziu do momentu, gdy ktoś zabrałby się za ich wskrzeszenie i zapewnił
 aktualne tłumaczenie przynajmniej dla kilku setek plików. Jest to coś, czego polska wersja robić nie musi :)
 
 
+[doc.php.net]: http://doc.php.net/revcheck.php?p=filesummary&lang=pl
 [gh-forking]: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo
 [gh-prs]: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork
 [phd]: https://github.com/php/phd
