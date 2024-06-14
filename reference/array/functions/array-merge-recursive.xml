@@ -1,17 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 9e0f03ac354d797d1d16c0fcc1663e5e170f2727 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
-<refentry xml:id="function.array-merge-recursive" xmlns="http://docbook.org/ns/docbook">
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.array-merge-recursive">
  <refnamediv>
   <refname>array_merge_recursive</refname>
   <refpurpose>Łączy dwie lub więcej tablic rekurencyjnie</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
    <type>array</type><methodname>array_merge_recursive</methodname>
-   <methodparam><type>array</type><parameter>tablica1</parameter></methodparam>
-   <methodparam choice="opt"><type>array</type><parameter>...</parameter></methodparam>
+   <methodparam rep="repeat"><type>array</type><parameter>arrays</parameter></methodparam>
   </methodsynopsis>
   <para>
    <function>array_merge_recursive</function> łączy elementy jednej lub
@@ -19,13 +19,66 @@
    poprzedniej. Zwracana jest tablica wynikowa.
   </para>
   <para>
-   Jeśli wejściowe tablice mają jakieś klucze tekstowe, to wartości dla tych
-   kluczy są łączone w tablicę, co jest robione rekurencyjnie, a więc jeśli
-   jedną z wartości jest tablica, funkcja połączy ją z odpowiadającą jej
-   wartością z innej tablicy. Jednakże jeśli tablice mają takie same klucze
-   liczbowe, późniejsza wartość nie nadpisze początkowej wartości, lecz
-   zostanie dopisana na koniec.
+   Jeśli wejściowe tablice mają jakieś klucze tekstowe, to wartości dla
+   tych kluczy są łączone w tablicę, co jest robione rekurencyjnie,
+   a więc jeśli jedną z tych wartości jest tablica,
+   funkcja połączy ją z odpowiadającą jej wartością z innej tablicy.
+   Jednakże jeśli tablice mają takie same klucze liczbowe, późniejsza
+   wartość nie nadpisze początkowej wartości, lecz zostanie dopisana na koniec.
   </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>arrays</parameter></term>
+     <listitem>
+      <para>
+       Dowolna ilość tablic do rekurencyjnego połączenia.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Tablicę wartości wynikającą z połączenia przekazanych argumentów.
+   Jeżeli została wywołana bez żadnych argumentów, zwracana jest pusta tablica.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>7.4.0</entry>
+       <entry>
+        Ta funkcja może być teraz wywołana bez żadnych parametrów.
+        Wcześniej wymagany był przynajmniej jeden parametr.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
    <example>
     <title>Przykład użycia <function>array_merge_recursive</function></title>
@@ -62,8 +115,15 @@ Array
     </screen>
    </example>
   </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
   <para>
-   Patrz także: <function>array_merge</function>.
+   <simplelist>
+    <member><function>array_merge</function></member>
+    <member><function>array_replace_recursive</function></member>
+   </simplelist>
   </para>
  </refsect1>
 </refentry>

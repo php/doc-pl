@@ -1,96 +1,288 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
-<!-- $Revision$ -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 62421b98a97fe576987878055e17cf755eb395af Maintainer: leszek Status: ready -->
 <refentry xml:id="function.range" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>range</refname>
-  <refpurpose>Stwórz tablicę zawierającą przedział elementów</refpurpose>
+  <refpurpose>Tworzy tablicę zawierającą przedział elementów</refpurpose>
  </refnamediv>
- <refsect1>
- <title>Opis</title>
- <methodsynopsis>
-  <type>array</type><methodname>range</methodname>
-  <methodparam><type>mixed</type><parameter>dolny</parameter></methodparam>
-  <methodparam><type>mixed</type><parameter>górny</parameter></methodparam>
-  <methodparam choice="opt"><type>number</type><parameter>krok</parameter></methodparam>
- </methodsynopsis>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type>array</type><methodname>range</methodname>
+   <methodparam><type class="union"><type>string</type><type>int</type><type>float</type></type><parameter>start</parameter></methodparam>
+   <methodparam><type class="union"><type>string</type><type>int</type><type>float</type></type><parameter>end</parameter></methodparam>
+   <methodparam choice="opt"><type class="union"><type>int</type><type>float</type></type><parameter>step</parameter><initializer>1</initializer></methodparam>
+  </methodsynopsis>
   <para>
-   <function>range</function> zwraca tablicę elementów od
-   <parameter>dolny</parameter> do <parameter>górny</parameter>, włącznie.
-   Jeśli dolny > górny, to sekwencja będzie od górnego do dolnego.
+   Tworzy tablicę zawierającą zakres elementów.
   </para>
-  <note>
-   <title>Nowy parametr</title>
-   <simpara>
-    Parametr opcjonalny <parameter>krok</parameter> został dodany w PHP
-    5.0.0.
-   </simpara>
-  </note>
   <para>
-   Jeśli podany zostanie parametr <parameter>krok</parameter>, zostanie on
-   użyty jako różnica pomiędzy elementami w sekwencji.
-   <parameter>krok</parameter> powinien być liczbą dodatnią. Jeśli nie
-   zostanie on podany, <parameter>krok</parameter> przyjmie domyślną wartość
-   1.
+   Jeśli zarówno parametry <parameter>start</parameter> i <parameter>end</parameter> są
+   typu <type>string</type>, a parametr <parameter>step</parameter> jest typu <type>int</type>,
+   to zwrócona tablica będzie sekwencją bajtów.
+   W przeciwnym razie tablica będzie sekwencją liczb.
   </para>
+  <para>
+   Sekwencja jest rosnąca jeśli <parameter>start</parameter> jest mniejszy
+   lub równy wartości <parameter>end</parameter>.
+   W przeciwnym razie przedział będzie się zmniejszać.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>start</parameter></term>
+     <listitem>
+      <para>
+       Pierwsza wartość przedziału.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>end</parameter></term>
+     <listitem>
+      <para>
+       Ostatnia dozwolona wartość przedziału.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>step</parameter></term>
+     <listitem>
+      <para>
+       Parametr <parameter>step</parameter> określa o ile zwiększa (lub zmniejsza) się
+       przedział pomiędzy kolejnymi jego elementami.
+      </para>
+      <para>
+       <parameter>step</parameter> może być ujemny dla przedziałów zmniejszających się.
+      </para>
+      <para>
+       Jeżeli <parameter>step</parameter> jest liczbą zmiennoprzecinkową (<type>float</type>) bez
+       części ułamkowej, to jest on interpretowany jak liczba całkowita (<type>int</type>).
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca przedział elementów jako tablicę, gdzie pierwszym elementem
+   jest <parameter>start</parameter>, a przedział dąży do wartości
+   <parameter>end</parameter>, gdzie każda z wartości przedziału jest
+   oddzielona od siebie o wartość określoną przez <parameter>step</parameter>.
+  </para>
+  <para>
+   Ostatnim elementem zwróconej tablicy jest <parameter>end</parameter>
+   lub poprzedni element przedziału,
+   zależnie od wartości parametru <parameter>step</parameter>.
+  </para>
+  <para>
+   Jeśli zarówno parametry <parameter>start</parameter> i <parameter>end</parameter> są
+   typu <type>string</type>, a parametr <parameter>step</parameter> jest typu <type>int</type>,
+   to zwrócona tablica będzie sekwencją bajtów,
+   zazwyczaj znaków <abbrev>ASCII</abbrev>.
+  </para>
+  <para>
+   Jeżeli choć jeden z parametrów <parameter>start</parameter>, <parameter>end</parameter>,
+   lub <parameter>step</parameter> jest typu <type>float</type>,
+   to zwrócona tablica będzie przedziałem liczb zmiennoprzecinkowych.
+  </para>
+  <para>
+   W przeciwnym razie zwrócona tablica będzie przedziałem liczb całkowitych (<type>int</type>).
+  </para>
+ </refsect1>
+
+ <refsect1 role="errors">
+  &reftitle.errors;
+  <itemizedlist>
+   <listitem>
+    <simpara>
+     Jeżeli parametr <parameter>step</parameter> ustawiono na <literal>0</literal>,
+     to zostanie rzucony <classname>ValueError</classname>.
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     Jeżeli <parameter>start</parameter>, <parameter>end</parameter>,
+     lub <parameter>step</parameter> nie spełniają warunków <function>is_finite</function>,
+     to zostanie rzucony <classname>ValueError</classname>.
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     Jeżeli <parameter>step</parameter> jest ujemny,
+     ale zwracany przedział jest rosnący
+     (tj. <code>$start &lt;= $end</code>),
+     to zostanie rzucony <classname>ValueError</classname>.
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     Jeżeli <parameter>start</parameter> lub <parameter>end</parameter>
+     są pustym ciągiem znaków <literal>''</literal>,
+     emitowane jest ostrzeżenie (<constant>E_WARNING</constant>), a
+     pusty ciąg znaków będzie zinterpretowany jak <literal>0</literal>.
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     Jeżeli <parameter>start</parameter> lub <parameter>end</parameter>
+     jest <link linkend="language.types.numeric-strings">nienumerycznym ciągiem znaków</link>
+     z więcej niż jednym bajtem, wyemitowane zostanie ostrzeżenie (<constant>E_WARNING</constant>).
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     Jeżeli <parameter>start</parameter> lub <parameter>end</parameter> jest ciągiem znaków,
+     który jest niejawnie rzutowany na typ <type>int</type>, ponieważ druga wartość graniczna
+     jest liczbą, emitowane jest ostrzeżenie (<constant>E_WARNING</constant>).
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     Jeżeli <parameter>step</parameter> jest liczbą zmiennoprzecinkową (<type>float</type>),
+     a <parameter>start</parameter> oraz <parameter>end</parameter> są
+     <link linkend="language.types.numeric-strings">nienumerycznymi ciągami znaków</link>,
+     emitowane jest ostrzeżenie (<constant>E_WARNING</constant>).
+    </simpara>
+   </listitem>
+  </itemizedlist>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>8.3.0</entry>
+      <entry>
+       Jeśli zarówno <parameter>start</parameter> i <parameter>end</parameter>
+       są ciągami znaków, to <function>range</function> zwróci teraz zawsze
+       tablicę bajtów.
+       Wcześniej, jeśli jedna z wartości granicznych była numerycznym ciągiem znaków,
+       to druga była niejawnie rzutowana na <type>int</type>.
+      </entry>
+     </row>
+     <row>
+      <entry>8.3.0</entry>
+      <entry>
+       Od teraz emitowane jest ostrzeżenie (<constant>E_WARNING</constant>) jeśli
+       <parameter>start</parameter> lub <parameter>end</parameter>
+       są ciągami znaków, które są niejawnie rzutowane na <type>int</type>,
+       ponieważ druga z wartości granicznych jest liczbą.
+      </entry>
+     </row>
+     <row>
+      <entry>8.3.0</entry>
+      <entry>
+       Od teraz emitowane jest ostrzeżenie (<constant>E_WARNING</constant>) jeśli
+       <parameter>start</parameter> lub <parameter>end</parameter>
+       jest nienumerycznym ciągiem znaków z więcej niż jednym bajtem.
+      </entry>
+     </row>
+     <row>
+      <entry>8.3.0</entry>
+      <entry>
+       Od teraz emitowane jest ostrzeżenie (<constant>E_WARNING</constant>) jeśli
+       <parameter>start</parameter> lub <parameter>end</parameter>
+       jest pustym ciągiem znaków.
+      </entry>
+     </row>
+     <row>
+      <entry>8.3.0</entry>
+      <entry>
+       Jeżeli parametr <parameter>step</parameter> jest liczbą zmiennoprzecinkową (<type>float</type>) bez
+       części ułamkowej, będzie on interpretowany jak liczba całkowita (<type>int</type>).
+      </entry>
+     </row>
+     <row>
+      <entry>8.3.0</entry>
+      <entry>
+       Jeżeli parametr <parameter>step</parameter> jest ujemny a tworzony
+       jest przedział rosnący, to zostanie od teraz rzucony
+       <classname>ValueError</classname>.
+      </entry>
+     </row>
+     <row>
+      <entry>8.3.0</entry>
+      <entry>
+       <classname>ValueError</classname> jest od teraz rzucany,
+       jeśli <parameter>step</parameter> nie jest wartością skończoną.
+      </entry>
+     </row>
+     <row>
+      <entry>8.3.0</entry>
+      <entry>
+       <classname>TypeError</classname> jest od teraz rzucany, jeśli
+       <parameter>start</parameter> lub <parameter>end</parameter>
+       są tablicą, obiektem lub <link linkend="language.types.resource">zasobem</link>.
+       Wcześniej byly one niejawnie rzutowane na <type>int</type>.
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </informaltable>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
    <example>
-    <title>Przykłady użycia funkcji <function>range</function></title>
+    <title>Przykłady użycia <function>range</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
-// array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
-foreach (range(0, 12) as $liczba) {
-    echo $liczba;
-}
+echo implode(', ', range(0, 12)), PHP_EOL;
 
-// Parametr kroku został wprowadzony w 5.0.0
-// array(0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
-foreach (range(0, 100, 10) as $liczba) {
-    echo $liczba;
-}
+echo implode(', ', range(0, 100, 10)), PHP_EOL;
 
-// Użycie sekwencji znakowych wprowadzono w 4.1.0
-// array('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i');
-foreach (range('a', 'i') as $litera) {
-    echo $litera;
-}
+echo implode(', ', range('a', 'i')), PHP_EOL;
 
-// array('c', 'b', 'a');
-foreach (range('c', 'a') as $litera) {
-    echo $litera;
-}
+echo implode(', ', range('c', 'a')), PHP_EOL;
+
+echo implode(', ', range('A', 'z')), PHP_EOL;
 ?>
 ]]>
     </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
+0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100
+a, b, c, d, e, f, g, h, i
+c, b, a
+A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, [, \, ], ^, _, `, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z
+]]>
+    </screen>
    </example>
   </para>
-  <note>
-   <para>
-    W wersjach wcześniejszych od PHP 4.1.0 funkcja
-    <function>range</function> generowała tylko rosnące tablice liczbowe.
-    Obsługa sekwencji znakowych i tablic malejących została wprowadzona w
-    PHP 4.1.0. Wartości sekwencji znakowych są ograniczone do długości
-    jednego znaku. Jeśli wprowadzony zostanie ciąg długości większej niż
-    jeden, użyty zostanie tylko pierwszy znak.
-   </para>
-  </note>
-  <caution>
-   <para>
-    W wersjach PHP od 4.1.0 do 4.3.2 funkcja <function>range</function>
-    rozpoznawała ciągi numeryczne jako ciągi, a nie jako liczby. W związku z
-    tym będą one użyte do generowania sekwencji znakowych. Na przykład
-    <literal>"4242"</literal> będzie traktowane jako <literal>"4"</literal>.
-   </para>
-  </caution>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
   <para>
-   Patrz także: <function>shuffle</function>,
-   <function>array_fill</function> i <link
-   linkend="control-structures.foreach">foreach</link>.
+   <simplelist>
+    <member><function>shuffle</function></member>
+    <member><function>array_fill</function></member>
+    <member>&foreach;</member>
+   </simplelist>
   </para>
  </refsect1>
-</refentry>
 
+</refentry>
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

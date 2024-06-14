@@ -1,89 +1,138 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 6a6f43d1c490a57b452656db285de6d136055ed2 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.array-multisort" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>array_multisort</refname>
-  <refpurpose>Sortuje wiele tablic lub wielowymiarowe tablice</refpurpose>
+  <refpurpose>Posortuj wiele tablic lub tablice wielowymiarowe</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>array_multisort</methodname>
-   <methodparam><type>array</type><parameter>tbl1</parameter></methodparam>
-   <methodparam choice="opt"><type>mixed</type><parameter>arg</parameter></methodparam>
-   <methodparam choice="opt"><type>mixed</type><parameter>...</parameter></methodparam>
-   <methodparam choice="opt"><type>array</type><parameter>...</parameter></methodparam>
-   <!-- Parameters don't need to be passed by reference -->
+   <methodparam><type>array</type><parameter role="reference">array1</parameter></methodparam>
+   <methodparam choice="opt"><type>mixed</type><parameter>array1_sort_order</parameter><initializer>SORT_ASC</initializer></methodparam>
+   <methodparam choice="opt"><type>mixed</type><parameter>array1_sort_flags</parameter><initializer>SORT_REGULAR</initializer></methodparam>
+   <methodparam rep="repeat"><type>mixed</type><parameter>rest</parameter></methodparam>
   </methodsynopsis>
-  <para>
-   &return.success;
-  </para>
   <para>
    <function>array_multisort</function> może być użyta do sortowania kilku
    tablic na raz lub wielowymiarowej tablicy na podstawie jednego z większej
    liczby wymiarów.
   </para>
   <para>
-   Klucze asocjacyjne są zachowywane, a indeksy numeryczne są
-   przenumerowywane.
+   Klucze asocjacyjne (typu <type>string</type>) są zachowywane, a indeksy
+   numeryczne są przenumerowywane.
   </para>
+  &note.sort-unstable;
+  &note.reset-index;
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
   <para>
-   Tablice wejściowe są traktowane jak kolumy tablicy, które mają być
-   posortowane wierszami - odpowiada to funkcjonalności warunku SQL ORDER
-   BY. Pierwsza tablica jest tablicą priorytetową do sortowania. Wiersze
-   (wartości) w tej tablicą które są takie sane sortowane są według
-   następnej tablicy wejściowej i tak dalej.
+   <variablelist>
+    <varlistentry>
+     <term><parameter>array1</parameter></term>
+     <listitem>
+      <para>
+       Tablica do posortowania.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>array1_sort_order</parameter></term>
+     <listitem>
+      <para>
+       Kolejność sortowania dla poprzedniego argumentu tablicy. <constant>SORT_ASC</constant>
+       aby posortować rosnąco lub <constant>SORT_DESC</constant>, aby posortować malejąco.
+      </para>
+      <para>
+       Ten argument może byc zamieniony z <parameter>array1_sort_flags</parameter>
+       lub całkowicie pominięty - w tym wypadku zakładane jest użycie <constant>SORT_ASC</constant>.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>array1_sort_flags</parameter></term>
+     <listitem>
+      <para>
+       Opcje sortowania dla poprzedniego argumentu tablicy:
+      </para>
+      <para>
+       Flagi sortowania:
+       <itemizedlist>
+        <listitem>
+         <simpara><constant>SORT_REGULAR</constant> - porównuj elementy normalnie
+          (nie zmieniając typów)</simpara>
+        </listitem>
+        <listitem>
+         <simpara><constant>SORT_NUMERIC</constant> - porównuj elementy numerycznie</simpara>
+        </listitem>
+        <listitem>
+         <simpara><constant>SORT_STRING</constant> - porównuj elementy jak ciągi znaków</simpara>
+        </listitem>
+        <listitem>
+         <simpara>
+          <constant>SORT_LOCALE_STRING</constant> - porównuj elementy jak
+          ciągi znaków, z uwzględnieniem ustawień regionalnych (locale). Używane
+          ustawienia regionalne mogą być zmienione funkcją <function>setlocale</function>
+         </simpara>
+        </listitem>
+        <listitem>
+         <simpara>
+          <constant>SORT_NATURAL</constant> - porównuj elementy jak ciągi znaków,
+          używając "sortowania naturalnego" tak jak <function>natsort</function>
+         </simpara>
+        </listitem>
+        <listitem>
+         <simpara>
+          <constant>SORT_FLAG_CASE</constant> - może być połączona
+          (poprzez bitowe OR) z flagami
+          <constant>SORT_STRING</constant> lub
+          <constant>SORT_NATURAL</constant> aby posortować ciągi znaków bez rozróżniania wielkości liter
+         </simpara>
+        </listitem>
+       </itemizedlist>
+      </para>
+      <para>
+       Ten argument może byc zamieniony z <parameter>array1_sort_order</parameter>
+       lub całkowicie pominięty - w tym wypadku zakładane jest użycie <constant>SORT_REGULAR</constant>.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>rest</parameter></term>
+     <listitem>
+      <para>
+       Więcej tablic, po których mogą następować flagi kolejności i opcji sortowania.
+       Porównywane są tylko elementy odpowiadające elementom w poprzednich tablicach.
+       Innymi słowy, sortowani jest leksykograficzne.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
   </para>
-  <para>
-   Struktura argumentów tej funkcji nie jest zwyczajna, ale jest ona
-   elastyczna. Pierwszy argument musi być tablicą. Każdy następny argument
-   musi być tablicą lub flagą oznaczającą porządek sortowania - jeden z
-   poniższych.
-  </para>
-  <para>
-   Flagi porządku sortowania:
-   <itemizedlist>
-    <listitem>
-     <simpara><constant>SORT_ASC</constant> - sortuj w porządku rosnącym</simpara>
-    </listitem>
-    <listitem>
-     <simpara><constant>SORT_DESC</constant> - sortuj w porządku malejącym</simpara>
-    </listitem>
-   </itemizedlist>
-  </para>
-  <para>
-   Flagi typu sortowania:
-   <itemizedlist>
-    <listitem>
-     <simpara><constant>SORT_REGULAR</constant> - porównuj elementy normalnie</simpara>
-    </listitem>
-    <listitem>
-     <simpara><constant>SORT_NUMERIC</constant> - porównuj elementy numerycznie</simpara>
-    </listitem>
-    <listitem>
-     <simpara><constant>SORT_STRING</constant> - porówuj elementy jak stringi</simpara>
-    </listitem>
-   </itemizedlist>
-  </para>
-  <para>
-   Nie można podać żadnych dwóch flag tego samego typu dla jednej tablicy.
-   Flagi sortowania podane po argumencie-tablicy dotyczą tylko tej tablicy
-   - są one zerowane do domyślnych wartośći <constant>SORT_ASC</constant> i
-   <constant>SORT_REGULAR</constant> po każdym argumencie tablicowym.
-  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
   <para>
    &return.success;
   </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
    <example>
     <title>Sortowanie wielu tablic</title>
     <programlisting role="php">
 <![CDATA[
 <?php
-$tbl1 = array (10, 100, 100, 0);
-$tbl2 = array (1, 3, 2, 4);
-array_multisort ($tbl1, $tbl2);
+$tbl1 = array(10, 100, 100, 0);
+$tbl2 = array(1, 3, 2, 4);
+array_multisort($tbl1, $tbl2);
 
 var_dump($tbl1);
 var_dump($tbl2);
@@ -91,10 +140,10 @@ var_dump($tbl2);
 ]]>
     </programlisting>
     <para>
-     W tym przypadku, po sortowaniu, pierwsza tablica będzie zawierać 0, 10,
-     100, 100, a druga 4, 1, 2, 3. Elementy drugiej tablicy
-     odpowiadające identycznym elementom pierwszej tablicy (100 i 100) także
-     zostały posortowane.
+     W tym przypadku, po sortowaniu, pierwsza tablica będzie zawierać 0,
+     10, 100, 100, a druga 4, 1, 2, 3.
+     Elementy drugiej tablicy odpowiadające identycznym
+     elementom pierwszej tablicy (100 i 100) także zostały posortowane.
     </para>
     <screen>
 <![CDATA[
@@ -116,16 +165,17 @@ array(4) {
   </para>
   <para>
    <example>
-    <title>Sortowanie wielowymiarowych tablic</title>
+    <title>Sortowanie tablicy wielowymiarowej</title>
     <programlisting role="php">
 <![CDATA[
-$tbl = array (
-      array ("10", 100, 100, "a"),
-      array (1, 3, "2", 1)
-   );
-array_multisort ($tbl[0], SORT_ASC, SORT_STRING,
-         $tbl[1], SORT_NUMERIC, SORT_DESC);
-var_dump($tbl);
+<?php
+$ar = array(
+       array("10", 11, 100, 100, "a"),
+       array(   1,  2, "2",   3,   1)
+      );
+array_multisort($ar[0], SORT_ASC, SORT_STRING,
+                $ar[1], SORT_NUMERIC, SORT_DESC);
+var_dump($ar);
 ?>
 ]]>
     </programlisting>
@@ -157,7 +207,6 @@ array(2) {
     </screen>
    </example>
   </para>
-
   <para>
    <example>
     <title>Sortowanie wyników zapytań do baz danych</title>
@@ -171,7 +220,7 @@ array(2) {
     </para>
     <screen>
 <![CDATA[
-Numer | edycja
+numer | edycja
 -------+--------
    67 |      2
    86 |      1
@@ -183,8 +232,7 @@ Numer | edycja
     </screen>
     <para>
      Dane zawarte są w tablicy o nazwie <varname>dane</varname>. Efekt ten
-     można uzyskać, na przykład, poprzez wywołując w pętli funkcję
-     <function>mysql_fetch_assoc</function>.
+     można uzyskać np. wywołując w pętli funkcję <function>mysqli_fetch_assoc</function>.
     </para>
     <programlisting role="php">
 <![CDATA[
@@ -199,15 +247,13 @@ $dane[] = array('numer' => 67, 'edycja' => 7);
 ]]>
     </programlisting>
     <para>
-     W tym przykładzie, dane zostaną posortowane według pola
-     <varname>numer</varname> malejąco, oraz względem pola
-     <varname>edycja</varname> rosnąco.
+     W tym przykładzie, dane zostaną posortowane według pola <varname>numer</varname> malejąco
+     oraz względem pola <varname>edycja</varname> rosnąco.
     </para>
     <para>
-     W zmiennej znajduje się tablica wierszy, lecz
-     <function>array_multisort</function> wymaga tablicy kolumn, tak więc
-     należy zastosować poniższy kod aby uzyskać kolumny, a następnie
-     przeprowadzić sortowanie.
+     W zmiennej znajduje się tablica wierszy, lecz <function>array_multisort</function>
+     wymaga tablicy kolumn, tak więc użyjemy kodu poniżej, aby uzyskać kolumny,
+     a następnie przeprowadzić sortowanie.
     </para>
     <programlisting role="php">
 <![CDATA[
@@ -218,9 +264,13 @@ foreach ($dane as $klucz => $wiersz) {
     $edycja[$klucz] = $wiersz['edycja'];
 }
 
+// możesz użyć array_column() zamiast kodu wyżej
+$numer  = array_column($data, 'numer');
+$edycja = array_column($data, 'edycja');
+
 // Posortuj dane według numeru malejąco i edycji rosnąco
-// Należy podać $dane jako ostatni parametr aby posortować według wspólnego
-// klucza
+// Należy podać $dane jako ostatni parametr, aby posortować według
+// wspólnego klucza
 array_multisort($numer, SORT_DESC, $edycja, SORT_ASC, $dane);
 ?>
 ]]>
@@ -246,10 +296,10 @@ numer | edycja
    <example>
     <title>Sortowanie z ignorowaniem wielkości znaków</title>
     <para>
-     Obie opcje, <constant>SORT_STRING</constant> i
+     Zarówno <constant>SORT_STRING</constant> jak
      <constant>SORT_REGULAR</constant>, powodują sortowanie z rozróżnianiem
-     wielkości znaków. Ciągi zaczynające się od dużej litery staną się
-     ciągami zaczynającymi się od litery małej.
+     wielkości znaków. Ciągi zaczynające się od dużej litery znajdą się
+     przed ciągami zaczynającymi się od litery małej.
     </para>
     <para>
      Aby przeprowadzić sortowanie ignorujące wielkość znaków, należy
@@ -283,6 +333,17 @@ Array
    </example>
   </para>
  </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>usort</function></member>
+    <member>&seealso.array.sorting;</member>
+   </simplelist>
+  </para>
+ </refsect1>
+
 </refentry>
 
 <!-- Keep this comment at the end of the file

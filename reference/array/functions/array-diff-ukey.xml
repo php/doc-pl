@@ -1,52 +1,104 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: leszek Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 2226ad08fd93e3979efbba47c5ae3545eec97d25 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: leszek -->
 <refentry xml:id="function.array-diff-ukey" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>array_diff_ukey</refname>
   <refpurpose>Oblicza różnicę tablic używając funkcji zwrotnej do porównywania kluczy</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
    <type>array</type><methodname>array_diff_ukey</methodname>
-   <methodparam><type>array</type><parameter>tablica1</parameter></methodparam>
-   <methodparam><type>array</type><parameter>tablica2</parameter></methodparam>
-   <methodparam choice="opt"><type>array</type><parameter> ...</parameter></methodparam>
-   <methodparam><type>callback</type><parameter>funk_porównania_kluczy</parameter></methodparam>
+   <methodparam><type>array</type><parameter>array</parameter></methodparam>
+   <methodparam rep="repeat"><type>array</type><parameter>arrays</parameter></methodparam>
+   <methodparam><type>callable</type><parameter>key_compare_func</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>array_diff_ukey</function> zwraca tablicę zawierającą wszystkie
-   wartości z <parameter>tablica1</parameter> których klucze nie są obecne w
-   żadnym z innych argumentów. Asocjacje są zachowywane. Funkcja ta jest
-   podobna do <function>array_diff</function>, z tym że porównywane są
-   klucze a nie wartości.
+   Porównuje klucze z tablicy <parameter>array</parameter> z kluczami
+   z pozostałych tablic (<parameter>arrays</parameter>) i zwraca różnicę.
+   Ta funkcja działa jak <function>array_diff</function>, z tym że
+   porównanie jest dokonywane po kluczach zamiast wartości.
   </para>
   <para>
-   Porównanie jest dokonywane przy pomocy podanej funkcji zwrotnej. Musi ona
-   zwracać liczbę całkowitą mniejszą, równą lub większą od zera jeśli
-   pierwszy klucz jest uznawany za mniejszy, równy lub większy drugiego.
+   W przeciwieństwie do <function>array_diff_key</function>, do porównania indeksów
+   jest używana nie funkcja wbudowana, a funkcja zwrotna przekazana przez użytkownika.
   </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+
+    <varlistentry>
+     <term><parameter>array</parameter></term>
+     <listitem>
+      <para>
+       Tablica do porównania
+      </para>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term><parameter>arrays</parameter></term>
+     <listitem>
+      <para>
+       Tablice, z którymi porównujemy
+      </para>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term><parameter>key_compare_func</parameter></term>
+     <listitem>
+      &sort.callback.description;
+     </listitem>
+    </varlistentry>
+
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca tablicę zawierającą wszystkie wpisy z tablicy
+   <parameter>array</parameter>, które nie są obecne w żadnej z pozostałych tablic.
+  </para>
+ </refsect1>
+
+ <!--
+  <refsect1 role="errors">
+   &reftitle.errors;
+   &errors.no.unusual.errors;
+  </refsect1>
+ -->
+
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
    <example>
-    <title>Przykład użycia funkcji <function>array_diff_ukey</function></title>
+    <title>Przykład użycia <function>array_diff_ukey</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
-function porownaj_klucze($klucz1, $klucz2)
+function key_compare_func($key1, $key2)
 {
-    if ($klucz1 == $klucz2)
+    if ($key1 == $key2)
         return 0;
-    else if ($klucz1 > $klucz2)
+    else if ($key1 > $key2)
         return 1;
     else
         return -1;
 }
 
-$tablica1 = tablica('niebieski'  => 1, 'czerwony'  => 2, 'zielony'  => 3, 'purpurowy' => 4);
-$tablica2 = tablica('zielony' => 5, 'niebieski' => 6, 'żółty' => 7, 'cyan'   => 8);
+$array1 = array('blue'  => 1, 'red'  => 2, 'green'  => 3, 'purple' => 4);
+$array2 = array('green' => 5, 'blue' => 6, 'yellow' => 7, 'cyan'   => 8);
 
-var_dump(array_diff_ukey($tablica1, $tablica2, 'porownaj_klucze'));
+var_dump(array_diff_ukey($array1, $array2, 'key_compare_func'));
 ?>
 ]]>
     </programlisting>
@@ -54,37 +106,48 @@ var_dump(array_diff_ukey($tablica1, $tablica2, 'porownaj_klucze'));
     <screen>
 <![CDATA[
 array(2) {
-  ["czerwony"]=>
+  ["red"]=>
   int(2)
-  ["purpurowy"]=>
+  ["purple"]=>
   int(4)
 }
 ]]>
     </screen>
    </example>
   </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
   <note>
-   <simpara>
-    Funkcja ta sprawdza tylko jeden wymiar n-wymiarowej tablicy. Można
-    sprawdzać głębsze wymiary przez użycie, na przykład
-    <literal>array_diff_assoc($tablica1[0], $tablica2[0], 'funkcja_zwrotna');</literal>.
-   </simpara>
+   <para>
+    Ta funkcja sprawdza tylko jeden wymiar n-wymiarowej
+    tablicy. Można oczywiście sprawdzić głębsze poziomy używając
+    <literal>array_diff_ukey($array1[0], $array2[0], 'callback');</literal>.
+   </para>
   </note>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
   <para>
-   Patrz także: <function>array_diff</function>,
-   <function>array_udiff</function>
-   <function>array_diff_assoc</function>,
-   <function>array_diff_uassoc</function>,
-   <function>array_udiff_assoc</function>,
-   <function>array_udiff_uassoc</function>,
-   <function>array_diff_key</function>,
-   <function>array_intersect</function>,
-   <function>array_intersect_assoc</function>,
-   <function>array_intersect_uassoc</function>,
-   <function>array_intersect_key</function> i
-   <function>array_intersect_ukey</function>.
+   <simplelist>
+    <member><function>array_diff</function></member>
+    <member><function>array_udiff</function></member>
+    <member><function>array_diff_assoc</function></member>
+    <member><function>array_diff_uassoc</function></member>
+    <member><function>array_udiff_assoc</function></member>
+    <member><function>array_udiff_uassoc</function></member>
+    <member><function>array_diff_key</function></member>
+    <member><function>array_intersect</function></member>
+    <member><function>array_intersect_assoc</function></member>
+    <member><function>array_intersect_uassoc</function></member>
+    <member><function>array_intersect_key</function></member>
+    <member><function>array_intersect_ukey</function></member>
+   </simplelist>
   </para>
  </refsect1>
+
 </refentry>
 
 <!-- Keep this comment at the end of the file
