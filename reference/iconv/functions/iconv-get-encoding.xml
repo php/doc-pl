@@ -1,29 +1,101 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: qrak Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: ab9a7d2e3dfa9224186abcbd7a43b3af08d1bfdb Maintainer: qrak Status: ready -->
 <!-- $Revision$ -->
-  <refentry xml:id="function.iconv-get-encoding" xmlns="http://docbook.org/ns/docbook">
-   <refnamediv>
-    <refname>iconv_get_encoding</refname>
-    <refpurpose>Pobiera aktualne ustawienia dla konwersji zestawu znaków</refpurpose>
-   </refnamediv>
-   <refsect1>
-    <title>Opis</title>
-     <methodsynopsis>
-      <type>array</type><methodname>iconv_get_encoding</methodname>
-      <methodparam choice="opt"><type>string</type><parameter>typ</parameter></methodparam>
-     </methodsynopsis>
-    <para>
-     Zwraca aktualne ustawienia funkcji <function>ob_iconv_handler</function>
-     jako tablicę, lub &false; jeśli się nie uda.
-    </para>
-    <para>
-     Patrz także: 
-     <function>iconv_set_encoding</function> i
-     <function>ob_iconv_handler</function>.
-    </para>
-   </refsect1>
-  </refentry>
+<refentry xml:id="function.iconv-get-encoding" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>iconv_get_encoding</refname>
+  <refpurpose>Pobiera wewnętrzne zmienne konfiguracyjne rozszerzenia iconv</refpurpose>
+ </refnamediv>
 
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type class="union"><type>array</type><type>string</type><type>false</type></type><methodname>iconv_get_encoding</methodname>
+   <methodparam choice="opt"><type>string</type><parameter>type</parameter><initializer>"all"</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   Pobiera wewnętrzne zmienne konfiguracyjne rozszerzenia iconv.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>type</parameter></term>
+     <listitem>
+      <para>
+       Wartością opcjonalnego argumentu <parameter>type</parameter> może być:
+       <simplelist>
+        <member>all (wszystko)</member>
+        <member>input_encoding (kodowanie wejściowe)</member>
+        <member>output_encoding (kodowanie wyjściowe)</member>
+        <member>internal_encoding (kodowanie wewnętrzne)</member>
+       </simplelist>
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca obecną wartość wewnętrznej zmiennej konfiguracyjnej w wypadku
+   powodzenia&return.falseforfailure;
+  </para>
+  <para>
+   Jeżeli parametr <parameter>type</parameter> został pominięty lub ustawiony na "all",
+   <function>iconv_get_encoding</function> zwraca tablicę,
+   która zawiera wszystkie te zmienne.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład użycia <function>iconv_get_encoding</function></title>
+    <programlisting role="php">
+<![CDATA[
+<pre>
+<?php
+iconv_set_encoding("internal_encoding", "UTF-8");
+iconv_set_encoding("output_encoding", "ISO-8859-1");
+var_dump(iconv_get_encoding('all'));
+?>
+</pre>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+Array
+(
+    [input_encoding] => ISO-8859-1
+    [output_encoding] => ISO-8859-1
+    [internal_encoding] => UTF-8
+)
+
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>iconv_set_encoding</function></member>
+    <member><function>ob_iconv_handler</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml
