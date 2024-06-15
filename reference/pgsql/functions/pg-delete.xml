@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 49944c9148ba4e48c1aa96544cdec3911b2f4131 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: c2eca73ef79ebe78cebb34053e41b565af504c4f Maintainer: sobak Status: ready -->
 <!-- $Revision$-->
 <!-- CREDITS: garbus, jarek -->
-<refentry xml:id='function.pg-delete' xmlns="http://docbook.org/ns/docbook">
+<refentry xml:id="function.pg-delete" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>pg_delete</refname>
   <refpurpose>
@@ -13,17 +13,32 @@
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
-   <type>mixed</type><methodname>pg_delete</methodname>
-   <methodparam><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
-   <methodparam><type>string</type><parameter>nazwa_tabeli</parameter></methodparam>
-   <methodparam><type>array</type><parameter>tablica_asocjacyjna</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>opcje</parameter><initializer>PGSQL_DML_EXEC</initializer></methodparam>
+   <type class="union"><type>string</type><type>bool</type></type><methodname>pg_delete</methodname>
+   <methodparam><type>PgSql\Connection</type><parameter>connection</parameter></methodparam>
+   <methodparam><type>string</type><parameter>table_name</parameter></methodparam>
+   <methodparam><type>array</type><parameter>conditions</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>flags</parameter><initializer><constant>PGSQL_DML_EXEC</constant></initializer></methodparam>
   </methodsynopsis>
   <para>
-   <function>pg_delete</function> usuwa wiersze z tabeli określonej przez
-   klucze i wartości w parametrze <parameter>tablica_asocjacyjna</parameter>. Jeśli <parameter>opcje</parameter> zostały
-   określone, to funkcja <function>pg_convert</function> stosuje
-   do parametru <parameter>tablica_asocjacyjna</parameter> podane opcje. 
+   <function>pg_delete</function> usuwa wiersze z tabeli 
+   określonej przez klucze i wartości w parametrze <parameter>conditions</parameter>.
+  </para>
+  <para>
+   Jeśli parametr <parameter>flags</parameter> jest określony,
+   to do warunków podanych <parameter>conditions</parameter> stosowana jest funkcja <function>pg_convert</function>
+   z określonymi flagami.
+  </para>
+  <para>
+   Domyślnie <function>pg_delete</function> przekazuje surowe wartości.
+   Wartości muszą mieć dodane znaki ucieczki lub należy podać flagę <constant>PGSQL_DML_ESCAPE</constant>
+   w parametrze <parameter>flags</parameter>.
+   <constant>PGSQL_DML_ESCAPE</constant> dodaje cudzysłowy i znaki ucieczki do parametrów/identyfikatorów.
+   W związku z tym nazwy tabeli i kolumn stają się wrażliwe na wielkość znaków.
+  </para>
+  <para>
+   Note that neither escape nor prepared query can protect LIKE query,
+   JSON, Array, Regex, etc. These parameters should be handled
+   according to their contexts. i.e. Escape/validate values.
   </para>
  </refsect1>
 
@@ -32,15 +47,13 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>identyfikator_połączenia</parameter></term>
+     <term><parameter>connection</parameter></term>
      <listitem>
-      <para>
-       Identyfikator połączenia do bazy PostgreSQL.
-      </para>
+      &pgsql.parameter.connection;
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>nazwa_tabeli</parameter></term>
+     <term><parameter>table_name</parameter></term>
      <listitem>
       <para>
        Nazwa tabeli, z której będą usuwane wiersze.
@@ -48,16 +61,16 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>tablica_asocjacyjna</parameter></term>
+     <term><parameter>conditions</parameter></term>
      <listitem>
       <para>
-       Tablica (ang. <type>array</type>), której klucze są nazwami pól w określonej parametrem <parameter>nazwa_tabeli</parameter> tabeli,
+       Tablica (ang. <type>array</type>), której klucze są nazwami pól w określonej parametrem <parameter>table_name</parameter> tabeli,
        oraz której wartościami, są wartości tych pól, które mają zostać usunięte.
       </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>opcje</parameter></term>
+     <term><parameter>flags</parameter></term>
      <listitem>
       <para>
        Dowolna kombinacja, dowolnej ilości parametrów: <constant>PGSQL_CONV_FORCE_NULL</constant>,
@@ -66,7 +79,7 @@
        <constant>PGSQL_DML_EXEC</constant>,
        <constant>PGSQL_DML_ASYNC</constant> lub
        <constant>PGSQL_DML_STRING</constant>. Jeśli <constant>PGSQL_DML_STRING</constant> jest jedną z podanych w parametrze
-       <parameter>opcje</parameter> opcji, zostanie zwrócony łańcuch zapytania z URL (ang. query string). Kiedy ustawione jest
+       <parameter>flags</parameter> flag, zostanie zwrócony łańcuch zapytania. Kiedy ustawione jest
        <constant>PGSQL_DML_NO_CONV</constant> lub <constant>PGSQL_DML_ESCAPE</constant>, funkcja nie wykonuje <function>pg_convert</function>
        wewnętrznie.
       </para>
@@ -80,21 +93,40 @@
   &reftitle.returnvalues;
   <para>
    &return.success;  Zwraca łańcuch (ang. <type>string</type>) gdy podano <constant>PGSQL_DML_STRING</constant> 
-   poprzez <parameter>opcje</parameter>.
+   poprzez <parameter>flags</parameter>.
   </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     &pgsql.changelog.connection-object;
+    </tbody>
+   </tgroup>
+  </informaltable>
  </refsect1>
 
  <refsect1 role="examples">
   &reftitle.examples;
   <para>
    <example>
-    <title><function>pg_delete</function> - przykład</title>
+    <title>Przykład użycia <function>pg_delete</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php 
   $polaczenie_do_bazy = pg_connect ('dbname=foo');
-  // To jest bezpieczne, odkąd $_POST jest konwertowane automatycznie
-  $res = pg_delete($polaczenie_do_bazy, 'kopia_post', $_POST);
+  // This is safe somewhat, since all values are escaped.
+  // However PostgreSQL supports JSON/Array. These are not
+  // safe by neither escape nor prepared query.
+  $res = pg_delete($db, 'post_log', $_POST, PG_DML_ESCAPE);
   if ($res) {
       echo "Dane określone przez POST zostały usunięte: $res\n";
   } else {
@@ -104,38 +136,6 @@
 ]]>
     </programlisting>
    </example>
-  </para>
- </refsect1>
-
- <refsect1 role="changelog">
-  &reftitle.changelog;
-  <para>
-   <informaltable>
-    <tgroup cols="2">
-     <thead>
-      <row>
-       <entry>&Version;</entry>
-       <entry>&Description;</entry>
-      </row>
-     </thead>
-     <tbody>
-      <row>
-       <entry>5.6.0</entry>
-       <entry>
-        Funkcja nie jest dłużej eksperymentalna. Dodano stałą <constant>PGSQL_DML_ESCAPE</constant> oraz
-        wsparcie typów danych &true;/&false; i &null;.
-       </entry>
-      </row>
-      <row>
-       <entry>5.5.3/5.4.19</entry>
-       <entry>
-        Bezpośredni atak SQL injection na parametr <parameter>nazwa_tabeli</parameter> i pośredni
-        na identyfikatory został uniemożliwiony.
-       </entry>
-      </row>
-     </tbody>
-    </tgroup>
-   </informaltable>
   </para>
  </refsect1>
  
@@ -148,7 +148,6 @@
   </para>    
  </refsect1>
 </refentry>
-
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

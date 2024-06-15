@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 95bdd6883b5dde9504701777ba81b3c5f15df52b Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: cfeb14a38b666f6a3fc73da70f4a90fbe115e53f Maintainer: joeaccord Status: ready -->
 <!-- $Revision$-->
 <!-- CREDITS: jarek, garbus, sobak -->
-<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.pg-fetch-array">
+<refentry xml:id="function.pg-fetch-array" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>pg_fetch_array</refname>
   <refpurpose>Pobiera wiersz jako tablicę</refpurpose>
@@ -11,19 +11,19 @@
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
-   <type>array</type><methodname>pg_fetch_array</methodname>
-   <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>wiersz</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>typ_wyniku</parameter><initializer>PGSQL_BOTH</initializer></methodparam>
+   <type class="union"><type>array</type><type>false</type></type><methodname>pg_fetch_array</methodname>
+   <methodparam><type>PgSql\Result</type><parameter>result</parameter></methodparam>
+   <methodparam choice="opt"><type class="union"><type>int</type><type>null</type></type><parameter>row</parameter><initializer>&null;</initializer></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>mode</parameter><initializer><constant>PGSQL_BOTH</constant></initializer></methodparam>
   </methodsynopsis>
   <para>
    <function>pg_fetch_array</function> zwraca tablicę zawierającą dane z pobranego
    wiersza (rekordu).
   </para>
   <para>
-   <function>pg_fetch_array</function> jest rozszerzeną wersją
+   <function>pg_fetch_array</function> jest rozszerzoną wersją
    <function>pg_fetch_row</function>.  Oprócz zapisywania danych
-   w tablicy wyników indeksowanej numerycznie, zapisuje je też używając indeksów
+   w tablicy wyników indeksowanej numerycznie zapisuje je też, używając indeksów
    przyporządkowujących (asocjacyjnych) tej tablicy, nazwy kolumn traktując jako klucze.
    Domyślnie zapisywane są oba rodzaje indeksów.
   </para>
@@ -40,17 +40,13 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>wynik</parameter></term>
+     <term><parameter>result</parameter></term>
      <listitem>
-      <para>
-       Identyfikator wyniku zapytania PostgreSQL, zwrócony przez <function>pg_query</function>,
-       <function>pg_query_params</function> lub <function>pg_execute</function>
-       (między innymi).
-      </para>
+      &pgsql.parameter.result;
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>wiersz</parameter></term>
+     <term><parameter>row</parameter></term>
      <listitem>
       <para>
        Numer wiersza w wyniku do pobrania.  Wiersze są numerowane od zera w górę.  Jeśli jest pominięty
@@ -59,20 +55,9 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>typ_wyniku</parameter></term>
+     <term><parameter>mode</parameter></term>
      <listitem>
-      <para>
-       Opcjonalny parametr kontrolujący
-       w jaki sposób zwrócona tablica (ang. <type>array</type>) jest indeksowana.
-       <parameter>typ_wyniku</parameter> jest stałą i może przyjąć
-       następujące wartości: <constant>PGSQL_ASSOC</constant>,
-       <constant>PGSQL_NUM</constant> oraz <constant>PGSQL_BOTH</constant>.
-       Używając <constant>PGSQL_NUM</constant>, <function>pg_fetch_array</function>
-       zwróci tablicę z indeksami numerycznymi, użycie
-       <constant>PGSQL_ASSOC</constant> zwróci wyłącznie indeksy asocjacyjne
-       podczas, gdy <constant>PGSQL_BOTH</constant>, wartość domyślna, zwróci oba 
-       rodzaje indeksów - numeryczne i asocjacyjne.
-      </para>
+      &pgsql.parameter.mode;
      </listitem>
     </varlistentry>
    </variablelist>
@@ -91,14 +76,32 @@
   <para>
    &false; zostanie zwrócone jeśli <parameter>wiersz</parameter> przekracza ilość
    wierszy w całym zbiorze, nie ma więcej wierszy, lub dowolnym innym błędzie.
+   Próba pobrania danych z wyniku zapytania innego niż SELECT także zwróci &false;.
   </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     &pgsql.changelog.result-object;
+    </tbody>
+   </tgroup>
+  </informaltable>
  </refsect1>
 
  <refsect1 role="examples">
   &reftitle.examples;
   <para>
    <example>
-    <title><function>pg_fetch_array</function> - przykład</title>
+    <title>Przykład użycia <function>pg_fetch_array</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php 
@@ -149,7 +152,6 @@ echo $tab[1] . " <- Wiersz 3 E-mail\n";
  </refsect1>
 
 </refentry>
-
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

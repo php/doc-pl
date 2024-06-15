@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: e41806c30bf6975e452c0d4ce35ab0984c2fa68c Maintainer: garbus Status: ready -->
+<!-- EN-Revision: c2eca73ef79ebe78cebb34053e41b565af504c4f Maintainer: garbus Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.52 -->
 <!-- CREDITS: jarek -->
@@ -15,13 +15,13 @@
   &reftitle.description;
   <methodsynopsis>
    <type>string</type><methodname>pg_field_type</methodname>
-   <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
-   <methodparam><type>int</type><parameter>numer_kolumny</parameter></methodparam>
+   <methodparam><type>PgSql\Result</type><parameter>result</parameter></methodparam>
+   <methodparam><type>int</type><parameter>field</parameter></methodparam>
   </methodsynopsis>
   <para>
    <function>pg_field_type</function> zwraca łańcuch zawierający typ
-   podstawowy kolumny wskazanej przez <parameter>numer_kolumny</parameter> w wyniku
-   <parameter>wynik</parameter> PostgreSQL-a.
+   podstawowy kolumny wskazanej przez <parameter>field</parameter> w
+   podanym obiekcie <parameter>result</parameter>.
   </para>
   <note>
    <para>
@@ -42,17 +42,13 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>wynik</parameter></term>
+     <term><parameter>result</parameter></term>
      <listitem>
-      <para>
-       Identyfikator wyniku zapytania do bazy PostgreSQL, zwrócony przez funkcję <function>pg_query</function>,
-       <function>pg_query_params</function> lub <function>pg_execute</function>
-       (między innymi).
-      </para>
+      &pgsql.parameter.result;
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>numer_pola</parameter></term>
+     <term><parameter>field</parameter></term>
       <listitem>
        <para>
         Numer pola, zaczynając od zera.
@@ -66,9 +62,25 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Łańcuch (ang. <type>string</type>) zawierający podstawową nazwę typu pola, lub &false;
-   w przypadku błędu.
+   Łańcuch (ang. <type>string</type>) zawierający podstawową nazwę typu pola.
   </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     &pgsql.changelog.result-object;
+    </tbody>
+   </tgroup>
+  </informaltable>
  </refsect1>
 
  <refsect1 role="examples">
@@ -109,7 +121,6 @@ Typ pola tytułu: varchar
   </para>
  </refsect1>
 </refentry>
-
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

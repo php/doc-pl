@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: e41806c30bf6975e452c0d4ce35ab0984c2fa68c Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: c2eca73ef79ebe78cebb34053e41b565af504c4f Maintainer: joeaccord Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.82 -->
 <!-- CREDITS: jarek, garbus -->
@@ -12,25 +12,25 @@
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
-   <type>resource</type><methodname>pg_pconnect</methodname>
-   <methodparam><type>string</type><parameter>łańcuch_połączenia</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>typ_połączenia</parameter></methodparam>
+   <type class="union"><type>PgSql\Connection</type><type>false</type></type><methodname>pg_pconnect</methodname>
+   <methodparam><type>string</type><parameter>connection_string</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>flags</parameter><initializer>0</initializer></methodparam>
   </methodsynopsis>
   <para>
    <function>pg_pconnect</function> otwiera trwałe połączenie
-   z serwerem PostgreSQL. Zwraca identyfikator połączenia
+   z serwerem PostgreSQL. Zwraca obiekt <classname>PgSql\Connection</classname>
    używany przez inne funkcje PostgreSQL-a.
   </para>
   <para>
    Ponowne wywołanie funkcji <function>pg_pconnect</function>
    z identycznym parametrem <parameter>łańcuch_połączenia</parameter>, jak w połączeniu już istniejącym,
-   zwróci identyfikator istniejącego połączenia, chyba, że podasz
-   <constant>PGSQL_CONNECT_FORCE_NEW</constant> jako parametr
-   <parameter>typ_połączenia</parameter>.
+   zwróci identyfikator istniejącego połączenia, chyba że podasz
+   <constant>PGSQL_CONNECT_FORCE_NEW</constant> w parametrze
+   <parameter>flags</parameter>.
   </para>
   <para>
-   Aby zezwolić na używanie stałych połączeń, należy ustawić dyrektywę <link
-   linkend="ini.pgsql.allow-persistent">pgsql.allow_persistent</link> w &php.ini;
+   Aby zezwolić na używanie stałych połączeń, należy ustawić dyrektywę 
+   <link linkend="ini.pgsql.allow-persistent">pgsql.allow_persistent</link> w &php.ini;
    na &quot;On&quot; (jest to ustawienie domyślne).
    Maksymalna liczba jednoczesnych trwałych połączeń może być zdefiniowana przez
    dyrektywę <link linkend="ini.pgsql.max-persistent">pgsql.max_persistent</link> w &php.ini;
@@ -74,7 +74,7 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>connect_type</parameter></term>
+     <term><parameter>flags</parameter></term>
      <listitem>
       <para>
        Jeśli podano <constant>PGSQL_CONNECT_FORCE_NEW</constant>, zostanie stworzone
@@ -90,15 +90,38 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Nawiązanie połączenie z serwerem PostgreSQL w przypadku powodzenia, &false; w razie błędu.
+   Zwraca obiekt klasy <classname>PgSql\Connection</classname> w przypadku powodzenia &return.falseforfailure;.
   </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>8.1.0</entry>
+      <entry>
+       Zwraca teraz obiekt klasy <classname>PgSql\Connection</classname>;
+       wcześniej zwracany był <link linkend="language.types.resource">zasób</link>.
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </informaltable>
  </refsect1>
 
  <refsect1 role="examples">
   &reftitle.examples;
   <para>
    <example>
-    <title>Używanie <function>pg_pconnect</function></title>
+    <title>Przykład użycia <function>pg_pconnect</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -134,7 +157,6 @@ $polaczenie4 = pg_pconnect($lancuch_polaczenia);
   </para>
  </refsect1>
 </refentry>
-
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

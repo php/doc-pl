@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: e41806c30bf6975e452c0d4ce35ab0984c2fa68c Maintainer: sobak Status: ready -->
+<!-- EN-Revision: c2eca73ef79ebe78cebb34053e41b565af504c4f Maintainer: sobak Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.2 -->
 <refentry xml:id="function.pg-connect" xmlns="http://docbook.org/ns/docbook">
@@ -11,20 +11,21 @@
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
-   <type>resource</type><methodname>pg_connect</methodname>
-   <methodparam><type>string</type><parameter>łąńcuch_połączenia</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>typ_połączenia</parameter></methodparam>
+   <type class="union"><type>PgSql\Connection</type><type>false</type></type><methodname>pg_connect</methodname>
+   <methodparam><type>string</type><parameter>connection_string</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>flags</parameter><initializer>0</initializer></methodparam>
   </methodsynopsis>
   <para>
-   <function>pg_connect</function> Otwiera tymczasowe połączenie do serwera
-   PostgreSQL określonego przez <parameter>łąńcuch_połączenia</parameter>.
+   <function>pg_connect</function> otwiera tymczasowe połączenie do serwera
+   PostgreSQL określonego przez "łańcuch połączenia" podany w parametrze
+   <parameter>connection_string</parameter>.
   </para>
   <para>
    Jeśli funkcja <function>pg_connect</function> zostanie wywołana drugi raz z 
-   tym samym <parameter>łąńcuchem_połączenia</parameter> jak istniejące połączenie,
-   zostanie zwrócony identyfikator istniejącego połączenia chyba, że podasz 
+   tym samym <parameter>connection_string</parameter> jak istniejące połączenie,
+   to zostanie zwrócony identyfikator istniejącego połączenia, chyba że podasz 
    <constant>PGSQL_CONNECT_FORCE_NEW</constant> jako
-   <parameter>typ_połączenia</parameter>.
+   <parameter>flags</parameter>.
   </para>
   <para>
    Stara składnia z wieloma parametrami
@@ -38,7 +39,7 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>łańcuch_połączenia</parameter></term>
+     <term><parameter>connection_string</parameter></term>
      <listitem>
       <para>
        <parameter>łąńcuch_połączenia</parameter> może być pusty, użyte zostaą wszystkie domyślne parametry lub
@@ -67,7 +68,7 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>typ_połączenia</parameter></term>
+     <term><parameter>flags</parameter></term>
      <listitem>
       <para>
        Jeśli jest podany <constant>PGSQL_CONNECT_FORCE_NEW</constant>, wtedy nowe połączenie
@@ -89,7 +90,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zasób, połączenie do bazy PostgreSQL w przypadku powodzenia, lub &false; gdy zawiedzie.
+   Returns an <classname>PgSql\Connection</classname> instance on success &return.falseforfailure;.
   </para>
  </refsect1>
 
@@ -106,10 +107,10 @@
      </thead>
      <tbody>
       <row>
-       <entry>5.6.0</entry>
+       <entry>8.1.0</entry>
        <entry>
-        Można podać stałą <constant>PGSQL_CONNECT_ASYNC</constant>
-        jako <parameter>typ_połączenia</parameter>.
+        Zwraca obiekt klasy <classname>PgSql\Connection</classname>;
+        wcześniej zwracany był <link linkend="language.types.resource">zasób</link>.
        </entry>
       </row>
      </tbody>
@@ -163,7 +164,6 @@ $dbconn5 = pg_connect("host=localhost options='--client_encoding=UTF8'");
   </para>
  </refsect1>
 </refentry>
-
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: c2eca73ef79ebe78cebb34053e41b565af504c4f Maintainer: sobak Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.6 -->
 <!-- CREDITS: garbus, jarek -->
@@ -13,9 +13,9 @@
   &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>pg_lo_export</methodname>
-   <methodparam choice="opt"><type>resource</type><parameter>polaczenie</parameter></methodparam>
-   <methodparam><type>int</type><parameter>id_obiektu</parameter></methodparam>
-   <methodparam><type>string</type><parameter>sciezka</parameter></methodparam>
+   <methodparam choice="opt"><type>PgSql\Connection</type><parameter>connection</parameter></methodparam>
+   <methodparam><type>int</type><parameter>oid</parameter></methodparam>
+   <methodparam><type>string</type><parameter>pathname</parameter></methodparam>
   </methodsynopsis>
   <para>
    <function>pg_lo_export</function> pobiera wielki obiekt w
@@ -38,26 +38,21 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>polaczenie</parameter></term>
+     <term><parameter>connection</parameter></term>
+     <listitem>
+      &pgsql.parameter.connection-with-unspecified-default;
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>oid</parameter></term>
      <listitem>
       <para>
-       Identyfikator połączenia do bazy PostgreSQL.  Gdy 
-       <parameter>polaczenie</parameter> nie zostało podane, domyślne połączenie
-       zostaje użyte. Domyślnym połączeniem jest ostatnie stworzone przez
-       <function>pg_connect</function> lub <function>pg_pconnect</function>.
+       Identyfikator wielkiego obiektu (Large Object) w bazie danych.
       </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>id_obiektu</parameter></term>
-     <listitem>
-      <para>
-       Identyfikator wielkiego obiektu w bazie danych.
-      </para>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
-     <term><parameter>sciezka</parameter></term>
+     <term><parameter>pathname</parameter></term>
      <listitem>
       <para>
        Pełna ścieżka i nazwa pliku, do którego zostanie zapisana
@@ -76,11 +71,28 @@
   </para>
  </refsect1>
 
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     &pgsql.changelog.connection-object;
+    </tbody>
+   </tgroup>
+  </informaltable>
+ </refsect1>
+
  <refsect1 role="examples">
   &reftitle.examples;
   <para>
    <example>
-    <title><function>pg_lo_export</function> - przykład</title>
+    <title>Przykład użycia <function>pg_lo_export</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php

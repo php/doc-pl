@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 4501571c0db3a88528af1c5bcf8cb7193eec6961 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 2fa74a5512c0a7d3eabe39b1060646fc32f253f5 Maintainer: sobak Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.80 -->
 <!-- CREDITS: garbus, jarek -->
@@ -14,22 +14,42 @@
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
-   <type>mixed</type><methodname>pg_select</methodname>
-   <methodparam><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
-   <methodparam><type>string</type><parameter>nazwa_tabeli</parameter></methodparam>
-   <methodparam><type>array</type><parameter>tablica_asocjacyjna</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>opcje</parameter><initializer>PGSQL_DML_EXEC</initializer></methodparam>
+   <type class="union"><type>array</type><type>string</type><type>false</type></type><methodname>pg_select</methodname>
+   <methodparam><type>PgSql\Connection</type><parameter>connection</parameter></methodparam>
+   <methodparam><type>string</type><parameter>table_name</parameter></methodparam>
+   <methodparam><type>array</type><parameter>conditions</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>flags</parameter><initializer><constant>PGSQL_DML_EXEC</constant></initializer></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>mode</parameter><initializer><constant>PGSQL_ASSOC</constant></initializer></methodparam>
   </methodsynopsis>
   <para>
    <function>pg_select</function> wybiera wiersze określone przez tablicę
-   <literal>tablica_asocjacyjna</literal> która zawiera dane w postaci: 
+   <literal>conditions</literal> która zawiera dane w postaci: 
    <literal>kolumna=>wartość</literal>. Jeśli zapytanie się powiedzie, zwraca tablicę
    zawierającą wszystkie wiersze i kolumny spełniające warunek określony przez 
-   <literal>tablica_asocjacyjna</literal>
+   <literal>conditions</literal>
   </para>
-  <para>Jeśli określono parametr <literal>opcje</literal> to funkcja,
-   <function>pg_convert</function> stosuje do tablicy
-   <literal>tablica_asocjacyjna</literal> określone flagi.
+  <para>
+   Jeśli określono parametr <literal>flags</literal> to funkcja,
+   <function>pg_convert</function> zostanie zastosowana do tablicy
+   <literal>conditions</literal> z użyciem podanych flag.
+  </para>
+  <para>
+   Jeśli został ustawiony parametr <parameter>mode</parameter>,
+   to zwrócona zostanie wartość w postaci tablicy,
+   jeśli użyto <constant>PGSQL_NUM</constant>; tablicy asocjacyjnej,
+   jeśli użyto <constant>PGSQL_ASSOC</constant> (domyślnie); lub obu,
+   jeśli użyto <constant>PGSQL_BOTH</constant>.
+  </para>
+  <para>
+   Domyślnie <function>pg_select</function> przekazuje surowe wartości.
+   Wartości muszą mieć dodane znaki ucieczki lub należy podać flagę PGSQL_DML_ESCAPE.
+   PGSQL_DML_ESCAPE dodaje cudzysłowy i znaki ucieczki do parametrów/identyfikatorów.
+   W związku z tym nazwy tabeli i kolumn stają się wrażliwe na wielkość znaków.
+  </para>
+  <para>
+   Note that neither escape nor prepared query can protect LIKE query,
+   JSON, Array, Regex, etc. These parameters should be handled
+   according to their contexts. i.e. Escape/validate values.
   </para>
  </refsect1>
 
@@ -38,15 +58,13 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>identyfikator_połączenia</parameter></term>
+     <term><parameter>connection</parameter></term>
      <listitem>
-      <para>
-       Identyfikator połączenia do bazy PostgreSQL.
-      </para>
+      &pgsql.parameter.connection;
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>nazwa_tabeli</parameter></term>
+     <term><parameter>table_name</parameter></term>
      <listitem>
       <para>
        Nazwa tabeli, z której będą wybrane wiersze.
@@ -54,39 +72,76 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>tablica_asocjacyjna</parameter></term>
+     <term><parameter>conditions</parameter></term>
      <listitem>
       <para>
-       Tablica (ang. <type>array</type>), której kluczami są nazwy pól w tabeli <parameter>nazwa_tabeli</parameter>,
+       Tablica (ang. <type>array</type>), której kluczami są nazwy pól w tabeli <parameter>table_name</parameter>,
        oraz której wartości są warunkami, które muszą spełniać wyszukiwane wiersze.
       </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>opcje</parameter></term>
+     <term><parameter>flags</parameter></term>
      <listitem>
       <para>
-       Dowolna kombinacja dowolnej ilości parametrów: <constant>PGSQL_CONV_FORCE_NULL</constant>,
+       Any number of <constant>PGSQL_CONV_FORCE_NULL</constant>,
        <constant>PGSQL_DML_NO_CONV</constant>,
        <constant>PGSQL_DML_ESCAPE</constant>,
        <constant>PGSQL_DML_EXEC</constant>,
-       <constant>PGSQL_DML_ASYNC</constant> oraz
-       <constant>PGSQL_DML_STRING</constant>. Jeśli <constant>PGSQL_DML_STRING</constant> jest częścią podanego parametru
-       <parameter>opcje</parameter>, zostanie zwrócony łańcuch zapytania. Kiedy ustawione jest
-       <constant>PGSQL_DML_NO_CONV</constant> lub <constant>PGSQL_DML_ESCAPE</constant>, funkcja nie wykonuje <function>pg_convert</function>
-       wewnętrznie.
+       <constant>PGSQL_DML_ASYNC</constant> or
+       <constant>PGSQL_DML_STRING</constant> combined. If <constant>PGSQL_DML_STRING</constant> is part of the
+       <parameter>flags</parameter> then the query string is returned. When <constant>PGSQL_DML_NO_CONV</constant>
+       or <constant>PGSQL_DML_ESCAPE</constant> is set, it does not call <function>pg_convert</function> internally.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>mode</parameter></term>
+     <listitem>
+      <para>
+       Dowolna kombinacja dowolnej ilości parametrów: <constant>PGSQL_ASSOC</constant>,
+       <constant>PGSQL_NUM</constant> or
+       <constant>PGSQL_BOTH</constant>
+       Jeśli użyto <constant>PGSQL_ASSOC</constant>, to zwrócona zostanie tablica asocjacyjna..
+       Jeśli użyto <constant>PGSQL_NUM</constant>, to zostanie zwrócona zwykła tablica <type>array</type>, a
+       jeśli <constant>PGSQL_BOTH</constant>, to zwrócona zostanie zarówno tablica asocjacyjna
+       oraz indeksowana numerycznie.
       </para>
      </listitem>
     </varlistentry>
    </variablelist>
   </para>
  </refsect1>
-
+ 
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   &return.success;  Returns <type>string</type> if <constant>PGSQL_DML_STRING</constant> is passed
-   via <parameter>options</parameter>.
+   Zwraca ciąg znaków (<type>string</type>) jeśli przekazano <constant>PGSQL_DML_STRING</constant> poprzez
+   parametr <parameter>flags</parameter>, w przeciwnym razie zwraca tablicę (<type>array</type>) w wypadku powodzenia &return.falseforfailure;.
+  </para>
+ </refsect1>
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      &pgsql.changelog.connection-object;
+      <row>
+       <entry>7.1.0</entry>
+       <entry>
+        Dodano parametr <parameter>mode</parameter>.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
   </para>
  </refsect1>
 
@@ -94,13 +149,15 @@
   &reftitle.examples;
   <para>
    <example>
-    <title><function>pg_select</function> example</title>
+    <title>Przykład użycia <function>pg_select</function></title>
     <programlisting role="php">
-<![CDATA[
+     <![CDATA[
 <?php 
   $db = pg_connect('dbname=foo');
-  // This is safe, since $_POST is converted automatically
-  $rec = pg_select($db, 'post_log', $_POST);
+  // This is safe somewhat, since all values are escaped.
+  // However PostgreSQL supports JSON/Array. These are not
+  // safe by neither escape nor prepared query.
+  $rec = pg_select($db, 'post_log', $_POST, PG_DML_ESCAPE);
   if ($rec) {
       echo "Records selected\n";
       var_dump($rec);
@@ -114,38 +171,6 @@
   </para>
  </refsect1>
 
- <refsect1 role="changelog">
-  &reftitle.changelog;
-  <para>
-   <informaltable>
-    <tgroup cols="2">
-     <thead>
-      <row>
-       <entry>&Version;</entry>
-       <entry>&Description;</entry>
-      </row>
-     </thead>
-     <tbody>
-      <row>
-       <entry>5.6.0</entry>
-       <entry>
-        Funkcja nie jest dłużej eksperymentalna. Dodano stałą <constant>PGSQL_DML_ESCAPE</constant> oraz
-        wsparcie typów danych &true;/&false; i &null;.
-       </entry>
-      </row>
-      <row>
-       <entry>5.5.3/5.4.19</entry>
-       <entry>
-        Bezpośredni atak SQL injection na parametr <parameter>nazwa_tabeli</parameter> i pośredni
-        na identyfikatory został uniemożliwiony.
-       </entry>
-      </row>
-     </tbody>
-    </tgroup>
-   </informaltable>
-  </para>
- </refsect1>
-
  <refsect1 role="seealso">
   &reftitle.seealso;
   <para>
@@ -155,7 +180,6 @@
   </para>
  </refsect1>
 </refentry>
-
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

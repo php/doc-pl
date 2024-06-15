@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: garbus Status: ready -->
+<!-- EN-Revision: c2eca73ef79ebe78cebb34053e41b565af504c4f Maintainer: garbus Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.2 -->
 <!-- CREDITS: jarek -->
@@ -13,15 +13,15 @@
   &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>pg_free_result</methodname>
-   <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
+   <methodparam><type>PgSql\Result</type><parameter>result</parameter></methodparam>
   </methodsynopsis>
   <para>
    <function>pg_free_result</function> zwalnia pamięć i danych związanych z
-   określonym identyfikatorem wyniku PostgreSQL (ang. typ <type>resource</type>).
+   określonym obiektem <classname>PgSql\Result</classname>.
   </para>
   <para>
-   Tę funkcję trzeba wywołać jeśli zużywanie
-   pamięci podczas wykonywania skryptu stanowi problem.   W przeciwnym wypadku, cała pamięć przeznaczona dla
+   Tę funkcję trzeba wywołać, jeśli zużywanie
+   pamięci podczas wykonywania skryptu stanowi problem. W przeciwnym wypadku, cała pamięć przeznaczona dla
    wyniku zostanie automatycznie zwolniona, gdy skrypt zakończy się.
   </para>
   <note>
@@ -36,13 +36,9 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>wynik</parameter></term>
+     <term><parameter>result</parameter></term>
      <listitem>
-      <para>
-       Identyfikator wyniku PostgreSQL, zwrócony przez <function>pg_query</function>,
-       <function>pg_query_params</function> lub <function>pg_execute</function>
-       (między innymi).
-      </para>
+      &pgsql.parameter.result;
      </listitem>
     </varlistentry>
    </variablelist>
@@ -56,11 +52,28 @@
   </para>
  </refsect1>
 
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     &pgsql.changelog.result-object;
+    </tbody>
+   </tgroup>
+  </informaltable>
+ </refsect1>
+
  <refsect1 role="examples">
   &reftitle.examples;
   <para>
    <example>
-    <title><function>pg_free_result</function> - przykład</title>
+    <title>Przykład użycia <function>pg_free_result</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php

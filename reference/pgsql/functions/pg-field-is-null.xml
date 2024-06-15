@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: garbus Status: ready -->
+<!-- EN-Revision: 39bb8a868935a56cfce438b0169e13c02c93211c Maintainer: garbus Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.2 -->
 <!-- CREDITS: jarek -->
@@ -13,18 +13,18 @@
   &reftitle.description;
   <methodsynopsis>
    <type>int</type><methodname>pg_field_is_null</methodname>
-   <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
-   <methodparam><type>int</type><parameter>wiersz</parameter></methodparam>
-   <methodparam><type>mixed</type><parameter>pole</parameter></methodparam>
+   <methodparam><type>PgSql\Result</type><parameter>result</parameter></methodparam>
+   <methodparam><type class="union"><type>string</type><type>false</type><type>null</type></type><parameter>row</parameter></methodparam>
+   <methodparam><type>mixed</type><parameter>field</parameter></methodparam>
   </methodsynopsis>
   <methodsynopsis>
    <type>int</type><methodname>pg_field_is_null</methodname>
-   <methodparam><type>resource</type><parameter>wynik</parameter></methodparam>
-   <methodparam><type>mixed</type><parameter>pole</parameter></methodparam>
+   <methodparam><type>PgSql\Result</type><parameter>result</parameter></methodparam>
+   <methodparam><type>mixed</type><parameter>field</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>pg_field_is_null</function> sprawdza, czy pole identyfikatora
-   wyniku  PostgreSQL jest wartością <literal>NULL</literal> SQL-a czy nie.
+   <function>pg_field_is_null</function> sprawdza, czy pole w obiekcie <classname>PgSql\Result</classname>
+   jest wartością <literal>NULL</literal> SQL-a czy nie.
   </para>
   <note>
    <para>
@@ -38,17 +38,13 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>wynik</parameter></term>
+     <term><parameter>result</parameter></term>
      <listitem>
-      <para>
-       Identyfikator wyniku PostgreSQL-q, zwrócony przez <function>pg_query</function>,
-       <function>pg_query_params</function> lub <function>pg_execute</function>
-       (między innymi).
-      </para>
+      &pgsql.parameter.result;
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>wiersz</parameter></term>
+     <term><parameter>row</parameter></term>
      <listitem>
       <para>
        Numer wiersza w wyniku do pobrania.  Wiersze są numerowane od zera, w górę.  Jeśli nie podano,
@@ -57,11 +53,11 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>pole</parameter></term>
+     <term><parameter>field</parameter></term>
       <listitem>
        <para>
-        Numer pola (zaczynając od zera) jako typ całkowity (ang. <type>integer</type>) lub
-        nazwa pola jako łańcuch (ang. <type>string</type>).
+        Numer pola (zaczynając od zera) jako liczba (<type>int</type>) lub
+        nazwa pola jako łańcuch (<type>string</type>).
        </para>
      </listitem>
     </varlistentry>
@@ -77,11 +73,34 @@
   </para>
  </refsect1>
 
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>8.3.0</entry>
+      <entry>
+       Parametr <parameter>row</parameter> dopuszcza teraz &null;.
+      </entry>
+     </row>
+     &pgsql.changelog.result-object;
+    </tbody>
+   </tgroup>
+  </informaltable>
+ </refsect1>
+
  <refsect1 role="examples">
   &reftitle.examples;
   <para>
    <example>
-    <title><function>pg_field_is_null</function> - przykład</title>
+    <title>Przykład użycia <function>pg_field_is_null</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php

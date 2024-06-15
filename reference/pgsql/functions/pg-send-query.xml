@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: c2eca73ef79ebe78cebb34053e41b565af504c4f Maintainer: joeaccord Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.2 -->
 <!-- CREDITS: jarek, garbus -->
-<refentry xml:id='function.pg-send-query' xmlns="http://docbook.org/ns/docbook">
+<refentry xml:id="function.pg-send-query" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>pg_send_query</refname>
   <refpurpose>
@@ -14,13 +14,13 @@
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
-   <type>bool</type><methodname>pg_send_query</methodname>
-   <methodparam><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
-   <methodparam><type>string</type><parameter>zapytanie</parameter></methodparam>
+   <type class="union"><type>int</type><type>bool</type></type><methodname>pg_send_query</methodname>
+   <methodparam><type>PgSql\Connection</type><parameter>connection</parameter></methodparam>
+   <methodparam><type>string</type><parameter>query</parameter></methodparam>
   </methodsynopsis>
   <para>
    <function>pg_send_query</function> wysyła asynchroniczne zapytanie lub zapytania do połączenia
-   określonego przez <parameter>identyfikator_połączenia</parameter>. W przeciwieństwie do
+   określonego przez <parameter>connection</parameter>. W przeciwieństwie do
    <function>pg_query</function>, pozwala wysłać jednorazowo wiele zapytań do PostgreSQL-a, na następnie
    pobrać wyniki jeden po drugim używając funkcji
    <function>pg_get_result</function>.
@@ -44,22 +44,19 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>identyfikator_połączenia</parameter></term>
+     <term><parameter>connection</parameter></term>
      <listitem>
-      <para>
-       Identyfikator połączenia do bazy PostgreSQL.
-      </para>
+      &pgsql.parameter.connection;
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>zapytanie</parameter></term>
+     <term><parameter>query</parameter></term>
      <listitem>
       <para>
        Instrukcja lub instrukcje SQL do wykonania.
       </para>
       <para>
-       Dane w zapytaniu powinny posiadać <link
-       linkend="function.pg-escape-string">znaki unikowe</link>.
+       Dane w zapytaniu powinny posiadać <link linkend="function.pg-escape-string">znaki unikowe</link>.
       </para>
      </listitem>
     </varlistentry>
@@ -69,10 +66,27 @@
 
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
-  <para>&return.success;</para>
   <para>
-   Użyj <function>pg_get_result</function>, aby ustalić wynik zapytania. 
+   Zwraca &true; w wypadku powodzenia, &false; lub <literal>0</literal> w razie niepowodzenia.  Użyj <function>pg_get_result</function>,
+   aby ustalić wynik zapytania.
   </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     &pgsql.changelog.connection-object;
+    </tbody>
+   </tgroup>
+  </informaltable>
  </refsect1>
 
  <refsect1 role="examples">
@@ -127,7 +141,6 @@ Resource id #4 ma 5 wpisów
   </para>
  </refsect1>
 </refentry>
-
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml
