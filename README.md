@@ -191,7 +191,7 @@ mniejsze ilości plików. W ten sposób będzie mniej do ewentualnej poprawki po
 zwiększać ilość zmian, wraz z nabieraniem doświadczenia ...choć też bez przesady ze zmianami w jednym pull requeście, żeby
 przeglądanie zmian nie trwało wieków, bo to może być demotywujące :)
 
-Commity tworzymy w języku angielskim, choćby ze względu na to, że pewne zmiany struktury są wykonywane przez ludzi z różnych
+Opisy commitów tworzymy w języku angielskim, choćby ze względu na to, że pewne zmiany struktury są wykonywane przez ludzi z różnych
 krajów dla wszystkich tłumaczeń jednocześnie, tak więc w ten prosty sposób znacząco ułatwiamy pracę komukolwiek spoza Polski.
 
 Po przygotowaniu zmian w forku należy [otworzyć pull request][gh-prs] do repozytorium `php/doc-pl`, a następnie poczekać
