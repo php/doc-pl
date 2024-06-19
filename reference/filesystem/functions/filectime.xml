@@ -1,58 +1,109 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: adi Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 871a231f4a1caa5fb258ae53b1bb7d1fb2a0f949 Maintainer: grzesiek Status: ready -->
 <!-- $Revision$ -->
-<refentry xml:id="function.filectime" xmlns="http://docbook.org/ns/docbook">
+<!-- CREDITS: sobak, adi -->
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.filectime">
  <refnamediv>
   <refname>filectime</refname>
-  <refpurpose>Pobiera i-węzłowy czas zmiany pliku</refpurpose>
+  <refpurpose>Pobiera czas zmiany inode pliku</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
-   <type>int</type><methodname>filectime</methodname>
-   <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
+   <type class="union"><type>int</type><type>false</type></type><methodname>filectime</methodname>
+   <methodparam><type>string</type><parameter>filename</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Zwraca czas, ostatniej zmiany pliku lub &false; w
-   przypadku błędu. Czas jest zwracany w postaci unix'owego znacznika
-   czasu.
+   Pobiera czas zmiany inode pliku.
   </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
   <para>
-   Uwaga: W większości Unixowych systemów plików, plik ulega zmianie
-   wtedy kiedy dane jego i-węzła zmieniają się; tj. kiedy prawa dostępu,
-   właściciel, grupa lub inne metadane z i-węzłą są nadpisywane.
-   Patrz także: <function>filemtime</function> (którą powinnieneś użyć, gdy chcesz stworzyć
-   stopkę strony "Ostatnia Modyfikacja") i
-   <function>fileatime</function>.
+   <variablelist>
+    <varlistentry>
+     <term><parameter>filename</parameter></term>
+     <listitem>
+      <para>
+       Scieżka do pliku.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
   </para>
-  <para>Zauważ także, że w niektórych tekstach Unixowych ctime pliku jest
-   określany jako będący czasem stworzenia pliku. To jest nieprawidłowe.
-   Nie ma pojęcia czasu stworzenia dla plików Unixowych większości Unixowych systemów plików.
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca czas ostatniej zmiany pliku &return.falseforfailure;.
+   Czas jest zwracany jako uniksowy znacznik czasu.
   </para>
-    &note.clearstatcache;
-    &tip.fopen-wrapper.stat;
-    <para>
-     <example>
-      <title><function>filectime</function> przykład</title>
-      <programlisting role="php">
+ </refsect1>
+
+ <refsect1 role="errors">
+  &reftitle.errors;
+  &fs.emits.warning.on.failure;
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład <function>filectime</function></title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 
-// wyświetli np. jakisplik.txt został ostatnio zmieniony : December 29 2002 22:16:23.
+// zwróci n.p.  został ostatnio zmieniony: December 29 2002 22:16:23.
 
-$filename = 'jakisplik.txt';
+$filename = 'somefile.txt';
 if (file_exists($filename)) {
-  echo "$filename został ostatnio zmieniony : " . date("F d Y H:i:s.", filectime($filename));
+    echo "$filename was last changed: " . date("F d Y H:i:s.", filectime($filename));
 }
+
 ?>
 ]]>
     </programlisting>
    </example>
   </para>
-  <simpara>
-   Patrz także: <function>filemtime</function>
-  </simpara>
  </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  <note>
+   <para>
+    Uwaga: W większości uniksowych systemów plików plik jest uważany za zmieniony,
+    gdy zmienią się dane jego i-węzła; to znaczy, gdy uprawnienia, właściciel, grupa lub
+    inne metadane z i-węzła zostaną zaktualizowane. Zobacz także
+    <function>filemtime</function> (to jest to, czego chcesz użyć, gdy chcesz
+    utworzyć stopki "Last Modified" na stronach internetowych) i
+    <function>fileatime</function>.
+   </para>
+  </note>
+  <note>
+   <para>
+    Należy również zauważyć, że w niektórych tekstach uniksowych ctime pliku jest
+    określany jako czas utworzenia pliku. Jest to błędne. W większości uniksowych
+    systemów plików nie ma czasu utworzenia pliku.
+   </para>
+  </note>
+  &note.filesystem-time-res;
+  &note.clearstatcache;
+  &tip.fopen-wrapper.stat;
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>filemtime</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
 </refentry>
 
 <!-- Keep this comment at the end of the file

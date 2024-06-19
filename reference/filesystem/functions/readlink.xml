@@ -1,33 +1,66 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: adi Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 0c9c2dd669fe9395eaa73d487fbd160f9057429a Maintainer: grzesiek Status: ready -->
 <!-- $Revision$ -->
 <!-- splitted from ./pl/functions/filesystem.xml, last change in rev 1.1 -->
 <!-- last change to 'readlink' in en/ tree in rev 1.2 -->
 <!-- OLD-Revision: 1.115/EN.1.2 -->
+<!-- CREDITS: sobak, adi -->
 <refentry xml:id="function.readlink" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>readlink</refname>
-  <refpurpose>Zwraca cel linku symbolicznego</refpurpose>
+  <refpurpose>Zwraca cel dowiązania symbolicznego</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
-   <type>string</type><methodname>readlink</methodname>
-   <methodparam><type>string</type><parameter>ścieżka</parameter></methodparam>
+   <type class="union"><type>string</type><type>false</type></type><methodname>readlink</methodname>
+   <methodparam><type>string</type><parameter>path</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>readlink</function> jest tym samym co funkcja języka C readlink
-   i zwraca ścieżkę linku symbolicznego lub &false;
-   w przypadku błędu.
+   <function>readlink</function> robi to samo, co funkcja readlink języka C.
   </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>path</parameter></term>
+     <listitem>
+      <para>
+       Ścieżka dowiązania symbolicznego.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca zawartość ścieżki dowiązania symbolicznego lub &false; w przypadku błędu.
+  </para>
+  <note>
+   <simpara>
+    Funkcja nie powiedzie się, jeśli parametr <parameter>path</parameter> nie jest dowiązaniem
+    symbolicznym, z wyjątkiem systemu Windows, gdzie zwrócona zostanie znormalizowana ścieżka.
+   </simpara>
+  </note>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
    <example>
-    <title><function>readlink</function> przykład</title>
+    <title>Przykład <function>readlink</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
 
-// wynik np. /boot/vmlinux-2.4.20-xfs
+// wyświetli n.p. /boot/vmlinux-2.4.20-xfs
 echo readlink('/vmlinuz');
 
 ?>
@@ -35,15 +68,20 @@ echo readlink('/vmlinuz');
     </programlisting>
    </example>
   </para>
-  &note.no-windows;
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
   <para>
-   Patrz takżę: <function>is_link</function>,
-   <function>symlink</function> i
-   <function>linkinfo</function>.
+   <simplelist>
+    <member><function>is_link</function></member>
+    <member><function>symlink</function></member>
+    <member><function>linkinfo</function></member>
+   </simplelist>
   </para>
  </refsect1>
-</refentry>
 
+</refentry>
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

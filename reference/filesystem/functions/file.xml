@@ -1,117 +1,177 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: adi Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 2957432ebc5ba2770805c08d5c867543ced8dd85 Maintainer: grzesiek Status: ready -->
 <!-- $Revision$ -->
-<refentry xml:id="function.file" xmlns="http://docbook.org/ns/docbook">
+<!-- CREDITS: sobak, adi -->
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.file">
  <refnamediv>
   <refname>file</refname>
-  <refpurpose>Czyta całą zawartość pliku do tablicy</refpurpose>
+  <refpurpose>Wczytuje cały plik do tablicy</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
-   <type>array</type><methodname>file</methodname>
-   <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>flagi</parameter></methodparam>
-   <methodparam choice="opt"><type>resource</type><parameter>kontekst</parameter></methodparam>
+   <type class="union"><type>array</type><type>false</type></type><methodname>file</methodname>
+   <methodparam><type>string</type><parameter>filename</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>flags</parameter><initializer>0</initializer></methodparam>
+   <methodparam choice="opt"><type class="union"><type>resource</type><type>null</type></type><parameter>context</parameter><initializer>&null;</initializer></methodparam>
   </methodsynopsis>
   <para>
-   Działa podobnie do <function>file_get_contents</function>, tylko że
-   <function>file</function> zwraca plik w tablicy. Każdy
-   element tablicy odpowiada linii w pliku. Elementy tablicy zawierają
-   znak nowej linii. W przypadku błędu, <function>file</function>
-   zwraca &false;.
+   Wczytuje cały plik do tablicy.
   </para>
+  <note>
+   <para>
+    Możesz użyć funkcji <function>file_get_contents</function>, aby zwrócić zawartość
+    pliku jako ciąg znaków.
+   </para>
+  </note>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
   <para>
-   Opcjonalny parametr <parameter>flagi</parameter> może być jedną lub więcej, z
-   następujących stałych:
    <variablelist>
     <varlistentry>
-     <term>
-      <constant>FILE_USE_INCLUDE_PATH</constant>
-     </term>
+     <term><parameter>filename</parameter></term>
      <listitem>
-      <simpara>
-       Poszukuj pliku w <link linkend="ini.include-path">include_path</link>.
-      </simpara>
+      <para>
+       Ścieżka do pliku.
+      </para>
+      &tip.fopen-wrapper;
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term>
-      <constant>FILE_IGNORE_NEW_LINES</constant>
-     </term>
+     <term><parameter>flags</parameter></term>
      <listitem>
-      <simpara>
-       Nie dodawaj nowej lini na na końcu każdego elementu tablicy.
-      </simpara>
+      <para>
+       Opcjonalny parametr <parameter>flags</parameter> może być jedną lub
+       kilkoma z następujących stałych:
+       <variablelist>
+        <varlistentry>
+         <term>
+          <constant>FILE_USE_INCLUDE_PATH</constant>
+         </term>
+         <listitem>
+          <simpara>
+           Wyszukuje plik w <link 
+           linkend="ini.include-path">include_path</link>.
+          </simpara>
+         </listitem>
+        </varlistentry>
+        <varlistentry>
+         <term>
+          <constant>FILE_IGNORE_NEW_LINES</constant>
+         </term>
+         <listitem>
+          <simpara>
+           Pomija znak nowej linii na końcu każdego elementu tablicy
+          </simpara>
+         </listitem>
+        </varlistentry>
+        <varlistentry>
+         <term>
+          <constant>FILE_SKIP_EMPTY_LINES</constant>
+         </term>
+         <listitem>
+          <simpara>
+           Pomija puste linie
+          </simpara>
+         </listitem>
+        </varlistentry>
+        <varlistentry>
+         <term>
+          <constant>FILE_NO_DEFAULT_CONTEXT</constant>
+         </term>
+         <listitem>
+          <simpara>
+           Nie używa domyślnego kontekstu
+          </simpara>
+         </listitem>
+        </varlistentry>
+       </variablelist>
+      </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term>
-      <constant>FILE_SKIP_EMPTY_LINES</constant>
-     </term>
+     <term><parameter>context</parameter></term>
      <listitem>
-      <simpara>
-       Pomiń puste linie.
-      </simpara>
+       &note.context-support;
      </listitem>
     </varlistentry>
    </variablelist>
   </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca plik w postaci tablicy. Każdy element tablicy odpowiada
+   linii w pliku, z dołączoną nową linią. W przypadku niepowodzenia
+   <function>file</function> zwraca &false;.
+  </para>
   <note>
    <para>
-    Przed PHP 5.0.0 parametr <parameter>flagi</parameter> jedynie
-    ukrywał <link linkend="ini.include-path">include_path</link> i był
-    włączany przez 1.
+    Każda linia w wynikowej tablicy będzie zawierała zakończenie linii, 
+    chyba że zostanie użyta stała <constant>FILE_IGNORE_NEW_LINES</constant>.
    </para>
   </note>
+  &note.line-endings;
+ </refsect1>
+
+ <refsect1 role="errors">
+  &reftitle.errors;
   <para>
-   <informalexample>
+   Emituje błąd poziomu <constant>E_WARNING</constant>, jeśli plik nie
+   istnieje.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład <function>file</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
-// Pobierz plik do tablicy. W tym przykładzie poprzez HTTP pobierzemy
-// źródło HTML z URL
+// Pobieranie pliku do tablicy.  W tym przykładzie przejdziemy przez HTTP, aby uzyskać
+// źródło HTML adresu URL.
 $lines = file('http://www.example.com/');
-// Za pomocą pętli przeglądamy naszą tablicę i pokazujemy źródło strony w postaci
-// źródła HTML oraz numery linii.
-  foreach ($lines as $line_num => $line) {
-      echo "Linia #<b>{$line_num}</b> : " . htmlspecialchars($line) . "<br />\n";
+
+// Pętla przez naszą tablicę, wyświetla źródło HTML jako źródło HTML; a także numery linii.
+foreach ($lines as $line_num => $line) {
+    echo "Line #<b>{$line_num}</b> : " . htmlspecialchars($line) . "<br />\n";
 }
 
-// Kolejny przyklad pozwala pobrać stronę i umieścić ją w łańcuchu znaków  Zobacz także file_get_contents().
-$html = implode ('', file ('http://www.example.com/'));
+// Używanie opcjonalnego parametru flags
+$trimmed = file('somefile.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 ?>
 ]]>
     </programlisting>
-   </informalexample>
-  </para>
-    &tip.fopen-wrapper;
-    <note>
-     <para>
-      Każda linia w wynikowej tabeli będzie zawierać znak(i) końca linii chyba, że jest użyte FILE_IGNORE_NEW_LINES,
-      jeśli nie chcesz ich musisz uzyć <function>rtrim</function>.
-     </para>
-    </note>
-    &note.line-endings;
-  <note>
-   <para>
-    W PHP 4.3.0 możesz użyć <function>file_get_contents</function> aby
-    zwrócić zawartość pliku do łańcucha.
-   </para>
-   <para>
-     W PHP 4.3.0 <function>file</function> stał się binarnie bezpieczny.
-   </para>
-  </note>
-    &note.context-support;
-    &warn.ssl-non-standard;
-  <para>
-   Patrz także: <function>readfile</function>,
-   <function>fopen</function>, <function>fsockopen</function>,
-   <function>popen</function>, <function>file_get_contents</function>,
-   <function>include</function> i
-   <function>stream_context_create</function>.
+   </example>
   </para>
  </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  &warn.ssl-non-standard;
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>file_get_contents</function></member>
+    <member><function>readfile</function></member>
+    <member><function>fopen</function></member>
+    <member><function>fsockopen</function></member>
+    <member><function>popen</function></member>
+    <member><function>include</function></member>
+    <member><function>stream_context_create</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
 </refentry>
 
 <!-- Keep this comment at the end of the file

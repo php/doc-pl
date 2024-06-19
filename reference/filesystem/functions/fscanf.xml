@@ -1,55 +1,97 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: adi Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 4225e50bc391ddba99e367c231463da0dc04357d Maintainer: grzesiek Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: sobak, adi -->
 <refentry xml:id="function.fscanf" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>fscanf</refname>
-  <refpurpose>Przetwarza dane z pliku według formatu</refpurpose>
+  <refpurpose>Parsuje dane wejściowe z pliku zgodnie z formatem</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
-   <type>mixed</type><methodname>fscanf</methodname>
-   <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam>
+   <type class="union"><type>array</type><type>int</type><type>false</type><type>null</type></type><methodname>fscanf</methodname>
+   <methodparam><type>resource</type><parameter>stream</parameter></methodparam>
    <methodparam><type>string</type><parameter>format</parameter></methodparam>
-   <methodparam choice="opt"><type>mixed</type><parameter role="reference">...</parameter></methodparam>
+   <methodparam rep="repeat"><type>mixed</type><parameter role="reference">vars</parameter></methodparam>
   </methodsynopsis>
   <para>
    Funkcja <function>fscanf</function> jest podobna do
    <function>sscanf</function>, ale pobiera dane wejściowe z pliku
-   skojarzonego z <parameter>uchwyt</parameter>em i interpretuje je
-   zgodnie z podanym <parameter>format</parameter>em, który opisany jest
-   w dokumentacji do <function>sprintf</function>.
-   Jeśli tylko dwa parametry zostaną podane do funkcji, przetworzone
-   wartości zostaną zwrócone w tablicy.
-   W przeciwnym razie, jeśli opcjonalne parametry zostaną podane,
-   funkcja zwróci numer przypisany do wartości. Opcjonalny parametr
-   musi być podawany przez referencje.
+   powiązanego ze strumieniem <parameter>stream</parameter> i interpretuje dane
+   wejściowe zgodnie z określonym formatem określonym przez <parameter>format</parameter>. 
   </para>
   <para>
-   Dowolny biały znak w łańcuchu formatującym pasuje do dowolnego białego znaku
-   w strumieniu wejściowym. To znaczy, że nawet tabulacja <literal>\t</literal>
-   w łańcuchu formatującym może być dopasowana do pojedynczego znaku spacji
-   w strumieniu wejściowym.
+   Dowolny biały znak w ciągu formatu pasuje do dowolnego białego znaku w strumieniu
+   wejściowym. Oznacza to, że nawet tabulator (<literal>\t</literal>) w ciągu formatu
+   może odpowiadać pojedynczemu znakowi spacji w strumieniu wejściowym.
   </para>
+  <para>
+   Każde wywołanie <function>fscanf</function> odczytuje jedną linię z pliku.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>stream</parameter></term>
+     <listitem>
+      &fs.file.pointer;
+     </listitem>
+    </varlistentry>
+    &strings.scanf.parameter.format;
+    <varlistentry>
+     <term><parameter>vars</parameter></term>
+     <listitem>
+      <para>
+       Opcjonalnie przypisane wartości.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Jeśli do tej funkcji przekazano tylko dwa parametry, przeanalizowane wartości
+   zostaną zwrócone jako tablica. W przeciwnym razie, jeśli przekazano opcjonalne
+   parametry funkcja zwróci liczbę przypisanych wartości. Opcjonalne parametry
+   muszą być przekazywane przez odniesienie. 
+  </para>
+  <para>
+   Jeśli w paraetrze <parameter>format</parameter> oczekiwanych jest więcej podciągów
+   niż jest dostępnych w parametrze <parameter>string</parameter> zostanie zwrócone
+   &null;. W przypadku innych błędów zosatnie zwrócone &false;.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
    <example>
-    <title><function>fscanf</function> Przykład</title>
+    <title>Przykład <function>fscanf</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
-$uchwyt = fopen("users.txt", "r");
-while ($userinfo = fscanf($uchwyt, "%s\t%s\t%s\n")) {
+$handle = fopen("users.txt", "r");
+while ($userinfo = fscanf($handle, "%s\t%s\t%s\n")) {
     list ($name, $profession, $countrycode) = $userinfo;
-     //... zrób coś z wartościami
+    //... robi coś z wartościami
 }
-fclose($uchwyt);
+fclose($handle);
 ?>
 ]]>
     </programlisting>
    </example>
+  </para>
+  <para>
    <example>
-    <title>Zawartość pliku users.txt</title>
+    <title>Zawartość users.txt</title>
     <programlisting role="txt">
 <![CDATA[
 javier  argonaut        pe
@@ -60,21 +102,23 @@ luigi   florist it
     </programlisting>
    </example>
   </para>
-  <note>
-   <simpara>
-    Przed PHP 4.3.0, maksymalną liczbą znaków czytanych z pliku było
-    512 (lub do pierwszego wystąpienia \n, cokolwiek nastąpiło pierwsze).
-    Od PHP 4.3.0 dowolnie długie linie są czytane i skanowane.
-   </simpara>
-  </note>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
   <para>
-   Patrz także: <function>fread</function>, <function>fgets</function>,
-   <function>fgetss</function>, <function>sscanf</function>,
-   <function>printf</function> i <function>sprintf</function>.
+   <simplelist>
+    <member><function>fread</function></member>
+    <member><function>fgets</function></member>
+    <member><function>fgetss</function></member>
+    <member><function>sscanf</function></member>
+    <member><function>printf</function></member>
+    <member><function>sprintf</function></member>
+   </simplelist>
   </para>
  </refsect1>
-</refentry>
 
+</refentry>
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

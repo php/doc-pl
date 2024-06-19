@@ -1,58 +1,88 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: adi Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 65bea242c8fe4217602a9759eb8289ddf0d9e899 Maintainer: grzesiek Status: ready -->
 <!-- $Revision$ -->
 <!-- splitted from ./pl/functions/filesystem.xml, last change in rev 1.1 -->
 <!-- last change to 'tmpfile' in en/ tree in rev 1.32 -->
 <!-- OLD-Revision: 1.115/EN.1.32 -->
-<refentry xml:id="function.tmpfile" xmlns="http://docbook.org/ns/docbook">
+<!-- CREDITS: sobak, adi -->
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.tmpfile">
  <refnamediv>
   <refname>tmpfile</refname>
   <refpurpose>Tworzy plik tymczasowy</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
-   <type>resource</type><methodname>tmpfile</methodname>
+   <type class="union"><type>resource</type><type>false</type></type><methodname>tmpfile</methodname>
    <void/>
   </methodsynopsis>
   <para>
-   Tworzy plik tymczasowy o unikalnej nazwie i otwiera go
-   w trybie do odczytu i zapisu (w+), zwraca uchwyt pliku, podobnie jak
-   <function>fopen</function>.
-   Plik jest automatycznie kasowany przy zamykaniu (po użyciu
-   <function>fclose</function>), lub gdy skrypt się zakończy.
+   Tworzy plik tymczasowy o unikalnej nazwie w trybie odczyt-zapis-binarny (w+b)
+   i zwraca uchwyt pliku.
   </para>
   <para>
-   Jeśli chcesz uzyskać więcej szczegółów, zajrzyj do dokumentacji
-   twojego systemu dotyczącej funkcji <literal>tmpfile(3)</literal>,
-   albo do pliku nagłówkowego <filename>stdio.h</filename>.
+   Plik jest automatycznie usuwany po zamknięciu (na przykład przez wywołanie
+   funkcji <function>fclose</function> lub gdy nie ma już żadnych odwołań do
+   uchwytu pliku zwróconego przez funkcję <function>tmpfile</function>) lub po
+   zakończeniu skryptu.
   </para>
+  <caution>
+   <simpara>
+    Jeśli skrypt zakończy się nieoczekiwanie, plik tymczasowy może nie zostać usunięty.
+   </simpara>
+  </caution>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  &no.function.parameters;
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca uchwyt pliku, podobny do zwracanego przez funkcję
+   <function>fopen</function> dla nowego pliku lub &return.falseforfailure;.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
    <example>
-    <title><function>tmpfile</function> przykład</title>
+    <title>Przykład <function>tmpfile</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
 $temp = tmpfile();
-fwrite($temp, "zapisywanie do pliku tymczasowego");
+fwrite($temp, "zapis do pliku tymczasowego");
 fseek($temp, 0);
 echo fread($temp, 1024);
-fclose($temp); // to kasuje plik
+fclose($temp); // to usuwa plik
 ?>
 ]]>
     </programlisting>
     &example.outputs;
     <screen>
 <![CDATA[
-zapisywanie do pliku tymczasowego
+writing to tempfile
 ]]>
     </screen>
    </example>
   </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
   <para>
-   Patrz także: <function>tempnam</function>, <function>sys_get_temp_dir</function>.
+   <simplelist>
+    <member><function>tempnam</function></member>
+    <member><function>sys_get_temp_dir</function></member>
+   </simplelist>
   </para>
  </refsect1>
+
 </refentry>
 
 <!-- Keep this comment at the end of the file

@@ -1,40 +1,114 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: adi Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 871a231f4a1caa5fb258ae53b1bb7d1fb2a0f949 Maintainer: grzesiek Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: sobak, adi -->
 <refentry xml:id="function.lstat" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>lstat</refname>
   <refpurpose>Podaje informacje o pliku lub dowiązaniu symbolicznym</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
-   <type>array</type><methodname>lstat</methodname>
-   <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
+   <type class="union"><type>array</type><type>false</type></type><methodname>lstat</methodname>
+   <methodparam><type>string</type><parameter>filename</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Zbiera statystyki pliku lub dowiązania symbolicznego nazwanego przez
-   <parameter>nazwę_pliku</parameter>. Ta funkcja jest identyczna do funkcji
-   <function>stat</function> z wyjątkiem tego, że jeśli parametr
-   <parameter>nazwa_pliku</parameter> jest dowiązaniem symbolicznym,
-   zwracany jest status dowiązania symbolicznego, a nie status pliku
-   na które ono wskazuje.
+   Zbiera statystyki pliku lub dowiązania symbolicznego o nazwie określonej przez
+   parametr <parameter>filename</parameter>.  
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>filename</parameter></term>
+     <listitem>
+      <para>
+       Ścieżka do pliku lub dowiązania symbolicznego.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Informacje na temat struktury tablicy zwracanej przez funkcję <function>lstat</function>
+   można znaleźć na stronie podręcznika funkcji <function>stat</function>.
+   Ta funkcja jest identyczna z funkcją <function>stat</function> z wyjątkiem
+   tego, że jeśli parametr <parameter>filename</parameter> jest dowiązaniem symbolicznym,
+   zwracany jest status dowiązania symbolicznego, a nie status pliku wskazywanego
+   przez dowiązanie symboliczne.
   </para>
   <para>
-   Zobacz stronę podręcznika dla <function>stat</function> w którym
-   znajdują się informacje na temat struktury tablicy jaką
-   <function>lstat</function> zwraca.
+   W przypadku niepowodzenia zwracany jest &false;.
   </para>
-    &note.clearstatcache;
-
-    &tip.fopen-wrapper.stat;
-
-  <simpara>
-   Patrz także: <function>stat</function>.
-  </simpara>
  </refsect1>
-</refentry>
 
+ <refsect1 role="errors">
+  &reftitle.errors;
+  &fs.emits.warning.on.failure;
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Porównanie <function>stat</function> i <function>lstat</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+symlink('uploads.php', 'uploads');
+
+// Informacje kontrastowe dla uploads.php i uploads
+array_diff(stat('uploads'), lstat('uploads'));
+?>
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <para>
+     Informacje, które różnią się między dwoma plikami.
+    </para>
+    <screen>
+<![CDATA[
+Array
+(
+    [ino] => 97236376
+    [mode] => 33188
+    [size] => 34
+    [atime] => 1223580003
+    [mtime] => 1223581848
+    [ctime] => 1223581848
+    [blocks] => 8
+)
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  &note.clearstatcache;
+  &tip.fopen-wrapper.stat;
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>stat</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

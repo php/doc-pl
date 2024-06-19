@@ -1,101 +1,97 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: adi Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: c1bb7dd16da7b27352a48604d7ad99f477aba0f9 Maintainer: grzesiek Status: ready -->
 <!-- $Revision$ -->
-<refentry xml:id="function.is-uploaded-file" xmlns="http://docbook.org/ns/docbook">
+<!-- CREDITS: sobak, adi -->
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.is-uploaded-file">
  <refnamediv>
   <refname>is_uploaded_file</refname>
-  <refpurpose>Mówi czy plik został przysłany przez HTTP POST.</refpurpose>
+  <refpurpose>Informuje, czy plik został przesłany za pomocą protokołu HTTP POST.</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>is_uploaded_file</methodname>
-   <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
+   <methodparam><type>string</type><parameter>filename</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Zwraca &true; jeśli plik o nazwie <parameter>nazwa_pliku</parameter>
-   został przysłany (upload) przez HTTP POST. To pomaga upewnić się,
-   czy złośliwy użytkownik nie próbuje oszukać skryptu pracującego
-   na plikach, tak aby działał on na plikach na których nie powinien
-   -- na przykład
+   Zwraca &true;, jeśli plik o nazwie podanej jako parametr <parameter>filename</parameter>
+   został przesłany przez HTTP POST. Jest to przydatne, aby upewnić się,
+   że złośliwy użytkownik nie próbował oszukać skryptu, aby działał na plikach,
+   na których nie powinien działać - na przykład
    <filename>/etc/passwd</filename>.
   </para>
   <para>
-   Ten rodzaj testów jest szczególnie ważny jeśli istnieje szansa, że
-   cokolwiek robimy z przysłanymi plikami może zdradzić ich
-   treść użytkownikowi lub nawet innym użytkownikom tego samego
-   systemu.
+   Ten rodzaj kontroli jest szczególnie ważny, jeśli istnieje jakakolwiek
+   szansa, że cokolwiek zrobione z przesłanymi plikami może ujawnić ich
+   zawartość użytkownikowi, a nawet innym użytkownikom w tym samym
+   systemie.
   </para>
   <para>
-   Do prawidłowego działania, funkcja <function>is_uploaded_file</function>
-   wymaga argumentu jak $_FILES['userfile']['tmp_name'], - nazwa przysyłanego
-   pliku na maszynie klienta $_FILES['userfile']['name'] nie zadziała.
+   Do poprawnego działania, funkcja <function>is_uploaded_file</function> potrzebuje
+   argumentu takiego jak <varname>$_FILES['userfile']['tmp_name']</varname>, - nazwa przesłanego
+   pliku na komputerze klienta <varname>$_FILES['userfile']['name']</varname> nie działa.
   </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>filename</parameter></term>
+     <listitem>
+      <para>
+       Nazwa sprawdzanego pliku.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
    <example>
-    <title><function>is_uploaded_file</function> przykład</title>
+    <title>Przykład <function>is_uploaded_file</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
 
 if (is_uploaded_file($_FILES['userfile']['tmp_name'])) {
-  echo "File ". $_FILES['userfile']['name'] ." upload prawidłowy.\n";
-  echo "Wyświetlam treść\n";
-  readfile($_FILES['userfile']['tmp_name']);
- } else {
-  echo "Możliwy atak przez uploadowanie pliku: ";
-  echo "Plik '". $_FILES['userfile']['tmp_name'] . "'.";
- }
+   echo "File ". $_FILES['userfile']['name'] ." uploaded successfully.\n";
+   echo "Displaying contents\n";
+   readfile($_FILES['userfile']['tmp_name']);
+} else {
+   echo "Possible file upload attack: ";
+   echo "filename '". $_FILES['userfile']['tmp_name'] . "'.";
+}
 
-?>
-]]>
+?>]]>
     </programlisting>
    </example>
-  <para>
-   <function>is_uploaded_file</function> jest dostępna tylko w wersjach
-   PHP 3 późniejszych od PHP 3.0.16, i wersjach PHP 4 późniejszych od 4.0.2.
-   Jeśli utknołeś przy używaniu wcześniejszej wersji, możesz użyć poniższej
-   funkcji w celu pomocy w zabezpieczeniu siebie:
-   <note>
-    <para>
-     Poniższy przykład <emphasis>nie</emphasis> zadziała w wersjach
-     PHP 4 późniejszych od 4.0.2. To jest spowodowane zmianą wewnętrznej
-     funkcjonalności PHP po tej wersji.
-    </para>
-   </note>
-  </para>
-  <example>
-   <title><function>is_uploaded_file</function> przykład dla PHP 4 &lt; 4.0.3</title>
-   <programlisting role="php">
-<![CDATA[
-<?php
-/* Test po stronie użytkownika na uploadowany plik */
-function is_uploaded_file_4_0_2($filename)
-{
-if (!$tmp_file = get_cfg_var('upload_tmp_dir')) {
-    $tmp_file = dirname(tempnam('', ''));
-}
-$tmp_file .= '/' . basename($filename);
-  /* Użytkownik może mieć zamykający ukośnik w php.ini... */
-return (ereg_replace('/+', '/', $tmp_file) == $filename);
-}
-
-/* Jak użyć tej funkcji, w starych wersjach nie masz także
- * move_uploaded_file(): */
-if (is_uploaded_file_4_0_2($HTTP_POST_FILES['userfile'])) {
-    copy($HTTP_POST_FILES['userfile'], "/place/to/put/uploaded/file");
-} else {
-    echo "Prawdopodobny atak przez uploadowanie pliku: '$HTTP_POST_FILES[userfile]'.";
-}
-?>
-]]>
-   </programlisting>
-  </example>
-  <para>
-   Patrz także: <function>move_uploaded_file</function> i rozdział
-   <link linkend="features.file-upload">Obsługa uploadowanych plików</link>
-   w celu uzyskania prostych przykładów użycia tej funkcji.
   </para>
  </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>move_uploaded_file</function></member>
+    <member><varname>$_FILES</varname></member>
+    <member>Zobacz <link linkend="features.file-upload">Obsługa przesyłania plików</link> dla prostego przykładu użycia.</member>
+   </simplelist>
+  </para>
+ </refsect1>
+ 
 </refentry>
 
 <!-- Keep this comment at the end of the file

@@ -1,44 +1,69 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: adi Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 0c9c2dd669fe9395eaa73d487fbd160f9057429a Maintainer: grzesiek Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: sobak, adi -->
 <refentry xml:id="function.fstat" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>fstat</refname>
-  <refpurpose>Pobiera informacje o pliku używając otwartego wskaźnika pliku</refpurpose>
+  <refpurpose>Pobiera informacje o pliku przy użyciu wskaźnika otwartego pliku</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
-   <type>array</type><methodname>fstat</methodname>
-   <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam>
+   <type class="union"><type>array</type><type>false</type></type><methodname>fstat</methodname>
+   <methodparam><type>resource</type><parameter>stream</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Zbiera statystyki otwartego pliku przez wskaźnik pliku <parameter>uchwyt</parameter>.
-   Ta funkcja jest podobna do funkcji
-   <function>stat</function> z wyjątkiem tego, że operuje na otwartym
-   wskaźniku pliku zamiast na nazwię pliku.
+   Zbiera statystyki pliku otwartego przez wskaźnik pliku określony przez
+   parametr <parameter>stream</parameter>. Ta funkcja jest podobna do funkcji
+   <function>stat</function> z wyjątkiem tego, że działa na wskaźniku
+   otwartego pliku zamiast na nazwie pliku.
   </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
   <para>
-   Zwraca tablicę ze statystykami pliku; format tablicy szczegółowo jest
-   opisany na stronie <function>stat</function> podręcznika.
+   <variablelist>
+    <varlistentry>
+     <term><parameter>stream</parameter></term>
+     <listitem>
+      &fs.file.pointer;
+     </listitem>
+    </varlistentry>
+   </variablelist>
   </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca tablicę ze statystykami pliku; format tablicy jest szczegółowo
+   opisany na stronie podręcznika <function>stat</function>.
+   Zwraca &false; w przypadku niepowodzenia.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
    <example>
-    <title><function>fstat</function> przykład</title>
+    <title>Przykład <function>fstat</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
 
-// otwarcie pliku
+// otwiera plik
 $fp = fopen("/etc/passwd", "r");
 
-// zebranie statystyk
+// zbiera statystyki
 $fstat = fstat($fp);
 
-// zamknięcie pliku
+// zamyka plik
 fclose($fp);
 
-// wyświetlenie tylko części asocjacyjnej
+// wyświetla tylko część asocjacyjną
 print_r(array_slice($fstat, 13));
 
 ?>
@@ -49,28 +74,32 @@ print_r(array_slice($fstat, 13));
 <![CDATA[
 Array
 (
-  [dev] => 771
-  [ino] => 488704
-  [mode] => 33188
-  [nlink] => 1
-  [uid] => 0
-  [gid] => 0
-  [rdev] => 0
-  [size] => 1114
-  [atime] => 1061067181
-  [mtime] => 1056136526
-  [ctime] => 1056136526
-  [blksize] => 4096
-  [blocks] => 8
+    [dev] => 771
+    [ino] => 488704
+    [mode] => 33188
+    [nlink] => 1
+    [uid] => 0
+    [gid] => 0
+    [rdev] => 0
+    [size] => 1114
+    [atime] => 1061067181
+    [mtime] => 1056136526
+    [ctime] => 1056136526
+    [blksize] => 4096
+    [blocks] => 8
 )
 ]]>
     </screen>
    </example>
   </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
   &note.no-remote;
  </refsect1>
-</refentry>
 
+</refentry>
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml
