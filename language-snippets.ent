@@ -2878,11 +2878,11 @@ xmlns="http://docbook.org/ns/docbook"><simpara xmlns="http://docbook.org/ns/docb
 <!ENTITY trader.arg.slow.limit 'Dolny limit do stosowania w algorytmie adaptacyjnym. Wartość z zakresu od 0.01 do 0.99.'>
 
 <!-- Mongo -->
-<!-- //// TODO DOKOŃCZYĆ //// -->
-<!ENTITY mongo.setreadpreference.parameters '<variablelist xmlns="http://docbook.org/ns/docbook"><varlistentry><term><parameter>read_preference</parameter></term><listitem><para>Tryb preferencji odczytu: <constant>MongoClient::RP_PRIMARY</constant>, <constant>MongoClient::RP_PRIMARY_PREFERRED</constant>, <constant>MongoClient::RP_SECONDARY</constant>, <constant>MongoClient::RP_SECONDARY_PREFERRED</constant>, or <constant>MongoClient::RP_NEAREST</constant>.</para></listitem></varlistentry><varlistentry><term><parameter>tags</parameter></term><listitem><para>Tablica jednego lub więcej zbiorów tagów, gdzie każdy zbiór tagów jest sam w sobie tablicą kryteriów stosowanych do dopasowania tagów na elementach zbioru replik.</para></listitem></varlistentry></variablelist>'>
+<!ENTITY mongo.setreadpreference.parameters '<variablelist xmlns="http://docbook.org/ns/docbook"><varlistentry><term><parameter>read_preference</parameter></term><listitem><para>Tryb preferencji odczytu: <constant>MongoClient::RP_PRIMARY</constant>, <constant>MongoClient::RP_PRIMARY_PREFERRED</constant>, <constant>MongoClient::RP_SECONDARY</constant>, <constant>MongoClient::RP_SECONDARY_PREFERRED</constant> lub <constant>MongoClient::RP_NEAREST</constant>.</para></listitem></varlistentry><varlistentry><term><parameter>tags</parameter></term><listitem><para>Tablica jednego lub więcej zbiorów tagów, gdzie każdy zbiór tagów jest sam w sobie tablicą kryteriów stosowanych do dopasowania tagów na elementach zbioru replik.</para></listitem></varlistentry></variablelist>'>
 <!ENTITY mongo.setreadpreference.returnvalues '<para xmlns="http://docbook.org/ns/docbook">Zwraca &true; w przypadku powodzenia lub &false; w przeciwnym przypadku.</para>'>
 <!ENTITY mongo.setreadpreference.errors '<para xmlns="http://docbook.org/ns/docbook">Generuje błąd poziomu <constant>E_WARNING</constant> jeśli parametr jest nieprawidłowy, lub podano jeden lub więcej zbiorów tagów przy stosowaniu trybu preferencji odczytu <constant>MongoClient::RP_PRIMARY</constant>.</para>'>
 <!ENTITY mongo.getreadpreference.returnvalues '<para xmlns="http://docbook.org/ns/docbook">Funkcja ta zwraca tablicę opisującą preferencję odczytu. Tablica zawiera wartości <literal>type</literal> dla stringowego trybu preferencji odczytu (odpowiadającego stałym <classname>MongoClient</classname>), i  <literal>tagsets</literal> zawierającą listę wszystkich kryteriów zbiorów tagów. Jeśli nie podano żadnego tagu, <literal>tagsets</literal> nie będzie obecne w tablicy.</para>'>
+<!-- //// TODO DOKOŃCZYĆ //// -->
 <!ENTITY mongo.setwriteconcern.parameters '<variablelist xmlns="http://docbook.org/ns/docbook"><varlistentry><term><parameter>w</parameter></term><listitem><para>The write concern. This may be an integer denoting the number of servers required to acknowledge the write, or a string mode (e.g. "majority").</para></listitem></varlistentry><varlistentry><term><parameter>wtimeout</parameter></term><listitem><para>The maximum number of milliseconds to wait for the server to satisfy the write concern.</para></listitem></varlistentry></variablelist>'>
 <!ENTITY mongo.setwriteconcern.returnvalues '<para xmlns="http://docbook.org/ns/docbook">Returns &true; on success, or &false; otherwise.</para>'>
 <!ENTITY mongo.setwriteconcern.errors '<para xmlns="http://docbook.org/ns/docbook">Emits <constant>E_WARNING</constant> if the <literal>w</literal> parameter is not an integer or string value.</para>'>
@@ -2942,7 +2942,6 @@ rozszerzenia <link linkend="set.mongodb">MongoDB</link></para>'>
 
 <!-- mongodb -->
 
-<!-- //// TODO DOKOŃCZYĆ //// -->
 <!ENTITY mongodb.changelog.tentative-return-types '
        <row xmlns="http://docbook.org/ns/docbook">
         <entry>PECL mongodb 1.15.0</entry>
@@ -2961,13 +2960,13 @@ rozszerzenia <link linkend="set.mongodb">MongoDB</link></para>'>
           <entry><type class="union"><type>array</type><type>object</type></type></entry>
           <entry>
            <para>
-            <link xlink:href="&url.mongodb.docs.collation;" xmlns:xlink="http://www.w3.org/1999/xlink">Collation</link> allows users to specify language-specific rules for string comparison, such as rules for lettercase and accent marks. When specifying collation, the <literal>"locale"</literal> field is mandatory; all other collation fields are optional. For descriptions of the fields, see <link xlink:href="&url.mongodb.docs.collation;#collation-document" xmlns:xlink="http://www.w3.org/1999/xlink">Collation Document</link>.
+            <link xlink:href="&url.mongodb.docs.collation;" xmlns:xlink="http://www.w3.org/1999/xlink">Porównywanie znaków</link> pozwala użytkownikom na określenie typowych dla języka zasad porównywania ciągów znaków, takich jak reguły dla wielkości znaków czy znaków akcentów. Przy określaniu porównyania znaków pole <literal>"locale"</literal> jest obowiązkowe; pozostałe pola collation są opcjonalne. Aby zapoznać się z opisami pól przeczytaj <link xlink:href="&url.mongodb.docs.collation;#collation-document" xmlns:xlink="http://www.w3.org/1999/xlink">Collation Document</link>.
            </para>
            <para>
-            If the collation is unspecified but the collection has a default collation, the operation uses the collation specified for the collection. If no collation is specified for the collection or for the operation, MongoDB uses the simple binary comparison used in prior versions for string comparisons.
+            Jeśli porównanie znaków jest nieokreslone, ale kolekcja ma domyślne porównywanie znaków, operacja będzie używać porównywania znaków określonego dla kolekcji. Jeśli kolekcja ani operacja nie ma określonego porównywania znaków, MongoDB użyje prostego porównania binarnego, które było używane dla porównań ciągów znaków we wcześniejszych wersjach.
            </para>
            <para>
-            This option is available in MongoDB 3.4+ and will result in an exception at execution time if specified for an older server version.
+            Ta opcja jest dostępna w Mongo 3.4+ i użycie jej w starszych wersjach spowoduje rzucenie wyjątku w trakcie wykonywania skryptu.
            </para>
           </entry>
          </row>
@@ -2978,14 +2977,15 @@ rozszerzenia <link linkend="set.mongodb">MongoDB</link></para>'>
           <entry><type class="union"><type>array</type><type>object</type></type></entry>
           <entry>
            <para>
-            Map of parameter names and values. Values must be constant or closed expressions that do not reference document fields. Parameters can then be accessed as variables in an aggregate expression context (e.g. <literal>$$var</literal>).
+            Mapa nazw i wartości parametrów. Wartości muszą być wyrażeniami stałymi lub zamkniętymi, które nie odnoszą się do pól dokumentu. Do parametrów można dostać się jak do zmiennych w kontekście wyrażenia agregującego (np. <literal>$$var</literal>).
            </para>
            <para>
-            This option is available in MongoDB 5.0+ and will result in an exception at execution time if specified for an older server version.
+            Ta opcja jest dostępna w Mongo 5.0+ i użycie jej w starszych wersjach spowoduje rzucenie wyjątku w trakcie wykonywania skryptu.
            </para>
           </entry>
          </row>
 '>
+<!-- //// TODO DOKOŃCZYĆ //// -->
 <!ENTITY mongodb.option.encryption.keyVaultClient '
          <row xmlns="http://docbook.org/ns/docbook">
           <entry>keyVaultClient</entry>
@@ -3358,13 +3358,13 @@ local: {
     <listitem>
      <para>
       <table>
-       <title>Encryption options</title>
+       <title>Opcje szyfrowania</title>
        <tgroup cols="3">
         <thead>
          <row>
-          <entry>Option</entry>
-          <entry>Type</entry>
-          <entry>Description</entry>
+          <entry>Opcja</entry>
+          <entry>Typ</entry>
+          <entry>Opis</entry>
          </row>
         </thead>
         <tbody>
@@ -3373,9 +3373,9 @@ local: {
           <entry><type>string</type></entry>
           <entry>
            <para>
-            The encryption algorithm to be used. This option is required.
-            Specify one of the following
-            <link linkend="mongodb-driver-clientencryption.constants">ClientEncryption constants</link>:
+            Algorytm szyfrowania, który powinien być użyty. Ta opcja jest wymagana.
+            Możesz określić jedną z następujących
+            <link linkend="mongodb-driver-clientencryption.constants">stałych ClientEncryption</link>:
            </para>
            <simplelist>
             <member><constant>MongoDB\Driver\ClientEncryption::AEAD_AES_256_CBC_HMAC_SHA_512_DETERMINISTIC</constant></member>
