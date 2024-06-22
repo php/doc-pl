@@ -1,29 +1,107 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: adi Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 46a0d3708e3c428ad8fa2e1dd38e4755863dc5c2 Maintainer: grzesiek Status: ready -->
 <!-- $Revision$ -->
-<refentry xml:id="function.link" xmlns="http://docbook.org/ns/docbook">
+<!-- CREDITS: sobak, adi -->
+<refentry xmlns="http://docbook.org/ns/docbook" xml:id="function.link">
  <refnamediv>
   <refname>link</refname>
   <refpurpose>Tworzy dowiązanie twarde</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>link</methodname>
-   <methodparam><type>string</type><parameter>cel</parameter></methodparam>
+   <methodparam><type>string</type><parameter>target</parameter></methodparam>
    <methodparam><type>string</type><parameter>link</parameter></methodparam>
   </methodsynopsis>
   <para>
-   <function>link</function> tworzy dowiązanie twarde. &return.success;
-  </para>
-    &note.no-remote;
-    &note.no-windows;
-  <para>
-   Patrz także: <function>symlink</function> do tworzenia dowiązań symbolicznych,
-   i <function>readlink</function> w powiązaniu z
-   <function>linkinfo</function>.
+   <function>link</function> tworzy dowiązanie twarde.
   </para>
  </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>target</parameter></term>
+     <listitem>
+      <para>
+       Cel dowiązania.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>link</parameter></term>
+     <listitem>
+      <para>
+       Nazwa dowiązania.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   &return.success;
+  </para>
+ </refsect1>
+
+ <refsect1 role="errors">
+  &reftitle.errors;
+  <para>
+   Funkcja kończy się niepowodzeniem i wyświetli <constant>E_WARNING</constant>, jeśli <parameter>link</parameter>
+   już istnieje lub jeśli <parameter>target</parameter> nie istnieje.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Tworzenie prostego dowiązania twardego</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$target = 'source.ext'; // To jest plik, który już istnieje
+$link = 'newfile.ext'; // Jest to nazwa pliku, do którego chcesz utworzyć dowiązanie.
+
+link($target, $link);
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="notes">
+  &reftitle.notes;
+  &note.no-remote;
+  <note>
+   <simpara>
+    Tylko dla systemu Windows: Ta funkcja wymaga uruchomienia PHP w trybie podwyższonego
+    poziomu lub z wyłączonym UAC.
+   </simpara>
+  </note>
+
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>symlink</function></member>
+    <member><function>readlink</function></member>
+    <member><function>linkinfo</function></member>
+    <member><function>unlink</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+ 
 </refentry>
 
 <!-- Keep this comment at the end of the file

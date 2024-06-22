@@ -1,43 +1,69 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: adi Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 0c9c2dd669fe9395eaa73d487fbd160f9057429a Maintainer: grzesiek Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: sobak, adi -->
 <refentry xml:id="function.ftell" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>ftell</refname>
-  <refpurpose>Mówi o pozycji odczyt/zapis wskaźnika pliku</refpurpose>
+  <refpurpose>Zwraca bieżącą pozycję wskaźnika odczytu/zapisu pliku.</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
-   <type>int</type><methodname>ftell</methodname>
-   <methodparam><type>resource</type><parameter>uchwyt</parameter></methodparam>
+   <type class="union"><type>int</type><type>false</type></type><methodname>ftell</methodname>
+   <methodparam><type>resource</type><parameter>stream</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Zwraca pozycję wskaźnika pliku wskazywanego przez <parameter>uchwyt</parameter>; np.
-   jego ofset w strumieniu pliku.
+   Zwraca pozycję wskaźnika pliku, do którego odwołuje się parametr <parameter>stream</parameter>.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>stream</parameter></term>
+     <listitem>
+      <para>
+       Wskaźnik pliku musi być prawidłowy i musi wskazywać na plik pomyślnie otwarty
+       przez <function>fopen</function> lub <function>popen</function>.
+       <function>ftell</function> daje niezdefiniowane wyniki dla strumieni tylko
+       dołączanych (otwieranych z flagą "a").
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca pozycję wskaźnika pliku, do którego odwołuje się <parameter>stream</parameter>
+   jako liczbę całkowitą; tj. jego przesunięcie w strumieniu plików.
   </para>
   <para>
-   W przypadku błędu, zwraca &false;.
+   Jeśli wystąpi błąd, zwraca &false;.
   </para>
-  <para>
-   Wskaźnik pliku musi być prawidłowy i musi wskazywać na
-   poprawnie otworzony plik przez <function>fopen</function> lub
-   <function>popen</function>.
-   <function>ftell</function> zwraca niezdefiniowane wyniki dla
-   strumieni tylko do dopisywania (otwartych z flagą "a").
-  </para>
+  &fs.file.32bit;
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
   <para>
    <example>
-    <title><function>ftell</function> przykład</title>
+    <title>Przykład <function>ftell</function></title>
     <programlisting role="php">
 <![CDATA[
 <?php
 
-// otwarcie pliku i odczytanie jakiś danych
+// otwiera plik i odczytuje dane
 $fp = fopen("/etc/passwd", "r");
 $data = fgets($fp, 12);
 
-// gdzie jesteśmy ?
+// gdzie jesteśmy?
 echo ftell($fp); // 11
 
 fclose($fp);
@@ -47,13 +73,21 @@ fclose($fp);
     </programlisting>
    </example>
   </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
   <para>
-   Patrz także: <function>fopen</function>, <function>popen</function>,
-   <function>fseek</function> i <function>rewind</function>.
+   <simplelist>
+    <member><function>fopen</function></member>
+    <member><function>popen</function></member>
+    <member><function>fseek</function></member>
+    <member><function>rewind</function></member>
+   </simplelist>
   </para>
  </refsect1>
-</refentry>
 
+</refentry>
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

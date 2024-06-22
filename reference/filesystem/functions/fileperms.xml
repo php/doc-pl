@@ -1,24 +1,72 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: n/a Maintainer: adi Status: ready -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 871a231f4a1caa5fb258ae53b1bb7d1fb2a0f949 Maintainer: grzesiek Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: sobak, adi -->
 <refentry xml:id="function.fileperms" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>fileperms</refname>
-  <refpurpose>Pobiera prawa dostępu pliku</refpurpose>
+  <refpurpose>Pobiera uprawnienia do plików</refpurpose>
  </refnamediv>
- <refsect1>
-  <title>Opis</title>
+ 
+ <refsect1 role="description">
+  &reftitle.description;
   <methodsynopsis>
-   <type>int</type><methodname>fileperms</methodname>
-   <methodparam><type>string</type><parameter>nazwa_pliku</parameter></methodparam>
+   <type class="union"><type>int</type><type>false</type></type><methodname>fileperms</methodname>
+   <methodparam><type>string</type><parameter>filename</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Zwraca prawa dostępu pliku, lub &false; w przypadku błędu.
+   Pobiera uprawnienia do podanego pliku.
   </para>
-  &note.clearstatcache;
-  &tip.fopen-wrapper.stat;
-  <example>
-   <title>Wyświetlanie uprawnień w postaci ósemkowej</title>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>filename</parameter></term>
+     <listitem>
+      <para>
+       Ścieżka do pliku.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca uprawnienia pliku w trybie numerycznym. Dolne bity tego trybu
+   są takie same, jak uprawnienia oczekiwane przez <function>chmod</function>,
+   jednak na większości platform zwracana wartość będzie zawierać również informację
+   o to typie pliku podaną jako <parameter>filename</parameter>. Poniższe przykłady
+   pokazują, jak przetestować wartość zwracaną dla określonych uprawnień i
+   typów plików w systemach POSIX, w tym Linux i macOS.
+  </para>
+  <para>
+   W przypadku plików lokalnych konkretną wartością zwracaną jest wartość elementu
+   <literal>st_mode</literal> struktury zwracanej przez funkcję biblioteki C
+   <function>stat</function>. Dokładne ustawienie bitów może się różnić w zależności
+   od platformy, a sprawdzenie dokumentacji konkretnej platformy jest zalecane,
+   jeśli wymagane jest parsowanie niedozwolonych bitów wartości zwracanej.
+  </para>
+  <para>
+   Zwraca &false; w przypadku niepowodzenia.
+  </para>
+ </refsect1>
+
+ <refsect1 role="errors">
+  &reftitle.errors;
+  &fs.emits.warning.on.failure;
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Wyświetl uprawnienia jako wartość ósemkową</title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -27,86 +75,100 @@ echo substr(sprintf('%o', fileperms('/etc/passwd')), -4);
 ?>
 ]]>
     </programlisting>
-    <para>To powino wyświetlić:</para>
-   <screen>
+    &example.outputs;
+    <screen>
 <![CDATA[
 1777
 0644
 ]]>
-   </screen>
-  </example>
-  <example>
-   <title>Wyświetlanie wszystkich uprawnień</title>
+    </screen>
+   </example>
+   <example>
+    <title>Wyświetl pełne uprawnienia</title>
     <programlisting role="php">
 <![CDATA[
 <?php
 $perms = fileperms('/etc/passwd');
 
-if (($perms & 0xC000) == 0xC000) {
-  // Gniazdo (socket)
-  $info = 's';
-} elseif (($perms & 0xA000) == 0xA000) {
-  // Link symboliczny
-  $info = 'l';
-} elseif (($perms & 0x8000) == 0x8000) {
-  // Zwykły plik
-  $info = '-';
-} elseif (($perms & 0x6000) == 0x6000) {
-  // Urządzenie blokowe
-  $info = 'b';
-} elseif (($perms & 0x4000) == 0x4000) {
-  // Katalog
-  $info = 'd';
-} elseif (($perms & 0x2000) == 0x2000) {
-  // Urządzenie znakowe
-  $info = 'c';
-} elseif (($perms & 0x1000) == 0x1000) {
-  // Potok (FIFO)
-  $info = 'p';
-} else {
-  // Nieznane
-   $info = 'u';
+switch ($perms & 0xF000) {
+    case 0xC000: // gniazdo
+        $info = 's';
+        break;
+    case 0xA000: // dowiązanie symboliczne
+        $info = 'l';
+        break;
+    case 0x8000: // normalny
+        $info = 'r';
+        break;
+    case 0x6000: // blok specjalny
+        $info = 'b';
+        break;
+    case 0x4000: // katalog
+        $info = 'd';
+        break;
+    case 0x2000: // znak specjalny
+        $info = 'c';
+        break;
+    case 0x1000: // potok FIFO
+        $info = 'p';
+        break;
+    default: // nieznany
+        $info = 'u';
 }
 
 // Właściciel
 $info .= (($perms & 0x0100) ? 'r' : '-');
 $info .= (($perms & 0x0080) ? 'w' : '-');
 $info .= (($perms & 0x0040) ?
-         (($perms & 0x0800) ? 's' : 'x' ) :
-         (($perms & 0x0800) ? 'S' : '-'));
+            (($perms & 0x0800) ? 's' : 'x' ) :
+            (($perms & 0x0800) ? 'S' : '-'));
 
 // Grupa
 $info .= (($perms & 0x0020) ? 'r' : '-');
 $info .= (($perms & 0x0010) ? 'w' : '-');
 $info .= (($perms & 0x0008) ?
-         (($perms & 0x0400) ? 's' : 'x' ) :
-         (($perms & 0x0400) ? 'S' : '-'));
+            (($perms & 0x0400) ? 's' : 'x' ) :
+            (($perms & 0x0400) ? 'S' : '-'));
 
-// Świat
+// Wszyscy
 $info .= (($perms & 0x0004) ? 'r' : '-');
 $info .= (($perms & 0x0002) ? 'w' : '-');
 $info .= (($perms & 0x0001) ?
-         (($perms & 0x0200) ? 't' : 'x' ) :
-         (($perms & 0x0200) ? 'T' : '-'));
+            (($perms & 0x0200) ? 't' : 'x' ) :
+            (($perms & 0x0200) ? 'T' : '-'));
 
 echo $info;
 ?>
 ]]>
-     </programlisting>
-    <para>To powino wyświetlić:</para>
+    </programlisting>
+    &example.outputs;
     <screen>
 <![CDATA[
 -rw-r--r--
 ]]>
     </screen>
    </example>
-  <simpara>
-   Patrz także: <function>is_readable</function>,
-   i <function>stat</function>
-  </simpara>
+  </para>
  </refsect1>
-</refentry>
 
+ <refsect1 role="notes">
+  &reftitle.notes;
+  &note.clearstatcache;
+  &tip.fopen-wrapper.stat;
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>chmod</function></member>
+    <member><function>is_readable</function></member>
+    <member><function>stat</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml
