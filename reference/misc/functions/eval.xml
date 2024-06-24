@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: a0a0165e07a83d74a66c316d52b04c1f4bf52aeb Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 78d17c25eeecc78cb7098b1a01d42391e36af2c1 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: grzesiek -->
 <refentry xml:id="function.eval" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>eval</refname>
@@ -15,6 +16,16 @@
   </methodsynopsis>
   <para>
    Wykonuje podany <parameter>kod</parameter> jako PHP.
+  </para>
+  <para>
+   Oceniany kod dziedziczy
+   <link linkend="language.variables.scope">zakres zmiennej</link>
+   linii, w której występuje wywołanie <function>eval</function>.
+   Wszelkie zmienne dostępne w tej linii będą dostępne do odczytu i
+   modyfikacji w ocenianym kodzie. 
+   Jednak wszystkie zdefiniowane funkcje i klasy zostaną zdefiniowane w globalnej przestrzeni nazw.
+   Innymi słowy, kompilator traktuje oceniony kod tak, jakby był oddzielnie
+   <link linkend="function.include">dołączonym</link> plikiem.
   </para>
   <caution>
    <para>
@@ -73,7 +84,7 @@
    <literal>return</literal> w wykonywanym kodzie, wtedy zwracana jest
    wartość przekazana do <literal>return</literal>.  Od PHP 7, jeżeli wystąpi
    błąd parsowania w wywoływanym kodzie, <function>eval</function> rzuca wyjątek
-   ParseError. Przed PHP 7 w takim wypadku <function>eval</function> zwracał
+   <classname>ParseError</classname>. Przed PHP 7 w takim wypadku <function>eval</function> zwracał
    &false;, a wykonywanie dalszego kodu odbywało się normalnie. Nie da się złapać
    błędu parsowania występującego w <function>eval</function>
    używając funkcji <function>set_error_handler</function>.

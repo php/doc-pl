@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 4501571c0db3a88528af1c5bcf8cb7193eec6961 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: c2eca73ef79ebe78cebb34053e41b565af504c4f Maintainer: sobak Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.80 -->
-<!-- CREDITS: garbus, jarek -->
-<refentry xml:id='function.pg-update' xmlns="http://docbook.org/ns/docbook">
+<!-- CREDITS: garbus, jarek, grzesiek -->
+<refentry xml:id="function.pg-update" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>pg_update</refname>
   <refpurpose>
@@ -14,19 +14,34 @@
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
-   <type>mixed</type><methodname>pg_update</methodname>
-   <methodparam><type>resource</type><parameter>identyfikator_połączenia</parameter></methodparam>
-   <methodparam><type>string</type><parameter>nazwa_tabeli</parameter></methodparam>
-   <methodparam><type>array</type><parameter>dane</parameter></methodparam>
-   <methodparam><type>array</type><parameter>warunek</parameter></methodparam>
-   <methodparam choice="opt"><type>int</type><parameter>opcje</parameter><initializer>PGSQL_DML_EXEC</initializer></methodparam>
+   <type class="union"><type>string</type><type>bool</type></type><methodname>pg_update</methodname>
+   <methodparam><type>PgSql\Connection</type><parameter>connection</parameter></methodparam>
+   <methodparam><type>string</type><parameter>table_name</parameter></methodparam>
+   <methodparam><type>array</type><parameter>values</parameter></methodparam>
+   <methodparam><type>array</type><parameter>conditions</parameter></methodparam>
+   <methodparam choice="opt"><type>int</type><parameter>flags</parameter><initializer>
+   <constant>PGSQL_DML_EXEC</constant></initializer></methodparam>
   </methodsynopsis>
   <para>
    <function>pg_update</function> aktualizuje wiersze spełniające warunki zawarte w parametrze
-   <literal>warunek</literal> używając danych z parametru <literal>dane</literal>. 
-   Jeśli jest użyty parametr <literal>opcje</literal>, jest on
-   przekazywany do wywołania <function>pg_convert</function> z opcjami w parametrze
-   <literal>dane</literal>.
+   <parameter>conditions</parameter> używając danych z parametru <parameter>values</parameter>.
+  </para>
+  <para>
+   Jeśli jest użyty parametr <parameter>flags</parameter>, funkcja
+   <function>pg_convert</function> jest stosowana na wartościach z parametru
+   <parameter>values</parameter> z podanymi flagami.
+  </para>
+  <para>
+   Domyślnie <function>pg_update</function> przekazuje nieprzetworzone wartości.
+   Wartości muszą być ucieknięte lub flaga <constant>PGSQL_DML_ESCAPE</constant>
+   musi być określona w parametrze <parameter>flags</parameter>.
+   <constant>PGSQL_DML_ESCAPE</constant> ucieka i umieszcza w cudzysłowach nazwy parametrów
+   i identyfikatorów. Dlatego w nazwach tabel/kolumn rozróżniana jest wielkość liter.
+  </para>
+  <para>
+   Należy pamiętać, że ani escape, ani przygotowane zapytanie nie mogą chronić zapytania
+   LIKE, JSON, Array, Regex itp. Z tymi parametrami należy postępować zgodnie z ich kontekstem.
+   Tj. Ucieczka/walidacja wartości.
   </para>
  </refsect1>
 
@@ -37,13 +52,11 @@
     <varlistentry>
      <term><parameter>identyfikator_połączenia</parameter></term>
      <listitem>
-      <para>
-       Identyfikator połączenia do bazy PostgreSQL.
-      </para>
+      &pgsql.parameter.connection;
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>nazwa_tabeli</parameter></term>
+     <term><parameter>table_name</parameter></term>
      <listitem>
       <para>
        Nazwa tabeli, w której będą aktualizowane wiersze.
@@ -51,25 +64,25 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>dane</parameter></term>
+     <term><parameter>values</parameter></term>
      <listitem>
       <para>
-       Tablica (ang. <type>array</type>), której klucze są nazwami kolumn w tabeli <parameter>nazwa_tabeli</parameter>,
+       Tablica (ang. <type>array</type>), której klucze są nazwami kolumn w tabeli <parameter>table_name</parameter>,
        oraz której wartości są nową zawartością pasujących do warunków wierszy.
       </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>warunek</parameter></term>
+     <term><parameter>conditions</parameter></term>
      <listitem>
       <para>
-       Tablica (ang. <type>array</type>), której klucze są nazwami kolumn w tabeli <parameter>nazwa_tabeli</parameter>,
+       Tablica (ang. <type>array</type>), której klucze są nazwami kolumn w tabeli <parameter>table_name</parameter>,
        oraz której wartości są warunkami, jakie muszą spełnić uaktualniane wiersze.
       </para>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>opcje</parameter></term>
+     <term><parameter>flags</parameter></term>
      <listitem>
       <para>
        Dowolna kombinacja dowolnej ilości parametrów: <constant>PGSQL_CONV_OPTS</constant>,
@@ -78,7 +91,7 @@
        <constant>PGSQL_DML_EXEC</constant>,
        <constant>PGSQL_DML_ASYNC</constant> lub
        <constant>PGSQL_DML_STRING</constant>. Jeśli <constant>PGSQL_DML_STRING</constant> został podany w parametrze
-       <parameter>opcje</parameter>, zostanie zwrócony łańcuch zapytania. Kiedy ustawione jest
+       <parameter>flags</parameter>, zostanie zwrócony łańcuch zapytania. Kiedy ustawione jest
        <constant>PGSQL_DML_NO_CONV</constant> lub <constant>PGSQL_DML_ESCAPE</constant>, funkcja nie wykonuje <function>pg_convert</function>
        wewnętrznie.
       </para>
@@ -92,10 +105,27 @@
   &reftitle.returnvalues;
   <para>
    &return.success;  Zwraca łańcuch (ang. <type>string</type>) gdy <constant>PGSQL_DML_STRING</constant> został podany
-   poprzez <parameter>opcje</parameter>.
+   poprzez <parameter>flags</parameter>.
   </para>
  </refsect1>
 
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     &pgsql.changelog.connection-object;
+    </tbody>
+   </tgroup>
+  </informaltable>
+ </refsect1>
+ 
  <refsect1 role="examples">
   &reftitle.examples;
   <para>
@@ -106,8 +136,9 @@
 <?php 
   $polaczenie = pg_connect ('dbname=foo');
   $dane = array('kolumna1'=>'AA', 'kolumna2'=>'BB');
-
-  // To jest bezpieczne, gdyż $_POST jest konwertowane automatycznie
+  // Jest to w pewnym stopniu bezpieczne, ponieważ wszystkie wartości są ucięknięte.
+  // PostgreSQL obsługuje jednak JSON/Array. Nie są one
+  // bezpieczne ani przez ucieczkę, ani przez przygotowane zapytanie.
   $res = pg_update($polaczenie, 'kopia_post', $_POST, $dane);
   if ($res) {
       echo "Dane zostały zaktualizowane: $res\n";
@@ -118,38 +149,6 @@
 ]]>
     </programlisting>
    </example>
-  </para>
- </refsect1>
-
- <refsect1 role="changelog">
-  &reftitle.changelog;
-  <para>
-   <informaltable>
-    <tgroup cols="2">
-     <thead>
-      <row>
-       <entry>&Version;</entry>
-       <entry>&Description;</entry>
-      </row>
-     </thead>
-     <tbody>
-      <row>
-       <entry>5.6.0</entry>
-       <entry>
-        Funkcja nie jest dłużej eksperymentalna. Dodano stałą <constant>PGSQL_DML_ESCAPE</constant> oraz
-        wsparcie typów danych &true;/&false; i &null;.
-       </entry>
-      </row>
-      <row>
-       <entry>5.5.3/5.4.19</entry>
-       <entry>
-        Bezpośredni atak SQL injection na parametr <parameter>nazwa_tabeli</parameter> i pośredni
-        na identyfikatory został uniemożliwiony.
-       </entry>
-      </row>
-     </tbody>
-    </tgroup>
-   </informaltable>
   </para>
  </refsect1>
 

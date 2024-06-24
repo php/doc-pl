@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 36e1d917ef7be36e8b4ff5193b456390061f2e21 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: grzesiek -->
 <refentry xml:id="function.defined" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>defined</refname>
@@ -11,10 +12,16 @@
   &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>defined</methodname>
-   <methodparam><type>string</type><parameter>nazwa</parameter></methodparam>
+   <methodparam><type>string</type><parameter>constant_name</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Sprawdza czy stała o podanej nazwie istnieje i jest zdefiniowana.
+   Sprawdza, czy stała o nazwie podanej jako parametr <parameter>constant_name</parameter>
+   jest zdefiniowana.
+  </para>
+  <para>
+   Ta funkcja działa również z <link
+   linkend="language.oop5.constants">class constants</link> i <link
+   linkend="language.types.enumerations">enum cases</link>.
   </para>
   <note>
    <para>
@@ -31,7 +38,7 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>nazwa</parameter></term>
+     <term><parameter>constant_name</parameter></term>
      <listitem>
       <para>
        Nazwa stałej
@@ -45,7 +52,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca &true; jeżeli stała nazwana przez argument <parameter>nazwa</parameter>
+   Zwraca &true; jeżeli stała nazwana przez argument <parameter>constant_name</parameter>
    została zdefiniowana lub &false; w przeciwnym wypadku.
   </para>
  </refsect1>
@@ -58,11 +65,45 @@
     <programlisting role="php">
 <![CDATA[
 <?php
+
 /* Zwróć uwagę na apostrofy, to ważne. Ten przykład sprawdza
  * czy string 'TEST' jest nazwą stałej TEST */
 if (defined('TEST')) {
     echo TEST;
 }
+
+
+interface bar {
+    const test = 'foobar!';
+}
+
+class foo {
+    const test = 'foobar!';
+}
+
+var_dump(defined('bar::test')); // bool(true)
+var_dump(defined('foo::test')); // bool(true)
+
+?>
+]]>
+    </programlisting>
+   </example>
+   <example>
+    <title>Sprawdzanie przypadków Enum (od PHP 8.1.0)</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+enum Suit
+{
+    case Hearts;
+    case Diamonds;
+    case Clubs;
+    case Spades;
+}
+
+var_dump(defined('Suit::Hearts')); // bool(true)
+
 ?>
 ]]>
     </programlisting>
@@ -84,7 +125,6 @@ if (defined('TEST')) {
  </refsect1>
 
 </refentry>
-
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

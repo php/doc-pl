@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: af4410a7e15898c3dbe83d6ea38246745ed9c6fb Maintainer: sobak Status: ready -->
+<!-- EN-Revision: ed851c6bbc75edca2706ea43f224278dd0538a6f Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-
+<!-- CREDITS: grzesiek -->
 <chapter xml:id="mysqli.setup" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  &reftitle.setup;
 
@@ -12,13 +12,27 @@
    Aby mieć dostęp do tych funkcji, musisz skompilować PHP z
    obsługą rozszerzenia mysqli.
   </para>
-  <note>
-   <para>
-    Rozszerzenie mysqli jest zaprojektowane do działania z MySQL w wersji 4.1.13 lub 
-    nowszej albo 5.0.7 lub nowszej. Dla starszych wersji, zapoznaj się z rozszerzeniem <link
-    linkend="intro.mysql">MySQL</link>.
-   </para>
-  </note>
+
+  <para>
+    <emphasis role="bold">MySQL 8</emphasis>
+  </para>
+
+  <para>
+   W przypadku korzystania z wersji PHP wcześniejszej niż 7.1.16 lub PHP 7.2 wcześniejszej niż 7.2.4
+   ustaw MySQL 8 Server domyślne hasło wtyczki na <emphasis>mysql_native_password</emphasis>
+   w przeciwnym razie pojawią się błędy podobne do
+   <emphasis>Serwer zażądał metody uwierzytelniania nieznanej klientowi [caching_sha2_password]</emphasis>
+   nawet jeśli <emphasis>caching_sha2_password</emphasis> nie jest używane.
+  </para>
+  <para>
+   Dzieje się tak, ponieważ MySQL 8 domyślnie używa caching_sha2_password,
+   wtyczki, która nie jest rozpoznawana przez starsze wersje PHP (mysqlnd). Zamiast tego
+   należy to zmienić, ustawiając <literal>default_authentication_plugin=mysql_native_password</literal>
+   w <filename>my.cnf</filename>. Wtyczka <emphasis>caching_sha2_password</emphasis>
+   jest w pełni obsługiwana od PHP 7.4.4. W starszych wersjach rozszerzenie
+   <link linkend="book.mysql-xdevapi">mysql_xdevapi</link> obsługuje ją.
+  </para>
+
  </section>
  <!-- }}} -->
 
