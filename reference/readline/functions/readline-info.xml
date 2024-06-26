@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 96c9d88bad9a7d7d44bfb7f26c226df7ee9ddf26 Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: d8ba69fe4e7c835bc2b76dcd908597f75d1c65a1 Maintainer: grzesiek Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS: leszek -->
+<!-- CREDITS: joeaccord, sobak, leszek -->
 <refentry xml:id="function.readline-info" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>readline_info</refname>
@@ -12,8 +12,10 @@
   &reftitle.description;
   <methodsynopsis>
    <type>mixed</type><methodname>readline_info</methodname>
-   <methodparam choice="opt"><type>string</type><parameter>nazwa_zmiennej</parameter></methodparam>
-   <methodparam choice="opt"><type>string</type><parameter>nowa_wartość</parameter></methodparam>
+   <methodparam choice="opt"><type class="union"><type>string</type><type>null</type></type>
+   <parameter>var_name</parameter><initializer>&null;</initializer></methodparam>
+   <methodparam choice="opt"><type class="union"><type>int</type><type>string</type><type>bool</type>
+   <type>null</type></type><parameter>value</parameter><initializer>&null;</initializer></methodparam>
   </methodsynopsis>
   <para>
    Pobiera lub ustawia różne wewnętrzne zmienne biblioteki readline.
@@ -25,7 +27,7 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>nazwa_zmiennej</parameter></term>
+     <term><parameter>var_name</parameter></term>
      <listitem>
       <para>
        Nazwa zmiennej.
@@ -33,7 +35,7 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>nowa_wartość</parameter></term>
+     <term><parameter>value</parameter></term>
      <listitem>
       <para>
        Jeśli podana, to zostanie ustawiona nowa wartość.
@@ -49,17 +51,41 @@
   <para>
    Jeśli funkcja zostanie wywołana bez parametrów, to zwrócona zostanie
    tablica z wartościami wszystkich ustawień biblioteki readline. Elementy
-   tej tablicy będą miały takie indeksy:  done, end, erase_empty_line,
-   library_version, line_buffer, mark, pending_input, point, prompt,
-   readline_name, i terminal_name.
+   tej tablicy będą miały takie indeksy:  <literal>done</literal>, <literal>end</literal>,
+   <literal>erase_empty_line</literal>, <literal>library_version</literal>, <literal>line_buffer</literal>,
+   <literal>mark</literal>, <literal>pending_input</literal>, <literal>point</literal>,
+   <literal>prompt</literal>, <literal>readline_name</literal>, and <literal>terminal_name</literal>.
+   Tablica &array; będzie zawierać tylko te elementy, które są obsługiwane przez
+   bibliotekę użytą do zbudowania rozszerzenia readline.
   </para>
   <para>
    Jeśli zostanie wywołana z jednym lub dwoma parametrami, zostanie zwrócona poprzenia wartość
   </para>
  </refsect1>
 
-</refentry>
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>8.0.0</entry>
+      <entry>
+       Parametr <parameter>var_name</parameter> i <parameter>value</parameter> dopuszczają teraz &null;.
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </informaltable>
+ </refsect1>
 
+</refentry>
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml

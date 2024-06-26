@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: ef362e88b393422e1962c48c825aa1c6e65b380b Maintainer: sobak Status: ready -->
+<!-- EN-Revision: cdc9d28d334bbc08386fecf8aade66080004a9dd Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
+<!-- CREDITS: grzesiek -->
 <refentry xml:id="function.define" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>define</refname>
@@ -11,9 +12,9 @@
   &reftitle.description;
   <methodsynopsis>
    <type>bool</type><methodname>define</methodname>
-   <methodparam><type>string</type><parameter>nazwa</parameter></methodparam>
-   <methodparam><type>mixed</type><parameter>wartość</parameter></methodparam>
-   <methodparam choice="opt"><type>bool</type><parameter>wielkość_znaków</parameter><initializer>false</initializer></methodparam>
+   <methodparam><type>string</type><parameter>constant_name</parameter></methodparam>
+   <methodparam><type>mixed</type><parameter>value</parameter></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>case_insensitive</parameter><initializer>&false;</initializer></methodparam>
   </methodsynopsis>
   <para>
    Tworzy nazwaną stałą w czasie wykonywania skryptu.
@@ -25,19 +26,26 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>nazwa</parameter></term>
+     <term><parameter>constant_name</parameter></term>
      <listitem>
       <para>
        Nazwa stałej.
       </para>
+      <note>
+       <para>
+        Możliwe jest <function>zdefiniowanie</function> stałych o zastrzeżonych
+        lub nawet nieprawidłowych nazwach, których wartość można (tylko) pobrać
+        za pomocą funkcji <function>constant</function>. Nie jest to jednak zalecane.
+       </para>
+      </note>
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>wartość</parameter></term>
+     <term><parameter>value</parameter></term>
      <listitem>
       <para>
-       Wartość stałej. W PHP <parameter>wartość</parameter> musi być typu skalarnego
-       (<type>integer</type>, <type>float</type>, <type>string</type>, <type>boolean</type> lub &null;).
+       Wartość stałej. W PHP <parameter>value</parameter> musi być typu skalarnego
+       (<type>int</type>, <type>float</type>, <type>string</type>, <type>bool</type> lub &null;).
        W PHP 7 dozwolone są także tablice (typ <type>array</type>).
       </para>
 	  <warning>
@@ -49,7 +57,7 @@
      </listitem>
     </varlistentry>
     <varlistentry>
-     <term><parameter>wielkość_znaków</parameter></term>
+     <term><parameter>case_insensitive</parameter></term>
      <listitem>
       <para>
        Jeżeli ustawione na &true;, stała będzie zdefiniowana bez zwracania uwagi
@@ -57,6 +65,13 @@
        <literal>CONSTANT</literal> i <literal>Constant</literal> reprezentują
        różne wartości.
       </para>
+      <warning>
+       <simpara>
+        Definiowanie stałych niewrażliwych na wielkość liter jest przestarzałe od PHP 7.3.0.
+        Od PHP 8.0.0 tylko &false; jest akceptowalną wartością, przekazanie &true;
+        spowoduje wyświetlenie ostrzeżenia.
+       </simpara>
+      </warning>
       <note>
        <para>
         Stałe nieczułe na wielkość znaków są przechowywane jako zapisane małymi literami.
@@ -87,6 +102,19 @@
       </row>
      </thead>
      <tbody>
+      <row>
+       <entry>8.0.0</entry>
+       <entry>
+        Przekazanie &true; do parametru <parameter>case_insensitive</parameter> emituje teraz
+        <constant>E_WARNING</constant>. Przekazanie &false; jest nadal dozwolone.
+       </entry>
+      </row>
+      <row>
+       <entry>7.3.0</entry>
+       <entry>
+        Parametr <parameter>case_insensitive</parameter> został zdeprecjonowany i zostanie usunięty w wersji 8.0.0.
+       </entry>
+      </row>
       <row>
        <entry>7.0.0</entry>
        <entry>
@@ -128,6 +156,37 @@ echo ZWIERZETA[1]; // wyświetli "kot"
     </programlisting>
    </example>
   </para>
+  <para>
+   <example>
+    <title>Stałe z nazwami zastrzeżonymi</title>
+    <para>
+     Ten przykład ilustruje <emphasis>możliwość</emphasis> zdefiniowania
+     stałej o tej samej nazwie, co
+     <link linkend="language.constants.predefined">stała magiczna</link>.
+     Ponieważ wynikające z tego zachowanie jest oczywiście mylące, 
+     nie zaleca się robienia tego w praktyce.
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+var_dump(defined('__LINE__'));
+var_dump(define('__LINE__', 'test'));
+var_dump(constant('__LINE__'));
+var_dump(__LINE__);
+?>
+]]>
+    </programlisting>
+   &example.outputs;
+   <screen>
+<![CDATA[
+bool(false)
+bool(true)
+string(4) "test"
+int(5)
+]]>
+   </screen>
+   </example>
+  </para>
  </refsect1>
 
  <refsect1 role="seealso">
@@ -142,7 +201,6 @@ echo ZWIERZETA[1]; // wyświetli "kot"
  </refsect1>
 
 </refentry>
-
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml
