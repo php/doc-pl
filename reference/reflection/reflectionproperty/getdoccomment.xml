@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: ec2fe9a592f794978114ef5021db9f1d00c2e05d Maintainer: sobak Status: ready -->
+<!-- $Revision$ -->
+<refentry xml:id="reflectionproperty.getdoccomment" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <refnamediv>
+  <refname>ReflectionProperty::getDocComment</refname>
+  <refpurpose>Pobiera komentarz dokumentujący właściwość</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis role="ReflectionProperty">
+   <modifier>public</modifier> <type class="union"><type>string</type><type>false</type></type><methodname>ReflectionProperty::getDocComment</methodname>
+   <void/>
+  </methodsynopsis>
+  <para>
+   Pobiera komentarz dokumentujący dla właściwości.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  &no.function.parameters;
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Komentarz dokumentacyjny jeśli istnieje, &false; w przeciwnym razie.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład użycia <methodname>ReflectionProperty::getDocComment</methodname></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+class Str
+{
+    /**
+     * @var int  Długość ciągu znaków
+     */
+    public $length = 5;
+}
+
+$prop = new ReflectionProperty('Str', 'length');
+
+var_dump($prop->getDocComment());
+
+?>
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
+<![CDATA[
+string(49) "/**
+     * @var int  Długość ciągu znaków
+     */"
+]]>
+    </screen>
+   </example>
+  </para>
+
+  <para>
+   <example>
+    <title>Wiele deklaracji właściwości</title>
+    <para>
+     Jeżeli kilka deklaracji właściwości jest poprzedzony przez jeden komentarz dokumentacyjny,
+     to komentarz odnosi się tylko do pierwszej właściwości.
+    </para>
+    <programlisting role="php">
+<![CDATA[
+<?php
+class Foo
+{
+    /** @var string */
+    public $a, $b;
+}
+$class = new \ReflectionClass('Foo');
+foreach ($class->getProperties() as $property) {
+    echo $property->getName() . ': ' . var_export($property->getDocComment(), true) . PHP_EOL;
+}
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+a: '/** @var string */'
+b: false
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><methodname>ReflectionProperty::getModifiers</methodname></member>
+    <member><methodname>ReflectionProperty::getName</methodname></member>
+    <member><methodname>ReflectionProperty::getValue</methodname></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
