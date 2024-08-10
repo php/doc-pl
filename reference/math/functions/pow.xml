@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: fc174e8d6162091550edde46159917ee7e5a2e73 Maintainer: grzesiek Status: ready -->
+<!-- EN-Revision: 7dbc44bd0d8923890acf1acedf79daba672af39c Maintainer: grzesiek Status: ready -->
 <!-- $Revision$ -->
-<!-- CREDITS: sobak -->
 <refentry xml:id="function.pow" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>pow</refname>
@@ -55,6 +54,9 @@
    a wynik może być reprezentowany jako liczba całkowita, wynik zostanie zwrócony z typem
    <type>int</type>, w przeciwnym razie zostanie zwrócony jako typ <type>float</type>.
   </para>
+  <para>
+   Rozszerzenia PHP mogą nadpisywać zachowanie tej operacji i zwracać obiekt.
+  </para>
  </refsect1>
  <refsect1 role="examples">
   &reftitle.examples;
@@ -66,11 +68,13 @@
 <?php
 
 var_dump(pow(2, 8)); // int(256)
-echo pow(-1, 20); // 1
-echo pow(0, 0); // 1
-echo pow(10, -1); // 0.1
+echo pow(-1, 20), PHP_EOL; // 1
+echo pow(0, 0), PHP_EOL; // 1
+echo pow(10, -1), PHP_EOL; // 0.1
+var_dump(pow(new GMP("3"), new GMP("2"))); // object(GMP)
 
 echo pow(-1, 5.5); // NAN
+
 ?>
 ]]>
     </programlisting>
