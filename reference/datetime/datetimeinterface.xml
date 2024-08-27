@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 4d17b7b4947e7819ff5036715dd706be87ae4def Maintainer: grzesiek Status: ready -->
+<!-- $Revision$ -->
+<reference xml:id="class.datetimeinterface" role="class" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude">
+
+ <title>Interfejs DateTimeInterface</title>
+ <titleabbrev>DateTimeInterface</titleabbrev>
+
+ <partintro>
+
+<!-- {{{ DateTimeInterface intro -->
+  <section xml:id="datetimeinterface.intro">
+   &reftitle.intro;
+   <para>
+    Interfejs<interfacename>DateTimeInterface</interfacename> został stworzony,
+    aby deklaracje parametrów, wartości zwracanych lub typów właściwości mogły
+    akceptować jako wartość klasę <classname>DateTimeImmutable</classname> albo 
+    klasę <classname>DateTime</classname>. Nie jest możliwe zaimplementowanie
+    tego interfejsu w klasach userland.
+   </para>
+   <para>
+    Wspólne stałe, które pozwalają na formatowanie obiektów klasy
+    <classname>DateTimeImmutable</classname> lub
+    <classname>DateTime</classname> dzięki metodzie
+    <methodname>DateTimeImmutable::format</methodname> i
+    <methodname>DateTime::format</methodname> są również zdefiniowane w tym
+    interfejsie.
+   </para>
+  </section>
+<!-- }}} -->
+
+  <section xml:id="datetimeinterface.synopsis">
+   &reftitle.interfacesynopsis;
+
+<!-- {{{ Synopsis -->
+   <classsynopsis class="interface">
+    <oointerface>
+     <interfacename>DateTimeInterface</interfacename>
+    </oointerface>
+
+    <classsynopsisinfo role="comment">&Constants;</classsynopsisinfo>
+    <fieldsynopsis>
+     <modifier>public</modifier>
+     <modifier>const</modifier>
+     <type>string</type>
+     <varname linkend="datetimeinterface.constants.atom">DateTimeInterface::ATOM</varname>
+     <initializer>"Y-m-d\\TH:i:sP"</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>public</modifier>
+     <modifier>const</modifier>
+     <type>string</type>
+     <varname linkend="datetimeinterface.constants.cookie">DateTimeInterface::COOKIE</varname>
+     <initializer>"l, d-M-Y H:i:s T"</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>public</modifier>
+     <modifier>const</modifier>
+     <type>string</type>
+     <varname linkend="datetimeinterface.constants.iso8601">DateTimeInterface::ISO8601</varname>
+     <initializer>"Y-m-d\\TH:i:sO"</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>public</modifier>
+     <modifier>const</modifier>
+     <type>string</type>
+     <varname linkend="datetimeinterface.constants.iso8601-expanded">DateTimeInterface::ISO8601_EXPANDED</varname>
+     <initializer>"X-m-d\\TH:i:sP"</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>public</modifier>
+     <modifier>const</modifier>
+     <type>string</type>
+     <varname linkend="datetimeinterface.constants.rfc822">DateTimeInterface::RFC822</varname>
+     <initializer>"D, d M y H:i:s O"</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>public</modifier>
+     <modifier>const</modifier>
+     <type>string</type>
+     <varname linkend="datetimeinterface.constants.rfc850">DateTimeInterface::RFC850</varname>
+     <initializer>"l, d-M-y H:i:s T"</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>public</modifier>
+     <modifier>const</modifier>
+     <type>string</type>
+     <varname linkend="datetimeinterface.constants.rfc1036">DateTimeInterface::RFC1036</varname>
+     <initializer>"D, d M y H:i:s O"</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>public</modifier>
+     <modifier>const</modifier>
+     <type>string</type>
+     <varname linkend="datetimeinterface.constants.rfc1123">DateTimeInterface::RFC1123</varname>
+     <initializer>"D, d M Y H:i:s O"</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>public</modifier>
+     <modifier>const</modifier>
+     <type>string</type>
+     <varname linkend="datetimeinterface.constants.rfc7231">DateTimeInterface::RFC7231</varname>
+     <initializer>"D, d M Y H:i:s \\G\\M\\T"</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>public</modifier>
+     <modifier>const</modifier>
+     <type>string</type>
+     <varname linkend="datetimeinterface.constants.rfc2822">DateTimeInterface::RFC2822</varname>
+     <initializer>"D, d M Y H:i:s O"</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>public</modifier>
+     <modifier>const</modifier>
+     <type>string</type>
+     <varname linkend="datetimeinterface.constants.rfc3339">DateTimeInterface::RFC3339</varname>
+     <initializer>"Y-m-d\\TH:i:sP"</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>public</modifier>
+     <modifier>const</modifier>
+     <type>string</type>
+     <varname linkend="datetimeinterface.constants.rfc3339-extended">DateTimeInterface::RFC3339_EXTENDED</varname>
+     <initializer>"Y-m-d\\TH:i:s.vP"</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>public</modifier>
+     <modifier>const</modifier>
+     <type>string</type>
+     <varname linkend="datetimeinterface.constants.rss">DateTimeInterface::RSS</varname>
+     <initializer>"D, d M Y H:i:s O"</initializer>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>public</modifier>
+     <modifier>const</modifier>
+     <type>string</type>
+     <varname linkend="datetimeinterface.constants.w3c">DateTimeInterface::W3C</varname>
+     <initializer>"Y-m-d\\TH:i:sP"</initializer>
+    </fieldsynopsis>
+
+    <classsynopsisinfo role="comment">&Methods;</classsynopsisinfo>
+    <xi:include xpointer="xmlns(db=http://docbook.org/ns/docbook) xpointer(id('class.datetimeinterface')/db:refentry/db:refsect1[@role='description']/descendant::db:methodsynopsis[@role='DateTimeInterface'])">
+     <xi:fallback/>
+    </xi:include>
+   </classsynopsis>
+<!-- }}} -->
+
+  </section>
+
+<!-- {{{ DateTimeInterface constants -->
+  <section xml:id="datetimeinterface.constants.types">
+   &reftitle.constants;
+   <variablelist>
+    <varlistentry xml:id="datetimeinterface.constants.atom">
+     <term><constant>DateTimeInterface::ATOM</constant></term>
+     <term><constant>DATE_ATOM</constant></term>
+     <listitem>
+      <simpara>
+       Atom (przykład: 2005-08-15T15:52:01+00:00)
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry xml:id="datetimeinterface.constants.cookie">
+     <term><constant>DateTimeInterface::COOKIE</constant></term>
+     <term><constant>DATE_COOKIE</constant></term>
+     <listitem>
+      <simpara>
+       HTTP Cookies (przykład: Monday, 15-Aug-2005 15:52:01 UTC)
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry xml:id="datetimeinterface.constants.iso8601">
+     <term><constant>DateTimeInterface::ISO8601</constant></term>
+     <term><constant>DATE_ISO8601</constant></term>
+     <listitem>
+      <simpara>
+       ISO-8601 (przykład: 2005-08-15T15:52:01+0000)
+      </simpara>
+      <note>
+       <simpara>
+        Format ten nie jest zgodny z ISO-8601, ale pozostawiono go w ten sposób ze względu
+        ze względu na zgodność wsteczną. Zamiast tego należy użyć
+        <constant>DateTimeInterface::ISO8601_EXPANDED</constant>,
+        <constant>DateTimeInterface::ATOM</constant> w celu zapewnienia zgodności z ISO-8601
+        . (odwołanie do ISO8601:2004 sekcja 4.3.3 klauzula d)
+       </simpara>
+      </note>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry xml:id="datetimeinterface.constants.iso8601-expanded">
+     <term><constant>DateTimeInterface::ISO8601_EXPANDED</constant></term>
+     <term><constant>DATE_ISO8601_EXPANDED</constant></term>
+     <listitem>
+      <simpara>
+       ISO-8601 Expanded (przykład: +10191-07-26T08:59:52+01:00)
+      </simpara>
+      <note>
+       <simpara>
+        Format ten pozwala na zakresy lat poza normalnym zakresem ISO-8601
+        <literal>0000</literal>-<literal>9999</literal> zawsze zawierając znak
+        podpisu. Dotyczy to również tego, że część strefy czasowej
+        (<literal>+01:00</literal>) jest zgodna z ISO-8601.
+       </simpara>
+      </note>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry xml:id="datetimeinterface.constants.rfc822">
+     <term><constant>DateTimeInterface::RFC822</constant></term>
+     <term><constant>DATE_RFC822</constant></term>
+     <listitem>
+      <simpara>
+       RFC 822 (przykład: Mon, 15 Aug 05 15:52:01 +0000)
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry xml:id="datetimeinterface.constants.rfc850">
+     <term><constant>DateTimeInterface::RFC850</constant></term>
+     <term><constant>DATE_RFC850</constant></term>
+     <listitem>
+      <simpara>
+       RFC 850 (przykład: Monday, 15-Aug-05 15:52:01 UTC)
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry xml:id="datetimeinterface.constants.rfc1036">
+     <term><constant>DateTimeInterface::RFC1036</constant></term>
+     <term><constant>DATE_RFC1036</constant></term>
+     <listitem>
+      <simpara>
+       RFC 1036 (przykład: Mon, 15 Aug 05 15:52:01 +0000)
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry xml:id="datetimeinterface.constants.rfc1123">
+     <term><constant>DateTimeInterface::RFC1123</constant></term>
+     <term><constant>DATE_RFC1123</constant></term>
+     <listitem>
+      <simpara>
+       RFC 1123 (przykład: Mon, 15 Aug 2005 15:52:01 +0000)
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry xml:id="datetimeinterface.constants.rfc7231">
+      <term><constant>DateTimeInterface::RFC7231</constant></term>
+      <term><constant>DATE_RFC7231</constant></term>
+      <listitem>
+       <simpara>
+        RFC 7231 (od PHP 7.0.19 i 7.1.5) (przykład: Sat, 30 Apr 2016 17:52:13 GMT)
+       </simpara>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry xml:id="datetimeinterface.constants.rfc2822">
+     <term><constant>DateTimeInterface::RFC2822</constant></term>
+     <term><constant>DATE_RFC2822</constant></term>
+     <listitem>
+      <simpara>
+       RFC 2822 (przykład: Mon, 15 Aug 2005 15:52:01 +0000)
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry xml:id="datetimeinterface.constants.rfc3339">
+     <term><constant>DateTimeInterface::RFC3339</constant></term>
+     <term><constant>DATE_RFC3339</constant></term>
+     <listitem>
+      <simpara>
+       Taki sam jak <constant>DATE_ATOM</constant>
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry xml:id="datetimeinterface.constants.rfc3339-extended">
+     <term><constant>DateTimeInterface::RFC3339_EXTENDED</constant></term>
+     <term><constant>DATE_RFC3339_EXTENDED</constant></term>
+     <listitem>
+      <simpara>
+       RFC 3339 EXTENDED format (przykład: 2005-08-15T15:52:01.000+00:00)
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry xml:id="datetimeinterface.constants.rss">
+     <term><constant>DateTimeInterface::RSS</constant></term>
+     <term><constant>DATE_RSS</constant></term>
+     <listitem>
+      <simpara>
+       RSS (przykład: Mon, 15 Aug 2005 15:52:01 +0000)
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry xml:id="datetimeinterface.constants.w3c">
+     <term><constant>DateTimeInterface::W3C</constant></term>
+     <term><constant>DATE_W3C</constant></term>
+     <listitem>
+      <simpara>
+       Konsorcjum World Wide Web (przykład: 2005-08-15T15:52:01+00:00)
+      </simpara>
+     </listitem>
+    </varlistentry>
+
+   </variablelist>
+  </section>
+<!-- }}} -->
+
+ <section role="changelog" xml:id="datetimeinterface.changelog"><!-- {{{ -->
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>8.2.0</entry>
+       <entry>
+        Stała <constant linkend="datetimeinterface.constants.iso8601-expanded">DateTimeInterface::ISO8601_EXPANDED</constant>
+        została dodana.
+       </entry>
+      </row>
+      <row>
+       <entry>7.2.0</entry>
+       <entry>
+        Stałe klasy <classname>DateTime</classname> są teraz zdefiniowane
+        w interfejsie <interfacename>DateTimeInterface</interfacename>.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </section><!-- }}} -->
+
+ </partintro>
+
+ &reference.datetime.entities.datetimeinterface;
+
+</reference>
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
