@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: af4410a7e15898c3dbe83d6ea38246745ed9c6fb Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: 48ce43fe79fa0c9f31f187ea8ec995b4cb13037e Maintainer: grzesiek Status: ready -->
 <!-- $Revision$ -->
-
+<!-- CREDITS: joeaccord -->
 <chapter xml:id="exif.setup" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  &reftitle.setup;
 
@@ -9,10 +9,15 @@
  <section xml:id="exif.requirements">
   &reftitle.required;
   <para>
-   PHP musi być skompilowany z opcją <literal>--enable-exif</literal>.
-   Do prawidłowego działania rozszerzenia Exif, PHP nie wymaga
-   dodatkowych bibliotek.  Użytkownicy Windows muszą mieć także
-   włączone rozszerzenie <link linkend="ref.mbstring"> mbstring</link>.
+   PHP musi być skompilowany z opcją <literal>--enable-exif</literal>. Aby włączyć
+   obsugę wielobajtową w tagach EXIF, rozszerzenie <link linkend="ref.mbstring">mbstring</link>
+   musi być włączone poprzez kompilację PHP z opcją <literal>--enable-mbstring</literal>.
+   PHP nie wymaga żadnej dodatkowej biblioteki dla modułu exif.
+  </para>
+  <para>
+   Tylko systemy Windows: Rozszerzenie <link linkend="ref.mbstring">mbstring</link> musi być
+   zawsze włączone. Zauważ, że rozszerzenie <link linkend="ref.mbstring">mbstring</link> musi być
+   załadowane przed EXIF w pliku <filename>php.ini</filename>.
   </para>
  </section>
  <!-- }}} -->
@@ -23,13 +28,6 @@
 
  <!-- {{{ Configuration -->
  &reference.exif.ini;
- <!-- }}} -->
-
- <!-- {{{ Resources -->
- <section xml:id="exif.resources">
-  &reftitle.resources;
-  &no.resource;
- </section>
  <!-- }}} -->
 
 </chapter>
