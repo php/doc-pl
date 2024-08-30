@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 2d1981cc3003cd94f5fb88e0473eed2c5b26efde Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: 61d5b83d9145d58515ad4c93c6125a339fb5eeda Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: slawek, sobak -->
  <chapter xml:id="features.http-auth" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -15,8 +15,8 @@
    <varname>PHP_AUTH_USER</varname>, <varname>PHP_AUTH_PW</varname> i
    <varname>AUTH_TYPE</varname> zawierającymi odpowiednio
    nazwę użytkownika, hasło i typ autoryzacji. Zmienne te będą dostępne w
-   tablicy <varname>$_SERVER</varname> Obsługiwane są <emphasis>tylko</emphasis> autoryzacje
-   typu "Basic" i "Digest". Więcej informacji można znaleźć w opisie funkcji
+   tablicy <varname>$_SERVER</varname> Obsługiwane jest <emphasis>tylko</emphasis> autoryzacje
+   typu "Basic". Więcej informacji można znaleźć w opisie funkcji
    <function>header</function>.
   </simpara>
 
@@ -37,73 +37,6 @@ if (!isset($_SERVER['PHP_AUTH_USER'])) {
 } else {
     echo "<p>Hej {$_SERVER['PHP_AUTH_USER']}.</p>";
     echo "<p>Twoje hasło to {$_SERVER['PHP_AUTH_PW']}.</p>";
-}
-?>
-]]>
-    </programlisting>
-   </example>
-  </para>
-
-  <para>
-   <example>
-    <title>Przykład uwierzytelnianie Digest HTTP</title>
-    <para>
-     Ten przykład pokazuje jak zaimplementować proste umierzytelnianie
-     Digest HTTP. Więcej informacji znajduje się w dokumencie <link
-      xlink:href="&url.rfc;2617">RFC 2617</link>.
-    </para>
-    <programlisting role="php">
-<![CDATA[
-<?php
-$realm = 'Zastrzeżona strefa';
-
-//user => password
-$users = array('admin' => 'mypass', 'guest' => 'guest');
-
-
-if (empty($_SERVER['PHP_AUTH_DIGEST'])) {
-    header('HTTP/1.1 401 Unauthorized');
-    header('WWW-Authenticate: Digest realm="'.$realm.
-           '",qop="auth",nonce="'.uniqid().'",opaque="'.md5($realm).'"');
-
-    die('Tekst do wysłania kiedy użytkownik kliknie klawisz anuluj');
-}
-
-
-// analiza zmiennej PHP_AUTH_DIGEST
-if (!($data = http_digest_parse($_SERVER['PHP_AUTH_DIGEST'])) ||
-    !isset($users[$data['username']]))
-    die('Nieprawidłowe listy uwierzytelniające!');
-
-
-// tworzenie prawidłowej odpowiedzi
-$A1 = md5($data['username'] . ':' . $realm . ':' . $users[$data['username']]);
-$A2 = md5($_SERVER['REQUEST_METHOD'].':'.$data['uri']);
-$valid_response = md5($A1.':'.$data['nonce'].':'.$data['nc'].':'.$data['cnonce'].':'.$data['qop'].':'.$A2);
-
-if ($data['response'] != $valid_response)
-    die('Nieprawidłowe listy uwierzytelniające!');
-
-// ok, prawidłowa nazwa użytkownika i hasło
-echo 'Jesteś zalogowany jako: ' . $data['username'];
-
-
-// function to parse the http auth header
-function http_digest_parse($txt)
-{
-    // zabezpieczenie przeciwko brakującym informacjom
-    $needed_parts = array('nonce'=>1, 'nc'=>1, 'cnonce'=>1, 'qop'=>1, 'username'=>1, 'uri'=>1, 'response'=>1);
-    $data = array();
-    $keys = implode('|', array_keys($needed_parts));
-
-    preg_match_all('@(\w+)=(?:([\'"])([^\2]+)\2|([^\s,]+))@', $txt, $matches, PREG_SET_ORDER);
-
-    foreach ($matches as $m) {
-        $data[$m[1]] = $m[3] ? $m[3] : $m[4];
-        unset($needed_parts[$m[1]]);
-    }
-
-    return $needed_parts ? false : $data;
 }
 ?>
 ]]>

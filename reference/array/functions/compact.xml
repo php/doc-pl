@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: e311803cd2fb931ad80bab6fd0f996d2ece6e2b8 Maintainer: leszek Status: ready -->
+<!-- EN-Revision: d58ee8eaaa7f716c51f66f5f1058ab3c42376d98 Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: sobak -->
 <refentry xml:id="function.compact" xmlns="http://docbook.org/ns/docbook">
@@ -19,8 +19,9 @@
   </para>
   <para>
    Dla każdej z nich <function>compact</function> sprawdza zmienną o
-   nazwie określonej przez bieżący symbol w tablicy i dodaje ją 
-   do tablicy wyjściowej tak, że nazwa zmiennej staje się kluczem,
+   tej nazwie w obecnej
+   <link linkend="features.gc.refcounting-basics">tablicy symboli</link>
+   i dodaje ją do tablicy wyjściowej tak, że nazwa zmiennej staje się kluczem,
    a zawartość zmiennej wartością dla tego klucza. 
    Krótko mówiąc, funkcja ta jest przeciwieństwem <function>extract</function>.
   </para>
@@ -102,6 +103,7 @@
     <programlisting role="php">
 <![CDATA[
 <?php
+
 $city  = "San Francisco";
 $state = "CA";
 $event = "SIGGRAPH";
@@ -110,6 +112,7 @@ $location_vars = array("city", "state");
 
 $result = compact("event", $location_vars);
 print_r($result);
+
 ?>
 ]]>
     </programlisting>
