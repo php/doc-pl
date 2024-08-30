@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: a3c18bfa37d1ccefec6f7f485cb2c77d30d59d09 Maintainer: qrak Status: ready -->
+<!-- EN-Revision: 46a9cdd2dbef4ec89bf65fad9930e2feb78bbb98 Maintainer: qrak Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: joeaccord, sobak -->
 
@@ -12,16 +12,43 @@
  <preface xml:id="intro.bc">
   &reftitle.intro;
   <para>
-    Dla potrzeb obliczeń arytmetycznych o dużej precyzji, PHP oferuje
-    Kalkulator Binarny, który operuje na liczbach dowolnej wielkości
-    i precyzji do 2147483647-1 (lub 0x7FFFFFFF-1) części dziesiętnych,
-    zapisanych jako typ string.
+   Dla potrzeb obliczeń arytmetycznych o dużej precyzji, PHP oferuje BCMath, który
+   obsługuje liczby o dowolnej wielkości i precyzji do <literal>2147483647</literal> (or <literal>0x7FFFFFFF</literal>) części dziesiętnych
+   (jeśli dostępna jest wystarczająca ilość pamięci), zapisanych jako typ string.
   </para>
+  <para>
+   Poprawne (tj. właściwie sformatowane) liczby BCMath są ciągami znaków pasującymi do wyrażenia regularnego
+   <literal>/^[+-]?[0-9]*(\.[0-9]*)?$/</literal>.
+  </para>
+  <caution>
+   <para>
+    Przekazywanie wartości typu <type>float</type> (liczb zmiennoprzecinkowych) do funkcji BCMath, które oczekują
+    typu <type>string</type> może nie przynieść oczekiwanego efektu ze względu na to,
+    jak PHP konwertuje wartości <type>float</type> na <type>string</type>, gdyż
+    ciąg znaków może być podany w notacji wykładniczej (nieobsługiwanej przez
+    BCMath) oraz ponieważ przed PHP 8.0.0 separator części dziesiętnej był zależny od ustawień regionalnych (locale),
+    a BCMath zawsze oczekuje użycia kropki.
+   </para>
+   <informalexample>
+    <programlisting role="php">
+     <![CDATA[
+<?php
+$num1 = 0; // (string) 0 => '0'
+$num2 = -0.000005; // (string) -0.000005 => '-5.05E-6'
+echo bcadd($num1, $num2, 6); // => '0.000000'
+
+setlocale(LC_NUMERIC, 'de_DE'); // używa przecinka jako separatora części dziesiętnej
+$num2 = 1.2; // (string) 1.2 => '1,2'
+echo bcsub($num1, $num2, 1); // => '0.0'
+?>
+]]>
+    </programlisting>
+   </informalexample>
+  </caution>
  </preface>
  <!-- }}} -->
 
  &reference.bc.setup;
- &reference.bc.constants;
  &reference.bc.reference;
 
 </book>
