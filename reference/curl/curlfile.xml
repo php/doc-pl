@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 4731f1a2d216c527410022765b0ef1a731f02695 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 4d17b7b4947e7819ff5036715dd706be87ae4def Maintainer: sobak Status: ready -->
 
 <reference xml:id="class.curlfile" role="class" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude">
 
@@ -12,8 +12,12 @@
   <section xml:id="curlfile.intro">
    &reftitle.intro;
    <para>
-    <classname>CURLFile</classname> powinna być używana do uploadu plików przez
+    Ta klasa lub <classname>CURLStringFile</classname> powinna być używana do uploadu plików przez
     <constant>CURLOPT_POSTFIELDS</constant>.
+   </para>
+   <para>
+    Deserializacja obiektów <classname>CURLFile</classname> jest niedozwolona.
+    Od PHP 7.4.0 w ogóle nie można ich też zserializować.
    </para>
   </section>
 <!-- }}} -->
@@ -22,33 +26,38 @@
    &reftitle.classsynopsis;
 
 <!-- {{{ Synopsis -->
-   <classsynopsis>
-    <ooclass><classname>CURLFile</classname></ooclass>
+   <classsynopsis class="class">
+    <ooclass>
+     <classname>CURLFile</classname>
+    </ooclass>
 
-<!-- {{{ Class synopsis -->
-    <classsynopsisinfo>
-     <ooclass>
-      <classname>CURLFile</classname>
-     </ooclass>
-    </classsynopsisinfo>
-<!-- }}} -->
     <classsynopsisinfo role="comment">&Properties;</classsynopsisinfo>
     <fieldsynopsis>
      <modifier>public</modifier>
+     <type>string</type>
      <varname linkend="curlfile.props.name">name</varname>
+     <initializer>""</initializer>
     </fieldsynopsis>
     <fieldsynopsis>
      <modifier>public</modifier>
+     <type>string</type>
      <varname linkend="curlfile.props.mime">mime</varname>
+     <initializer>""</initializer>
     </fieldsynopsis>
     <fieldsynopsis>
      <modifier>public</modifier>
+     <type>string</type>
      <varname linkend="curlfile.props.postname">postname</varname>
+     <initializer>""</initializer>
     </fieldsynopsis>
 
-    
     <classsynopsisinfo role="comment">&Methods;</classsynopsisinfo>
-    <xi:include xpointer="xmlns(db=http://docbook.org/ns/docbook) xpointer(id('class.curlfile')/db:refentry/db:refsect1[@role='description']/descendant::db:methodsynopsis[1])" />
+    <xi:include xpointer="xmlns(db=http://docbook.org/ns/docbook) xpointer(id('class.curlfile')/db:refentry/db:refsect1[@role='description']/descendant::db:constructorsynopsis[@role='CURLFile'])">
+     <xi:fallback/>
+    </xi:include>
+    <xi:include xpointer="xmlns(db=http://docbook.org/ns/docbook) xpointer(id('class.curlfile')/db:refentry/db:refsect1[@role='description']/descendant::db:methodsynopsis[@role='CURLFile'])">
+     <xi:fallback/>
+    </xi:include>
    </classsynopsis>
 <!-- }}} -->
 
@@ -88,6 +97,7 @@
      <member>
       <function>curl_setopt</function>
      </member>
+     <member><classname>CURLStringFile</classname></member>
     </simplelist>
    </para>
   </section>

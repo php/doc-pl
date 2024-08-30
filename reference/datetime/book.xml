@@ -14,22 +14,29 @@
    Te funkcje pozwalają pobierać datę i czas z serwera,
    na którym uruchomione są skrypty PHP. Można ich używać do formatowania
    daty i czasu na wiele różnych sposobów.
+   <classname>DateTimeImmutable</classname> oraz klasy pokrewne pozwalają na
+   reprezentowanie informacji o dacie i czasie. Te obiekty mogą być tworzone przez przekazanie
+   tekstowej reprezentacji informacji o dacie/czasie lub z użyciem obecnego czasu
+   systemowego.
   </para>
   <para>
-   Informacje o dacie i czasie są wewnętrzenie przechowywane jako liczby 64 bitowe, dlatego
-   obsługiwane są wszystkie możliwie przydatne daty (włącznie z latami ujemnymi).
-   Zakres dat jest od 292 miliardów lat w przeszłości do 292 miliardów lat w przyszłości.
+   Dostępny jest też szeroki zakres metod pozwalających na modyfikację i formatowanie
+   tych informacji, w tym obsługę stres czasowych i przejść z czasu letniego na zimowy.
   </para>
-  <note>
-   <simpara>
-    Proszę pamiętać, że poniższe funkcje są zależne od
-    lokalnych ustawień danego serwera. Należy się upewnić, że
-    podczas pracy z nimi bierzemy pod uwagę czas zimowy
-    i lata przestępne (należy użyć np.
-    <literal>$date = strtotime('+7 days', $date)</literal>, a nie
-    <literal>$date += 7*24*60*60</literal>).
-   </simpara>
-  </note>
+  <para>
+   Funkcjonalności obsługi daty/czasu implementują kalendarz ISO 8601, który jest
+   <link xlink:href="&url.proleptic-gregorian-calendar;">proleptycznym kalendarzem
+   gregoriańskim</link> implementującym obecne reguły dni przestępnych dla lat sprzed
+   wprowadzenia kalendarza gregoriańskiego, a także zawierającym rok
+   <literal>0</literal> jako numer roku pomiędzy <literal>-1
+   p.n.e</literal> i <literal>1 n.e.</literal>. Sekundy przestępne nie są obsługiwane.
+  </para>
+  <para>
+   Informacje o dacie i czasie są wewnętrznie przechowywane jako liczby 64-bitowe, dlatego
+   obsługiwane są wszystkie możliwie przydatne daty (włącznie z latami ujemnymi).
+   Zakres dat jest od 292 miliardów lat w przeszłości do 292 miliardów lat w
+   przyszłości.
+  </para>
   <note>
    <simpara>
     Strefy czasowe, do których odwołujemy się w tym rozdziale
@@ -51,8 +58,49 @@
  &reference.datetime.dateperiod;
 
  &reference.datetime.reference;
+
+ <article xml:id="datetime.error.tree">
+  <title>Wyjątki i błędy daty/czasu</title>
+
+  <itemizedlist>
+   <listitem>
+    <simpara><exceptionname>DateError</exceptionname> (rozszerza <exceptionname>Error</exceptionname>)</simpara>
+    <itemizedlist>
+     <listitem>
+      <simpara><exceptionname>DateObjectError</exceptionname></simpara>
+      <simpara><exceptionname>DateRangeError</exceptionname></simpara>
+     </listitem>
+    </itemizedlist>
+   </listitem>
+   <listitem>
+    <simpara><exceptionname>DateException</exceptionname> (rozszerza <exceptionname>Exception</exceptionname>)</simpara>
+    <itemizedlist>
+     <listitem>
+      <itemizedlist>
+       <listitem><simpara><exceptionname>DateInvalidOperationException</exceptionname></simpara></listitem>
+       <listitem><simpara><exceptionname>DateInvalidTimezoneException</exceptionname></simpara></listitem>
+       <listitem><simpara><exceptionname>DateMalformedIntervalStringException</exceptionname></simpara></listitem>
+       <listitem><simpara><exceptionname>DateMalformedPeriodStringException</exceptionname></simpara></listitem>
+       <listitem><simpara><exceptionname>DateMalformedStringException</exceptionname></simpara></listitem>
+      </itemizedlist>
+     </listitem>
+    </itemizedlist>
+   </listitem>
+  </itemizedlist>
+ </article>
+
  &reference.datetime.formats;
  &reference.datetime.timezones;
+
+ &reference.datetime.dateerror;
+ &reference.datetime.dateobjecterror;
+ &reference.datetime.daterangeerror;
+ &reference.datetime.dateexception;
+ &reference.datetime.dateinvalidoperationexception;
+ &reference.datetime.dateinvalidtimezoneexception;
+ &reference.datetime.datemalformedintervalstringexception;
+ &reference.datetime.datemalformedperiodstringexception;
+ &reference.datetime.datemalformedstringexception;
 
 </book>
 
