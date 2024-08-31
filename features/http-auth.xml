@@ -7,7 +7,7 @@
 
   <simpara>
    Możliwe jest używanie
-   funkcji <function>header</function> w celu wysłania do przeądarki komunikatu
+   funkcji <function>header</function> w celu wysłania do przeglądarki komunikatu
    <literal>"Wymagana autoryzacja"</literal>. To powoduje wyświetlenie okna z polami:
    użytkownik i hasło. Po wypełnieniu przez użytkownika tych pól, URL
    zawierający skrypt PHP zostanie ponownie wywołany z ustawionymi
@@ -15,7 +15,7 @@
    <varname>PHP_AUTH_USER</varname>, <varname>PHP_AUTH_PW</varname> i
    <varname>AUTH_TYPE</varname> zawierającymi odpowiednio
    nazwę użytkownika, hasło i typ autoryzacji. Zmienne te będą dostępne w
-   tablicy <varname>$_SERVER</varname> Obsługiwane jest <emphasis>tylko</emphasis> autoryzacje
+   tablicy <varname>$_SERVER</varname> Obsługiwana jest <emphasis>tylko</emphasis> autoryzacja
    typu "Basic". Więcej informacji można znaleźć w opisie funkcji
    <function>header</function>.
   </simpara>
@@ -49,7 +49,7 @@ if (!isset($_SERVER['PHP_AUTH_USER'])) {
    <para>
     Należy uważać z linijkami dodawanymi do nagłówka HTTP. W celu zachowania maksymalnej
     zgodności ze wszystkimi klientami, słowo Basic powinno zaczynać się dużą
-    literą "B", wartość realm powinna być otoczona  cudzysłowami (nie apostrofami),
+    literą "B", wartość realm powinna być otoczona cudzysłowami (nie apostrofami),
     i dokładnie jeden znak odstępu powinien poprzedzać kod <emphasis>401</emphasis> w linii
     <emphasis>HTTP/1.0 401</emphasis>. Parametry autoryzacyjne muszą być
     oddzielone przecinkami jak pokazano to w przykładzie digest powyżej.
@@ -65,7 +65,7 @@ if (!isset($_SERVER['PHP_AUTH_USER'])) {
 
   <para>
    Należy uważać na kapryśne przeglądarki Internet Explorer. Są wrażliwe na
-   kolejność wysyłanych nagłówków HTTP. Wysłanie nagłowka
+   kolejność wysyłanych nagłówków HTTP. Wysłanie nagłówka
    <emphasis>WWW-Authenticate</emphasis> przed
    <literal>HTTP/1.0 401</literal> powinno rozwiązać problem.
   </para>
@@ -84,9 +84,9 @@ if (!isset($_SERVER['PHP_AUTH_USER'])) {
    wymagające autoryzacji.
   </simpara>
   <simpara>
-   Zarówno Netscape Navigator jak i Internet Explorer opróżnią bufor
+   Zarówno Netscape Navigator, jak i Internet Explorer opróżnią bufor
    autoryzacji po otrzymaniu od serwera kodu 401. Można w ten sposób
-   wylogowanić użytkownika i zmusić go do ponownego wysłania nazwy użytkownika
+   wylogować użytkownika i zmusić go do ponownego wysłania nazwy użytkownika
    i hasła. Tej metody można użyć do wylogowania użytkownika po określonym
    czasie lub stworzenia przycisku "Wyloguj".
   </simpara>
@@ -124,17 +124,17 @@ if (!isset($_SERVER['PHP_AUTH_USER']) ||
    Powyższa metoda nie jest wymagana przez autoryzację <literal>HTTP Basic</literal>,
    więc nie można na niej polegać. Testy z przeglądarką
    <literal>Lynx</literal> pokazały, że <literal>Lynx</literal> nie usuwa danych
-   o autoryzacji po odebraniu od serwera kodu 401, zatem przejście wstecz a następnie
-   do przodu otworzy stronę, chyba, że
+   o autoryzacji po odebraniu od serwera kodu 401, zatem przejście wstecz, a następnie
+   do przodu otworzy stronę, chyba że
    wymagania co do danych autoryzacji zmieniły się. Użytkownik może jednak
-   użyć klawisza <literal>'_'</literal> by usunąc dane o autoryzacji.
+   użyć klawisza <literal>'_'</literal> by usunąć dane o autoryzacji.
   </simpara>
   <simpara>
    Aby autoryzacja HTTP działała na serwerze Microsoft IIS z PHP w wersji
    CGI musisz wyedytować "<literal>Bezpieczeństwo katalogów</literal>" w konfiguracji IIS.
    Kliknij na "<literal>Edytuj</literal>" i zaznacz wyłącznie
    "<literal>Anonimowy Dostęp</literal>", wszystkie inne pola
-   powinny pozostać nie zaznaczone.
+   powinny pozostać niezaznaczone.
   </simpara>
   <note>
    <title>Notatka IIS:</title>
