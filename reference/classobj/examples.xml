@@ -1,70 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 62d53f70bd8d83c2b5abf2b6d39b53657a2f41ae Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: 6f11457f11d91834e1240c3351d8c4e289371b6d Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: dombal, sobak -->
-
 
 <appendix xml:id="classobj.examples">
  &reftitle.examples;
  <para>
   W tym przykładzie najpierw zdefiniujemy bazową klasę i jej
-  rozszerzenie. Klasa bazowa opisuje normalne warzywo, czy jest
-  jadalne czy nie oraz jego kolor. Podklasa <varname>Szpinak</varname>
+  rozszerzenie. Klasa bazowa opisuje ogólne warzywo,
+  czy jest jadalne oraz jego kolor. Podklasa <varname>Szpinak</varname>
   dodaje metodę pozwalającą go ugotować, i drugą, która pozwala
   dowiedzieć się, czy jest ugotowany.
  </para>
  <para>
   <example>
-   <title>classes.inc</title>
+   <title>Definicje klasy</title>
+   <para><varname>Warzywo</varname></para>
    <programlisting role="php">
 <![CDATA[
 <?php
 
-// klasa bazowa wraz z jej właściwościami i metodami
 class Warzywo {
+    public $jadalne;
 
-    var $jadalne;
-    var $kolor;
+    public $kolor;
 
-    function __construct($jadalne, $kolor="zielony")
-	{
+    public function __construct($jadalne, $kolor="zielony")
+    {
         $this->jadalne = $jadalne;
         $this->kolor = $kolor;
     }
 
-    function czy_jadalne()
-	{
+    public function czyJadalne()
+    {
         return $this->jadalne;
     }
 
-    function jaki_kolor()
-	{
+    public function pobierzKolor()
+    {
         return $this->kolor;
     }
+}
 
-} // koniec klasy Warzywo
+?>
+]]>
+   </programlisting>
+   <para><varname>Szpinak</varname></para>
+   <programlisting role="php">
+<![CDATA[
+<?php
 
-// rozrzesza klasę bazową
 class Szpinak extends Warzywo {
+    public $ugotowane = false;
 
-    var $ugotowane = false;
-
-    function __construct()
-	{
+    public function __construct()
+    {
         $this->Warzywo(true, "zielone");
     }
 
-    function ugotuj()
-	{
+    public function ugotuj()
+    {
         $this->ugotowane = true;
     }
 
-    function czy_ugotowane()
-	{
+    function czyUgotowane()
+    {
         return $this->ugotowane;
     }
-
-} // koniec klasy Szpinak
+}
 
 ?>
 ]]>
@@ -82,21 +85,19 @@ class Szpinak extends Warzywo {
    <title>test_script.php</title>
    <programlisting role="php">
 <![CDATA[
-<pre>
 <?php
 
-include "classes.inc";
+// zarejestruj autoloader aby automatycznie ładować klasy
+spl_autoload_register();
 
-// funkcje użytkowe
-
-function drukuj_wlasciwosci($obj)
+function drukujWlasciwosci($obj)
 {
     foreach (get_object_vars($obj) as $wlasc => $wart) {
         echo "\t$wlasc = $wart\n";
     }
 }
 
-function drukuj_metody($obj)
+function drukujMetody($obj)
 {
     $tab = get_class_methods(get_class($obj));
     foreach ($tab as $metoda) {
@@ -104,42 +105,62 @@ function drukuj_metody($obj)
     }
 }
 
-function przodkowie_klasy($obj, $klasa)
+function przodkowieKlasy($obj, $klasa)
 {
-    global $$obj;
-    if (is_subclass_of($GLOBALS[$obj], $klasa)) {
-        echo "Obiekt $obj należy do klasy ".get_class($GLOBALS[$obj]);
-        echo ", podklasy $klasa\n";
+    if (is_subclass_of($obj, $klasa)) {
+        echo "Obiekt należy do klasy " . get_class($obj);
+        echo ", a subclass of $klasa\n";
     } else {
-        echo "Obiekt $obj nie należy do podklasy $klass\n";
+        echo "Obiekt nie należy do podklasy $klasa\n";
     }
 }
 
 // tworzymy 2 egzemplarze obiektów
-
 $warzywko = new Warzywo(true, "niebieski");
 $lisciaste = new Szpinak();
 
 // wydrukujemy informację o obiektach
-echo "warzywko: KLASA ".get_class($warzywko)."\n";
-echo "lisciaste: KLASA ".get_class($lisciaste);
-echo ", PRZODEK ".get_parent_class($lisciaste)."\n";
+echo "warzywko: KLASA " . get_class($warzywko) . "\n";
+echo "lisciaste: KLASA " . get_class($lisciaste);
+echo ", PRZODEK " . get_parent_class($lisciaste) . "\n";
 
 // pokażmy właściwości warzywka
 echo "\nwarzywko: Właściwości\n";
-drukuj_wlasciwosci($warzywko);
+drukujWlasciwosci($warzywko);
 
 // i metody liściastego
-echo "\nlisciaste: Metody\n";
-drukuj_metody($lisciaste);
+echo "\nliściaste: Metody\n";
+drukujMetody($lisciaste);
 
 echo "\nPrzodkowie:\n";
-przodkowie_klasy("lisciaste", "Szpinak");
-przodkowie_klasy("lisciaste", "Warzywo");
+przodkowieKlasy($lisciaste, Szpinak::class);
+przodkowieKlasy($lisciaste, Warzywo::class);
+
 ?>
-</pre>
 ]]>
    </programlisting>
+   &examples.outputs;
+   <screen>
+<![CDATA[
+warzywko: KLASA Warzywo
+liściaste: KLASA Szpinak, PRZODEK Warzywo
+
+warzywko: Właściwości
+        jadalne = 1
+        kolor = blue
+
+liściaste: Metody
+        function __construct()
+        function ugotuj()
+        function czyUgotowane()
+        function czyJadalne()
+        function pobierzKolor()
+
+Przodkowie:
+Obiekt nie należy do podklasy Szpinak
+Obiekt należy do klasy Szpinak, podklasy Warzywo
+]]>
+   </screen>
    <para>
     Wartą odnotowania rzeczą w powyższym przykładzie jest to,
     że obiekt <varname>$lisciaste</varname> jest egzemplarzem klasy
@@ -147,14 +168,6 @@ przodkowie_klasy("lisciaste", "Warzywo");
     <classname>Warzywo</classname>, i tak ostatnia część powyższego
     skryptu pokaże na wyjściu:
    </para>
-   <screen>
-<![CDATA[
-       [...]
-Przodkowie:
-Obiekt lisciasty nie należy do podklasy Szpinak
-Obiekt lisciasty należy do klasy Szpinak, podklasy Warzywo
-]]>
-   </screen>
   </example>
  </para>
 </appendix>
@@ -179,4 +192,3 @@ vim600: syn=xml fen fdm=syntax fdl=2 si
 vim: et tw=78 syn=sgml
 vi: ts=1 sw=1
 -->
-

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: e6376e04ed2526138e5b71e16168cf6bb269fa8a Maintainer: sobak Status: ready -->
+<!-- EN-Revision: ced371fcb7a105f06a6a75672fbcd448271a3e3f Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <reference xml:id="class.errorexception" role="exception" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude">
  <title>ErrorException</title>
@@ -82,31 +82,34 @@
      <programlisting role="php">
  <![CDATA[
 <?php
-function exception_error_handler(int $errno, string $errstr, string $errfile = null, int $errline) {
+set_error_handler(function (int $errno, string $errstr, string $errfile, int $errline) {
     if (!(error_reporting() & $errno)) {
         // Ten kod błędu nie został uwzględniony w error_reporting
         return;
     }
+    if ($errno === E_DEPRECATED || $errno === E_USER_DEPRECATED) {
+        // Nie rzucaj wyjątku dla ostrzeżeń o przestarzałych funkcjonalnościach gdyż nowe lub
+        // niespodziewane uznanie rzeczy za przestarzałe popsułoby aplikację.
+        return;
+    }
     throw new \ErrorException($errstr, 0, $errno, $errfile, $errline);
-}
-set_error_handler(exception_error_handler(...));
-// Przed PHP 8.1.0 i wprowadzeniem wbudowanej składni callable, musi zostać użyta następująca składnia
-// set_error_handler(__NAMESPACE__ . "\\exception_error_handler");
+});
 
-/* Wywołaj błąd */
-strpos();
+// Próba odserializowania błędnych danych wywołuje ostrzeżenie, które zostanie zamienione
+// na wyjątek ErrorException przez funkcję obsługi błędów.
+unserialize('popsute dane');
 ?>
 ]]>
      </programlisting>
      &example.outputs.similar;
      <screen>
 <![CDATA[
-Fatal error: Uncaught exception 'ErrorException' with message 'strpos() expects at least 2 parameters, 0 given' in /home/bjori/tmp/ex.php:12
+Fatal error: Uncaught ErrorException: unserialize(): Error at offset 0 of 12 bytes in test.php:16
 Stack trace:
-#0 [internal function]: exception_error_handler(2, 'strpos() expect...', '/home/bjori/php...', 12, Array)
-#1 /home/bjori/php/cleandocs/test.php(12): strpos()
+#0 [internal function]: {closure}(2, 'unserialize(): ...', 'test.php', 16)
+#1 test.php(16): unserialize('popsute dane')
 #2 {main}
-  thrown in /home/bjori/tmp/ex.php on line 12
+  thrown in test.php on line 16
 ]]>
      </screen>
     </example><!-- }}} -->
