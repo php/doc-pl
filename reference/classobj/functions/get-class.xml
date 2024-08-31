@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 7edc8853119f799d46f8e1057c49c2921c1f34d2 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 4f36c26a72c40b16e955c3c1c88041910932d0bf Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: dombal -->
 <refentry xml:id="function.get-class" xmlns="http://docbook.org/ns/docbook">
@@ -11,10 +11,10 @@
   &reftitle.description;
   <methodsynopsis>
    <type>string</type><methodname>get_class</methodname>
-   <methodparam choice="opt"><type>object</type><parameter>obiekt</parameter></methodparam>
+   <methodparam choice="opt"><type>object</type><parameter>object</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Zwraca nazwę klasy reprezentującej <parameter>obiekt</parameter>.
+   Zwraca nazwę klasy reprezentującej <parameter>object</parameter>.
   </para>
  </refsect1>
  <refsect1 role="parameters">
@@ -22,20 +22,16 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>obiekt</parameter></term>
+     <term><parameter>object</parameter></term>
      <listitem>
       <para>
-       Sprawdzany obiekt. Ten parametr może być pominięty, gdy funkcja jest wywoływana wewnątrz klasy.
+       Sprawdzany obiekt.
       </para>
       <note>
        <simpara>
-        Jawne przekazanie &null; jako <parameter>obiekt</parameter> jest niedozwolone
-        od wersji PHP 7.2.0.
-       </simpara>
-       <simpara>
-        Ten parametr wciąż jest opcjonalny i wywołanie <function>get_class</function>
-        z wewnątrz klasy, bez podania parametru, wciąż będzie działać, jednak
-        przekazanie &null; wywoła teraz komunikat <constant>E_WARNING</constant>.
+        Jawne przekazanie &null; jako <parameter>object</parameter> jest niedozwolone
+        od wersji PHP 7.2.0 i powoduje wygenerowanie ostrzeżenia (<constant>E_WARNING</constant>).
+        Od PHP 8.0.0 w przypadku użycia &null; rzucany jest <classname>TypeError</classname>.
        </simpara>
       </note>
      </listitem>
@@ -46,13 +42,7 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca nazwę klasy, której instancją jest <parameter>obiekt</parameter> is an.
-   Zwraca &false; jeżeli <parameter>obiekt</parameter> nie jest 
-   obiektem.
-  </para>
-  <para>
-   Jeżeli <parameter>obiekt</parameter> nie został podany podczas wywołania wewnątrz klasy,
-   zwracana jest nazwa tej klasy.
+   Zwraca nazwę klasy, której instancją jest <parameter>obiekt</parameter>.
   </para>
   <para>
    Jeżeli <parameter>obiekt</parameter> jest instancją klasy, która istnieje w przestrzeni nazw,
@@ -63,7 +53,13 @@
   &reftitle.errors;
   <para>
    Jeżeli <function>get_class</function> jest wykonywana na czymkolwiek innym niż
-   obiekcie, to generowany jest błąd <constant>E_WARNING</constant>.
+   obiekcie, rzucany jest <classname>TypeError</classname>. Przed PHP 8.0.0
+   generowane było ostrzeżenie (<constant>E_WARNING</constant>).
+  </para>
+  <para>
+   Jeżeli <function>get_class</function> zostanie wywołane bez argumentów spoza klasy,
+   rzucony zostanie <classname>Error</classname>. Przed PHP 8.0.0
+   generowane było ostrzeżenie (<constant>E_WARNING</constant>).
   </para>
  </refsect1>
  <refsect1 role="changelog">
@@ -79,18 +75,27 @@
      </thead>
      <tbody>
       <row>
+       <entry>8.3.0</entry>
+       <entry>
+        Wywołanie <function>get_class</function> bez argumentu powoduje teraz wygenerowanie błędu
+        <constant>E_DEPRECATED</constant>;
+        wcześniej wywołanie tej funkcji bez parametru z wewnątrz klasy zwracało nazwę tej klasy..
+       </entry>
+      </row>
+      <row>
+       <entry>8.0.0</entry>
+       <entry>
+        Wywołanie tej funkcji spoza klasy bez żadnych argumentów spowoduje
+        teraz rzucenie wyjątku <classname>Error</classname>.
+        Wcześniej generowane było ostrzeżenie (<constant>E_WARNING</constant>)
+        a funkcja zwracała &false;.
+       </entry>
+      </row>
+      <row>
        <entry>7.2.0</entry>
        <entry>
         &null; nie jest już domyślną wartością parametru <parameter>obiekt</parameter>,
         i nie może być do niej przekazane.
-       </entry>
-      </row>
-      <row>
-       <entry>5.3.0</entry>
-       <entry>
-        &null; został domyślną wartością dla parametru <parameter>obiekt</parameter>,
-        więc przekazanie &null; jako <parameter>obiekt</parameter> ma teraz taki sam
-        efekt jak nieprzekazanie żadnej wartości.
        </entry>
       </row>
      </tbody>
@@ -201,6 +206,7 @@ string(11) "Foo\Bar\Baz"
     <member><function>get_called_class</function></member>
     <member><function>get_parent_class</function></member>
     <member><function>gettype</function></member>
+    <member><function>get_debug_type</function></member>
     <member><function>is_subclass_of</function></member>
    </simplelist>
   </para>

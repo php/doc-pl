@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 970d9b2e5401211c8d3fb79c9518bde3e14ec716 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 7cec82fec28b339913fe98e990e7b01f4bb97476 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: dombal -->
 <refentry xml:id="function.get-parent-class" xmlns="http://docbook.org/ns/docbook">
@@ -10,8 +10,8 @@
  <refsect1 role="description">
   &reftitle.description;
   <methodsynopsis>
-   <type>string</type><methodname>get_parent_class</methodname>
-   <methodparam choice="opt"><type>mixed</type><parameter>obiekt</parameter></methodparam>
+   <type class="union"><type>string</type><type>false</type></type><methodname>get_parent_class</methodname>
+   <methodparam choice="opt"><type class="union"><type>object</type><type>string</type></type><parameter>object_or_class</parameter></methodparam>
   </methodsynopsis>
   <para>
    Zwraca nazwę klasy rodzica dla obiektu lub klasy.
@@ -22,11 +22,10 @@
   <para>
    <variablelist>
     <varlistentry>
-     <term><parameter>obiekt</parameter></term>
+     <term><parameter>object_or_class</parameter></term>
      <listitem>
       <para>
-       Sprawdzany obiekt lub nazwa klasy. Parametr jest opcjonalny jeżeli
-       funkcję wywołano wewnątrz metody.
+       Sprawdzany obiekt lub nazwa klasy.
       </para>
      </listitem>
     </varlistentry>
@@ -37,40 +36,42 @@
   &reftitle.returnvalues;
   <para>
    Zwraca nazwę klasy nadrzędnej, której
-   <parameter>obiekt</parameter> jest instancją lub nazwą.
+   <parameter>object_or_class</parameter> jest instancją lub nazwą.
   </para>
-  <note>
-   <para>
-    Jeżeli klasa nie ma rodzica lub podana klasa nie istnieje, zostanie zwrócone &false;.
-   </para>
-  </note>
   <para>
-   Jeżeli funkcja została wywołana bez parametru poza obiektem, zostanie zwrócone &false;.
+   Jeżeli obiekt nie ma rodzica lub podana klasa nie istnieje,
+   zostanie zwrócone &false;
   </para>
  </refsect1>
+
  <refsect1 role="changelog">
   &reftitle.changelog;
-  <para>
-   <informaltable>
-    <tgroup cols="2">
-     <thead>
-      <row>
-       <entry>&Version;</entry>
-       <entry>&Description;</entry>
-      </row>
-     </thead>
-     <tbody>
-      <row>
-       <entry>5.1.0</entry>
-       <entry>
-        JEżeli została wywołana poza obiektem, bez określonego parametru, ta funkcja
-        zwracała &null; z ostrzeżeniem, ale teraz zwraca &false;.
-       </entry>
-      </row>
-     </tbody>
-    </tgroup>
-   </informaltable>
-  </para>
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>8.3.0</entry>
+      <entry>
+       Wywołanie <function>get_parent_class</function> bez argumentu powoduje teraz
+       wygenerowanie ostrzeżenia <constant>E_DEPRECATED</constant>;
+       wcześniej wywołanie tej funkcji wewnątrz klasy bez parametru zwracało nazwę tej klasy.
+      </entry>
+     </row>
+     <row>
+      <entry>8.0.0</entry>
+      <entry>
+       Parametr <parameter>object_or_class</parameter> akceptuje teraz tylko obiekty lub poprawne nazwy klas.
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </informaltable>
  </refsect1>
  <refsect1 role="examples">
   &reftitle.examples;
@@ -81,22 +82,22 @@
 <![CDATA[
 <?php
 
-class dad {
-    function dad()
+class Dad {
+    function __construct()
     {
     // implementacja jakiejś logiki
     }
 }
 
-class child extends dad {
-    function child()
+class Child2 extends Dad {
+    function __construct()
     {
         echo "Jestem potomkiem klasy " , get_parent_class($this) , "\n";
     }
 }
 
-class child2 extends dad {
-    function child2()
+class Child2 extends Dad {
+    function __construct()
     {
         echo "Także jestem potomkiem klasy " , get_parent_class('child2') , "\n";
     }
@@ -111,8 +112,8 @@ $bar = new child2();
     &example.outputs;
     <screen>
 <![CDATA[
-Jestem potomkiem klasy dad
-Także jestem potomkiem klasy dad
+Jestem potomkiem klasy Dad
+Także jestem potomkiem klasy Dad
 ]]>
     </screen>
    </example>
