@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 08bce8d11d3d2a7d0461c17138d61b9da5be817a Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 1fd637525fd3bbaec04f6fff80eeb33fce880b10 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
  <chapter xml:id="tutorial" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
   <info><title>Prosty tutorial</title></info>
@@ -21,11 +21,11 @@
    <info><title>Czego potrzebuję?</title></info>
    <para>
     W tym tutorialu zakładamy że Twój serwer ma włączoną obsługę PHP
-    i że wszystkie pliki z zakończeniem <filename>.php</filename>
+    i że wszystkie pliki z zakończeniem <filename class="extension">.php</filename>
     są parsowane przez PHP. Na większości serwerów jest to domyślne
     rozszerzenie dla plików PHP, ale zapytaj swojego administratora, aby
     się upewnić. Jeśli Twój serwer obsługuje PHP, nie musisz nic robić.
-    Po prostu stwórz swoje pliki <filename>.php</filename>, umieść je
+    Po prostu stwórz swoje pliki <filename class="extension">.php</filename>, umieść je
     w katalogu swojej strony a serwer automatycznie sparsuje je dla Ciebie.
     Nie musisz nic kompilować ani instalować dodatkowych narzędzi. Pomyśl
     o stronach korzystających z PHP jak o zwykłych plikach HTML    z dodatkową
@@ -58,7 +58,7 @@
   </section>
 
   <section xml:id="tutorial.firstpage">
-   <info><title>Twoja pierwsza strona korzystające z PHP</title></info>
+   <info><title>Twoja pierwsza strona korzystająca z PHP</title></info>
    <para>
     Stwórz plik nazwany <filename>hello.php</filename> i umieść go
     w katalogu root swojego serwera (<varname>DOCUMENT_ROOT</varname>),
@@ -69,25 +69,41 @@
      <info><title>Nasz pierwszy skrypt PHP: <filename>hello.php</filename></title></info>
      <programlisting role="php">
 <![CDATA[
+<?php
+
+echo "Witaj, świecie!";
+
+?>
+]]>
+     </programlisting>
+     <simpara>
+      Użyj przeglądarki internetowej do otwarcia adresu URL Twojego serwera zakończonego
+      odniesieniem do pliku <literal>/hello.php</literal>. Przy serwerze lokalnym
+      adres będzie podobny do <literal>http://localhost/hello.php</literal>
+      lub <literal>http://127.0.0.1/hello.php</literal>, zależnie od konfiguracji
+      serwera. Jeśli wszystko zostało skonfigurowane poprawnie, ten plik zostanie
+      sparsowany przez PHP i w swojej przeglądarce zobaczysz wyświetlone wyjście
+      skryptu: "Witaj, świecie!".
+     </simpara>
+     <simpara>
+      PHP może zostać osadzony wewnątrz normalnej strony napisanej w HTML. Oznacza to, że wewnątrz dokumentu HTML
+      możesz umieścić wyrażenia PHP, jak pokazano w następującym przykładzie:
+     </simpara>
+     <programlisting role="php">
+<![CDATA[
 <!DOCTYPE html>
 <html>
     <head>
         <title>Test PHP</title>
      </head>
      <body>
-         <?php echo '<p>Hello World</p>'; ?>
+         <?php echo '<p>Witaj, świecie</p>'; ?>
      </body>
 </html>
 ]]>
      </programlisting>
      <simpara>
-      Użyj przeglądarki internetowej do otwarcia adresu URL Twojego serwera
-      zakończonego odniesieniem do pliku <literal>/hello.php</literal>. Przy serwerze lokalnym
-      adres będzie podobny do <literal>http://localhost/hello.php</literal> 
-      lub <literal>http://127.0.0.1/hello.php</literal>, zależnie od konfiguracji
-      serwera. Jeśli wszystko zostało skonfigurowane poprawnie, ten plik zostanie
-      sparsowany przez PHP i do Twojej przeglądarki zostanie wysłany następujący
-      wynik:
+      Skutkiem tego będzie następujący kod wyjściowy:
      </simpara>
      <screen role="html">
 <![CDATA[
@@ -96,7 +112,7 @@
   <title>Test PHP</title>
  </head>
  <body>
- <p>Hello World</p>
+ <p>Witaj, świecie</p>
  </body>
 </html>
 ]]>
@@ -105,12 +121,12 @@
    </para>
    <para>
     To przykład ekstremalnie prostego programu i tak naprawdę nie potrzebujesz
-    PHP by stworzyć stronę jak tę. Wszystko co robi to wyświetlenie tekstu
-    <literal>Hello World</literal> używając wyrażenia <function>echo</function>
-    z PHP. Zauważ że plik <emphasis>nie musi być wykonywalny</emphasis>
-    lub szczególny w żaden sposób. Serwer wie, że ten plik musi być przetworzony
-    przez PHP ponieważ użyłeś rozszerzenia ".php", a konfiguracja serwera przekazuje
-    je do PHP. Pomyśl o tym jak o normalnym pliku HTML, który ma dostępny zestaw
+    PHP, by stworzyć stronę jak tę. Wszystko, co robi to wyświetlenie tekstu
+    <literal>Witaj, świecie</literal> używając wyrażenia <function>echo</function>
+    z PHP. Zauważ, że plik <emphasis>nie musi być wykonywalny</emphasis>
+    lub specjalny w żaden sposób. Serwer wie, że ten plik musi być przetworzony
+    przez PHP, ponieważ użyłeś rozszerzenia ".php", a konfiguracja serwera przekazuje
+    je do PHP. Pomyśl o tym, jak o normalnym pliku HTML, który ma dostępny zestaw
     specjalnych tagów, umożliwiających robienie wielu interesujących rzeczy.
    </para>
    <para>
@@ -396,8 +412,8 @@ if (str_contains($_SERVER['HTTP_USER_AGENT'], 'Firefox')) {
      <info><title>Wyświetlanie danych z naszego formularza</title></info>
      <programlisting role="php">
 <![CDATA[
-HCześć<?php echo htmlspecialchars($_POST['nazwa']); ?>.
-Masz <?php echo (int)$_POST['wiek']; ?> lat.
+Cześć <?php echo htmlspecialchars($_POST['nazwa']); ?>.
+Masz <?php echo (int) $_POST['wiek']; ?> lat.
 ]]>
      </programlisting>
      <para>
