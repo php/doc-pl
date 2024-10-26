@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: ced371fcb7a105f06a6a75672fbcd448271a3e3f Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 2f3c1237bc46a7e40dae35e9f3aec2c1b2fa23b8 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <reference xml:id="class.errorexception" role="exception" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude">
  <title>ErrorException</title>
@@ -78,26 +78,30 @@
    &reftitle.examples;
    <para>
     <example xml:id="errorexception.example.error-handler"><!-- {{{ -->
-     <title>Użycie <function>set_error_handler</function> do zmiany wiadomości błędu na ErrorException.</title>
+     <title>Użycie <function>set_error_handler</function> do zmiany wiadomości błędu na ErrorException</title>
      <programlisting role="php">
  <![CDATA[
 <?php
+
 set_error_handler(function (int $errno, string $errstr, string $errfile, int $errline) {
     if (!(error_reporting() & $errno)) {
         // Ten kod błędu nie został uwzględniony w error_reporting
         return;
     }
+
     if ($errno === E_DEPRECATED || $errno === E_USER_DEPRECATED) {
         // Nie rzucaj wyjątku dla ostrzeżeń o przestarzałych funkcjonalnościach gdyż nowe lub
         // niespodziewane uznanie rzeczy za przestarzałe popsułoby aplikację.
         return;
     }
+
     throw new \ErrorException($errstr, 0, $errno, $errfile, $errline);
 });
 
 // Próba odserializowania błędnych danych wywołuje ostrzeżenie, które zostanie zamienione
 // na wyjątek ErrorException przez funkcję obsługi błędów.
 unserialize('popsute dane');
+
 ?>
 ]]>
      </programlisting>
