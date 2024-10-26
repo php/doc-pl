@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: c35c07ab6a9cf533455947147634399fc928f6ca Maintainer: leszek Status: ready -->
+<!-- EN-Revision: d7a77b5f850d5077f75d0c8c0d22cd60f099965d Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.session-name" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
@@ -22,9 +22,9 @@
   <para>
    Jeżeli podano parametr <parameter>name</parameter>,
    <function>session_name</function> modyfikuje ciasteczko HTTP
-   (i zawartość odpowiedzi, jeśli opcja <literal>session.transid</literal> jest
+   (i zawartość odpowiedzi, jeśli opcja <link linkend="ini.session.use-trans-sid">session.use_trans_sid</link> jest
    włączona). Jeśli ciasteczko HTTP zostało już
-   wysłane, <function>session_name</function> zwraca błąd.
+   wysłane, <function>session_name</function> powoduje ostrzeżenie (<constant>E_WARNING</constant>).
    <function>session_name</function> musi być wywołana
    przed <function>session_start</function>, aby sesja działała
    prawidłowo.
