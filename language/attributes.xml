@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 9155d793178b5fcd5131b734cd174fecc34c1ae6 Maintainer: sobak Status: ready -->
+ <chapter xml:id="language.attributes" xmlns="http://docbook.org/ns/docbook">
+  <title>Atrybuty</title>
+  <sect1 xml:id="language.attributes.overview">
+   <title>Przegląd atrybutów</title>
+   <?phpdoc print-version-for="attributes"?>
+
+   <para>
+    Atrybuty oferują możliwość dodania ustrukturyzowanych metadanych nadających się do odczytu maszynowego
+    dla deklaracji w kodzie; klasy, metody, funkcje, parametry,
+    właściwości oraz stałe w klasach mogą mieć przypisane atrybuty. Metadane
+    zdefiniowane przez atrybuty mogą być następnie sprawdzane w czasie wykonywania przy użyciu
+    <link linkend="book.reflection">klas
+     Reflection</link>. Można więc myśleć o atrybutach jak o języku
+    konfiguracji osadzonym bezpośrednio w kodzie.
+   </para>
+
+   <para>
+    Używając atrybutów można oddzielić generyczną implementację
+    funkcjonalności od jej konkretnego użycia w aplikacji. W pewnym sensie jest to
+    porównywalne do interfejsów i ich implementacji. Jednak
+    interfejsy tyczą się kodu, a atrybuty
+    opisywania dodatkowych informacji i konfiguracji. Interfejsy mogą
+    być implementowane przez klasy, a atrybuty można zdeklarować też
+    dla metod, funkcji, parametrów, właściwości oraz stałych w klasach.
+    W związku z tym są one bardziej wszechstronne niż interfejsy.
+   </para>
+
+    <para>
+     Prostym przykładem użycia atrybutu jest zamiana interfejsu,
+     który ma opcjonalne metody, na atrybut. Załóżmy interfejs
+     <literal>ActionHandler</literal>
+     reprezentujący operację w aplikacji, gdzie niektóre
+     implementacje funkcji obsługi akcji wymagają dodatkowego kodu do ustawienia rzeczy, a inne nie. Zamiast
+     wymuszać aby wszystkie klasy implementujące interfejs <literal>ActionHandler</literal> definiowały
+     metodę <literal>setUp()</literal>
+     możemy skorzystać z atrybutu. Zaletą
+     tego podejścia jest możliwość użycia atrybutu kilkukrotnie.
+    </para>
+
+   <example>
+    <title>Implementacja opcjonalnych metod interfejsu z użyciem atrybutów</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+interface ActionHandler
+{
+    public function execute();
+}
+
+#[Attribute]
+class SetUp {}
+
+class CopyFile implements ActionHandler
+{
+    public string $fileName;
+    public string $targetDirectory;
+
+    #[SetUp]
+    public function fileExists()
+    {
+        if (!file_exists($this->fileName)) {
+            throw new RuntimeException("Plik nie istnieje");
+        }
+    }
+
+    #[SetUp]
+    public function targetDirectoryExists()
+    {
+        if (!file_exists($this->targetDirectory)) {
+            mkdir($this->targetDirectory);
+        } elseif (!is_dir($this->targetDirectory)) {
+            throw new RuntimeException("Target directory $this->targetDirectory is not a directory");
+        }
+    }
+
+    public function execute()
+    {
+        copy($this->fileName, $this->targetDirectory . '/' . basename($this->fileName));
+    }
+}
+
+function executeAction(ActionHandler $actionHandler)
+{
+    $reflection = new ReflectionObject($actionHandler);
+
+    foreach ($reflection->getMethods() as $method) {
+        $attributes = $method->getAttributes(SetUp::class);
+
+        if (count($attributes) > 0) {
+            $methodName = $method->getName();
+
+            $actionHandler->$methodName();
+        }
+    }
+
+    $actionHandler->execute();
+}
+
+$copyAction = new CopyFile();
+$copyAction->fileName = "/tmp/foo.jpg";
+$copyAction->targetDirectory = "/home/user";
+
+executeAction($copyAction);
+]]>
+     </programlisting>
+    </example>
+  </sect1>
+
+  <sect1 xml:id="language.attributes.syntax">
+   <title>Składnia atrybutu</title>
+
+   <para>
+    Na składnię atrybutu składa się kilka części. Po pierwsze, deklaracja
+    atrybutu jest zawsze zawarta między rozpoczynającym
+    <literal>#[</literal> i odpowiadającym mu końcowym
+    <literal>]</literal>. Wewnątrz wymieniony jest jeden lub więcej atrybutów,
+    oddzielonych przecinkami. Nazwa atrybutu jest nazwą niekwalifikowaną, kwalifikowaną
+    i w pełni kwalifikowaną jak wyjaśniono w rozdziale <link linkend="language.namespaces.basics">Podstawy użycia przestrzeni nazw</link>.
+    Argumenty atrybutów są opcjonalne, ale są deklarowane jak zazwyczaj, wewnątrz nawiasów <literal>()</literal>.
+    Argumenty atrybutów mogą być wyłącznie dosłownymi wartościami lub wyrażeniami stałych. Obsługiwane są
+    zarówno argumenty pozycyjne, jak i nazwane.
+   </para>
+
+   <para>
+    Nazwy atrybutów i ich parametry są rozwiązywane do klasy i argumenty są przekazywane do jej konstruktora,
+    gdzie instancja atrybutu jest tworzona przez API rozszerzenia Reflection. W związku z tym
+    dla każdego atrybutu powinna być utworzona klasa.
+   </para>
+
+   <example>
+    <title>Składnia atrybutu</title>
+
+    <programlisting role="php">
+<![CDATA[
+<?php
+// a.php
+namespace MojPrzyklad;
+
+use Attribute;
+
+#[Attribute]
+class MojAtrybut
+{
+    const VALUE = 'wartość';
+
+    private $value;
+
+    public function __construct($value = null)
+    {
+        $this->value = $value;
+    }
+}
+
+// b.php
+
+namespace Another;
+
+use MojPrzyklad\MojAtrybut;
+
+#[MojAtrybut]
+#[\MojPrzyklad\MojAtrybut]
+#[MojAtrybut(1234)]
+#[MojAtrybut(value: 1234)]
+#[MojAtrybut(MojAtrybut::VALUE)]
+#[MojAtrybut(array("klucz" => "wartość"))]
+#[MojAtrybut(100 + 200)]
+class Rzecz
+{
+}
+
+#[MojAtrybut(1234), MojAtrybut(5678)]
+class InnaRzecz
+{
+}
+]]>
+    </programlisting>
+   </example>
+  </sect1>
+
+
+  <sect1 xml:id="language.attributes.reflection">
+   <title>Odczyt atrybutów przy użyciu API Reflection</title>
+
+   <para>
+    Aby uzyskać dostęp do atrybutów z klas, metod, funkcji, parametrów, właściwości i stałych w klasach,
+    API Reflection udostępnia metodę <function>getAttributes</function> dla każdego z odpowiadających
+    obiektów Reflection. Ta metoda zwraca tablicę obiektów <classname>ReflectionAttribute</classname>,
+    które mogą być użyte do pobrania nazwy atrybutu, jego argumentów i stworzenia instancji reprezentowanego atrybutu.
+   </para>
+
+   <para>
+    Ta separacja reprezentacji atrybutu poddanego refleksji od faktycznego obiektu klasy zwiększa kontrolę programisty
+    nad obsługą błędów związaną z brakującymi klasami atrybutów, niepoprawnie wpisanymi lub nieistniejącymi atrybutami. Obiekty
+    klasy atrybutów są tworzone dopiero po wywołaniu <function>ReflectionAttribute::newInstance</function> i dopiero wtedy
+    sprawdzane jest czy argumenty pasują do atrybutu.
+   </para>
+
+   <example>
+    <title>Odczyt atrybutów przy użyciu API Reflection</title>
+
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+#[Attribute]
+class MojAtrybut
+{
+    public $value;
+
+    public function __construct($value)
+    {
+        $this->value = $value;
+    }
+}
+
+#[MojAtrybut(value: 1234)]
+class Thing
+{
+}
+
+function zrzucDaneAtrybutu($reflection) {
+    $attributes = $reflection->getAttributes();
+
+    foreach ($attributes as $attribute) {
+       var_dump($attribute->getName());
+       var_dump($attribute->getArguments());
+       var_dump($attribute->newInstance());
+    }
+}
+
+zrzucDaneAtrybutu(new ReflectionClass(Thing::class));
+/*
+string(11) "MojAtrybut"
+array(1) {
+  ["value"]=>
+  int(1234)
+}
+object(MojAtrybut)#3 (1) {
+  ["value"]=>
+  int(1234)
+}
+*/
+
+]]>
+    </programlisting>
+   </example>
+
+   <para>
+    Zamiast iterowania po wszystkich atrybutach w obiekcie refleksji, można
+    pobrać tylko te dla określonego atrybutu.
+    W tym celu należy przekazać nazwę klasy szukanego atrybutu jako argument.
+   </para>
+
+   <example>
+    <title>Odczyt konkretnego atrybutu używając API Reflection</title>
+
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+function zrzucDaneAtrybutuMojAtrybut($reflection) {
+    $attributes = $reflection->getAttributes(MojAtrybut::class);
+
+    foreach ($attributes as $attribute) {
+       var_dump($attribute->getName());
+       var_dump($attribute->getArguments());
+       var_dump($attribute->newInstance());
+    }
+}
+
+zrzucDaneAtrybutuMojAtrybut(new ReflectionClass(Thing::class));
+]]>
+     </programlisting>
+    </example>
+  </sect1>
+
+  <sect1 xml:id="language.attributes.classes">
+   <title>Deklarowanie klas atrybutu</title>
+
+   <para>
+    Mimo iż nie jest to wymagane, zaleca się stworzenie faktycznej klasy dla każdego atrybutu.
+    W najprostszym wypadku potrzebna jest tylko pusta klasa z atrybutem <literal>#[Attribute]</literal>,
+    który może być zaimportowany z globalnej przestrzeni nazw używając wyrażenia use.
+   </para>
+
+  <example>
+   <title>Prosta klasa atrybutu</title>
+
+   <programlisting role="php">
+<![CDATA[
+<?php
+
+namespace Example;
+
+use Attribute;
+
+#[Attribute]
+class MojAtrybut
+{
+}
+]]>
+   </programlisting>
+  </example>
+
+  <para>
+   Aby ograniczyć do czego może być przypisany atrybut, można przekazać maskę bitową jako pierwszy
+   argument do deklaracji atrybutu <literal>#[Attribute]</literal>.
+  </para>
+
+  <example>
+   <title>Wykorzystanie określenia elementu docelowego do ograniczenia gdzie można użyć atrybutu</title>
+
+   <programlisting role="php">
+<![CDATA[
+<?php
+
+namespace Example;
+
+use Attribute;
+
+#[Attribute(Attribute::TARGET_METHOD | Attribute::TARGET_FUNCTION)]
+class MojAtrybut
+{
+}
+]]>
+    </programlisting>
+
+    <para>
+     Zdeklarowanie atrybutu <classname>MojAtrybut</classname> na innym typie konstrukcji rzuci teraz wyjątek
+     przy wywołaniu <function>ReflectionAttribute::newInstance</function>
+    </para>
+   </example>
+
+   <para>Można określić następujące elementy docelowe</para>
+
+   <simplelist>
+    <member><constant>Attribute::TARGET_CLASS</constant> (klasy)</member>
+    <member><constant>Attribute::TARGET_FUNCTION</constant> (funkcje)</member>
+    <member><constant>Attribute::TARGET_METHOD</constant> (metody)</member>
+    <member><constant>Attribute::TARGET_PROPERTY</constant> (właściwości)</member>
+    <member><constant>Attribute::TARGET_CLASS_CONSTANT</constant> (stałe w klasach)</member>
+    <member><constant>Attribute::TARGET_PARAMETER</constant> (parametry)</member>
+    <member><constant>Attribute::TARGET_ALL</constant> (wszystkie)</member>
+   </simplelist>
+
+   <para>
+    Domyślnie atrybutu można użyć tylko raz na daną konstrukcję. Jeżeli atrybut powinien być powtarzalny, musi
+    być to określone jako część maski bitowej przekazanej do deklaracji <literal>#[Attribute]</literal>.
+   </para>
+
+   <example>
+    <title>Użycie IS_REPEATABLE aby pozwolić na wielokrotne użycie atrybutu dla jednej konstrukcji</title>
+
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+namespace Example;
+
+use Attribute;
+
+#[Attribute(Attribute::TARGET_METHOD | Attribute::TARGET_FUNCTION | Attribute::IS_REPEATABLE)]
+class MojAtrybut
+{
+}
+]]>
+    </programlisting>
+
+   </example>
+  </sect1>
+ </chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
