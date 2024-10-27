@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 7204e2dbb9b484c8b67bb5ad4a93fa1369c5b317 Maintainer: sobak Status: ready -->
+  <chapter xml:id="security.database" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+   <title>Bezpieczeństwo baz danych</title>
+
+   <simpara>
+    W dzisiejszych czasach bazy danych są kluczowymi komponentami każdej aplikacji internetowej,
+    umożliwiającymi stronom internetowym dostarczanie różnych dynamicznych treści. Ponieważ w bazie danych
+    mogą być przechowywane bardzo wrażliwe lub tajne informacje, należy poważnie podejść
+    do kwestii ochrony swoich baz danych.
+   </simpara>
+   <simpara>
+    Aby pobrać lub zapisać jakiekolwiek informacje, należy się połączyć do bazy danych,
+    wysłać poprawne zapytanie, pobrać wynik i zamknąć połączenie.
+    W obecnych czasach powszechnie stosowanym w tym celu językiem zapytań jest
+    SQL (Structured Query Language). Zobacz, w jaki sposób atakujący może <link
+    linkend="security.database.sql-injection">manipulować zapytaniami SQL</link>.
+   </simpara>
+   <simpara>
+    Jak możesz przypuszczać, <acronym>PHP</acronym> nie może ochronić Twojej bazy danych samej w sobie.
+    Kolejne sekcje są wprowadzeniem do podstaw tego, jak
+    uzyskiwać dostęp i zmieniać informacje w bazach danych z poziomu skryptów <acronym>PHP</acronym>.
+   </simpara>
+   <simpara>
+    Pamiętaj o prostej zasadzie: głęboka ochrona. W im większej ilości miejsc
+    zadbasz o zwiększenie ochrony swojej bazy danych, tym mniejsze
+    prawdopodobieństwo, że atakujący da radę wykraść lub wykorzystać przechowywane
+    w niej informacje. Dobry projekt schematu bazy danych oraz aplikacji
+    poradzi sobie z większością problemów.
+   </simpara>
+
+   <sect1 xml:id="security.database.design">
+    <title>Projektowanie baz danych</title>
+     <simpara>
+      Pierwszym krokiem jest zawsze stworzenie bazy danych, chyba że chcesz
+      użyć bazy danych od strony trzeciej. Gdy baza danych jest tworzona,
+      przypisywany jest jej właściciel, który wykonał żądanie tworzące bazę. Zazwyczaj tylko
+      właściciel (lub superużytkownik) może operować na obiektach w tej
+      bazie danych, a inni użytkownicy muszą otrzymać uprawnienia,
+      aby mogli ich używać.
+     </simpara>
+     <simpara>
+      Aplikacja nigdy nie powinna łączyć się do bazy danych jako jej właściciel lub
+      superużytkownik, ponieważ ci użytkownicy mogą wykonać dowolne zapytania, na
+      przykład zmieniające strukturę bazy danych (np. usuwające tabele) lub
+      usuwające całą jej zawartość.
+     </simpara>
+     <simpara>
+      Możesz stworzyć różnych użytkowników bazy danych dla każdego z zastosowań
+      Twojej aplikacji z bardzo ograniczonymi uprawnieniami do obiektów w bazie danych.
+      Powinieneś nadawać tylko niezbędne uprawnienia i unikać tego, by ten sam użytkownik
+      mógł używać bazy danych w innych celach. Oznacza to, że jeśli
+      atakujący zdobędą dostęp do Twojej bazy danych używając poświadczeń aplikacji,
+      mogą wykonać tylko takie zmiany, które może wykonać Twoja aplikacja.
+     </simpara>
+   </sect1>
+
+   <sect1 xml:id="security.database.connection">
+    <title>Łączenie z bazą danych</title>
+    <simpara>
+     Możesz ustanowić połączenie z wykorzystaniem SSL aby zaszyfrować
+     komunikację między klientem a serwerem i zwiększyć bezpieczeństwo, lub użyć ssh,
+     aby zaszyfrować połączenie sieciowe między klientami a serwerem bazy danych.
+     Przy zastosowaniu któregoś z tych rozwiązań monitorowanie ruchu i zdobycie
+     informacji o Twojej bazie danych będzie utrudnione dla potencjalnego atakującego.
+    </simpara>
+    <!--simpara>
+     If your database server has native SSL support, consider using <link
+     linkend="ref.openssl">OpenSSL functions</link> in communication between
+     <acronym>PHP</acronym> and database via SSL.
+    </simpara-->
+   </sect1>
+
+   <sect1 xml:id="security.database.storage">
+    <title>Szyfrowany model zapisu</title>
+    <simpara>
+     SSL lub SSH chroni dane płynące z klienta do serwera, ale
+     nie chroni danych już zapisanych w bazie. SSL jest
+     protokołem szyfrującym transfer danych.
+    </simpara>
+    <simpara>
+     Kiedy atakujący uzyska bezpośredni dostęp do Twojej bazy danych (omijając
+     serwer WWW), przechowywane wrażliwe informacje mogą być ujawnione, chyba że
+     informacja jest chroniona przez samą bazę danych. Szyfrowanie danych
+     jest dobrym sposobem, aby zapobiec temu zagrożeniu, ale bardzo niewiele
+     baz danych oferuje ten typ szyfrowania danych.
+    </simpara>
+    <simpara>
+     Najprostszym sposobem obejścia tego problemu jest stworzenie
+     swojej własnej paczki szyfrującej i wykorzystanie jej z poziomu skryptów <acronym>PHP</acronym>. <acronym>PHP</acronym>
+     może Ci w tym pomóc dostarczając kilka rozszerzeń, takich jak <link
+     linkend="book.openssl">OpenSSL</link> i <link
+     linkend="book.sodium">Sodium</link>, które oferują szeroką gamę algorytmów
+     szyfrujących. Skrypt może szyfrować dane przed ich umieszczeniem w bazie danych i odszyfrować
+     je w chwili odczytu. Zobacz odniesienia, żeby zobaczyć dalsze przykłady tego,
+     jak działa szyfrowanie.
+    </simpara>
+
+    <sect2 xml:id="security.database.storage.hashing">
+    <title>Haszowanie</title>
+     <simpara>
+      W wypadku naprawdę ukrytych danych, jeśli ich surowa reprezentacja nie jest potrzebna
+      (tj. dane nie będą wyświetlane), można rozważyć ich haszowanie.
+      Powszechnie znanym przykładem haszowania jest zapisywanie haszu kryptograficznego
+      haseł w bazie danych, zamiast trzymania samych haseł.
+     </simpara>
+     <simpara>
+      Funkcje modułu <link linkend="ref.password">password</link>
+      oferują wygodny sposób haszowania wrażliwych danych i pracy z tymi haszami.
+     </simpara>
+     <simpara>
+      Funkcja <function>password_hash</function> jest używana do haszowania podanego ciągu znaków używając
+      najmocniejszego obecnie dostępnego algorytmu, a <function>password_verify</function>
+      sprawdza czy podane hasło pasuje do haszu zapisanego w bazie danych.
+     </simpara>
+     <example>
+      <title>Haszowanie pola z hasłem</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+
+// zapisywanie haszu hasła
+$query  = sprintf("INSERT INTO users(name,pwd) VALUES('%s','%s');",
+            pg_escape_string($username),
+            password_hash($password, PASSWORD_DEFAULT));
+$result = pg_query($connection, $query);
+
+// sprawdzanie czy użytkownik wysłał poprawne hasło
+$query = sprintf("SELECT pwd FROM users WHERE name='%s';",
+            pg_escape_string($username));
+$row = pg_fetch_assoc(pg_query($connection, $query));
+
+if ($row && password_verify($password, $row['pwd'])) {
+    echo 'Witaj, ' . htmlspecialchars($username) . '!';
+} else {
+    echo 'Autentykacja dla ' . htmlspecialchars($username) . ' nie powiodła się.';
+}
+
+?>
+]]>
+      </programlisting>
+     </example>
+    </sect2>
+   </sect1>
+
+   <sect1 xml:id="security.database.sql-injection">
+    <title>SQL Injection (wstrzyknięcie SQL)</title>
+    <simpara>
+     SQL injection (wstrzyknięcie SQL) jest techniką, w której atakujący wykorzystuje luki
+     w kodzie aplikacji odpowiedzialnym za budowanie dynamicznych zapytań SQL.
+     Atakujący może zyskać dostęp do chronionych części aplikacji,
+     pobrać wszystkie informacje z bazy danych, manipulować istniejącymi danymi
+     lub nawet wykonywać niebezpieczne komendy systemowe na maszynie bazy
+     danych. Podatność występuje, gdy programista łączy lub wplata
+     dane wejściowe od użytkownika do zapytań SQL.
+    </simpara>
+    <para>
+     <example>
+      <title>
+       Dzielenie wyników na strony... i tworzenie superużytkowników
+       (PostgreSQL)
+      </title>
+      <simpara>
+       W następującym przykładzie dane wejściowe od użytkownika są bezpośrednio wplatane
+       w zapytanie SQL, pozwalając atakującemu na zdobycie konta superużytkownika w bazie danych.
+      </simpara>
+      <programlisting role="php">
+<![CDATA[
+<?php
+
+$offset = $_GET['offset']; // uważaj, brak sprawdzenia danych wejściowych!
+$query  = "SELECT id, name FROM products ORDER BY name LIMIT 20 OFFSET $offset;";
+$result = pg_query($conn, $query);
+
+?>
+]]>
+      </programlisting>
+     </example>
+      Normalni użytkownicy klikają na linki 'następna'/'poprzednia', które kodują wartość
+      zmiennej <varname>$offset</varname> w adresie <acronym>URL</acronym>. Skrypt spodziewa się, że
+      dane przychodzące w zmiennej <varname>$offset</varname> są liczbą. Jednak co jeśli ktoś spróbuje
+      włamać się doklejając następującą rzecz do adresu <acronym>URL</acronym>?
+      <informalexample>
+       <programlisting role="sql">
+<![CDATA[
+0;
+insert into pg_shadow(usename,usesysid,usesuper,usecatupd,passwd)
+    select 'crack', usesysid, 't','t','crack'
+    from pg_shadow where usename='postgres';
+--
+]]>
+       </programlisting>
+      </informalexample>
+      Jeśli tak się stanie, skrypt utworzyłby atakującemu konto superużytkownika.
+      Zauważ, że <literal>0;</literal> zostało podane aby dostarczyć poprawny offset
+      do oryginalnego zapytania i je zakończyć.
+    </para>
+    <note>
+     <para>
+      Częstą techniką wymuszenia na parserze SQL aby zignorował resztę
+      zapytania napisanego przez programistę jest podanie <literal>--</literal>, czyli
+      znaków rozpoczynających komentarz w SQL.
+     </para>
+    </note>
+    <para>
+     Możliwym sposobem na uzyskanie haseł jest obejście stron wyników wyszukiwania.
+     Jedynym co musi zrobić atakujący jest zobaczenie czy istnieją jakieś wysyłane zmienne
+     używane w zapytaniu SQL, które nie są obsługiwane poprawnie. Takie filtry mogą być
+     często ustawiane w poprzedzającym formularzu, aby dostosować klauzule <literal>WHERE, ORDER BY,
+     LIMIT</literal> and <literal>OFFSET</literal> w zapytaniu <literal>SELECT</literal>.
+     Jeśli Twoja baza danych wspiera konstrukcję <literal>UNION</literal>,
+     atakujący może spróbować dokleić całe zapytanie do oryginalnego, aby otrzymać
+     listę haseł z określonej tabeli. Jest zdecydowanie zalecane aby przetrzymywać jedynie
+     bezpieczne hasze haseł zamiast samych haseł.
+     <example>
+      <title>
+       Pobieranie listy artykułów... i haseł (dowolna baza danych)
+      </title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+
+$query  = "SELECT id, name, inserted, size FROM products
+           WHERE size = '$size'";
+$result = odbc_exec($conn, $query);
+
+?>
+]]>
+      </programlisting>
+     </example>
+     Statyczna część zapytania może zostać połączona z innym
+     wyrażeniem <literal>SELECT</literal>, które ujawnia wszystkie hasła:
+     <informalexample>
+      <programlisting role="sql">
+<![CDATA[
+'
+union select '1', concat(uname||'-'||passwd) as name, '1971-01-01', '0' from usertable;
+--
+]]>
+      </programlisting>
+     </informalexample>
+    </para>
+    <para>
+     Zapytania <literal>UPDATE</literal> i <literal>INSERT</literal> również są
+     podatne na takie ataki.
+     <example>
+     <title>
+      Formularz resetujący hasło... aby uzyskać więcej uprawnień (dowolna baza danych)
+     </title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+$query = "UPDATE usertable SET pwd='$pwd' WHERE uid='$uid';";
+?>
+]]>
+      </programlisting>
+     </example>
+     Jeżeli złośliwy użytkownik wyśle wartość
+     <literal>' or uid like'%admin%</literal> jako zmienną <varname>$uid</varname>, aby
+     zmienić hasło administratora lub po prostu ustawi <varname>$pwd</varname> na
+     <literal>hehehe', trusted=100, admin='yes</literal> aby uzyskać więcej
+     uprawnień, to zapytanie zostanie zmienione:
+     <informalexample>
+      <programlisting role="php">
+<![CDATA[
+<?php
+
+// $uid: ' or uid like '%admin%
+$query = "UPDATE usertable SET pwd='...' WHERE uid='' or uid like '%admin%';";
+
+// $pwd: hehehe', trusted=100, admin='yes
+$query = "UPDATE usertable SET pwd='hehehe', trusted=100, admin='yes' WHERE
+...;";
+
+?>
+]]>
+      </programlisting>
+     </informalexample>
+    </para>
+    <simpara>
+     Mimo, że jest oczywiste, że atakujący musi posiąść jakąś
+     wiedzę na temat architektury bazy danych, aby przeprowadzić udany
+     atak, to zdobycie tej informacji jest często bardzo proste. Przykładowo
+     kod może być częścią otwartoźródłowego oprogramowania i być publicznie dostępny.
+     Informacje te mogą również zostać ujawnione
+     przez zamknięty kod źródłowy - nawet jeśli jest on zakodowany, zaciemniony lub skompilowany -
+     a nawet przez Twój własny kod, poprzez wyświetlanie wiadomości błędów.
+     Inne metody to np. użycie typowych nazw tabel i kolumn Na
+     przykład formularz logowania, który używa taeli 'users' z kolumnami nazwanymi
+     'id', 'username', and 'password'.
+    </simpara>
+    <para>
+     <example>
+     <title>Atak na system operacyjny serwera baz danych (MSSQL Server)</title>
+      <simpara>
+       Przerażający przykład tego, jak na niektórych maszynach baz danych można
+       uzyskać dostęp do komend systemowych.
+      </simpara>
+      <programlisting role="php">
+<![CDATA[
+<?php
+
+$query  = "SELECT * FROM products WHERE id LIKE '%$prod%'";
+$result = mssql_query($query);
+
+?>
+]]>
+      </programlisting>
+     </example>
+     Jeśli atakujący wyśle wartość
+     <literal>a%' exec master..xp_cmdshell 'net user test testpass /ADD' --</literal>
+     jako zmienną <varname>$prod</varname>, to wartością <varname>$query</varname> będzie:
+     <informalexample>
+      <programlisting role="php">
+<![CDATA[
+<?php
+
+$query  = "SELECT * FROM products
+           WHERE id LIKE '%a%'
+           exec master..xp_cmdshell 'net user test testpass /ADD' --%'";
+$result = mssql_query($query);
+
+?>
+]]>
+      </programlisting>
+     </informalexample>
+     MSSQL Server wykonuje zapytania SQL w grupach, w tym komendę
+     dodającą nowego użytkownika do lokalnych kont bazy danych. Jeśli ta aplikacja
+     była uruchomiona jako <literal>sa</literal> i usługa MSSQLSERVER została
+     uruchomiona z wystarczającymi uprawnieniami, to atakujący miałby teraz
+     konto z dostępem do tej maszyny.
+    </para>
+    <note>
+     <para>
+      Niektóre przykłady powyżej są powiązane z konkretnym serwerem baz danych, ale
+      nie oznacza to, że podobne ataki są niemożliwe względem innych produktów.
+      Twój serwer baz danych może mieć podobną podatność wykorzystywaną w inny sposób.
+     </para>
+    </note>
+    <para>
+     <mediaobject>
+      <alt>Zabawny przykład problemów związanych z SQL injection</alt>
+      <imageobject>
+       <imagedata fileref="en/security/figures/xkcd-bobby-tables.png" format="PNG"/>
+      </imageobject>
+      <caption>
+       <simpara>
+        Obrazek dzięki uprzejmości <link xlink:href="&url.xkcd;327">xkcd</link>
+       </simpara>
+      </caption>
+     </mediaobject>
+    </para>
+
+    <sect2 xml:id="security.database.avoiding">
+     <title>Techniki unikania</title>
+     <para>
+      Rekomendowanym sposobem unikania SQL injection jest przypisanie wszystkich danych
+      za pomocą przygotowanych instrukcji (ang. prepared statements). Użycie parametryzowanych zapytań
+      nie jest wystarczające aby zupełnie uniknąć SQL injection, ale jest najbezpieczniejszym sposobem dostarczenia
+      danych wejściowych od użytkownika do zapytań SQL. Wszystkie dynamiczne dane w zapytaniach <literal>WHERE</literal>,
+      <literal>SET</literal> i <literal>VALUES</literal> muszą być
+      zastąpione symbolami zastępczymi (placeholderami). Rzeczywiste dane zostaną podstawione podczas
+      wykonywania i zostaną wysłane osobno od zapytania SQL.
+     </para>
+     <para>
+      Podstawianie parametrów może być wykorzystane tylko dla danych. Inne dynamiczne części
+      zapytań SQL muszą być filtrowane tak, aby pozwolić tylko na znaną listę dozwolonych wartości.
+     </para>
+     <para>
+      <example>
+      <title>Unikanie SQL injection przy użyciu przygotowanych instrukcji PDO</title>
+       <programlisting role="php">
+<![CDATA[
+<?php
+
+// Dynamiczna część zapytania SQL jest sprawdzana względem listy oczekiwanych wartości
+$sortingOrder = $_GET['sortingOrder'] === 'DESC' ? 'DESC' : 'ASC';
+$productId = $_GET['productId'];
+// Zapytanie jest przygotowywane z symbolem zastępczym
+$stmt = $pdo->prepare("SELECT * FROM products WHERE id LIKE ? ORDER BY price {$sortingOrder}");
+// Wartość jest dostarczana z symbolami wieloznacznymi LIKE
+$stmt->execute(["%{$productId}%"]);
+
+?>
+]]>
+       </programlisting>
+      </example>
+     </para>
+
+     <simpara>
+      Przygotowane instrukcje są obsługiwane
+      <link linkend="pdo.prepared-statements">przez PDO</link>,
+      <link linkend="mysqli.quickstart.prepared-statements">przez MySQLi</link>
+      i inne biblioteki baz danych.
+     </simpara>
+
+     <simpara>
+      Ataki SQL injection są oparte głównie na wykorzystywaniu kodu, który nie został stworzony
+      z myślą o bezpieczeństwie. Nigdy nie ufaj żadnym danym wejściowym, szczególnie
+      pochodzącym od użytkownika, nawet jeśli pochodzi z listy wyboru,
+      ukrytego pola formularza lub ciasteczka. Pierwszy przykład pokazuje, że takie
+      proste zapytanie może spowodować prawdziwy chaos.
+     </simpara>
+
+     <para>
+      Strategia głębokiej ochrony opiera się na kilku dobrych praktykach kodowania:
+      <itemizedlist>
+       <listitem>
+        <simpara>
+         Nigdy nie łącz się do bazy danych jako superużytkownik lub właściciel bazy danych.
+         Zawsze używaj dostosowanych użytkowników z minimalnymi uprawnieniami.
+        </simpara>
+       </listitem>
+       <listitem>
+        <simpara>
+         Sprawdzaj czy otrzymane dane wejściowe mają oczekiwany typ danych. <acronym>PHP</acronym> ma
+         szeroki zakres funkcji sprawdzających dane, od najprostszych, które
+         można znaleźć w <link linkend="ref.var">funkcjach zmiennych</link> i
+         w <link linkend="ref.ctype">funkcjach typu znaków</link>
+         (np. <function>is_numeric</function> czy <function>ctype_digit</function>)
+         aż po wsparcie
+         <link linkend="ref.pcre">wyrażeń regularnych kompatybilnych z Perlem</link>.
+        </simpara>
+       </listitem>
+       <listitem>
+        <simpara>
+         Jeżeli aplikacja oczekuje danych numerycznych, rozważ ich weryfikację
+         funkcją <function>ctype_digit</function>, po cichu zmień ich typ
+         używając <function>settype</function> lub użyj reprezentacji numerycznej
+         dzięki <function>sprintf</function>.
+        </simpara>
+       </listitem>
+       <listitem>
+        <simpara>
+         Jeżeli warstwa bazy danych nie wspiera podstawiania parametrów, to
+         ujmij w apostrofy każdą nienumeryczną wartość przekazaną przez użytkownika, która jest
+         przekazywana do bazy danych. Zrób to za pomocą funkcji dodającej znaki ucieczki dla Twojej bazy danych (np.
+         <function>mysql_real_escape_string</function>,
+         <function>sqlite_escape_string</function>, itd.).
+         Ogólne funkcje takie jak <function>addslashes</function> są przydatne tylko
+         w bardzo określonych zastosowaniach (np. MySQL w jednobajtowym zestawie znaków
+         z wyłączonym <varname>NO_BACKSLASH_ESCAPES</varname>), więc
+         lepiej ich unikać.
+        </simpara>
+       </listitem>
+       <listitem>
+        <simpara>
+         Nie wyświetlaj żadnych informacji o bazie danych, szczególnie
+         jej strukturze — czy to umyślnie, czy przypadkiem. Zobacz też sekcje <link
+         linkend="security.errors">raportowanie błędów</link> and <link
+         linkend="ref.errorfunc">funkcje raportowania i logowania błędów</link>.
+        </simpara>
+       </listitem>
+      </itemizedlist>
+     </para>
+
+     <simpara>
+      Poza tym, warto też skorzystać z logowania zapytań w kodzie Twojej aplikacji
+      lub przez samą bazę danych, jeśli wspiera ona takie logi. Oczywiście logowanie danych nie
+      jest w stanie zapobiec szkodliwym sytuacjom, ale może być pomocne w wyśledzeniu, która
+      aplikacja została zaatakowana. Log nie jest przydatny sam w sobie, lecz
+      dzięki informacjom które zawiera. Ogólnie rzecz biorąc, im więcej szczegółów tym lepiej.
+     </simpara>
+    </sect2>
+   </sect1>
+  </chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

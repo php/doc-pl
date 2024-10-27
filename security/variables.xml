@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: ab6785b01ce1006e3a9761988575289f40c9b678 Maintainer: sobak Status: ready -->
+<!-- splitted from ./index.xml, last change in rev 1.66 -->
+<chapter xml:id="security.variables" xmlns="http://docbook.org/ns/docbook">
+ <title>Dane przesyłane przez użytkownika</title>
+ <para>
+  Największą słabością w wielu programach <acronym>PHP</acronym> jest nie słabość
+  samego języka, a zwyczajny problem w kodzie, który nie został napisany
+  z myślą o bezpieczeństwie. Z tego powodu, powinno się zawsze poświęcić czas,
+  aby przeanalizować skutki danego fragmentu kodu, rozważyć
+  potencjalne straty, jeżeli przekazana do niego zostanie nieoczekiwana zmienna.
+  <example>
+   <title>Niebezpieczne wykorzystanie zmiennych</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+// skasuj plik z katalogu domowego użytkownika... a może
+// kogoś innego?
+unlink ($evil_var);
+
+// Zapisz log dostępu... a może wpis w /etc/passwd?
+fwrite ($fp, $evil_var);
+
+// Wykonaj prostą komendę.. lub rm -rf *?
+system ($evil_var);
+exec ($evil_var);
+
+?>
+]]>
+   </programlisting>
+  </example>
+ </para>
+ <para>
+  Powinno się zawsze dokładnie sprawdzić kod, aby upewnić się, że
+  wszystkie zmienne wysyłane przez przeglądarkę są poprawnie
+  sprawdzone. Zadaj sobie następujące pytania:
+  <itemizedlist>
+   <listitem>
+    <simpara>
+     Czy ten skrypt wpłynie tylko na zamierzone pliki?
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     Czy może reagować na nietypowe lub niepożądane dane?
+    </simpara>
+   </listitem>
+   <listitem>
+   <simpara>
+     Czy ten skrypt może być użyty w niezamierzony sposób?
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     Czy ten skrypt w połączeniu z innymi skryptami może być użyty w zły
+     sposób?
+    </simpara>
+   </listitem>
+   <listitem>
+    <simpara>
+     Czy wszystkie działania są poprawnie logowane?
+    </simpara>
+   </listitem>
+  </itemizedlist>
+ </para>
+ <para>
+  Odpowiednio zadając sobie te pytania w trakcie pisania kodu,
+  a nie później, możesz zapobiec niefortunnej konieczności przepisania kodu, gdy
+  musisz zwiększyć bezpieczeństwo. Zaczynając z tymi zasadami w głowie,
+  nie zagwarantujesz pełnego bezpieczeństwa sytemu, ale pomoże Ci to
+  je poprawić.
+ </para>
+ <para>
+  Możesz też rozważyć wyłączenie register_globals,
+  magic_quotes lub innych wygodnych ustawień, które mogą wprowadzić zamieszanie
+  co do poprawności, źródła i wartości danej zmiennej.
+  Używanie <acronym>PHP</acronym> z trybem error_reporting(E_ALL) także może ostrzec
+  Cię przed zmiennymi, które są użyte przed sprawdzeniem lub
+  inicjalizacją (więc możesz zapobiec operowaniu na nietpowych
+  danych).
+ </para>
+</chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
