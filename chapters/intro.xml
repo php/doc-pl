@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 2d0ae2133ccc5365c31ac675c88cda06b4877e22 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 77f5f3b3a8bbe1ad7727201c7603d1419dd7840f Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
  <chapter xml:id="introduction" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <info><title>Wprowadzenie</title></info>
+  <info>
+   <titleabbrev>Wprowadzenie</titleabbrev>
+   <title>Czym jest PHP i co potrafi?</title>
+  </info>
 
-  <section xml:id="intro-whatis">
+  <section xml:id="intro-whatis" annotations="chunk:false">
    <info><title>Czym jest PHP?</title></info>
    <para>
-    <acronym>PHP</acronym> (akronim rekurencyjny od <literal>PHP: Hypertext
-    Preprocessor</literal>) to popularny język skryptowy open source
+    <acronym>PHP</acronym> (akronim rekurencyjny od <emphasis>PHP: Hypertext
+    Preprocessor</emphasis>) to popularny język skryptowy open source
     ogólnego przeznaczenia, który jest szczególne przystosowany do tworzenia
     aplikacji internetowych i może zostać osadzony w kodzie HTML.
    </para>
@@ -40,39 +43,38 @@
    <para>
     Zamiast wielu komend do wyświetlenia HTML (jak w C lub Perlu),
     strony w PHP zawierają HTML z osadzonym kodem, który robi
-    "coś" (w tym wypadku wyświetla "Hej, jestem skryptem PHP!").
+    <replaceable>coś</replaceable> (w tym wypadku wyświetla <computeroutput>Hej, jestem skryptem PHP!</computeroutput>).
     Kod PHP jest zamknięty w specjalnych <link
     linkend="language.basic-syntax.phpmode">instrukcjach początku i
     końca przetwarzania <code>&lt;?php</code> i <code>?&gt;</code></link>,
-    które pozwalają na "wskoczenie" i "wyskoczenie" z "trybu PHP."
+    które pozwalają na "wskoczenie" i "wyskoczenie" z <quote>trybu PHP</quote>.
    </para>
    <para>
     Tym co odróżnia PHP od rzeczy takich jak JavaScript po stronie klienta,
     jest fakt, że kod jest wykonywany na serwerze, generując HTML, który
     jest później wysyłany do klienta. Klient odbierze wynik działania
     skryptu, ale nie będzie wiedział, jaki kod stał za jego wygenerowaniem.
-    Możesz nawet skonfigurować serwer tak, aby przetwarzał wszystkie pliki HTML
-    z pomocą parsera PHP - użytkownicy nie będą wtedy mieli żadnego sposobu
-    na określenie jakiej technologii faktycznie używasz pod maską.
+    Serwer WWW może być nawet skonfigurowany tak, aby przetwarzał wszystkie pliki HTML
+    z pomocą parsera PHP. Użytkownicy nie będą wtedy mieli żadnego sposobu,
+    aby stwierdzić czy korzystasz z PHP.
    </para>
    <para>
     Najlepszą cechą PHP jest fakt że jest on bardzo prosty dla
     początkujących, a jednocześnie oferuje wiele zaawansowanych możliwości
     dla profesjonalnych programistów. Niech nie zrazi Cię długa lista
-    możliwości PHP. Pisanie prostych skryptów możesz rozpocząć
-    już po kilku godzinach.
+    możliwości PHP. Używając PHP niemal każdy może zacząć pisać
+    proste skrypty już po krótkim czasie.
    </para>
    <para>
     Mimo iż rozwój PHP skupia się na skryptowaniu po stronie serwera,
-    możesz z jego pomocą zrobić znacznie więcej. Kontynuuj czytanie
+    można z jego pomocą zrobić znacznie więcej. Kontynuuj czytanie
     w rozdziale <link linkend="intro-whatcando">Co potrafi PHP?</link>
     lub przejdź prosto do <link linkend="tutorial">tutoriala
-    wprowadzającego</link>, jeśli jesteś zainteresowany tylko programowaniem
-    webowym.
+    wprowadzającego</link>, aby natychmiast rozpocząć naukę programowania webowego.
    </para>
   </section>
 
-  <section xml:id="intro-whatcando">
+  <section xml:id="intro-whatcando" annotations="chunk:false">
    <info><title>Co potrafi PHP?</title></info>
    <para>
     Wszystko. PHP skupia się głównie na skryptowaniu po stronie serwera,
@@ -85,25 +87,23 @@
     <itemizedlist>
      <listitem>
       <simpara>
-       Skryptowanie po stronie serwera. To najbardziej tradycyjny
-       i docelowo główny obszar działania dla PHP. Potrzebujesz trzech
-       rzeczy aby działać: parsera PHP (CGI lub moduł serwera),
-       serwera WWW i przeglądarki internetowej. Musisz uruchomić
-       serwer z połączoną instalacją PHP. Wynik działania programów
-       PHP możesz zobaczyć przy pomocy przeglądarki, odbierającej stronę
-       z serwera. Wszystkie te rzeczy możesz uruchomić na własnej maszynie
-       domowej, jeśli tylko eksperymentujesz z programowaniem w PHP. Zobacz
+       Skryptowanie po stronie serwera. To najczęściej wykorzystywany
+       i docelowo główny obszar działania dla PHP. Potrzebne są trzy
+       rzeczy, aby działać: parser PHP (CGI lub moduł serwera),
+       serwer WWW oraz przeglądarka internetowa. Wszystkie te rzeczy
+       możesz uruchomić na swoim komputerze, aby po prostu poeksperymentować 
+       z programowaniem w PHP. Zobacz
        <link linkend="install">instrukcje instalacji</link>,
        aby uzyskać więcej informacji.
       </simpara>
      </listitem>
      <listitem>
       <simpara>
-       Skryptowanie wiersza poleceń. Możesz stworzyć skrypt PHP
-       uruchamiany bez żadnego serwera i przeglądarki.
-       Do działania w taki sposób potrzebujesz tylko parsera PHP.
+       Skryptowanie wiersza poleceń. Skrypt PHP może być uruchomiony
+       bez żadnego serwera i przeglądarki, w tej sytuacji
+       używany jest tylko parser PHP.
        Taki rodzaj wykorzystania jest idealny dla skryptów regularnie
-       uruchamianych przez cron (na *nixach i Linuksach) lub Harmonogram
+       uruchamianych przez <command>cron</command> (w systemach Unix i macOS) lub Harmonogram
        Zadań (na Windowsie). Takie skrypty mogą być również użyte do
        prostych zadań przetwarzania tekstu. Zapoznaj się z rozdziałem o
        <link linkend="features.commandline">Używaniu PHP z wiersza poleceń</link>,
@@ -122,15 +122,15 @@
     i nginx. PHP działa jako moduł lub procesor CGI.
    </para>
    <para>
-    Tak więc z PHP masz wolność wyboru systemu operacyjnego
-    i serwera WWW. Ponadto masz także wybór między używaniem
+    Tak więc z PHP programiści mają wolność wyboru systemu operacyjnego
+    i serwera WWW. Ponadto mają także wybór między używaniem
     programowania proceduralnego, obiektowego (OOP) lub mieszanki
     ich obu.
    </para>
    <para>
-    PHP nie ogranicza Cię jedynie do generowania kodu HTML. PHP może też
+    PHP nie jest ograniczone jedynie do generowania kodu HTML. PHP może też
     generować bardziej złożone typy plików (jak obrazy lub pliki PDF), szyfrować dane,
-    czy wysyłać emaile. Możesz też łatwo generować dowolny tekst, na przykład JSON
+    czy wysyłać emaile. Może też łatwo generować dowolny tekst, na przykład JSON
     lub XML. PHP może automatycznie generować te pliki i zapisać je w
     systemie plików, zamiast każdorazowo generować je od zera, więc może posłużyć za cache po stronie serwera
     dla dynamicznej zawartości.
@@ -149,7 +149,7 @@
    <para>
     PHP ma też wsparcie dla komunikacji z innymi usługami, używając protokołów
     takich jak LDAP, IMAP, SNMP, NNTP, POP3, HTTP, COM (w systemie Windows) i
-    niezliczonych innych. Możesz także otwierać surowe sockety sieciowe dla
+    niezliczonych innych. Może także otwierać surowe sockety sieciowe dla
     interakcji z dowolnym innym protokołem. PHP ma wsparcie dla WDDX,
     kompleksowej wymiany danych między niemal wszystkimi językami webowymi.
     Mowiąc o łączeniu z innymi językami, PHP ma wsparcie dla tworzenia
@@ -170,7 +170,7 @@
     podręczniku PHP, jak <link xlink:href="&url.xdebug;">XDebug</link>.
    </para>
    <para>
-    Jak widzisz, jedna strona nie wystarczy, aby wymienić
+    Ta strona to za mało, aby wymienić
     wszystkie możliwości i korzyści, które oferuje PHP.
     Przejdź do rozdziału o <link linkend="install">instalacji
     PHP</link> i zobacz sekcję <link linkend="funcref">Opis

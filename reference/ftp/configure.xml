@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: a0ae28d3bc85f927c22649ebd9a590b921534b7d Maintainer: sobak Status: ready -->
+<!-- EN-Revision: af432424136ff55777bd92ff4f83f01594612ef1 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <section xml:id="ftp.installation" xmlns="http://docbook.org/ns/docbook">
  &reftitle.install;
@@ -12,6 +12,42 @@
   Na platformie Windows to rozszerzenie jest zawsze budowane jako współdzielone i musi
   zostać włączone w &php.ini;.
  </para>
+ <para>
+  W przypadku Autotools, wsparcie SSL dla FTP jest niejawnie włączone, gdy budowanie odbywa się
+  z rozszerzeniem <literal>openssl</literal> przy użyciu
+  opcji konfiguracyjnej <option role="configure">--with-openssl</option>. Gdy
+  budowanie odbywa się bez rozszerzenia <literal>openssl</literal>, można użyć
+  opcji konfiguracyjnej <option role="configure">--with-ftp-ssl</option> dla Autotools,
+  aby jawnie włączyć obsługę SSL dla FTP.
+ </para>
+
+ <simplesect role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>8.4.0</entry>
+       <entry>
+        Opcja konfiguracyjna Autotools <option role="configure">--with-openssl-dir</option>
+        została usunięta na rzecz nowej
+        <option role="configure">--with-ftp-ssl</option>, która jawnie włącza wsparcie SSL
+        dla FTP, kiedy budowanie odbywa się bez rozszerzenia
+        <literal>openssl</literal>.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </simplesect>
 </section>
 
 <!-- Keep this comment at the end of the file

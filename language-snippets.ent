@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 850a9367b8ff7fe0ba91042daf9d61d58c985b1e Maintainer: sobak Status: wip -->
+<!-- EN-Revision: 27ae0a4a16cdfc868a884c0f0dad7023b5f2709c Maintainer: sobak Status: wip -->
 <!-- $Revision$ -->
 <!-- CREDITS: leszek, adi, cyb0org, joeaccord -->
 <!-- TODO: Nieliczne sekcje opisane przez "TODO DOKOŃCZYĆ" nie są faktycznie przetłumaczone na j. polski. Pomoc mile widziana -->
@@ -625,6 +625,10 @@ jest niezalecane.</simpara></warning>
 
 <!ENTITY example.outputs.83.similar '<para xmlns="http://docbook.org/ns/docbook">Powyższy przykład w PHP 8.3 wyświetli coś podobnego do:</para>'>
 
+<!ENTITY example.outputs.84 '<para xmlns="http://docbook.org/ns/docbook">Powyższy przykład w PHP 8.4 wyświetli:</para>'>
+
+<!ENTITY example.outputs.84.similar '<para xmlns="http://docbook.org/ns/docbook">Powyższy przykład w PHP 8.4 wyświetli coś podobnego do:</para>'>
+
 <!ENTITY example.outputs.32bit '<para xmlns="http://docbook.org/ns/docbook">Wyświetla następujący przykład na systemach 32 bitowych:</para>'>
 
 <!ENTITY example.outputs.64bit '<para xmlns="http://docbook.org/ns/docbook">Wyświetla następujący przykład na systemach 64 bitowych:</para>'>
@@ -1058,6 +1062,16 @@ oprogramowania.</simpara></warning>'>
  </entry>
 </row>'>
 
+<!-- CSV -->
+<!ENTITY warning.csv.escape-parameter '<warning xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"><simpara>
+ Gdy parametr <parameter>escape</parameter> jest ustawiony na dowolną wartość inną niż pusty ciąg znaków,
+ (<literal>""</literal>), to wynikiem może być CSV, który nie jest zgodny z
+ <link xlink:href="&url.rfc;4180">RFC 4180</link> lub taki, który nie przetrwa
+ przetworzenia przez funkcje obsługi CSV w PHP. Domyślną wartością parametru <parameter>escape</parameter> jest
+ <literal>"\\"</literal>, tak więc zaleca się aby jawnie ustawić go na pusty ciąg znaków.
+ Domyślna wartość zmieni się w przyszłości, ale nie wcześniej niż w PHP 9.0.
+</simpara></warning>'>
+
 <!-- DBM notes -->
 
 <!ENTITY dbm.dbm-identifier.description '<varlistentry xmlns="http://docbook.org/ns/docbook"><term>
@@ -1110,6 +1124,16 @@ zwrócony przez <function>dbmopen</function>.</para></listitem></varlistentry>'>
  <entry>
   Parametr <parameter>share_handle</parameter> oczekuje teraz obiektu klasy <classname>CurlShareHandle</classname>
   wcześniej oczekiwany był <link linkend="language.types.resource">zasób</link>.
+ </entry>
+</row>'>
+
+<!-- dba notes -->
+<!ENTITY dba.parameter.dba 'Obiekt <classname xmlns="http://docbook.org/ns/docbook">Dba\Connection</classname> zwracany przez <function xmlns="http://docbook.org/ns/docbook">dba_open</function> lub <function xmlns="http://docbook.org/ns/docbook">dba_popen</function>.'>
+<!ENTITY dba.changelog.dba-object '<row xmlns="http://docbook.org/ns/docbook">
+ <entry>8.4.0</entry>
+ <entry>
+  Parametr <parameter>dba</parameter> przyjmuje teraz obiekt klasy <classname>Dba\Connection</classname>,
+  wcześniej oczekiwany był poprawny <link linkend="language.types.resource">zasób</link> <literal>dba</literal>.
  </entry>
 </row>'>
 
@@ -1466,6 +1490,48 @@ kodowania znaków.</para>'>
 
 <!ENTITY gearman.parameter.jobhandle 'Uchwyt zadania przypisany przez serwer Gearman'>
 
+<!ENTITY gearman.parameter.callback '<varlistentry xmlns="http://docbook.org/ns/docbook">
+ <term><parameter>callback</parameter></term>
+ <listitem>
+  <para>
+   Funkcja lub metoda do wywołania,
+   Powinna zwrócić poprawną <link linkend="gearman.constants">wartość zwracaną dla Gearman</link>.
+  </para>
+  <para>
+   Jeżeli nie znaleziono wyrażenia return, to domyślnie zostanie użyte <constant>GEARMAN_SUCCESS</constant>.
+  </para>
+  <methodsynopsis>
+   <type>int</type><methodname><replaceable>callback</replaceable></methodname>
+   <methodparam><type>GearmanTask</type><parameter>task</parameter></methodparam>
+   <methodparam><type>mixed</type><parameter>context</parameter></methodparam>
+  </methodsynopsis>
+  <variablelist>
+   <varlistentry>
+    <term><parameter>task</parameter></term>
+    <listitem>
+     <para>
+      Zadanie, dla którego wykonywana jest ta funkcja zwrotna.
+     </para>
+    </listitem>
+   </varlistentry>
+   <varlistentry>
+    <term><parameter>context</parameter></term>
+    <listitem>
+     <para>
+      Cokolwiek co zostało przekazane do <methodname>GearmanClient::addTask</methodname> (lub odpowiednika) jako parametr <parameter>context</parameter>.
+     </para>
+    </listitem>
+   </varlistentry>
+  </variablelist>
+ </listitem>
+</varlistentry>'>
+
+<!ENTITY gearman.note.callback '<note xmlns="http://docbook.org/ns/docbook">
+ <para>
+  Funkcja zwrotna zostanie wykonana tylko dla zadań, które zostaną dodane (np. używając <methodname>GearmanClient::addTask</methodname>)
+  po wywołaniu tej metody.
+ </para>
+</note>'>
 
 <!-- Date and time entities -->
 <!ENTITY date.timezone.intro.title '<title xmlns="http://docbook.org/ns/docbook">Lista obsługiwanych stref czasowych</title>'>
@@ -1572,6 +1638,30 @@ linkend="domnode.appendchild">DOMNode::appendChild()</link>.'>
 <!ENTITY dom.malformederror '<para xmlns="http://docbook.org/ns/docbook">Podczas gdy nieprawidłowy kod HTML powinien zostać załadowany poprawnie, ta funkcja może wygenerować błąd poziomu <constant>E_WARNING</constant> po napotkaniu nieprawidłowej składni. Do poprawnej obsługi tych błędów można zastosować <link linkend="function.libxml-use-internal-errors">funkcje obsługi błędów biblioteki libxml</link>.</para>'>
 <!ENTITY dom.note.utf8 '<note xmlns="http://docbook.org/ns/docbook"><para>Rozszerzenie DOM używa kodowania UTF-8. Skorzystaj z <function>mb_convert_encoding</function>, <methodname>UConverter::transcode</methodname> lub <function>iconv</function> aby obsłużyć inne kodowania.</para></note>'>
 <!ENTITY dom.note.json '<note xmlns="http://docbook.org/ns/docbook"><para>Jeśli użyte zostanie <function>json_encode</function> na obiekcie <classname>DOMDocument</classname>, to wynik będzie taki, jak gdyby zakodowano pusty obiekt.</para></note>'>
+<!ENTITY dom.domdocument.html5 '<warning xmlns="http://docbook.org/ns/docbook">
+ <para>
+  Ta funkcja parsuje podane wejście przy użyciu parsera HTML 4. Reguły parsowania
+  HTML, których używają nowoczesne przeglądarki, są inne. Zależnie
+  od podanego wejścia może to skutkować inną strukturą DOM. W związku z tym
+  ta funkcja nie może być bezpiecznie użyta do oczyszczania HTML.
+ </para>
+ <para>
+  Zachowanie podczas parsowania HTML może zależeć od użytej wersji biblioteki
+  <literal>libxml</literal>, w szczególności jeśli chodzi o
+  przypadki brzegowe i obsługę błędów.
+  Aby skorzystać z parsowania zgodnego ze specyfikacją HTML 5,
+  użyj metod <methodname>Dom\HTMLDocument::createFromString</methodname> lub
+  <methodname>Dom\HTMLDocument::createFromFile</methodname> dodanych w PHP 8.4.
+ </para>
+ <para>
+  Przykładowo, niektóre elementy HTML niejawnie zamykają element rodzica
+  po ich napotkaniu. Reguły dla automatycznego zamykania elementów rodzica
+  różnią się między HTML 4 a HTML 5, a zatem wynikowa struktura DOM, którą
+  reprezentuje <classname>DOMDocument</classname> może być inna niż struktura DOM
+  widziana przez przeglądarkę, potencjalnie pozwalając atakującemu na
+  popsucie wynikowego HTML.
+ </para>
+</warning>'>
 
 <!-- Dom Examples -->
 <!ENTITY dom.book.example '<para xmlns="http://docbook.org/ns/docbook">Poniższe przykłady stosują <filename>book.xml</filename> który zawiera poniższe dane:</para>
@@ -2396,6 +2486,15 @@ używanie preforkowanego MPM, który jest domyślny w Apache 2.0 i Apache 2.2.
 Wyjaśnienie powodów można znaleźć w odpowiednim punkcie FAQ, dotyczącym używania
 <link xmlns="http://docbook.org/ns/docbook" linkend="faq.installation.apache2">Apache2 z wątkowanym
 MPM</link></para></warning>'>
+<!ENTITY warn.install.third-party-support '<warning xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <para>
+  Kompilacje (buildy) od osób trzecich są uznawane za nieoficjalne i nie są bezpośrednio
+  wspierane przez projekt PHP. Jakiekolwiek napotkane błędy powinny być zgłaszane do
+  dostawcy tych nieoficjalnych kompilacji, chyba że można je zreprodukować używając
+  kompilacji z <link xlink:href="&url.php.downloads;">oficjalnej
+  sekcji pobierania</link>.
+ </para>
+</warning>'>
 
 <!ENTITY note.apache.slashes '<note xmlns="http://docbook.org/ns/docbook"><simpara xmlns="http://docbook.org/ns/docbook">Nalezy pamiętać, że podając
 ścieżki w plikach konfiguracyjnych Apache w systemie Windows, wszystkie znaki
@@ -2407,10 +2506,9 @@ mogą być także niezbędne dla katalogów.</simpara></note>'>
 <!-- Snippets and titles for the contributors section -->
 <!ENTITY Credit.Authors.and.Contributors 'Autorzy i współpracownicy'>
 
-<!ENTITY Credit.Introduction '<para xmlns="http://docbook.org/ns/docbook">Wyróżniamy najbardziej aktywnych twórców na
-pierwszej stronie podręcznika, ale jest wielu innych współpracowników, którzy
+<!ENTITY Credit.Introduction '<para xmlns="http://docbook.org/ns/docbook">Istnieje duża grupa współpracowników, którzy
 pomagają w pracach, lub włożyli w przeszłości wiele pracy przy tym projekcie.
-Jest wiele niewymienionych tutaj ludzi, którzy wnieśli wkład w rozwój tego
+Jest też wielu niewymienionych tutaj ludzi, którzy wnieśli wkład w rozwój tego
 podręcznika licznymi komentarzami. Cały czas te uwagi są one uwzględniane
 w odnośnikach, i za nie serdecznie dziękujemy. Wszystkie poniższe listy
 uporządkowane są w kolejności alfabetycznej.</para>'>
@@ -2822,7 +2920,7 @@ void callback(mixed $dane, int $wynik[, resource $zapytanie]);
 </varlistentry>
 <varlistentry xmlns="http://docbook.org/ns/docbook">
 <term><parameter>zapytanie</parameter></term>
-<listitem><para>opcjonalny zasób zapytania, który może być użyty z funkcjami takimi jak <function>eio_get_last_error</function></para></listitem>
+<listitem><para>opcjonalny zasób zapytania, który może być użyty z funkcjami takimi jak <function>eio_get_last_error</function>.</para></listitem>
 </varlistentry>
 </variablelist>
 </para>
@@ -2867,7 +2965,7 @@ xmlns="http://docbook.org/ns/docbook"><simpara xmlns="http://docbook.org/ns/docb
 <!ENTITY trader.arg.fast.ma.type 'Typ ruchomej średniej dla szybkiego MA. Należy stosować stałe z serii <link xmlns="http://docbook.org/ns/docbook" linkend="trader.constants">TRADER_MA_TYPE_*</link>.'>
 <!ENTITY trader.arg.slow.ma.type 'Typ ruchomej średniej dla wolnego MA. Należy stosować stałe z serii <link xmlns="http://docbook.org/ns/docbook" linkend="trader.constants">TRADER_MA_TYPE_*</link>.'>
 <!ENTITY trader.arg.fastd.ma.type 'Typ ruchomej średniej dla Fast-D. Należy stosować stałe z serii <link xmlns="http://docbook.org/ns/docbook" linkend="trader.constants">TRADER_MA_TYPE_*</link>.'>
-<!ENTITY trader.arg.slowk.ma.type 'Typ ruchomej średniej dla Slow-K. Należy stosować stałe z serii <link xmlns="http://docbook.org/ns/docbook" linkend="trader.constants">TRADER_MA_TYPE_*</link>.'>
+<!ENTITY trader.arg.fastk.ma.type 'Typ ruchomej średniej dla Fast-K. Należy stosować stałe z serii <link xmlns="http://docbook.org/ns/docbook" linkend="trader.constants">TRADER_MA_TYPE_*</link>.'>
 <!ENTITY trader.arg.slowd.ma.type 'Typ ruchomej średniej dla Slow-D. Należy stosować stałe z serii <link xmlns="http://docbook.org/ns/docbook" linkend="trader.constants">TRADER_MA_TYPE_*</link>.'>
 <!ENTITY trader.arg.slowk.ma.type 'Typ ruchomej średniej dla Slow-K. Należy stosować stałe z serii <link xmlns="http://docbook.org/ns/docbook" linkend="trader.constants">TRADER_MA_TYPE_*</link>.'>
 <!ENTITY trader.arg.signal.ma.type 'Typ ruchomej średniej dla linii sygnału. Należy stosować stałe z serii <link xmlns="http://docbook.org/ns/docbook" linkend="trader.constants">TRADER_MA_TYPE_*</link>.'>
@@ -3502,7 +3600,7 @@ local: {
                <row>
                 <entry>trimFactor</entry>
                 <entry><type>int</type></entry>
-                <entry>Required. Positive 32-bit integer.</entry>
+                <entry>Optional. Positive 32-bit integer.</entry>
                </row>
               </tbody>
              </tgroup>
@@ -3693,6 +3791,50 @@ local: {
 '>
 
 <!-- strings snippets -->
+<!ENTITY strings.stripped.characters '
+ <itemizedlist xmlns="http://docbook.org/ns/docbook">
+    <listitem>
+     <simpara>
+      <literal>" "</literal> (<acronym>ASCII</acronym> 32 (0x20)), zwykła spacja.
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      <literal>"\t"</literal> (<acronym>ASCII</acronym> 9 (0x09)), tabulator.
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      <literal>"\n"</literal> (<acronym>ASCII</acronym> 10 (0x0A)), nowa linia (znak nowego wiersza).
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      <literal>"\r"</literal> (<acronym>ASCII</acronym> 13 (0x0D)), znak powrotu karetki.
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      <literal>"\0"</literal> (<acronym>ASCII</acronym> 0 (0x00)), bajt NUL.
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      <literal>"\v"</literal> (<acronym>ASCII</acronym> 11 (0x0B)), pionowy tabulator.
+     </simpara>
+    </listitem>
+   </itemizedlist>
+'>
+
+<!ENTITY strings.parameter.characters.optional '
+ <simpara xmlns="http://docbook.org/ns/docbook">
+  Opcjonalnie można też określić usuwane znaki przy użyciu
+  parametru <parameter>characters</parameter>.
+  Po prostu wymień wszystkie znaki, które mają zostać usunięte.
+  Przy użyciu <literal>..</literal> możliwe jest określenie rosnącego zakresu znaków.
+ </simpara>
+'>
+
 <!ENTITY strings.parameter.encoding '
  <para xmlns="http://docbook.org/ns/docbook">
   Opcjonalny parametr określający kodowanie przy konwersji znaków.
@@ -3984,13 +4126,13 @@ local: {
 
   <warning>
    <para>
-    Znak formatujący <literal>c</literal> określa dopełnienia (padding) i szerokość.
+    Znak formatujący <literal>c</literal> ignoruje dopełnienia (padding) i szerokość.
    </para>
   </warning>
 
   <warning>
    <para>
-    Próba użycia kombinacji znaków formatujących dla ciągów znaków (string) z zestawami znaków, które wymagają więcej niż jednego bajtu na znam może powodować nieoczekiwane wyniki
+    Próba użycia kombinacji znaków formatujących dla ciągów znaków (string) z zestawami znaków, które wymagają więcej niż jednego bajtu na znam może powodować nieoczekiwane wyniki.
    </para>
   </warning>
 

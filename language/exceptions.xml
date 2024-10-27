@@ -1,80 +1,426 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 6398de67edc88a4f296fbcc2103a7565a043492e Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 7a75b854c8c52226d38397e7e8177e339fdb273f Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
- <chapter xml:id="language.exceptions" xmlns="http://docbook.org/ns/docbook">
-  <title>Wyjątki</title>
-   
-  <sect1 xml:id="language.exceptions.extending">
-   <title>Rozszerzanie wyjątków</title>
+<chapter xml:id="language.exceptions" xmlns="http://docbook.org/ns/docbook">
+ <title>Wyjątki</title>
+ <para>
+  PHP posiada model obsługi wyjątków podobny do innych języków
+  programowania. W PHP wyjątek może zostać rzucony (&throw;) oraz złapany (&catch;).
+  Kod może zostać otoczony blokiem &try; aby skorzystać z łapania
+  potencjalnych wyjątków. Każdy z bloków &try; musi mieć przynajmniej jeden odpowiadający
+  blok &catch; lub &finally;.
+ </para>
+ <para>
+  Jeżeli zostanie rzucony wyjątek a jego obecny zasięg nie ma bloku &catch;
+  to wyjątek "przejdzie" wyżej w poszukiwaniu pasującego bloku &catch;. Wszystkie napotkane po drodze
+  bloki &finally; zostaną wykonane. Jeżeli zakres wywołania nie zawiera pasującego
+  bloku &catch; aż do osiągnięcia zasięgu globalnego, program zakończy
+  się błędem krytycznym, chyba że została ustawiona globalna funkcja obsługi wyjątków.
+ </para>
+ <para>
+  Rzucany obiekt musi być typu (&instanceof;) <interfacename>Throwable</interfacename>.
+  Próba rzucenia obiektu, który nie jest tego typu, będzie skutkować błędem krytycznym PHP.
+ </para>
+ <para>
+  Począwszy od PHP 8.0.0, słowo kluczowe &throw; jest wyrażeniem i może być użyte w konteście
+  dowolnego wyrażenia. We wcześniejszych wersjach było deklaracją i musiało znajdować się w swojej własnej linii.
+ </para>
+
+ <sect1 annotations="chunk:false" xml:id="language.exceptions.catch">
+  <title><literal>catch</literal></title>
+  <para>
+   Blok &catch; określa w jaki sposób odpowiedzieć na rzucony wyjątek. Blok
+   &catch; określa jeden lub więcej typów wyjątków, które może obsłużyć i
+   opcjonalnie określa zmienną, do której zostanie przypisany wyjątek (zmienna
+   była wymagana przed PHP 8.0.0). Pierwszy blok &catch;, do którego
+   pasuje rzucony wyjątek, będzie odpowiedzialny za jego obsługę.
+  </para>
+  <para>
+   Można użyć wielu bloków &catch; aby złapać różne klasy
+   wyjątków. Normalne wykonywanie (gdy w bloku &try; nie jest
+   rzucany żaden wyjątek) będzie kontynuowane po ostatnim bloku &catch;.
+   W blokach &catch; można rzucać inne wyjątki (używając &throw;) lub ponownie
+   rzucić ten sam wyjątek po wykonaniu jakiegoś kodu. Jeżeli tak się nie stanie,
+   wykonywanie będzie kontynuowane po bloku &catch;, który został wywołany.
+  </para>
+  <para>
+   Gdy rzucany jest wyjątek, kod następujący po wyrażeniu &throw; nie będzie
+   wykonany, a PHP spróbuje znaleźć pierwszy pasujący blok &catch;.
+   Jeżeli wyjątek nie zostanie złapany, zostanie zgłoszony krytyczny błąd PHP
+   z komunikatem "<literal>Uncaught Exception ...</literal>", chyba że
+   przy pomocy <function>set_exception_handler</function> została zdefiniowana
+   funkcja obsługi niezłapanych wyjątków.
+  </para>
+  <para>
+   Począwszy od PHP 7.1.0 blok &catch; może określać wiele wyjątków
+   używając znaku pipe (<literal>|</literal>). Jest to przydatne, gdy
+   różne wyjątki, z różnych hierarchii klas, są obsługiwane w ten sam
+   sposób.
+  </para>
+  <para>
+   Od PHP 8.0.0 nazwa zmiennej dla złapanego wyjątku jest opcjonalna.
+   Jeżeli nie zostanie określona, to blok &catch; wciąż zostanie wykonany, ale
+   nie będzie miał dostępu do rzuconego obiektu.
+  </para>
+ </sect1>
+
+ <sect1 annotations="chunk:false" xml:id="language.exceptions.finally">
+  <title><literal>finally</literal></title>
+  <para>
+   Można też określić blok &finally; po blokach &catch; lub
+   zamiast nich. Kod w bloku &finally; będzie wykonany zawsze
+   po blokach &try; lub &catch; (niezależnie czy zostań rzucony
+   wyjątek), a zanim zostanie wznowione normalne wykonywanie kodu.
+  </para>
+  <para>
+   Występuje szczególna interakcja między blokiem &finally; i wyrażeniem &return;.
+   Jeżeli w bloku &try; lub &catch; zostanie napotkane wyrażenie &return;,
+   to blok &finally; wciąż zostanie wykonany. Ponadto wyrażenie &return; jest
+   ewaluowane po jego napotkaniu, ale wynik zostanie zwrócony po wykonaniu bloku
+   &finally;. Co więcej, jeżeli blok &finally; także zawiera wyrażenie &return;,
+   to zostanie zwrócona wartość z bloku &finally;.
+  </para>
+ </sect1>
+
+ <sect1 annotations="chunk:false" xml:id="language.exceptions.exception-handler">
+  <title>Globalna funkcja obsługi wyjątków</title>
+  <para>
+   Jeżeli wyjątek będzie podróżował do zakresu globalnego, może zostać złapany
+   przez globalną funkcję obsługi wyjątków, jeśli została ona ustawiona. Funkcja
+   <function>set_exception_handler</function> może ustawić funkcję, która będzie
+   wykonana zamiast bloku &catch;, jeżeli nie został wywołany żaden
+   inny blok. Efekt jest więc zasadniczo taki, jak gdyby cały program
+   został ujęty w wielki blok &try;-&catch;, a ta funkcja była blokiem &catch;.
+  </para>
+ </sect1>
+
+ <sect1 annotations="chunk:false" xml:id="language.exceptions.notes">
+  &reftitle.notes;
+
+  <note>
    <para>
-    Użytkownik może zdefiniować klasę wyjątku poprzez rozszerzenie wbudowanej
-    klasy Exception. Metody i właściwości poniżej pokazują co jest dostępne
-    w klasie potomnej, która dziedziczy po wbudowanej klasie Exception.
+    Wewnętrzne funkcje PHP używają głównie
+    <link linkend="ini.error-reporting">raportowania błędów</link>, tylko nowoczesne
+    rozszerzenia <link linkend="language.oop5">zorientowane obiektowo</link>
+    używają wyjątków. Jednakże błędy mogą zostać łatwo "przetłumaczone" na
+    wyjątki używając klasy <link linkend="class.errorexception">ErrorException</link>
+    Ten sposób nie działa jednak z błędami krytycznymi (PHP fatal errors).
    </para>
    <example>
-    <title>Wbudowana klasa Exception</title>
+    <title>Konwersja z raportowania błędów na wyjątki</title>
     <programlisting role="php">
+     <![CDATA[
+<?php
+function exceptions_error_handler($severity, $message, $filename, $lineno) {
+    throw new ErrorException($message, 0, $severity, $filename, $lineno);
+}
+
+set_error_handler('exceptions_error_handler');
+?>
+]]>
+    </programlisting>
+   </example>
+  </note>
+  <tip>
+   <para>
+    <link linkend="intro.spl">Biblioteka standardowa PHP (SPL)</link> udostępnia
+    sporą ilość <link linkend="spl.exceptions">wbudowanych
+    wyjątków</link>.
+   </para>
+  </tip>
+ </sect1>
+
+ <sect1 annotations="chunk:false" xml:id="language.exceptions.examples">
+  &reftitle.examples;
+
+  <example>
+   <title>Rzucanie wyjątku</title>
+   <programlisting role="php">
 <![CDATA[
 <?php
-class Exception extends Throwable
+function odwroc_liczbe($x) {
+    if (!$x) {
+        throw new Exception('Dzielenie przez zero.');
+    }
+    return 1/$x;
+}
+
+try {
+    echo odwroc_liczbe(5) . "\n";
+    echo odwroc_liczbe(0) . "\n";
+} catch (Exception $e) {
+    echo 'Złapany wyjątek: ',  $e->getMessage(), "\n";
+}
+
+// Kontynuuj wykonywanie
+echo "Witaj, świecie!\n";
+?>
+]]>
+   </programlisting>
+   &example.outputs;
+   <screen>
+    <![CDATA[
+0.2
+Złapany wyjątek: Dzielenie przez zero.
+Witaj, świecie!
+]]>
+   </screen>
+  </example>
+  <example>
+   <title>Obsługa wyjątków z blokiem &finally;</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+function odwroc_liczbe($x) {
+    if (!$x) {
+        throw new Exception('Dzielenie przez zero.');
+    }
+    return 1/$x;
+}
+
+try {
+    echo odwroc_liczbe(5) . "\n";
+} catch (Exception $e) {
+    echo 'Złapany wyjątek: ',  $e->getMessage(), "\n";
+} finally {
+    echo "Pierwszy blok finally.\n";
+}
+
+try {
+    echo odwroc_liczbe(0) . "\n";
+} catch (Exception $e) {
+    echo 'Złapany wyjątek: ',  $e->getMessage(), "\n";
+} finally {
+    echo "Drugi blok finally.\n";
+}
+
+// Kontynuuj wykonywanie
+echo "Witaj, świecie!\n";
+?>
+]]>
+   </programlisting>
+   &example.outputs;
+   <screen>
+<![CDATA[
+0.2
+Pierwszy blok finally.
+Złapany wyjątek: Dzielenie przez zero.
+Drugi blok finally.
+Witaj, świecie!
+]]>
+   </screen>
+  </example>
+  <example>
+   <title>Interakcja między blokiem &finally; i &return;</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+
+function test() {
+    try {
+        throw new Exception('foo');
+    } catch (Exception $e) {
+        return 'catch';
+    } finally {
+        return 'finally';
+    }
+}
+
+echo test();
+?>
+]]>
+   </programlisting>
+   &example.outputs;
+   <screen>
+<![CDATA[
+finally
+]]>
+   </screen>
+  </example>
+  <example>
+   <title>Zagnieżdżony wyjątek</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+
+class MojWyjatek extends Exception { }
+
+class Test {
+    public function testing() {
+        try {
+            try {
+                throw new MojWyjatek('foo!');
+            } catch (MojWyjatek $e) {
+                // rzuć ponownie
+                throw $e;
+            }
+        } catch (Exception $e) {
+            var_dump($e->getMessage());
+        }
+    }
+}
+
+$foo = new Test;
+$foo->testing();
+
+?>
+]]>
+   </programlisting>
+   &example.outputs;
+   <screen>
+<![CDATA[ 
+string(4) "foo!"
+]]>
+   </screen>
+  </example>
+  <example>
+   <title>Obsługa kilku wyjątków w catch</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+
+class MojWyjatek extends Exception { }
+
+class MojInnyWyjatek extends Exception { }
+
+class Test {
+    public function testing() {
+        try {
+            throw new MojWyjatek();
+        } catch (MojWyjatek | MojInnyWyjatek $e) {
+            var_dump(get_class($e));
+        }
+    }
+}
+
+$foo = new Test;
+$foo->testing();
+
+?>
+]]>
+   </programlisting>
+   &example.outputs;
+   <screen>
+<![CDATA[
+string(11) "MojWyjatek"
+]]>
+   </screen>
+  </example>
+  <example>
+   <title>Pomijanie zmiennej w catch</title>
+   <para>Dozwolone tylko w PHP 8.0.0 i późniejszych.</para>
+   <programlisting role="php">
+<![CDATA[
+<?php
+
+class KonkretnyWyjatek extends Exception {}
+
+function test() {
+    throw new KonkretnyWyjatek('Ups');
+}
+
+try {
+    test();
+} catch (KonkretnyWyjatek) {
+    print "Został rzucony konkretny wyjątek, ale nie interesują nas szczegóły.";
+}
+?>
+]]>
+   </programlisting>
+  </example>
+  <example>
+   <title>Throw jako wyrażenie</title>
+   <para>Dozwolone tylko w PHP 8.0.0 i późniejszych.</para>
+   <programlisting role="php">
+<![CDATA[
+<?php
+
+function test() {
+    zrob_cos_ryzykownego() or throw new Exception('Nie zadziałało');
+}
+
+try {
+    test();
+} catch (Exception $e) {
+    print $e->getMessage();
+}
+?>
+]]>
+   </programlisting>
+  </example>
+ </sect1>
+
+ <sect1 xml:id="language.exceptions.extending">
+  <title>Rozszerzanie wyjątków</title>
+  <para>
+   Użytkownik może zdefiniować własną klasę wyjątku poprzez rozszerzenie wbudowanej
+   klasy Exception. Metody i właściwości poniżej pokazują, co jest dostępne
+   w klasie potomnej, która dziedziczy po wbudowanej klasie Exception.
+  </para>
+  <example>
+   <title>Wbudowana klasa Exception</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+class Exception implements Throwable
 {
     protected $message = 'Unknown exception';   // wiadomość wyjątku
-    private   $string;                          // metoda __toString
-    protected $code = 0;                        // kod wyjątku zdefiniowany przez użytkownika
+    private   $string;                          // cache metody __toString
+    protected $code = 0;                        // kod wyjątku określony przez użytkownika
     protected $file;                            // plik, w którym wystąpił wyjątek
     protected $line;                            // linia, w której wystąpił wyjątek
     private   $trace;                           // backtrace
     private   $previous;                        // poprzedni wyjątek, jeżeli zostały one zagnieżdżone
 
-    public function __construct($message = null, $code = 0, Exception $previous = null);
+    public function __construct($message = '', $code = 0, Throwable $previous = null);
 
-    final private function __clone();           // powstrzymuje przed klonowaniem wyjątków
+    final private function __clone();           // uniemożliwia klonowanie wyjątków
 
-    final public  function getMessage();        // wiadomość wyjąku
+    final public  function getMessage();        // wiadomość wyjątku
     final public  function getCode();           // kod wyjątku
-    final public  function getFile();           // nazwa pliku źródłowego
-    final public  function getLine();           // linia źródłowa
-    final public  function getTrace();          // tablica backtrace()
+    final public  function getFile();           // plik, w którym wystąpił wyjątek
+    final public  function getLine();           // linia, w której wystąpił wyjątek
+    final public  function getTrace();          // backtrace jako tablica
     final public  function getPrevious();       // poprzedni wyjątek
-    final public  function getTraceAsString();  // ślad sformatowany jako łańcuch znaków
+    final public  function getTraceAsString();  // ślad sformatowany jako ciąg znaków
 
     // Nadpisywalne
-    public function __toString();               // sformatowany string gotowy do wyświetlenia
+    public function __toString();               // sformatowany ciąg znaków do wyświetlenia
 }
 ?>
 ]]>
-    </programlisting>
-   </example>
+   </programlisting>
+  </example>
+  <para>
+   Jeżeli rozszerzana jest wbudowana klasa Exception i nadpisywany jest <link
+   linkend="language.oop5.decon">konstruktor</link>, to zdecydowanie zaleca się,
+   aby wywoływał on również <link
+   linkend="language.oop5.paamayim-nekudotayim">parent::__construct()</link>,
+   aby mieć pewność, że wszystkie dostępne dane zostały prawidłowo przypisane. Metoda <link
+   linkend="language.oop5.magic">__toString()</link> może zostać nadpisana, aby
+   określić własny format wyjścia, gdy obiekt jest prezentowany jako string.
+  </para>
+  <note>
    <para>
-    Jeżeli rozszerzana jest wbudowana klasa Exception i nadpisywany jest <link
-    linkend="language.oop5.decon">konstruktor</link>, to zdecydowanie zaleca się
-    aby wywoływał on również <link
-    linkend="language.oop5.paamayim-nekudotayim">parent::__construct()</link>,
-    aby mieć pewność że wszystkie dostępne dane zostały prawidłowo przypisane. Metoda <link
-    linkend="language.oop5.magic">__toString()</link> może zostać nadpisana, aby
-    określić własny format wyjścia, gdy obiekt jest prezentowany jako string.
+    Wyjątki nie mogą być klonowane. Próba <link
+    linkend="language.oop5.cloning">sklonowania</link> klasy Exception skończy się
+    błędem krytycznym <constant>E_ERROR</constant>.
    </para>
-   <note>
-    <para>
-     Wyjątki nie mogą być klonowane. Próba <link
-     linkend="language.oop5.cloning">sklonowania</link> klasy Exception skończy się
-     błędem krytycznym <constant>E_ERROR</constant>.
-    </para>
-   </note>
-   <example>
-    <title>Rozszerzanie klasy Exception (PHP 5.3.0+)</title>
-    <programlisting role="php">
-<![CDATA[
+  </note>
+  <example>
+   <title>Rozszerzanie klasy Exception</title>
+   <programlisting role="php">
+<![CDATA[ 
 <?php
 /**
  * Definiujemy własną klasę wyjątku
  */
-class MyException extends Exception
+class MojWyjatek extends Exception
 {
     // Zredefiniuj konstruktor tak, aby wiadomość wyjątku była obowiązkowa
-    public function __construct($message, $code = 0, Exception $previous = null) {
+    public function __construct($message, $code = 0, Throwable $previous = null) {
         // jakiś kod
-    
+
         // upewnij się, że wszystko jest przypisane poprawnie
         parent::__construct($message, $code, $previous);
     }
@@ -106,16 +452,16 @@ class TestException
         switch ($avalue) {
             case self::THROW_CUSTOM:
                 // rzuć własny wyjątek
-                throw new MyException('Pierwszy parametr jest niepoprawny', 5);
+                throw new MojWyjatek('1 nie jest poprawnym parametrem', 5);
                 break;
 
             case self::THROW_DEFAULT:
-                // throw default one.
+                // rzuć domyślny wyjątek
                 throw new Exception('2 nie jest dozwolone jako parametr', 6);
                 break;
 
-            default: 
-                // Brak wyjątku, zostnie stworzony obiekt.
+            default:
+                // brak wyjątku, zostanie stworzony obiekt
                 $this->var = $avalue;
                 break;
         }
@@ -126,14 +472,14 @@ class TestException
 // Przykład 1
 try {
     $o = new TestException(TestException::THROW_CUSTOM);
-} catch (MyException $e) {      // Będzie złapany
-    echo "Złapałem swój wyjątek\n", $e;
+} catch (MojWyjatek $e) {      // Będzie złapany
+    echo "Złapałem nasz wyjątek\n", $e;
     $e->customFunction();
-} catch (Exception $e) {        // Ten blok będzie pominięty
-    echo "Złapano domyślny wyjątek\n", $e;
+} catch (Exception $e) {        // Pominięto
+    echo "Złapałem domyślny wyjątek\n", $e;
 }
 
-// Kontynuuj wykonywanie skryptu
+// Kontynuuj wykonywanie
 var_dump($o); // Null
 echo "\n\n";
 
@@ -141,14 +487,14 @@ echo "\n\n";
 // Przykład 2
 try {
     $o = new TestException(TestException::THROW_DEFAULT);
-} catch (MyException $e) {      // Wyjątek nie pasuje do określonego typu
-    echo "Złapałem swój wyjątek\n", $e;
+} catch (MojWyjatek $e) {      // Typ się nie zgadza
+    echo "Złapałem nasz wyjątek\n", $e;
     $e->customFunction();
 } catch (Exception $e) {        // Będzie złapany
-    echo "Złapano domyślny wyjątek\n", $e;
+    echo "Złapałem domyślny wyjątek\n", $e;
 }
 
-// Kontynuuj wykonywanie skryptu
+// Kontynuuj wykonywanie
 var_dump($o); // Null
 echo "\n\n";
 
@@ -157,10 +503,10 @@ echo "\n\n";
 try {
     $o = new TestException(TestException::THROW_CUSTOM);
 } catch (Exception $e) {        // Będzie złapany
-    echo "Złapano domyślny wyjątek\n", $e;
+    echo "Złapałem domyślny wyjątek\n", $e;
 }
 
-// Kontynuuj wykonywanie skryptu
+// Kontynuuj wykonywanie
 var_dump($o); // Null
 echo "\n\n";
 
@@ -168,278 +514,21 @@ echo "\n\n";
 // Przykład 4
 try {
     $o = new TestException();
-} catch (Exception $e) {        // Blok ominięty, brak wyjątków
-    echo "Złapano domyślny wyjątek\n", $e;
+} catch (Exception $e) {        // Pomięto, brak wyjątku
+    echo "Złapałem domyślny wyjątek\n", $e;
 }
 
-// Kontynuuj wykonywanie skryptu
+// Kontynuuj wykonywanie
 var_dump($o); // TestException
 echo "\n\n";
 ?>
 ]]>
-    </programlisting>
-    <note>
-     <para>
-      Wersje PHP 5 poniżej PHP 5.3.0 nie wspierają zagnieżdżania wyjątku.
-      Jeżeli chcesz uruchomić ten przykład, poniższy kod może być użyty jako
-      zastępstwo dla klasy MyException.
-     </para>
-     <programlisting role="php">
-<![CDATA[
-<?php
-/**
- * Define a custom exception class
- */
-class MyException extends Exception
-{
-    // Ponownie zdefiniuj konstruktor wyjątku, aby wiadomość ($message) nie była opcjonalna
-    public function __construct($message, $code = 0) {
-        // jakiś kod
-    
-        // upewnij się, że wszystko jest przypisane poprawnie
-        parent::__construct($message, $code);
-    }
+   </programlisting>
+  </example>
+ </sect1>
 
-    // własna reprezentacja obiektu jako ciąg znaków
-    public function __toString() {
-        return __CLASS__ . ": [{$this->code}]: {$this->message}\n";
-    }
+</chapter>
 
-    public function customFunction() {
-        echo "Własna funkcja dla tego typu wyjątku\n";
-    }
-}
-?>
-]]>
-     </programlisting>
-    </note>
-   </example>
-  </sect1>
-
-  <simplesect xml:id="language.exceptions.introduction">
-   <para>
-    Model wyjątków w PHP jest podobny do tego z innych języków programowania.
-    W PHP wyjątek może być rzucony (&throw;) i złapany (&catch;).
-    Kod może zostać otoczony blokiem &try;, aby ułatwić łapanie potencjalnych
-    wyjątków. Każdy &try; musi mieć przynajmniej jeden odpowiadający mu
-    blok &catch; lub &finally;.
-   </para>
-
-   <para>
-    Rzucany obiekt musi być instancją klasy
-    <classname>Exception</classname> lub klasy dziedziczącej po
-    <classname>Exception</classname>. Próba rzucenia innego obiektu
-    spowoduje wygenerowanie błędu PHP.
-   </para>
-  </simplesect>
-
-  <simplesect xml:id="language.exceptions.catch">
-   <title><literal>catch</literal></title>
-   <para>
-    Można użyć wielu bloków &catch;, aby złapać róne klasy wyjątków.
-    Normalne wykonywanie (kiedy w bloku &try; nie jest rzucany żaden
-    wyjątek) będzie kontynuowane po ostatnim bloku &catch; w sekwencji.
-    Można rzucać (lub rzucać ponownie) wyjątki w bloku &catch;.
-   </para>
-   <para>
-    Kiedy rzucany jest wyjątek, kod po wyrażeniu nie zostanie wykonany,
-    a PHP spróbuje znaleźć pierwszy pasujący blok &catch;.
-    Jeżeli wyjątek nie zostanie złapany, zostanie wygenerowany PHP Fatal Error
-    z wiadomością "<literal>Uncaught Exception ...</literal>", o ile nie zdefiniowano
-    własnej obsługi przez <function>set_exception_handler</function>.
-   </para>
-   <para>
-    W PHP 7.1 i późniejszych blok &catch; może opisywać kilka wyjątków,
-    używając znaku poziomej kreski (<literal>|</literal>). Jest to przydatne
-    gdy różne wyjątki, z róznych hierarchii klas, są obsługiwane w ten sam
-    sposób.
-   </para>
-  </simplesect>
-
-  <simplesect xml:id="language.exceptions.finally">
-   <title><literal>finally</literal></title>
-   <para>
-    W PHP 5.5 i późniejszych można także określić blok &finally; po lub
-    w zamian bloków &catch;. Kod w bloku &finally; będzie wykonany
-    zawsze po blokach &try; i &catch;, niezależnie od tego czy
-    wyjątek został rzucony, a zanim zostanie wznowione normalne wykonywanie skryptu.
-   </para>
-  </simplesect>
-
-  <simplesect xml:id="language.exceptions.notes">
-   &reftitle.notes;
-
-   <note>
-    <para>
-     Funkcje wbudowane w PHP używają głównie
-     <link linkend="ini.error-reporting">raportowania błędów</link>, tylko nowoczesne
-	 rozszrzenia <link linkend="language.oop5">zorientowane obiektowo</link>
-     korzystają z wyjątków. Jednakże błędy mogą być łatwo przetłumaczone na
-     na wyjątki dzięki <link linkend="class.errorexception">ErrorException</link>.
-    </para>
-   </note>
-   <tip>
-    <para>
-     <link linkend="intro.spl">Biblioteka standardowa PHP (SPL)</link> udostępnia
-     sporą ilość <link linkend="spl.exceptions">wbudowanych
-     wyjątków</link>.
-    </para>
-   </tip>
-  </simplesect>
-
-  <simplesect xml:id="language.exceptions.examples">
-   &reftitle.examples;
-
-   <example>
-    <title>Rzucanie wyjątku</title>
-    <programlisting role="php">
-<![CDATA[
-<?php
-function inverse($x) {
-    if (!$x) {
-        throw new Exception('Dzielenie przez zero.');
-    }
-    return 1/$x;
-}
-
-try {
-    echo inverse(5) . "\n";
-    echo inverse(0) . "\n";
-} catch (Exception $e) {
-    echo 'Złapany wyjątek: ',  $e->getMessage(), "\n";
-}
-
-// Kontynuuj wykonywanie
-echo "Witaj, świecie\n";
-?>
-]]>
-    </programlisting>
-    &example.outputs;
-    <screen>
-<![CDATA[
-0.2
-Złapany wyjątek: Dzielenie przez zero.
-Witaj, świecie
-]]>
-    </screen>
-   </example>
-   <example>
-    <title>Obsługa wyjątków z blokiem <literal>finally</literal></title>
-    <programlisting role="php">
-<![CDATA[
-<?php
-function inverse($x) {
-    if (!$x) {
-        throw new Exception('Dzielenie przez zero.');
-    }
-    return 1/$x;
-}
-
-try {
-    echo inverse(5) . "\n";
-} catch (Exception $e) {
-    echo 'Złapany wyjątek: ',  $e->getMessage(), "\n";
-} finally {
-    echo "Pierwszy blok finally.\n";
-}
-
-try {
-    echo inverse(0) . "\n";
-} catch (Exception $e) {
-    echo 'Złapany wyjątek: ',  $e->getMessage(), "\n";
-} finally {
-    echo "Drugi blok finally.\n";
-}
-
-// Kontynuuj wykonywanie
-echo "Witaj świecie\n";
-?>
-]]>
-    </programlisting>
-    &example.outputs;
-    <screen>
-<![CDATA[
-0.2
-Pierwszy blok finally.
-Złapany wyjątek: Dzielenie przez zero.
-Drugi blok finally.
-Witaj, świecie
-]]>
-    </screen>
-   </example>
-   <example>
-    <title>Zagnieżdżony wyjątek</title>
-    <programlisting role="php">
-<![CDATA[
-<?php
-
-class MyException extends Exception { }
-
-class Test {
-    public function testing() {
-        try {
-            try {
-                throw new MyException('foo!');
-            } catch (MyException $e) {
-                // rzuć go ponownie
-                throw $e;
-            }
-        } catch (Exception $e) {
-            var_dump($e->getMessage());
-        }
-    }
-}
-
-$foo = new Test;
-$foo->testing();
-
-?>
-]]>
-    </programlisting>
-    &example.outputs;
-    <screen>
-<![CDATA[
-string(4) "foo!"
-]]>
-    </screen>
-   </example>
-   <example>
-    <title>Obsługa wielu wyjątków w catch</title>
-    <programlisting role="php">
-<![CDATA[
-<?php
-
-class MyException extends Exception { }
-
-class MyOtherException extends Exception { }
-
-class Test {
-    public function testing() {
-        try {
-            throw new MyException();
-        } catch (MyException | MyOtherException $e) {
-            var_dump(get_class($e));
-        }
-    }
-}
-
-$foo = new Test;
-$foo->testing();
-
-?>
-]]>
-    </programlisting>
-    &example.outputs;
-    <screen>
-<![CDATA[
-string(11) "MyException"
-]]>
-    </screen>
-   </example>
-  </simplesect>
-
- </chapter>
- 
 <!-- Keep this comment at the end of the file
 Local variables:
 mode: sgml
