@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: cdc9d28d334bbc08386fecf8aade66080004a9dd Maintainer: grzesiek Status: ready -->
+<!-- $Revision$ -->
+
+<sect1 xml:id="control-structures.switch" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title>switch</title>
+ <?phpdoc print-version-for="switch"?>
+ <simpara>
+  Instrukcja  <literal>switch</literal> jest podobna do serii instrukcji IF
+  na tym samym wyrażeniu.  W wielu przypadkach możesz chcieć
+  porównać tę samą zmienną (lub wyrażenie) z wieloma różnymi wartościami
+  i wykonać inny fragment kodu w zależności od tego, której wartości jest
+  ona równa. Właśnie do tego służy instrukcja
+  <literal>switch</literal>.
+ </simpara>
+ <note>
+  <simpara>
+   Należy pamiętać, że w przeciwieństwie do niektórych innych języków, instrukcję
+   <link linkend="control-structures.continue">continue</link> 
+   stosuje się do <literal>switch</literal> i działa podobnie do <literal>break</literal>. Jeśli
+   masz <literal>switch</literal> wewnątrz pętli i chcesz przejść do następnej iteracji
+   pętli zewnętrznej użyj <literal>continue 2</literal>.
+  </simpara>
+ </note>
+ <note>
+  <para>
+   Należy pamiętać, że switch/case powodują
+   <link linkend="types.comparisions-loose">luźne porównanie</link>.
+  </para>
+ </note>
+
+ <para>
+  W poniższym przykładzie każdy blok kodu jest równoważny.
+  Jeden używa serii instrukcji <literal>if</literal> i
+  <literal>elseif</literal>, a drugi instrukcji
+  <literal>switch</literal>.  W każdym przypadku wynik jest taki sam.
+  <example>
+   <title>Struktura <literal>switch</literal></title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+// Instrukcja switch:
+
+switch ($i) {
+    case 0:
+        echo "i jest równe 0";
+        break;
+    case 1:
+        echo "i jest równe 1";
+        break;
+    case 2:
+        echo "i jest równe 2";
+        break;
+}
+
+// Jest równoważna:
+
+if ($i == 0) {
+    echo "i jest równe 0";
+} elseif ($i == 1) {
+    echo "i jest równe 1";
+} elseif ($i == 2) {
+    echo "i jest równe 2";
+}
+?>
+]]>
+   </programlisting>
+  </example>
+ </para>
+ <para>
+  Ważne jest zrozumienie, jak instrukcja <literal>switch</literal>
+  jest wykonywana, aby uniknąć błędów.  Instrukcja
+  <literal>switch</literal> jest wykonywana linia po linii
+  (właściwie instrukcja po instrukcji).  Na początku nie jest wykonywany
+  żaden kod.  Tylko wtedy, gdy zostanie znaleziona instrukcja <literal>case</literal>,
+  której wyrażenie ma wartość zgodną z wartością wyrażenia
+  <literal>switch</literal>, PHP rozpoczyna wykonywanie instrukcji.
+  PHP kontynuuje wykonywanie poleceń do końca bloku
+  <literal>switch</literal> lub do pierwszego razu, gdy zobaczy
+  instrukcję <literal>break</literal>.  Jeśli nie napiszesz instrukcji
+  <literal>break</literal> na końcu listy instrukcji case
+  PHP będzie kontynuować wykonywanie instrukcji następnego przypadku.
+  Na prrzykład:
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php
+switch ($i) {
+    case 0:
+        echo "i jest równe 0";
+    case 1:
+        echo "i jest równe 1";
+    case 2:
+        echo "i jest równe 2";
+}
+?>
+]]>
+   </programlisting>
+  </informalexample>
+ </para>
+ <simpara>
+  Tutaj, jeśli zmienna <varname>$i</varname> jest równa 0, PHP wykona wszystkie
+  instrukcje echo!  Jeśli zmienna <varname>$i</varname> jest równa 1, PHP wykona
+  dwie ostatnie instrukcje echo. Otrzymasz oczekiwane zachowanie (zostanie wyświetlone
+  'i równa się 2') tylko wtedy, gdy zmienna <varname>$i</varname> jest równa 2.  Dlatego,
+  ważne jest, aby nie zapomnieć o instrukcjach  <literal>break</literal>
+  (nawet jeśli w pewnych okolicznościach możesz chcieć uniknąć ich celowego
+  dostarczania).
+ </simpara>
+ <simpara>
+  W instrukcji <literal>switch</literal> warunek oceniany jest tylko raz,
+  a wynik jest porównywany z każdą instrukcją
+  <literal>case</literal>. W instrukcji <literal>elseif</literal>
+  warunek jest oceniany ponownie. Jeśli twój warunek jest
+  bardziej skomplikowany niż proste porównanie i / lub znajduje się w
+  ciasnej pętli, instrukcja <literal>switch</literal> może być szybsza.
+ </simpara>
+ <para>
+  Lista instrukcji dla case może być również pusta, co po
+  prostu przekazuje kontrolę do listy instrukcji dla następnego przypadku (case).
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php
+switch ($i) {
+    case 0:
+    case 1:
+    case 2:
+        echo "i jest mniejsze niż 3, ale nie ujemne";
+        break;
+    case 3:
+        echo "i jest równe 3";
+}
+?>
+]]>
+   </programlisting>
+  </informalexample>
+ </para>
+ <para>
+  Specjalnym przypadkiem jest przypadek <literal>default</literal>.  Ten przypadek
+  pasuje do wszystkiego, co nie zostało dopaowane przez inne przypadki (case). Na przykład:
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php
+switch ($i) {
+    case 0:
+        echo "i jest równe 0";
+        break;
+    case 1:
+        echo "i jest równe 1";
+        break;
+    case 2:
+        echo "i jest równe 2";
+        break;
+    default:
+       echo "i is not equal to 0, 1 or 2";
+}
+?>
+]]>
+   </programlisting>
+  </informalexample>
+  <note>
+   <simpara>
+    Wiele przypadków domyślnych spowoduje zgłoszenie
+    błędu <constant>E_COMPILE_ERROR</constant>.
+   </simpara>
+  </note>
+  <note>
+   <simpara>
+    Technicznie przypadek <literal>default</literal> może być wymieniony w dowolnej
+    kolejności. Zostanie on użyty tylko wtedy, gdy żaden inny przypadek nie będzie pasował.
+    Jednak zgodnie z konwencją najlepiej jest umieścić go na końcu jako ostatnią
+    gałąź.
+   </simpara>
+  </note>
+ </para>
+ <para>
+  Jeśli żadna gałąź <literal>case</literal> nie pasuje i nie ma domyślnej gałęzi <literal>default</literal>
+  wówczas żaden kod nie zostanie wykonany, tak jakby żadna instrukcja <literal>if</literal> nie była prawdziwa.
+ </para>
+ <para>
+  Wartość przypadku (case) może być podana jako wyrażenie. Jednak
+  wyrażenie to zostanie ocenione samodzielnie, a następnie luźno porównane z wartością switch. Oznacza to,
+  że nie można go użyć do złożonej oceny wartości switch.  Na przykład:
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php
+$target = 1;
+$start = 3;
+
+switch ($target) {
+    case $start - 1:
+        print "A";
+        break;
+    case $start - 2:
+        print "B";
+        break;
+    case $start - 3:
+        print "C";
+        break;
+    case $start - 4:
+        print "D";
+        break;
+}
+
+// Prints "B"
+?>
+]]>
+   </programlisting>
+  </informalexample>
+ </para>
+ <para>
+  W przypadku bardziej złożonych porównań, wartość &true; może być użyta jako wartość switch.
+  Lub, alternatywnie, bloki <literal>if</literal>-<literal>else</literal> zamiast <literal>switch</literal>.
+  <informalexample>
+   <programlisting role="php">
+    <![CDATA[
+<?php
+$offset = 1;
+$start = 3;
+
+switch (true) {
+    case $start - $offset === 1:
+        print "A";
+        break;
+    case $start - $offset === 2:
+        print "B";
+        break;
+    case $start - $offset === 3:
+        print "C";
+        break;
+    case $start - $offset === 4:
+        print "D";
+        break;
+}
+
+// Prints "B"
+?>
+]]>
+   </programlisting>
+  </informalexample>
+ </para>
+ <para>
+  Alternatywna składnia struktur sterujących jest obsługiwana przez
+  switches. Aby uzyskać więcej informacji, zobacz <link
+  linkend="control-structures.alternative-syntax">Alternatywna składnia
+  dla struktur sterujących</link>.
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php
+switch ($i):
+    case 0:
+        echo "i jest równe 0";
+        break;
+    case 1:
+        echo "i jest równe 1";
+        break;
+    case 2:
+        echo "i jest równe 2";
+        break;
+    default:
+        echo "i nie jest równe 0, 1 lub 2";
+endswitch;
+?>
+]]>
+   </programlisting>
+  </informalexample>
+ </para>
+ <para>
+  Możliwe jest użycie średnika zamiast dwukropka po przypadku (case), np:
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php
+switch($beer)
+{
+    case 'tuborg';
+    case 'carlsberg';
+    case 'stella';
+    case 'heineken';
+        echo 'Dobry wybór';
+        break;
+    default;
+        echo 'Dokonaj nowego wyboru...';
+        break;
+}
+?>
+]]>
+   </programlisting>
+  </informalexample>
+ </para>
+
+ <sect2 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member>&match;</member>
+   </simplelist>
+  </para>
+ </sect2>
+</sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
