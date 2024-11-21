@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: cef78b0fbe0fbe02003699b027ab50200097e949 Maintainer: adi Status: ready -->
+<!-- EN-Revision: 73007ad9889ca2a3d85b0a710b55deb44ac370cc Maintainer: adi Status: ready -->
 <!-- CREDITS: sobak, grzesiek -->
 <refentry xml:id="function.fgetcsv" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
@@ -25,9 +25,10 @@
   </para>
   <note>
    <para>
-    Ta funkcja uwzględnia ustawienia regionalne. Jeśli stała
-    <constant>LC_CTYPE</constant> ma wartość np. <literal>en_US.UTF-8</literal>, pliki w
-    kodowaniu jednobajtowym mogą być błędnie odczytywane przez tę funkcję.
+    Ta funkcja bierze pod uwagę ustawienia regionalne.
+    Przykładowo dane zakodowane niektórymi kodowaniami jednobajtowymi mogą nie być
+    parsowane poprawnie, jeśli stała <constant>LC_CTYPE</constant> ma 
+    wartość <literal>en_US.UTF-8</literal>.
    </para>
   </note>
  </refsect1>
@@ -99,6 +100,14 @@
         przeznaczony do ucieczki przed samym sobą.
        </simpara>
       </note>
+      <warning>
+       <simpara>
+        Począwszy od PHP 8.4.0 poleganie na domyślnej wartości
+        parametru <parameter>escape</parameter> jest przestarzałe.
+        Musi on zostać jawnie ustawiony, pozycyjnie lub używając
+        <link linkend="functions.named-arguments">nazwanych argumentów</link>.
+       </simpara>
+      </warning>
      </listitem>
     </varlistentry>
    </variablelist>
@@ -121,6 +130,19 @@
   &note.line-endings;
  </refsect1>
 
+ <refsect1 role="errors">
+  &reftitle.errors;
+  <simpara>
+   Rzuca <exceptionname>ValueError</exceptionname> jeśli parametry
+   <parameter>separator</parameter> lub <parameter>enclosure</parameter>
+   nie mają długości jednego bajtu.
+  </simpara>
+  <simpara>
+   Rzuca <exceptionname>ValueError</exceptionname> jeśli parametr
+   <parameter>escape</parameter> nie ma długości jednego bajtu lub jest pustym ciągiem znaków.
+  </simpara>
+ </refsect1>
+
  <refsect1 role="changelog">
   &reftitle.changelog;
   <para>
@@ -133,6 +155,13 @@
       </row>
      </thead>
      <tbody>
+      <row>
+       <entry>8.4.0</entry>
+       <entry>
+        Poleganie na domyślnej wartości parametru <parameter>escape</parameter> jest
+        teraz przestarzałe.
+       </entry>
+      </row>
       <row>
        <entry>8.0.0</entry>
        <entry>
@@ -184,15 +213,17 @@ fclose ($handle);
 
  <refsect1 role="seealso">
   &reftitle.seealso;
-  <para>
-   <simplelist>
-    <member><function>str_getcsv</function></member>
-    <member><function>explode</function></member>
-    <member><function>file</function></member>
-    <member><function>pack</function></member>
-    <member><function>fputcsv</function></member>
-   </simplelist>
-  </para>
+  <simplelist>
+   <member><function>fputcsv</function></member>
+   <member><function>str_getcsv</function></member>
+   <member><methodname>SplFileObject::fgetcsv</methodname></member>
+   <member><methodname>SplFileObject::fputcsv</methodname></member>
+   <member><methodname>SplFileObject::setCsvControl</methodname></member>
+   <member><methodname>SplFileObject::getCsvControl</methodname></member>
+   <member><function>explode</function></member>
+   <member><function>file</function></member>
+   <member><function>pack</function></member>
+  </simplelist>
  </refsect1>
 
 </refentry>

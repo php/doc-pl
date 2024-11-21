@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: cffb5f52894aa8a29109e3802e2257c56b51bcb6 Maintainer: grzesiek Status: ready -->
+<!-- EN-Revision: aa2e1accf0888a290a76b9193844d0d7b7bd40b8 Maintainer: grzesiek Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: jarek, joeaccord -->
 
@@ -16,13 +16,14 @@
     <programlisting role="php">
 <![CDATA[
 <?php
+
 // Nawiązanie połączenia, wybór bazy danych
 $dbconn = pg_connect("host=localhost dbname=publikacje user=www password=tajne")
     or die('Nie można nawiązać połączenia: ' . pg_last_error());
 
 // Wykonanie zapytania SQL
 $query = 'SELECT * FROM authors';
-$result = pg_query($query) or die('Nieprawidłowe zapytanie: ' . pg_last_error());
+$result = pg_query($dbconn, $query) or die('Nieprawidłowe zapytanie: ' . pg_last_error());
 
 // Wyświetlenie wyników w postaci HTML
 echo "<table>\n";
@@ -40,6 +41,7 @@ pg_free_result($result);
 
 // Zamknięcie połączenia
 pg_close($dbconn);
+
 ?>
 ]]>
     </programlisting>
