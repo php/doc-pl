@@ -1,0 +1,839 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: f94d903985119d3ac00f4528551df947f57b667f Maintainer: sobak Status: ready -->
+
+ <sect1 xml:id="language.oop5.basic" xmlns="http://docbook.org/ns/docbook">
+  <title>Podstawy</title>
+
+  <sect2 xml:id="language.oop5.basic.class">
+   <title>class</title>
+   <para>
+    Podstawowe definicje klas zaczynają się
+    od słowa kluczowego <literal>class</literal>, po którym następuje nazwa klasy,
+    a następnie para nawiasów klamrowych, które otaczają definicje
+    właściwości i metod należących do klasy.
+   </para>
+   <para>
+    Nazwa klasy może być dowolną poprawną etykietą, o ile nie jest
+    <link linkend="reserved">zastrzeżonym słowem</link> w PHP. Poprawna nazwa
+    klasy zaczyna się od litery lub podkreślnika, po której następuje dowolna ilość
+    liter, cyfr lub podkreślników. Jako wyrażenie regularne wyglądałoby
+    to więc następująco:
+    <code>^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$</code>.
+   </para>
+   <para>
+    Klasa może zawierać swoje
+    własne <link linkend="language.oop5.constants">stałe</link>, <link linkend="language.oop5.properties">zmienne</link>
+    (nazywane "właściwościami" lub "własnościami") oraz funkcje (nazywane "metodami").
+   </para>
+   <example>
+    <title>Prosta definicja klasy</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+class ProstaKlasa
+{
+    // deklaracja właściwości
+    public $wlasciwosc = 'domyślna wartość';
+
+    // deklaracja metody
+    public function wyswietlWlasciwosc() {
+        echo $this->wlasciwosc;
+    }
+}
+?>
+]]>
+    </programlisting>
+   </example>
+   <para>
+    Kiedy metoda jest wywołana w kontekście obiektu, dostępna
+    jest pseudo zmienna <varname>$this</varname>, której wartością
+    jest obiekt wywołujący metodę.
+   </para>
+   <warning>
+    <para>
+     Wywołanie niestatycznej metody statycznie rzuca błąd typu
+     <classname>Error</classname>.
+     Przed PHP 8.0.0 skutkowało to wygenerowaniem komunikatu o przestarzałej
+     funkcjonalności a zmienna <varname>$this</varname> byłaby niezdefiniowana.
+    </para>
+    <example xml:id="language.oop5.basic.class.this">
+     <title>Kilka przykładów pseudo zmiennej <varname>$this</varname></title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+class A
+{
+    function foo()
+    {
+        if (isset($this)) {
+            echo '$this jest zdefiniowana (';
+            echo get_class($this);
+            echo ")\n";
+        } else {
+            echo "\$this nie jest zdefiniowana.\n";
+        }
+    }
+}
+
+class B
+{
+    function bar()
+    {
+        A::foo();
+    }
+}
+
+$a = new A();
+$a->foo();
+
+A::foo();
+
+$b = new B();
+$b->bar();
+
+B::bar();
+?>
+]]>
+     </programlisting>
+     &example.outputs.7;
+     <screen>
+<![CDATA[
+$this jest zdefiniowana (A)
+
+Deprecated: Non-static method A::foo() should not be called statically in %s  on line 27
+$this nie jest zdefiniowana.
+
+Deprecated: Non-static method A::foo() should not be called statically in %s  on line 20
+$this nie jest zdefiniowana.
+
+Deprecated: Non-static method B::bar() should not be called statically in %s  on line 32
+
+Deprecated: Non-static method A::foo() should not be called statically in %s  on line 20
+$this nie jest zdefiniowana.
+]]>
+     </screen>
+     &example.outputs.8;
+     <screen>
+<![CDATA[
+$this jest zdefiniowana (A)
+
+Fatal error: Uncaught Error: Non-static method A::foo() cannot be called statically in %s :27
+Stack trace:
+#0 {main}
+  thrown in %s  on line 27
+]]>
+     </screen>
+    </example>
+   </warning>
+
+   <sect3 xml:id="language.oop5.basic.class.readonly">
+    <title>Klasy tylko do odczytu (readonly)</title>
+    <para>
+     Począwszy od PHP 8.2.0 klasa może być oznaczona
+     modyfikatorem <modifier>readonly</modifier>.
+     Oznaczenie klasy jako <modifier>readonly</modifier> doda
+     <link linkend="language.oop5.properties.readonly-properties">modyfikator <modifier>readonly</modifier></link>
+     do każdej z jej właściwości i uniemożliwi tworzenie
+     <link linkend="language.oop5.properties.dynamic-properties">właściwości dynamicznych</link>.
+     Ponadto nie możliwe jest włączenie ich obsługi przy użyciu
+     atrybutu <classname>AllowDynamicProperties</classname>. Próba zrobienia tego
+     poskutkuje błędem czasu kompilacji.
+    </para>
+    <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<?php
+#[\AllowDynamicProperties]
+readonly class Foo {
+}
+
+// Fatal error: Cannot apply #[AllowDynamicProperties] to readonly class Foo
+?>
+]]>
+     </programlisting>
+    </informalexample>
+
+    <para>
+     Jako że właściwości nieotypowane oraz statyczne nie mogą być oznaczone
+     modyfikatorem <literal>readonly</literal>, klasy tylko do odczytu
+     nie mogą ich deklarować:
+    </para>
+    <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<?php
+readonly class Foo
+{
+    public $bar;
+}
+
+// Fatal error: Readonly property Foo::$bar must have type
+?>
+]]>
+     </programlisting>
+     <programlisting role="php">
+<![CDATA[
+<?php
+readonly class Foo
+{
+    public static int $bar;
+}
+
+// Fatal error: Readonly class Foo cannot declare static properties
+?>
+]]>
+     </programlisting>
+    </informalexample>
+    <para>
+     Klasa tylko do odczytu może być
+     <link linkend="language.oop5.basic.extends">rozszerzona</link>
+     wyłącznie przez klasę, która także jest
+     tylko do odczytu.
+    </para>
+   </sect3>
+  </sect2>
+
+  <sect2 xml:id="language.oop5.basic.new">
+   <title>new</title>
+   <para>
+    Aby stworzyć instancję (obiekt) klasy, należy użyć słowa kluczowego <literal>new</literal>.
+    Obiekt zostanie utworzony zawsze, chyba że klasa ma zdefiniowany
+    <link linkend="language.oop5.decon">konstruktor</link>, który rzuca
+    <link linkend="language.exceptions">wyjątek</link> w wypadku błędu. Klasy
+    powinny być zdefiniowane przed próbą stworzenia ich obiektów (instancjonowaniem), a
+    w niektórych wypadkach jest to wymóg.
+   </para>
+   <para>
+    Jeżeli ze słowem kluczowym <literal>new</literal> zostanie użyta zmienna zawierająca
+    ciąg znaków będący nazwą klasy, to zostanie stworzony nowy obiekt tej klasy. Jeśli
+    klasa jest w przestrzeni nazw, to musi być użyta jej w pełni kawalifikowana nazwa
+    (tj. taka, która zawiera przestrzeń nazw).
+   </para>
+
+   <note>
+    <para>
+     Jeśli do konstruktora klasy nie są przekazywane żadne argumenty,
+     to nawiasy po nazwie klasy można pominąć
+    </para>
+   </note>
+
+   <example>
+    <title>Tworzenie instancji (obiektu)</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$obiekt = new ProstaKlasa();
+
+// Można też użyć zmiennej:
+$nazwaKlasy = 'ProstaKlasa';
+$obiekt = new $nazwaKlasy(); // new ProstaKlasa()
+?>
+]]>
+    </programlisting>
+   </example>
+   <para>
+    Od PHP 8.0.0 dozwolone jest użycie <literal>new</literal> z dowolnymi
+    wyrażeniami. Pozwala do na bardziej złożone instancjonowanie, jeśli wyrażenie
+    tworzy typ <type>string</type>. Wyrażenia muszą być zamknięte w nawiasach.
+   </para>
+   <example>
+    <title>Tworzenie obiektu z pomocą wyrażenia</title>
+    <para>
+     Poniżej pokazujemy różne przykłady poprawnych wyrażeń, które tworzą nazwę klasy,
+     w tym wywołanie funkcji, łączenie ciągów znaków oraz użycie stałej <constant>::class</constant>.
+    </para>
+    <programlisting role="php">
+     <![CDATA[
+<?php
+
+class ClassA extends \stdClass {}
+class ClassB extends \stdClass {}
+class ClassC extends ClassB {}
+class ClassD extends ClassA {}
+
+function getSomeClass(): string
+{
+    return 'ClassA';
+}
+
+var_dump(new (getSomeClass()));
+var_dump(new ('Class' . 'B'));
+var_dump(new ('Class' . 'C'));
+var_dump(new (ClassD::class));
+?>
+]]>
+    </programlisting>
+    &example.outputs.8;
+    <screen>
+     <![CDATA[
+object(ClassA)#1 (0) {
+}
+object(ClassB)#1 (0) {
+}
+object(ClassC)#1 (0) {
+}
+object(ClassD)#1 (0) {
+}
+
+]]>
+    </screen>
+   </example>
+   <para>
+    Jeśli kod jest już w kontekście klasy, to możliwe jest stworzenie
+    nowego obiektu używając <literal>new self</literal> oraz <literal>new parent</literal>.
+   </para>
+   <para>
+    Jeśli przypiszemy stworzoną już instancję klasy do nowej zmiennej, to nowa zmienna
+    będzie odnosić się do tej samej instancji, do której przypisany był obiekt. To
+    zachowanie jest identyczne w wypadku przekazywania instancji do funkcji. Aby
+    stworzyć kopię już utworzonego obiektu, należy go
+    <link linkend="language.oop5.cloning">sklonować</link>.
+   </para>
+   <example>
+    <title>Przypisanie obiektu</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+$instancja = new ProstaKlasa();
+
+$przypisana   =  $instancja;
+$referencja  =& $instancja;
+
+$instancja->var = '$przypisana będzie miała tą wartość';
+
+$instancja = null; // $instancja oraz $referencja mają teraz wartość null
+
+var_dump($instancja);
+var_dump($referencja);
+var_dump($przypisana);
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+NULL
+NULL
+object(ProstaKlasa)#1 (1) {
+   ["var"]=>
+     string(30) "$przypisana będzie miała tą wartość"
+}
+]]>
+    </screen>
+   </example>
+   <para>
+    Nowe obiekty można stworzyć na kilka sposobów:
+   </para>
+   <example>
+    <title>Tworzenie nowych obiektów</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+class Test
+{
+    public static function getNew()
+    {
+        return new static();
+    }
+}
+
+class Child extends Test {}
+
+$obj1 = new Test(); // Używając nazwy klasy
+$obj2 = new $obj1(); // Poprzez zmienną zawierającą obiekt
+var_dump($obj1 !== $obj2);
+
+$obj3 = Test::getNew(); // Używając metody klasy (która zwraca nowy obiekt)
+var_dump($obj3 instanceof Test);
+
+$obj4 = Child::getNew(); // Używając metody klasy potomnej
+var_dump($obj4 instanceof Child);
+
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+bool(true)
+bool(true)
+bool(true)
+]]>
+    </screen>
+   </example>
+
+   <para>
+    Możliwe jest uzyskanie dostępu do elementu właśnie stworzonego obiektu
+    w pojedynczym wyrażeniu:
+   </para>
+   <example>
+    <title>Uzyskanie dostępu do elementu właśnie stworzonego obiektu</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+echo (new DateTime())->format('Y');
+?>
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
+<![CDATA[
+2016
+]]>
+    </screen>
+   </example>
+
+   <note>
+    <simpara>
+     Przed PHP 7.1 argumenty nie są ewaluowane jeśli klasa nie ma metody
+     konstruktora.
+    </simpara>
+   </note>
+  </sect2>
+  
+  <sect2 xml:id="language.oop5.basic.properties-methods">
+   <title>Właściwości i metody</title>
+   <para>
+    Właściwości i metody klasy żyją w osobnych "przestrzeniach nazw", więc
+    możliwe jest, aby mieć właściwość i metodę o tej samej nazwie. Użycie
+    do właściwości oraz metody korzysta z tej samej notacji i to, czy uzyskamy
+    dostęp do właściwości, czy wywołamy metodę, zależy wyłącznie od kontaktu,
+    tj. czy używamy zmiennej, czy tez wywołujemy metodę.
+   </para>
+   <example>
+    <title>Dostęp do właściwości vs. wywołanie metody</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+class Foo
+{
+    public $bar = 'właściwość';
+    
+    public function bar() {
+        return 'methoda';
+    }
+}
+
+$obj = new Foo();
+echo $obj->bar, PHP_EOL, $obj->bar(), PHP_EOL;
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+właściwość
+methoda
+]]>
+    </screen>
+   </example>
+   <para>
+    Oznacza to, że wywołanie <link linkend="functions.anonymous">funkcji
+    anonimowej</link>, która została przypisana do właściwości nie jest
+    możliwe bezpośrednio. Zamiast tego należy najpierw przypisać właściwość do zmiennej.
+    Jest też możliwe wywołanie takiej właściwości po
+    otoczeniu jej nawiasami.
+   </para>
+   <example>
+    <title>Wywołanie funkcji anonimowej przechowywanej we właściwości</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+class Foo
+{
+    public $bar;
+    
+    public function __construct() {
+        $this->bar = function() {
+            return 42;
+        };
+    }
+}
+
+$obj = new Foo();
+
+echo ($obj->bar)(), PHP_EOL;
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+42
+]]>
+    </screen>
+   </example>
+  </sect2>
+
+  <sect2 xml:id="language.oop5.basic.extends">
+   <!-- TODO Example about class constant redefinition -->
+   <!-- TODO Split into it's own page? -->
+   <title>extends</title>
+   <para>
+    Klasa może odziedziczyć stałe, metody i właściwości innej klasy przy
+    użyciu słowa kluczowego <literal>extends</literal> (rozszerza) w deklaracji
+    klasy. Nie jest możliwe rozszerzanie z wielu klas na raz,
+    klasa może dziedziczyć tylko z jednej klasy bazowej.
+   </para>
+   <para>
+    Dziedziczone stałe, metody i właściwości mogą być nadpisane przez
+    ich ponowne zdeklarowanie przy użyciu tej samej nazwy jak w klasie
+    rodzica. Jeśli jednak klasa rodzica zadeklarowała metodę lub stałą
+    jako <link linkend="language.oop5.final">finalną</link>,
+    to nie można ich nadpisać. Można uzyskać dostęp do nadpisanych
+    metod i właściwości statycznych odnosząc się do nich
+    przy użyciu słowa kluczowego <link linkend="language.oop5.paamayim-nekudotayim">parent::</link>.
+   </para>
+   <note>
+    <simpara>
+     Od PHP 8.1.0 stałe mogą być zadeklarowane jako finalne.
+    </simpara>
+   </note>
+   <example>
+    <title>Proste dziedziczenie klas</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+class RozszerzKlase extends ProstaKlasa
+{
+    // Zdefiniuj metodę rodzica na nowo
+    function wyswietlWlasciwosc()
+    {
+        echo "Klasa rozszerzająca\n";
+        parent::wyswietlWlasciwosc();
+    }
+}
+
+$extended = new RozszerzKlase();
+$extended->wyswietlWlasciwosc();
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+Klasa rozszerzająca
+domyślna wartość
+]]>
+    </screen>
+   </example>
+
+   <sect3 xml:id="language.oop.lsp">
+    <title>Zasady zgodności sygnatur</title>
+    <para>
+     W wypadku nadpisania metody jej sygnatura musi być kompatybilna z metodą
+     rodzica. W przeciwnym wypadku pojawi się błąd krytyczny, a przed PHP 8.0.0
+     ostrzeżenie (<constant>E_WARNING</constant>).
+     Sygnatura jest uznawana za kompatybilną jeżeli przestrzega
+     reguł <link linkend="language.oop5.variance">zmienności</link>, czyni
+     wymagane parametry opcjonalnymi, dodaje tylko opcjonalne parametry i
+     nie ogranicza, a jedynie używa mniej restrykcyjnego modyfikatora widoczności.
+     Te zasady są znane jako Zasada Podstawienia Liskov lub LSP.
+     <link linkend="language.oop5.decon.constructor">Konstruktor</link>
+     oraz  metody prywatne są wyłączone z zasad zgodności sygnatur i
+     w wypadku niezgodnych sygnatur nie zostanie zgłoszony
+     żaden błąd.
+    </para>
+    <example>
+     <title>Kompatybilne metody potomne</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+
+class KlasaPodstawowa
+{
+    public function foo(int $a) {
+        echo "Poprawna\n";
+    }
+}
+
+class Rozszerzenie1 extends KlasaPodstawowa
+{
+    function foo(int $a = 5)
+    {
+        parent::foo($a);
+    }
+}
+
+class Rozszerzenie2 extends KlasaPodstawowa
+{
+    function foo(int $a, $b = 5)
+    {
+        parent::foo($a);
+    }
+}
+
+$rozszerzona1 = new Rozszerzenie1();
+$rozszerzona1->foo();
+$rozszerzona2 = new Rozszerzenie2();
+$rozszerzona2->foo(1);
+]]>
+     </programlisting>
+     &example.outputs;
+     <screen>
+<![CDATA[
+Poprawna
+Poprawna
+]]>
+     </screen>
+    </example>
+
+    <para>
+     Następujące przykłady pokazują, że klasa potomna, która usuwa parametr lub czyni parametr opcjonalny
+     wymaganym, nie jest kompatybilna z metodą rodzica.
+    </para>
+    <example>
+     <title>Błąd krytyczny gdy klasa potomna usuwa parametr</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+
+class KlasaPodstawowa
+{
+    public function foo(int $a = 5) {
+        echo "Poprawna\n";
+    }
+}
+
+class Extend extends KlasaPodstawowa
+{
+    function foo()
+    {
+        parent::foo(1);
+    }
+}
+]]>
+     </programlisting>
+     &example.outputs.8.similar;
+     <screen>
+<![CDATA[
+Fatal error: Declaration of Extend::foo() must be compatible with KlasaPodstawowa::foo(int $a = 5) in /in/evtlq on line 13
+]]>
+     </screen>
+    </example>
+    <example>
+     <title>Błąd krytyczny gdy klasa potomna czyni parametr opcjonalny wymaganym</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+
+class KlasaPodstawowa
+{
+    public function foo(int $a = 5) {
+        echo "Poprawna\n";
+    }
+}
+
+class Extend extends KlasaPodstawowa
+{
+    function foo(int $a)
+    {
+        parent::foo($a);
+    }
+}
+]]>
+     </programlisting>
+     &example.outputs.8.similar;
+     <screen>
+<![CDATA[
+Fatal error: Declaration of Extend::foo(int $a) must be compatible with KlasaPodstawowa::foo(int $a = 5) in /in/qJXVC on line 13
+]]>
+     </screen>
+    </example>
+
+    <warning>
+     <para>
+      Zmiana nazwy parametru w klasie potomnej nie jest niezgodnością
+      sygnatur. Jest to jednak niezalecane, ponieważ spowoduje to
+      błąd <classname>Error</classname> w trakcie uruchamiania kodu, jeśli
+      użyte są
+      <link linkend="functions.named-arguments">nazwane argumenty</link>.
+     </para>
+     <example>
+      <title>Błąd w wypadku użycia nazwanych parametrów i zmiany nazwy parametru w klasie potomnej</title>
+      <programlisting role="php">
+<![CDATA[
+<?php
+
+class A {
+    public function test($foo, $bar) {}
+}
+
+class B extends A {
+    public function test($a, $b) {}
+}
+
+$obj = new B;
+
+// Przekaż parametry zgodnie z kontraktem A::test()
+$obj->test(foo: "foo", bar: "bar"); // BŁĄD!
+]]>
+      </programlisting>
+      &example.outputs.similar;
+      <screen>
+<![CDATA[
+Fatal error: Uncaught Error: Unknown named parameter $foo in /in/XaaeN:14
+Stack trace:
+#0 {main}
+  thrown in /in/XaaeN on line 14
+]]>
+      </screen>
+     </example>
+    </warning>
+   </sect3>
+  </sect2>
+
+  <sect2 xml:id="language.oop5.basic.class.class">
+   <title>::class</title>
+
+   <para>
+    Słowo kluczowe <literal>class</literal> jest używane też do
+    rozwiązywania nazwy klasy.
+    Aby uzyskać w pełni kwalifikowaną nazwę klasy <literal>NazwaKlasy</literal>
+    użyj <literal>NazwaKlasy::class</literal>. Jest to szczególnie przydatne dla
+    klas używających <link linkend="language.namespaces">przestrzeni nazw</link>.
+   </para>
+   <para>
+    <example xml:id="language.oop5.basic.class.class.name">
+     <title>Rozwiązywanie nazwy klasy</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+namespace NS {
+    class NazwaKlasy {
+    }
+    
+    echo NazwaKlasy::class;
+}
+?>
+]]>
+     </programlisting>
+     &example.outputs;
+     <screen>
+<![CDATA[
+NS\NazwaKlasy
+]]>
+     </screen>
+    </example>
+   </para>
+   <note>
+    <para>Rozwiązywanie nazwy klasy <literal>::class</literal> dzieje się
+     w czasie kompilacji. Oznacza to, że w chwili gdy tworzony jest ciąg znaków z nazwą
+     klasy, autoloading jeszcze się nie odbył. W związku z tym nazwy klas są rozwiązywane
+     nawet jeśli klasa nie istnieje. W takim wypadku nie jest
+     zgłaszany żaden błąd.
+    </para>
+    <example xml:id="language.oop5.basic.class.class.fail">
+     <title>Rozwiązywanie nazwy nieistniejącej klasy</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+print Klasa\Nie\Istnieje::class;
+?>
+]]>
+     </programlisting>
+     &example.outputs;
+     <screen>
+<![CDATA[
+Klasa\Nie\Istnieje
+]]>
+     </screen>
+    </example>
+   </note>
+   <para>
+    Począwszy od PHP 8.0.0 <literal>::class</literal> można używać też na
+    obiektach. Takie rozwiązanie nazwy dzieje się w trakcie wykonywania a nie kompilacji.
+    Jego efekt jest identyczny, jak wywołanie <function>get_class</function> na obiekcie.
+   </para>
+   <example xml:id="language.oop5.basic.class.class.object">
+    <title>Rozwiązywanie nazwy obiektu</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+namespace NS {
+    class NazwaKlasy {
+    }
+}
+$c = new NazwaKlasy();
+print $c::class;
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+NS\NazwaKlasy
+]]>
+    </screen>
+   </example>
+  </sect2>
+ <sect2 xml:id="language.oop5.basic.nullsafe">
+  <title>Operator nullsafe dla metod i właściwości</title>
+  <para>
+   Począwszy od PHP 8.0.0 dostęp do metod i właściwości można uzyskać
+   też za pomocą operatora "nullsafe": <literal>?-></literal>. Operator nullsafe
+   działa tak samo, jak normalny dostęp do właściwości lub metod, pokazany powyżej,
+   z tym że, jeśli obiekt, z którego pobieramy jest wartością &null; to zostanie
+   zwrócone &null; zamiast wystąpienia się błędu. Jeśli dostęp do obiektu jest częścią
+   wywołania łańcuchowego, to reszta łańcucha zostanie pominięta.
+  </para>
+  <para>
+   Skutek jest podobny do opakowania każdego dostępu w funkcję <function>is_null</function>,
+   ale jest bardziej zwięzły.
+  </para>
+  <para>
+   <example>
+    <title>Operator nullsafe</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+// Od PHP 8.0.0 ta linia
+$result = $repository?->getUser(5)?->name;
+
+// Działa tak samo jak poniższy blok kodu:
+if (is_null($repository)) {
+    $result = null;
+} else {
+    $user = $repository->getUser(5);
+    if (is_null($user)) {
+        $result = null;
+    } else {
+        $result = $user->name;
+    }
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <note>
+   <para>
+    Z operatora nullsafe najlepiej korzystać wtedy, gdy null jest poprawną i potencjalnie
+    spodziewaną wartością właściwości lub wartością zwracaną przez metodę. Aby zaznaczyć
+    wystąpienie błędu, powinno się rzucić wyjątek.
+   </para>
+  </note>
+ </sect2>
+</sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
