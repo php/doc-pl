@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: f94d903985119d3ac00f4528551df947f57b667f Maintainer: sobak Status: ready -->
+ <sect1 xml:id="language.oop5.inheritance" xmlns="http://docbook.org/ns/docbook">
+  <title>Dziedziczenie obiektów</title>
+  <para>
+   Dziedziczenie jest ugruntowaną zasadą programowania i PHP używa
+   tej zasady w swoim modelu obiektowym. Ta reguła wpływa na sposób
+   w jaki wiele klas odnosi się do siebie.
+  </para>
+  <para>
+   Na przykład, kiedy klasa jest rozszerzana, klasa potomna dziedziczy wszystkie
+   metody, właściwości i stałe z klasy rodzica oznaczone jako publiczne i protected.
+   Te elementy zachowają swoją oryginalną funkcjonalność,
+   chyba że klasa je nadpisuje.
+  </para>
+  <para>
+   Jest to przydatne do definiowana i abstrahowania funkcjonalności i pozwala
+   na implementację dodatkowej funkcjonalności w podobnych obiektach bez
+   potrzeby ponownej implementacji całej współdzielonej funkcjonalności.
+  </para>
+  <para>
+   Metody prywatne klasy rodzica nie są dostępne dla klasy potomnej. W związku z tym
+   klasy potomne mogą zreimplementować prywatną metodę bez wpływu na standardowe
+   reguły dziedziczenia. Jednakże przed PHP 8.0.0 do metod prywatnych stosowały się
+   ograniczenia <literal>final</literal> oraz <literal>static</literal>. Od PHP 8.0.0 jedyne
+   ograniczenie, które tyczy się metod prywatnych to <literal>private final</literal> dla konstruktora, jako
+   że jest to powszechny sposób "wyłączania" konstruktora, gdy używane są metody fabryki.
+  </para>
+ <para>
+  Przy dziedziczeniu <link linkend="language.oop5.visibility">widoczność</link>
+  metod, właściwości i stałych może być poluzowana, np.
+  metoda <literal>protected</literal> może być oznaczona jako
+  <literal>public</literal>, ale nie może być zaostrzona, np.
+  oznaczając właściwość publiczną jako <literal>private</literal>.
+  Wyjątkiem są konstruktory, których widoczność może być ograniczona, np.
+  konstruktor publiczny może zostać oznaczony jako prywatny w
+  klasie dziedziczącej.
+ </para>
+
+  <note>
+   <para>
+    O ile nie został użyty autoloading, to klasa musi być zdefiniowana przed
+    jej użyciem. Jeżeli klasa rozszerza inną, to klasa rodzica musi być zdefiniowana
+    przed zdefiniowaniem klasy, która ją rozszerza. Ta reguła tyczy się klas, które dziedziczą
+    z innych klas oraz interfejsów.
+   </para>
+  </note>
+  <note>
+   <para>
+    Nie jest możliwe nadpisanie właściwości do odczytu i zapisu właściwością <link linkend="language.oop5.properties.readonly-properties">readonly property</link> i odwrotnie.
+    <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<?php
+
+class A {
+    public int $prop;
+}
+class B extends A {
+    // Niedozwolone: read-write -> readonly
+    public readonly int $prop;
+}
+?>
+]]>
+     </programlisting>
+    </informalexample>
+   </para>
+  </note>
+
+ <example>
+  <title>Przykład dziedziczenia</title>
+  <programlisting role="php">
+<![CDATA[
+<?php
+
+class Foo
+{
+    public function wyswietlElement($string)
+    {
+        echo 'Foo: ' . $string . PHP_EOL;
+    }
+    
+    public function wyswietlPHP()
+    {
+        echo 'PHP jest super.' . PHP_EOL;
+    }
+}
+
+class Bar extends Foo
+{
+    public function wyswietlElement($string)
+    {
+        echo 'Bar: ' . $string . PHP_EOL;
+    }
+}
+
+$foo = new Foo();
+$bar = new Bar();
+$foo->wyswietlElement('baz'); // Output: 'Foo: baz'
+$foo->wyswietlPHP();       // Output: 'PHP jest super' 
+$bar->wyswietlElement('baz'); // Output: 'Bar: baz'
+$bar->wyswietlPHP();       // Output: 'PHP jest super'
+
+?>
+]]>
+  </programlisting>
+ </example>
+
+  <sect2 xml:id="language.oop5.inheritance.internal-classes">
+   <title>Zgodność typu zwracanego z klasami wbudowanymi</title>
+ 
+   <para>
+    Przed PHP 8.1 większość wbudowanych klas i metod nie deklarowała swoich zwracanych typów
+    i podczas ich rozszerzania dozwolony był dowolny typ zwracany.
+   </para>
+ 
+   <para>
+    Od PHP 8.1.0 większość wbudowanych metod zaczęła "wstępnie" deklarować swój zwracany typ danych.
+    W tym wypadku typ zwracany przez dziedziczące metody powinien być zgodny z typem rodzica,
+    w przeciwnym wypadku zostanie wyemitowany komunikat deprecated.
+    Zwróć uwagę, że brak jawnej deklaracji zwracanego typu danych też jest uznawany za niepasującą sygnaturę,
+    a więc też skutkuje komunikatem deprecated.
+   </para>
+ 
+   <para>
+    Jeżeli zwracany typ nie może być zadeklarowany dla nadpisującej metody ze względu na potrzebę kompatybilności między wieloma wersjami PHP,
+    można dodać atrybut <classname>ReturnTypeWillChange</classname>, aby wyciszyć komunikat deprecated.
+   </para>
+ 
+   <example>
+    <title>Nadpisująca metoda nie określa zwracanego typu danych</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+class MyDateTime extends DateTime
+{
+    public function modify(string $modifier) { return false; }
+}
+ 
+// "Deprecated: Return type of MyDateTime::modify(string $modifier) should either be compatible with DateTime::modify(string $modifier): DateTime|false, or the #[\ReturnTypeWillChange] attribute should be used to temporarily suppress the notice" as of PHP 8.1.0
+?> 
+]]>
+    </programlisting>
+   </example>
+ 
+   <example>
+    <title>Nadpisująca metoda określa niepoprawny typ zwracanych danych</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+class MyDateTime extends DateTime
+{
+    public function modify(string $modifier): ?DateTime { return null; }
+}
+ 
+// "Deprecated: Return type of MyDateTime::modify(string $modifier): ?DateTime should either be compatible with DateTime::modify(string $modifier): DateTime|false, or the #[\ReturnTypeWillChange] attribute should be used to temporarily suppress the notice" as of PHP 8.1.0
+?> 
+]]>
+    </programlisting>
+   </example>
+ 
+   <example>
+    <title>Nadpisująca metoda określa niepoprawny typ zwracanych danych, ale wycisza komunikat</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+class MyDateTime extends DateTime
+{
+    /**
+     * @return DateTime|false
+     */
+    #[\ReturnTypeWillChange]
+    public function modify(string $modifier) { return false; }
+}
+ 
+// Nie będzie wywołany żaden komunikat
+?> 
+]]>
+    </programlisting>
+   </example>
+ 
+  </sect2>
+
+ </sect1>
+ 
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
