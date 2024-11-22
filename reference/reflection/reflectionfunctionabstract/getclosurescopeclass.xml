@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: ca840c9a6d665e60a7de48b57a5b6440c0d3b0c1 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 348789addeedc32858ec0e29ec44fada391aecb3 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-<refentry xml:id="reflectionfunctionabstract.getclosurescopeclass" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+<refentry xml:id="reflectionfunctionabstract.getclosurescopeclass" xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude">
  <refnamediv>
   <refname>ReflectionFunctionAbstract::getClosureScopeClass</refname>
-  <refpurpose>Zwraca klasę zakresu powiązaną z domknięciem</refpurpose>
+  <refpurpose>Zwraca klasę odpowiadającą zakresowi wewnątrz domknięcia.</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
@@ -13,9 +13,11 @@
    <modifier>public</modifier> <type class="union"><type>ReflectionClass</type><type>null</type></type><methodname>ReflectionFunctionAbstract::getClosureScopeClass</methodname>
    <void/>
   </methodsynopsis>
-  <para>
-   Pobiera klasę, w której zamknięto deklarację domknięcia.
-  </para>
+  <simpara>
+   Zwraca klasę jako <classname>ReflectionClass</classname>, która
+   odpowiada zakresowi wewnątrz
+   <classname>Closure</classname>.
+  </simpara>
 
  </refsect1>
 
@@ -26,11 +28,25 @@
 
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
-  <para>
-   Zwraca klasę lub &null; jeśli funkcja nie jest domknięciem lub nie ma klasy, w której byłoby ono zamknięte.
-  </para>
+  <simpara>
+   Zwraca <classname>ReflectionClass</classname> odpowiadającą klasie,
+   której zakres jest używany wewnątrz <classname>Closure</classname>.
+   Jeśli funkcja nie jest domknięciem lub ma zakres globalny, zwracana jest wartość &null;.
+  </simpara>
  </refsect1>
 
+ <xi:include xpointer="xmlns(db=http://docbook.org/ns/docbook) xpointer(id('reflectionfunctionabstract.getclosurecalledclass')/db:refsect1[@role='examples']/.)">
+  <xi:fallback/>
+ </xi:include>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <simplelist>
+   <member><methodname>ReflectionFunctionAbstract::getClosureCalledClass</methodname></member>
+   <member><methodname>ReflectionFunctionAbstract::getClosureThis</methodname></member>
+   <member><xref linkend="language.oop5.late-static-bindings" /></member>
+  </simplelist>
+ </refsect1>
 
 </refentry>
 <!-- Keep this comment at the end of the file

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: eee245cdbd89dc2fd908285f588e3b9e055924e5 Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: b2fa00ca2e052f87785a7f8b296466edc4e55767 Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: sobak, qrak -->
  <sect2 xml:id="reserved.constants.core" xmlns="http://docbook.org/ns/docbook">
@@ -107,7 +107,8 @@
     <varlistentry xml:id="constant.php-zts">
      <term>
       <constant>PHP_ZTS</constant>
-      (<type>int</type>)
+      (<type>bool</type>)
+      &Alias; <constant>ZEND_THREAD_SAFE</constant>
      </term>
      <listitem>
       <simpara>
@@ -118,7 +119,8 @@
     <varlistentry xml:id="constant.php-debug">
      <term>
       <constant>PHP_DEBUG</constant>
-      (<type>int</type>)
+      (<type>bool</type>)
+      &Alias; <constant>ZEND_DEBUG_BUILD</constant>
      </term>
      <listitem>
       <simpara>
@@ -497,174 +499,69 @@
       <constant>E_ERROR</constant>
       (<type>int</type>)
      </term>
-     <listitem>
-      <simpara>
-       <link linkend="errorfunc.constants">Stała raportowania błędów</link>
-      </simpara>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
      <term>
       <constant>E_WARNING</constant>
       (<type>int</type>)
      </term>
-     <listitem>
-      <simpara>
-       <link linkend="errorfunc.constants">Stała raportowania błędów</link>
-      </simpara>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
      <term>
       <constant>E_PARSE</constant>
       (<type>int</type>)
      </term>
-     <listitem>
-      <simpara>
-       <link linkend="errorfunc.constants">Stała raportowania błędów</link>
-      </simpara>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
      <term>
       <constant>E_NOTICE</constant>
       (<type>int</type>)
      </term>
-     <listitem>
-      <simpara>
-       <link linkend="errorfunc.constants">Stała raportowania błędów</link>
-      </simpara>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
      <term>
       <constant>E_CORE_ERROR</constant>
       (<type>int</type>)
      </term>
-     <listitem>
-      <simpara>
-       <link linkend="errorfunc.constants">Stała raportowania błędów</link>
-      </simpara>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
      <term>
       <constant>E_CORE_WARNING</constant>
       (<type>int</type>)
      </term>
-     <listitem>
-      <simpara>
-       <link linkend="errorfunc.constants">Stała raportowania błędów</link>
-      </simpara>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
      <term>
       <constant>E_COMPILE_ERROR</constant>
       (<type>int</type>)
      </term>
-     <listitem>
-      <simpara>
-       <link linkend="errorfunc.constants">Stała raportowania błędów</link>
-      </simpara>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
      <term>
       <constant>E_COMPILE_WARNING</constant>
       (<type>int</type>)
      </term>
-     <listitem>
-      <simpara>
-       <link linkend="errorfunc.constants">Stała raportowania błędów</link>
-      </simpara>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
      <term>
       <constant>E_USER_ERROR</constant>
       (<type>int</type>)
      </term>
-     <listitem>
-      <simpara>
-       <link linkend="errorfunc.constants">Stała raportowania błędów</link>
-      </simpara>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
      <term>
       <constant>E_USER_WARNING</constant>
       (<type>int</type>)
      </term>
-     <listitem>
-      <simpara>
-       <link linkend="errorfunc.constants">Stała raportowania błędów</link>
-      </simpara>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
      <term>
       <constant>E_USER_NOTICE</constant>
       (<type>int</type>)
      </term>
-     <listitem>
-      <simpara>
-       <link linkend="errorfunc.constants">Stała raportowania błędów</link>
-      </simpara>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
      <term>
       <constant>E_RECOVERABLE_ERROR</constant>
       (<type>int</type>)
      </term>
-     <listitem>
-      <simpara>
-       <link linkend="errorfunc.constants">Stała raportowania błędów</link>.
-      </simpara>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
      <term>
       <constant>E_DEPRECATED</constant>
       (<type>int</type>)
      </term>
-     <listitem>
-      <simpara>
-       <link linkend="errorfunc.constants">Stałe raportowania błędów</link>.
-      </simpara>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
      <term>
       <constant>E_USER_DEPRECATED</constant>
       (<type>int</type>)
      </term>
-     <listitem>
-      <simpara>
-       <link linkend="errorfunc.constants">Stałe raportowania błędów</link>.
-      </simpara>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
      <term>
       <constant>E_ALL</constant>
       (<type>int</type>)
      </term>
-     <listitem>
-      <simpara>
-       <link linkend="errorfunc.constants">Stała raportowania błędów</link>
-      </simpara>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
      <term>
       <constant>E_STRICT</constant>
       (<type>int</type>)
      </term>
      <listitem>
       <simpara>
-       <link linkend="errorfunc.constants">Stała raportowania błędów</link>
+       <link linkend="errorfunc.constants">Stałe raportowania błędów</link>
       </simpara>
      </listitem>
     </varlistentry>
