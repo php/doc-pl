@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 4d17b7b4947e7819ff5036715dd706be87ae4def Maintainer: sobak Status: ready -->
+<!-- EN-Revision: c0fa5077c8862405942d8aac7360c5169558b59b Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <reference xml:id="class.reflectionclass" role="class" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude">
 
@@ -56,6 +56,18 @@
      <modifier>const</modifier>
      <type>int</type>
      <varname linkend="reflectionclass.constants.is-readonly">ReflectionClass::IS_READONLY</varname>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>public</modifier>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="reflectionclass.constants.skip-initialization-on-serialize">ReflectionClass::SKIP_INITIALIZATION_ON_SERIALIZE</varname>
+    </fieldsynopsis>
+    <fieldsynopsis>
+     <modifier>public</modifier>
+     <modifier>const</modifier>
+     <type>int</type>
+     <varname linkend="reflectionclass.constants.skip-destructor">ReflectionClass::SKIP_DESTRUCTOR</varname>
     </fieldsynopsis>
 
     <classsynopsisinfo role="comment">&Properties;</classsynopsisinfo>
@@ -138,6 +150,26 @@
        <para>
         Zaznacza, że klasa jest <link linkend="language.oop5.basic.class.readonly">tylko do odczytu (readonly)</link>.
        </para>
+      </listitem>
+     </varlistentry>
+
+     <varlistentry xml:id="reflectionclass.constants.skip-initialization-on-serialize">
+      <term><constant>ReflectionClass::SKIP_INITIALIZATION_ON_SERIALIZE</constant></term>
+      <listitem>
+       <simpara>
+        Zaznacza że <function>serialize</function> nie powinno wyzwalać
+        serializacji leniwego obiektu.
+       </simpara>
+      </listitem>
+     </varlistentry>
+
+     <varlistentry xml:id="reflectionclass.constants.skip-destructor">
+      <term><constant>ReflectionClass::SKIP_DESTRUCTOR</constant></term>
+      <listitem>
+       <simpara>
+        Zaznacza, że destruktor obiektu nie powinien być wywołany, gdy obiekt jest resetowany jako
+        leniwy.
+       </simpara>
       </listitem>
      </varlistentry>
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 74976cdb263ef841c5fc2c3f91ca7e284adce552 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 489d46bc2598784bd3711454ccab8940107cde67 Maintainer: sobak Status: ready -->
 <!-- CREDITS: cyb0org, pirate -->
  <chapter xml:id="language.functions" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
   <title>Funkcje</title>
@@ -456,20 +456,25 @@ Robię kubek jogurtu naturalnego o smaku truskawek.
      przez usunięcie domyślnej wartości, ponieważ i tak nie byłaby ona nigdy użyta.
      Wyjątkiem od tej reguły są argumenty w postaci
      <code>Typ $parametr = null</code>, gdzie domyślna wartość &null; czyni typ niejawnie
-     pozwalającym na null. To użycie pozostaje dozwolone, choć zaleca się używać
-     jawnego <link linkend="language.types.declarations.nullable">typu pozwalającego na null</link> zamiast tego.
+     pozwalającym na null. Taki zapis jest przestarzały od PHP 8.4.0 i powinien być użyty
+     wprost <link linkend="language.types.declarations.nullable">typ pozwalający na null</link>.
      <example>
       <title>Deklarowanie argumentów opcjonalnych po wymaganych</title>
       <programlisting role="php">
-       <![CDATA[
- <?php
- function foo($a = [], $b) {} // Domyślna wartość nieużywana; zdeprecjonowane od PHP 8.0.0
- function foo($a, $b) {}      // Zachowuje się identycznie, brak ostrzeżenia o deprekacji
+<![CDATA[
+<?php
 
- function bar(A $a = null, $b) {} // Wciąż dozwolone; $a jest wymagane ale pozwala na null
- function bar(?A $a, $b) {}       // Zalecane
- ?>
- ]]>
+function foo($a = [], $b) {}     // Domyślna wartość nieużywana; zdeprecjonowane od PHP 8.0.0
+function foo($a, $b) {}          // Zachowuje się identycznie, brak ostrzeżenia o przestarzałym zapisie
+
+function bar(A $a = null, $b) {} // Od PHP 8.1.0, parametr $a jest niejawnie wymagany
+                                 // (gdyż został zdeklarowany przed wymaganym parametrem),
+                                 // ale też niejawnie dopuszcza null (przestarzałe od PHP 8.4.0),
+                                 // ponieważ jego domyślną wartością jest null
+function bar(?A $a, $b) {}       // Zalecane
+
+?>
+]]>
       </programlisting>
      </example>
     </para>

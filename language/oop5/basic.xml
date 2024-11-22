@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: f94d903985119d3ac00f4528551df947f57b667f Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 2f85d57a0b5a01b875cbca2b291f04389cf61ac2 Maintainer: sobak Status: ready -->
 
  <sect1 xml:id="language.oop5.basic" xmlns="http://docbook.org/ns/docbook">
   <title>Podstawy</title>
@@ -14,10 +14,12 @@
    </para>
    <para>
     Nazwa klasy może być dowolną poprawną etykietą, o ile nie jest
-    <link linkend="reserved">zastrzeżonym słowem</link> w PHP. Poprawna nazwa
-    klasy zaczyna się od litery lub podkreślnika, po której następuje dowolna ilość
-    liter, cyfr lub podkreślników. Jako wyrażenie regularne wyglądałoby
-    to więc następująco:
+    <link linkend="reserved">zastrzeżonym słowem</link> w PHP. 
+    Od PHP 8.4.0 użycie pojedynczego podkreślenia <literal>_</literal> jako
+    nazwy klasy jest przestarzałe.
+    Poprawna nazwa  klasy zaczyna się od litery lub podkreślnika,
+    po której następuje dowolna ilość liter, cyfr lub podkreślników. 
+    Jako wyrażenie regularne wyglądałoby to więc następująco:
     <code>^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$</code>.
    </para>
    <para>
@@ -374,6 +376,8 @@ bool(true)
 <![CDATA[
 <?php
 echo (new DateTime())->format('Y');
+// okalające nawiasy są opcjonalne od PHP 8.4.0
+echo new DateTime()->format('Y');
 ?>
 ]]>
     </programlisting>
