@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: a93bf76a1bb8f0d1cce34c7ac637fad377432047 Maintainer: sobak Status: ready -->
-<!-- $Revision$ -->
+<!-- EN-Revision: 68ca0a46a0db2f5d5858127f8c02c502b2519af2 Maintainer: sobak Status: ready -->
 <!-- CREDITS: joeaccord, adi -->
 <appendix xml:id="filesystem.constants" xmlns="http://docbook.org/ns/docbook">
  &reftitle.constants;
@@ -84,167 +83,13 @@
    </listitem>
   </varlistentry>
  </variablelist>
- <variablelist xml:id="constant.glob-constant-variablelist">
-  <varlistentry>
-   <term>
-    <constant>GLOB_BRACE</constant>
-    (<type>int</type>)
-   </term>
-   <listitem>
-    <simpara>
-     Rozpakowuje składnię {a,b,c} tak, aby szukała 'a', 'b', lub 'c'
-    </simpara>
-    <note>
-     <simpara>
-      <constant>GLOB_BRACE</constant> nie jest dostępne na niektórych systemach nieopartych na GNU,
-      takich jak Solaris czy Alpine Linux.
-     </simpara>
-    </note>
-   </listitem>
-  </varlistentry>
-  <varlistentry>
-   <term>
-    <constant>GLOB_ERR</constant>
-    (<type>int</type>)
-   </term>
-   <listitem>
-    <simpara>
-     Przerwij działanie po napotkaniu błędów odczytu (np. katalogów bez uprawnień do odczytu),
-     domyślnie błędy są ignorowane.
-    </simpara>
-   </listitem>
-  </varlistentry>
-  <varlistentry>
-   <term>
-    <constant>GLOB_ONLYDIR</constant>
-    (<type>int</type>)
-   </term>
-   <listitem>
-    <simpara>
-     Zwróć tylko katalogi, które pasują do wzorca
-    </simpara>
-   </listitem>
-  </varlistentry>
-  <varlistentry>
-   <term>
-    <constant>GLOB_MARK</constant>
-    (<type>int</type>)
-   </term>
-   <listitem>
-    <simpara>
-     Dodaje ukośnik (lub odwrócony ukośnik na Windows) do każdego ze zwróconych katalogów
-    </simpara>
-   </listitem>
-  </varlistentry>
-  <varlistentry>
-   <term>
-    <constant>GLOB_NOSORT</constant>
-    (<type>int</type>)
-   </term>
-   <listitem>
-    <simpara>
-     Zwraca pliki w takiej kolejności, w jakiej występują w katalogu (bez sortowania).
-     Jeśli ta flaga nie jest użyta, ścieżki są sortowane alfabetycznie.
-    </simpara>
-   </listitem>
-  </varlistentry>
-  <varlistentry>
-   <term>
-    <constant>GLOB_NOCHECK</constant>
-    (<type>int</type>)
-   </term>
-   <listitem>
-    <simpara>
-     Zwraca wzorzec wyszukiwania jeśli nie znaleziono żadnych pasujących plików
-    </simpara>
-   </listitem>
-  </varlistentry>
-  <varlistentry>
-   <term>
-    <constant>GLOB_NOESCAPE</constant>
-    (<type>int</type>)
-   </term>
-   <listitem>
-    <simpara>
-     Metaznaki nie korzystają ze znaku ucieczki (escape'owania)
-    </simpara>
-   </listitem>
-  </varlistentry>
-  <varlistentry>
-   <term>
-    <constant>GLOB_AVAILABLE_FLAGS</constant>
-    (<type>int</type>)
-   </term>
-   <listitem>
-    <simpara>
-     Wszystkie flagi <constant>GLOB_<replaceable>*</replaceable></constant> razem.
-     Odpowiednik użycia <literal>0</literal> | <constant>GLOB_BRACE</constant> |
-     <constant>GLOB_MARK</constant> | <constant>GLOB_NOSORT</constant> |
-     <constant>GLOB_NOCHECK</constant> | <constant>GLOB_NOESCAPE</constant> |
-     <constant>GLOB_ERR</constant> | <constant>GLOB_ONLYDIR</constant>
-    </simpara>
-   </listitem>
-  </varlistentry>
- </variablelist>
- <variablelist role="constant_list">
-  <varlistentry xml:id="constant.pathinfo-all">
-   <term>
-    <constant>PATHINFO_ALL</constant>
-    (<type>int</type>)
-   </term>
-   <listitem>
-    <simpara>
-     Wszystkie części pathinfo zwracane
-     jako tablica asocjacyjna.
-    </simpara>
-   </listitem>
-  </varlistentry>
-  <varlistentry xml:id="constant.pathinfo-dirname">
-   <term>
-    <constant>PATHINFO_DIRNAME</constant>
-    (<type>int</type>)
-   </term>
-   <listitem>
-    <simpara>
-     Ścieżka do katalogu lub pliku.
-    </simpara>
-   </listitem>
-  </varlistentry>
-  <varlistentry xml:id="constant.pathinfo-basename">
-   <term>
-    <constant>PATHINFO_BASENAME</constant>
-    (<type>int</type>)
-   </term>
-   <listitem>
-    <simpara>
-     Nazwa katalogu lub
-     nazwa i rozszerzenie pliku.
-    </simpara>
-   </listitem>
-  </varlistentry>
-  <varlistentry xml:id="constant.pathinfo-extension">
-   <term>
-    <constant>PATHINFO_EXTENSION</constant>
-    (<type>int</type>)
-   </term>
-   <listitem>
-    <simpara>
-     Rozszerzenie pliku.
-    </simpara>
-   </listitem>
-  </varlistentry>
-  <varlistentry xml:id="constant.pathinfo-filename">
-   <term>
-    <constant>PATHINFO_FILENAME</constant>
-    (<type>int</type>)
-   </term>
-   <listitem>
-    <simpara>
-     Nazwa pliku (bez rozszerzenia)
-     lub katalogu.
-    </simpara>
-   </listitem>
-  </varlistentry>
+
+ <variablelist>
+  <title>
+   Available <parameter>flags</parameter> for
+   <function>file</function>
+  </title>
+
   <varlistentry xml:id="constant.file-use-include-path">
    <term>
     <constant>FILE_USE_INCLUDE_PATH</constant>
@@ -308,13 +153,12 @@
    </term>
    <listitem>
     <para>
-      Tryb binarny.
-     <note>
-      <para>
-       Ta stała niczego nie zmienia. Jest ona dostępna tylko w celu
-       zapewnienia zgodności <literal>przyszłymi wersjami</literal>.
-      </para>
-     </note>
+     Tryb binarny.
+     <warning>
+      <simpara>
+       Ta funkcja na nic nie wpływa i jest przestarzała od PHP 8.1.0.
+      </simpara>
+     </warning>
     </para>
    </listitem>
   </varlistentry>
@@ -326,16 +170,196 @@
    </term>
    <listitem>
     <para>
-     Tryb tekstowy.
-     <note>
-      <para>
-       Ta stała niczego nie zmienia. Jest ona dostępna tylko w celu
-       zapewnienia zgodności <literal>przyszłymi wersjami</literal>.
-      </para>
-     </note>
+     Text mode.
+     <warning>
+      <simpara>
+       Ta funkcja na nic nie wpływa i jest przestarzała od PHP 8.1.0.
+      </simpara>
+     </warning>
     </para>
    </listitem>
   </varlistentry>
+ </variablelist>
+
+ <variablelist>
+  <title>
+   Dostępne wartości parametru <parameter>flags</parameter> dla funkcji
+   <function>glob</function>
+  </title>
+
+  <varlistentry xml:id="constant.glob-available-flags">
+   <term>
+    <constant>GLOB_AVAILABLE_FLAGS</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Wszystkie <constant>GLOB_<replaceable>*</replaceable></constant> połączone.
+     Równoważne z <literal>0</literal> | <constant>GLOB_BRACE</constant> |
+     <constant>GLOB_MARK</constant> | <constant>GLOB_NOSORT</constant> |
+     <constant>GLOB_NOCHECK</constant> | <constant>GLOB_NOESCAPE</constant> |
+     <constant>GLOB_ERR</constant> | <constant>GLOB_ONLYDIR</constant>
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.glob-brace">
+   <term>
+    <constant>GLOB_BRACE</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Rozpakowuje składnię {a,b,c} tak, aby szukała 'a', 'b', lub 'c'
+    </simpara>
+    <note>
+     <simpara>
+      <constant>GLOB_BRACE</constant> nie jest dostępne na niektórych systemach nieopartych na GNU,
+      takich jak Solaris czy Alpine Linux.
+     </simpara>
+    </note>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.glob-err">
+   <term>
+    <constant>GLOB_ERR</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Przerwij działanie po napotkaniu błędów odczytu (np. katalogów bez uprawnień do odczytu),
+     domyślnie błędy są ignorowane.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.glob-mark">
+   <term>
+    <constant>GLOB_MARK</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Dodaje ukośnik (lub odwrócony ukośnik na Windows) do każdego ze zwróconych katalogów
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.glob-nocheck">
+   <term>
+    <constant>GLOB_NOCHECK</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Zwraca wzorzec wyszukiwania, jeśli nie znaleziono żadnych pasujących plików
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.glob-noescape">
+   <term>
+    <constant>GLOB_NOESCAPE</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Metaznaki nie korzystają z odwrotnego ukośnika jako znaku ucieczki (escape'owania)
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.glob-nosort">
+   <term>
+    <constant>GLOB_NOSORT</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Zwraca pliki w takiej kolejności, w jakiej występują w katalogu (bez sortowania).
+     Jeśli ta flaga nie jest użyta, ścieżki są sortowane alfabetycznie.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.glob-onlydir">
+   <term>
+    <constant>GLOB_ONLYDIR</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Zwraca tylko katalogi, które pasują do wzorca
+    </simpara>
+   </listitem>
+  </varlistentry>
+ </variablelist>
+
+ <variablelist>
+  <title>
+   Dostępne wartości parametru <parameter>flags</parameter> dla funkcji
+   <function>pathinfo</function>
+  </title>
+  <varlistentry xml:id="constant.pathinfo-all">
+   <term>
+    <constant>PATHINFO_ALL</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Wszystkie części pathinfo zwracane
+     jako tablica asocjacyjna.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.pathinfo-dirname">
+   <term>
+    <constant>PATHINFO_DIRNAME</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Ścieżka do katalogu lub pliku.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.pathinfo-basename">
+   <term>
+    <constant>PATHINFO_BASENAME</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Nazwa katalogu lub
+     nazwa i rozszerzenie pliku.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.pathinfo-extension">
+   <term>
+    <constant>PATHINFO_EXTENSION</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Rozszerzenie pliku.
+    </simpara>
+   </listitem>
+  </varlistentry>
+  <varlistentry xml:id="constant.pathinfo-filename">
+   <term>
+    <constant>PATHINFO_FILENAME</constant>
+    (<type>int</type>)
+   </term>
+   <listitem>
+    <simpara>
+     Nazwa pliku (bez rozszerzenia)
+     lub katalogu.
+    </simpara>
+   </listitem>
+  </varlistentry>
+ </variablelist>
+
+ <variablelist>
+  <title>
+   Dostępne wartości parametru <parameter>scanner_mode</parameter>s dla funkcji
+   <function>parse_ini_file</function> i
+   <function>parse_ini_string</function>
+  </title>
 
   <varlistentry xml:id="constant.ini-scanner-normal">
    <term>
@@ -368,10 +392,17 @@
    </term>
    <listitem>
     <simpara>
-     Tryb skanowania INI respektujący typy.
+     Tryb skanowania INI respektujący typy danych.
     </simpara>
    </listitem>
   </varlistentry>
+ </variablelist>
+
+ <variablelist>
+  <title>
+   Dostępne wartości parametru <parameter>flags</parameter> dla funkcji
+   <function>fnmatch</function>
+  </title>
 
   <varlistentry xml:id="constant.fnm-noescape">
    <term>
@@ -416,79 +447,112 @@
    </term>
    <listitem>
     <simpara>
-     Dopasowanie bez rozróżniania znaków. Część rozszeżenia GNU.
+     Dopasowanie bez rozróżniania znaków. Część rozszerzenia GNU.
     </simpara>
    </listitem>
   </varlistentry>
-
  </variablelist>
- <variablelist role="constant_list">
+
+ <variablelist xml:id="filesystem.constants.upload">
+  <title>Stałe PHP uploadu plików</title>
   <varlistentry xml:id="constant.upload-err-cant-write">
-   <term><constant>UPLOAD_ERR_CANT_WRITE</constant></term>
+   <term>
+    <constant>UPLOAD_ERR_CANT_WRITE</constant>
+    (<type>int</type>)
+   </term>
    <listitem>
     <para>
      Nie udało się zapisać pliku na dysku.
+     Wartość tej stałej to <literal>7</literal>.
     </para>
    </listitem>
   </varlistentry>
   <varlistentry xml:id="constant.upload-err-extension">
-   <term><constant>UPLOAD_ERR_EXTENSION</constant></term>
+   <term>
+    <constant>UPLOAD_ERR_EXTENSION</constant>
+    (<type>int</type>)
+   </term>
    <listitem>
     <para>
      Rozszerzenie PHP zatrzymało przesyłanie pliku. PHP nie zapewnia sposobu
      na ustalenie, które rozszerzenie spowodowało zatrzymanie wysyłania pliku;
      pomocne może być sprawdzenie listy załadowanych rozszerzeń za pomocą <function>phpinfo</function>.
+     Wartość tej stałej to <literal>8</literal>.
     </para>
    </listitem>
   </varlistentry>
   <varlistentry xml:id="constant.upload-err-form-size">
-   <term><constant>UPLOAD_ERR_FORM_SIZE</constant></term>
+   <term>
+    <constant>UPLOAD_ERR_FORM_SIZE</constant>
+    (<type>int</type>)
+   </term>
    <listitem>
     <para>
-     Przesłany plik przekracza wartość dyrektywy <emphasis>MAX_FILE_SIZE</emphasis>
-     który został określony w formularzu HTML.
+     Przesłany plik przekracza wartość dyrektywy
+     <emphasis>MAX_FILE_SIZE</emphasis> określonej w formularzu HTML.
+     Wartość tej stałej to <literal>2</literal>.
     </para>
    </listitem>
   </varlistentry>
   <varlistentry xml:id="constant.upload-err-ini-size">
-   <term><constant>UPLOAD_ERR_INI_SIZE</constant></term>
+   <term>
+    <constant>UPLOAD_ERR_INI_SIZE</constant>
+    (<type>int</type>)
+   </term>
    <listitem>
     <para>
      Przesłany plik przekracza limit dyrektywy
      <link linkend="ini.upload-max-filesize">upload_max_filesize</link>
      w &php.ini;.
+     Wartość tej stałej to <literal>1</literal>.
     </para>
    </listitem>
   </varlistentry>
   <varlistentry xml:id="constant.upload-err-no-file">
-   <term><constant>UPLOAD_ERR_NO_FILE</constant></term>
+   <term>
+    <constant>UPLOAD_ERR_NO_FILE</constant>
+    (<type>int</type>)
+   </term>
    <listitem>
     <para>
      Nie przesłano żadnego pliku.
+     Wartość tej stałej to <literal>4</literal>.
     </para>
    </listitem>
   </varlistentry>
   <varlistentry xml:id="constant.upload-err-no-tmp-dir">
-   <term><constant>UPLOAD_ERR_NO_TMP_DIR</constant></term>
+   <term>
+    <constant>UPLOAD_ERR_NO_TMP_DIR</constant>
+    (<type>int</type>)
+   </term>
    <listitem>
     <para>
      Brak folderu tymczasowego.
+     Wartość tej stałej to <literal>6</literal>.
     </para>
    </listitem>
   </varlistentry>
   <varlistentry xml:id="constant.upload-err-ok">
-   <term><constant>UPLOAD_ERR_OK</constant></term>
+   <term>
+    <constant>UPLOAD_ERR_OK</constant>
+    (<type>int</type>)
+   </term>
    <listitem>
     <para>
      Nie wystąpił żaden błąd, plik został przesłany pomyślnie.
+     Wartość tej stałej to <literal>0</literal>.
     </para>
    </listitem>
   </varlistentry>
   <varlistentry xml:id="constant.upload-err-partial">
-   <term><constant>UPLOAD_ERR_PARTIAL</constant></term>
+   <term>
+    <constant>UPLOAD_ERR_PARTIAL</constant>
+    (<type>int</type>)
+   </term>
    <listitem>
     <para>
      Przesłany plik został przesłany tylko częściowo.
+     Wartość tej stałej to <literal>3</literal>.
     </para>
    </listitem>
   </varlistentry>
