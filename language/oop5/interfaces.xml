@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 2e7c00fd314a708ecbd495ef7cc9ae8c8462c33c Maintainer: sobak Status: ready -->
+ <sect1 xml:id="language.oop5.interfaces" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>Interfejsy obiektów</title>
+  <para>
+   Interfejsy obiektów pozwalają na stworzenie kodu, który określa jakie metody i właściwości
+   musi implementować klasa, bez konieczności określenia jak te metody lub właściwości mają być
+   zaimplementowane. Interfejsy współdzielą przestrzeń nazw z klasami i traitami, więc nie
+   mogą używać takich samych nazw.
+  </para>
+  <para>
+   Interfejsy definiuje się tak jak klasy, ale używając słowa kluczowego <literal>interface</literal>
+   zamiast <literal>class</literal> a metody nie mają zdefiniowanej swojej zawartości.
+  </para>
+  <para>
+   Wszystkie metody zadeklarowane w interfejsie muszą być publiczne, taka jest
+   natura interfejsu.
+  </para>
+  <para>
+   W praktyce interfejsy służą dwóm celom: 
+  </para>
+  <simplelist>
+   <member>
+    Pozwalają programistom na tworzenie obiektów różnych klas, które mogą być używane wymiennie,
+    ponieważ implementują ten sam interfejs lub interfejsy. Popularnym przykładem jest wiele usług dostępu do bazy danych,
+    wiele bramek płatności lub różne strategie cache'owania. Różne implementacje mogą
+    być wymieniane bez potrzeby zmian w kodzie, który z nich korzysta.
+   </member>
+   <member>
+    Pozwalają funkcji lub metodzie akceptować i operować na parametrze, który przestrzega
+    interfejsu, bez przejmowania się co jeszcze dany obiekt robi lub jak został zaimplementowany. Takie interfejsy
+    często mają nazwy takie jak <literal>Iterable</literal>, <literal>Cacheable</literal>, <literal>Renderable</literal>
+    itd. aby podkreślić istotę ich zachowania.
+   </member>
+  </simplelist>
+  <para>
+   Interfejsy mogą definiować
+   <link linkend="language.oop5.magic">metody magiczne</link>, aby wymusić na klasach
+   implementację tych metod.
+  </para>
+  <note>
+   <para>
+    Mimo iż jest to obsługiwane, opisywanie <link linkend="language.oop5.decon.constructor">konstruktorów</link>
+    w interfejsach jest zdecydowanie niezalecane. Wymuszenie konstruktora znacząco ogranicza elastyczność obiektu, który implementuje
+    interfejs. Ponadto konstruktory nie podlegają regułom dziedziczenia, co może spowodować niespójne
+    i niespodziewane zachowanie.
+   </para>
+  </note>
+
+  <sect2 xml:id="language.oop5.interfaces.implements">
+   <title><literal>implements</literal></title>
+   <para>
+    Aby zaimplementować interfejs, używa się operatora <literal>implements</literal>.
+    Wszystkie metody opisane w interfejsie muszą zostać zaimplementowane w klasie, w przeciwnym razie
+    zostanie wygenerowany błąd krytyczny. Klasy mogą implementować więcej niż jeden interfejs,
+    oddzielając kolejne interfejsy przecinkami.
+   </para>
+   <warning>
+    <para>
+     Klasa, która implementuje interfejs, może używać innych nazw parametrów niż
+     interfejs. Jednakże od PHP 8.0 język wspiera <link linkend="functions.named-arguments">nazwane argumenty</link>, co oznacza,
+     że wywołujący kod może polegać na nazwach parametrów w interfejsie. Z tego powodu zdecydowanie
+     zaleca się aby programiści używali takich samych nazw parametrów, jak w interfejsie, który implementują.
+    </para>
+   </warning>
+   <note>
+    <para>
+     Interfaces can be extended like classes using the <link linkend="language.oop5.inheritance">extends</link> 
+     operator.
+    </para>
+   </note>
+   <note>
+    <para>
+     Klasa implementująca interfejsie musi zadeklarować wszystkie metody z interfejsu
+     z <link linkend="language.oop.lsp">kompatybilnymi sygnaturami</link>. Klasa może implementować wiele interfejsów,
+     które opisują metodę z taką samą nazwą. W tym wypadku implementacja musi stosować się do
+     <link linkend="language.oop.lsp">reguł kompatybilności sygnatur</link> ze wszystkimi interfejsami. Tak, aby
+     można było zastosować <link linkend="language.oop5.variance">kowariancję i kontrawariancję</link>.
+    </para>
+   </note>
+  </sect2>
+ <!-- Move this to OOP constants page? -->
+  <sect2 xml:id="language.oop5.interfaces.constants">
+   <title>Stałe</title>
+   <para>
+    Interfejsy mogą zawierać stałe. Stałe w interfejsach działają dokładnie
+    tak jak <link linkend="language.oop5.constants">stałe w klasach</link>.
+    Przed PHP 8.1.0 niemożliwe było ich nadpisanie przez klasę ani interfejs, które je dziedziczą.
+   </para>
+  </sect2>
+  <sect2 xml:id="language.oop5.interfaces.properties">
+   <title>Właściwości</title>
+   <simpara>
+    Od PHP 8.4.0 interfejsy mogą też deklarować właściwości.
+    W takim wypadku deklaracja musi określić czy właściwość jest odczytywalna,
+    zapisywalna, czy oba.
+    Deklaracje w interfejsach odnoszą się tylko do publicznego dostępu do odczytu i zapisu.
+   </simpara>
+   <simpara>
+    Klasa może zaimplementować taką właściwość z interfejsu na kilka sposobów.
+    Może zadeklarować właściwość publiczną.
+    Może zadeklarować publiczną
+    <link linkend="language.oop5.property-hooks.virtual">właściwość wirtualną</link>,
+    która implementuje tylko odpowiedni hook.
+    Właściwość odczytywalna może być zaimplementowana używając właściwości <literal>readonly</literal>.
+    Jednakże właściwość interfejsu, którą można ustawić, nie może być <literal>readonly</literal>.
+   </simpara>
+   <example>
+    <title>Przykłady właściwości w interfejsach</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+interface I
+{
+    // Klasa implementująca MUSI mieć publiczną i odczytywalną właściwość,
+    // ale to czy musi ona pozwalać na publiczne ustawienie wartości, nie jest wymuszone.
+    public string $readable { get; }
+
+    // Klasa implementująca MUSI mieć publiczną i zapisywalną właściwość,
+    // ale to czy musi ona być publicznie odczytywalna, nie jest wymuszone.
+    public string $writeable { set; }
+
+    // Klasa implementująca MUSI mieć właściwość, która jest zarówno publicznie
+    // odczytywalna i zapisywalna.
+    public string $both { get; set; }
+}
+
+// Ta klasa implementuje wszystkie trzy właściwości jako klasyczne właściwości
+// bez hooków. Jest to zupełnie poprawne.
+class C1 implements I
+{
+    public string $readable;
+
+    public string $writeable;
+
+    public string $both;
+}
+
+// Ta klasa implementuje wszystkie trzy właściwości, używając tylko hooków,
+// które są wymagane przez interfejs. To także jest poprawne.
+class C2 implements I
+{
+    private string $written = '';
+    private string $all = '';
+
+    // Używa tylko hooka get, aby stworzyć właściwość wirtualną.
+    // Spełnia to wymóg "public get".
+    // Nie jest ona zapisywalna, ale interfejs tego nie wymaga.
+    public string $readable { get => strtoupper($this->writeable); }
+
+    // Interfejs wymaga, tylko aby właściwość dało się ustawić,
+    // ale umożliwienie operacji get jest jak najbardziej dozwolone.
+    // Ten przykład tworzy właściwość wirtualną, co jest poprawne.
+    public string $writeable {
+        get => $this->written;
+        set => $value;
+    }
+
+    // Ta właściwość wymaga, aby możliwy był odczyt i zapis,
+    // więc musimy zaimplementować obie operacje lub pozwolić jej
+    // na domyślne zachowanie.
+    public string $both {
+        get => $this->all;
+        set => strtoupper($value);
+    }
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </sect2>
+  <sect2 xml:id="language.oop5.interfaces.examples">
+   &reftitle.examples;
+   <example xml:id="language.oop5.interfaces.examples.ex1">
+    <title>Przykład interfejsu</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+
+// Stwórz interfejs "Szablon"
+interface Szablon
+{
+    public function setVariable($name, $var);
+    public function getHtml($template);
+}
+
+// Zaimplementuj interfejs
+// To będzie działać
+class PoprawnySzablon implements Szablon
+{
+    private $vars = [];
+  
+    public function setVariable($name, $var)
+    {
+        $this->vars[$name] = $var;
+    }
+  
+    public function getHtml($template)
+    {
+        foreach($this->vars as $name => $value) {
+            $template = str_replace('{' . $name . '}', $value, $template);
+        }
+ 
+        return $template;
+    }
+}
+
+// To nie zadziała
+// Fatal error: Class BadSzablon contains 1 abstract methods
+// and must therefore be declared abstract (Szablon::getHtml)
+class NiepoprawnySzablon implements Szablon
+{
+    private $vars = [];
+  
+    public function setVariable($name, $var)
+    {
+        $this->vars[$name] = $var;
+    }
+}
+?>
+]]>
+    </programlisting>
+   </example>
+   <example xml:id="language.oop5.interfaces.examples.ex2">
+    <title>Rozszerzalne interfejsy</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+interface A
+{
+    public function foo();
+}
+
+interface B extends A
+{
+    public function baz(Baz $baz);
+}
+
+// To zadziała
+class C implements B
+{
+    public function foo()
+    {
+    }
+
+    public function baz(Baz $baz)
+    {
+    }
+}
+
+// To nie zadziała i spowoduje błąd krytyczny
+class D implements B
+{
+    public function foo()
+    {
+    }
+
+    public function baz(Foo $foo)
+    {
+    }
+}
+?>
+]]>
+     </programlisting>
+   </example>
+   <example xml:id="language.oop5.interfaces.examples.variance.multiple.interfaces">
+    <title>Kompatybilność wariancji z wieloma interfejsami</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+class Foo {}
+class Bar extends Foo {}
+
+interface A {
+    public function myfunc(Foo $arg): Foo;
+}
+
+interface B {
+    public function myfunc(Bar $arg): Bar;
+}
+
+class MyClass implements A, B
+{
+    public function myfunc(Foo $arg): Bar
+    {
+        return new Bar();
+    }
+}
+?>
+]]>
+     </programlisting>
+   </example>
+   <example xml:id="language.oop5.interfaces.examples.ex3">
+    <title>Dziedziczenie po wielu interfejsach</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+interface A
+{
+    public function foo();
+}
+
+interface B
+{
+    public function bar();
+}
+
+interface C extends A, B
+{
+    public function baz();
+}
+
+class D implements C
+{
+    public function foo()
+    {
+    }
+
+    public function bar()
+    {
+    }
+
+    public function baz()
+    {
+    }
+}
+?>
+]]>
+     </programlisting>
+   </example>
+   <example xml:id="language.oop5.interfaces.examples.ex4">
+    <title>Interfejsy ze stałymi</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+interface A
+{
+    const B = 'Stała interfejsu';
+}
+
+// Wyświetli: Stała interfejsu
+echo A::B;
+
+
+class B implements A
+{
+    const B = 'Stała klasy';
+}
+
+// Wyświetli: Stała klasy
+// Przed PHP 8.1.0 ten kod nie zadziała, ponieważ nie było
+// możliwe nadpisywanie stałych.
+echo B::B;
+?>
+]]>
+     </programlisting>
+   </example>
+   <example xml:id="language.oop5.interfaces.examples.ex5">
+    <title>Interfejsy i klasy abstrakcyjne</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+interface A
+{
+    public function foo(string $s): string;
+
+    public function bar(int $i): int;
+}
+
+// Klasa abstrakcyjna może zaimplementować tylko część interfejsu.
+// Klasy, które rozszerzają klasę abstrakcyjną będą musiały zaimplementować resztę.
+abstract class B implements A
+{
+    public function foo(string $s): string
+    {
+        return $s . PHP_EOL;
+    }
+}
+
+class C extends B
+{
+    public function bar(int $i): int
+    {
+        return $i * 2;
+    }
+}
+?>
+]]>
+     </programlisting>
+   </example>
+   <example xml:id="language.oop5.interfaces.examples.ex6">
+    <title>Rozszerzanie klas i jednoczesne implementowanie interfejsów</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+
+class One
+{
+    /* ... */
+}
+
+interface Usable
+{
+    /* ... */
+}
+
+interface Updatable
+{
+    /* ... */
+}
+
+// Istotna jest tutaj kolejność słów kluczowych, najpierw musi pojawić się "extends"
+class Two extends One implements Usable, Updatable
+{
+    /* ... */
+}
+?>
+]]>
+     </programlisting>
+   </example>
+   <para>
+     Interfejsy w połączeniu z deklaracjami typów, to dobry sposób aby upewnić się,
+     że obiekt zawiera konkretne metody. Zobacz informacje o
+     operatorze <link linkend="language.operators.type">instanceof</link> i
+     <link linkend="language.types.declarations">deklaracjach typów</link>.
+   </para>
+  </sect2>
+
+ </sect1>
+ 
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
