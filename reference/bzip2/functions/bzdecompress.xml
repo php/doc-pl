@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: c564dbc4f35dd39b4415ebbb671f2764a44306a6 Maintainer: sobak Status: ready -->
+<refentry xml:id="function.bzdecompress" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <refnamediv>
+  <refname>bzdecompress</refname>
+  <refpurpose>Dekompresuje dane skompresowane jako bzip2</refpurpose>
+ </refnamediv>
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type class="union"><type>string</type><type>int</type><type>false</type></type><methodname>bzdecompress</methodname>
+   <methodparam><type>string</type><parameter>data</parameter></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>use_less_memory</parameter><initializer>&false;</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>bzdecompress</function> dekompresuje podany ciąg znaków zawierający
+   dane zakodowane jako bzip2.
+  </para>
+ </refsect1>
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>data</parameter></term>
+     <listitem>
+      <para>
+       Ciąg znaków do zdekompresowania.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>use_less_memory</parameter></term>
+     <listitem>
+      <para>
+       Jeżeli ustawiony na &true;, to zostanie użyty alternatywny algorytm dekompresji, który
+       uży mniej pamięci (maksymalne wykorzystanie pamięci spada do koło 2300K),
+       ale działa mniej więcej z połową domyślnej prędkości.
+      </para>
+      <para>
+       Zapoznaj się z <link xlink:href="&url.bzip2;">dokumentacją bzip2</link>, aby poznać
+       więcej informacji o tej funkcjonalności.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zdekompresowany ciąg znaków lub &false;, lub numer błędu, jeśli wystąpił błąd.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>8.0.0</entry>
+      <entry>
+       Typ parametru <parameter>use_less_memory</parameter> został zmieniony z
+       <type>int</type> na <type>bool</type>. Wcześniej domyślną wartością było
+       <literal>0</literal>.
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </informaltable>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Dekompresja ciągu znaków</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$start_str = "Przykładowe dane";
+$bzstr = bzcompress($start_str);
+
+echo "Skompresowany ciąg znaków: ";
+echo $bzstr;
+echo "\n<br />\n";
+
+$str = bzdecompress($bzstr);
+echo "Zdekompresowany ciąg znaków: ";
+echo $str;
+echo "\n<br />\n";
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>bzcompress</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+</refentry>
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
