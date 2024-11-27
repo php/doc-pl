@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 8bc832a464e33122e8129f5a623bd845b69fa7e0 Maintainer: grzesiek Status: ready -->
+<!-- $Revision$ -->
+
+<refentry xml:id="context.socket" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" annotations="verify_info:false" role="stream_context_option">
+ <refnamediv>
+  <refname>Opcje kontekstu gniazda</refname>
+  <refpurpose>Lista opcji kontekstu gniazda</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description"><!-- {{{ -->
+  &reftitle.description;
+  <para>
+   Opcje kontekstu gniazda są dostępne dla wszystkich wrapperów, które działają
+   przez gniazda, takie jak <literal>tcp</literal>, <literal>http</literal> i
+   <literal>ftp</literal>.
+  </para>
+ </refsect1><!-- }}} -->
+
+ <refsect1 role="options"><!-- {{{ -->
+  &reftitle.options;
+  <para>
+   <variablelist>
+    <varlistentry xml:id="context.socket.bindto">
+     <term><parameter>bindto</parameter></term>
+     <listitem>
+      <para>
+       Służy do określania adresu IP (albo IPv4 albo IPv6) i/lub numeru portu,
+       którego PHP będzie używać do uzyskiwania dostępu do sieci. Składnia to
+       <literal>ip:port</literal> dla adresów IPv4 i
+       <literal>[ip]:port</literal> dla adresów IPv6.
+       Ustawienie adresu IP lub portu na <literal>0</literal> pozwoli systemowi
+       wybrać adres IP i/lub port.
+      </para>
+      <note>
+       <para>
+        Ponieważ FTP tworzy dwa połączenia gniazd podczas normalnej pracy,
+        numer portu nie może być określony za pomocą tej opcji.
+       </para>
+      </note>
+     </listitem>
+    </varlistentry>
+    <varlistentry xml:id="context.socket.backlog">
+     <term><parameter>backlog</parameter></term>
+     <listitem>
+      <para>
+       Służy do ograniczania liczby niezrealizowanych połączeń w kolejce
+       nasłuchiwania gniazda.
+      </para>
+      <note>
+       <para>
+        To ma zastosowanie tylko dla funkcji <function>stream_socket_server</function>.
+       </para>
+      </note>
+     </listitem>
+    </varlistentry>
+    <varlistentry xml:id="context.socket.ipv6_v6only">
+     <term><parameter>ipv6_v6only</parameter></term>
+     <listitem>
+      <para>
+       Zastępuje domyślne ustawienia systemu operacyjnego dotyczące mapowania IPv4 na IPv6.
+      </para>
+      <note>
+       <para>
+        Jest to ważne w szczególności, gdy próbuje się nasłuchiwać na adresach IPv4
+        oddzielnie, podczas gdy istnieje powiązanie z <literal>[::]</literal>.
+       </para>
+       <para>
+        To ma zastosowanie tylko dla funkcji <function>stream_socket_server</function>.
+       </para>
+      </note>
+     </listitem>
+    </varlistentry>
+    <varlistentry xml:id="context.socket.so_reuseport">
+     <term><parameter>so_reuseport</parameter></term>
+     <listitem>
+      <para>
+       Pozwala na wiele powiązań do tej samej pary ip:port nawet z oddzielnych procesów.
+      </para>
+      <note>
+       <para>
+        To ma zastosowanie tylko dla funkcji <function>stream_socket_server</function>.
+       </para>
+      </note>
+     </listitem>
+    </varlistentry>
+    <varlistentry xml:id="context.socket.so_broadcast">
+     <term><parameter>so_broadcast</parameter></term>
+     <listitem>
+      <para>
+       Umożliwia wysyłanie i odbieranie danych z/do adresów rozgłoszeniowych.
+      </para>
+      <note>
+       <para>
+        To ma zastosowanie tylko dla funkcji <function>stream_socket_server</function>.
+       </para>
+      </note>
+     </listitem>
+    </varlistentry>
+    <varlistentry xml:id="context.socket.tcp_nodelay">
+     <term><parameter>tcp_nodelay</parameter></term>
+     <listitem>
+      <para>
+       Ustawienie tej opcji na &true; spowoduje odpowiednie ustawienie <literal>SOL_TCP,NO_DELAY=1</literal>
+       wyłączając w ten sposób algorytm TCP Nagle.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1><!-- }}} -->
+
+ <refsect1 role="changelog"><!-- {{{ -->
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>7.1.0</entry>
+       <entry>
+        Dodano paramert <parameter>tcp_nodelay</parameter>.
+       </entry>
+      </row>
+      <row>
+       <entry>7.0.1</entry>
+       <entry>
+        Dodano parametr <parameter>ipv6_v6only</parameter>.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1><!-- }}} -->
+
+ <refsect1 role="examples"><!-- {{{ -->
+  &reftitle.examples;
+  <para>
+   <example xml:id="context.socket.example-bindto"><!-- {{{ -->
+    <title>Podstawowy przykład użycia <parameter>bindto</parameter></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// połącz się z internetem używając adresu IP '192.168.0.100'
+$opts = array(
+    'socket' => array(
+        'bindto' => '192.168.0.100:0',
+    ),
+);
+
+
+// połącz się z internetem używając adresu IP '192.168.0.100' i portu '7000'
+$opts = array(
+    'socket' => array(
+        'bindto' => '192.168.0.100:7000',
+    ),
+);
+
+
+// połącz się z internetem używając adresu IPv6 '2001:db8::1'
+// i portu '7000'
+$opts = array(
+    'socket' => array(
+        'bindto' => '[2001:db8::1]:7000',
+    ),
+);
+
+
+// połącz się z internetem używając portu '7000'
+$opts = array(
+    'socket' => array(
+        'bindto' => '0:7000',
+    ),
+);
+
+
+// utwórz kontekst...
+$context = stream_context_create($opts);
+
+// ...i użyj go do pobrania danych
+echo file_get_contents('http://www.example.com', false, $context);
+
+?>
+]]>
+    </programlisting>
+   </example><!-- }}} -->
+  </para>
+ </refsect1><!-- }}} -->
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
+
