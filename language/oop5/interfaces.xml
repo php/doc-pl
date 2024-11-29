@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 2e7c00fd314a708ecbd495ef7cc9ae8c8462c33c Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 0c2a0d736df56dd0f3a1b88bd6ce7c975c38285a Maintainer: sobak Status: ready -->
  <sect1 xml:id="language.oop5.interfaces" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
   <title>Interfejsy obiektów</title>
   <para>
    Interfejsy obiektów pozwalają na stworzenie kodu, który określa jakie metody i właściwości
    musi implementować klasa, bez konieczności określenia jak te metody lub właściwości mają być
-   zaimplementowane. Interfejsy współdzielą przestrzeń nazw z klasami i traitami, więc nie
+   zaimplementowane. Interfejsy współdzielą przestrzeń nazw z klasami, traitami i enumami, więc nie
    mogą używać takich samych nazw.
   </para>
   <para>
@@ -153,7 +153,9 @@ class C2 implements I
     // Ten przykład tworzy właściwość wirtualną, co jest poprawne.
     public string $writeable {
         get => $this->written;
-        set => $value;
+        set {
+            $this->written = $value;
+        }
     }
 
     // Ta właściwość wymaga, aby możliwy był odczyt i zapis,
@@ -161,7 +163,9 @@ class C2 implements I
     // na domyślne zachowanie.
     public string $both {
         get => $this->all;
-        set => strtoupper($value);
+        set {
+            $this->all = strtoupper($value);
+        }
     }
 }
 ?>
