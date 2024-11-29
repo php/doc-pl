@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 4754397753fd79f1c846868b66a2448babab1c54 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 87f32875a189be7ee2a8487c0db3958579e4ce72 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: sobak -->
 <refentry xml:id="function.bcdiv" xmlns="http://docbook.org/ns/docbook">
@@ -50,9 +50,23 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca wynik dzielenia jako łańcuch znaków lub &null; jeśli
-   <parameter>num2</parameter> wynosi <literal>0</literal>.
+   Zwraca wynik dzielenia jako łańcuch znaków.
   </para>
+ </refsect1>
+
+ <refsect1 role="errors">
+  &reftitle.errors;
+  <para>
+   Ta funkcja rzuca <exceptionname>ValueError</exceptionname> w następujących wypadkach:
+   <simplelist>
+    <member><parameter>num1</parameter> lub <parameter>num2</parameter> nie są numerycznymi ciągami znaków poprawnie sformatowanymi dla BCMath</member>
+    <member><parameter>scale</parameter> jest poza dozwolonym zakresem</member>
+   </simplelist>
+  </para>
+  <simpara>
+   Ta funkcja rzuca wyjątek <exceptionname>DivisionByZeroError</exceptionname> jeśli <parameter>num2</parameter>
+   wynosi <literal>0</literal>.
+  </simpara>
  </refsect1>
 
  <refsect1 role="changelog">
@@ -70,6 +84,12 @@
       <entry>8.0.0</entry>
       <entry>
        Parametr <parameter>scale</parameter> dopuszcza teraz &null;.
+      </entry>
+     </row>
+     <row>
+      <entry>8.0.0</entry>
+      <entry>
+       Dzielenie przez zero powoduje teraz rzucenie <exceptionname>DivisionByZeroError</exceptionname> zamiast zwrócenia null.
       </entry>
      </row>
     </tbody>
@@ -97,6 +117,8 @@ echo bcdiv('105', '6.55957', 3);  // 16.007
   &reftitle.seealso;
   <para>
    <simplelist>
+    <member><function>bcdivmod</function></member>
+    <member><function>bcmod</function></member>
     <member><function>bcmul</function></member>
    </simplelist>
   </para>

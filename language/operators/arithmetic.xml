@@ -65,10 +65,12 @@
   </tgroup>
  </table>
  <simpara>
-  Operator dzielenia ("/") zwraca liczbę zmiennoprzecinkową, chyba że oba argumenty (operandy)
-  są liczbami całkowitymi (lub ciągami znaków, które są konwertowane na liczby całkowite) i liczby te
-  mogą się równo podzielić - w tym wypadku zostanie zwrócona liczba całkowita. Aby
-  dowiedzieć się więcej o dzieleniu liczb całkowitych zobacz <function>intdiv</function>.
+  Operator dzielenia <literal>/</literal> zwraca liczbę zmiennoprzecinkową,
+  chyba że oba argumenty (tzw. operandy) są liczbami całkowitymi <type>int</type> (lub
+  <link linkend="language.types.numeric-strings">numerycznymi ciągami znaków</link>,
+  które są konwertowane na liczby całkowite) i licznik jest wielokrotnością
+  dzielnika, to wtedy zostanie zwrócona liczba całkowita.
+  Dla dzielenia liczb całkowitych zapoznaj się też z funkcją <function>intdiv</function>.
  </simpara>
  <simpara>
   Argumenty modulo są konwertowane do typu <type>int</type>
@@ -77,21 +79,30 @@
  </simpara>
  <para>
   Wynik dzielenia modulo <literal>%</literal> ma taki sam znak,
-  jak dzielna. Oznacza to, że wynik <literal>$a % $b</literal>
+  jak dzielna. Oznacza to, że wynik <code>$a % $b</code>
   będzie miał taki sam znak jak <varname>$a</varname>. Przykładowo:
   <informalexample>
    <programlisting role="php">
 <![CDATA[
 <?php
 
-echo (5 % 3)."\n";           // wyświetla 2
-echo (5 % -3)."\n";          // wyświetla 2
-echo (-5 % 3)."\n";          // wyświetla -2
-echo (-5 % -3)."\n";         // wyświetla -2
+var_dump(5 % 3);
+var_dump(5 % -3);
+var_dump(-5 % 3);
+var_dump(-5 % -3);
 
 ?>
 ]]>
    </programlisting>
+   &example.outputs;
+   <screen>
+    <![CDATA[
+int(2)
+int(2)
+int(-2)
+int(-2)
+]]>
+   </screen>
   </informalexample>
  </para>
  <sect2 role="seealso">
