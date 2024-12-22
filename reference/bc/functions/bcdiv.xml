@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 87f32875a189be7ee2a8487c0db3958579e4ce72 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: ddb05f8827151e25dd1c3e058f95f6c024bc881b Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: sobak -->
-<refentry xml:id="function.bcdiv" xmlns="http://docbook.org/ns/docbook">
+<refentry xml:id="function.bcdiv" xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude">
  <refnamediv>
   <refname>bcdiv</refname>
   <refpurpose>Dzieli dwie liczby o dużej precyzji</refpurpose>
@@ -17,8 +17,7 @@
    <methodparam choice="opt"><type class="union"><type>int</type><type>null</type></type><parameter>scale</parameter><initializer>&null;</initializer></methodparam>
   </methodsynopsis>
   <para>
-   Dzieli <parameter>num1</parameter> przez
-   <parameter>num2</parameter>.
+   Dzieli <parameter>num1</parameter> przez <parameter>num2</parameter>.
   </para>
  </refsect1>
 
@@ -55,17 +54,12 @@
  </refsect1>
 
  <refsect1 role="errors">
-  &reftitle.errors;
-  <para>
-   Ta funkcja rzuca <exceptionname>ValueError</exceptionname> w następujących wypadkach:
-   <simplelist>
-    <member><parameter>num1</parameter> lub <parameter>num2</parameter> nie są numerycznymi ciągami znaków poprawnie sformatowanymi dla BCMath</member>
-    <member><parameter>scale</parameter> jest poza dozwolonym zakresem</member>
-   </simplelist>
-  </para>
+  <!-- Include standard ValueErrors for num1, num2, and scale, this includes the title -->
+  <xi:include xpointer="xmlns(db=http://docbook.org/ns/docbook) xpointer(id('function.bcadd')/db:refsect1[@role='errors']/*)" />
+
   <simpara>
-   Ta funkcja rzuca wyjątek <exceptionname>DivisionByZeroError</exceptionname> jeśli <parameter>num2</parameter>
-   wynosi <literal>0</literal>.
+   Ta funkcja rzuca wyjątek <exceptionname>DivisionByZeroError</exceptionname>
+   jeśli <parameter>num2</parameter> wynosi <literal>0</literal>.
   </simpara>
  </refsect1>
 
@@ -89,7 +83,9 @@
      <row>
       <entry>8.0.0</entry>
       <entry>
-       Dzielenie przez zero powoduje teraz rzucenie <exceptionname>DivisionByZeroError</exceptionname> zamiast zwrócenia null.
+       Dzielenie przez zero powoduje teraz rzucenie
+       <exceptionname>DivisionByZeroError</exceptionname>
+       zamiast zwrócenia &null;.
       </entry>
      </row>
     </tbody>

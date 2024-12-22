@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: c44475e1fafcbee203ed4935a6d5d7a01379fcdc Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 1debc76060f0c33222789a299df72d0addd7fce3 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: dombal -->
 <refentry xml:id="function.get-class-vars" xmlns="http://docbook.org/ns/docbook">
@@ -51,29 +51,28 @@
 <![CDATA[
 <?php
 
-class myclass {
-
-    var $var1; // brak wartości domyślnej
-    var $var2 = "xyz";
-    var $var3 = 100;
+class MyClass
+{
+    public $var1; // Brak podanej wartości domyślnej (technicznie wartością domyślną jest NULL)...
+    public $var2 = "xyz";
+    public $var3 = 100;
     private $var4;
 
-    // konstruktor
-    function __construct() {
-        // zmień niektóre właściwości
+    public function __construct()
+    {
+        // Zmień niektóre właściwości
         $this->var1 = "foo";
         $this->var2 = "bar";
         return true;
     }
-
 }
 
-$my_class = new myclass();
+$my_class = new MyClass();
 
 $class_vars = get_class_vars(get_class($my_class));
 
 foreach ($class_vars as $name => $value) {
-    echo "$name : $value\n";
+    echo "{$name}: ", var_export($value, true), "\n";
 }
 
 ?>
@@ -82,9 +81,9 @@ foreach ($class_vars as $name => $value) {
     &example.outputs;
     <screen>
 <![CDATA[
-var1 :
-var2 : xyz
-var3 : 100
+var1: NULL
+var2: 'xyz'
+var3: 100
 ]]>
     </screen>
    </example>
@@ -95,6 +94,7 @@ var3 : 100
     <programlisting role="php">
 <![CDATA[
 <?php
+
 function format($array)
 {
     return implode('|', array_keys($array)) . "\r\n";
@@ -114,6 +114,7 @@ class TestCase
 
 TestCase::expose();
 echo format(get_class_vars('TestCase'));
+
 ?>
 ]]>
     </programlisting>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 87f32875a189be7ee2a8487c0db3958579e4ce72 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: ddb05f8827151e25dd1c3e058f95f6c024bc881b Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: qrak -->
-<refentry xml:id="function.bcmod" xmlns="http://docbook.org/ns/docbook">
+<refentry xml:id="function.bcmod" xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude">
  <refnamediv>
   <refname>bcmod</refname>
   <refpurpose>Wykonuje dzielenie modulo liczby o dużej precyzji</refpurpose>
@@ -19,34 +19,12 @@
   <para>
    Zwraca resztę z dzielenia argumentu <parameter>num1</parameter> przez
    <parameter>num2</parameter>.
-   Wynik ma taki sam znak jak <parameter>num1</parameter>, chyba że
-   <parameter>num2</parameter> wynosi zero.
+   Wynik ma taki sam znak jak <parameter>num1</parameter>.
   </para>
  </refsect1>
 
  <refsect1 role="parameters">
-  &reftitle.parameters;
-  <para>
-   <variablelist>
-    <varlistentry>
-     <term><parameter>num1</parameter></term>
-     <listitem>
-      <para>
-       Dzielna jako łańcuch znaków.
-      </para>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
-     <term><parameter>num2</parameter></term>
-     <listitem>
-      <para>
-       Dzielnik jako łańcuch znaków.
-      </para>
-     </listitem>
-    </varlistentry>
-    &bc.scale.description;
-   </variablelist>
-  </para>
+  <xi:include xpointer="xmlns(db=http://docbook.org/ns/docbook) xpointer(id('function.bcadd')/db:refsect1[@role='parameters']/*)" />
  </refsect1>
 
  <refsect1 role="returnvalues">
@@ -56,20 +34,7 @@
   </para>
  </refsect1>
 
- <refsect1 role="errors">
-  &reftitle.errors;
-  <para>
-   Ta funkcja rzuca <exceptionname>ValueError</exceptionname> w następujących wypadkach:
-   <simplelist>
-    <member><parameter>num1</parameter> lub <parameter>num2</parameter> nie są numerycznymi ciągami znaków poprawnie sformatowanymi dla BCMath</member>
-    <member><parameter>scale</parameter> jest poza dozwolonym zakresem</member>
-   </simplelist>
-  </para>
-  <simpara>
-   Ta funkcja rzuca wyjątek <exceptionname>DivisionByZeroError</exceptionname> jeśli <parameter>num2</parameter>
-   wynosi <literal>0</literal>.
-  </simpara>
- </refsect1>
+ <xi:include xpointer="xmlns(db=http://docbook.org/ns/docbook) xpointer(id('function.bcdiv')/db:refsect1[@role='errors'])" />
 
  <refsect1 role="changelog"><!-- {{{ -->
   &reftitle.changelog;

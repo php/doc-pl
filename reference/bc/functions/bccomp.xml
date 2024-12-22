@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 23f5599c8cc2713e7a4fdc29d8cceab66c341c48 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: ddb05f8827151e25dd1c3e058f95f6c024bc881b Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: qrak -->
-<refentry xml:id="function.bccomp" xmlns="http://docbook.org/ns/docbook">
+<refentry xml:id="function.bccomp" xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude">
  <refnamediv>
   <refname>bccomp</refname>
   <refpurpose>Porównuje dwie liczby o dużej precyzji</refpurpose>
@@ -17,44 +17,25 @@
    <methodparam choice="opt"><type class="union"><type>int</type><type>null</type></type><parameter>scale</parameter><initializer>&null;</initializer></methodparam>
   </methodsynopsis>
   <para>
-   Porównuje <parameter>num1</parameter> do wartości podanej
-   jako <parameter>num2</parameter> i zwraca wynik jako
-   liczbę.
+   Porównuje <parameter>num1</parameter> do <parameter>num2</parameter> 
+   i zwraca wynik porównania jako liczbę.
   </para>
  </refsect1>
 
  <refsect1 role="parameters">
-  &reftitle.parameters;
-  <para>
-   <variablelist>
-    <varlistentry>
-     <term><parameter>num1</parameter></term>
-     <listitem>
-      <para>
-       Lewy operand, jako łańcuch znaków.
-      </para>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
-     <term><parameter>num2</parameter></term>
-     <listitem>
-      <para>
-       Prawy operand, jako łańcuch znaków.
-      </para>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
-     <term><parameter>scale</parameter></term>
-     <listitem>
-      <para>
-       Opcjonalny argument <parameter>scale</parameter>, używany do ustalenia
-       liczby cyfr po miejscu dziesiętny, które będą użyte w porównaniu.
-      </para>
-     </listitem>
-    </varlistentry>
-   </variablelist>
-  </para>
+  <xi:include xpointer="xmlns(db=http://docbook.org/ns/docbook) xpointer(id('function.bcadd')/db:refsect1[@role='parameters']/*)" />
  </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <simpara>
+   Zwraca <literal>0</literal>, jeśli oba operandy są równe,
+   <literal>1</literal> jeśli <parameter>num1</parameter> jest większy
+   niż <parameter>num2</parameter>, <literal>-1</literal> w przeciwnym wypadku.
+  </simpara>
+ </refsect1>
+
+ <xi:include xpointer="xmlns(db=http://docbook.org/ns/docbook) xpointer(id('function.bcadd')/db:refsect1[@role='errors'])" />
 
  <refsect1 role="changelog">
   &reftitle.changelog;
@@ -76,15 +57,6 @@
     </tbody>
    </tgroup>
   </informaltable>
- </refsect1>
-
- <refsect1 role="returnvalues">
-  &reftitle.returnvalues;
-  <para>
-   Zwraca 0, jeśli oba operandy są równe, 1 jeśli
-   <parameter>num1</parameter> jest większy
-   <parameter>num2</parameter>, -1 w przeciwnym wypadku.
-  </para>
  </refsect1>
  
  <refsect1 role="examples">

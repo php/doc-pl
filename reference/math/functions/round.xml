@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 6406cc6c50f8f66f7d55f550dc1ec2759e2eca0f Maintainer: qrak Status: ready -->
+<!-- EN-Revision: f721489eaeb79ff096971fe5a5b101c2ebab8eeb Maintainer: qrak Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: sobak -->
 <refentry xml:id="function.round" xmlns="http://docbook.org/ns/docbook">
@@ -128,6 +128,15 @@
   </para>
  </refsect1>
 
+ <refsect1 role="errors">
+  &reftitle.errors;
+  <simpara>
+   Ta funkcja rzuca <exceptionname>ValueError</exceptionname> jeśli <parameter>mode</parameter> jest
+   niepoprawny.
+   Przed PHP 8.4.0 niepoprawny tryb mógł być po cichu ustawiony na <constant>PHP_ROUND_HALF_UP</constant>.
+  </simpara>
+ </refsect1>
+
  <refsect1 role="changelog">
   &reftitle.changelog;
   <informaltable>
@@ -139,6 +148,13 @@
      </row>
     </thead>
     <tbody>
+     <row>
+      <entry>8.4.0</entry>
+      <entry>
+       Rzuca teraz <exceptionname>ValueError</exceptionname> jeśli
+       tryb (<parameter>mode</parameter>) jest niepoprawny.
+      </entry>
+     </row>
      <row>
       <entry>8.0.0</entry>
       <entry>
