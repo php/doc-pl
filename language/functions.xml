@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 489d46bc2598784bd3711454ccab8940107cde67 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: ae8e5c871b1a71ea77f5b97f7929d76d4ca724ab Maintainer: sobak Status: ready -->
 <!-- CREDITS: cyb0org, pirate -->
  <chapter xml:id="language.functions" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
   <title>Funkcje</title>
@@ -171,13 +171,15 @@ function recursion($a)
   </sect1>
  
   <sect1 xml:id="functions.arguments">
-   <title>Argumenty funkcji</title>
+   <title>Argumenty i parametry funkcji</title>
  
    <simpara>
+    Parametry funkcji są deklarowane w sygnaturze funkcji.
     Dane mogą być przekazywane do funkcji przez listę argumentów,
     która jest listą oddzielonych przecinkami wyrażeń. Argumenty są wykonywane
-    od prawej do lewej, jeszcze przed faktycznym wykonaniem funkcji
-    (wartościowanie <emphasis>zachłanne</emphasis>).
+    od prawej do lewej, a wynik jest przypisywany do parametrów
+    funkcji jeszcze przed faktycznym wykonaniem funkcji
+    (ang. <literal><emphasis>eager</emphasis> evaluation</literal>).
    </simpara>
 
    <para>
@@ -205,12 +207,12 @@ function takes_array($input)
     </example>
    </para>
    <para>
-    Od PHP 8.0.0 lista argumentów funkcji może kończyć się przecinkiem, który zostanie
-    zignorowany. Jest to szczególnie przydatne w wypadkach gdy lista argumentów jest
-    długa lub zawiera długie nazwy zmiennych, przez co wygodnym byłoby podanie listy argumentów pionowo.
+    Od PHP 8.0.0 lista parametrów funkcji może kończyć się przecinkiem, który zostanie
+    zignorowany. Jest to szczególnie przydatne w wypadkach, gdy lista parametrów jest
+    długa lub zawiera długie nazwy zmiennych, przez co wygodne byłoby podanie listy parametrów pionowo.
    </para>
    <example>
-    <title>Lista argumentów funkcji zakończona przecinkiem</title>
+    <title>Lista parametrów funkcji zakończona przecinkiem</title>
     <programlisting role="php">
      <![CDATA[
 <?php
@@ -240,11 +242,11 @@ function przyjmuje_wiele_argumentow(
     </simpara>
     <para>
      Aby argument zawsze był podawany przez referencję, poprzedź nazwę
-     argumentu znakiem (&amp;) w definicji funkcji:
+     parametru znakiem (&amp;) w definicji funkcji:
     </para>
     <para>
      <example>
-      <title>Podawanie parametrów funkcji przez referencję</title>
+      <title>Podawanie argumentów funkcji przez referencję</title>
       <programlisting role="php">
 <![CDATA[
 <?php
@@ -261,16 +263,16 @@ echo $str;    // wypisuje 'To jest ciąg znaków, i coś ekstra.'
      </example>
     </para>
     <para>
-     Przekazywanie wartości jako argument, który powinien być przekazany przez referencję jest błędem.
+     Przekazywanie wyrażenia stałego jako argument do parametru, który powinien być przekazany przez referencję jest błędem.
     </para>
    </sect2>
    <sect2 xml:id="functions.arguments.default">
-    <title>Domyślne wartości argumentów</title>
+    <title>Domyślne wartości parametrów</title>
  
     <para>
-     Funkcja może zdefiniować domyślne wartości dla argumentów, używając składni podobnej
-     do przypisania zmiennej. Domyślna wartość jest używana tylko, gdy parametr nie jest
-     określony; należy zauważyć, że przekazanie &null; <emphasis>nie</emphasis>
+     Funkcja może zdefiniować domyślne wartości dla parametrów, używając składni podobnej
+     do przypisania zmiennej. Domyślna wartość jest używana tylko, gdy argument parametru nie jest
+     określony. Należy zauważyć, że przekazanie &null; <emphasis>nie</emphasis>
      ustawia domyślnej wartości.
     </para>
     <para>
@@ -369,13 +371,13 @@ Parzę przepyszną kawę specjalnie dla ciebie.
      zmienną, właściwością klasy czy wywołaniem funkcji.
     </simpara>
     <para>
-     Zauważ że argumenty opcjonalne powinny być zdefiniowane po
-     argumentach wymaganych, w przeciwnym razie nie będzie można ich pominąć przy wywołaniu funkcji.
+     Zauważ że parametry opcjonalne powinny być zdefiniowane po
+     parametrach wymaganych, w przeciwnym razie nie będzie można ich pominąć przy wywołaniu funkcji.
      Spójrz na poniższy przykład:
     </para>
     <para>
      <example>
-      <title>Niepoprawne użycie domyślnych argumentów funkcji</title>
+      <title>Niepoprawne użycie domyślnych parametrów funkcji</title>
       <programlisting role="php">
        <![CDATA[
 <?php
@@ -402,7 +404,7 @@ Fatal error: Uncaught ArgumentCountError: Too few arguments
     </para>
     <para>
      <example>
-      <title>Poprawne użycie domyślnych argumentów funkcji</title>
+      <title>Poprawne użycie domyślnych parametrów funkcji</title>
       <programlisting role="php">
        <![CDATA[
 <?php
@@ -429,7 +431,7 @@ Robię kubek jogurtu o smaku truskawek.
     </para>
     <para>
      <example>
-      <title>Poprawne użycie domyślnych argumentów funkcji</title>
+      <title>Poprawne użycie domyślnych parametrów funkcji</title>
       <programlisting role="php">
        <![CDATA[
 <?php
@@ -451,15 +453,15 @@ Robię kubek jogurtu naturalnego o smaku truskawek.
      </example>
     </para>
     <para>
-     Począwszy od PHP 8.0.0, deklarowanie argumentów wymaganych po opcjonalnych
+     Począwszy od PHP 8.0.0, deklarowanie parametrów wymaganych po opcjonalnych
      jest <emphasis>zdeprecjonowane</emphasis>. Zazwyczaj można rozwiązać ten problem
      przez usunięcie domyślnej wartości, ponieważ i tak nie byłaby ona nigdy użyta.
-     Wyjątkiem od tej reguły są argumenty w postaci
+     Wyjątkiem od tej reguły są parametry w postaci
      <code>Typ $parametr = null</code>, gdzie domyślna wartość &null; czyni typ niejawnie
      pozwalającym na null. Taki zapis jest przestarzały od PHP 8.4.0 i powinien być użyty
      wprost <link linkend="language.types.declarations.nullable">typ pozwalający na null</link>.
      <example>
-      <title>Deklarowanie argumentów opcjonalnych po wymaganych</title>
+      <title>Deklarowanie parametrów opcjonalnych po wymaganych</title>
       <programlisting role="php">
 <![CDATA[
 <?php
@@ -487,7 +489,7 @@ function bar(?A $a, $b) {}       // Zalecane
     </note>
     <note>
      <simpara>
-      Argumenty przekazywane przez referencję mogą mieć wartość domyślną.
+      Parametry przekazywane przez referencję mogą mieć wartość domyślną.
      </simpara>
     </note>
    </sect2>
@@ -502,7 +504,7 @@ function bar(?A $a, $b) {}       // Zalecane
     </simpara>
     
     <para>
-     Lista argumentów może zawierać token
+     Lista parametrów może zawierać token
      <literal>...</literal>, który oznacza, że funkcja akceptuje
      zmienną ilość argumentów. Argumenty zostaną przekazane do
      do podanej zmiennej jako tablica, na przykład:
@@ -565,7 +567,7 @@ echo dodaj(...$a);
     </para>
 
     <para>
-     Możesz określić normalne argumenty pozycyjne przed tokenem
+     Możesz określić normalne parametry pozycyjne przed tokenem
      <literal>...</literal>. W tym wypadku tylko końcowe argumenty,
      które nie pasują do żadnego argumentu pozycyjnego, zostaną dodane do tablicy
      generowanej przez <literal>...</literal>.
@@ -702,20 +704,24 @@ htmlspecialchars($string, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401, 'UTF-8', fa
     </example>
 
     <para>
-     Przekazanie tego samego argumentu wiele razy skutkuje wyjątkiem klasy Error.
+     Przekazanie argumentu do tego samego nazwanego parametru wiele razy skutkuje
+     wyjątkiem klasy <classname>Error</classname>.
     </para>
 
     <example>
-     <title>Wyjątek Error gdy ten sam argument jest przekazany wiele razy</title>
+     <title>Błąd przy przekazaniu argumentu do tego samego nazwanego parametru wiele razy</title>
      <programlisting role="php">
       <![CDATA[
 <?php
+
 function foo($parametr) { ... }
 
 foo(parametr: 1, parametr: 2);
 // Error: Named parameter $parametr overwrites previous argument
+
 foo(1, parametr: 2);
 // Error: Named parameter $parametr overwrites previous argument
+
 ?>
 ]]>
      </programlisting>
@@ -1400,6 +1406,13 @@ Warning: Cannot bind an instance to a static closure in %s on line %d
         </row>
        </thead>
        <tbody>
+        <row>
+         <entry>8.3.0</entry>
+         <entry>
+          Domknięcia utworzone z <link linkend="language.oop5.magic">metod
+          magicznych</link> mogą przyjmować nazwane parametry.
+         </entry>
+        </row>
         <row>
          <entry>7.1.0</entry>
          <entry>
