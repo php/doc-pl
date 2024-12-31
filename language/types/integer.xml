@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 8859c8b96cd9e80652813f7bcf561432a5e9f934 Maintainer: sobak Status: ready -->
+<sect1 xml:id="language.types.integer">
+ <title>Liczby całkowite</title>
+
+ <simpara>
+  Typ <type>int</type> to liczba z zakresu
+  &#8484; = {..., -2, -1, 0, 1, 2, ...}.
+ </simpara>
+
+ <sect2 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><link linkend="language.types.float">Liczby zmiennoprzecinkowe</link></member>
+    <member><link linkend="book.bc">Liczby o dowolnej precyzji / BCMath</link></member>
+    <member><link linkend="book.gmp">Liczby o dowolnej długości / GMP</link></member>
+   </simplelist>
+  </para>
+ </sect2>
+
+ <sect2 xml:id="language.types.integer.syntax">
+  <title>Składnia</title>
+
+  <simpara>
+   Liczby całkowite <type>int</type> mogą być określone w notacji dziesiętnej (podstawa 10), szesnastkowej
+   (podstawa 16), ósemkowej (podstawa 8) lub binarnej (podstawa 2).
+   Można użyć <link linkend="language.operators.arithmetic">operatora negacji</link>,
+   aby oznaczyć liczbę ujemną.
+  </simpara>
+
+  <para>
+   Aby skorzystać z notacji ósemkowej, poprzedź liczbę używając <literal>0</literal> (zero).
+   Od PHP 8.1.0 notacja ósemkowa może być też poprzedzona <literal>0o</literal> lub <literal>0O</literal>.
+   Aby użyć notacji szesnastkowej, poprzedź liczbę <literal>0x</literal>.
+   Aby użyć notacji binarnej, poprzedź liczbę <literal>0b</literal>.
+  </para>
+
+  <para>
+   Od PHP 7.4.0 wyrażenia liczbowe mogą zawierać podkreślenia (<literal>_</literal>) pomiędzy cyframi,
+   aby poprawić czytelność liczb. Te podkreślenia są usuwane przez parser PHP.
+  </para>
+
+  <example>
+   <title>Wyrażenia liczbowe</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+$a = 1234; // liczba dziesiętna
+$a = 0123; // liczba ósemkowa (odpowiednik dziesiętnego 83)
+$a = 0o123; // liczba ósemkowa (od PHP 8.1.0)
+$a = 0x1A; // liczba szesnastkowa (odpowiednik dziesiętnego 26)
+$a = 0b11111111; // liczba binarna (odpowiednik dziesiętnego 255)
+$a = 1_234_567; // liczba dziesiętna (od PHP 7.4.0)
+?>
+]]>
+   </programlisting>
+  </example>
+
+  <para>
+   Formalnie strukturą dla wyrażeń <type>int</type> od PHP 8.1.0 jest
+   (wcześniej <literal>0o</literal> ani <literal>0O</literal> nie były
+   dozwolone jako prefiksy liczb ósemkowych, a przed PHP 7.4.0 nie były dozwolone
+   znaki podkreślenia):
+  </para>
+
+  <informalexample>
+   <programlisting>
+<![CDATA[
+decimal     : [1-9][0-9]*(_[0-9]+)*
+            | 0
+
+hexadecimal : 0[xX][0-9a-fA-F]+(_[0-9a-fA-F]+)*
+
+octal       : 0[oO]?[0-7]+(_[0-7]+)*
+
+binary      : 0[bB][01]+(_[01]+)*
+
+integer     : decimal
+            | hexadecimal
+            | octal
+            | binary
+]]>
+   </programlisting>
+  </informalexample>
+
+  <para>
+   Rozmiar typu <type>int</type> zależy od platformy, choć zazwyczaj maksymalna
+   wartość to około dwóch miliardów (32 bity ze znakiem).
+   Platformy 64-bitowe zazwyczaj mają maksymalną wartość około 9E18.
+   PHP nie wspiera liczb bez znaków (ang. unsigned).
+   Rozmiar <type>int</type> może być określony
+   używając stałej <constant>PHP_INT_SIZE</constant>, maksymalna wartość przy użyciu
+   stałej <constant>PHP_INT_MAX</constant>, a najmniejsza wartość przy użyciu
+   stałej <constant>PHP_INT_MIN</constant>.
+  </para>
+ </sect2>
+
+ <sect2 xml:id="language.types.integer.overflow">
+  <title>Przepełnienie integera</title>
+
+  <para>
+   Jeżeli PHP napotka liczbę spoza zakresu typu <type>int</type>,
+   to zostanie ona zinterpretowana jako <type>float</type>. Ponadto
+   operacja, która skutkuje otrzymaniem liczby poza zakresem
+   typu <type>int</type> zwróci typ <type>float</type>.
+  </para>
+
+  <example>
+   <title>Integer overflow</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+$large_number = 50000000000000000000;
+var_dump($large_number);         // float(5.0E+19)
+
+var_dump(PHP_INT_MAX + 1);       // systemy 32-bitowe: float(2147483648)
+                                 // systemy 64-bitowe: float(9.2233720368548E+18)
+?>
+]]>
+   </programlisting>
+  </example>
+ </sect2>
+
+ <sect2 xml:id="language.types.integer.division">
+  <title>Dzielenie liczb całkowitych</title>
+
+  <para>
+   Nie istnieje operator dla dzielenia typu <type>int</type> w PHP, skorzystaj
+   z funkcji <function>intdiv</function>, aby osiągnąć taki efekt.
+   <literal>1/2</literal> zwraca wynik <literal>0.5</literal> jako <type>float</type>.
+   Wartość może być zrzutowana do typu <type>int</type> aby zaokrąglić ją w kierunku zera lub
+   można użyć funkcji <function>round</function> dla dokładniejszej kontroli zaokrąglania.
+  </para>
+
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php
+var_dump(25/7);         // float(3.5714285714286)
+var_dump((int) (25/7)); // int(3)
+var_dump(round(25/7));  // float(4)
+?>
+]]>
+   </programlisting>
+  </informalexample>
+ </sect2>
+
+ <sect2 xml:id="language.types.integer.casting">
+  <title>Konwertowanie na liczby całkowite</title>
+
+  <simpara>
+   Aby jawnie przekonwertować wartość na typ <type>int</type>, użyj
+   rzutowania <literal>(int)</literal> lub <literal>(integer)</literal>. Jednak
+   w większości wypadków rzutowanie nie jest potrzebne, jako że wartość będzie konwertowana
+   automatycznie, jeśli operator funkcja lub struktura kontrolna wymaga argumentu o
+   typie <type>int</type>. Wartość może być też przekonwertowana na <type>int</type>
+   przy użyciu funkcji <function>intval</function>.
+  </simpara>
+
+  <simpara>
+   Jeśli typ <type>resource</type> zostanie przekonwertowany na <type>int</type>, to
+   wynikiem będzie unikalny numer zasobu przypisany do typu
+   <type>resource</type> przez PHP w trakcie wykonywania programu.
+  </simpara>
+
+  <simpara>
+   Zobacz też <link linkend="language.types.type-juggling">Dopasowywanie typów</link>.
+  </simpara>
+
+  <sect3 xml:id="language.types.integer.casting.from-boolean">
+   <title>Z <link linkend="language.types.boolean">wartości logicznych</link></title>
+
+   <simpara>
+    &false; zwróci <literal>0</literal> (zero), a &true; zwróci
+    <literal>1</literal> (jeden).
+   </simpara>
+  </sect3>
+
+  <sect3 xml:id="language.types.integer.casting.from-float">
+   <title>
+    Z <link linkend="language.types.float">liczb zmiennoprzecinkowych</link>
+   </title>
+
+   <simpara>
+    Gdy <type>float</type> jest konwertowany na <type>int</type>, liczba
+    jest zaokrąglana <emphasis>w kierunku zera</emphasis>.
+    Od PHP 8.1.0 przy niejawnym konwertowaniu niecałkowitej wartości &float; na &integer;, która traci precyzję, emitowany jest komunikat o przestarzałym zachowaniu.
+   </simpara>
+
+   <programlisting role="php">
+<![CDATA[
+<?php
+
+function foo($value): int {
+  return $value; 
+}
+
+var_dump(foo(8.1)); // "Deprecated: Implicit conversion from float 8.1 to int loses precision" as of PHP 8.1.0
+var_dump(foo(8.1)); // 8 przed PHP 8.1.0
+var_dump(foo(8.0)); // 8 w obu wypadkach
+
+var_dump((int) 8.1); // 8 w obu wypadkach
+var_dump(intval(8.1)); // 8 w obu wypadkach
+?>
+]]>
+   </programlisting>
+
+   <para>
+    Jeżeli liczba zmiennoprzecinkowa jest poza zakresem <type>int</type> (zazwyczaj
+    <literal>+/- 2.15e+9 = 2^31</literal> na platformach 32-bitowych i
+    <literal>+/- 9.22e+18 = 2^63</literal> na platformach 64-bitowych),
+    wynik jest nieokreślony, jako że <type>float</type> nie ma
+    wystarczającej precyzji aby podać dokładny wynik <type>int</type>.
+    W takiej sytuacji nie jest generowane żadne ostrzeżenie ani nawet komunikat.
+   </para>
+
+   <note>
+    <para>
+     <literal>NaN</literal>, <literal>Inf</literal> i <literal>-Inf</literal> zawsze mają wartość zero przy rzutowaniu na <type>int</type>.
+    </para>
+   </note>
+
+   <warning>
+    <para>
+     Nigdy nie rzutuj nieznanego ułamka do <type>int</type>, jako że może
+     to czasami prowadzić do nieoczekiwanych wyników.
+    </para>
+
+    <informalexample>
+     <programlisting role="php">
+<![CDATA[
+<?php
+echo (int) ( (0.1+0.7) * 10 ); // wyświetla 7!
+?>
+]]>
+     </programlisting>
+    </informalexample>
+
+    <para>
+     Zobacz też <link linkend="warn.float-precision">ostrzeżenie o precyzji
+     liczb zmiennoprzecinkowych</link>.
+    </para>
+   </warning>
+  </sect3>
+
+  <sect3 xml:id="language.types.integer.casting.from-string">
+   <title>Z ciągów znaków</title>
+
+   <simpara>
+    Jeżeli ciąg znaków jest
+    <link linkend="language.types.numeric-strings">numeryczny</link>
+    lub jego początek jest numeryczny, to rozwiąże się on do
+    odpowiadającej wartości liczby całkowitej, w przeciwnym wypadku będzie skonwertowany jako zero
+    (<literal>0</literal>).
+   </simpara>
+  </sect3>
+
+  <sect3 xml:id="language.types.integer.casting-from-null">
+   <title>Z <type>NULL</type></title>
+
+   <simpara>
+    &null; jest zawsze konwertowany na zero (<literal>0</literal>).
+   </simpara>
+  </sect3>
+
+  <sect3 xml:id="language.types.integer.casting.from-other">
+   <title>Z innych typów</title>
+
+   <caution>
+    <simpara>
+     Zachowanie przy konwersji na <type>int</type> jest niezdefiniowane dla
+     innych typów. <emphasis>Nie</emphasis> polegaj na żadnym zaobserwowanym zachowaniu, jako
+     że może się ono zmienić bez ostrzeżenia.
+    </simpara>
+   </caution>
+  </sect3>
+
+ </sect2>
+</sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

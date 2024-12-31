@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 95bdd6883b5dde9504701777ba81b3c5f15df52b Maintainer: sobak Status: ready -->
+<sect1 xml:id="language.types.resource">
+ <title>Zasoby</title>
+  
+ <para>
+  Zasób (<type>resource</type>) to specjalna zmienna, która przechowuje odniesienie
+  do zewnętrznego zasobu. Zasoby są tworzone i wykorzystywane przez specjalne funkcje. Zobacz
+  <link linkend="resource">dodatek</link>, który zawiera listę wszystkich tych
+  funkcji i odpowiadających im typów zasobów.
+ </para>
+
+ <para>
+  Zapoznaj się też z funkcją <function>get_resource_type</function>.
+ </para>
+
+ <sect2 xml:id="language.types.resource.casting">
+  <title>Konwersja na zasób</title>
+  
+  <para>
+   Zmienne o typie <type>resource</type> przechowują specjalne uchwyty do otwartych plikó,w
+   połączenia do bazy danych, obszary zdjęć i podobne. Konwersja na typ
+   <type>resource</type> nie ma sensu.
+  </para>
+ </sect2>
+
+ <sect2 xml:id="language.types.resource.self-destruct">
+  <title>Zwalnianie zasobów</title>
+  
+  <para>
+   Dzięki mechanizmowi zliczania referencji będącemu częścią Zend Engine,
+   zasoby, do których nie ma już odwołań, są wykrywane
+   automatycznie i są zwalniane przez garbage collector. Z tego powodu rzadko
+   istnieje konieczność ręcznego zwalniania pamięci.
+  </para>
+
+  <note>
+   <simpara>
+    Trwałe połączenia do bazy danych są wyjątkiem od tej reguły.
+    <emphasis>Nie</emphasis> są one niszczone przez garbage collector. Przeczytaj
+    sekcję o <link linkend="features.persistent-connections">trwałych
+    połączeniach</link>, aby dowiedzieć się więcej.
+   </simpara>
+  </note>
+  
+ </sect2>
+</sect1>
+ 
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

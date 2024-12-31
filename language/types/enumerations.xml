@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: f4609f913fe6bf4a8b41328df9366726208b7e33 Maintainer: sobak Status: ready -->
+<sect1 xml:id="language.types.enumerations">
+ <title>Wyliczenia (enumy)</title>
+ <?phpdoc print-version-for="enumerations"?>
+
+ <sect2 xml:id="language.types.enumerations.basics">
+  <title>Podstawowe wyliczenia</title>
+
+  <para>
+   Wyliczenia są warstwą zacieśniającą ponad klasami i stałymi w klasach,
+   których przeznaczeniem jest dostarczenie sposobu na zdefiniowanie zamkniętego zbioru dozwolonych wartości dla typu.
+  </para>
+
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php
+enum KoloryKart
+{
+    case Kier;
+    case Karo;
+    case Trefl;
+    case Pik;
+}
+
+function zrob_cos(Suit $s)
+{
+    // ...
+}
+
+zrob_cos(KoloryKart::Pik);
+?>
+]]>
+   </programlisting>
+  </informalexample>
+
+  <simpara>
+   Dla pełnego opisu zapoznaj się z
+   rozdziałem <link linkend="language.enumerations">Wyliczenia</link>.
+  </simpara>
+
+ </sect2>
+ 
+ <sect2 xml:id="language.types.enumerations.casting">
+  <title>Rzutowanie</title>
+  
+  <para>
+   Jeżeli typ <type>enum</type> jest konwertowany na <type>object</type>, to nie
+   jest modyfikowany. Jeżeli <type>enum</type> jest konwertowany na tablicę (<type>array</type>),
+   to tworzona jest tablica z pojedynczym kluczem <literal>name</literal> (dla czystych enumów)
+   lub tablica z kluczami <literal>name</literal> i <literal>values</literal>
+   (dla backed enums, enumeracji z wartościami). Wszystkie inne rzutowania skutkują błędem.
+  </para>
+ </sect2>
+</sect1>
+ 
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->

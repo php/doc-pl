@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 7ba2406e555a240338d63f72d9ac54a46e0bee5d Maintainer: sobak Status: ready -->
+<sect1 xml:id="language.types.numeric-strings" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title>Numeryczne ciągi znaków</title>
+ <para>
+  Typ <type>string</type> w PHP jest uznawany za numeryczny, jeśli może być zinterpretowany jako
+  <type>int</type> lub <type>float</type>.
+ </para>
+
+ <para>
+  Formalnie od PHP 8.0.0:
+ </para>
+
+ <informalexample>
+  <programlisting>
+   <![CDATA[
+WHITESPACES      \s*
+LNUM             [0-9]+
+DNUM             ([0-9]*[\.]{LNUM}) | ({LNUM}[\.][0-9]*)
+EXPONENT_DNUM    (({LNUM} | {DNUM}) [eE][+-]? {LNUM})
+INT_NUM_STRING   {WHITESPACES} [+-]? {LNUM} {WHITESPACES}
+FLOAT_NUM_STRING {WHITESPACES} [+-]? ({DNUM} | {EXPONENT_DNUM}) {WHITESPACES}
+NUM_STRING       ({INT_NUM_STRING} | {FLOAT_NUM_STRING})
+]]>
+  </programlisting>
+ </informalexample>
+
+ <para>
+  PHP ma też koncept <emphasis>początkowych</emphasis> ciągów numerycznych.
+  Jest to po prostu string, który zaczyna się jak numeryczny ciąg znaków, po którym następują
+  inne znaki.
+ </para>
+
+ <note>
+  <para>
+   Dowolny ciąg znaków zawierający literę <literal>E</literal> (bez względu na jej wielkość)
+   ograniczony liczbami będzie postrzegany jako liczba wyrażona w notacji naukowej.
+   Może to przynieść nieoczekiwane rezultaty.
+   <programlisting role="php">
+<![CDATA[
+<?php
+var_dump("0D1" == "000"); // false, "0D1" nie jest notacją wykładniczą
+var_dump("0E1" == "000"); // true, "0E1" to 0 * (10 ^ 1), czyli 0
+var_dump("2E1" == "020"); // true, "2E1" to 2 * (10 ^ 1), czyli 20
+?>
+]]>
+   </programlisting>
+  </para>
+ </note>
+
+ <sect2 xml:id="language.types.numeric-string.conversion">
+  <title>Ciągi znaków używane w kontekstach numerycznych</title>
+  <para>
+   Gdy <type>string</type> musi być obliczony jako liczba (np. operacje
+   arytmetyczne, deklaracja typu <type>int</type> itp.) podejmowane są następujące
+   w celu określenia wyniku:
+
+   <orderedlist>
+    <listitem>
+     <simpara>
+      Jeśli <type>string</type> jest numeryczny, rozwiąż go do typu <type>int</type> o
+      ile ciąg znaków jest numeryczną liczbą całkowitą i mieści się w
+      limitach typu <type>int</type> (określonych przez stałą
+      <constant>PHP_INT_MAX</constant>), w przeciwnym razie rozwiąż jako
+      <type>float</type>.
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      Jeśli kontekst pozwala na początkowo numeryczne ciągi znaków i <type>string</type>
+      jest takim, rozwiąż go do typu <type>int</type>, jeśli początkowa część
+      ciągu znaków jest numerycznym ciągiem znaków liczby całkowitej i mieści się w
+      limitach typu <type>int</type> (określonych przez stałą
+      <constant>PHP_INT_MAX</constant>), w przeciwnym razie rozwiąż jako
+      <type>float</type>.
+      Dodatkowo zgłaszany jest błąd o poziomie <constant>E_WARNING</constant>.
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      Ciąg znaków <type>string</type> nie jest numeryczny, rzuć
+      <classname>TypeError</classname>.
+     </simpara>
+    </listitem>
+   </orderedlist>
+  </para>
+ </sect2>
+
+ <sect2 xml:id="language.types.numeric-string.prior">
+  <title>Zachowanie przed PHP 8.0.0</title>
+  <para>
+   Przed PHP 8.0.0 <type>string</type> był uznawany za numeryczny tylko, jeśli
+   miał <emphasis>początkowe</emphasis> białe znaki. Jeśli miał
+   <emphasis>po sobie</emphasis> białe znaki, to był uznawany za
+   początkowo numeryczny.
+  </para>
+
+  <para>
+   Przed PHP 8.0.0 jeśli ciąg znaków był używany w kontekście numerycznym, to byłyby
+   wykonane kroki wymienione wyżej z następującymi różnicami:
+   <itemizedlist>
+    <listitem>
+     <simpara>
+      Użycie początkowo numerycznego ciągu znaków spowodowałoby błąd o poziomie
+      <constant>E_NOTICE</constant> zamiast <constant>E_WARNING</constant>.
+     </simpara>
+     </listitem>
+    <listitem>
+     <simpara>
+      Jeżeli ciąg znaków nie jest numeryczny, to zgłaszany był błąd <constant>E_WARNING</constant>
+      i zwracana była wartość <literal>0</literal>.
+     </simpara>
+    </listitem>
+   </itemizedlist>
+   Przed PHP 7.1.0 nie byl zgłaszany <constant>E_NOTICE</constant>
+   ani <constant>E_WARNING</constant>.
+  </para>
+
+  <informalexample>
+   <programlisting role="php">
+<![CDATA[
+<?php
+$foo = 1 + "10.5";                // $foo to float (11.5)
+$foo = 1 + "-1.3e3";              // $foo to float (-1299)
+$foo = 1 + "bob-1.3e3";           // TypeError as of PHP 8.0.0, $foo to wcześniej integer (1)
+$foo = 1 + "bob3";                // TypeError as of PHP 8.0.0, $foo to wcześniej integer (1)
+$foo = 1 + "10 Small Pigs";       // $foo to integer (11) i od PHP 8.0 zgłaszany jest E_WARNING, wcześniej E_NOTICE
+$foo = 4 + "10.2 Little Piggies"; // $foo to float (14.2) i od PHP 8.0 zgłaszany jest E_WARNING, wcześniej E_NOTICE
+$foo = "10.0 pigs " + 1;          // $foo to float (11) i od PHP 8.0 zgłaszany jest E_WARNING, wcześniej E_NOTICE
+$foo = "10.0 pigs " + 1.0;        // $foo to float (11) i od PHP 8.0 zgłaszany jest E_WARNING, wcześniej E_NOTICE
+?>
+]]>
+   </programlisting>
+  </informalexample>
+ </sect2>
+</sect1>
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
