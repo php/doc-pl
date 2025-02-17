@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 84b8fca68fc762fefe85acde180a38b2e77a28b9 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 30c0106d51ac2786b81b27709ca88f1daf07e716 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 
 <sect1 xml:id="function.require" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -8,10 +8,10 @@
  
  <para>
   <literal>require</literal> działa identycznie jak <function>include</function>,
-  z tą różnicą, że w razie błędu generuje <constant>E_COMPILE_ERROR</constant>.
-  Innymi słowy, skrypt zostanie zatrzymany, podczas gdy
-  <function>include</function> wywoła jedynie ostrzeżenie
-  (<constant>E_WARNING</constant>), które pozwala na kontynuowanie skryptu.
+  z tą różnicą, że w razie błędu rzuca wyjątek <classname>Error</classname>
+  (błąd o poziomie <constant>E_COMPILE_ERROR</constant> przed
+  PHP 8.0.0) podczas gdy <function>include</function> wywoła jedynie ostrzeżenie
+  (<constant>E_WARNING</constant>).
  </para>
  <para>
   Zobacz dokumentację <function>include</function>, aby dowiedzieć się więcej.

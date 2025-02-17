@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 3ba15fd3dfb8196a1762b1a21a14311e0279284b Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: 651fad6c6677036edd2871bb78199e17586a3acd Maintainer: joeaccord Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: leszek, sobak, grzesiek -->
 <refentry xml:id="function.array-unique" xmlns="http://docbook.org/ns/docbook">
@@ -21,13 +21,13 @@
   </para>
   <para>
    Zauważ, że klucze są zachowywane. Jeśli wiele elementów porównywanych jest
-   równych w ramach danego parmetru <parameter>flags</parameter>, wówczas klucz
+   równych w ramach danego parametru <parameter>flags</parameter>, wówczas klucz
    i wartość pierwszego równego elementu zostaną zachowane.
   </para>
   <note>
    <simpara>
     Dwa elementy tablicy są uważane za równe wtedy i tylko wtedy jeśli
-    <literal>(string) $elem1 === (string) $elem2</literal>, to znaczy gdy
+    <literal>(string) $elem1 === (string) $elem2</literal>, to znaczy, gdy
     reprezentacje jako ciąg znaków są takie same, to użyty będzie pierwszy element.
    </simpara>
   </note>
@@ -121,9 +121,11 @@
     <programlisting role="php">
 <![CDATA[
 <?php
-$input = array ("a" => "green", "red", "b" => "green", "blue", "red");
+
+$input = ["a" => "green", "red", "b" => "green", "blue", "red"];
 $result = array_unique ($input);
 print_r($result);
+
 ?>
 ]]>
     </programlisting>
@@ -146,9 +148,11 @@ Array
     <programlisting role="php">
 <![CDATA[
 <?php
-$input = array(4, "4", "3", 4, 3, "3");
+
+$input = [4, "4", "3", 4, 3, "3"];
 $result = array_unique($input);
 var_dump($result);
+
 ?>
 ]]>
     </programlisting>

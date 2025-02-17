@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: ddb05f8827151e25dd1c3e058f95f6c024bc881b Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 3295741565f760edd22e305bd10e37f243e9e194 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: qrak -->
 <refentry xml:id="function.bcadd" xmlns="http://docbook.org/ns/docbook">
@@ -42,7 +42,17 @@
       </para>
      </listitem>
     </varlistentry>
-    &bc.scale.description;
+    <varlistentry xmlns="http://docbook.org/ns/docbook"><term>
+     <parameter>scale</parameter></term>
+     <listitem>
+      <para>
+       Ten parametr służy do ustawienia liczby cyfr po kropce w wyniku.
+       Jeśli zostanie ustawiony na &null;, to funkcja użyje domyślnej skali ustawionej funkcją <function>bcscale</function>
+       lub alternatywnie skorzysta z wartości
+       dyrektywy INI <link linkend="ini.bcmath.scale"><literal>bcmath.scale</literal></link>.
+      </para>
+     </listitem>
+    </varlistentry>
    </variablelist>
   </para>
  </refsect1>
@@ -117,6 +127,7 @@ echo bcadd($a, $b, 4);  // 6.2340
   <para>
    <simplelist>
     <member><function>bcsub</function></member>
+    <member><methodname>BcMath\Number::add</methodname></member>
    </simplelist>
   </para>
  </refsect1>
