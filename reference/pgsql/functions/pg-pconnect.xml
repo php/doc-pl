@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: c2eca73ef79ebe78cebb34053e41b565af504c4f Maintainer: joeaccord Status: ready -->
+<!-- EN-Revision: 3b2503bdcbbffc9bd1381078ee06c298d4f8a49a Maintainer: joeaccord Status: ready -->
 <!-- $Revision$-->
 <!-- splitted from ./en/functions/pgsql.xml, last change in rev 1.82 -->
 <!-- CREDITS: jarek, garbus -->
@@ -34,10 +34,9 @@
    na &quot;On&quot; (jest to ustawienie domyślne).
    Maksymalna liczba jednoczesnych trwałych połączeń może być zdefiniowana przez
    dyrektywę <link linkend="ini.pgsql.max-persistent">pgsql.max_persistent</link> w &php.ini;
-   (domyślnia wartość to -1 oznacza brak ograniczeń). Maksymalna liczba wszystkich połączeń
-   może być ustawiona przez dyrektywę <link
-   linkend="ini.pgsql.max-links">pgsql.max_links</link>
-   w &php.ini;.
+   (domyślna wartość to -1 oznacza brak ograniczeń).
+   Maksymalna liczba wszystkich połączeń może być ustawiona przez dyrektywę
+   <link linkend="ini.pgsql.max-links">pgsql.max_links</link>.
   </para>
   <para>
    <function>pg_close</function> nie zamyka trwałych połączeń otwartych przez
@@ -56,10 +55,10 @@
        Parametr <parameter>łańcuch_połączenia</parameter> może zostać pusty w celu użycia domyślnych parametrów, lub
        może zawierać jedno, lub więcej ustawień oddzielonych spacją.
        Każde ustawienie ma format <literal>klucz = wartość</literal>. Spacje po obu stronach
-       znaku równości są opcjonalne. Aby stworzyć wartość pustą, lub
-       zawierającą spacje, otocz ją pojedynczymi znakami cudzysłowia, np. <literal>klucz =
-       'wartość'</literal>. Pojedyncze cudzysłowy, oraz backslashe wewnątrz wartości muszą być
-       poprzedzone znakiem ucieczki "\", np., \' oraz \\.
+       znaku równości są opcjonalne. Aby stworzyć wartość pustą lub
+       zawierającą spacje, otocz ją pojedynczymi znakami cudzysłowu, np. <literal>klucz =
+       'wartość'</literal>. Pojedyncze cudzysłowy oraz backslashe wewnątrz wartości muszą być
+       poprzedzone znakiem ucieczki "\", tj., <literal>\'</literal> oraz <literal>\\</literal>.
       </para>
       <para>
        Aktualnie rozpoznawanymi parametrami są:
@@ -68,8 +67,8 @@
        <parameter>password</parameter>, <parameter>connect_timeout</parameter>,
        <parameter>options</parameter>, <parameter>tty</parameter> (ignorowany), <parameter>sslmode</parameter>
        <parameter>requiressl</parameter> (zdeprecjonowany na korzyść <parameter>sslmode</parameter>), oraz
-       <parameter>service</parameter>.  Niektóre z tych argumentów są zależne
-       od używanej wersji PostgreSQL.
+       <parameter>service</parameter>.
+       To które z parametrów istnieją, zależy od używanej wersji PostgreSQL.
       </para>
      </listitem>
     </varlistentry>
@@ -125,18 +124,18 @@
     <programlisting role="php">
 <![CDATA[
 <?php
+// Połączenie z bazą o nazwie "mary"
 $polaczenie = pg_pconnect("dbname=mary");
-//Połączenie z bazą o nazwie "mary"
 
+// Połączenie z bazą o nazwie "mary" na "localhost" portem "5432"
 $polaczenie2 = pg_pconnect("host=localhost port=5432 dbname=mary");
-//Połączenie z bazą o nazwie "mary" na "localhost" portem "5432"
 
+// Połączenie z bazą o nazwie "mary" na hoście "owca" z nazwą użytkownika i hasłem
 $polaczenie3 = pg_pconnect("host=owca port=5432 dbname=mary user=jagnie password=foo");
-//Połączenie z bazą o nazwie "mary" na hoście "owca" z nazwą użytkownika i hasłem
 
+// Połączenie z bazą o nazwie "test" na hoście "owca" z nazwą użytkownika i hasłem
 $lancuch_polaczenia = "host=owca port=5432 dbname=test user=jagnie password=bar";
 $polaczenie4 = pg_pconnect($lancuch_polaczenia);
-//Połączenie z bazą o nazwie "test" na hoście "owca" z nazwą użytkownika i hasłem
 ?>
 ]]>
     </programlisting>

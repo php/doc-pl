@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: e095023e408c8cb6378ae16bb6870343a3946919 Maintainer: sMeRFx Status: ready -->
+<!-- EN-Revision: a6ee935b0e0416084509e2c82ecea0578c7f40cc Maintainer: sMeRFx Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.wordwrap" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
@@ -19,6 +19,8 @@
   <para>
    Zawija ciąg znaków po podanej liczbie znaków używając znaku
    łamania łańcucha.
+   Ciągi znaków zawijane są po znaku spacji (U+0020), chyba że parametr <parameter>cut_long_words</parameter>
+   jest ustawiony na &true;.
   </para>
  </refsect1>
 
@@ -46,8 +48,8 @@
      <term><parameter>break</parameter></term>
      <listitem>
       <para>
-       Przełamanie linii odbywa się przy użyciu
-       opcjonalnego parametru <parameter>break</parameter>.
+       Przełamanie linii odbywa się przy użyciu opcjonalnego parametru <parameter>break</parameter>.
+       Nie może być on pusty.
       </para>
      </listitem>
     </varlistentry>
@@ -72,6 +74,38 @@
   <para>
    Zwraca przekazany ciąg znaków zawinięty po określonej długości.
   </para>
+ </refsect1>
+
+ <refsect1 role="errors">
+  &reftitle.errors;
+  <simpara>
+   Jeżeli parametr <parameter>break</parameter> jest pustym ciągiem znaków,
+   to rzucany jest <classname>ValueError</classname>.
+  </simpara>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>8.0.0</entry>
+      <entry>
+       Jeżeli parametr <parameter>break</parameter> jest pustym ciągiem znaków,
+       to rzucany jest <classname>ValueError</classname>.
+       Wcześniej w tym wypadku funkcja zgłaszała błąd o poziomie <constant>E_WARNING</constant> i zwracała &false;.
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </informaltable>
  </refsect1>
 
  <refsect1 role="examples">
