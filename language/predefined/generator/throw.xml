@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 8fee3ae9715ffa15922469eb7d98f4878917a6ee Maintainer: grzesiek Status: ready -->
+<!-- $Revision$ -->
+<refentry xml:id="generator.throw" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <refnamediv>
+  <refname>Generator::throw</refname>
+  <refpurpose>Zgłasza wyjątek do generatora</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis role="Generator">
+   <modifier>public</modifier> <type>mixed</type><methodname>Generator::throw</methodname>
+   <methodparam><type>Throwable</type><parameter>exception</parameter></methodparam>
+  </methodsynopsis>
+  <para>
+   Zgłasza wyjątek w generatorze i wznawia jego wykonywanie. 
+   Zachowanie będzie takie samo, jak gdyby bieżące wyrażenie &yield; zostało zastąpione instrukcją
+   <literal>throw $exception</literal>.
+  </para>
+  <para>
+   Jeśli generator jest już zamknięty w momencie wywołania tej metody, wyjątek będzie
+   zgłaszany w kontekście wywołującego.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <variablelist>
+   <varlistentry>
+    <term><parameter>exception</parameter></term>
+    <listitem>
+     <para>
+      Wyjątek zgłaszany do generatora.
+     </para>
+    </listitem>
+   </varlistentry>
+  </variablelist>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca uzyskaną wartość.
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+  &reftitle.examples;
+  <para>
+   <example>
+    <title>Zgłaszanie wyjątku do generatora</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+function gen() {
+    echo "Foo\n";
+    try {
+        yield;
+    } catch (Exception $e) {
+        echo "Exception: {$e->getMessage()}\n";
+    }
+    echo "Bar\n";
+}
+ 
+$gen = gen();
+$gen->rewind();
+$gen->throw(new Exception('Test'));
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+Foo
+Exception: Test
+Bar
+]]>
+    </screen>
+   </example>
+  </para>
+ </refsect1>
+</refentry>
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
