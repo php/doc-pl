@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: fd65805e83f7dc3b12ab5844cafc4489dc367a27 Maintainer: sobak Status: ready -->
-<!-- $Revision$ -->
+<!-- EN-Revision: c558c3af38874a913c7515bbd49aaf2e689cbdd0 Maintainer: sobak Status: ready -->
 <!-- CREDITS: dombal -->
 <refentry xml:id="function.is-a" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
@@ -89,6 +88,15 @@ if (is_a($WF, 'WidgetFactory')) {
     <programlisting role="php">
 <![CDATA[
 <?php
+// zdefiniuj klasę
+class WidgetFactory
+{
+  var $oink = 'moo';
+}
+
+// stwórz nowy obiekt
+$WF = new WidgetFactory();
+
 if ($WF instanceof WidgetFactory) {
     echo 'Tak, $WF jest obiektem WidgetFactory';
 }

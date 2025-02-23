@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: de35b538453a7817a0cc839cddda0be46eed8764 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: ae148826a6830492a51e47f21e1ad4f80373f2a6 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.number-format" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
@@ -40,6 +40,11 @@
        Ustawia liczbę cyfr po przecinku.
        Jeśli <literal>0</literal>, <parameter>decimal_separator</parameter> jest
        pomijany z wartości zwracanej.
+       Od PHP 8.3.0 kiedy wartość jest ujemna, <parameter>num</parameter>
+       jest zaokrąglane do ilości cyfr znaczących oznaczonych przez <parameter>decimals</parameter> przed
+       kropką dziesiętną.
+       Przed PHP 8.3.0 ujemne wartości były ignorowane i obsługiwane
+       tak samo jak <literal>0</literal>.
       </para>
      </listitem>
     </varlistentry>
@@ -82,6 +87,12 @@
       </row>
      </thead>
      <tbody>
+      <row>
+       <entry>8.3.0</entry>
+       <entry>
+        Dodano obsługę ujemnych wartości dla parametru <parameter>decimals</parameter>.
+       </entry>
+      </row>
       <row>
        <entry>8.0.0</entry>
        <entry>
@@ -138,6 +149,32 @@ $english_format_number = number_format($number, 2, '.', '');
     </programlisting>
    </example>
   </para>
+  <example>
+   <title>Ujemna wartość dla parametru <parameter>decimals</parameter></title>
+   <simpara>
+    Od PHP 8.3.0 ujemna wartość dla <parameter>decimals</parameter>
+    jest używana do zaokrąglenia liczby cyfr znaczących przed kropką
+    dziesiętną.
+   </simpara>
+   <programlisting role="php">
+    <![CDATA[
+<?php
+$number = "1234.5678";
+var_dump(number_format($number, -1));
+var_dump(number_format($number, -2));
+var_dump(number_format($number, -3));
+?>
+]]>
+   </programlisting>
+   &example.outputs;
+   <screen>
+    <![CDATA[
+string(5) "1,230"
+string(5) "1,200"
+string(5) "1,000"
+]]>
+   </screen>
+  </example>
  </refsect1>
 
  <refsect1 role="seealso">

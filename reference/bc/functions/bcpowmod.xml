@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: cbac1ecf71d754707d69bdc344c4031c157eaa54 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 3295741565f760edd22e305bd10e37f243e9e194 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
-<refentry xml:id="function.bcpowmod" xmlns="http://docbook.org/ns/docbook">
+<refentry xml:id="function.bcpowmod" xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude">
  <refnamediv>
   <refname>bcpowmod</refname>
   <refpurpose>Podnosi liczbę o dużej precyzji do potęgi i wykonuje dzielenie modulo</refpurpose>
@@ -52,7 +52,7 @@
       </para>
      </listitem>
     </varlistentry>
-    &bc.scale.description;
+    <xi:include xpointer="function.bcadd..parameters.scale" />
    </variablelist>
   </para>
  </refsect1>
@@ -60,9 +60,25 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   Zwraca wynik jako ciąg znaków lub &false; jeśli parametr <parameter>modulus</parameter>
-   wynosi <literal>0</literal>, lub parametr <parameter>exponent</parameter> jest ujemny.
+   Zwraca wynik jako ciąg znaków.
   </para>
+ </refsect1>
+
+ <refsect1 role="errors">
+  &reftitle.errors;
+  <para>
+   Ta funkcja rzuca <exceptionname>ValueError</exceptionname> w następujących wypadkach:
+   <simplelist>
+    <member><parameter>num</parameter>, <parameter>exponent</parameter> lub <parameter>modulus</parameter> nie są poprawnie sformatowanymi dla BCMath ciągami numerycznymi</member>
+    <member><parameter>num</parameter>, <parameter>exponent</parameter> lub <parameter>modulus</parameter> mają część ułamkową</member>
+    <member><parameter>exponent</parameter> ma wartość ujemną</member>
+    <member><parameter>scale</parameter> jest poza poprawnym zakresem</member>
+   </simplelist>
+  </para>
+  <simpara>
+   Ta funkcja rzuca wyjątek <exceptionname>DivisionByZeroError</exceptionname> jeśli <parameter>modulus</parameter>
+   wynosi <literal>0</literal>.
+  </simpara>
  </refsect1>
 
  <refsect1 role="changelog">
@@ -80,6 +96,18 @@
       <entry>8.0.0</entry>
       <entry>
        Parametr <parameter>scale</parameter> dopuszcza teraz &null;.
+      </entry>
+     </row>
+     <row>
+      <entry>8.0.0</entry>
+      <entry>
+       Od teraz rzucany jest <exceptionname>ValueError</exceptionname> zamiast zwrócenia &false; jeśli <parameter>exponent</parameter> jest ujemną wartością.
+      </entry>
+     </row>
+     <row>
+      <entry>8.0.0</entry>
+      <entry>
+       Dzielenie przez <literal>0</literal> rzuca teraz wyjątek <exceptionname>DivisionByZeroError</exceptionname> zamiast zwracać &false;.
       </entry>
      </row>
     </tbody>
@@ -126,6 +154,7 @@ $b = bcmod(bcpow($x, $y), $mod);
    <simplelist>
     <member><function>bcpow</function></member>
     <member><function>bcmod</function></member>
+    <member><methodname>BcMath\Number::powmod</methodname></member>
    </simplelist>
   </para>
  </refsect1>

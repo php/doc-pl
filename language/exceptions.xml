@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: f4f96ef8b2a95283c92ea2183fe1dedf06f3ad22 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 844190217fcb8ad1d0790ef5a90f7c18fa9d1a9d Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <chapter xml:id="language.exceptions" xmlns="http://docbook.org/ns/docbook">
  <title>Wyjątki</title>
@@ -327,6 +327,12 @@ try {
 ?>
 ]]>
    </programlisting>
+   &example.outputs;
+   <screen>
+<![CDATA[
+Został rzucony konkretny wyjątek, ale nie interesują nas szczegóły.
+]]>
+   </screen>
   </example>
   <example>
    <title>Throw jako wyrażenie</title>
@@ -339,6 +345,10 @@ function test() {
     zrob_cos_ryzykownego() or throw new Exception('Nie zadziałało');
 }
 
+function zrob_cos_ryzykownego() {
+    return false; // Zasymuluj niepowodzenie
+}
+
 try {
     test();
 } catch (Exception $e) {
@@ -347,6 +357,12 @@ try {
 ?>
 ]]>
    </programlisting>
+   &example.outputs;
+   <screen>
+<![CDATA[
+Nie zadziałało
+]]>
+   </screen>
   </example>
  </sect1>
 
