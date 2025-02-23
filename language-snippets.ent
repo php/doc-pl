@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: c75f19c74fa3b64abfafd7a35aaa652b07834a5a Maintainer: sobak Status: wip -->
+<!-- EN-Revision: 3295741565f760edd22e305bd10e37f243e9e194 Maintainer: sobak Status: wip -->
 <!-- $Revision$ -->
 <!-- CREDITS: leszek, adi, cyb0org, joeaccord -->
 <!-- TODO: Nieliczne sekcje opisane przez "TODO DOKOŃCZYĆ" nie są faktycznie przetłumaczone na j. polski. Pomoc mile widziana -->
@@ -793,13 +793,7 @@ w <envar xmlns="http://docbook.org/ns/docbook">PATH</envar> systemu), ale nie je
 <!ENTITY style.oop 'Styl obiektowy'>
 <!ENTITY style.procedural 'Styl proceduralny'>
 
-<!ENTITY resource '<link xmlns="http://docbook.org/ns/docbook" linkend="language.types.resource">zasób</link>'>
-
-<!ENTITY foreach '<link xmlns="http://docbook.org/ns/docbook" linkend="control-structures.foreach">foreach</link>'>
-
 <!ENTITY match '<link xmlns="http://docbook.org/ns/docbook" linkend="control-structures.match">match</link>'>
-
-<!ENTITY yield '<link xmlns="http://docbook.org/ns/docbook" linkend="control-structures.yield">yield</link>'>
 
 <!ENTITY parameter.context 'Opis <link xmlns="http://docbook.org/ns/docbook" linkend="context">kontekstów</link>
 podano w części podręcznika poświęconej <literal xmlns="http://docbook.org/ns/docbook">kontekstom</literal>.'>
@@ -859,8 +853,10 @@ funkcję.</simpara></warning>'>
 <!ENTITY standard.changelog.binary-safe-string-comparison '<row xmlns="http://docbook.org/ns/docbook">
  <entry>8.2.0</entry>
  <entry>
-  Ta funkcja zwraca teraz <literal>-1</literal> lub <literal>1</literal>,
-  podczas gdy wcześniej zwracała ona liczbę ujemną lub dodatnią.
+  Ta funkcja nie gwarantuje już zwrócenia
+  <code>strlen($string1) - strlen($string2)</code> gdy długości ciągów znaków
+  nie są równe, ale może teraz zwrócić <literal>-1</literal> lub
+  <literal>1</literal>.
  </entry>
 </row>
 '>
@@ -1647,31 +1643,62 @@ linkend="domnode.appendchild">DOMNode::appendChild()</link>.'>
 
 <!ENTITY dom.malformederror '<para xmlns="http://docbook.org/ns/docbook">Podczas gdy nieprawidłowy kod HTML powinien zostać załadowany poprawnie, ta funkcja może wygenerować błąd poziomu <constant>E_WARNING</constant> po napotkaniu nieprawidłowej składni. Do poprawnej obsługi tych błędów można zastosować <link linkend="function.libxml-use-internal-errors">funkcje obsługi błędów biblioteki libxml</link>.</para>'>
 <!ENTITY dom.note.utf8 '<note xmlns="http://docbook.org/ns/docbook"><para>Rozszerzenie DOM używa kodowania UTF-8. Skorzystaj z <function>mb_convert_encoding</function>, <methodname>UConverter::transcode</methodname> lub <function>iconv</function> aby obsłużyć inne kodowania.</para></note>'>
+<!ENTITY dom.note.modern.utf8 '<note xmlns="http://docbook.org/ns/docbook">
+ <simpara>
+  Rozszerzenie DOM używa kodowania UTF-8 podczas pracy z metodami lub właściwościami.
+  Metody parsera automatycznie wykrywają kodowanie lub pozwalają wywołującemu na określenie kodowania.
+ </simpara>
+</note>'>
 <!ENTITY dom.note.json '<note xmlns="http://docbook.org/ns/docbook"><para>Jeśli użyte zostanie <function>json_encode</function> na obiekcie <classname>DOMDocument</classname>, to wynik będzie taki, jak gdyby zakodowano pusty obiekt.</para></note>'>
 <!ENTITY dom.domdocument.html5 '<warning xmlns="http://docbook.org/ns/docbook">
- <para>
+ <simpara>
+  Użyj <classname>Dom\HTMLDocument</classname> zamiast <classname>DOMDocument</classname>,
+  aby sparsować i przetworzyć nowoczesny HTML.
+ </simpara>
+ <simpara>
   Ta funkcja parsuje podane wejście przy użyciu parsera HTML 4. Reguły parsowania
   HTML, których używają nowoczesne przeglądarki, są inne. Zależnie
   od podanego wejścia może to skutkować inną strukturą DOM. W związku z tym
   ta funkcja nie może być bezpiecznie użyta do oczyszczania HTML.
- </para>
- <para>
+ </simpara>
+ <simpara>
   Zachowanie podczas parsowania HTML może zależeć od użytej wersji biblioteki
   <literal>libxml</literal>, w szczególności jeśli chodzi o
   przypadki brzegowe i obsługę błędów.
   Aby skorzystać z parsowania zgodnego ze specyfikacją HTML 5,
   użyj metod <methodname>Dom\HTMLDocument::createFromString</methodname> lub
   <methodname>Dom\HTMLDocument::createFromFile</methodname> dodanych w PHP 8.4.
- </para>
- <para>
+</simpara>
+ <simpara>
   Przykładowo, niektóre elementy HTML niejawnie zamykają element rodzica
   po ich napotkaniu. Reguły dla automatycznego zamykania elementów rodzica
   różnią się między HTML 4 a HTML 5, a zatem wynikowa struktura DOM, którą
   reprezentuje <classname>DOMDocument</classname> może być inna niż struktura DOM
   widziana przez przeglądarkę, potencjalnie pozwalając atakującemu na
   popsucie wynikowego HTML.
- </para>
+ </simpara>
 </warning>'>
+<!ENTITY dom.tokenlist.errors '<itemizedlist xmlns="http://docbook.org/ns/docbook">
+ <listitem>
+  <simpara>
+   Rzuca <exceptionname>ValueError</exceptionname> jeśli
+   token zawiera jakiekolwiek bajty null.
+  </simpara>
+ </listitem>
+ <listitem>
+  <simpara>
+   Rzuca <exceptionname>Dom\DOMException</exceptionname> z kodem
+   <constant>Dom\SYNTAX_ERR</constant> jeśli token jest pustym stringiem.
+  </simpara>
+ </listitem>
+ <listitem>
+  <simpara>
+   Rzuca <exceptionname>Dom\DOMException</exceptionname> z kodem
+   <constant>Dom\INVALID_CHARACTER_ERR</constant> jeśli token zawiera jakiekolwiek
+   białe znaki ASCII.
+  </simpara>
+ </listitem>
+</itemizedlist>'>
 
 <!-- Dom Examples -->
 <!ENTITY dom.book.example '<para xmlns="http://docbook.org/ns/docbook">Poniższe przykłady stosują <filename>book.xml</filename> który zawiera poniższe dane:</para>
@@ -1713,6 +1740,28 @@ linkend="domnode.appendchild">DOMNode::appendChild()</link>.'>
   dla <link linkend="libxml.constants">stałych opcji libxml</link>.
 </para>'>
 
+<!ENTITY dom.parameter.compliant.options '&dom.parameter.options;
+ <simpara xmlns="http://docbook.org/ns/docbook">
+  Można też przekazać <constant>Dom\HTML_NO_DEFAULT_NS</constant>,
+  aby wyłączyć użycie przestrzeni nazw HTML i tagu template.
+  Powinno się z tego korzystać tylko jeśli rozumie się skutki.
+</simpara>'>
+
+<!ENTITY dom.parameter.compliant.encoding '<simpara xmlns="http://docbook.org/ns/docbook">
+ Kodowanie, w którym został stworzony dokument.
+ Jeśli nie zostało podane, to zostanie podjęta próba określenia najbardziej prawdopodobnego kodowania.
+</simpara>'>
+
+<!ENTITY dom.parser.compliant.note.whitespace '<refsect1 role="notes" xmlns="http://docbook.org/ns/docbook">
+ &reftitle.notes;
+ <note>
+  <simpara>
+   Białe znaki w znacznikach <literal>html</literal> i <literal>head</literal>
+   nie są uznawane za znaczące i mogą stracić ich formatowanie.
+  </simpara>
+ </note>
+</refsect1>'>
+
 <!ENTITY dom.parameters.register_node_ns '<varlistentry xmlns="http://docbook.org/ns/docbook">
  <term><parameter>registerNodeNS</parameter></term>
  <listitem>
@@ -1723,6 +1772,14 @@ linkend="domnode.appendchild">DOMNode::appendChild()</link>.'>
   </para>
  </listitem>
 </varlistentry>'>
+
+<!ENTITY dom.parameters.serialize.options '<simpara xmlns="http://docbook.org/ns/docbook">
+ Dodatkowe opcje.
+ Opcje <constant>LIBXML_NOEMPTYTAG</constant>
+ i <constant>LIBXML_NOXMLDECL</constant> są obsługiwane.
+ Przed PHP 8.3.0 obsługiwana była tylko opcja
+ <constant>LIBXML_NOEMPTYTAG</constant>
+</simpara>'>
 
 <!ENTITY dom.errors.hierarchy.parent '<varlistentry xmlns="http://docbook.org/ns/docbook">
  <term><constant>DOM_HIERARCHY_REQUEST_ERR</constant></term>
@@ -1755,6 +1812,27 @@ linkend="domnode.appendchild">DOMNode::appendChild()</link>.'>
   </para>
  </listitem>
 </varlistentry>'>
+
+<!ENTITY dom.errors.compliant.wrong_document '<listitem xmlns="http://docbook.org/ns/docbook">
+ <simpara>
+  Rzuca <exceptionname>Dom\DOMException</exceptionname> z kodem
+  <constant>Dom\WRONG_DOCUMENT_ERR</constant> jeśli <parameter>node</parameter>
+  pochodzi z innego dokumentu.
+ </simpara>
+</listitem>'>
+
+<!ENTITY dom.errors.compliant.common '<listitem xmlns="http://docbook.org/ns/docbook">
+ <simpara>
+  Rzuca <exceptionname>ValueError</exceptionname> jeśli
+  <parameter>options</parameter> zawiera niepoprawne opcje.
+ </simpara>
+</listitem>
+<listitem>
+ <simpara>
+  Rzuca <exceptionname>ValueError</exceptionname> jeśli
+  <parameter>overrideEncoding</parameter> jest nieznanym kodowaniem.
+ </simpara>
+</listitem>'>
 
 <!ENTITY dom.changelog.previous_hierarchy_exception 'Poprzednio rzucany był wyjątek
  <classname xmlns="http://docbook.org/ns/docbook">DOMException</classname> z kodem
@@ -1818,8 +1896,14 @@ jest zazwyczaj tworzony poprzez funkcję <function xmlns="http://docbook.org/ns/
 <!ENTITY haru.error '<para xmlns="http://docbook.org/ns/docbook">Zgłasza wyjątek <classname xmlns="http://docbook.org/ns/docbook">HaruException</classname> gdy wystąpi błąd.</para>'>
 
 <!-- ODBC -->
-<!ENTITY odbc.connection.id '<para xmlns="http://docbook.org/ns/docbook">Identyfikator połączenia ODBC.
+<!ENTITY odbc.connection.id '<para xmlns="http://docbook.org/ns/docbook">Obiekt połączenia ODBC.
 Zobacz opis funkcji <function xmlns="http://docbook.org/ns/docbook">odbc_connect</function> aby poznać szczegóły.</para>'>
+
+<!ENTITY odbc.result.object 'Obiekt wyniku ODBC'>
+
+<!ENTITY odbc.result.object-return 'Zwraca obiekt wyniku ODBC '>
+
+<!ENTITY odbc.result.object-return-falseforfailure '&odbc.result.object-return;&return.falseforfailure;.'>
 
 <!ENTITY odbc.parameter.catalog 'Katalog (&apos;qualifier&apos; w terminologii ODBC 2).'>
 
@@ -1830,6 +1914,66 @@ Zobacz opis funkcji <function xmlns="http://docbook.org/ns/docbook">odbc_connect
 oraz <literal xmlns="http://docbook.org/ns/docbook">_</literal> - dopasowanie oznacza jeden znak.'>
 
 <!ENTITY odbc.result.driver-specific 'Sterowniki mogą zgłosić dodatkowe kolumny.'>
+
+<!ENTITY odbc.changelog.connection-param '<row xmlns="http://docbook.org/ns/docbook">
+ <entry>8.4.0</entry>
+ <entry>
+  <parameter>odbc</parameter> oczekuje teraz instancji <classname>Odbc\Connection</classname>,
+  wcześniej oczekiwany byl typ <type>resource</type>.
+ </entry>
+</row>'>
+
+<!ENTITY odbc.changelog.connection-return '&odbc.changelog.connection-param;
+ <row xmlns="http://docbook.org/ns/docbook">
+  <entry>8.4.0</entry>
+  <entry>
+   Ta funkcja zwraca teraz instancję <classname>Odbc\Connection</classname>,
+   wcześniej zwracany był typ <type>resource</type>.
+  </entry>
+ </row>'>
+
+<!ENTITY odbc.changelog.credential-params '<row xmlns="http://docbook.org/ns/docbook">
+  <entry>8.4.0</entry>
+  <entry>
+   <parameter>user</parameter> i <parameter>password</parameter> dopuszczają teraz null,
+   są teraz też opcjonalne a ich wartość domyślna to &null;.
+  </entry>
+ </row>
+ <row xmlns="http://docbook.org/ns/docbook">
+  <entry>8.4.0</entry>
+  <entry>
+   Wcześniej użycie pustego ciągu dla parametru <parameter>password</parameter> nie uwzględniało
+   <literal>pwd</literal> w wygenerowanym ciągu połączenia dla <parameter>dsn</parameter>.
+   Teraz generowany ciąg zawiera <literal>pwd</literal>, którego wartością jest pusty ciąg znaków.
+   Aby przywrócić poprzednie zachowanie, parametr <parameter>password</parameter> można teraz ustawić na &null;.
+  </entry>
+ </row>
+ <row xmlns="http://docbook.org/ns/docbook">
+  <entry>8.4.0</entry>
+  <entry>
+   Wcześniej jeśli <parameter>dsn</parameter> zawierał <literal>uid</literal> lub <literal>pwd</literal>
+   to parametry <parameter>user</parameter> i <parameter>password</parameter> były ignorowane.
+   Teraz <parameter>user</parameter> jest ignorowany tylko jeśli <parameter>dsn</parameter> zawiera
+   <literal>uid</literal>, a <parameter>password</parameter>  jest ignorowany tylko jeśli
+   <parameter>dsn</parameter> zawiera <literal>pwd</literal>.
+  </entry>
+ </row>'>
+
+<!ENTITY odbc.changelog.result-param '<row xmlns="http://docbook.org/ns/docbook">
+ <entry>8.4.0</entry>
+ <entry>
+  <parameter>statement</parameter> oczekuje teraz instancji <classname>Odbc\Result</classname>,
+  wcześniej oczekiwany był typ <type>resource</type>.
+ </entry>
+</row>'>
+
+<!ENTITY odbc.changelog.result-return '<row xmlns="http://docbook.org/ns/docbook">
+ <entry>8.4.0</entry>
+ <entry>
+  Ta funkcja zwraca teraz instancję <classname>Odbc\Result</classname>,
+  wcześniej zwracany był typ <type>resource</type>.
+ </entry>
+</row>'>
 
 <!-- OAUTH -->
 <!ENTITY oauth.callback.error 'Zgłasza błąd <constant xmlns="http://docbook.org/ns/docbook">E_ERROR</constant>
@@ -2146,13 +2290,6 @@ Windows posiada wbudowaną obsługę dla tego rozszerzenia. Nie trzeba ładować
 <!ENTITY safemode '<link xmlns="http://docbook.org/ns/docbook" linkend="ini.safe-mode">tryb bezpieczny</link>'>
 
 <!ENTITY sqlsafemode '<link xmlns="http://docbook.org/ns/docbook" linkend="ini.sql.safe-mode">tryb bezpieczny SQL</link>'>
-
-<!-- BCMath Notes -->
-<!ENTITY bc.scale.description '<varlistentry xmlns="http://docbook.org/ns/docbook"><term>
-<parameter>scale</parameter></term>
-<listitem><para>Ten opcjonalny parametr służy do ustawienia liczby cyfr po kropce w wyniku. Jeśli pominięty, zostanie domyślnie
-ustawiony na skalę ustawioną globalnie przez funkcję <function>bcscale</function> lub <literal>0</literal>, jeśli nie
-zostanie ona ustawiona.</para></listitem></varlistentry>'>
 
 <!-- CTYPE Notes -->
 <!ENTITY note.ctype.parameter.integer '<note xmlns="http://docbook.org/ns/docbook"><para>
@@ -2626,6 +2763,9 @@ gdy PHP zostało skompilowane z biblioteką libxml 20620 lub nowszą.</para></ca
 <varname linkend="streamwrapper.props.context">streamWrapper::$context</varname>
 jest aktualizowana, jeśli do wywołującej funkcji jest przekazywany prawidłowy kontekst.</para></note>'>
 
+<!ENTITY stream.bucket.param '<parameter>bucket</parameter> oczekuje teraz obiektu <classname>StreamBucket</classname>, wcześniej oczekiwany był obiekt typu <classname>stdClass</classname>.'>
+<!ENTITY stream.bucket.return 'Ta funkcja zwraca teraz obiekt <classname>StreamBucket</classname>, wcześniej zwracany był obiekt typu <classname>stdClass</classname>.'>
+
 <!-- Gmagick -->
 <!ENTITY gmagick.return.success 'Zwraca &true; w przypadku powodzenia.'>
 <!ENTITY gmagick.gmagickexception.throw 'Wywołuje wyjątek
@@ -2671,19 +2811,6 @@ referencjami, muszą one być referencjami w przekazywanej liście argumentów.'
  </para>
 </listitem>
 </varlistentry>'>
-
-<!-- SPL -->
-<!ENTITY spl.datastructures.intro.title '<title xmlns="http://docbook.org/ns/docbook">Struktury danych</title>'>
-
-<!ENTITY spl.exceptions.intro.title '<title xmlns="http://docbook.org/ns/docbook">Wyjątki</title>'>
-<!ENTITY spl.exceptions.intro '
- <para xmlns="http://docbook.org/ns/docbook">
-  SPL udostępnia zestaw standardowych wyjątków.
- </para>
- <para xmlns="http://docbook.org/ns/docbook">
-  Zobacz także <xref linkend="reserved.exceptions" />.
- </para>
-'>
 
 <!ENTITY spl.files.intro.title '<title xmlns="http://docbook.org/ns/docbook">Obsługa plików</title>'>
 <!ENTITY spl.files.intro '<partintro xmlns="http://docbook.org/ns/docbook"><para xmlns="http://docbook.org/ns/docbook">SPL dostarcza kilka klas do pracy na plikach.</para></partintro>'>
@@ -4380,19 +4507,36 @@ local: {
   </para>
 '>
 
+<!ENTITY strings.comparison.return '
+  <simpara xmlns="http://docbook.org/ns/docbook">
+   Zwraca wartość mniejszą od 0 jeśli <parameter>string1</parameter>
+   jest mniejszy niż <parameter>string2</parameter>; wartość większą
+   od 0 jeśli <parameter>string1</parameter> jest większy niż
+   <parameter>string2</parameter> i <literal>0</literal> jeśli
+   są równe.
+   Poza użytym znakiem, z wartości nie można wywnioskować żadnego konkretnego
+   znaczenia.
+  </simpara>
+'>
+
 <!-- filter snippets -->
+<!-- TODO: Remove -->
 <!ENTITY filter.param.filter '
  <varlistentry xmlns="http://docbook.org/ns/docbook">
   <term><parameter>filter</parameter></term>
   <listitem>
    <para>
-    ID filtra do zastosowania. Strona <xref linkend="filter.filters" />
-    wymienia dostępne filtry.
+    Filtr do zastosowania.
+    Może być filtrem walidującym jeśli użyta zostanie jedna ze stałych
+    <constant>FILTER_VALIDATE_<replaceable>*</replaceable></constant>,
+    filtrem oczyszczającym jeśli użyta zostanie jedna ze stałych
+    <constant>FILTER_SANITIZE_<replaceable>*</replaceable></constant>,
+    filtrem <constant>FILTER_UNSAFE_RAW</constant> lub własnym filtrem przy użyciu
+    <constant>FILTER_CALLBACK</constant>.
    </para>
    <para>
-    Jeśli pominięto, zostanie użyty <constant>FILTER_DEFAULT</constant>, który jest
-    odpowiednikiem
-    <constant>FILTER_UNSAFE_RAW</constant>.
+    Domyślnym jest <constant>FILTER_DEFAULT</constant>,
+    który jest aliasem dla <constant>FILTER_UNSAFE_RAW</constant>.
     Skutkuje to domyślnym brakiem filtrowania.
    </para>
   </listitem>
