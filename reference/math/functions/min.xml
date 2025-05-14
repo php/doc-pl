@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 9d044185431afc63026546899216053820ac5d64 Maintainer: grzesiek Status: ready -->
+<!-- EN-Revision: 761d72245071f89a626903c9bcdc6aaff1252d54 Maintainer: grzesiek Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: sobak -->
 <refentry xml:id="function.min" xmlns="http://docbook.org/ns/docbook">
@@ -128,32 +128,39 @@
     <programlisting role="php">
 <![CDATA[
 <?php
-echo min(2, 3, 1, 6, 7);  // 1
-echo min(array(2, 4, 5)); // 2
+echo min(2, 3, 1, 6, 7), PHP_EOL;  // 1
+echo min(array(2, 4, 5)), PHP_EOL; // 2
 
 // Tutaj porównujemy -1 < 0, więc -1 jest najniższą wartością
-echo min('hello', -1);    // -1
+echo min('hello', -1), PHP_EOL;    // -1
 
 // W przypadku wielu tablic o różnych długościach, min zwraca najkrótszą z nich
 $val = min(array(2, 2, 2), array(1, 1, 1, 1)); // array(2, 2, 2)
+var_dump($val);
 
 // Wiele tablic o tej samej długości jest porównywanych od lewej do prawej.
 // więc w naszym przykładzie: 2 == 2, but 4 < 5
 $val = min(array(2, 4, 8), array(2, 5, 1)); // array(2, 4, 8)
+var_dump($val);
 
 // Jeśli podano zarówno tablicę, jak i nie-tablicę, tablica nigdy nie jest zwracana
 // ponieważ porównania traktują tablice jako większe niż jakakolwiek inna wartość.
 $val = min('string', array(2, 5, 7), 42);   // string
+var_dump($val);
 
 // Jeśli jednym z argumentów jest NULL lub wartość logiczna, zostanie ona porównana z
 // innymi wartościami przy użyciu reguł FALSE < TRUE i NULL == FALSE niezależnie od 
 // innych typów
 // W poniższych przykładach, zarówno -10 jak i 10 są traktowane jako TRUE w porównaniu
 $val = min(-10, FALSE, 10); // FALSE
+var_dump($val);
+
 $val = min(-10, NULL, 10);  // NULL
+var_dump($val);
 
 // 0, z drugiej strony, jest traktowane jako FALSE, więc jest „mniejsze niż” TRUE
 $val = min(0, TRUE); // 0
+var_dump($val);
 ?>
 ]]>
     </programlisting>

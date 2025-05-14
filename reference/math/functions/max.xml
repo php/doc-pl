@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 9d044185431afc63026546899216053820ac5d64 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 761d72245071f89a626903c9bcdc6aaff1252d54 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: qrak -->
 <refentry xml:id="function.max" xmlns="http://docbook.org/ns/docbook">
@@ -132,30 +132,35 @@
     <programlisting role="php">
 <![CDATA[
 <?php
-echo max(2, 3, 1, 6, 7);  // 7
-echo max(array(2, 4, 5)); // 5
+echo max(2, 3, 1, 6, 7), PHP_EOL;  // 7
+echo max(array(2, 4, 5)), PHP_EOL; // 5
 
 // W tym wypadku porównujemy -1 < 0, więc największą wartością jest 'hello'
-echo max('hello', -1);    // hello
+echo max('hello', -1), PHP_EOL;    // hello
 
 // Jeżeli podano kilka tablic o różnych długościach, max zwraca najdłuższą
 $val = max(array(2, 2, 2), array(1, 1, 1, 1)); // array(1, 1, 1, 1)
+var_dump($val);
 
 // Kilka tablic tej samej długości jest porównywanych od lewej do prawej
 // więc w naszym wypadku: 2 == 2, ale 5 > 4
 $val = max(array(2, 4, 8), array(2, 5, 1)); // array(2, 5, 1)
+var_dump($val);
 
 // Jeżeli podano tablicę i nie-tablicę, zostanie zwrócona tablica,
 // gdyż porównania traktują tablice jako większe niż inne wartości
 $val = max('string', array(2, 5, 7), 42);   // array(2, 5, 7)
+var_dump($val);
 
 // Jeśli jednym parametrem jest NULL lub wartość logiczna, zostanie ona porównana
 // do innych wartości według zasady FALSE < TRUE niezależnie od użycia innych typów
 // W poniższym przykładzie -10 jest traktowane jako TRUE przy porównaniu
 $val = max(-10, FALSE); // -10
+var_dump($val);
 
 // Z kolei 0 jest traktowane jako 0, więc jest "mniejsze" niż TRUE
 $val = max(0, TRUE); // TRUE
+var_dump($val);
 ?>
 ]]>
     </programlisting>
