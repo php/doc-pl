@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: f908fff129bcd8ec1605658e06457cb04e5b2b51 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: e587d0655e426f97b3fcb431453da5030e743b23 Maintainer: sobak Status: ready -->
 <sect1 xml:id="language.types.declarations">
  <title>Deklaracje typów</title>
 
@@ -310,6 +310,7 @@ Stack trace:
       Nie jest to zalecane, jako że gdy wartość domyślna jest zmieniana w klasie
       potomnej, to zostanie zgłoszone naruszenie kompatybilności typów, gdyż
       <type>null</type> będzie musiał być dodany do deklaracji typu.
+      To zachowanie jest także przestarzałe od wersji PHP 8.4.
      </para>
      <example>
       <title>Stary sposób aby pozwolić na wartości null dla argumentu</title>
@@ -603,7 +604,7 @@ NULL
 
   <example>
    <title>Deklaracja zwracanego typu dopuszczającego null</title>
-   <programlisting role="php">
+   <programlisting role="php" annotations="non-interactive">
     <![CDATA[
 <?php
 function get_item(): ?string {
@@ -620,7 +621,7 @@ function get_item(): ?string {
 
   <example>
    <title>Deklaracja typu właściwości klasy</title>
-   <programlisting role="php">
+   <programlisting role="php" annotations="non-interactive">
 <![CDATA[
 <?php
 class User {
@@ -690,7 +691,7 @@ class User {
 
   <example>
    <title>Ścisłe typowanie wartości argumentów</title>
-   <programlisting role="php">
+   <programlisting role="php" annotations="non-interactive">
 <![CDATA[
 <?php
 declare(strict_types=1);
@@ -745,7 +746,7 @@ int(3)
 
   <example>
    <title>Ścisłe typowanie zwracanych wartości</title>
-   <programlisting role="php">
+   <programlisting role="php" annotations="non-interactive">
 <![CDATA[
 <?php
 declare(strict_types=1);

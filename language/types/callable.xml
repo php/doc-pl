@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: c897161ca5a62a887295c695adc161b8fde5d772 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: e587d0655e426f97b3fcb431453da5030e743b23 Maintainer: sobak Status: ready -->
 <sect1 xml:id="language.types.callable">
  <title>Funkcje zwrotne / Callable</title>
 
@@ -70,13 +70,13 @@
 
 // Przykładowa funkcja zwrotna
 function my_callback_function() {
-    echo 'hello world!';
+    echo 'hello world!', PHP_EOL;
 }
 
 // Przykładowa metoda zwrotna
 class MyClass {
     static function myCallbackMethod() {
-        echo 'Hello World!';
+        echo 'Hello World!', PHP_EOL;
     }
 }
 
@@ -96,13 +96,13 @@ call_user_func('MyClass::myCallbackMethod');
 // Typ 5: Relatywne wywołanie statycznej metody klasy
 class A {
     public static function who() {
-        echo "A\n";
+        echo 'A', PHP_EOL;
     }
 }
 
 class B extends A {
     public static function who() {
-        echo "B\n";
+        echo 'B', PHP_EOL;
     }
 }
 
@@ -111,7 +111,7 @@ call_user_func(array('B', 'parent::who')); // Wyświetla "A", przestarzałe od P
 // Typ 6: Obiekty implementujące __invoke mogą być użyte jako funkcje zwrotne
 class C {
     public function __invoke($name) {
-        echo 'Hello ', $name, "\n";
+        echo 'Hello ', $name, PHP_EOL;
     }
 }
 

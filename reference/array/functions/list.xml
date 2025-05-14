@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 75a5125c8b8bbe3006415bdcff531735c5701bd5 Maintainer: leszek Status: ready -->
+<!-- EN-Revision: 2e60c5134e7a847c99f81eb3f7ecee1f5efeeace Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: sobak -->
 <refentry xml:id="function.list" xmlns="http://docbook.org/ns/docbook">
@@ -128,7 +128,7 @@ var_dump($bar); // NULL
   <para>
    <example>
     <title>Przykładowe użycie <function>list</function></title>
-    <programlisting role="php">
+    <programlisting role="php" annotations="non-interactive">
 <![CDATA[
 <?php
 $result = $pdo->query("SELECT id, name FROM employees");
@@ -154,6 +154,7 @@ var_dump($a, $b, $c);
 ?>
 ]]>
     </programlisting>
+    &example.outputs;
     <screen>
 <![CDATA[
 int(1)
@@ -164,12 +165,12 @@ int(3)
    </example>
   </para>
   <para>
+   Kolejność w której zdefiniowano indeksy tablicy przyjmowanej
+   przez <function>list</function> jest bez znaczenia.
+  </para>
+  <para>
    <example>
     <title><function>list</function> i kolejność definicji indeksu</title>
-    <simpara>
-     Kolejność w której zdefiniowano indeksy tablicy przyjmowanej
-     przez <function>list</function> jest bez znaczenia.
-    </simpara>
     <programlisting role="php">
 <![CDATA[
 <?php

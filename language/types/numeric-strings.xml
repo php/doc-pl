@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 7ba2406e555a240338d63f72d9ac54a46e0bee5d Maintainer: sobak Status: ready -->
+<!-- EN-Revision: e587d0655e426f97b3fcb431453da5030e743b23 Maintainer: sobak Status: ready -->
 <sect1 xml:id="language.types.numeric-strings" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <title>Numeryczne ciągi znaków</title>
  <para>
@@ -36,6 +36,9 @@ NUM_STRING       ({INT_NUM_STRING} | {FLOAT_NUM_STRING})
    Dowolny ciąg znaków zawierający literę <literal>E</literal> (bez względu na jej wielkość)
    ograniczony liczbami będzie postrzegany jako liczba wyrażona w notacji naukowej.
    Może to przynieść nieoczekiwane rezultaty.
+  </para>
+  <example>
+   <title>Porównanie notacji naukowych</title>
    <programlisting role="php">
 <![CDATA[
 <?php
@@ -45,7 +48,7 @@ var_dump("2E1" == "020"); // true, "2E1" to 2 * (10 ^ 1), czyli 20
 ?>
 ]]>
    </programlisting>
-  </para>
+  </example>
  </note>
 
  <sect2 xml:id="language.types.numeric-string.conversion">

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 376d3f9c2ef7fcd64d8b8503d552013acefb8b5b Maintainer: sobak Status: ready -->
+<!-- EN-Revision: c1f37a6c270aadbbb3da56a3973ffd62197adf2b Maintainer: sobak Status: ready -->
  <sect1 xml:id="language.oop5.decon" xmlns="http://docbook.org/ns/docbook">
   <title>Konstruktory i destruktory</title>
 
@@ -194,7 +194,7 @@ class Punkt {
     </note>
     <example>
      <title>Użycie new w inicjalizatorach</title>
-     <programlisting role="php">
+     <programlisting role="php" annotations="non-interactive">
 <![CDATA[
 <?php
 
@@ -237,6 +237,9 @@ function test(
      <programlisting role="php">
 <![CDATA[
 <?php
+$jakis_string_json = '{ "id": 1004, "name": "Elephpant" }';
+$jakis_string_xml = "<animal><id>1005</id><name>Elephpant</name></animal>";
+
 class Produkt {
 
     private ?int $id;
@@ -258,11 +261,10 @@ class Produkt {
     }
 
     public static function fromXml(string $xml): static {
-        // Dowolna własna logika.
-        $data = convert_xml_to_array($xml);
+        $data = simplexml_load_string($xml);
         $new = new static();
-        $new->id = $data['id'];
-        $new->nazwa = $data['nazwa'];
+        $new->id = $data->id;
+        $new->nazwa = $data->nazwa;
         return $new;
     }
 }
@@ -270,6 +272,8 @@ class Produkt {
 $p1 = Produkt::fromBasicData(5, 'Nazwa produktu');
 $p2 = Produkt::fromJson($jakis_string_json);
 $p3 = Produkt::fromXml($jakis_string_xml);
+
+var_dump($p1, $p2, $p3);
 ]]>
      </programlisting>
     </example>
