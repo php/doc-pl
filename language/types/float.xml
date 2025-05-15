@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: a1e3d629b4f01ee41bd38391cd5c6ae5ee894cb3 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: e587d0655e426f97b3fcb431453da5030e743b23 Maintainer: sobak Status: ready -->
 <sect1 xml:id="language.types.float" xmlns:xlink="http://www.w3.org/1999/xlink">
  <title>Liczby zmiennoprzecinkowe</title>
 
@@ -129,12 +129,14 @@ EXPONENT_DNUM (({LNUM} | {DNUM}) [eE][+-]? {LNUM})
    górna granica względnego błędu z powodu zaokrąglenia. Wartość ta znana jest jako epsilon maszynowy
    lub zaokrąglenie jednostkowe i jest najmniejszą dopuszczalną różnicą w obliczeniach.
   </para>
-  
-  <informalexample>
-   <simpara>
-    <varname>$a</varname> i <varname>$b</varname> są identyczne do precyzji
-    5 cyfr po przecinku.
-   </simpara>
+
+  <para>
+   <varname>$a</varname> i <varname>$b</varname> są identyczne do precyzji
+   5 cyfr po przecinku.
+  </para>
+
+  <example>
+   <title>Porównywanie liczb zmiennoprzecinkowych</title>
    <programlisting role="php">
 <![CDATA[
 <?php
@@ -142,13 +144,13 @@ $a = 1.23456789;
 $b = 1.23456780;
 $epsilon = 0.00001;
 
-if(abs($a-$b) < $epsilon) {
+if (abs($a - $b) < $epsilon) {
     echo "true";
 }
 ?>
 ]]>
    </programlisting>
-  </informalexample>
+  </example>
  </sect2>
  
  <sect2 xml:id="language.types.float.nan">

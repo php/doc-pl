@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 43d07782b514d0c7a8487f2c74063739f302df8d	 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 16934048f79c6e117cd16a23c09c1b2ea502e284	 Maintainer: sobak Status: ready -->
 <sect1 xml:id="language.operators.errorcontrol">
  <title>Operatory kontroli błędów</title>
  <titleabbrev>Kontrola błędów</titleabbrev>
@@ -29,22 +29,31 @@
   Wynik wywołania tej funkcji zmieni się po każdym błędzie, więc sprawdzenie musi nastąpić wcześnie.
  </simpara>
  <para>
-  <informalexample>
+  <example>
+   <title>Umyślny błąd dostępu do pliku</title>
    <programlisting role="php">
 <![CDATA[
 <?php
-/* Umyślny błąd dostępu do pliku */
 $my_file = @file ('bledny_plik') or
     die ("Nie można otworzyć pliku: błąd to '" . error_get_last()['message'] . "'");
-
-// działa to dla wszystkich wyrażeń, nie tylko funkcji:
-$value = @$cache[$key];
-// ten kod nie wygeneruje błędu, nawet jeśli indeks $key nie istnieje
-
 ?>
 ]]>
    </programlisting>
-  </informalexample>
+  </example>
+ </para>
+ <para>
+  <example>
+   <title>Wyciszanie wyrażeń</title>
+   <programlisting role="php">
+    <![CDATA[
+<?php
+// działa to dla wszystkich wyrażeń, nie tylko funkcji:
+$value = @$cache[$key];
+// ten kod nie wygeneruje błędu, nawet jeśli indeks $key nie istnieje
+?>
+]]>
+   </programlisting>
+  </example>
  </para>
  <note>
   <simpara>

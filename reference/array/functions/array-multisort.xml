@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 6a6f43d1c490a57b452656db285de6d136055ed2 Maintainer: leszek Status: ready -->
+<!-- EN-Revision: 2e60c5134e7a847c99f81eb3f7ecee1f5efeeace Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.array-multisort" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
@@ -234,18 +234,6 @@ numer | edycja
      Dane zawarte są w tablicy o nazwie <varname>dane</varname>. Efekt ten
      można uzyskać np. wywołując w pętli funkcję <function>mysqli_fetch_assoc</function>.
     </para>
-    <programlisting role="php">
-<![CDATA[
-<?php
-$dane[] = array('numer' => 67, 'edycja' => 2);
-$dane[] = array('numer' => 86, 'edycja' => 1);
-$dane[] = array('numer' => 85, 'edycja' => 6);
-$dane[] = array('numer' => 98, 'edycja' => 2);
-$dane[] = array('numer' => 86, 'edycja' => 6);
-$dane[] = array('numer' => 67, 'edycja' => 7);
-?>
-]]>
-    </programlisting>
     <para>
      W tym przykładzie, dane zostaną posortowane według pola <varname>numer</varname> malejąco
      oraz względem pola <varname>edycja</varname> rosnąco.
@@ -258,13 +246,21 @@ $dane[] = array('numer' => 67, 'edycja' => 7);
     <programlisting role="php">
 <![CDATA[
 <?php
+// Dane pobrane przez przejście pętlą po mysqli_fetch_assoc()
+$dane[] = array('numer' => 67, 'edycja' => 2);
+$dane[] = array('numer' => 86, 'edycja' => 1);
+$dane[] = array('numer' => 85, 'edycja' => 6);
+$dane[] = array('numer' => 98, 'edycja' => 2);
+$dane[] = array('numer' => 86, 'edycja' => 6);
+$dane[] = array('numer' => 67, 'edycja' => 7);
+
 // Pobierz listę kolumn
 foreach ($dane as $klucz => $wiersz) {
     $numer[$klucz]  = $wiersz['numer'];
     $edycja[$klucz] = $wiersz['edycja'];
 }
 
-// możesz użyć array_column() zamiast kodu wyżej
+// Możesz użyć array_column() zamiast kodu wyżej
 $numer  = array_column($data, 'numer');
 $edycja = array_column($data, 'edycja');
 
@@ -272,6 +268,13 @@ $edycja = array_column($data, 'edycja');
 // Należy podać $dane jako ostatni parametr, aby posortować według
 // wspólnego klucza
 array_multisort($numer, SORT_DESC, $edycja, SORT_ASC, $dane);
+
+// Przeiteruj się po danych i wyświetl posortowane wartości dla każdej z kolumn
+echo 'numer | edycja', PHP_EOL;
+echo '------+-------', PHP_EOL;
+for ($i = 0; $i < count($data); $i++) {
+     printf("%5d | %6d\n", $volume[$i], $edition[$i]);
+}
 ?>
 ]]>
     </programlisting>

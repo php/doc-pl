@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 8859c8b96cd9e80652813f7bcf561432a5e9f934	 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 16934048f79c6e117cd16a23c09c1b2ea502e284	 Maintainer: sobak Status: ready -->
 <sect1 xml:id="language.operators.bitwise">
  <title>Operatory bitowe</title>
  <titleabbrev>Bitowe</titleabbrev>
@@ -99,16 +99,14 @@
   <literal>&gt;&gt;</literal> są zawsze traktowane jak liczby.
  </para>
  <para>
+  Ustawienie ini error_reporting języka PHP używa wartości bitowych,
+  co jest przykładem z życia dla wyłączania
+  bitów. Aby pokazać wszystkie błędy z wyjątkiem komunikatów (notice),
+  instrukcje w pliku php.ini mówią, aby użyć:
+  <userinput>E_ALL &amp; ~E_NOTICE</userinput>
+ </para>
+ <para>
   <informalexample>
-   <para>
-    <literallayout>
-     Ustawienie ini error_reporting języka PHP używa wartości bitowych,
-     co jest przykładem z życia dla wyłączania
-     bitów. Aby pokazać wszystkie błędy z wyjątkiem komunikatów (notice),
-     instrukcje w pliku php.ini mówią, aby użyć:
-     <userinput>E_ALL &amp; ~E_NOTICE</userinput>
-    </literallayout>
-   </para>
    <para>
     <literallayout>
      Opiera się to o wzięcie wartości E_ALL:
@@ -122,24 +120,20 @@
      <computeroutput>00000000000000000111011111110111</computeroutput>
     </literallayout>
    </para>
-   <para>
-    <literallayout>
-     Innym sposobem aby to osiągnąć jest użycie XOR (<literal>^</literal>),
-     aby znaleźć bity które są tylko w jednej lub w drugiej wartości:
-     <userinput>E_ALL ^ E_NOTICE</userinput>
-    </literallayout>
-   </para>
   </informalexample>
  </para>
  <para>
+  Innym sposobem, aby to osiągnąć, jest użycie XOR (<literal>^</literal>),
+  aby znaleźć bity, które są tylko w jednej lub w drugiej wartości:
+  <userinput>E_ALL ^ E_NOTICE</userinput>
+ </para>
+ <para>
+  error_reporting może być użyte też do zademonstrowania włączania bitów.
+  Aby pokazać błędy i odzyskiwalne błędy można użyć::
+  <userinput>E_ERROR | E_RECOVERABLE_ERROR</userinput>
+ </para>
+ <para>
   <informalexample>
-   <para>
-    <literallayout>
-     error_reporting może być użyte też do zademonstrowania włączania bitów.
-     Aby pokazać błędy i odzyskiwalne błędy można użyć::
-     <userinput>E_ERROR | E_RECOVERABLE_ERROR</userinput>
-    </literallayout>
-   </para>
    <para>
     <literallayout>
      Ten proces łączy E_ERROR
@@ -237,19 +231,19 @@ foreach ($values as $value) {
    <programlisting role="php">
 <![CDATA[
 <?php
-echo 12 ^ 9; // Wyświetla '5'
+echo 12 ^ 9, PHP_EOL;  // Wyświetla '5'
 
-echo "12" ^ "9"; // Wyświetla znak Backspace (ascii 8)
-                 // ('1' (ascii 49)) ^ ('9' (ascii 57)) = #8
+echo "12" ^ "9", PHP_EOL; // Wyświetla znak Backspace (ascii 8)
+                          // ('1' (ascii 49)) ^ ('9' (ascii 57)) = #8
 
-echo "hallo" ^ "hello"; // Wyświetla wartości ascii #0 #4 #0 #0 #0
-                        // 'a' ^ 'e' = #4
+echo "hallo" ^ "hello", PHP_EOL; // Wyświetla wartości ascii #0 #4 #0 #0 #0
+                                 // 'a' ^ 'e' = #4
 
-echo 2 ^ "3"; // Wyświetla 1
-              // 2 ^ ((int) "3") == 1
+echo 2 ^ "3", PHP_EOL; // Wyświetla 1
+                       // 2 ^ ((int) "3") == 1
 
-echo "2" ^ 3; // Wyświetla 1
-              // ((int) "2") ^ 3 == 1
+echo "2" ^ 3, PHP_EOL; // Wyświetla 1
+                       // ((int) "2") ^ 3 == 1
 ?>
 ]]>
    </programlisting>
@@ -369,7 +363,7 @@ function p($res, $val, $op, $places, $note = '') {
         echo " UWAGI: $note\n";
     }
 
-    echo "\n";
+    echo "\n\n";
 }
 ?>
 ]]>

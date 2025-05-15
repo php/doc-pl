@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 22583751fbfdaa3eaa41aeb6470d1343f5cb2c78 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: e587d0655e426f97b3fcb431453da5030e743b23 Maintainer: sobak Status: ready -->
 <sect1 xml:id="language.types.type-juggling">
  <title>Dopasowywanie typów</title>
 
@@ -229,7 +229,7 @@
 
    <caution>
     <para>
-     Wyjątkiem jest gdy wartość jest ciągiem znaków, a częścią unii jest zarówno int oraz float.
+     Wyjątkiem jest, gdy wartość jest ciągiem znaków, a częścią unii jest zarówno int, jak i float.
      Preferowany typ jest określany zgodnie z istniejącą semantyką
      <link linkend="language.types.numeric-strings">numerycznych ciągów znaków</link>.
      Na przykład dla <literal>"42"</literal> wybierany jest typ <type>int</type>,
@@ -286,16 +286,17 @@ true  --> 1           // wartość logiczna (bool) kompatybilna z typem int
    nawiasach przed wartością do skonwertowania.
   </simpara>
 
-  <informalexample>
+  <example>
+   <title>Rzutowanie typów</title>
    <programlisting role="php">
 <![CDATA[
 <?php
-$foo = 10;   // $foo jest liczbą całkowitą
-$bar = (bool) $foo;   // $bar jest wartością logiczną
+$foo = 10;          // $foo jest liczbą całkowitą
+$bar = (bool) $foo; // $bar jest wartością logiczną
 ?>
 ]]>
    </programlisting>
-  </informalexample>
+  </example>
 
   <simpara>
    Dozwolone rzutowania to:
@@ -380,14 +381,14 @@ $binary = b"binary string";
   </informalexample>
 
   <!-- TODO Remove or move into string context section? -->
-  <note>
-   <simpara>
-    Zamiast rzutowania zmiennej na typ <type>string</type> możliwe jest też
-    otoczenie jej cudzysłowami.
-   </simpara>
+  <simpara>
+   Zamiast rzutowania zmiennej na typ <type>string</type> możliwe jest też
+   otoczenie jej cudzysłowami.
+  </simpara>
 
-   <informalexample>
-    <programlisting role="php">
+  <example>
+   <title>Różne mechanizmy rzutowania</title>
+   <programlisting role="php">
 <![CDATA[
 <?php
 $foo = 10;            // $foo jest liczbą całkowitą (typ int)
@@ -396,13 +397,12 @@ $fst = (string) $foo; // $fst też jest ciągiem znaków
 
 // Wyświetli "są identyczne"
 if ($fst === $str) {
-    echo "są identyczne";
+    echo "są identyczne", PHP_EOL;
 }
 ?>
 ]]>
-    </programlisting>
-   </informalexample>
-  </note>
+   </programlisting>
+  </example>
 
   <para>
    Może nie być oczywiste co dokładnie stanie się, gdy nastąpi rzutowanie między pewnymi
@@ -427,7 +427,8 @@ if ($fst === $str) {
     jest prawdziwy we wszystkich wersjach PHP:
    </simpara>
 
-   <informalexample>
+   <example>
+    <title>Użycie przesunięcia tablicy z ciągiem znaków</title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -437,7 +438,7 @@ echo $a;       // bar
 ?>
 ]]>
     </programlisting>
-   </informalexample>
+   </example>
 
    <simpara>
     Przeczytaj rozdział <link linkend="language.types.string.substr">dostęp

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: e50e79746736dbdfbabe9bd3566793b3ddf38f58	 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 16934048f79c6e117cd16a23c09c1b2ea502e284	 Maintainer: sobak Status: ready -->
 <sect1 xml:id="language.operators.comparison">
  <title>Operatory porównania</title>
  <titleabbrev>Porównania</titleabbrev>
@@ -147,58 +147,59 @@ a
  </warning>
 
  <para>
-  <informalexample>
+  <example>
+   <title>Operatory porównania</title>
    <programlisting role="php">
 <![CDATA[
 <?php
 // Liczby całkowite
-echo 1 <=> 1; // 0
-echo 1 <=> 2; // -1
-echo 2 <=> 1; // 1
+echo 1 <=> 1, ' '; // 0
+echo 1 <=> 2, ' '; // -1
+echo 2 <=> 1, ' '; // 1
 
 // Liczy zmiennoprzecinkowe
-echo 1.5 <=> 1.5; // 0
-echo 1.5 <=> 2.5; // -1
-echo 2.5 <=> 1.5; // 1
+echo 1.5 <=> 1.5, ' '; // 0
+echo 1.5 <=> 2.5, ' '; // -1
+echo 2.5 <=> 1.5, ' '; // 1
 
 // Ciągi znaków
-echo "a" <=> "a"; // 0
-echo "a" <=> "b"; // -1
-echo "b" <=> "a"; // 1
+echo "a" <=> "a", ' '; // 0
+echo "a" <=> "b", ' '; // -1
+echo "b" <=> "a", ' '; // 1
 
-echo "a" <=> "aa"; // -1
-echo "zz" <=> "aa"; // 1
+echo "a" <=> "aa", ' ';  // -1
+echo "zz" <=> "aa", ' '; // 1
 
 // Tablice
-echo [] <=> []; // 0
-echo [1, 2, 3] <=> [1, 2, 3]; // 0
-echo [1, 2, 3] <=> []; // 1
-echo [1, 2, 3] <=> [1, 2, 1]; // 1
-echo [1, 2, 3] <=> [1, 2, 4]; // -1
+echo [] <=> [], ' ';               // 0
+echo [1, 2, 3] <=> [1, 2, 3], ' '; // 0
+echo [1, 2, 3] <=> [], ' ';        // 1
+echo [1, 2, 3] <=> [1, 2, 1], ' '; // 1
+echo [1, 2, 3] <=> [1, 2, 4], ' '; // -1
 
 // Obiekty
 $a = (object) ["a" => "b"];
 $b = (object) ["a" => "b"];
-echo $a <=> $b; // 0
+echo $a <=> $b, ' '; // 0
 
 $a = (object) ["a" => "b"];
 $b = (object) ["a" => "c"];
-echo $a <=> $b; // -1
+echo $a <=> $b, ' '; // -1
 
 $a = (object) ["a" => "c"];
 $b = (object) ["a" => "b"];
-echo $a <=> $b; // 1
+echo $a <=> $b, ' '; // 1
 
 // porównywane są nie tylko wartości, klucze też muszą się zgadzać
 $a = (object) ["a" => "b"];
 $b = (object) ["b" => "b"];
-echo $a <=> $b; // 1
+echo $a <=> $b, ' '; // 1
 
 ?>
 ]]>
 
    </programlisting>
-  </informalexample>
+  </example>
  </para>
 
  <para>
@@ -281,7 +282,7 @@ var_dump(min(-100, -10, NULL, 10, 100)); // NULL - (bool) NULL < (bool) -100 tj.
  <para>
   <example>
    <title>Transkrypcja standardowych reguł porównań tablic</title>
-   <programlisting role="php">
+   <programlisting role="php" annotations="non-interactive">
 <![CDATA[
 <?php
 // Tablice są porównywane w ten sposób dla standardowych operatorów porównań, a także dla operatora

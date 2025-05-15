@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 43d07782b514d0c7a8487f2c74063739f302df8d	 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 16934048f79c6e117cd16a23c09c1b2ea502e284	 Maintainer: sobak Status: ready -->
 <sect1 xml:id="language.operators.assignment">
  <title>Operatory przypisania</title>
  <titleabbrev>Przypisania</titleabbrev>
@@ -13,37 +13,38 @@
   Wartością wyrażenia przypisania jest przypisywana wartość. Oznacza to,
   że wartością wyrażenia "<literal>$a = 3</literal>" jest 3. Pozwala to na kilka sprytnych
   rzeczy:
-  <informalexample>
+  <example>
+   <title>Zagnieżdżone przypisania</title>
    <programlisting role="php">
 <![CDATA[
 <?php
-
 $a = ($b = 4) + 5; // $a jest teraz równe 9, a $b zostało ustawione na 4.
-
+var_dump($a);
 ?>
 ]]>
    </programlisting>
-  </informalexample>
+  </example>
  </para>
  <para>
   Poza podstawowym operatorem przypisania istnieją też "operatory
   łączone" dla wszystkich operatorów <link linkend="language.operators">arytmetycznych</link>,
   unii tablic i operatorów ciągów znaków, które pozwalają użyć wartości w
   wyrażeniu i potem ustawić tę wartość jako wynik tego wyrażenia. Przykładowo:
-  <informalexample>
+  <example>
+   <title>Przypisania połączone</title>
    <programlisting role="php">
 <![CDATA[
 <?php
-
 $a = 3;
 $a += 5; // ustawia $a na 8, jak gdybyśmy napisali: $a = $a + 5;
 $b = "Cześć ";
 $b .= "wszystkim!"; // ustawia $b na "Cześć wszystkim!", zupełnie jak $b = $b . "wszystkim!";
 
+var_dump($a, $b);
 ?>
 ]]>
    </programlisting>
-  </informalexample>
+  </example>
  </para>
  <para>
   Zauważ, że przypisanie kopiuje oryginalną zmienną do nowej
@@ -94,7 +95,8 @@ print "$b\n"; // także wyświetla 4, ponieważ $b jest referencją do $a, któr
    <link linkend="language.oop5.basic.new">new</link> przez referencję jest błędem.
   </para>
   <para>
-   <informalexample>
+   <example>
+    <title>Operator new przez referencję</title>
     <programlisting role="php">
 <![CDATA[
 <?php
@@ -107,10 +109,10 @@ $o = &new C;
     &example.outputs;
     <screen>
 <![CDATA[
-Parse error: syntax error, unexpected 'new' (T_NEW) in …
+Parse error: syntax error, unexpected token ";", expecting "("
 ]]>
     </screen>
-   </informalexample>
+   </example>
   </para>
   <para>
    Więcej informacji o referencjach i sytuacjach gdy mogą być przydatne

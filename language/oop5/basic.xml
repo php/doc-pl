@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 2f85d57a0b5a01b875cbca2b291f04389cf61ac2 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: c1f37a6c270aadbbb3da56a3973ffd62197adf2b Maintainer: sobak Status: ready -->
 
  <sect1 xml:id="language.oop5.basic" xmlns="http://docbook.org/ns/docbook">
   <title>Podstawy</title>
@@ -224,11 +224,16 @@ readonly class Foo
     <programlisting role="php">
 <![CDATA[
 <?php
+class ProstaKlasa {
+}
+
 $obiekt = new ProstaKlasa();
+var_dump($obiekt);
 
 // Można też użyć zmiennej:
 $nazwaKlasy = 'ProstaKlasa';
 $obiekt = new $nazwaKlasy(); // new ProstaKlasa()
+var_dump($obiekt);
 ?>
 ]]>
     </programlisting>
@@ -296,6 +301,12 @@ object(ClassD)#1 (0) {
     <programlisting role="php">
 <![CDATA[
 <?php
+ing role="php">
+<![CDATA[
+<?php
+class ProstaKlasa {
+    public string $var;
+}
 
 $instancja = new ProstaKlasa();
 
@@ -375,16 +386,17 @@ bool(true)
     <programlisting role="php">
 <![CDATA[
 <?php
-echo (new DateTime())->format('Y');
+echo (new DateTime())->format('Y'), PHP_EOL;
 // okalające nawiasy są opcjonalne od PHP 8.4.0
-echo new DateTime()->format('Y');
+echo new DateTime()->format('Y'), PHP_EOL;
 ?>
 ]]>
     </programlisting>
     &example.outputs.similar;
     <screen>
 <![CDATA[
-2016
+2025
+2025
 ]]>
     </screen>
    </example>
@@ -498,6 +510,14 @@ echo ($obj->bar)(), PHP_EOL;
     <programlisting role="php">
 <![CDATA[
 <?php
+class ProstaKlasa
+{
+    function wyswietlWlasciwosc()
+    {
+        echo "Klasa rodzica\n";
+    }
+}
+
 class RozszerzKlase extends ProstaKlasa
 {
     // Zdefiniuj metodę rodzica na nowo
@@ -757,9 +777,10 @@ Klasa\Nie\Istnieje
 namespace NS {
     class NazwaKlasy {
     }
+    
+    $c = new NazwaKlasy();
+    print $c::class;
 }
-$c = new NazwaKlasy();
-print $c::class;
 ?>
 ]]>
     </programlisting>
@@ -788,7 +809,7 @@ NS\NazwaKlasy
   <para>
    <example>
     <title>Operator nullsafe</title>
-    <programlisting role="php">
+    <programlisting role="php" annotations="non-interactive">
 <![CDATA[
 <?php
 

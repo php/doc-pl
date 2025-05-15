@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 8859c8b96cd9e80652813f7bcf561432a5e9f934 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: e587d0655e426f97b3fcb431453da5030e743b23 Maintainer: sobak Status: ready -->
 <sect1 xml:id="language.types.integer">
  <title>Liczby całkowite</title>
 
@@ -43,7 +43,7 @@
 
   <example>
    <title>Wyrażenia liczbowe</title>
-   <programlisting role="php">
+   <programlisting role="php" annotations="non-interactive">
 <![CDATA[
 <?php
 $a = 1234; // liczba dziesiętna
@@ -107,7 +107,7 @@ integer     : decimal
   </para>
 
   <example>
-   <title>Integer overflow</title>
+   <title>Przepełnienie liczby całkowitej</title>
    <programlisting role="php">
 <![CDATA[
 <?php
@@ -133,7 +133,8 @@ var_dump(PHP_INT_MAX + 1);       // systemy 32-bitowe: float(2147483648)
    można użyć funkcji <function>round</function> dla dokładniejszej kontroli zaokrąglania.
   </para>
 
-  <informalexample>
+  <example>
+   <title>Dzielenie</title>
    <programlisting role="php">
 <![CDATA[
 <?php
@@ -143,7 +144,7 @@ var_dump(round(25/7));  // float(4)
 ?>
 ]]>
    </programlisting>
-  </informalexample>
+  </example>
  </sect2>
 
  <sect2 xml:id="language.types.integer.casting">
@@ -188,7 +189,9 @@ var_dump(round(25/7));  // float(4)
     Od PHP 8.1.0 przy niejawnym konwertowaniu niecałkowitej wartości &float; na &integer;, która traci precyzję, emitowany jest komunikat o przestarzałym zachowaniu.
    </simpara>
 
-   <programlisting role="php">
+   <example>
+    <title>Rzutowanie z liczby zmiennoprzecinkowej</title>
+    <programlisting role="php">
 <![CDATA[
 <?php
 
@@ -204,7 +207,8 @@ var_dump((int) 8.1); // 8 w obu wypadkach
 var_dump(intval(8.1)); // 8 w obu wypadkach
 ?>
 ]]>
-   </programlisting>
+    </programlisting>
+   </example>
 
    <para>
     Jeżeli liczba zmiennoprzecinkowa jest poza zakresem <type>int</type> (zazwyczaj

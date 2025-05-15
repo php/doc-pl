@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 4c4b82965384d55f5c3efb1ffa80615acd98a737 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: e587d0655e426f97b3fcb431453da5030e743b23 Maintainer: sobak Status: ready -->
 <sect1 xml:id="language.types.object">
  <title>Obiekty</title>
 
@@ -11,7 +11,8 @@
    do zainstancjonowania klasy:
   </para>
 
-  <informalexample>
+  <example>
+   <title>Tworzenie obiektów</title>
    <programlisting role="php">
 <![CDATA[
 <?php
@@ -28,7 +29,7 @@ $bar->do_foo();
 ?>
 ]]>
    </programlisting>
-  </informalexample>
+  </example>
 
   <simpara>
    Dla pełnego opisu zapoznaj się z
@@ -50,24 +51,27 @@ $bar->do_foo();
    numeryczne były niedostępne, chyba że po nich iterowano.
   </para>
 
-  <informalexample>
+  <example>
+   <title>Rzutowanie na obiekt</title>
    <programlisting role="php">
 <![CDATA[
 <?php
-$obj = (object) array('1' => 'foo');
-var_dump(isset($obj->{'1'})); // wyświetla 'bool(true)' od PHP 7.2.0; wcześniej 'bool(false)'
-var_dump(key($obj)); // wyświetla 'string(1) "1"' od PHP 7.2.0; wcześniej 'int(1)'
+var_dump(isset($obj->{'1'})); // wyświetla 'bool(true)'
+
+// Przestarzałe od PHP 8.1
+var_dump(key($obj)); // wyświetla 'string(1) "1"'
 ?>
 ]]>
    </programlisting>
-  </informalexample>
+  </example>
 
   <para>
    Dla każdej innej wartości właściwość o nazwie <literal>scalar</literal> będize zawierała
    tę wartość.
   </para>
 
-  <informalexample>
+  <example>
+   <title>Rzutowanie przy pomocy <literal>(object)</literal></title>
    <programlisting role="php">
 <![CDATA[
 <?php
@@ -76,7 +80,7 @@ echo $obj->scalar;  // wyświetla 'ciao'
 ?>
 ]]>
    </programlisting>
-  </informalexample>
+  </example>
 
  </sect2>
 </sect1>

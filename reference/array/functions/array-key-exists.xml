@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 89fe795cc8bcf1b5ff9eb894bff51f006db66a65 Maintainer: leszek Status: ready -->
+<!-- EN-Revision: 73048c75fbe328342b74f0ffb0a0c85c477f5cde Maintainer: leszek Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: sobak, grzesiek -->
 <refentry xml:id="function.array-key-exists" xmlns="http://docbook.org/ns/docbook">
@@ -75,9 +75,21 @@
       <entry>8.0.0</entry>
       <entry>
        Parametr <parameter>key</parameter> akceptuje teraz
-       <parameter>bool</parameter>, <parameter>float</parameter>, <parameter>int</parameter>,
-       <parameter>null</parameter>, <parameter>resource</parameter>, i
-       <parameter>string</parameter> jako argumenty.
+       <type>bool</type>, <type>float</type>, <type>int</type>,
+       <type>null</type>, <type>resource</type>, i
+       <type>string</type> jako argumenty.
+      </entry>
+     </row>
+     <row>
+      <entry>8.0.0</entry>
+      <entry>
+       Przekazywanie obiektu jako parametr <parameter>array</parameter> nie jest już obsługiwane.
+      </entry>
+     </row>
+     <row>
+      <entry>7.4.0</entry>
+      <entry>
+       Przekazywanie obiektu jako parametr <parameter>array</parameter> jest uznane za przestarzałe. Zamiast tego skorzystaj z funkcji <function>property_exists</function>.
       </entry>
      </row>
     </tbody>
@@ -93,13 +105,17 @@
     <programlisting role="php">
 <![CDATA[
 <?php
-$tablica = array('pierwszy' => 1, 'drugi' => 4);
-if (array_key_exists('pierwszy', $tablica)) {
-    echo "Element 'pierwszy' istnieje w tablicy";
-}
+$searchArray = ['pierwszy' => 1, 'drugi' => 4];
+var_dump(array_key_exists('pierwszy', $searchArray));
 ?>
 ]]>
     </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+bool(true)
+]]>
+    </screen>
    </example>
   </para>
   <example>
@@ -112,34 +128,21 @@ if (array_key_exists('pierwszy', $tablica)) {
    <programlisting role="php">
 <![CDATA[
 <?php
-$tablica = array('pierwszy' => 1, 'drugi' => 4);
+$tablica = ['pierwszy' => 1, 'drugi' => 4];
 
-// zwraca false
-isset($tablica['pierwszy']);
-
-// zwraca true
-array_key_exists('pierwszy', $tablica);
+var_dump(isset($searchArray['pierwszy']));
+var_dump(array_key_exists('pierwszy', $searchArray));
 ?>
 ]]>
    </programlisting>
+   &example.outputs;
+   <screen>
+<![CDATA[
+bool(false)
+bool(true)
+]]>
+   </screen>
   </example>
- </refsect1>
-
- <refsect1 role="notes">
-  &reftitle.notes;
-  <note>
-    <para>
-     Z powodu kompatybilności wstecznej, <function>array_key_exists</function>
-     zwróci &true; także wtedy, gdy parametr <parameter>key</parameter> jest właściwością
-     zdefiniowaną w ramach obiektu <type>object</type> podanego jako parametr
-     <parameter>array</parameter>. To zachowanie jest przestarzałe od PHP 7.4.0,
-     i usunięte od PHP 8.0.0.
-    </para>
-    <para>
-     Aby sprawdzić czy właściwość istnieje w obiekcie,
-     powinna zostać użyta funkcja<function>property_exists</function>.
-    </para>
-  </note>
  </refsect1>
 
  <refsect1 role="seealso">
