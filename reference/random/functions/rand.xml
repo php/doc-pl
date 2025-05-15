@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 826073522514072830b63bee2b6135dc675ea45d Maintainer: qrak Status: ready -->
+<!-- EN-Revision: bf672f5f2402ee78264a130c52defeed37fe44bf Maintainer: qrak Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="function.rand" xmlns="http://docbook.org/ns/docbook">
  <refnamediv>
   <refname>rand</refname>
-  <refpurpose>Generate a random integer</refpurpose>
+  <refpurpose>Generuje losową liczbę całkowitą</refpurpose>
  </refnamediv>
  <refsect1 role="description">
   &reftitle.description;
@@ -18,28 +18,28 @@
    <methodparam><type>int</type><parameter>max</parameter></methodparam>
   </methodsynopsis>
   <simpara>
-   If called without the optional <parameter>min</parameter>,
-   <parameter>max</parameter> arguments <function>rand</function>
-   returns a pseudo-random integer between 0 and
-   <function>getrandmax</function>.  If you want a random number
-   between 5 and 15 (inclusive), for example, use <literal>rand(5,
+   Jeśli wywołana bez opcjonalnych argumentów <parameter>min</parameter> i
+   <parameter>max</parameter>, funkcja <function>rand</function>
+   zwraca pseudolosową liczbę stałoprzecinkową z przedziału pomiędzy 0 a
+   <function>getrandmax</function>.  Dla uzyskania liczby losowej z
+   przedziału np. od 5 do 15 (włącznie), należy wywołać <literal>rand(5,
    15)</literal>.
   </simpara>
   &caution.cryptographically-insecure;
   <note>
    <simpara>
-    On some platforms (such as Windows), <function>getrandmax</function>
-    is only 32767.  If you require a range larger than 32767, specifying
-    <parameter>min</parameter> and <parameter>max</parameter> will allow
-    you to create a range larger than this, or consider using
-    <function>mt_rand</function> instead.
+    Przed PHP 7.1.0 na niektórych platformach (jak na przykład Windows) <function>getrandmax</function>
+    wynosiło tylko 32768. Aby uzyskać wartości większe niż 32768, należało podać odpowiednie wartości
+    argumentów <parameter>min</parameter> i <parameter>max</parameter>, co pozwoli na
+    wygenerowanie wartości większych niż ta liczba. Można też użyć funkcji
+    <function>mt_rand</function>.
    </simpara>
   </note>
-  <note><simpara>As of PHP 7.1.0, <function>rand</function> uses the same
-   random number generator as <function>mt_rand</function>. To preserve
-   backwards compatibility <function>rand</function> allows
-   <parameter>max</parameter> to be smaller than <parameter>min</parameter>
-   as opposed to returning &false; as <function>mt_rand</function>.</simpara>
+  <note><simpara>Od PHP 7.1.0 <function>rand</function> używa tego samego
+   generatora liczb losowych co <function>mt_rand</function>. Dla zachowania
+   kompatybilności wstecznej <function>rand</function> pozwala, aby parametr
+   <parameter>max</parameter> był mniejszy niż <parameter>min</parameter>,
+   zamiast zwrócić &false; tak, jak robi to <function>mt_rand</function>.</simpara>
   </note>
  </refsect1>
  <refsect1 role="parameters">
@@ -50,7 +50,7 @@
      <term><parameter>min</parameter></term>
      <listitem>
       <para>
-       The lowest value to return (default: 0)
+       Najmniejsza zwracana wartość (domyślnie: 0)
       </para>
      </listitem>
     </varlistentry>
@@ -58,7 +58,7 @@
      <term><parameter>max</parameter></term>
      <listitem>
       <para>
-       The highest value to return (default: <function>getrandmax</function>)
+       Największa zwracana wartość (domyślnie: <function>getrandmax</function>)
       </para>
      </listitem>
     </varlistentry>
@@ -68,8 +68,8 @@
  <refsect1 role="returnvalues">
   &reftitle.returnvalues;
   <para>
-   A pseudo random value between <parameter>min</parameter>
-   (or 0) and <parameter>max</parameter> (or <function>getrandmax</function>, inclusive).
+   Pseudolosowa wartość pomiędzy <parameter>min</parameter>
+   (lub 0) i <parameter>max</parameter> (lub <function>getrandmax</function> włącznie).
   </para>
  </refsect1>
  <refsect1 role="changelog">
@@ -87,13 +87,13 @@
       <row>
        <entry>7.2.0</entry>
        <entry>
-        <function>rand</function> <link linkend="migration72.incompatible.rand-mt_rand-output">has received a bug fix</link> for a modulo bias bug. This means that sequences generated with a specific seed may differ from PHP 7.1 on 64-bit machines.
+        <function>rand</function> <link linkend="migration72.incompatible.rand-mt_rand-output">otrzymało poprawkę</link> na błąd skrzywienia modulo. Oznacza to, że sekwencje generowane z określonym ziarnem mogą różnić się od tych generowanych w PHP 7.1 na maszynach 64-bitowych.
        </entry>
       </row>
       <row>
        <entry>7.1.0</entry>
        <entry>
-        <function>rand</function> <link linkend="migration71.incompatible.rand-srand-aliases">has been made</link> an alias of <function>mt_rand</function>.
+        <function>rand</function> <link linkend="migration71.incompatible.rand-srand-aliases">stała się</link> aliasem <function>mt_rand</function>.
        </entry>
       </row>
      </tbody>
@@ -105,9 +105,9 @@
   &reftitle.examples;
   <para>
    <example>
-    <title><function>rand</function> example</title>
+    <title>Przykład użycia <function>rand</function></title>
     <programlisting role="php">
-     <![CDATA[
+<![CDATA[
 <?php
 echo rand(), "\n";
 echo rand(), "\n";
@@ -132,10 +132,10 @@ echo rand(5, 15), "\n";
   &reftitle.notes;
   <warning>
    <para>
-    <parameter>min</parameter> <parameter>max</parameter> range must
-    be within the range <function>getrandmax</function>. i.e. (<parameter>max</parameter> -
+    Zakres <parameter>min</parameter> <parameter>max</parameter> musi być
+    w zakresie <function>getrandmax</function>, tzn. (<parameter>max</parameter> -
     <parameter>min</parameter>) &lt;= <function>getrandmax</function>
-    Otherwise, <function>rand</function> may return poor-quality random numbers.
+    W przeciwnym razie <function>rand</function> może zwracać losowe liczby o niskiej jakości.
    </para>
   </warning>
  </refsect1>
