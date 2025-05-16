@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: ec2fe9a592f794978114ef5021db9f1d00c2e05d Maintainer: sobak Status: ready -->
+<!-- EN-Revision: c4aabaa0b97ef1ecc00cf2cd539ea186c6a855ae Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <refentry xml:id="reflectionclass.setstaticpropertyvalue" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
  <refnamediv>
   <refname>ReflectionClass::setStaticPropertyValue</refname>
-  <refpurpose>Ustawia wartość właściwości statycznej</refpurpose>
+  <refpurpose>Ustawia wartość publicznej właściwości statycznej</refpurpose>
  </refnamediv>
 
  <refsect1 role="description">
@@ -15,8 +15,16 @@
    <methodparam><type>mixed</type><parameter>value</parameter></methodparam>
   </methodsynopsis>
   <para>
-   Ustawia wartość właściwości statycznej.
+
   </para>
+  <simpara>
+   Ustawia wartość publicznej właściwości statycznej.
+   Jeżeli właściwość jest prywatna lub protected, metoda zwróci błąd.
+  </simpara>
+  <simpara>
+   <methodname>ReflectionProperty::setValue</methodname> pozwala na
+   ustawienie wartości właściwości publicznej, prywatnej i protected.
+  </simpara>
  </refsect1>
 
  <refsect1 role="parameters">
@@ -50,11 +58,36 @@
   </para>
  </refsect1>
 
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <informaltable>
+   <tgroup cols="2">
+    <thead>
+     <row>
+      <entry>&Version;</entry>
+      <entry>&Description;</entry>
+     </row>
+    </thead>
+    <tbody>
+     <row>
+      <entry>7.4.0</entry>
+      <entry>
+       Użycie <methodname>ReflectionClass::setStaticPropertyValue</methodname>, aby
+       ustawić właściwość prywatną lub protected skutkuje teraz błędem krytycznym. Wcześniej
+       powodowało to rzucenie <classname>ReflectionException</classname>.
+      </entry>
+     </row>
+    </tbody>
+   </tgroup>
+  </informaltable>
+ </refsect1>
+
  <refsect1 role="seealso">
   &reftitle.seealso;
   <para>
    <simplelist>
     <member><methodname>ReflectionClass::getStaticPropertyValue</methodname></member>
+    <member><methodname>ReflectionProperty::setValue</methodname></member>
    </simplelist>
   </para>
  </refsect1>

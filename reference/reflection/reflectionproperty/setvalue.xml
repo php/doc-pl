@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 0a8a502764676759e213265a3e1e675c43533dd1 Maintainer: sobak Status: ready -->
+<!-- EN-Revision: c4aabaa0b97ef1ecc00cf2cd539ea186c6a855ae Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 
 <refentry xml:id="reflectionproperty.setvalue" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -12,7 +12,7 @@
   &reftitle.description;
   <methodsynopsis role="ReflectionProperty">
    <modifier>public</modifier> <type>void</type><methodname>ReflectionProperty::setValue</methodname>
-   <methodparam><type>object</type><parameter>object</parameter></methodparam>
+   <methodparam><type class="union"><type>object</type><type>null</type></type><parameter>object</parameter></methodparam>
    <methodparam><type>mixed</type><parameter>value</parameter></methodparam>
   </methodsynopsis>
   <methodsynopsis>
@@ -24,7 +24,7 @@
   </para>
   <note>
    <simpara>
-    Od PHP 8.3.0 wywoływanie tej metody z jednym argumentem jest przestarzałe, w takiej sytuacji użyj <methodname>ReflectionClass::setStaticPropertyValue</methodname>.
+    Aby ustawić wartość właściwości statycznej, skorzystaj z <literal>ReflectionProperty::setValue(null, $value)</literal>.
    </simpara>
   </note>
  </refsect1>
@@ -37,9 +37,8 @@
      <term><parameter>object</parameter></term>
      <listitem>
       <para>
-       Jeżeli właściwość nie jest statyczna, to musi zostać podany obiekt, dla którego
-       będzie zmieniana wartość właściwości.
-       Jeżeli właściwość jest statyczna, <emphasis>musi</emphasis> zostać podana wartość &null;.
+       Dla statycznych właściwości przekaż &null;.
+       Dla właściwości, które nie są statyczne, przekaż obiekt.
       </para>
      </listitem>
     </varlistentry>
@@ -77,8 +76,8 @@
       <entry>8.3.0</entry>
       <entry>
        Wywołanie tej metody z jednym argumentem jest przestarzałe.
-       Aby zmienić właściwości statyczne, należy użyć
-       <methodname>ReflectionClass::setStaticPropertyValue</methodname>.
+       Zamiast tego użyj <methodname>ReflectionClass::setStaticPropertyValue</methodname>,
+       dla właściwości statycznych.
       </entry>
      </row>
      <row>
@@ -113,9 +112,10 @@ class Foo {
 
 $reflectionClass = new ReflectionClass('Foo');
 
-// Od PHP 8.3 set Value nie powinna być używana do ustawiania wartości własciwości statycznych, użyj setStaticPropertyValue()
-$reflectionClass->setStaticPropertyValue('wlasciwoscStatyczna', 'foo');
-var_dump(Foo::$wlasciwoscStatyczna);
+// Od PHP 8.3 przekazanie null jako pierwszego argumentu jest wymagane,
+// aby uzyskać dostęp do właściwości statycznych.
+$reflectionProperty = $reflectionClass->getProperty('wlasciwoscStatyczna');
+$reflectionProperty->setValue(null, 'foo');
 
 $foo = new Foo;
 
