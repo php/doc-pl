@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 3295741565f760edd22e305bd10e37f243e9e194 Maintainer: sobak Status: wip -->
+<!-- EN-Revision: 4639881688d3faaf0073ad71fe0a4b730aea15a0 Maintainer: sobak Status: wip -->
 <!-- $Revision$ -->
 <!-- CREDITS: leszek, adi, cyb0org, joeaccord -->
 <!-- TODO: Nieliczne sekcje opisane przez "TODO DOKOŃCZYĆ" nie są faktycznie przetłumaczone na j. polski. Pomoc mile widziana -->
@@ -231,6 +231,9 @@ aby mieć pewność, że użytkownicy nie mogą uruchomić dowolnych poleceń sy
 ich nazw, w zasadzie wszystko udokumentowane tutaj może zostać zmienione w
 przyszłych wersjach PHP bez wcześniejszego uprzedzenia. Używaj tego modułu na
 własne ryzyko.</simpara></warning>'>
+
+<!ENTITY deprecated.function 'Ta funkcja została uznana za przestarzałą'>
+<!ENTITY removed.function 'Ta funkcja została usunięta'>
 
 <!ENTITY warn.deprecated.feature-5-3-0 '<warning
 xmlns="http://docbook.org/ns/docbook"><simpara xmlns="http://docbook.org/ns/docbook">Ta opcja jest
@@ -1454,11 +1457,13 @@ kodowania znaków.</para>'>
 
 <!-- RNP -->
 
-<!ENTITY rnp.parameter.ffi-description 'Obiekt FFI zwrócony przez rnp_ffi_create.'>
+<!ENTITY rnp.parameter.ffi-description 'Obiekt FFI zwrócony przez <function
+xmlns="http://docbook.org/ns/docbook">rnp_ffi_create</function>.'>
 
 <!ENTITY rnp.parameter.key-format 'Format klucza danych (GPG, KBX, G10).'>
 
-<!ENTITY rnp.parameter.loadsave-flags 'Zobacz opisy flag RNP_LOAD_SAVE_*.'>
+<!ENTITY rnp.parameter.loadsave-flags 'Zobacz opisy flag <constant xmlns="http://docbook.org/ns/docbook">RNP_LOAD_SAVE_<replaceable>*.
+</replaceable></constant> flags description.'>
 
 <!-- socket entities -->
 
@@ -1631,10 +1636,6 @@ zwracany przez <function>timezone_open</function></para></listitem></varlistentr
 
 <!ENTITY date.formats 'Prawidłowe formaty są wyjaśnione pod adresem <link xmlns="http://docbook.org/ns/docbook" linkend="datetime.formats">Formaty daty i czasu</link>.'>
 <!ENTITY date.formats.parameter 'Łańcuch daty/czasu. &date.formats;'>
-
-<!-- DomXml Notes -->
-<!ENTITY node.inserted 'Ten węzeł nie pojawi się w dokumencie dopóki nie
-zostanie wstawiony, np. funkcją <function xmlns="http://docbook.org/ns/docbook">domnode_append_child</function>.'>
 
 <!-- Dom Notes -->
 <!ENTITY dom.node.inserted 'Ten węzeł nie pojawi się w dokumencie dopóki nie
@@ -2982,6 +2983,44 @@ xmlns="http://docbook.org/ns/docbook"><simpara xmlns="http://docbook.org/ns/docb
 <!ENTITY trader.arg.slow.limit 'Dolny limit do stosowania w algorytmie adaptacyjnym. Wartość z zakresu od 0.01 do 0.99.'>
 
 <!-- mongodb -->
+<!ENTITY mongodb.changelog.class-removed '
+       <row xmlns="http://docbook.org/ns/docbook">
+        <entry>PECL mongodb 2.0.0</entry>
+        <entry>
+         Ta klasa została usunięta.
+        </entry>
+       </row>
+'>
+
+<!ENTITY mongodb.changelog.function-removed '
+       <row xmlns="http://docbook.org/ns/docbook">
+        <entry>PECL mongodb 2.0.0</entry>
+        <entry>
+         Ta funkcja została usunięta.
+        </entry>
+       </row>
+'>
+
+<!ENTITY mongodb.changelog.method-removed '
+       <row xmlns="http://docbook.org/ns/docbook">
+        <entry>PECL mongodb 2.0.0</entry>
+        <entry>
+         Ta metoda została usunięta.
+        </entry>
+       </row>
+'>
+
+<!ENTITY mongodb.changelog.serializable-interface-removed '
+       <row xmlns="http://docbook.org/ns/docbook">
+        <entry>PECL mongodb 2.0.0</entry>
+        <entry>
+         <para>
+          Ta klasa nie implementuje już
+          interfejsu <interfacename>Serializable</interfacename>.
+         </para>
+        </entry>
+       </row>
+'>
 
 <!ENTITY mongodb.changelog.tentative-return-types '
        <row xmlns="http://docbook.org/ns/docbook">
@@ -2991,6 +3030,26 @@ xmlns="http://docbook.org/ns/docbook"><simpara xmlns="http://docbook.org/ns/docb
          co powoduje zgłaszanie <constant>E_DEPRECATED</constant> w kodzie, który implementuje ten interfejs
          bez zadeklarowania odpowiednich zwracanych typów. Można użyć atrybutu
          <code>#[ReturnTypeWillChange]</code> aby wyciszyć zgłaszanie komunikatów <code>E_DEPRECATED</code>.
+        </entry>
+       </row>
+'>
+
+<!ENTITY mongodb.changelog.tentative-return-types-enforced '
+       <row xmlns="http://docbook.org/ns/docbook">
+        <entry>PECL mongodb 2.0.0</entry>
+        <entry>
+         Zwracane typy zadeklarowane wcześniej jako niepewne są teraz wymuszane.
+        </entry>
+       </row>
+'>
+
+  <!ENTITY mongodb.changelog.throw-unacknowledged-write '
+       <row xmlns="http://docbook.org/ns/docbook">
+        <entry>PECL mongodb 2.0.0</entry>
+        <entry>
+         <para>
+          Ta metoda rzuca teraz wyjątek w wypadku wywołania dla niepotwierdzonego zapisu zamiast zwracać &null;.
+         </para>
         </entry>
        </row>
 '>
@@ -3246,6 +3305,11 @@ local: {
        <entry>endpoint</entry>
        <entry>string</entry>
        <entry>Optional. Host with optional port.</entry>
+      </row>
+      <row>
+       <entry>delegated</entry>
+       <entry>bool</entry>
+       <entry>Optional. If true, this key should be decrypted by the KMIP server.</entry>
       </row>
      </tbody>
     </tgroup>
@@ -3618,6 +3682,7 @@ local: {
 <!ENTITY mongodb.throws.connection '<member xmlns="http://docbook.org/ns/docbook">Rzuca wyjątek <classname>MongoDB\Driver\Exception\ConnectionException</classname> jeśli połączenie z serwerem nie powiedzie się (z powodów innych niż autoryzacja).</member>'>
 <!-- //// TODO DOKOŃCZYĆ //// -->
 <!ENTITY mongodb.throws.bson.unexpected '<member xmlns="http://docbook.org/ns/docbook">Throws <classname>MongoDB\Driver\Exception\UnexpectedValueException</classname> if the input did not contain exactly one BSON document. Possible reasons include, but are not limited to, invalid BSON, extra data (after reading one BSON document), or an unexpected <link xlink:href="&url.mongodb.libbson;" xmlns:xlink="http://www.w3.org/1999/xlink">libbson</link> error.</member>'>
+<!ENTITY mongodb.throws.unacknowledged '<member xmlns="http://docbook.org/ns/docbook">Throws <classname>MongoDB\Driver\Exception\LogicException</classname> if the write was not acknowledged.</member>'>
 
 <!-- Not used in EN anymore -->
 <!ENTITY mongodb.note.queryable-encryption-preview ''>
@@ -3976,57 +4041,59 @@ local: {
    </para>
   </formalpara>
 
-  <para>
-   <table>
-    <title>Flagi</title>
-    <tgroup cols="2">
-     <thead>
-      <row>
-       <entry>Flaga</entry>
-       <entry>&Description;</entry>
-      </row>
-     </thead>
-     <tbody>
-      <row>
-       <entry><literal>-</literal></entry>
-       <entry>
-        Wyrównaj do lewej w ramach szerokości danego pola;
-        domyślnie wyrównuje do prawej
-       </entry>
-      </row>
-      <row>
-       <entry><literal>+</literal></entry>
-       <entry>
-        Poprzedź liczby dodatnie znakiem plusa
-        <literal>+</literal>; Domyślnie tylko liczby ujemne
-        poprzedzone są znakiem minus.
-       </entry>
-      </row>
-      <row>
-       <entry><literal> </literal>(spacja)</entry>
-       <entry>
-        Wyrównaj wynik spacjami.
-        Zachowanie domyślne.
-       </entry>
-      </row>
-      <row>
-       <entry><literal>0</literal></entry>
-       <entry>
-        Wyrównaj wynik zerami z lewej strony.
-        W połączeniu z <literal>s</literal> może to też
-        wyrównywać zerami z prawej strony.
-       </entry>
-      </row>
-      <row>
-       <entry><literal>&apos;</literal>(znak)</entry>
-       <entry>
-        Wyrównuje wynik znakiem (char).
-       </entry>
-      </row>
-     </tbody>
-    </tgroup>
-   </table>
-  </para>
+  <formalpara>
+   <title>Flagi</title>
+   <para>
+    <informaltable>
+     <tgroup cols="2">
+      <thead>
+       <row>
+        <entry>Flag</entry>
+        <entry>&Description;</entry>
+       </row>
+      </thead>
+      <tbody>
+       <row>
+        <entry><literal>-</literal></entry>
+        <entry>
+         Wyrównaj do lewej w ramach szerokości danego pola;
+         domyślnie wyrównuje do prawej
+        </entry>
+       </row>
+       <row>
+        <entry><literal>+</literal></entry>
+        <entry>
+         Poprzedź liczby dodatnie znakiem plusa
+         <literal>+</literal>; Domyślnie tylko liczby ujemne
+         poprzedzone są znakiem minus.
+        </entry>
+       </row>
+       <row>
+        <entry><literal> </literal>(space)</entry>
+        <entry>
+         Wyrównaj wynik spacjami.
+         Zachowanie domyślne.
+        </entry>
+       </row>
+       <row>
+        <entry><literal>0</literal></entry>
+        <entry>
+         Wyrównaj wynik zerami z lewej strony.
+         W połączeniu z <literal>s</literal> może to też
+         wyrównywać zerami z prawej strony.
+        </entry>
+       </row>
+       <row>
+        <entry><literal>&apos;</literal>(char)</entry>
+        <entry>
+         Wyrównuje wynik znakiem (char).
+        </entry>
+       </row>
+      </tbody>
+     </tgroup>
+    </informaltable>
+   </para>
+  </formalpara>
 
   <formalpara>
    <title>Szerokość</title>
