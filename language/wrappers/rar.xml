@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 8bc832a464e33122e8129f5a623bd845b69fa7e0 Maintainer: grzesiek Status: ready -->
+<!-- $Revision$ -->
+
+<refentry xml:id="wrappers.rar" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" annotations="verify_info:false" role="stream_wrapper">
+ <refnamediv>
+  <refname>rar://</refname>
+  <refpurpose>RAR</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description"><!-- {{{ -->
+  &reftitle.description;
+  <para>
+   Wrapper przyjmuje zakodowaną w url ścieżkę do archiwum RAR (względną lub bezwzględną),
+   opcjonalną gwiazdkę (<literal>*</literal>), opcjonalny znak liczby
+   (<literal>#</literal>) i opcjonalną zakodowaną w url nazwę wpisu zapisaną w archiwum.
+   Określenie nazwy wpisu wymaga znaku liczby; wiodący  ukośnik w nazwie wpisu jest
+   opcjonalny.
+  </para>
+
+  <simpara>
+   Ten wrapper może otwierać zarówno pliki, jak i katalogi. Podczas otwierania katalogów
+   znak gwiazdki wymusza zwracanie niekodowanych nazw wpisów katalogów. Jeśli nie
+   zostanie określony, zostaną zwrócone zakodowane url - powodem tego jest umożliwienie
+   prawidłowego użycia wrappera z wbudowaną funkcjonalnością, taką jak
+   <classname>RecursiveDirectoryIterator</classname> w obecności nazw plików, które wydają się
+   być zakodowanymi danymi url.
+  </simpara>
+
+  <simpara>
+   Jeśli znak funta i część nazwy wpisu nie zostaną uwzględnione, wyświetlony zostanie
+   katalog główny archiwum. Różni się to od zwykłych katalogów tym, że wynikowy strumień
+   nie będzie zawierał informacji takich jak czas modyfikacji, ponieważ katalog główny nie
+   jest przechowywany w indywidualnym wpisie w archiwum.
+   Użycie wrappera z <classname>RecursiveDirectoryIterator</classname> wymaga
+   uwzględnienia znaku liczby w adresie URL podczas uzyskiwania dostępu do katalogu głównego,
+   aby adresy URL katalogów podrzędnych mogły być poprawnie skonstruowane.
+  </simpara>
+  <note>
+   <title>Ten wrapper nie jest domyślnie włączony</title>
+   <simpara>
+    Aby użyć wrappera <filename>rar://</filename>,
+    rozszerzenie
+    <link xlink:href="&url.pecl.package;rar">rar</link>
+    dostępne z &link.pecl; musi być zainstalowane.
+   </simpara>
+  </note>
+  <simpara>
+   <filename>rar://</filename>
+   Dostępne od wersji PECL rar 3.0.0
+  </simpara>
+
+ </refsect1><!-- }}} -->
+
+ <refsect1 role="usage"> <!-- {{{ -->
+  &reftitle.usage;
+  <itemizedlist>
+   <listitem><simpara><filename>rar://&lt;nazwa archiwum zakodowana w url&gt;[*][#[&lt;nazwa wpisu zakodowana w url&gt;]]</filename></simpara></listitem>
+  </itemizedlist>
+ </refsect1> <!-- }}} -->
+
+ <refsect1 role="options"><!-- {{{ -->
+  &reftitle.options;
+  <para>
+   <table>
+    <title>Podsumowanie Wrappera</title>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>Atrybut</entry>
+       <entry>Obsługiwany</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>Zastrzeżony przez <link linkend="ini.allow-url-fopen">allow_url_fopen</link></entry>
+       <entry>Nie</entry>
+      </row>
+      <row>
+       <entry>Zastrzeżony przez <link linkend="ini.allow-url-include">allow_url_include</link></entry>
+       <entry>Nie</entry>
+      </row>
+      <row>
+       <entry>Umożliwia odczytywanie</entry>
+       <entry>Yes</entry>
+      </row>
+      <row>
+       <entry>Umożliwia zapisywanie</entry>
+       <entry>Nie</entry>
+      </row>
+      <row>
+       <entry>Umożliwia dołączanie</entry>
+       <entry>Nie</entry>
+      </row>
+      <row>
+       <entry>Umożliwia jednocześnie odczytywanie i zapisywanie</entry>
+       <entry>Nie</entry>
+      </row>
+      <row>
+       <entry>Obsługuje <function>stat</function></entry>
+       <entry>Tak</entry>
+      </row>
+      <row>
+       <entry>Obsługuje <function>unlink</function></entry>
+       <entry>Nie</entry>
+      </row>
+      <row>
+       <entry>Obsługuje <function>rename</function></entry>
+       <entry>Nie</entry>
+      </row>
+      <row>
+       <entry>Obsługuje <function>mkdir</function></entry>
+       <entry>Nie</entry>
+      </row>
+      <row>
+       <entry>Obsługuje <function>rmdir</function></entry>
+       <entry>Nie</entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </table>
+  </para>
+
+  <!-- FIXME: This should be context.rar ! -->
+  <para>
+   <table>
+    <title>Opcje kontekstu</title>
+    <tgroup cols="3">
+     <thead>
+      <row>
+       <entry>Nazwa</entry>
+       <entry>Użycie</entry>
+       <entry>Domyślnie</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry><literal>open_password</literal></entry>
+       <entry>Hasło używane do szyfrowania nagłówków archiwum, jeśli takie
+       istnieją. WinRAR zaszyfruje wszystkie pliki tym samym hasłem, co hasło
+       nagłówków, jeśli jest ono obecne, więc dla archiwów z zaszyfrowanymi
+       nagłówkami, <literal>file_password</literal> będzie ignorowane.
+       </entry>
+       <entry/>
+      </row>
+      <row>
+       <entry><literal>file_password</literal></entry>
+       <entry>Hasło używane do szyfrowania pliku, jeśli istnieje. Jeśli
+       nagłówki są również zaszyfrowane, opcja ta zostanie pominięta na rzecz
+       <literal>open_password</literal>. Powodem istnienia dwóch opcji
+       jest uwzględnienie możliwości obsługi archiwów z różnymi nagłówkami
+       i hasłami plików, jeśli takie archiwa powstaną. Należy pamiętać,
+       że jeśli archiwum nie ma zaszyfrowanych nagłówków, opcja
+       <literal>open_password</literal> będzie ignorowana i zamiast niej
+       należy użyć tej opcji, jeśli takie archiwa powstaną.
+       </entry>
+       <entry/>
+      </row>
+      <row>
+       <entry><literal>volume_callback</literal></entry>
+       <entry>Wywołanie zwrotne w celu określenia ścieżki brakujących woluminów. Zobacz
+        <methodname>RarArchive::open</methodname> po więcej informacji.
+       </entry>
+       <entry/>
+      </row>
+     </tbody>
+    </tgroup>
+   </table>
+  </para>
+ </refsect1> <!-- }}} -->
+
+ <refsect1 role="examples"><!-- {{{ -->
+  &reftitle.examples;
+  <example>
+   <title>Przemierzanie archiwum RAR</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+
+class MyRecDirIt extends RecursiveDirectoryIterator {
+    function current() {
+        return rawurldecode($this->getSubPathName()) .
+            (is_dir(parent::current())?" [DIR]":"");
+    }
+}
+
+$f = "rar://" . rawurlencode(dirname(__FILE__)) .
+    DIRECTORY_SEPARATOR . 'dirs_and_extra_headers.rar#';
+
+$it = new RecursiveTreeIterator(new MyRecDirIt($f));
+
+foreach ($it as $s) {
+    echo $s, "\n";
+}
+?>
+]]>
+   </programlisting>
+    &example.outputs.similar;
+    <screen>
+<![CDATA[
+|-allow_everyone_ni [DIR]
+|-file1.txt
+|-file2_אּ.txt
+|-with_streams.txt
+\-אּ [DIR]
+  |-אּ\%2Fempty%2E [DIR]
+  | \-אּ\%2Fempty%2E\file7.txt
+  |-אּ\empty [DIR]
+  |-אּ\file3.txt
+  |-אּ\file4_אּ.txt
+  \-אּ\אּ_2 [DIR]
+    |-אּ\אּ_2\file5.txt
+    \-אּ\אּ_2\file6_אּ.txt
+]]>
+   </screen>
+  </example>
+  <example>
+   <title>Otwieranie zaszyfrowanego pliku (szyfrowanie nagłówka)</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+$stream = fopen("rar://" .
+    rawurlencode(dirname(__FILE__)) . DIRECTORY_SEPARATOR .
+    'encrypted_headers.rar' . '#encfile1.txt', "r", false,
+    stream_context_create(
+        array(
+            'rar' =>
+                array(
+                    'open_password' => 'samplepassword'
+                )
+            )
+        )
+    );
+var_dump(stream_get_contents($stream));
+/* data utworzenia i data ostatniego dostępu są opcjonalne w WinRAR, stąd większość
+ * plików ich nie posiada */
+var_dump(fstat($stream));
+?>
+]]>
+   </programlisting>
+    &example.outputs.similar;
+    <screen>
+<![CDATA[
+string(26) "Encrypted file 1 contents."
+Array
+(
+    [0] => 0
+    [1] => 0
+    [2] => 33206
+    [3] => 1
+    [4] => 0
+    [5] => 0
+    [6] => 0
+    [7] => 26
+    [8] => 0
+    [9] => 1259550052
+    [10] => 0
+    [11] => -1
+    [12] => -1
+    [dev] => 0
+    [iNie] => 0
+    [mode] => 33206
+    [nlink] => 1
+    [uid] => 0
+    [gid] => 0
+    [rdev] => 0
+    [size] => 26
+    [atime] => 0
+    [mtime] => 1259550052
+    [ctime] => 0
+    [blksize] => -1
+    [blocks] => -1
+)
+]]>
+   </screen>
+  </example>
+ </refsect1><!-- }}} -->
+
+</refentry>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
+
