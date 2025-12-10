@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 4639881688d3faaf0073ad71fe0a4b730aea15a0 Maintainer: sobak Status: wip -->
+<!-- EN-Revision: 69fe083419b7888f6d424595771d54fe2d850d9d Maintainer: sobak Status: wip -->
 <!-- $Revision$ -->
 <!-- CREDITS: leszek, adi, cyb0org, joeaccord -->
 <!-- TODO: Nieliczne sekcje opisane przez "TODO DOKOŃCZYĆ" nie są faktycznie przetłumaczone na j. polski. Pomoc mile widziana -->
@@ -343,6 +343,11 @@ xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja jest
 <emphasis>PRZESTARZAŁA</emphasis> od PHP 8.0.0. Używanie tej funkcji
 jest niezalecane.</simpara></warning>'>
 
+<!ENTITY warn.deprecated.feature-8-1-0 '<warning
+xmlns="http://docbook.org/ns/docbook"><simpara>Ta opcja jest
+<emphasis>PRZESTARZAŁA</emphasis> od PHP 8.1.0. Używanie tej opcji
+jest niezalecane.</simpara></warning>'>
+
 <!ENTITY warn.deprecated.function-8-1-0 '<warning
 xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja jest
 <emphasis>PRZESTARZAŁA</emphasis> od PHP 8.1.0. Używanie tej funkcji
@@ -371,6 +376,16 @@ jest niezalecane.</simpara></warning>'>
 <!ENTITY warn.deprecated.function-8-4-0 '<warning
 xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja jest
 <emphasis>PRZESTARZAŁA</emphasis> od PHP 8.4.0. Używanie tej funkcji
+jest niezalecane.</simpara></warning>'>
+
+<!ENTITY warn.deprecated.feature-8-5-0 '<warning
+xmlns="http://docbook.org/ns/docbook"><simpara>Ta opcja jest
+<emphasis>PRZESTARZAŁA</emphasis> od PHP 8.5.0. Używanie tej opcji
+jest niezalecane.</simpara></warning>'>
+
+<!ENTITY warn.deprecated.function-8-5-0 '<warning
+xmlns="http://docbook.org/ns/docbook"><simpara>Ta funkcja jest
+<emphasis>PRZESTARZAŁA</emphasis> od PHP 8.5.0. Używanie tej funkcji
 jest niezalecane.</simpara></warning>'>
 
 <!ENTITY removed.php.future 'Ta przestarzała funkcja <emphasis xmlns="http://docbook.org/ns/docbook">zostanie</emphasis>
@@ -641,6 +656,10 @@ jest niezalecane.</simpara></warning>
 <!ENTITY example.outputs.84 '<para xmlns="http://docbook.org/ns/docbook">Powyższy przykład w PHP 8.4 wyświetli:</para>'>
 
 <!ENTITY example.outputs.84.similar '<para xmlns="http://docbook.org/ns/docbook">Powyższy przykład w PHP 8.4 wyświetli coś podobnego do:</para>'>
+
+<!ENTITY example.outputs.85 '<para xmlns="http://docbook.org/ns/docbook">Powyższy przykład w PHP 8.5 wyświetli:</para>'>
+
+<!ENTITY example.outputs.85.similar '<para xmlns="http://docbook.org/ns/docbook">Powyższy przykład w PHP 8.5 wyświetli coś podobnego do:</para>'>
 
 <!ENTITY example.outputs.32bit '<para xmlns="http://docbook.org/ns/docbook">Wyświetla następujący przykład na systemach 32 bitowych:</para>'>
 
@@ -2215,6 +2234,14 @@ dla tego rozszerzenia <acronym xmlns="http://docbook.org/ns/docbook">PECL</acron
 <!ENTITY pecl.moved-ver 'To rozszerzenie zostało przeniesione do repozytorium &link.pecl;
 i nie jest rozprowadzane z PHP od PHP '>
 
+<!ENTITY pecl.moving.to.pie '<note xmlns="http://docbook.org/ns/docbook">
+ <simpara>
+  Instalator rozszerzeń dla PHP (ang. <emphasis>PHP Installer for Extensions</emphasis>, <acronym>PIE</acronym>) to nowe narzędzie, które zastąpi PECL.
+  Zalecamy użycie PIE do instalacji rozszerzeń.
+  Dowiedz się więcej pod adresem <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://github.com/php/pie">https://github.com/php/pie</link>
+ </simpara>
+</note>'>
+
 <!ENTITY warn.pecl.unmaintained '<warning xmlns="http://docbook.org/ns/docbook">
  <simpara>To rozszerzenie <emphasis>nie jest już utrzymywane</emphasis>.</simpara>
 </warning>'>
@@ -3446,6 +3473,16 @@ local: {
     </listitem>
    </varlistentry>
 '>
+<!ENTITY mongodb.parameter.bulkwritecommand '
+   <varlistentry xmlns="http://docbook.org/ns/docbook">
+    <term><parameter>bulk</parameter> (<classname>MongoDB\Driver\BulkWriteCommand</classname>)</term>
+    <listitem>
+     <para>
+      Zapis(y) do wykonania.
+     </para>
+    </listitem>
+   </varlistentry>
+'>
 <!ENTITY mongodb.parameter.command '
    <varlistentry xmlns="http://docbook.org/ns/docbook">
     <term><parameter>command</parameter> (<classname>MongoDB\Driver\Command</classname>)</term>
@@ -3672,10 +3709,12 @@ local: {
 '>
 <!ENTITY mongodb.returns.cursor '<para xmlns="http://docbook.org/ns/docbook">Zwraca <classname>MongoDB\Driver\Cursor</classname> przy powodzeniu.</para>'>
 <!ENTITY mongodb.returns.writeresult '<para xmlns="http://docbook.org/ns/docbook">Zwraca <classname>MongoDB\Driver\WriteResult</classname> przy powodzeniu.</para>'>
+<!ENTITY mongodb.returns.bulkwritecommandresult '<para xmlns="http://docbook.org/ns/docbook">Zwraca <classname>MongoDB\Driver\BulkWriteCommandResult</classname> przy powodzeniu.</para>'>
 <!ENTITY mongodb.throws.std '&mongodb.throws.argumentparsing;&mongodb.throws.connection;&mongodb.throws.authentication;'>
 <!ENTITY mongodb.throws.session-readwriteconcern '<member xmlns="http://docbook.org/ns/docbook">Rzuca wyjątek <classname>MongoDB\Driver\Exception\InvalidArgumentException</classname> jeśli opcja <literal>"session"</literal> jest używana w powiązanej transakcji w połączeniu z opcją <literal>"readConcern"</literal> lub <literal>"writeConcern"</literal>.</member>'>
 <!-- //// TODO DOKOŃCZYĆ //// -->
 <!ENTITY mongodb.throws.session-unacknowledged '<member xmlns="http://docbook.org/ns/docbook">Rzuca wyjątek <classname>MongoDB\Driver\Exception\InvalidArgumentException</classname> jeśli opcja <literal>"session"</literal> option is used in combination with an unacknowledged write concern.</member>'>
+<!ENTITY mongodb.throws.bulkwritecommandexception '<member xmlns="http://docbook.org/ns/docbook">Throws <classname>MongoDB\Driver\Exception\BulkWriteCommandException</classname> on any write failure (e.g. command failure, write or write concern error)</member>'>
 <!ENTITY mongodb.throws.bulkwriteexception '<member xmlns="http://docbook.org/ns/docbook">Rzuca wyjątek <classname>MongoDB\Driver\Exception\BulkWriteException</classname> w przypadku niepowodzenia zapisu (e.g. write error, failure to apply a write concern)</member>'>
 <!ENTITY mongodb.throws.argumentparsing '<member xmlns="http://docbook.org/ns/docbook">Rzuca wyjątek <classname>MongoDB\Driver\Exception\InvalidArgumentException</classname> przy błędach parsowania argumentów.</member>'>
 <!ENTITY mongodb.throws.authentication '<member xmlns="http://docbook.org/ns/docbook">Rzuca wyjątek <classname>MongoDB\Driver\Exception\AuthenticationException</classname> jeśli wymagana autoryzacja nie powiedzie się.</member>'>

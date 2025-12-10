@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 8cdc6621f9826d04abc3e50438c010804d7e8683 Maintainer: grzesiek Status: ready -->
+<!-- EN-Revision: cd8b964b8566801265f0d287db6eb651f93be950 Maintainer: grzesiek Status: ready -->
 <!-- $Revision$ -->
 
 <chapter xml:id="datetime.examples" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -15,8 +15,8 @@
    <example>
     <title>DateTimeImmutable::add/sub dodaje interwały obejmujące czas, który upłynął</title>
     <simpara>
-        Dodanie PT24H do przejścia DST spowoduje dodanie 23/25 godzin (dla większości
-        stref czasowych).
+     Dodanie PT24H do przejścia DST spowoduje dodanie 23/25 godzin (dla większości
+     stref czasowych).
     </simpara>
     <programlisting role="php">
 <![CDATA[
@@ -25,7 +25,6 @@ $dt = new DateTimeImmutable("2015-11-01 00:00:00", new DateTimeZone("America/New
 echo "Początek: ", $dt->format("Y-m-d H:i:s P"), PHP_EOL;
 $dt = $dt->add(new DateInterval("PT3H"));
 echo "Koniec:   ", $dt->format("Y-m-d H:i:s P"), PHP_EOL;
-?>
 ]]>
     </programlisting>
     &example.outputs;
@@ -52,7 +51,6 @@ $dt = new DateTimeImmutable("2015-11-01 00:00:00", new DateTimeZone("America/New
 echo "Początek: ", $dt->format("Y-m-d H:i:s P"), PHP_EOL;
 $dt = $dt->modify("+24 hours");
 echo "Koniec:   ", $dt->format("Y-m-d H:i:s P"), PHP_EOL;
-?>
 ]]>
     </programlisting>
     &example.outputs;
@@ -85,7 +83,6 @@ $dt = new DateTimeImmutable("2016-01-31 00:00:00", new DateTimeZone("America/New
 echo "Początek: ", $dt->format("Y-m-d H:i:s P"), PHP_EOL;
 $dt = $dt->modify("+1 month");
 echo "Koniec:   ", $dt->format("Y-m-d H:i:s P"), PHP_EOL;
-?>
 ]]>
     </programlisting>
     &example.outputs;
@@ -117,7 +114,6 @@ $dt = new DateTimeImmutable("2016-01-31 00:00:00", new DateTimeZone("America/New
 echo "Początek: ", $dt->format("Y-m-d H:i:s P"), PHP_EOL;
 $dt = $dt->modify("last day of next month");
 echo "Koniec:   ", $dt->format("Y-m-d H:i:s P"), PHP_EOL;
-?>
 ]]>
     </programlisting>
     &example.outputs;
