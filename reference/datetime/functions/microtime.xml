@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- EN-Revision: 5c951013ca04161992efed8b86fb40f55669958e Maintainer: sobak Status: ready -->
+<!-- EN-Revision: 3a8c3e77df070a046c9d5b56b68926ca2d7e5ee3 Maintainer: sobak Status: ready -->
 <!-- $Revision$ -->
 <!-- CREDITS: qrak -->
 <refentry xml:id="function.microtime" xmlns="http://docbook.org/ns/docbook">
@@ -70,30 +70,28 @@
 $czas_start = microtime(true);
 
 // Poczekaj chwilę
-usleep(100);
+usleep(10_000);
 
 $czas_koniec = microtime(true);
 $czas = $czas_koniec - $czas_start;
 
-echo "Nie robiłem nic przez $czas sekund\n";
-?>
+print "Nie robiłem nic przez $czas sekund\n";
 ]]>
     </programlisting>
    </example>
    <example>
     <title><function>microtime</function> i <literal>REQUEST_TIME_FLOAT</literal> (od PHP 5.4.0)</title>
-    <programlisting role="php">
+    <programlisting role="php" annotations="non-interactive">
 <![CDATA[
 <?php
 // Losowy czas uśpienia skryptu
-usleep(mt_rand(100, 10000));
+usleep(random_int(10_000, 1_000_000));
 
 // W tablicy superglobalnej $_SERVER dostępny jest klucz REQUEST_TIME_FLOAT.
 // Zawiera on znacznik czasu w momencie rozpoczęcia żądania, z precyzją do mikrosekund.
 $czas = microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"];
 
 echo "Nie robiłem nic przez $czas sekund\n";
-?>
 ]]>
     </programlisting>
    </example>
