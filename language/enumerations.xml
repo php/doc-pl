@@ -1,0 +1,990 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 3bc8fc7b9785c335e55d83986e6cd8968498dcfb Maintainer: grzesiek Status: ready -->
+<!-- $Revision$ -->
+ <chapter xml:id="language.enumerations" xmlns="http://docbook.org/ns/docbook">
+  <title>Wyliczenia</title>
+  <sect1 xml:id="language.enumerations.overview">
+   <title>Przegląd wyliczeń</title>
+   <?phpdoc print-version-for="enumerations"?>
+
+   <para>
+    Wyliczenia lub "Enumy" pozwalają programiście zdefiniować niestandardowy typ, który jest ograniczony
+    do jednej z dyskretnej liczby możliwych wartości. Może to być szczególnie pomocne przy definiowaniu
+    modelu domeny, ponieważ umożliwia "uniemożliwienie reprezentowania nieważnych stanów."
+   </para>
+
+   <para>
+    Enumy pojawiają się w wielu językach z różnymi funkcjami. W PHP, Enumy są specjalnym
+    rodzajem obiektów. Enum samo w sobie jest klasą, a jego możliwe zbiory wartości są
+    pojedynczymi obiektami tej klasy. Oznacza to, że zbiory wartości Enuma są poprawnymi obiektami
+    i mogą być używane wszędzie tam, gdzie obiekt może być użyty, włączając w to sprawdzanie typów.
+   </para>
+
+   <para>
+    Najpopularniejszym przykładem wyliczeń jest wbudowany typ boolean, który jest
+    typem wyliczeniowym z legalnymi wartościami &true; i &false;.
+    Enumy pozwalają programistom definiować własne, dowolnie rozbudowane wyliczenia.
+   </para>
+  </sect1>
+  <sect1 xml:id="language.enumerations.basics">
+   <title>Podstawowe wyliczenia</title>
+
+   <para>
+    Enumy są podobne do klas i dzielą te same przestrzenie nazw co klasy, interfejsy i traity.
+    Są one również automatycznie ładowane w ten sam sposób. Enumy definiują nowy typ, który ma stałą,
+    ograniczoną liczbę możliwych legalnych wartości.
+   </para>
+
+
+   <programlisting role="php">
+<![CDATA[
+<?php
+
+enum Suit
+{
+    case Hearts;
+    case Diamonds;
+    case Clubs;
+    case Spades;
+}
+?>
+]]>
+   </programlisting>
+
+   <para>
+    Ta deklaracja tworzy nowy typ wyliczeniowy o nazwie <literal>Suit</literal>, który ma
+    cztery i tylko cztery legalne wartości: <literal>Suit::Hearts</literal>, <literal>Suit::Diamonds</literal>,
+    <literal>Suit::Clubs</literal> i <literal>Suit::Spades</literal>. Zmienne mogą być przypisane
+    do jednej z tych legalnych wartości. Funkcja może być sprawdzana pod kątem typu wyliczeniowego,
+    w którym to przypadku mogą być przekazywane tylko wartości tego typu.
+   </para>
+
+   <programlisting role="php">
+<![CDATA[
+<?php
+
+function pick_a_card(Suit $suit)
+{
+    /* ... */
+}
+
+$val = Suit::Diamonds;
+
+// OK
+pick_a_card($val);
+
+// OK
+pick_a_card(Suit::Clubs);
+
+// TypeError: pick_a_card(): Argument #1 ($suit) must be of type Suit, string given
+pick_a_card('Spades');
+?>
+]]>
+   </programlisting>
+
+   <para>
+    Wyliczenie może mieć zero lub więcej definicji <literal>case</literal>, bez maksimum.
+    Enumy o zerowej ilości case są poprawne składniowo, choć raczej bezużyteczne.
+   </para>
+
+   <para>
+    Dla przypadków wyliczeń obowiązują te same zasady składni, co dla każdej etykiety w PHP, zobacz
+    <link linkend="language.constants">Stałe</link>.
+   </para>
+
+   <para>
+    Domyślnie instrukcje case nie są wewnętrznie wspierane przez wartość skalarną.
+    Oznacza to, że <literal>Suit::Hearts</literal> nie jest równy <literal>"0"</literal>.
+    Zamiast tego, każdy case jest wspierany przez pojedynczy obiekt o tej nazwie. Oznacza to, że:
+   </para>
+
+   <programlisting role="php">
+<![CDATA[
+<?php
+
+$a = Suit::Spades;
+$b = Suit::Spades;
+
+$a === $b; // true
+
+$a instanceof Suit;  // true
+?>
+]]>
+   </programlisting>
+
+   <para>
+    Oznacza to również, że wartości enumów nigdy nie są <literal>&lt;</literal> lub <literal>&gt;</literal> względem siebie,
+    ponieważ te porównania nie mają znaczenia na obiektach. Te porównania zawsze
+    zwrócą &false; podczas pracy z wartościami enuma.
+   </para>
+
+   <para>
+    Ten typ instrukcji case, bez powiązanych danych, nazywany jest "Pure Case".  Enumy zawierające
+    tylko Pure Case nazywane są Pure Enum.
+   </para>
+
+   <para>
+    Wszystkie Pure Case są zaimplementowane jako instancje ich typu enuma. Typ enuma jest reprezentowany wewnętrznie jako klasa.
+   </para>
+
+   <para>
+    Wszystkie instrukcje case mają właściwość tylko do odczytu <literal>nazwę</literal>, która jest rozróżniającą
+    wielkość liter nazwą samej instrukcji case.
+   </para>
+
+   <programlisting role="php">
+<![CDATA[
+<?php
+
+print Suit::Spades->name;
+// prints "Spades"
+?>
+]]>
+   </programlisting>
+
+   <para>
+    Możliwe jest również użycie funkcji  <function>defined</function> i <function>constant</function>
+    do sprawdzenia istnienia lub odczytania case enuma, jeśli nazwa jest uzyskiwana dynamicznie.
+    Jest to jednak odradzane, ponieważ użycie <link linkend="language.enumerations.backed">Enuma backed</link>
+    powinno działać w większości przypadków użycia.
+   </para>
+
+  </sect1>
+
+ <sect1 xml:id="language.enumerations.backed">
+  <title>Wyliczenia backed</title>
+
+  <para>
+   Domyślnie Wyliczone Case nie mają skalarnego odpowiednika. Są to po prostu obiekty singleton. Istnieje
+   jednak wiele przypadków, w których Wyliczony Case musi być w stanie zaokrąglić do bazy danych lub
+   podobnego magazynu danych, więc posiadanie wbudowanej wartoścci skalarnej (a zatem trywialnie serializowalnego)
+   odpowiednika zdefiniowanego wewnętrznie jest przydatne.
+  </para>
+
+  <para>Aby zdefiniować skalarny odpowiednik dla Wyliczeń, składnia jest następująca:</para>
+
+  <programlisting role="php">
+<![CDATA[
+<?php
+
+enum Suit: string
+{
+    case Hearts = 'H';
+    case Diamonds = 'D';
+    case Clubs = 'C';
+    case Spades = 'S';
+}
+?>
+]]>
+  </programlisting>
+
+  <para>
+   Case, który ma odpowiednik skalarny, nazywany jest Backed Case, ponieważ jest "Utworzony"
+   przez prostszą wartość. Enum, który zawiera wszystkie Backed Case nazywany jest "Backed Enum".
+   Backed Enum może zawierać tylko Backed Cases. Pure Enum może zawierać tylko Pure Case.
+  </para>
+
+  <para>
+   Backed Enum może być utworzony przez typy <literal>int</literal> lub <literal>string</literal>,
+   a dane wyliczenie obsługuje tylko jeden typ w danym czasie (tj. nie ma uni <literal>int|string</literal>).
+   Jeśli wyliczenie jest oznaczone jako posiadające skalarny odpowiednik, to wszystkie przypadki muszą mieć
+   unikalny skalarny odpowiednik zdefiniowany jawnie. Nie ma automatycznie generowanych odpowiedników
+   skalarnych (np. sekwencyjnych liczb całkowitych). Backed case muszą być unikalne; dwa backed enum case nie mogą
+   mieć tego samego skalarnego odpowiednika. Stała może jednak odnosić się do przypadku, skutecznie
+   tworząc alias. Zobacz <link linkend="language.enumerations.constants">Stałe wyliczenia</link>.
+  </para>
+
+  <para>
+   Równoważne wartości mogą być stałym wyrażeniem skalarnym.
+   Przed PHP 8.2.0 równoważne wartości musiały być literałami lub wyrażeniami literałowymi.
+   Oznacza to, że stałe i wyrażenia stałe nie były obsługiwane.
+   Oznacza to, że <code>1 + 1</code> było dozwolone, ale nie <code>1 + SOME_CONST</code>.
+  </para>
+
+  <para>
+   Backed Case mają dodatkową właściwość tylko do odczytu <literal>value</literal>, która jest wartością
+   określoną w definicji.
+  </para>
+
+  <programlisting role="php">
+<![CDATA[
+<?php
+
+print Suit::Clubs->value;
+// Prints "C"
+?>
+]]>
+  </programlisting>
+
+  <para>
+   Aby wymusić właściwość <literal>value</literal> jako tylko do odczytu, nie można przypisać zmiennej
+   jako odniesienia do niej. Oznacza to, że poniższy kod powoduje błąd:
+  </para>
+
+  <programlisting role="php">
+<![CDATA[
+<?php
+
+$suit = Suit::Clubs;
+$ref = &$suit->value;
+// Błąd: Nie można uzyskać odniesienia do właściwości Suit::$value
+?>
+]]>
+  </programlisting>
+
+  <para>
+   Enumy backed implementują wewnętrzny interfejs <interfacename>BackedEnum</interfacename>,
+   który udostępnia dwie dodatkowe metody::
+  </para>
+
+  <simplelist>
+   <member>
+    <literal>from(int|string): self</literal> przyjmie skalar i zwróci odpowiadający mu
+    Case Enuma. Jeśli nie zostanie znaleziony, zostanie zgłoszony błąd <classname>ValueError</classname>.
+    Jest to przydatne głównie w przypadkach, gdy skalar wejściowy jest zaufany, a brakująca wartość enuma powinna
+    być uznana za błąd zatrzymujący aplikację.
+   </member>
+   <member>
+    <literal>tryFrom(int|string): ?self</literal> przyjmie skalar i zwróci
+    odpowiadający mu Case Enuma. Jeśli nie zostanie znaleziony, zwróci <literal>null</literal>.
+    Jest to przydatne głównie w przypadkach, gdy skalar wejściowy jest niegodny zaufania, a wywołujący chce
+    zaimplementować własną obsługę błędów lub logikę wartości domyślnych.
+   </member>
+  </simplelist>
+
+  <para>
+   Metody <literal>from()</literal> i <literal>tryFrom()</literal> stosują się do standardowych
+   reguł słabego/silnego typowania. W trybie słabego typowania, przekazanie liczby całkowitej lub ciągu jest dopuszczalne,
+   a system odpowiednio wymusi wartość. Przekazanie liczby zmiennoprzecinkowej również zadziała i
+   zostanie wymuszone. W trybie ścisłego typowania, przekazanie liczby całkowitej do <literal>from()</literal> w
+   wyliczeniu opartym na ciągu (lub odwrotnie) spowoduje błąd <classname>TypeError</classname>,
+   podobnie jak float we wszystkich okolicznościach. Wszystkie inne typy parametrów wyrzucą błąd TypeError
+   w obu trybach.
+  </para>
+
+  <programlisting role="php">
+<![CDATA[
+<?php
+
+$record = get_stuff_from_database($id);
+print $record['suit'];
+
+$suit =  Suit::from($record['suit']);
+// Invalid data throws a ValueError: "X" is not a valid scalar value for enum "Suit"
+print $suit->value;
+
+$suit = Suit::tryFrom('A') ?? Suit::Spades;
+// Invalid data returns null, so Suit::Spades is used instead.
+print $suit->value;
+?>
+]]>
+  </programlisting>
+
+  <para>Ręczne zdefiniowanie metody <literal>from()</literal> lub <literal>tryFrom()</literal> w Backed Enum spowoduje błąd krytyczny.</para>
+
+  </sect1>
+
+ <sect1 xml:id="language.enumerations.methods">
+  <title>Metody wyliczeń</title>
+
+  <para>
+   Enumy (zarówno Enumy Pure, jak i Enumy Backed) mogą zawierać metody i mogą implementować interfejsy.
+   Jeśli Enum implementuje interfejs, wówczas każde sprawdzenie typu dla tego interfejsu zaakceptuje również
+   wszystkie przypadki tego Enuma.
+  </para>
+
+  <programlisting role="php">
+<![CDATA[
+<?php
+
+interface Colorful
+{
+    public function color(): string;
+}
+
+enum Suit implements Colorful
+{
+    case Hearts;
+    case Diamonds;
+    case Clubs;
+    case Spades;
+
+    // Spełnia kontrakt interfejsu.
+    public function color(): string
+    {
+        return match($this) {
+            Suit::Hearts, Suit::Diamonds => 'Red',
+            Suit::Clubs, Suit::Spades => 'Black',
+        };
+    }
+
+    // Nie jest częścią interfejsu; nie ma problemu.
+    public function shape(): string
+    {
+        return "Rectangle";
+    }
+}
+
+function paint(Colorful $c)
+{
+   /* ... */
+}
+
+paint(Suit::Clubs);  // Działa
+
+print Suit::Diamonds->shape(); // Wyświetli "Rectangle"
+?>
+]]>
+  </programlisting>
+
+  <para>
+   W tym przykładzie wszystkie cztery wystąpienia <literal>Suit</literal> mają dwie metody
+   <literal>color()</literal> i <literal>shape()</literal>. Jeśli chodzi o wywoływanie kodu
+   i sprawdzanie typów, zachowują się one dokładnie tak samo, jak każde inna instancja obiektu.
+  </para>
+
+  <para>
+   W przypadku Backed Enum deklaracja interfejsu następuje po deklaracji typu backed.
+  </para>
+
+  <programlisting role="php">
+   <![CDATA[
+<?php
+
+interface Colorful
+{
+    public function color(): string;
+}
+
+enum Suit: string implements Colorful
+{
+    case Hearts = 'H';
+    case Diamonds = 'D';
+    case Clubs = 'C';
+    case Spades = 'S';
+
+    // Spełnienie kontraktu interfejsu.
+    public function color(): string
+    {
+        return match($this) {
+            Suit::Hearts, Suit::Diamonds => 'Red',
+            Suit::Clubs, Suit::Spades => 'Black',
+        };
+    }
+}
+?>
+]]>
+  </programlisting>
+
+  <para>
+   Wewnątrz metody zdefiniowana jest zmienna <literal>$this</literal> która odwołuje się do instancji Case.
+  </para>
+
+  <para>
+   Metody mogą być dowolnie złożone, ale w praktyce zazwyczaj zwracają wartość statyczną lub
+   &match; dla <literal>$this</literal> aby zapewnić
+   różne wyniki w różnych przypadkach.
+  </para>
+
+  <para>
+   Należy zauważyć, że w tym przypadku lepszą praktyką modelowania danych byłoby również zdefiniowanie
+   Typu Enum <literal>SuitColor</literal> z wartościami Red i Black i zwrócenie go zamiast tego.
+   Jednak skomplikowałoby to ten przykład.
+  </para>
+
+  <para>
+   Powyższa hierarchia jest logicznie podobna do następującej struktury klas
+   (choć nie jest to faktyczny kod, który jest uruchamiany):
+  </para>
+
+  <programlisting role="php">
+<![CDATA[
+<?php
+
+interface Colorful
+{
+    public function color(): string;
+}
+
+final class Suit implements UnitEnum, Colorful
+{
+    public const Hearts = new self('Hearts');
+    public const Diamonds = new self('Diamonds');
+    public const Clubs = new self('Clubs');
+    public const Spades = new self('Spades');
+
+    private function __construct(public readonly string $name) {}
+
+    public function color(): string
+    {
+        return match($this) {
+            Suit::Hearts, Suit::Diamonds => 'Red',
+            Suit::Clubs, Suit::Spades => 'Black',
+        };
+    }
+
+    public function shape(): string
+    {
+        return "Rectangle";
+    }
+
+    public static function cases(): array
+    {
+        // Nielegalna metoda, ponieważ ręczne definiowanie metody cases() na Enumie jest niedozwolone.
+        // Zobacz także sekcję "Listowanie wartości".
+    }
+}
+?>
+]]>
+  </programlisting>
+
+  <para>
+   Metody mogą być publiczne, prywatne lub chronione, chociaż w praktyce prywatne i
+   chronione są równoważne, ponieważ dziedziczenie nie jest dozwolone.
+  </para>
+
+ </sect1>
+
+ <sect1 xml:id="language.enumerations.static-methods">
+  <title>Statyczne metody wyliczeń</title>
+
+  <para>
+   Wyliczenia mogą również posiadać metody statyczne. Użycie metod statycznych na
+   samym wyliczeniu jest przede wszystkim dla alternatywnych konstruktorów. Np:
+  </para>
+
+  <programlisting role="php">
+<![CDATA[
+<?php
+
+enum Size
+{
+    case Small;
+    case Medium;
+    case Large;
+
+    public static function fromLength(int $cm): self
+    {
+        return match(true) {
+            $cm < 50 => self::Small,
+            $cm < 100 => self::Medium,
+            default => self::Large,
+        };
+    }
+}
+?>
+]]>
+  </programlisting>
+
+  <para>
+   Metody statyczne mogą być publiczne, prywatne lub chronione, chociaż w praktyce prywatne
+   i chronione są równoważne, ponieważ dziedziczenie nie jest dozwolone.
+  </para>
+
+ </sect1>
+
+ <sect1 xml:id="language.enumerations.constants">
+  <title>Stałe wyliczeń</title>
+
+  <para>
+   Wyliczenia mogą zawierać stałe, które mogą być publiczne, prywatne lub chronione,
+   chociaż w praktyce prywatne i chronione są równoważne, ponieważ dziedziczenie nie jest dozwolone.
+  </para>
+
+  <para>Stała enuma może odnosić się do przypadku enuma:</para>
+
+  <programlisting role="php">
+<![CDATA[
+<?php
+
+enum Size
+{
+    case Small;
+    case Medium;
+    case Large;
+
+    public const Huge = self::Large;
+}
+?>
+]]>
+  </programlisting>
+ </sect1>
+
+ <sect1 xml:id="language.enumerations.traits">
+  <title>Traity</title>
+
+  <para>Wyliczenia mogą wykorzystywać cechy, które będą zachowywać się tak samo jak w przypadku klas.
+   Zastrzeżeniem jest to, że traity <literal>używane</literal> w enum nie mogą zawierać właściwości.
+   Mogą one zawierać jedynie metody, metody statyczne i stałe. Traity z właściwościami
+   spowodują błąd krytyczny.
+  </para>
+
+  <programlisting role="php">
+<![CDATA[
+<?php
+
+interface Colorful
+{
+    public function color(): string;
+}
+
+trait Rectangle
+{
+    public function shape(): string {
+        return "Rectangle";
+    }
+}
+
+enum Suit implements Colorful
+{
+    use Rectangle;
+
+    case Hearts;
+    case Diamonds;
+    case Clubs;
+    case Spades;
+
+    public function color(): string
+    {
+        return match($this) {
+            Suit::Hearts, Suit::Diamonds => 'Red',
+            Suit::Clubs, Suit::Spades => 'Black',
+        };
+    }
+}
+?>
+]]>
+  </programlisting>
+ </sect1>
+
+ <sect1 xml:id="language.enumerations.expressions">
+  <title>Wartości Enum w wyrażeniach stałych</title>
+
+  <para>
+   Ponieważ case są reprezentowane jako stałe w samym wyliczeniu, mogą być używane jako wartości
+   statyczne w większości wyrażeń stałych: wartości domyślne właściwości, wartości domyślne zmiennych
+   statycznych, wartości domyślne parametrów, wartości stałe globalne i klasowe. Nie mogą być używane
+   w innych wartościach case wyliczenia, ale normalne stałe mogą odnosić się do case wyliczenia.
+  </para>
+
+  <para>
+   Jednak niejawne magiczne wywołania metod, takie jak <classname>ArrayAccess</classname> na enumach, 
+   nie są dozwolone w definicjach statycznych lub stałych, ponieważ nie można absolutnie zagwarantować, że
+   wynikowa wartość jest deterministyczna lub że wywołanie metody jest wolne od skutków ubocznych. Wywołania
+   funkcji, metod i dostęp do właściwości nadal są nieprawidłowymi operacjami w stałych wyrażeniach.
+  </para>
+
+  <programlisting role="php">
+<![CDATA[
+<?php
+
+// Jest to całkowicie legalna definicja Enum.
+enum Direction implements ArrayAccess
+{
+    case Up;
+    case Down;
+
+    public function offsetExists($offset): bool
+    {
+        return false;
+    }
+
+    public function offsetGet($offset): mixed
+    {
+        return null;
+    }
+
+    public function offsetSet($offset, $value): void
+    {
+        throw new Exception();
+    }
+
+    public function offsetUnset($offset): void
+    {
+        throw new Exception();
+    }
+}
+
+class Foo
+{
+    // This is allowed.
+    const DOWN = Direction::Down;
+
+    // Jest to niedozwolone, ponieważ może nie być deterministyczne.
+    const UP = Direction::Up['short'];
+    // Błąd krytyczny: Nie można użyć [] na wyliczeniach w wyrażeniu stałym
+}
+
+// Jest to całkowicie legalne, ponieważ nie jest to wyrażenie stałe.
+$x = Direction::Up['short'];
+var_dump("\$x is " . var_export($x, true));
+
+$foo = new Foo();
+?>
+]]>
+  </programlisting>
+ </sect1>
+
+ <sect1 xml:id="language.enumerations.object-differences">
+  <title>Różnice w stosunku do obiektów</title>
+
+  <para>
+   Chociaż enumy są zbudowane na klasach i obiektach, nie obsługują wszystkich funkcji związanych z obiektami.
+   W szczególności case Enuma nie mogą posiadać stanu.
+  </para>
+
+  <simplelist>
+   <member>Konstruktory i Destruktory są zabronione.</member>
+   <member>Dziedziczenie nie jest obsługiwane. Wyliczenia nie mogą rozszerzać ani być rozszerzane.</member>
+   <member>Właściwości statyczne lub obiektowe nie są dozwolone.</member>
+   <member>Klonowanie przypadku Enum nie jest obsługiwane, ponieważ przypadki muszą być pojedynczymi instancjami.</member>
+   <member><link linkend="language.oop5.magic">Metody magiczne</link>z wyjątkiem tych wymienionych poniżej są niedozwolone.</member>
+   <member>Enumy muszą być zawsze zadeklarowane przed ich użyciem.</member>
+  </simplelist>
+
+  <para>Następujące funkcje obiektu są dostępne i zachowują się tak samo, jak w przypadku każdego innego obiektu:</para>
+
+  <simplelist>
+   <member>Metody publiczne, prywatne i chronione.</member>
+   <member>Publiczne, prywatne i chronione metody statyczne.</member>
+   <member>Stałe publiczne, prywatne i chronione</member>
+   <member>Enum może implementować dowolną liczbę interfejsów.</member>
+   <member>
+    Enumy i przypadki mogą mieć dołączone <link linkend="language.attributes">atrybuty</link>.
+    Filtr docelowy <constant>TARGET_CLASS</constant>
+    obejmuje same wyliczenia. Filtr docelowy <constant>TARGET_CLASS_CONST</constant>
+    obejmuje przypadki Enumów.
+   </member>
+   <member>
+    Magiczn metody <link linkend="object.call">__call</link>, <link linkend="object.callstatic">__callStatic</link>,
+    i <link linkend="object.invoke">__invoke</link>
+   </member>
+   <member><constant>__CLASS__</constant> i <constant>__FUNCTION__</constant> stałe zachowują się jak zwykle</member>
+  </simplelist>
+
+  <para>
+   Stała magiczna <literal>::class</literal> na typie Enum jest oceniana na nazwę typu,
+   w tym dowolną przestrzeń nazw, dokładnie tak samo jak obiekt. Stała magiczna <literal>::class</literal>
+   na instancji Case również jest wartościowana na typ Enum, ponieważ jest
+   instancją tego typu.
+  </para>
+
+  <para>
+   Dodatkowo case enuma nie mogą być instancjonowane bezpośrednio za pomocą <literal>new</literal>, ani za pomocą
+   <methodname>ReflectionClass::newInstanceWithoutConstructor</methodname> w refleksji. W obu przypadkach wystąpi błąd.
+  </para>
+
+  <programlisting role="php">
+<![CDATA[
+<?php
+
+$clovers = new Suit();
+// Błąd: Nie można utworzyć instancji enum Suit
+
+$horseshoes = (new ReflectionClass(Suit::class))->newInstanceWithoutConstructor()
+// Błąd: Nie można utworzyć instancji enum Suit
+?>
+]]>
+  </programlisting>
+ </sect1>
+
+ <sect1 xml:id="language.enumerations.listing">
+  <title>Wykaz wartości</title>
+
+  <para>
+   Zarówno Pure Enums, jak i Backed Enums implementują wewnętrzny interfejs o nazwie
+   <interfacename>UnitEnum</interfacename>. <literal>UnitEnum</literal> zawiera statyczną metodę
+   <literal>cases()</literal>. <literal>cases()</literal> returns a packed array of
+   zwraca spakowaną tablicę wszystkich zdefiniowanych Cases w kolejności deklaracji.
+  </para>
+
+  <programlisting role="php">
+<![CDATA[
+<?php
+
+Suit::cases();
+// Produces: [Suit::Hearts, Suit::Diamonds, Suit::Clubs, Suit::Spades]
+?>
+]]>
+  </programlisting>
+
+  <para>Ręczne zdefiniowanie metody <literal>cases()</literal> na Enum spowoduje błąd krytyczny.</para>
+ </sect1>
+
+ <sect1 xml:id="language.enumerations.serialization">
+  <title>Serializacja</title>
+
+  <para>
+   Wyliczenia są serializowane inaczej niż obiekty. W szczególności mają one nowy kod serializacji,
+   <literal>"E"</literal>, który określa nazwę case enuma. Procedura deserializacji może następnie
+   użyć tego do ustawienia zmiennej na istniejącą pojedynczą wartość. Zapewnia to, że:
+  </para>
+
+  <programlisting role="php">
+<![CDATA[
+<?php
+
+Suit::Hearts === unserialize(serialize(Suit::Hearts));
+
+print serialize(Suit::Hearts);
+// E:11:"Suit:Hearts";
+?>
+]]>
+  </programlisting>
+
+  <para>
+   Podczas deserializacji, jeśli nie można znaleźć enuma i case pasującego do zserializowanej
+   wartości, zostanie wyświetlone ostrzeżenie i zwrócone &false;.</para>
+
+  <para>
+   Jeśli Pure Enum jest serializowane do JSON, zostanie zgłoszony błąd. Jeśli Backed Enum
+   jest serializowane do JSON, będzie reprezentowane tylko przez jego wartość skalarną
+   w odpowiednim typie. Zachowanie obu może zostać zastąpione przez implementację
+   <classname>JsonSerializable</classname>.
+  </para>
+
+  <para>Dla <function>print_r</function>, wynik case enuma jest nieco inny
+   niż obiektów, aby zminimalizować zamieszanie.
+  </para>
+
+  <programlisting role="php">
+<![CDATA[
+<?php
+
+enum Foo {
+    case Bar;
+}
+
+enum Baz: int {
+    case Beep = 5;
+}
+
+print_r(Foo::Bar);
+print_r(Baz::Beep);
+
+/* Produkuje
+
+Foo Enum (
+    [name] => Bar
+)
+Baz Enum:int {
+    [name] => Beep
+    [value] => 5
+}
+*/
+?>
+]]>
+  </programlisting>
+ </sect1>
+
+ <sect1 xml:id="language.enumerations.object-differences.inheritance">
+
+  <title>Dlaczego enumy nie są rozszerzalne</title>
+
+  <simpara>
+   Klasy mają umowy dotyczące swoich metod:
+  </simpara>
+
+  <programlisting role="php">
+<![CDATA[
+<?php
+
+class A {}
+class B extends A {}
+
+function foo(A $a) {}
+
+function bar(B $b) {
+    foo($b);
+}
+?>
+]]>
+ </programlisting>
+
+  <simpara>
+   Ten kod jest bezpieczny dla typów, ponieważ B podąża za kontraktem A, a dzięki magii
+   współbieżności/kontrawariancji, wszelkie oczekiwania, jakie można mieć wobec metod,
+   zostaną zachowane, z wyjątkiem wyjątków.
+  </simpara>
+
+  <simpara>
+   Enumy mają kontrakty dotycząc case, a nie metody:
+  </simpara>
+
+  <programlisting role="php">
+<![CDATA[
+<?php
+
+enum ErrorCode {
+    case SOMETHING_BROKE;
+}
+
+function quux(ErrorCode $errorCode)
+{
+    // Po napisaniu kod ten wydaje się obejmować wszystkie przypadki
+    match ($errorCode) {
+        ErrorCode::SOMETHING_BROKE => true,
+    };
+}
+
+?>
+]]>
+  </programlisting>
+
+  <simpara>
+   Instrukcja &match; w funkcji <code>quux</code> może być analizowana statycznie, aby objąć
+   wszystkie przypadki w ErrorCode.
+  </simpara>
+
+  <simpara>
+   Ale wyobraźmy sobie, że można rozszerzyć enumy:
+  </simpara>
+
+
+  <programlisting role="php">
+<![CDATA[
+<?php
+
+// Kod eksperymentu myślowego, w którym wyliczenia nie są ostateczne.
+// Uwaga, to nie będzie działać w PHP.
+enum MoreErrorCode extends ErrorCode {
+    case PEBKAC;
+}
+
+function fot(MoreErrorCode $errorCode) {
+    quux($errorCode);
+}
+
+fot(MoreErrorCode::PEBKAC);
+
+?>
+]]>
+ </programlisting>
+
+  <simpara>
+   Zgodnie z normalnymi zasadami dziedziczenia, klasa, która rozszerza inną, przejdzie
+   kontrolę typu.
+  </simpara>
+
+  <simpara>
+   Problemem byłoby to, że instrukcja &match; w <code>quux()</code> nie obejmuje już wszystkich
+   case. Ponieważ nie wie o <code>MoreErrorCode::PEBKAC</code> match zgłosi wyjątek.
+  </simpara>
+
+  <simpara>
+   Z tego powodu wyliczenia są ostateczne i nie mogą być rozszerzane.
+  </simpara>
+ </sect1>
+
+ <sect1 xml:id="language.enumerations.examples">
+  &reftitle.examples;
+
+  <para>
+   <example>
+    <title>Podstawowe wartości ograniczone</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+enum SortOrder
+{
+    case Asc;
+    case Desc;
+}
+
+function query($fields, $filter, SortOrder $order = SortOrder::Asc)
+{
+     /* ... */
+}
+?>
+]]>
+    </programlisting>
+    <para>
+     Funkcja <literal>query()</literal> może teraz działać bezpiecznie, wiedząc, że
+     <literal>$order</literal> jest gwarantowane jako <literal>SortOrder::Asc</literal>
+     lub <literal>SortOrder::Desc</literal>. Każda inna wartość spowodowałaby błąd
+     <classname>TypeError</classname>, więc nie jest potrzebne dalsze sprawdzanie błędów ani testowanie.
+    </para>
+   </example>
+  </para>
+
+  <para>
+
+   <example>
+    <title>Zaawansowane wyłączne wartości</title>
+
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+enum UserStatus: string
+{
+    case Pending = 'P';
+    case Active = 'A';
+    case Suspended = 'S';
+    case CanceledByUser = 'C';
+
+    public function label(): string
+    {
+        return match($this) {
+            self::Pending => 'Pending',
+            self::Active => 'Active',
+            self::Suspended => 'Suspended',
+            self::CanceledByUser => 'Canceled by user',
+        };
+    }
+}
+?>
+]]>
+    </programlisting>
+
+    <para>
+     W tym przykładzie status użytkownika może być jednym z, i wyłącznie <literal>UserStatus::Pending</literal>,
+     <literal>UserStatus::Active</literal>, <literal>UserStatus::Suspended</literal>, lub
+     <literal>UserStatus::CanceledByUser</literal>. Funkcja może wpisać parametr względem
+     <literal>UserStatus</literal> a następnie zaakceptować tylko te cztery wartości.
+    </para>
+
+    <para>
+     Wszystkie cztery wartości mają metodę <literal>label()</literal>, która zwraca ciąg znaków czytelny dla człowieka.
+     Ciąg ten jest niezależny od skalarnego odpowiednika ciągu "machine name", który może być użyty na przykład
+     w polu bazy danych lub polu wyboru HTML.
+    </para>
+
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+foreach (UserStatus::cases() as $case) {
+    printf('<option value="%s">%s</option>\n', $case->value, $case->label());
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+
+ </sect1>
+
+ </chapter>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
