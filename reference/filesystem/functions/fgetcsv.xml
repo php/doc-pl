@@ -89,18 +89,21 @@
        Musi być znakiem jednobajtowym lub pustym ciągiem znaków.
        Pusty ciąg znaków (<literal>""</literal>) wyłącza własnościowy mechanizm ucieczki.
       </para>
-      <note>
+      <warning xml:id="function.fgetcsv..warn.escape.parameter">
        <simpara>
-        Zazwyczaj znak <parameter>enclosure</parameter> jest unikany wewnątrz pola
-        poprzez jego podwojenie; jednak znak <parameter>escape</parameter>
-        może być użyty jako alternatywa. Tak więc dla domyślnych wartości
-        parametrów <literal>""</literal> i <literal>\"</literal> mają takie samo
-        znaczenie. Poza umożliwieniem ucieczki przed znakiem
-        <parameter>enclosure</parameter>, znak
-        <parameter>escape</parameter> nie specjalnego znaczenia; nie jest nawet
-        przeznaczony do ucieczki przed samym sobą.
+        W strumieniu wejściowym znak <parameter>enclosure</parameter>
+        zawsze może być unikany przez podwojenie wewnątrz cytowanego ciągu,
+        co daje pojedynczy znak <parameter>enclosure</parameter>
+        w przetworzonym wyniku.
+        Znak <parameter>escape</parameter> działa inaczej:
+        jeśli sekwencja znaków <parameter>escape</parameter> i
+        <parameter>enclosure</parameter> pojawia się na wejściu,
+        oba znaki będą obecne w przetworzonym wyniku.
+        Tak więc dla domyślnych parametrów, linia CSV taka jak
+        <literal>"a""b","c\"d"</literal> będzie miała pola przetworzone jako
+        <literal>a"b</literal> i <literal>c\"d</literal>.
        </simpara>
-      </note>
+      </warning>
       <warning>
        <simpara>
         Począwszy od PHP 8.4.0 poleganie na domyślnej wartości
