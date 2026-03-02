@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 943c1285bd3808ad764f01da00b59458110133c0 Maintainer: sobak Status: ready -->
+<!-- $Revision$ -->
+<refentry xml:id="function.get-headers" xmlns="http://docbook.org/ns/docbook">
+ <refnamediv>
+  <refname>get_headers</refname>
+  <refpurpose>Pobiera wszystkie nagłówki wysłane przez serwer w odpowiedzi na żądanie HTTP</refpurpose>
+ </refnamediv>
+
+ <refsect1 role="description">
+  &reftitle.description;
+  <methodsynopsis>
+   <type class="union"><type>array</type><type>false</type></type><methodname>get_headers</methodname>
+   <methodparam><type>string</type><parameter>url</parameter></methodparam>
+   <methodparam choice="opt"><type>bool</type><parameter>associative</parameter><initializer>&false;</initializer></methodparam>
+   <methodparam choice="opt"><type class="union"><type>resource</type><type>null</type></type><parameter>context</parameter><initializer>&null;</initializer></methodparam>
+  </methodsynopsis>
+  <para>
+   <function>get_headers</function> zwraca tablicę z nagłówkami wysłanymi
+   przez serwer w odpowiedzi na żądanie HTTP.
+  </para>
+ </refsect1>
+
+ <refsect1 role="parameters">
+  &reftitle.parameters;
+  <para>
+   <variablelist>
+    <varlistentry>
+     <term><parameter>url</parameter></term>
+     <listitem>
+      <para>
+       Docelowy URL.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>associative</parameter></term>
+     <listitem>
+      <para>
+       Jeśli opcjonalny parametr <parameter>associative</parameter> jest ustawiony
+       na true, <function>get_headers</function> przetworzy odpowiedź i ustawi
+       klucze tablicy.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term><parameter>context</parameter></term>
+     <listitem>
+      <para>
+       Prawidłowy zasób kontekstu utworzony za pomocą
+       <function>stream_context_create</function> lub &null;, aby użyć
+       domyślnego kontekstu.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+ </refsect1>
+
+ <refsect1 role="returnvalues">
+  &reftitle.returnvalues;
+  <para>
+   Zwraca tablicę indeksowaną lub asocjacyjną z nagłówkami lub &false; w
+   przypadku niepowodzenia.
+  </para>
+ </refsect1>
+
+ <refsect1 role="changelog">
+  &reftitle.changelog;
+  <para>
+   <informaltable>
+    <tgroup cols="2">
+     <thead>
+      <row>
+       <entry>&Version;</entry>
+       <entry>&Description;</entry>
+      </row>
+     </thead>
+     <tbody>
+      <row>
+       <entry>8.0.0</entry>
+       <entry>
+        Parametr <parameter>associative</parameter> został zmieniony z <type>int</type> na <type>bool</type>.
+       </entry>
+      </row>
+      <row>
+       <entry>7.1.0</entry>
+       <entry>
+        Dodano parametr <parameter>context</parameter>.
+       </entry>
+      </row>
+     </tbody>
+    </tgroup>
+   </informaltable>
+  </para>
+ </refsect1>
+
+ <refsect1 role="examples">
+ &reftitle.examples;
+  <para>
+   <example>
+    <title>Przykład użycia <function>get_headers</function></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+$url = 'http://www.example.com';
+
+print_r(get_headers($url));
+
+print_r(get_headers($url, true));
+?>
+]]>
+    </programlisting>
+    &example.outputs.similar;
+    <screen>
+<![CDATA[
+Array
+(
+    [0] => HTTP/1.1 200 OK
+    [1] => Date: Sat, 29 May 2004 12:28:13 GMT
+    [2] => Server: Apache/1.3.27 (Unix)  (Red-Hat/Linux)
+    [3] => Last-Modified: Wed, 08 Jan 2003 23:11:55 GMT
+    [4] => ETag: "3f80f-1b6-3e1cb03b"
+    [5] => Accept-Ranges: bytes
+    [6] => Content-Length: 438
+    [7] => Connection: close
+    [8] => Content-Type: text/html
+)
+
+Array
+(
+    [0] => HTTP/1.1 200 OK
+    [Date] => Sat, 29 May 2004 12:28:14 GMT
+    [Server] => Apache/1.3.27 (Unix)  (Red-Hat/Linux)
+    [Last-Modified] => Wed, 08 Jan 2003 23:11:55 GMT
+    [ETag] => "3f80f-1b6-3e1cb03b"
+    [Accept-Ranges] => bytes
+    [Content-Length] => 438
+    [Connection] => close
+    [Content-Type] => text/html
+)
+]]>
+    </screen>
+   </example>
+   <example>
+    <title>Przykład użycia <function>get_headers</function> z żądaniem HEAD</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+// Domyślnie get_headers używa żądania GET do pobrania nagłówków. Aby
+// wysłać żądanie HEAD, można użyć kontekstu strumienia:
+$context = stream_context_create(
+    [
+        'http' => array(
+            'method' => 'HEAD'
+        )
+    ]
+);
+$headers = get_headers('http://example.com', false, $context);
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </refsect1>
+
+ <refsect1 role="seealso">
+  &reftitle.seealso;
+  <para>
+   <simplelist>
+    <member><function>apache_request_headers</function></member>
+   </simplelist>
+  </para>
+ </refsect1>
+
+</refentry>
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
