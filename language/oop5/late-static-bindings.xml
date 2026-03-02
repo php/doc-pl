@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 009f215fc983eeded6161676bcffdd8cf3b6b080 Maintainer: sobak Status: ready -->
+ <sect1 xml:id="language.oop5.late-static-bindings" xmlns="http://docbook.org/ns/docbook">
+  <title>Późne wiązanie statyczne</title>
+  <para>
+   PHP implementuje funkcjonalność zwaną późnym wiązaniem statycznym, która
+   może być używana do odwoływania się do wywoływanej klasy w kontekście
+   dziedziczenia statycznego.
+  </para>
+
+  <para>
+   Dokładniej rzecz ujmując, późne wiązanie statyczne działa poprzez
+   przechowywanie klasy wymienionej w ostatnim "nieprzekazującym wywołaniu".
+   W przypadku wywołań metod statycznych jest to klasa jawnie nazwana
+   (zwykle ta po lewej stronie operatora
+   <link linkend="language.oop5.paamayim-nekudotayim"><literal>::</literal></link>);
+   w przypadku wywołań metod niestatycznych jest to klasa obiektu. "Wywołanie
+   przekazujące" to wywołanie statyczne wprowadzone przez <literal>self::</literal>,
+   <literal>parent::</literal>, <literal>static::</literal>, lub, jeśli
+   poruszamy się w górę hierarchii klas, <function>forward_static_call</function>.
+   <!-- technically, static:: may be non forwarding, but it's irrelevant -->
+
+   Funkcja <function>get_called_class</function> może być użyta do pobrania
+   łańcucha znaków z nazwą wywoływanej klasy, a <literal>static::</literal>
+   wprowadza jej zasięg.
+  </para>
+
+  <para>
+   Funkcjonalność ta została nazwana "późnym wiązaniem statycznym" z myślą
+   o wewnętrznym działaniu. "Późne wiązanie" wynika z faktu, że
+   <literal>static::</literal> nie będzie rozwiązywane przy użyciu klasy,
+   w której metoda została zdefiniowana, lecz będzie obliczane na podstawie
+   informacji dostępnych w czasie wykonywania.
+
+   Zostało to również nazwane "wiązaniem statycznym", ponieważ może być
+   używane (choć nie tylko) do wywołań metod statycznych.
+  </para>
+
+  <sect2 xml:id="language.oop5.late-static-bindings.self">
+   <title>Ograniczenia <literal>self::</literal></title>
+   <para>
+    Statyczne odwołania do bieżącej klasy, takie jak <literal>self::</literal>
+    lub <literal>__CLASS__</literal>, są rozwiązywane przy użyciu klasy,
+    do której funkcja należy, czyli klasy, w której została zdefiniowana:
+   </para>
+   <example>
+    <title>Użycie <literal>self::</literal></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+class A
+{
+    public static function who()
+    {
+        echo __CLASS__;
+    }
+
+    public static function test()
+    {
+        self::who();
+    }
+}
+
+class B extends A
+{
+    public static function who()
+    {
+        echo __CLASS__;
+    }
+}
+
+B::test();
+
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+A
+]]>
+    </screen>
+   </example>
+
+  </sect2>
+
+  <sect2 xml:id="language.oop5.late-static-bindings.usage">
+   <title>Użycie późnego wiązania statycznego</title>
+
+   <para>
+    Późne wiązanie statyczne próbuje rozwiązać to ograniczenie, wprowadzając
+    słowo kluczowe, które odwołuje się do klasy, która została pierwotnie
+    wywołana w czasie wykonywania. W zasadzie słowo kluczowe, które pozwoliłoby
+    odwoływać się do <literal>B</literal> z <literal>test()</literal>
+    w poprzednim przykładzie. Zdecydowano, aby nie wprowadzać nowego słowa
+    kluczowego, lecz zamiast tego użyć <literal>static</literal>, które
+    było już zarezerwowane.
+   </para>
+
+   <example>
+    <title>Proste użycie <literal>static::</literal></title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+class A
+{
+    public static function who()
+    {
+        echo __CLASS__;
+    }
+
+    public static function test()
+    {
+        static::who(); // Tutaj działa późne wiązanie statyczne
+    }
+}
+
+class B extends A
+{
+    public static function who()
+    {
+        echo __CLASS__;
+    }
+}
+
+B::test();
+
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+B
+]]>
+    </screen>
+   </example>
+   <note>
+    <para>
+     W kontekstach niestatycznych wywoływaną klasą będzie klasa instancji
+     obiektu. Ponieważ <literal>$this-></literal> będzie próbowało wywołać
+     prywatne metody z tego samego zasięgu, użycie <literal>static::</literal>
+     może dać inne wyniki. Kolejną różnicą jest to, że <literal>static::</literal>
+     może odwoływać się jedynie do właściwości statycznych.
+    </para>
+   </note>
+   <example>
+    <title>Użycie <literal>static::</literal> w kontekście niestatycznym</title>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+class A
+{
+    private function foo()
+    {
+        echo "Success!\n";
+    }
+
+    public function test()
+    {
+        $this->foo();
+        static::foo();
+    }
+}
+
+class B extends A
+{
+    /* foo() zostanie skopiowane do B, więc jego zasięg nadal będzie A
+    * i wywołanie zakończy się powodzeniem */
+}
+
+class C extends A
+{
+    private function foo()
+    {
+        /* Oryginalna metoda jest zastąpiona; zasięgiem nowej jest C */
+    }
+}
+
+$b = new B();
+$b->test();
+
+$c = new C();
+try {
+    $c->test();
+} catch (Error $e) {
+    echo $e->getMessage();
+}
+
+?>
+]]>
+    </programlisting>
+    &example.outputs;
+    <screen>
+<![CDATA[
+Success!
+Success!
+Success!
+Call to private method C::foo() from scope A
+]]>
+    </screen>
+   </example>
+   <note>
+    <para>
+     Rozwiązywanie późnego wiązania statycznego zatrzymuje się na w pełni
+     rozwiązanym wywołaniu statycznym, bez mechanizmu awaryjnego. Z drugiej
+     strony, wywołania statyczne używające słów kluczowych takich jak
+     <literal>parent::</literal> lub <literal>self::</literal> przekazują
+     informację o wywołaniu dalej.
+    </para>
+    <example>
+     <title>Wywołania przekazujące i nieprzekazujące</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+
+class A
+{
+    public static function foo()
+    {
+        static::who();
+    }
+
+    public static function who()
+    {
+        echo __CLASS__ . "\n";
+    }
+}
+
+class B extends A
+{
+    public static function test()
+    {
+        A::foo();
+        parent::foo();
+        self::foo();
+    }
+
+    public static function who()
+    {
+        echo __CLASS__ . "\n";
+    }
+}
+
+class C extends B
+{
+    public static function who()
+    {
+        echo __CLASS__ . "\n";
+    }
+}
+
+C::test();
+
+?>
+]]>
+     </programlisting>
+     &example.outputs;
+     <screen>
+<![CDATA[
+A
+C
+C
+]]>
+     </screen>
+    </example>
+   </note>
+  </sect2>
+ </sect1>
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:t
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:1
+sgml-indent-data:t
+indent-tabs-mode:nil
+sgml-parent-document:nil
+sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+vim600: syn=xml fen fdm=syntax fdl=2 si
+vim: et tw=78 syn=sgml
+vi: ts=1 sw=1
+-->
