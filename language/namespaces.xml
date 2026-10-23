@@ -1,0 +1,1567 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: f4f96ef8b2a95283c92ea2183fe1dedf06f3ad22 Maintainer: grzesiek Status: ready -->
+<!-- $Revision$ -->
+<chapter xml:id="language.namespaces" xmlns="http://docbook.org/ns/docbook"
+ version="1.1">
+ <title>Przestrzenie nazw</title>
+
+ <sect1 xml:id="language.namespaces.rationale">
+  <title>Przegląd przestrzeni nazw</title>
+  <titleabbrev>Przegląd</titleabbrev>
+  <?phpdoc print-version-for="namespaces"?>
+  <simpara>
+   Czym są przestrzenie nazw? W najszerszej definicji przestrzenie nazw są sposobem enkapsulacji
+   elementów. Może to być postrzegane jako abstrakcyjna koncepcja w wielu miejscach. Na przykład w każdym
+   ystemie operacyjnym katalogi służą do grupowania powiązanych plików i działają jako przestrzeń
+   nazw dla plików w nich zawartych. Jako konkretny przykład, plik <literal>foo.txt</literal> może
+   może istnieć zarówno w katalogu <literal>/home/greg</literal> jak i w <literal>/home/other</literal>,
+   ale dwie kopie <literal>foo.txt</literal> nie mogą współistnieć w tym samym katalogu. Ponadto,
+   aby uzyskać dostęp do pliku <literal>foo.txt</literal> poza katalogiem
+   <literal>/home/greg</literal> musimy dodać nazwę katalogu do nazwy pliku za pomocą
+   separatora katalogów, aby uzyskać <literal>/home/greg/foo.txt</literal>. Ta sama zasada
+   rozciąga się na przestrzenie nazw w świecie programowania.
+  </simpara>
+
+  <simpara>
+   W świecie PHP przestrzenie nazw zostały zaprojektowane w celu rozwiązania dwóch problemów,
+   które napotykają autorzy bibliotek i aplikacji podczas tworzenia elementów kodu wielokrotnego użytku,
+   takich jak klasy lub funkcje:
+  </simpara>
+  <para>
+   <orderedlist>
+    <listitem>
+     <simpara>
+      Kolizje nazw między tworzonym kodem a wewnętrznymi
+      klasami/funkcjami/stałymi PHP lub klasami/funkcjami/stałymi innych firm.
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      Możliwość aliasowania (lub skracania) Extra_Long_Names ma na celu złagodzenie pierwszego problemu,
+      poprawiając czytelność kodu źródłowego.
+     </simpara>
+    </listitem>
+   </orderedlist>
+  </para>
+  <simpara>
+   Przestrzenie nazw PHP umożliwiają grupowanie powiązanych klas, interfejsów,
+   funkcji i stałych. Oto przykład składni przestrzeni nazw w PHP:
+  </simpara>
+  <example>
+   <title>Przykład składni przestrzeni nazw</title>
+   <programlisting role="php">
+   <![CDATA[
+<?php
+namespace my\name; // zobacz sekcję "Definiowanie Przestrzeni Nazw"
+
+class MyClass {}
+function myfunction() {}
+const MYCONST = 1;
+
+$a = new MyClass;
+$c = new \my\name\MyClass; // zobacz sekcję "Przestrzeń Globalna"
+
+$a = strlen('hi'); // see "Using namespaces: fallback to global
+                   // function/constant" section
+
+$d = namespace\MYCONST; // zobacz sekcję "operator przestrzeni nazw i stała
+                        // __NAMESPACE__"
+$d = __NAMESPACE__ . '\MYCONST';
+echo constant($d); // zobacz sekcję "Przestrzenie nazw i dynamiczne funkcje języka"
+?>
+    ]]>
+   </programlisting>
+  </example>
+   <note>
+    <simpara>
+     Wielkość liter w nazwach przestrzeni nazw nie ma znaczenia.
+    </simpara>
+   </note>
+  <note>
+   <para>
+    Nazwa przestrzeni nazw <literal>PHP</literal> i nazwy złożone zaczynające się
+    od tej nazwy (jak <literal>PHP\Classes</literal>) są zarezerwowane do wewnętrznego użytku języka
+    i nie powinny być używane w kodzie przestrzeni użytkownika.
+   </para>
+  </note>
+ </sect1>
+
+ <sect1 xml:id="language.namespaces.definition">
+  <title>Definiowanie przestrzeni nazw</title>
+  <titleabbrev>Przestrzenie nazw</titleabbrev>
+  <?phpdoc print-version-for="namespaces"?>
+  <para>
+   Chociaż każdy poprawny kod PHP może być zawarty w przestrzeni nazw, tylko następujące typy kodu
+   podlegają wpływowi przestrzeni nazw: klasy (w tym abstrakcje i traity), interfejsy, funkcje i stałe.
+  </para>
+  <para>
+   Przestrzenie nazw są deklarowane za pomocą słowa <literal>namespace</literal>
+   Plik zawierający przestrzeń nazw musi zadeklarować przestrzeń nazw na
+   początku pliku przed jakimkolwiek innym kodem - z jednym wyjątkiem:
+   słowem kluczowym <xref linkend="control-structures.declare" />.
+   <example>
+    <title>Deklarowanie pojedynczej przestrzeni nazw</title>
+    <programlisting role="php">
+     <![CDATA[
+<?php
+namespace MyProject;
+
+const CONNECT_OK = 1;
+class Connection { /* ... */ }
+function connect() { /* ... */ }
+
+?>
+]]>
+    </programlisting>
+   </example>
+   <note>
+    <simpara>
+     W pełni kwalifikowane nazwy (tj. nazwy zaczynające się od odwrotnego ukośnika) nie są dozwolone
+     w deklaracjach przestrzeni nazw, ponieważ takie konstrukcje są interpretowane jako względne wyrażenia przestrzeni nazw.
+    </simpara>
+   </note>
+   Jedyną konstrukcją kodu dozwoloną przed deklaracją przestrzeni nazw jest instrukcja
+   <literal>declare</literal> służąca do definiowania kodowania pliku źródłowego.
+   Ponadto żaden kod spoza PHP nie może poprzedzać deklaracji przestrzeni nazw, w tym dodatkowe białe znaki:
+   <example>
+    <title>Deklarowanie pojedynczej przestrzeni nazw</title>
+    <programlisting role="php">
+     <![CDATA[
+<html>
+<?php
+namespace MyProject; // błąd krytyczny - przestrzeń nazw musi być pierwszą instrukcją w skrypcie
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   Ponadto, w przeciwieństwie do innych konstrukcji PHP, ta sama przestrzeń nazw może być zdefiniowana
+   w wielu plikach, umożliwiając podział zawartości przestrzeni nazw w systemie plików.
+  </para>
+ </sect1>
+ <sect1 xml:id="language.namespaces.nested">
+  <title>Deklarowanie podprzestrzeni nazw</title>
+  <titleabbrev>Podprzestrzenie nazw</titleabbrev>
+  <?phpdoc print-version-for="namespaces"?>
+  <para>
+   Podobnie jak katalogi i pliki, przestrzenie nazw PHP również zawierają możliwość określenia
+   hierarchii nazw przestrzeni nazw. Tak więc, nazwa przestrzeni nazw może być zdefiniowana
+   z podpoziomami:
+   <example>
+    <title>Deklarowanie pojedynczej przestrzeni nazw z hierarchią</title>
+    <programlisting role="php">
+     <![CDATA[
+<?php
+namespace MyProject\Sub\Level;
+
+const CONNECT_OK = 1;
+class Connection { /* ... */ }
+function connect() { /* ... */  }
+
+?>
+]]>
+    </programlisting>
+   </example>
+   Powyższy przykład tworzy stałą <literal>MyProject\Sub\Level\CONNECT_OK</literal>,
+   klasę <literal>MyProject\Sub\Level\Connection</literal> i funkcję
+   <literal>MyProject\Sub\Level\connect</literal>.
+  </para>
+ </sect1>
+ <sect1 xml:id="language.namespaces.definitionmultiple">
+  <title>Definiowanie wielu przestrzeni nazw w tym samym pliku</title>
+  <titleabbrev>Definiowanie wielu przestrzeni nazw w tym samym pliku</titleabbrev>
+  <?phpdoc print-version-for="namespaces"?>
+  <para>
+   W tym samym pliku można również zadeklarować wiele przestrzeni nazw. Istnieją dwie
+   dozwolone składnie.
+  </para>
+  <para>
+   <example>
+    <title>Deklarowanie wielu przestrzeni nazw, prosta składnia kombinacji</title>
+    <programlisting role="php">
+     <![CDATA[
+<?php
+namespace MyProject;
+
+const CONNECT_OK = 1;
+class Connection { /* ... */ }
+function connect() { /* ... */  }
+
+namespace AnotherProject;
+
+const CONNECT_OK = 1;
+class Connection { /* ... */ }
+function connect() { /* ... */  }
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   Ta składnia nie jest zalecana do łączenia przestrzeni nazw w jednym pliku.
+   Zamiast tego zaleca się użycie alternatywnej składni z nawiasami klamrowymi.
+  </para>
+  <para>
+   <example>
+    <title>Deklarowanie wielu przestrzeni nazw, składnia z nawiasami klamrowymi</title>
+    <programlisting role="php">
+     <![CDATA[
+<?php
+namespace MyProject {
+
+const CONNECT_OK = 1;
+class Connection { /* ... */ }
+function connect() { /* ... */  }
+}
+
+namespace AnotherProject {
+
+const CONNECT_OK = 1;
+class Connection { /* ... */ }
+function connect() { /* ... */  }
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   Zdecydowanie odradza się łączenie wielu przestrzeni nazw w tym samym pliku.
+   Podstawowym przypadkiem użycia jest łączenie wielu skryptów PHP w tym samym
+   pliku.
+  </para>
+  <para>
+   W celu połączenia globalnego kodu bez przestrzeni nazw z kodem z przestrzenią nazw,
+   obsługiwana jest tylko składnia z nawiasami klamrowymi. Kod globalny powinien być
+   zawarty w instrukcji przestrzeni nazw bez nazwy przestrzeni nazw, jak w:
+   <example>
+    <title>Deklarowanie wielu przestrzeni nazw i kod bez przestrzeni nazw</title>
+    <programlisting role="php">
+     <![CDATA[
+<?php
+namespace MyProject {
+
+const CONNECT_OK = 1;
+class Connection { /* ... */ }
+function connect() { /* ... */  }
+}
+
+namespace { // global code
+session_start();
+$a = MyProject\connect();
+echo MyProject\Connection::start();
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   Żaden kod PHP nie może istnieć poza nawiasami przestrzeni nazw, z wyjątkiem
+   otwierającej instrukcji declare.
+   <example>
+    <title>Deklarowanie wielu przestrzeni nazw i kod bez przestrzeni nazw</title>
+    <programlisting role="php">
+     <![CDATA[
+<?php
+declare(encoding='UTF-8');
+namespace MyProject {
+
+const CONNECT_OK = 1;
+class Connection { /* ... */ }
+function connect() { /* ... */  }
+}
+
+namespace { // global code
+session_start();
+$a = MyProject\connect();
+echo MyProject\Connection::start();
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </sect1>
+ <sect1 xml:id="language.namespaces.basics">
+  <title>Korzystanie z przestrzeni nazw: Podstawy</title>
+  <titleabbrev>Podstawy</titleabbrev>
+  <?phpdoc print-version-for="namespaces"?>
+  <para>
+   Przed omówieniem korzystania z przestrzeni nazw, ważne jest, aby zrozumieć, w jaki sposób PHP
+   wie, który element przestrzeni nazw jest żądany przez kod. Można dokonać prostej analogii
+   między przestrzeniami nazw PHP a systemem plików. Istnieją trzy sposoby dostępu do pliku w
+   systemie plików:
+   <orderedlist>
+    <listitem>
+     <simpara>
+      Względna nazwa pliku, taka jak <literal>foo.txt</literal>. Jest ona rozwiązana do
+      <literal>currentdirectory/foo.txt</literal>, gdzie <literal>currentdirectory</literal> jest
+      aktualnie zajmowanym katalogiem. Jeśli więc bieżącym katalogiem jest
+      <literal>/home/foo</literal> nazwa zostanie rozwiązana do <literal>/home/foo/foo.txt</literal>.
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      Względna nazwa ścieżki, taka jak <literal>subdirectory/foo.txt</literal>. To rozwiązuje do
+      <literal>currentdirectory/subdirectory/foo.txt</literal>.
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      Bezwzględna nazwa ścieżki, taka jak <literal>/main/foo.txt</literal>. To rozwiązuje się do
+      <literal>/main/foo.txt</literal>.
+     </simpara>
+    </listitem>
+   </orderedlist>
+   Ta sama zasada może być zastosowana do elementów w PHP. Na
+   przykład, nazwa klasy może być określona na trzy sposoby:
+   <orderedlist>
+    <listitem>
+     <simpara>
+      Niekwalifikowana nazwa lub nazwa klasy bez przedrostka, np.
+      <literal>$a = new foo();</literal> lub
+      <literal>foo::staticmethod();</literal>. Jeśli bieżącą przestrzenią nazw jest
+      <literal>currentnamespace</literal>, to rozwiązuje do
+      <literal>currentnamespace\foo</literal>. Jeśli
+      kod jest kodem globalnym, bez przestrzeni nazw, jest to rozwiązuje do <literal>foo</literal>.
+     </simpara>
+     <simpara>
+      Jedno zastrzeżenie: niewykwalifikowane nazwy funkcji i stałych będą rozwiązywane
+      na globalne funkcje i stałe, jeśli funkcja lub stała z przestrzenią nazw nie jest
+      zdefiniowana. Zobacz <link linkend="language.namespaces.fallback">Używanie przestrzeni
+      nazw: powrót do globalnej funkcji/stałej</link> po szczegóły.
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      Nazwa kwalifikowana lub nazwa klasy z prefiksem, np.
+      <literal>$a = new subnamespace\foo();</literal> lub
+      <literal>subnamespace\foo::staticmethod();</literal>. Jeśli bieżącą przestrzenią nazw jest
+      <literal>currentnamespace</literal>, rozwiązuje to do
+      <literal>currentnamespace\subnamespace\foo</literal>. Jeśli
+      kod jest kodem globalnym, bez przestrzeni nazw, to rozwiązuje do <literal>subnamespace\foo</literal>.
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      W pełni kwalifikowana nazwa lub nazwa z prefiksem z globalnym operatorem prefiksu,
+      takim jak <literal>$a = new \currentnamespace\foo();</literal> lub
+      <literal>\currentnamespace\foo::staticmethod();</literal>. To zawsze rozwiązuje
+      do dosłownej nazwy określonej w kodzie <literal>currentnamespace\foo</literal>.
+     </simpara>
+    </listitem>
+   </orderedlist>
+  </para>
+  <para>
+   Oto przykład trzech rodzajów składni w rzeczywistym kodzie:
+   <informalexample>
+    <simpara>file1.php</simpara>
+    <programlisting role="php">
+     <![CDATA[
+<?php
+namespace Foo\Bar\subnamespace;
+
+const FOO = 1;
+function foo() {}
+class foo
+{
+    static function staticmethod() {}
+}
+?>
+     ]]>
+    </programlisting>
+    <simpara>file2.php</simpara>
+    <programlisting role="php">
+     <![CDATA[
+<?php
+namespace Foo\Bar;
+include 'file1.php';
+
+const FOO = 2;
+function foo() {}
+class foo
+{
+    static function staticmethod() {}
+}
+
+/* Niekwalifikowana nazwa */
+foo(); // rozwiązuje do funkcji Foo\Bar\foo
+foo::staticmethod(); // rozwiązuje do metody staticmethod, klasy Foo\Bar\foo
+echo FOO; // rozwiązuje do stałej Foo\Bar\FOO
+
+/* Nazwa kwalifikowana */
+subnamespace\foo(); // rozwiązuje do funkcji Foo\Bar\subnamespace\foo
+subnamespace\foo::staticmethod(); // rozwiązuje do klasy Foo\Bar\subnamespace\foo,
+                                  // method staticmethod
+echo subnamespace\FOO; // rozwiązuje do stałej Foo\Bar\subnamespace\FOO
+
+/* W pełni kwalifikowana nazwa */
+\Foo\Bar\foo(); // rozwiązuje do funkcji Foo\Bar\foo
+\Foo\Bar\foo::staticmethod(); // rozwiązuje do metody staticmethod, klasy Foo\Bar\foo
+echo \Foo\Bar\FOO; // rozwiązuje do stałej Foo\Bar\FOO
+?>
+     ]]>
+    </programlisting>
+   </informalexample>
+  </para>
+  <para>
+   Należy pamiętać, że aby uzyskać dostęp do dowolnej globalnej
+   klasy, funkcji lub stałej, można użyć w pełni kwalifikowanej nazwy, takiej jak
+   <function>\strlen</function> lub <classname>\Exception</classname> lub
+   \<constant>INI_ALL</constant>.
+   <example>
+    <title>Dostęp do globalnych klas, funkcji i stałych z przestrzeni nazw</title>
+    <programlisting role="php">
+     <![CDATA[
+<?php
+namespace Foo;
+
+function strlen() {}
+const INI_ALL = 3;
+class Exception {}
+
+$a = \strlen('hi'); // wywołuje globalną funkcję strlen
+$b = \INI_ALL; // uzyskuje dostęp do globalnej stałej INI_ALL
+$c = new \Exception('error'); // tworzy instancję globalnej klasy Exception
+?>
+     ]]>
+    </programlisting>
+   </example>
+  </para>
+ </sect1>
+ <sect1 xml:id="language.namespaces.dynamic">
+  <title>Przestrzenie nazw i dynamiczne funkcje języka</title>
+  <titleabbrev>Przestrzenie nazw i dynamiczne funkcje języka</titleabbrev>
+  <?phpdoc print-version-for="namespaces"?>
+  <para>
+   Na implementację przestrzeni nazw w PHP wpływa jego dynamiczna natura jako języka
+   programowania. Tak więc, aby przekonwertować kod taki jak poniższy przykład na kod z przestrzenią nazw:
+   <example>
+    <title>Dynamiczny dostęp do elementów</title>
+    <simpara>example1.php:</simpara>
+    <programlisting role="php">
+     <![CDATA[
+<?php
+class classname
+{
+    function __construct()
+    {
+        echo __METHOD__,"\n";
+    }
+}
+function funcname()
+{
+    echo __FUNCTION__,"\n";
+}
+const constname = "global";
+
+$a = 'classname';
+$obj = new $a; // wyświetli classname::__construct
+$b = 'funcname';
+$b(); // prints funcname
+echo constant('constname'), "\n"; // wyświetli global
+?>
+    ]]>
+    </programlisting>
+   </example>
+   Należy użyć w pełni kwalifikowanej nazwy (nazwa klasy z prefiksem przestrzeni nazw).
+   Zauważ, że ponieważ nie ma różnicy między kwalifikowaną i w pełni kwalifikowaną Nazwą
+   wewnątrz dynamicznej nazwy klasy, nazwy funkcji lub nazwy stałej, wiodący odwrotny
+   ukośnik nie jest konieczny.
+   <example>
+    <title>Dynamiczny dostęp do elementów z przestrzenią nazw</title>
+    <programlisting role="php">
+     <![CDATA[
+<?php
+namespace namespacename;
+class classname
+{
+    function __construct()
+    {
+        echo __METHOD__,"\n";
+    }
+}
+function funcname()
+{
+    echo __FUNCTION__,"\n";
+}
+const constname = "namespaced";
+
+/* należy pamiętać, że w przypadku użycia podwójnych cudzysłowów, "\\namespacename\\classname" must be used */
+$a = '\namespacename\classname';
+$obj = new $a; // wyświetli namespacename\classname::__construct
+$a = 'namespacename\classname';
+$obj = new $a; // również wyświetli namespacename\classname::__construct
+$b = 'namespacename\funcname';
+$b(); // wyświetli namespacename\funcname
+$b = '\namespacename\funcname';
+$b(); // również wyświetli namespacename\funcname
+echo constant('\namespacename\constname'), "\n"; // wyświetli namespaced
+echo constant('namespacename\constname'), "\n"; // również wyświetli namespaced
+?>
+    ]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   Koniecznie przeczytaj <link linkend="language.namespaces.faq.quote">uwagę o
+   uciekaniu nazw przestrzeni nazw w ciągach znaków</link>.
+  </para>
+ </sect1>
+ <sect1 xml:id="language.namespaces.nsconstants">
+  <title>Słowo kluczowe namespace i stała magiczna __NAMESPACE__</title>
+  <titleabbrev>Słowo kluczowe namespace i stała magiczna __NAMESPACE__</titleabbrev>
+  <?phpdoc print-version-for="namespaces"?>
+  <para>
+   PHP obsługuje dwa sposoby abstrakcyjnego dostępu do elementów w bieżącej przestrzeni nazw,
+   magiczną stałą <constant>__NAMESPACE__</constant> i słowo kluczowe <literal>namespace</literal>
+   keyword.
+  </para>
+  <para>
+   Wartość <constant>__NAMESPACE__</constant> jest ciągiem znaków, który zawiera bieżącą
+   namespace name. nazwę przestrzeni nazw. W globalnym kodzie bez przestrzeni nazw zawiera
+   on pusty ciąg znaków.
+   <example>
+    <title>Przykłąd __NAMESPACE__, kod z przestrzenią nazw</title>
+    <programlisting role="php">
+     <![CDATA[
+<?php
+namespace MyProject;
+
+echo '"', __NAMESPACE__, '"'; // wyświetli "MyProject"
+?>
+]]>
+    </programlisting>
+   </example>
+   <example>
+    <title>Przykład __NAMESPACE__, kod globalny</title>
+    <programlisting role="php">
+     <![CDATA[
+<?php
+
+echo '"', __NAMESPACE__, '"'; // wyświetli ""
+?>
+]]>
+    </programlisting>
+   </example>
+   Stała <constant>__NAMESPACE__</constant> constant jest przydatna na przykład do dynamicznego
+   konstruowania nazw:
+   <example>
+    <title>użycie __NAMESPACE__ do dynamicznego tworzenia nazw</title>
+    <programlisting role="php">
+     <![CDATA[
+<?php
+namespace MyProject;
+
+function get($classname)
+{
+    $a = __NAMESPACE__ . '\\' . $classname;
+    return new $a;
+}
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   Słowo kluczowe <literal>namespace</literal> może być użyte do jawnego żądania
+   elementu z bieżącej przestrzeni nazw lub podprzestrzeni. Jest to odpowiednik
+   przestrzeni nazw operatora <literal>self</literal> dla klas.
+   <example>
+    <title>operator namespace wewnątrz przestrzeni nazw</title>
+    <programlisting role="php">
+     <![CDATA[
+<?php
+namespace MyProject;
+
+use blah\blah as mine; // zobacz "Korzystanie z przestrzeni nazw: Aliasowanie/Importowanie"
+
+blah\mine(); // wywołuje funkcje MyProject\blah\mine()
+namespace\blah\mine(); // wywołuje funkcje MyProject\blah\mine()
+
+namespace\func(); // wywołuje funkcje MyProject\func()
+namespace\sub\func(); // wywołuje funkcje MyProject\sub\func()
+namespace\cname::method(); // wywołuje statyczną metodę "method" klasy of class MyProject\cname
+$a = new namespace\sub\cname(); // tworzy instancję obiektu klasy MyProject\sub\cname
+$b = namespace\CONSTANT; // assigns value of constant MyProject\CONSTANT do $b
+?>
+]]>
+    </programlisting>
+   </example>
+   <example>
+    <title>operator namespace w kodzie globalnym</title>
+    <programlisting role="php">
+     <![CDATA[
+<?php
+
+namespace\func(); // wywołuje funkcje func()
+namespace\sub\func(); // wywołuje funkcje sub\func()
+namespace\cname::method(); // wywołuje statyczną metodę "method" klasy cname
+$a = new namespace\sub\cname(); // tworzy instancję obiektu klasy sub\cname
+$b = namespace\CONSTANT; // przypisuje wartość stałej CONSTANT do $b
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+ </sect1>
+
+ <sect1 xml:id="language.namespaces.importing">
+  <title>Korzystanie z przestrzeni nazw: Aliasowanie/Importowanie</title>
+  <titleabbrev>Aliasowanie i Importowanie</titleabbrev>
+  <?phpdoc print-version-for="namespaces"?>
+  <para>
+   Możliwość odwoływania się do zewnętrznej w pełni kwalifikowanej nazwy za pomocą aliasu lub importowania
+   jest ważną cechą przestrzeni nazw. Jest to podobne do
+   zdolności uniksowych systemów plików do tworzenia dowiązań symbolicznych do pliku lub katalogu.
+  </para>
+  <para>
+   PHP może aliasować (/importować) stałe, funkcje, klasy, interfejsy, traity, enumy i przestrzenie nazw.
+  </para>
+  <para>
+   Aliasing jest wykonywany za pomocą operatora <literal>use</literal>.
+   Oto przykład pokazujący wszystkie 5 rodzajów importowania:
+   <example>
+    <title>importowanie/aliasowanie za pomocą operatora use</title>
+    <programlisting role="php">
+     <![CDATA[
+<?php
+namespace foo;
+use My\Full\Classname as Another;
+
+// To jest to samo, co użycie My\Full\NSname as NSname
+use My\Full\NSname;
+
+// importowanie klasy globalnej
+use ArrayObject;
+
+// importowanie funkcji
+use function My\Full\functionName;
+
+// aliasowanie funkcji
+use function My\Full\functionName as func;
+
+// importowanie stałej
+use const My\Full\CONSTANT;
+
+$obj = new namespace\Another; // tworzy instancję obiektu klasy foo\Another
+$obj = new Another; // tworzy instancję obiektu klasy My\Full\Classname
+NSname\subns\func(); // wywołuje funkcję My\Full\NSname\subns\func 
+$a = new ArrayObject(array(1)); // tworzy instancję obiektu klasy ArrayObject
+// bez "use ArrayObject" utworzylibyśmy instancję obiektu klasy foo\ArrayObject
+func(); // wywołuje funkcję My\Full\functionName
+echo CONSTANT; // wyświetli wartość My\Full\CONSTANT
+?>
+]]>
+    </programlisting>
+   </example>
+   Należy zauważyć, że w przypadku nazw z przestrzenią nazw (w pełni kwalifikowane nazwy
+   przestrzeni nazw zawierające separator przestrzeni nazw, takie jak <literal>Foo\Bar</literal>
+   w przeciwieństwie do nazw globalnych, które tego nie robią, takich jak <literal>FooBar</literal>),
+   wiodący odwrotny ukośnik jest niepotrzebny i nie jest zalecany, ponieważ nazwy importu muszą być
+   w pełni kwalifikowane i nie są przetwarzane względem bieżącej przestrzeni nazw.
+  </para>
+  <para>
+   PHP dodatkowo obsługuje wygodny skrót do umieszczania wielu instrukcji
+   use w tej samej linii
+   <example>
+    <title>importowanie/aliasing z operatorem use, wiele instrukcji use połączonych</title>
+    <programlisting role="php">
+     <![CDATA[
+<?php
+use My\Full\Classname as Another, My\Full\NSname;
+
+$obj = new Another; // tworzy instancję obiektu klasy My\Full\Classname
+NSname\subns\func(); // wywołuje funkcję My\Full\NSname\subns\func
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   Importowanie jest wykonywane w czasie kompilacji, a więc nie ma wpływu na
+   dynamiczne nazwy klas, funkcji lub stałych.
+   <example>
+    <title>Importowanie i nazwy dynamiczne</title>
+    <programlisting role="php">
+     <![CDATA[
+<?php
+use My\Full\Classname as Another, My\Full\NSname;
+
+$obj = new Another; // tworzy instancję obiektu klasy My\Full\Classname
+$a = 'Another';
+$obj = new $a;      // tworzy instancję obiektu klasy Another
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   Ponadto importowanie wpływa tylko na nazwy niewykwalifikowane i kwalifikowane. W pełni
+   kwalifikowane nazwy są bezwzględne i import nie ma na nie wpływu.
+   <example>
+    <title>Importowanie i w pełni kwalifikowane nazwy</title>
+    <programlisting role="php">
+     <![CDATA[
+<?php
+use My\Full\Classname as Another, My\Full\NSname;
+
+$obj = new Another; // tworzy instancję obiektu klasy My\Full\Classname
+$obj = new \Another; // tworzy instancję obiektu klasy Another
+$obj = new Another\thing; // tworzy instancję obiektu klasy My\Full\Classname\thing
+$obj = new \Another\thing; // tworzy instancję obiektu klasy Another\thing
+?>
+]]>
+    </programlisting>
+   </example>
+  </para>
+  <sect2 xml:id="language.namespaces.importing.scope">
+   <title>Zasady dotyczące zakresu importowania</title>
+   <para>
+    Słowo kluczowe <literal>use</literal> musi być zadeklarowane w najbardziej
+    zewnętrznym zakresie pliku (zakres globalny) lub wewnątrz deklaracji
+    przestrzeni nazw. Dzieje się tak, ponieważ importowanie odbywa się w czasie
+    kompilacji, a nie w czasie wykonywania, więc nie można go ograniczyć do zakresu bloku.
+    Poniższy przykład pokazuje nielegalne użycie słowa kluczowego
+    <literal>use</literal>:
+   </para>
+   <para>
+    <example>
+     <title>Nielegalne zasady importowania</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+namespace Languages;
+
+function toGreenlandic()
+{
+    use Languages\Danish;
+
+    // ...
+}
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   <note>
+    <para>
+     Reguły importowania są oparte na plikach, co oznacza, że dołączone pliki
+     <emphasis>NIE</emphasis> odziedziczą reguły importowania pliku nadrzędnego.
+    </para>
+   </note>
+  </sect2>
+  <sect2 xml:id="language.namespaces.importing.group">
+   <title>Grupowe deklaracje <literal>use</literal></title>
+   <para>
+    Klasy, funkcje i stałe importowane z tej samej
+    &namespace; mogą być zgrupowane w jednej instrukcji
+    &use.namespace;.
+   </para>
+   <informalexample>
+    <programlisting role="php">
+<![CDATA[
+<?php
+
+use some\namespace\ClassA;
+use some\namespace\ClassB;
+use some\namespace\ClassC as C;
+
+use function some\namespace\fn_a;
+use function some\namespace\fn_b;
+use function some\namespace\fn_c;
+
+use const some\namespace\ConstA;
+use const some\namespace\ConstB;
+use const some\namespace\ConstC;
+
+// jest równoważna następującej zgrupowanej deklaracji use
+use some\namespace\{ClassA, ClassB, ClassC as C};
+use function some\namespace\{fn_a, fn_b, fn_c};
+use const some\namespace\{ConstA, ConstB, ConstC};
+]]>
+    </programlisting>
+   </informalexample>
+  </sect2>
+ </sect1>
+ <sect1 xml:id="language.namespaces.global">
+  <title>Global space</title>
+  <titleabbrev>Global space</titleabbrev>
+  <?phpdoc print-version-for="namespaces"?>
+  <para>
+   Bez definicji przestrzeni nazw, wszystkie definicje klas i funkcji są
+   umieszczane w przestrzeni globalnej - tak jak to było w PHP przed obsługą
+   przestrzeni nazw. Przedrostek nazwy <literal>\</literal> określi, że
+   nazwa jest wymagana z przestrzeni globalnej nawet w kontekście przestrzeni
+   nazw.
+   <example>
+    <title>Używanie specyfikacji przestrzeni globalnej</title>
+    <programlisting role="php">
+     <![CDATA[
+<?php
+namespace A\B\C;
+
+/* Ta funkcja to A\B\C\fopen */
+function fopen() {
+     /* ... */
+     $f = \fopen(...); // wywołuje globalną fopen
+     return $f;
+}
+?>
+    ]]>
+    </programlisting>
+   </example>
+  </para>
+ </sect1>
+ <sect1 xml:id="language.namespaces.fallback">
+  <title>Korzystanie z przestrzeni nazw: powrót do przestrzeni globalnej dla funkcji i stałych</title>
+  <titleabbrev>Powrót do przestrzeni globalnej</titleabbrev>
+  <?phpdoc print-version-for="namespaces"?>
+  <para>
+   Wewnątrz przestrzeni nazw, gdy PHP napotka niewykwalifikowaną nazwę w kontekście nazwy klasy,
+   funkcji lub stałej, rozwiązuje je z różnymi priorytetami. Nazwy klas zawsze rozwiązywane są do
+   bieżącej nazwy przestrzeni nazw. Tak więc, aby uzyskać dostęp do wewnętrznych lub nieobjętych
+   przestrzenią nazw klas użytkownika, należy odwołać się do nich za pomocą ich w pełni kwalifikowanej nazwy, tak jak w:
+   <example>
+    <title>Dostęp do klas globalnych wewnątrz przestrzeni nazw</title>
+    <programlisting role="php">
+     <![CDATA[
+<?php
+namespace A\B\C;
+class Exception extends \Exception {}
+
+$a = new Exception('hi'); // $a jest obiektem klasy A\B\C\Exception
+$b = new \Exception('hi'); // $b jest obiektem klasy Exception
+
+$c = new ArrayObject; // błąd krytyczny, klasa A\B\C\ArrayObject nie została znaleziona
+?>
+    ]]>
+    </programlisting>
+   </example>
+  </para>
+  <para>
+   W przypadku funkcji i stałych, PHP powróci do funkcji lub stałych
+   globalnych, jeśli taka funkcja lub stała nie istnieje.
+   <example>
+    <title>globalny powrót funkcji/stałych w przestrzeni nazw</title>
+    <programlisting role="php">
+     <![CDATA[
+<?php
+namespace A\B\C;
+
+const E_ERROR = 45;
+function strlen($str)
+{
+    return \strlen($str) - 1;
+}
+
+echo E_ERROR, "\n"; // wyświetli "45"
+echo INI_ALL, "\n"; // wyświetli "7" - powraca do globalnego INI_ALL
+
+echo strlen('hi'), "\n"; // wyświetli "1"
+if (is_array('hi')) { // wyświetli "is not array"
+    echo "is array\n";
+} else {
+    echo "is not array\n";
+}
+?>
+    ]]>
+    </programlisting>
+   </example>
+  </para>
+ </sect1>
+
+ <sect1 xml:id="language.namespaces.rules">
+  <title>Zasady rozstrzygania nazw</title>
+  <titleabbrev>Zasady rozstrzygania nazw</titleabbrev>
+  <?phpdoc print-version-for="namespaces"?>
+  <para>
+   Dla celów niniejszych zasad dotyczących rozstrzygania, oto kilka ważnych definicji:
+   <variablelist>
+    <title>Definicje nazw przestrzeni nazw</title>
+    <varlistentry>
+     <term>Nazwa niekwalifikowana</term>
+     <listitem>
+      <para>
+       Jest to identyfikator bez separatora przestrzeni nazw taki jak <literal>Foo</literal>
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term>Nazwa kwalifikowana</term>
+     <listitem>
+      <para>
+       Jest to identyfikator z separatorem przestrzeni nazw, taki jak <literal>Foo\Bar</literal>
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term>W pełni kwalifikowana nazwa</term>
+     <listitem>
+      <para>
+       Jest to identyfikator z separatorem przestrzeni nazw, który zaczyna się od separatora
+       przestrzeni nazw, na przykład <literal>\Foo\Bar</literal>. Przestrzeń nazw
+       <literal>\Foo</literal> jest również w pełni kwalifikowaną nazwą.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term>Nazwa względna</term>
+     <listitem>
+      <para>
+       Jest to identyfikator zaczynający się od <literal>namespace</literal>, taki jak
+       <literal>namespace\Foo\Bar</literal>.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </para>
+  <para>
+   Nazwy są rozwiązywane zgodnie z tymi zasadami rozstrzygania:
+   <orderedlist>
+    <listitem>
+     <simpara>
+      W pełni kwalifikowane nazwy zawsze rozwiązują się do nazwy bez wiodącego separatora przestrzeni nazw.
+      Na przykład <literal>\A\B</literal> rozwiązuje do <literal>A\B</literal>.
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      Nazwy względne zawsze rozwiązują się do nazwy z <literal>namespace</literal> zastąpionym przez
+      bieżącą przestrzeń nazw. Jeśli nazwa występuje w globalnej przestrzeni nazw, prefiks
+      <literal>namespace\</literal> jest usuwany. Na przykład <literal>namespace\A</literal>
+      wewnątrz przestrzeni nazw <literal>X\Y</literal> rozwiązuje do <literal>X\Y\A</literal>. Ta sama nazwa
+      wewnątrz globalnej przestrzeni nazw jest rozwiązywana jako <literal>A</literal>.
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      W przypadku nazw kwalifikowanych pierwszy segment nazwy jest tłumaczony zgodnie z bieżącą
+      tabelą importu klas/przestrzeni nazw. Na przykład, jeśli przestrzeń nazw <literal>A\B\C</literal> jest
+      importowana jako <literal>C</literal>, nazwa <literal>C\D\E</literal> jest tłumaczona na
+      <literal>A\B\C\D\E</literal>.
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      W przypadku nazw kwalifikowanych, jeśli nie ma zastosowania żadna reguła importu, bieżąca przestrzeń nazw
+      jest dodawana do nazwy. Na przykład, nazwa <literal>C\D\E</literal> wewnątrz przestrzeni nazw <literal>A\B</literal>,
+      rozwiązuje do <literal>A\B\C\D\E</literal>.
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      W przypadku nazw niewykwalifikowanych nazwa jest tłumaczona zgodnie z bieżącą tabelą importu
+      dla odpowiedniego typu symbolu. Oznacza to, że nazwy podobne do klas są tłumaczone zgodnie z
+      tabelą importu klas/przestrzeni nazw, nazwy funkcji zgodnie z tabelą importu funkcji, a stałe
+      zgodnie z tabelą importu stałych. Na przykład, po
+      <literal>use A\B\C;</literal> użycie takie jak <literal>new C()</literal> rozwiązuje się do nazwy
+      <literal>A\B\C()</literal>. Podobnie, po <literal>use function A\B\foo;</literal> użycie
+      takie jak <literal>foo()</literal> rozwiązuje do nazwy <literal>A\B\foo</literal>.
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      W przypadku nazw niewykwalifikowanych, jeśli nie ma zastosowania żadna reguła importu, a nazwa odnosi
+      się do symbolu podobnego do klasy, bieżąca przestrzeń nazw jest dodawana. Na przykład <literal>new C()</literal>
+      wewnątrz przestrzeni nazw <literal>A\B</literal> rozwiązuje do nazwy <literal>A\B\C</literal>.
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      W przypadku niewykwalifikowanych nazw, jeśli nie ma zastosowania żadna reguła importu, a nazwa
+      odnosi się do funkcji lub stałej, a kod znajduje się poza globalną przestrzenią nazw, nazwa jest rozwiązywana
+      w czasie wykonywania. Zakładając, że kod znajduje się w przestrzeni nazw <literal>A\B</literal>, oto jak
+      rozwiązywane jest wywołanie funkcji <literal>foo()</literal>:
+     </simpara>
+      <orderedlist>
+       <listitem>
+        <simpara>
+         Wyszukuje funkcję z bieżącej przestrzeni nazw:
+         <literal>A\B\foo()</literal>.
+        </simpara>
+       </listitem>
+       <listitem>
+        <simpara>
+         Próbuje znaleźć i wywołać funkcję <emphasis>globalną</emphasis>
+         <literal>foo()</literal>.
+        </simpara>
+       </listitem>
+      </orderedlist>
+    </listitem>
+   </orderedlist>
+  </para>
+  <example>
+   <title>Zilustrowane rozstrzygnięcia dotyczące nazw</title>
+   <programlisting role="php">
+<![CDATA[
+<?php
+namespace A;
+use B\D, C\E as F;
+
+// wywołania funkcji
+
+foo();      // najpierw próbuje wywołać funkcję "foo" zdefiniowaną w przestrzeni nazw "A"
+            // następnie wywołuje funkcję globalną "foo"
+
+\foo();     // wywołuje funkcję "foo" zdefiniowaną w zakresie globalnym
+
+my\foo();   // wywołuje funkcję "foo" zdefiniowaną w przestrzeni nazw "A\my"
+
+F();        // najpierw próbuje wywołać funkcję "F" zdefiniowaną w przestrzeni nazw "A"
+            // następnie wywołuje funkcję globalną "F"
+
+// referencje do klas
+
+new B();    // tworzy obiekt klasy "B" zdefiniowany w przestrzeni nazw "A"
+            // jeśli nie zostanie znaleziony, próbuje automatycznie załadować klasę "A\B"
+
+new D();    // używając reguł importu, tworzy obiekt klasy "D" zdefiniowany w przestrzeni nazw "B"
+            // jeśli nie zostanie znaleziona, próbuje automatycznie załadować klasę "B\D"
+
+new F();    // używając reguł importu, tworzy obiekt klasy "E" zdefiniowany w przestrzeni nazw "C"
+            // jeśli nie zostanie znaleziony, próbuje automatycznie załadować klasę "C\E"
+
+new \B();   // tworzy obiekt klasy "B" zdefiniowany w zakresie globalnym
+            // jeśli nie zostanie znaleziony, próbuje automatycznie załadować klasę "B"
+
+new \D();   // tworzy obiekt klasy "D" zdefiniowany w zakresie globalnym
+            // jeśli nie zostanie znaleziony, próbuje automatycznie załadować klasę "D"
+
+new \F();   // tworzy obiekt klasy "F" zdefiniowany w zakresie globalnym
+            // jeśli nie zostanie znaleziony, próbuje automatycznie załadować klasę "F"
+
+// statyczne metody/funkcje przestrzeni nazw z innej przestrzeni nazw
+
+B\foo();    // wywołuje funkcję "foo" z przestrzeni nazw "A\B"
+
+B::foo();   // wywołuje metodę "foo" klasy "B" zdefiniowanej w przestrzeni nazw "A"
+            // jeśli klasa "A\B" nie zostanie znaleziona, próbuje automatycznie załadować klasę "A\B"
+
+D::foo();   // używając reguł importu, wywołuje metodę "foo" klasy "D" zdefiniowanej w przestrzeni nazw "B"
+            // jeśli klasa "B\D" nie zostanie znaleziona, próbuje automatycznie załadować klasę "B\D"
+
+\B\foo();   // wywołuje funkcję "foo" z przestrzeni nazw "B"
+
+\B::foo();  // wywołuje metodę "foo" klasy "B" z zakresu globalnego
+            // jeśli klasa "B" nie zostanie znaleziona, próbuje automatycznie załadować klasę "B"
+
+// statyczne metody/funkcje bieżącej przestrzeni nazw
+
+A\B::foo();   // wywołuje metodę "foo" klasy "B" z przestrzeni nazw "A\A"
+              // jeśli klasa "A\A\B" nie zostanie znaleziona, próbuje automatycznie załadować klasę "A\A\B"
+
+\A\B::foo();  // wywołuje metodę "foo" klasy "B" z przestrzeni nazw "A"
+              // jeśli klasa "A\B" nie zostanie znaleziona, próbuje automatycznie załadować klasę "A\B"
+?>
+]]>
+   </programlisting>
+  </example>
+ </sect1>
+ <sect1 xml:id="language.namespaces.faq">
+  <title>FAQ: rzeczy, które musisz wiedzieć o przestrzeniach nazw</title>
+  <titleabbrev>FAQ</titleabbrev>
+  <?phpdoc print-version-for="namespaces"?>
+  <para>
+   Ten FAQ jest podzielony na dwie sekcje: najczęściej zadawane pytania i niektóre szczegóły
+   implementacji, które są pomocne w pełnym zrozumieniu.
+  </para>
+  <para>
+   Po pierwsze, najczęstsze pytania.
+   <orderedlist>
+    <listitem>
+     <simpara>
+      <link linkend="language.namespaces.faq.shouldicare">Jeśli nie używam przestrzeni nazw, czy
+      powinienem się tym przejmować?</link>
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      <link linkend="language.namespaces.faq.globalclass">Jak używać klas wewnętrznych lub globalnych
+      przestrzeni nazw?</link>
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      <link linkend="language.namespaces.faq.innamespace">Jak używać klas przestrzeni
+      azw, funkcji lub stałych w ich własnych przestrzeniach nazw?</link>
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      <link linkend="language.namespaces.faq.full">
+       Jak rozwiązywana jest nazwa taka jak <literal>\my\name</literal> lub
+       <literal>\name</literal>?
+      </link>
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      <link linkend="language.namespaces.faq.qualified">W jaki sposób rozwiązywana jest
+      nazwa taka jak <literal>my\name</literal>?</link>
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      <link linkend="language.namespaces.faq.shortname1">W jaki sposób rozwiązywana jest
+      niewykwalifikowana nazwa klasy, taka jak <literal>name</literal>?</link>
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      <link linkend="language.namespaces.faq.shortname2">Jak rozwiązywana jest niewykwalifikowana
+      nazwa funkcji lub niewykwalifikowana nazwa stałej, taka jak
+      <literal>name</literal>?</link>
+     </simpara>
+    </listitem>
+   </orderedlist>
+  </para>
+  <para>
+   Istnieje kilka szczegółów implementacji przestrzeni nazw,
+   które są pomocne do zrozumienia.
+   <orderedlist>
+    <listitem>
+     <simpara>
+      <link linkend="language.namespaces.faq.conflict">Nazwy importu nie mogą kolidować z
+      klasami zdefiniowanymi w tym samym pliku.</link>
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      <link linkend="language.namespaces.faq.nested">Zagnieżdżone przestrzenie nazw nie są dozwolone.
+      </link>
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      <link linkend="language.namespaces.faq.quote">Dynamiczne nazwy przestrzeni nazw
+      (cytowane identyfikatory) powinny unikać odwrotnego ukośnika.</link>
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      <link linkend="language.namespaces.faq.constants">Niezdefiniowane stałe, do których
+      odwołuje się dowolny odwrotny ukośnik, giną z błędem krytycznym</link>
+     </simpara>
+    </listitem>
+    <listitem>
+     <simpara>
+      <link linkend="language.namespaces.faq.builtinconst">Nie można nadpisać stałych
+      specjalnych &null;, &true; or &false;</link>
+     </simpara>
+    </listitem>
+   </orderedlist>
+  </para>
+  <sect2 xml:id="language.namespaces.faq.shouldicare">
+   <title>Jeśli nie używam przestrzeni nazw, czy powinienem się tym przejmować?</title>
+   <para>
+    nie. Przestrzenie nazw nie wpływają w żaden sposób na istniejący kod ani na kod, 
+    który ma zostać napisany, a który nie zawiera przestrzeni nazw. Możesz
+    napisać taki kod, jeśli chcesz:
+   </para>
+   <para>
+    <example>
+     <title>Dostęp do klas globalnych poza przestrzenią nazw</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+$a = new \stdClass;
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+   <para>
+    Jest to funkcjonalnie równoważne:
+   </para>
+   <para>
+    <example>
+     <title>Dostęp do klas globalnych poza przestrzenią nazw</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+$a = new stdClass;
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+  </sect2>
+  <sect2 xml:id="language.namespaces.faq.globalclass">
+   <title>Jak używać klas wewnętrznych lub globalnych w przestrzeni nazw?</title>
+   <para>
+    <example>
+     <title>Dostęp do klas wewnętrznych w przestrzeniach nazw</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+namespace foo;
+$a = new \stdClass;
+
+function test(\ArrayObject $parameter_type_example = null) {}
+
+$a = \DirectoryIterator::CURRENT_AS_FILEINFO;
+
+// rozszerzenie klasy wewnętrznej lub globalnej
+class MyException extends \Exception {}
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+  </sect2>
+  <sect2 xml:id="language.namespaces.faq.innamespace">
+   <title>
+    Jak używać klas, funkcji lub stałych przestrzeni nazw w ich własnych
+    przestrzeniach nazw?
+   </title>
+   <para>
+    <example>
+     <title>Dostęp do wewnętrznych klas, funkcji lub stałych w przestrzeniach nazw</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+namespace foo;
+
+class MyClass {}
+
+// używając klasy z bieżącej przestrzeni nazw jako typu parametru
+function test(MyClass $parameter_type_example = null) {}
+// inny sposób użycia klasy z bieżącej przestrzeni nazw jako typu parametru
+function test(\foo\MyClass $parameter_type_example = null) {}
+
+// rozszerzenie klasy z bieżącej przestrzeni nazw
+class Extended extends MyClass {}
+
+// dostęp do funkcji globalnej
+$a = \globalfunc();
+
+// dostęp do stałej globalnej
+$b = \INI_ALL;
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+  </sect2>
+  <sect2 xml:id="language.namespaces.faq.full">
+   <title>
+     Jak rozwiązywana jest nazwa taka jak <literal>\my\name</literal> lub
+     <literal>\name</literal>?
+   </title>
+   <para>
+    Nazwy rozpoczynające się od <literal>\</literal> zawsze rozwiązują się tak,
+    jak wyglądają, więc <literal>\my\name</literal> to w rzeczywistości <literal>my\name</literal>,
+    i <literal>\Exception</literal> to <literal>Exception</literal>.
+    <example>
+     <title>W pełni kwalifikowane nazwy</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+namespace foo;
+$a = new \my\name(); // tworzy instancję klasy "my\name"
+echo \strlen('hi'); // wywołuje funkcję "strlen"
+$a = \INI_ALL; // $a jest ustawione na wartość stałej "INI_ALL"
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+  </sect2>
+  <sect2 xml:id="language.namespaces.faq.qualified">
+   <title>Jak rozwiązywana jest nazwa taka jak <literal>my\name</literal>?</title>
+   <para>
+    Nazwy zawierające odwrotny ukośnik, ale nie zaczynające się od odwrotnego ukośnika, 
+    takie jak <literal>my\name</literal> mogą być rozwiązywane na 2 różne sposoby.
+   </para>
+   <para>
+    Jeśli istnieje
+    instrukcja importu, która aliasuje inną nazwę do <literal>my</literal>, to
+    alias importu jest stosowany do <literal>my</literal> w <literal>my\name</literal>.
+   </para>
+   <para>
+    W przeciwnym razie bieżąca nazwa przestrzeni nazw jest dodawana do <literal>my\name</literal>.
+   </para>
+   <para>
+    <example>
+     <title>Kwalifikowane nazwy</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+namespace foo;
+use blah\blah as foo;
+
+$a = new my\name(); // tworzy instancję klasy "foo\my\name"
+foo\bar::name(); // wywołuje statyczną metodę "name" w klasie "blah\blah\bar"
+my\bar(); // wywołuje funkcję "foo\my\bar"
+$a = my\BAR; // ustawia $a na wartość stałej "foo\my\BAR".
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+  </sect2>
+  <sect2 xml:id="language.namespaces.faq.shortname1">
+   <title>Jak rozwiązywana jest niewykwalifikowana nazwa klasy, taka jak <literal>name</literal>?</title>
+   <para>
+    Nazwy klas, które nie zawierają odwrotnego ukośnika jak
+    <literal>name</literal> mogą być rozwiązywane na 2 różne sposoby.
+   </para>
+   <para>
+    Jeśli istnieje
+    instrukcja importu, która aliasuje inną nazwę do <literal>name</literal>, wówczas
+    alias importu jest stosowany.
+   </para>
+   <para>
+    W przeciwnym razie bieżąca nazwa przestrzeni nazw jest dodawana do <literal>name</literal>.
+   </para>
+   <para>
+    <example>
+     <title>Niekwalifikowane nazwy klas</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+namespace foo;
+use blah\blah as foo;
+
+$a = new name(); // tworzy instancję klasy "foo\name"
+foo::name(); // wywołuje statyczną metodę "name" w klasie "blah\blah"
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+  </sect2>
+  <sect2 xml:id="language.namespaces.faq.shortname2">
+   <title>
+    Jak rozwiązywana jest niekwalifikowana nazwa funkcji lub niekwalifikowana nazwa stałej,
+    taka jak <literal>name</literal>?
+   </title>
+   <para>
+    Nazwy funkcji lub stałych, które nie zawierają odwrotnego ukośnika jak
+    <literal>name</literal> mogą być rozwiązywane na 2 różne sposoby.
+   </para>
+   <para>
+    Po pierwsze, bieżąca nazwa przestrzeni nazw jest dodawana do <literal>name</literal>.
+   </para>
+   <para>
+    Wreszcie, jeśli stała lub funkcja <literal>name</literal> nie istnieje
+    w bieżącej przestrzeni nazw, używana jest globalna stała lub funkcja <literal>name</literal>,
+    jeśli istnieje.
+   </para>
+   <para>
+    <example>
+     <title>Niekwalifikowane nazwy funkcji lub stałych</title>
+     <programlisting role="php">
+<![CDATA[
+<?php
+namespace foo;
+use blah\blah as foo;
+
+const FOO = 1;
+
+function my() {}
+function foo() {}
+function sort(&$a)
+{
+    \sort($a); // wywołuje globalną funkcję "sort"
+    $a = array_flip($a);
+    return $a;
+}
+
+my(); // wywołuje "foo\my"
+$a = strlen('hi'); // wywołuje globalną funkcję "strlen", ponieważ "foo\strlen" nie istnieje
+$arr = array(1,3,2);
+$b = sort($arr); // wywołuję funkcję "foo\sort"
+$c = foo(); // wywołuje funkcję "foo\foo" - import nie jest stosowany
+
+$a = FOO; // ustawia $a na wartość stałej "foo\FOO" - import nie jest stosowany
+$b = INI_ALL; // ustawia $b na wartość globalnej stałej "INI_ALL"
+?>
+]]>
+     </programlisting>
+    </example>
+   </para>
+  </sect2>
+  <sect2 xml:id="language.namespaces.faq.conflict">
+   <title>Nazwy importu nie mogą kolidować z klasami zdefiniowanymi w tym samym pliku.</title>
+   <para>
+    Następujące kombinacje skryptów są legalne:
+    <informalexample>
+     <simpara>file1.php</simpara>
+     <programlisting role="php">
+     <![CDATA[
+<?php
+namespace my\stuff;
+class MyClass {}
+?>
+     ]]>
+     </programlisting>
+     <simpara>another.php</simpara>
+     <programlisting role="php">
+     <![CDATA[
+<?php
+namespace another;
+class thing {}
+?>
+     ]]>
+     </programlisting>
+     <simpara>file2.php</simpara>
+     <programlisting role="php">
+     <![CDATA[
+<?php
+namespace my\stuff;
+include 'file1.php';
+include 'another.php';
+
+use another\thing as MyClass;
+$a = new MyClass; // tworzy instancję klasy "thing" z przestrzeni nazw another
+?>
+     ]]>
+     </programlisting>
+    </informalexample>
+   </para>
+   <para>
+    Nie ma konfliktu nazw, mimo że klasa <literal>MyClass</literal> istnieje w
+    przestrzeni nazw <literal>my\stuff</literal> ponieważ definicja MyClass znajduje
+    się w osobnym pliku. Jednak następny przykład powoduje błąd krytyczny dotyczący
+    konfliktu nazw, ponieważ klasa MyClass jest zdefiniowana w tym samym pliku co instrukcja use.
+    <informalexample>
+     <programlisting role="php">
+     <![CDATA[
+<?php
+namespace my\stuff;
+use another\thing as MyClass;
+class MyClass {} // błąd krytyczny: MyClass koliduje z instrukcją import
+$a = new MyClass;
+?>
+     ]]>
+     </programlisting>
+    </informalexample>
+   </para>
+  </sect2>
+  <sect2 xml:id="language.namespaces.faq.nested">
+   <title>Zagnieżdżone przestrzenie nazw nie są dozwolone.</title>
+   <para>
+    PHP nie pozwala na zagnieżdżanie przestrzeni nazw
+    <informalexample>
+     <programlisting role="php">
+     <![CDATA[
+<?php
+namespace my\stuff {
+    namespace nested {
+        class foo {}
+    }
+}
+?>
+     ]]>
+     </programlisting>
+    </informalexample>
+    Łatwo jest jednak symulować zagnieżdżone przestrzenie nazw w ten sposób:
+    <informalexample>
+     <programlisting role="php">
+     <![CDATA[
+<?php
+namespace my\stuff\nested {
+    class foo {}
+}
+?>
+     ]]>
+     </programlisting>
+    </informalexample>
+   </para>
+  </sect2>
+
+  <sect2 xml:id="language.namespaces.faq.quote">
+   <title>Dynamiczne nazwy przestrzeni nazw (cytowane identyfikatory) powinny unikać odwrotnego ukośnika</title>
+   <para>
+    Bardzo ważne jest, aby zdać sobie sprawę, że ponieważ odwrotny ukośnik jest używany jako znak ucieczki
+    w łańcuchach, zawsze powinien być podwojony, gdy jest używany wewnątrz łańcucha. W przeciwnym
+    razie istnieje ryzyko niezamierzonych konsekwencji:
+    <example>
+     <title>Niebezpieczeństwa związane z używaniem nazw wewnątrz podwójnie cytowanego ciągu znaków</title>
+     <programlisting role="php">
+      <![CDATA[
+<?php
+$a = "dangerous\name"; // \n jest nową linią wewnątrz podwójnie cytowanych ciągów znakowych!
+$obj = new $a;
+
+$a = 'not\at\all\dangerous'; // tutaj nie ma problemów.
+$obj = new $a;
+?>
+      ]]>
+     </programlisting>
+    </example>
+    Wewnątrz ciągów zanków w pojedynczych cudzysłowach, sekwencja ucieczki
+    odwrotnego ukośnika jest znacznie bezpieczniejsza w użyciu, ale nadal
+    zaleca się ucieczkę odwrotnego ukośnika we wszystkich ciągach znaków jako najlepszą praktykę.
+   </para>
+  </sect2>
+  <sect2 xml:id="language.namespaces.faq.constants">
+   <title>Niezdefiniowane stałe, do których odwołuje się dowolny odwrotny ukośnik, giną z błędem krytycznym</title>
+   <para>
+    Każda niezdefiniowana stała, która nie jest kwalifikowana, jak <literal>FOO</literal> spowoduje
+    wyświetlenie powiadomienia wyjaśniającego, że PHP przyjęło <literal>FOO</literal> was the value
+    jako wartość stałej. Każda stała, kwalifikowana lub w pełni kwalifikowana, która zawiera
+    odwrotny ukośnik, spowoduje błąd krytyczny, jeśli nie zostanie znaleziona.
+    <example>
+     <title>Niezdefiniowane stałe</title>
+     <programlisting role="php">
+      <![CDATA[
+<?php
+namespace bar;
+$a = FOO; // produkuje powiadomienie - niezdefiniowana stała "FOO" przyjęto "FOO";
+$a = \FOO; // błąd krytyczny, niezdefiniowana stała przestrzeni nazw FOO
+$a = Bar\FOO; // błąd krytyczny, niezdefiniowana stała przestrzeni nazw bar\Bar\FOO
+$a = \Bar\FOO; // błąd krytyczny, niezdefiniowana stała przestrzeni nazw bar\FOO
+?>
+      ]]>
+     </programlisting>
+    </example>
+   </para>
+  </sect2>
+  <sect2 xml:id="language.namespaces.faq.builtinconst">
+   <title>Nie można nadpisać stałych specjalnych &null;, &true; or &false;</title>
+   <para>
+    Każda próba zdefiniowania stałej w przestrzeni nazw, która jest specjalną, wbudowaną
+    stałą, skutkuje błędem krytycznym
+    <example>
+     <title>Undefined constants</title>
+     <programlisting role="php">
+      <![CDATA[
+<?php
+namespace bar;
+const NULL = 0; // błąd krytyczny;
+const true = 'stupid'; // również błąd krytyczny;
+// etc.
+?>
+      ]]>
+     </programlisting>
+    </example>
+   </para>
+  </sect2>
+ </sect1>
+</chapter>
+
+<!-- Keep this comment at the end of the file
+ Local variables:
+ mode: sgml
+ sgml-omittag:t
+ sgml-shorttag:t
+ sgml-minimize-attributes:nil
+ sgml-always-quote-attributes:t
+ sgml-indent-step:1
+ sgml-indent-data:t
+ indent-tabs-mode:nil
+ sgml-parent-document:nil
+ sgml-default-dtd-file:"~/.phpdoc/manual.ced"
+ sgml-exposed-tags:nil
+ sgml-local-catalogs:nil
+ sgml-local-ecat-files:nil
+ End:
+ vim600: syn=xml fen fdm=syntax fdl=2 si
+ vim: et tw=78 syn=sgml
+ vi: ts=1 sw=1
+-->
